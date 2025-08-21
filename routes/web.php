@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Demo1Controller;
 use App\Http\Controllers\Demo2Controller;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\CurrencyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +21,29 @@ use App\Http\Controllers\Demo2Controller;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+// Admin routes
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Users
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+
+    // Countries
+    Route::get('/countries', [CountryController::class, 'index'])->name('countries.index');
+    Route::get('/countries/{id}/edit', [CountryController::class, 'edit'])->name('countries.edit');
+    Route::put('/countries/{id}', [CountryController::class, 'update'])->name('countries.update');
+
+    // Cities
+    Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
+    Route::get('/cities/{id}/edit', [CityController::class, 'edit'])->name('cities.edit');
+    Route::put('/cities/{id}', [CityController::class, 'update'])->name('cities.update');
+
+    // Currencies
+    Route::get('/currencies', [CurrencyController::class, 'index'])->name('currencies.index');
+    Route::get('/currencies/{id}/edit', [CurrencyController::class, 'edit'])->name('currencies.edit');
+    Route::put('/currencies/{id}', [CurrencyController::class, 'update'])->name('currencies.update');
 });
 
 // Demo 1 routes

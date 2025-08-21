@@ -261,7 +261,7 @@
             </div>
 
             <div class="card-link">
-                <a href="#" title="View"><span>View</span></a>
+                <a href="{{ route('admin.users.index') }}" title="View Users"><span>View</span></a>
             </div>
         </div>
 
@@ -272,7 +272,7 @@
             </div>
 
             <div class="card-link">
-                <a href="#" title="View"><span>View</span></a>
+                <a href="{{ route('admin.countries.index') }}" title="View Countries"><span>View</span></a>
             </div>
         </div>
 
@@ -283,7 +283,7 @@
             </div>
 
             <div class="card-link">
-                <a href="#" title="View"><span>View</span></a>
+                <a href="{{ route('admin.cities.index') }}" title="View Cities"><span>View</span></a>
             </div>
         </div>
 
@@ -294,7 +294,7 @@
             </div>
 
             <div class="card-link">
-                <a href="#" title="View"><span>View</span></a>
+                <a href="{{ route('admin.currencies.index') }}" title="View Currencies"><span>View</span></a>
             </div>
         </div>
     </div>

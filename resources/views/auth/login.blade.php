@@ -29,7 +29,7 @@
     </script>
 
     <!-- Theme Mode -->
-    <script>
+    {{-- <script>
         const defaultThemeMode = 'light'; // light|dark|system
         let themeMode;
 
@@ -53,7 +53,7 @@
 
             document.documentElement.classList.add(themeMode);
         }
-    </script>
+    </script> --}}
     <!-- End of Theme Mode -->
 @endpush
 
