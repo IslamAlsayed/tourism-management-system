@@ -1,12 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Demo1Controller;
-use App\Http\Controllers\Demo2Controller;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\CountryController;
-use App\Http\Controllers\Admin\CityController;
-use App\Http\Controllers\Admin\CurrencyController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\CountryController;
+use App\Http\Controllers\Dashboard\CityController;
+use App\Http\Controllers\Dashboard\CurrencyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +23,15 @@ Route::get('/', function () {
 });
 
 // Admin routes
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+    // Admin
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
     // Users
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.delete');
 
     // Countries
     Route::get('/countries', [CountryController::class, 'index'])->name('countries.index');
@@ -44,65 +47,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/currencies', [CurrencyController::class, 'index'])->name('currencies.index');
     Route::get('/currencies/{id}/edit', [CurrencyController::class, 'edit'])->name('currencies.edit');
     Route::put('/currencies/{id}', [CurrencyController::class, 'update'])->name('currencies.update');
-});
 
-// Demo 1 routes
-Route::get('/demo1', function () {
-    return view('pages.demo1.index');
-});
-
-// Demo 2 routes
-Route::get('/demo2', function () {
-    return view('pages.demo2.index');
-});
-
-// Demo 3 routes
-Route::get('/demo3', function () {
-    return view('pages.demo3.index');
-});
-
-// Demo 4 routes
-Route::get('/demo4', function () {
-    return view('pages.demo4.index');
-});
-
-// Demo 5 routes
-Route::get('/demo5', function () {
-    return view('pages.demo5.index');
-});
-
-// Demo 6 routes
-Route::get('/demo6', function () {
-    return view('pages.demo6.index');
-});
-
-// Demo 7 routes
-Route::get('/demo7', function () {
-    return view('pages.demo7.index');
-});
-
-// Demo 8 routes
-Route::get('/demo8', function () {
-    return view('pages.demo8.index');
-});
-
-// Demo 9 routes
-Route::get('/demo9', function () {
-    return view('pages.demo9.index');
-})->name('demo9.index');
-
-Route::get('/demo9/profile', function () {
-    return view('pages.demo9.profile');
-})->name('demo9.profile');
-
-// Demo 10 routes
-Route::get('/demo10', function () {
-    return view('pages.demo10.index');
-});
-
-Route::middleware(['auth'])->group(function () {
-    // Dashboard routes
-    Route::get('/admin/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
+    // Profile
+    Route::get('/user/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('user.profile');
+    // Route::get('/profile/edit', fn() => auth()->user())->name('profile.edit');
+    Route::get('/profile/edit', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/photo', action: [App\Http\Controllers\ProfileController::class, 'updatePhoto'])->name('profile.photo');
+    Route::delete('/profile', [App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Metronic Demo Routes

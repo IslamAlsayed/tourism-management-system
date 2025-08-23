@@ -24,4 +24,9 @@ Homestead.yaml
 Thumbs.db
 
 /public/assets
-/Source-metroic
+/Source-mertonic
+/resources/vie2ws_old
+/resources/views/pages/dashboard/users/index_old.blade.php
+/resources/views/pages/dashboard/cities/index_old.blade.php
+/resources/views/pages/dashboard/countries/index_old.blade.php
+/resources/views/pages/dashboard/currencies/index_old.blade.php

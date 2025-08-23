@@ -1,4 +1,5 @@
 <title>@yield('title', 'MixJo Tourism') - World's Largest Geographic Database</title>
+<base href="../../">
 <meta charset="utf-8" />
 <meta content="follow, index" name="robots" />
 <link href="{{ url(request()->path()) }}" rel="canonical" />
@@ -8,7 +9,7 @@
 <meta content="@keenthemes" name="twitter:site" />
 <meta content="@keenthemes" name="twitter:creator" />
 <meta content="summary_large_image" name="twitter:card" />
-<meta content="Metronic - Tailwind CSS Sign In" name="twitter:title" />
+<meta content="Metronic - Tailwind CSS" name="twitter:title" />
 <meta content="Sign in page using Tailwind CSS" name="twitter:description" />
 <meta content="{{ asset('metronic/media/app/og-image.png') }}" name="twitter:image" />
 
@@ -16,7 +17,7 @@
 <meta content="en_US" property="og:locale" />
 <meta content="website" property="og:type" />
 <meta content="@keenthemes" property="og:site_name" />
-<meta content="Metronic - Tailwind CSS Sign In" property="og:title" />
+<meta content="Metronic - Tailwind CSS" property="og:title" />
 <meta content="Sign in page using Tailwind CSS" property="og:description" />
 <meta content="{{ asset('metronic/media/app/og-image.png') }}" property="og:image" />
 

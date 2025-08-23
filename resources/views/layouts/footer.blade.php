@@ -12,21 +12,21 @@
                 </a>
             </div>
             <nav class="order-1 flex gap-4 text-sm font-normal text-secondary-foreground md:order-2">
-                <a class="hover:text-primary" href="https://keenthemes.com/assets/tailwind/docs">
+                <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs">
                     Docs
                 </a>
                 <a class="hover:text-primary" href="https://1.envato.market/Vm7VRE">
                     Purchase
                 </a>
                 <a class="hover:text-primary"
-                    href="https://keenthemes.com/assets/tailwind/docs/getting-started/license">
+                    href="https://keenthemes.com/metronic/tailwind/docs/getting-started/license">
                     FAQ
                 </a>
                 <a class="hover:text-primary" href="https://devs.keenthemes.com">
                     Support
                 </a>
                 <a class="hover:text-primary"
-                    href="https://keenthemes.com/assets/tailwind/docs/getting-started/license">
+                    href="https://keenthemes.com/metronic/tailwind/docs/getting-started/license">
                     License
                 </a>
             </nav>

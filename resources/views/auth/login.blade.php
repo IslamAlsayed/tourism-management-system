@@ -29,7 +29,7 @@
     </script>
 
     <!-- Theme Mode -->
-    {{-- <script>
+    <script>
         const defaultThemeMode = 'light'; // light|dark|system
         let themeMode;
 
@@ -53,7 +53,7 @@
 
             document.documentElement.classList.add(themeMode);
         }
-    </script> --}}
+    </script>
     <!-- End of Theme Mode -->
 @endpush
 
@@ -104,7 +104,8 @@
                     <label class="kt-form-label font-normal text-mono">
                         Email
                     </label>
-                    <input class="kt-input" placeholder="email@email.com" type="email" name="email" />
+                    <input class="kt-input" placeholder="email@email.com" type="email" name="email"
+                        value="eslamalsayed8133@gmail.com" />
                 </div>
                 <div class="flex flex-col gap-1">
                     <div class="flex items-center justify-between gap-1">
@@ -116,7 +117,7 @@
                         </a>
                     </div>
                     <div class="kt-input" data-kt-toggle-password="true">
-                        <input name="password" placeholder="Enter Password" type="password" />
+                        <input name="password" placeholder="Enter Password" type="password" value="12345678" />
                         <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                             data-kt-toggle-password-trigger="true" type="button">
                             <span class="kt-toggle-password-active:hidden">

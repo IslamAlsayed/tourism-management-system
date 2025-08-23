@@ -1,5 +1,5 @@
 <div class="kt-modal" data-kt-modal="true" id="search_modal">
-    <div class="kt-modal-content max-w-[600px] top-[15%]">
+    <div class="kt-modal-content max-w-[600px]">
         <div class="kt-modal-header py-4 px-5">
             <i class="ki-filled ki-magnifier text-muted-foreground text-xl">
             </i>

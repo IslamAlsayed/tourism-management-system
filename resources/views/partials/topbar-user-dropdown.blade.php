@@ -2,21 +2,23 @@
 <div class="shrink-0" data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px" data-kt-dropdown-offset-rtl="-20px, 10px"
     data-kt-dropdown-placement="bottom-end" data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
     <div class="shrink-0 cursor-pointer" data-kt-dropdown-toggle="true">
-        <img alt="" class="size-9 shrink-0 rounded-full border-2 border-green-500"
-            src="{{ asset('metronic/media/avatars/300-2.png') }}" />
+        <img alt="{{ $activeUser?->name ?? 'unknown user' }}"
+            class="size-9 shrink-0 rounded-full border-2 border-green-500"
+            src="{{ $activeUser && $activeUser->avatar_url ? asset('storage/' . $activeUser->avatar_url) : asset('metronic/media/avatars/blank.png') }}" />
     </div>
-    <div class="kt-dropdown-menu w-[250px]" data-kt-dropdown-menu="true">
+    <div class="kt-dropdown-menu w-[300px]" data-kt-dropdown-menu="true">
         <div class="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
             <div class="flex items-center gap-2">
-                <img alt="" class="size-9 shrink-0 rounded-full border-2 border-green-500"
-                    src="{{ asset('metronic/media/avatars/300-2.png') }}" />
+                <img alt="{{ $activeUser?->name ?? 'unknown user' }}"
+                    class="size-9 shrink-0 rounded-full border-2 border-green-500"
+                    src="{{ $activeUser && $activeUser->avatar_url ? asset('storage/' . $activeUser->avatar_url) : asset('metronic/media/avatars/blank.png') }}" />
                 <div class="flex flex-col gap-1.5">
                     <span class="text-sm font-semibold leading-none text-foreground">
-                        Cody Fisher
+                        {{ $activeUser?->name ?? 'unknown user' }}
                     </span>
                     <a class="hover:text-primary text-xs font-medium leading-none text-secondary-foreground"
                         href="#">
-                        c.fisher@gmail.com
+                        {{ $activeUser?->email ?? 'unknown email' }}
                     </a>
                 </div>
             </div>
@@ -29,21 +31,21 @@
                 <div class="kt-dropdown-menu-separator">
                 </div>
             </li>
-            <li>
-                <a class="kt-dropdown-menu-link" href="#">
+            {{-- <li>
+                <a class="kt-dropdown-menu-link" href="{{ route('user.profile') }}">
                     <i class="ki-filled ki-badge">
                     </i>
                     Public Profile
                 </a>
-            </li>
+            </li> --}}
             <li>
-                <a class="kt-dropdown-menu-link" href="#">
+                <a class="kt-dropdown-menu-link" href="{{ route('user.profile') }}">
                     <i class="ki-filled ki-profile-circle">
                     </i>
                     My Profile
                 </a>
             </li>
-            <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-trigger="hover">
+            {{-- <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-trigger="hover">
                 <button class="kt-dropdown-menu-toggle" data-kt-dropdown-toggle="true">
                     <i class="ki-filled ki-setting-2">
                     </i>
@@ -124,14 +126,14 @@
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li>
+            </li> --}}
+            {{-- <li>
                 <a class="kt-dropdown-menu-link" href="https://devs.keenthemes.com">
                     <i class="ki-filled ki-message-programming">
                     </i>
                     Dev Forum
                 </a>
-            </li>
+            </li> --}}
             <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-trigger="hover">
                 <button class="kt-dropdown-menu-toggle py-1" data-kt-dropdown-toggle="true">
                     <span class="flex items-center gap-2">
