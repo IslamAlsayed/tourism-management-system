@@ -7,7 +7,6 @@
     $formAction = route('cities.update', $city->id);
 @endphp
 
-
 @section('form-content')
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="col-span-1 xl:col-span-3">

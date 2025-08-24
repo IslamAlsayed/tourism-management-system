@@ -19,7 +19,8 @@ class CityController extends Controller
     public function edit($id)
     {
         $city = City::with('country')->findOrFail($id);
-        return view('pages.dashboard.cities.edit', compact('city'));
+        $countries = Country::all();
+        return view('pages.dashboard.cities.edit', compact('city', 'countries'));
     }
 
     public function update(Request $request, $id)
