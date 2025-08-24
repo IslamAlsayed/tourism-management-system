@@ -105,7 +105,7 @@
                         Email
                     </label>
                     <input class="kt-input" placeholder="email@email.com" type="email" name="email"
-                        value="eslamalsayed8133@gmail.com" />
+                        value="admin@example.com" />
                 </div>
                 <div class="flex flex-col gap-1">
                     <div class="flex items-center justify-between gap-1">
