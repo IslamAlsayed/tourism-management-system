@@ -11,6 +11,7 @@ class CurrencyTable extends Component
     use WithPagination;
     public $search = '';
     public $totalCount = '';
+    public $perPage = 50;
     public array $columns = [];
 
     public function updatingSearch()
@@ -23,10 +24,16 @@ class CurrencyTable extends Component
         $this->resetPage();
     }
 
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
     public function mount()
     {
         $this->resetPage();
-        $this->columns = ['name', 'code', 'symbol'];
+        // عرض جميع أعمدة العملات (id, name, code, symbol, created_at, updated_at)
+        $this->columns = ['id', 'name', 'code', 'symbol', 'created_at', 'updated_at'];
     }
 
     public function resetFilters()
@@ -47,7 +54,7 @@ class CurrencyTable extends Component
                     }
                 });
             })
-            ->paginate(20);
+            ->paginate($this->perPage);
 
         return view('livewire.dashboard.currency-table', [
             'data' => $data,

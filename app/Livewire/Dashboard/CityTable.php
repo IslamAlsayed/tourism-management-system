@@ -11,6 +11,7 @@ class CityTable extends Component
     use WithPagination;
     public $search = '';
     public $totalCount = '';
+    public $perPage = 50;
     public array $columns = [];
 
     public function updatingSearch()
@@ -23,10 +24,16 @@ class CityTable extends Component
         $this->resetPage();
     }
 
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
     public function mount()
     {
         $this->resetPage();
-        $this->columns = ['name', 'country_id'];
+        // عرض جميع أعمدة المدن (id, name, country_id, created_at, updated_at)
+        $this->columns = ['id', 'name', 'country_id', 'created_at', 'updated_at'];
     }
 
     public function resetFilters()
@@ -47,7 +54,7 @@ class CityTable extends Component
                     }
                 });
             })
-            ->with('country')->paginate(20);
+            ->with('country')->paginate($this->perPage);
 
         return view('livewire.dashboard.city-table', [
             'data' => $data,

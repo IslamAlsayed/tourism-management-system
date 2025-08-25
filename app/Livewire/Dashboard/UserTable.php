@@ -11,6 +11,7 @@ class UserTable extends Component
     use WithPagination;
     public $search = '';
     public $totalCount = '';
+    public $perPage = 50;
     public array $columns = [];
     public array $statusOptions = [];
 
@@ -25,10 +26,24 @@ class UserTable extends Component
         $this->resetPage();
     }
 
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
     public function mount()
     {
         $this->resetPage();
-        $this->columns = ['name', 'email', 'phone', 'department', 'position', 'created_at'];
+        // عرض جميع أعمدة المستخدمين المهمة
+        $this->columns = [
+            'name', 'email', 'phone', 'department', 'position',
+            'bio', 'address', 'city', 'country', 'postal_code',
+            'website', 'linkedin', 'twitter', 'facebook', 'instagram',
+            'github', 'company_name', 'industry', 'experience_years',
+            'education_level', 'preferred_language', 'timezone',
+            'date_of_birth', 'gender', 'marital_status', 'emergency_contact',
+            'emergency_phone', 'skills', 'interests', 'created_at', 'updated_at'
+        ];
 
         $this->statusOptions = array_merge(['all', ...User::select('is_active')->distinct()->get()->pluck('is_active')->toArray()]);
     }
@@ -51,7 +66,7 @@ class UserTable extends Component
                     }
                 });
             })
-            ->paginate(20);
+            ->paginate($this->perPage);
 
         return view('livewire.dashboard.user-table', [
             'data' => $data,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
@@ -11,8 +12,61 @@ class CountryController extends Controller
     public function index()
     {
         $countries = Country::paginate(10);
-        $totalCount = Country::count();
-        return view('pages.dashboard.countries.index', compact('countries', 'totalCount'));
+        $totalCountries = Country::count();
+        return view('pages.dashboard.countries.index', compact('countries', 'totalCountries'));
+    }
+
+    public function create()
+    {
+        $currencies = Currency::orderBy('code')->get();
+        return view('pages.dashboard.countries.create', compact('currencies'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:255',
+            'code_iso2' => 'required|string|max:2|unique:countries,code_iso2',
+            'code_iso3' => 'nullable|string|max:3',
+            'phone_code' => 'nullable|string|max:10',
+            'capital' => 'nullable|string|max:255',
+            'currency_id' => 'nullable|exists:currencies,id',
+            'population' => 'nullable|integer',
+            'area' => 'nullable|numeric',
+            'continent' => 'nullable|string|max:255',
+            'region' => 'nullable|string|max:255',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'timezone' => 'nullable|string|max:255',
+            'languages' => 'nullable|string',
+            'description' => 'nullable|string',
+            'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'is_active' => 'boolean',
+            'is_independent' => 'boolean',
+            'is_developed' => 'boolean',
+            'is_landlocked' => 'boolean',
+        ]);
+
+        // Handle flag upload
+        if ($request->hasFile('flag')) {
+            $flagPath = $request->file('flag')->store('countries/flags', 'public');
+            $validated['flag'] = $flagPath;
+        }
+
+        // Handle checkboxes
+        $validated['is_active'] = $request->has('is_active');
+        $validated['is_independent'] = $request->has('is_independent');
+        $validated['is_developed'] = $request->has('is_developed');
+        $validated['is_landlocked'] = $request->has('is_landlocked');
+
+        Country::create($validated);
+
+        if ($request->has('save_and_add')) {
+            return redirect()->route('countries.create')->with('success', 'تم حفظ البلد بنجاح! يمكنك إضافة بلد آخر.');
+        }
+
+        return redirect()->route('countries.index')->with('success', 'تم إضافة البلد بنجاح!');
     }
 
     public function edit($id)

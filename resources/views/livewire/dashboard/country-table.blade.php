@@ -1,8 +1,9 @@
 <div class="kt-card kt-card-grid min-w-full">
-    @component('includes.search', [
+    @component('includes.pagination-info', [
         'data' => $data,
-        'count' => $data->count(),
-        'totalCount' => $totalCount,
+        'title' => 'إدارة البلدان',
+        'entityName' => 'بلد',
+        'showSearch' => true,
     ])
     @endcomponent
 
@@ -49,17 +50,62 @@
                     </tbody>
                 </table>
             </div>
-            <div
-                class="kt-card-footer justify-center md:justify-between flex-col md:flex-row gap-5 text-secondary-foreground text-sm font-medium">
-                <div class="flex items-center gap-2 order-2 md:order-1">
-                    Show
-                    <select class="kt-select w-16" data-kt-datatable-size="true" data-kt-select=""
-                        name="perpage"></select>
-                    per page
-                </div>
-                <div class="flex items-center gap-4 order-1 md:order-2">
-                    <span data-kt-datatable-info="true"></span>
-                    <div class="kt-datatable-pagination" data-kt-datatable-pagination="true"></div>
+
+            {{-- Enhanced Pagination Controls --}}
+            <div class="kt-card-footer border-t border-gray-200 bg-gray-50">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 p-4">
+                    {{-- Records per page selector --}}
+                    <div class="flex items-center gap-2 text-sm text-gray-600">
+                        <span>عرض</span>
+                        <select wire:model.live="perPage" class="kt-select w-20 px-2 py-1 border rounded">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span>عنصر في كل صفحة</span>
+                    </div>
+
+                    {{-- Pagination info and links --}}
+                    <div class="flex items-center gap-4">
+                        <div class="text-sm text-gray-600">
+                            {{ $data->firstItem() }} - {{ $data->lastItem() }} من {{ $data->total() }}
+                        </div>
+
+                        {{-- Pagination Links --}}
+                        @if($data->hasPages())
+                        <div class="flex items-center gap-1">
+                            {{-- Previous Page Link --}}
+                            @if ($data->onFirstPage())
+                                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">السابق</span>
+                            @else
+                                <button wire:click="previousPage" class="px-3 py-1 text-blue-600 bg-white border border-gray-300 rounded hover:bg-blue-50">
+                                    السابق
+                                </button>
+                            @endif
+
+                            {{-- Page Numbers --}}
+                            @for ($i = max(1, $data->currentPage() - 2); $i <= min($data->lastPage(), $data->currentPage() + 2); $i++)
+                                @if ($i == $data->currentPage())
+                                    <span class="px-3 py-1 text-white bg-blue-600 rounded">{{ $i }}</span>
+                                @else
+                                    <button wire:click="gotoPage({{ $i }})" class="px-3 py-1 text-blue-600 bg-white border border-gray-300 rounded hover:bg-blue-50">
+                                        {{ $i }}
+                                    </button>
+                                @endif
+                            @endfor
+
+                            {{-- Next Page Link --}}
+                            @if ($data->hasMorePages())
+                                <button wire:click="nextPage" class="px-3 py-1 text-blue-600 bg-white border border-gray-300 rounded hover:bg-blue-50">
+                                    التالي
+                                </button>
+                            @else
+                                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">التالي</span>
+                            @endif
+                        </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

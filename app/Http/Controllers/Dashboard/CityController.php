@@ -16,6 +16,38 @@ class CityController extends Controller
         return view('pages.dashboard.cities.index', compact('cities', 'totalCities'));
     }
 
+    public function create()
+    {
+        $countries = Country::orderBy('name_ar')->get();
+        return view('pages.dashboard.cities.create', compact('countries'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:255',
+            'country_id' => 'required|exists:countries,id',
+            'code' => 'nullable|string|max:10',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'population' => 'nullable|integer',
+            'timezone' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'is_active' => 'boolean',
+        ]);
+
+        $validated['is_active'] = $request->has('is_active');
+
+        City::create($validated);
+
+        if ($request->has('save_and_add')) {
+            return redirect()->route('cities.create')->with('success', 'تم حفظ المدينة بنجاح! يمكنك إضافة مدينة أخرى.');
+        }
+
+        return redirect()->route('cities.index')->with('success', 'تم إضافة المدينة بنجاح!');
+    }
+
     public function edit($id)
     {
         $city = City::with('country')->findOrFail($id);

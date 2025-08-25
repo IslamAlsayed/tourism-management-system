@@ -11,6 +11,7 @@ class CountryTable extends Component
     use WithPagination;
     public $search = '';
     public $totalCount = '';
+    public $perPage = 50;
     public array $columns = [];
 
     public function updatingSearch()
@@ -23,10 +24,16 @@ class CountryTable extends Component
         $this->resetPage();
     }
 
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
     public function mount()
     {
         $this->resetPage();
-        $this->columns = ['name', 'code'];
+        // عرض جميع أعمدة البلدان (id, name, code, created_at, updated_at)
+        $this->columns = ['id', 'name', 'code', 'created_at', 'updated_at'];
     }
 
     public function resetFilters()
@@ -47,7 +54,7 @@ class CountryTable extends Component
                     }
                 });
             })
-            ->with('cities')->paginate(20);
+            ->with('cities')->paginate($this->perPage);
 
         return view('livewire.dashboard.country-table', [
             'data' => $data,
