@@ -11,12 +11,15 @@ return [
             'route' => 'dashboard',
             'permission' => null,
         ],
+    // ...existing code...
+    // ...existing code...
+    // ...existing code...
         [
             'title' => [
                 'en' => 'User Management',
                 'ar' => 'إدارة المستخدمين'
             ],
-            'icon' => 'ki-filled ki-profile-user',
+            'icon' => 'ki-outline ki-users',
             'permission' => 'manage_users',
             'children' => [
                 [
@@ -181,7 +184,7 @@ return [
                         'en' => 'Settings',
                         'ar' => 'الإعدادات'
                     ],
-                    'icon' => 'ki-filled ki-setting-2',
+                    'icon' => 'ki-solid ki-setting-3',
                     'children' => [
                         [
                             'title' => [
@@ -269,7 +272,7 @@ return [
                 'en' => 'System Settings',
                 'ar' => 'إعدادات النظام'
             ],
-            'icon' => 'ki-filled ki-gear',
+            'icon' => 'ki-filled ki-setting-2',
             'permission' => 'manage_system',
             'children' => [
                 [
@@ -319,7 +322,7 @@ return [
                         'en' => 'Hotels',
                         'ar' => 'الفنادق'
                     ],
-                    'icon' => 'ki-filled ki-abstract-26',
+                    'icon' => 'ki-duotone ki-cheque',
                     'children' => [
                         [
                             'title' => [
@@ -349,7 +352,7 @@ return [
                         'en' => 'Resorts',
                         'ar' => 'المنتجعات'
                     ],
-                    'icon' => 'ki-filled ki-picture',
+                    'icon' => 'ki-duotone ki-cheque',
                     'children' => [
                         [
                             'title' => [
@@ -379,7 +382,7 @@ return [
                         'en' => 'Tourist Camps',
                         'ar' => 'المخيمات السياحية'
                     ],
-                    'icon' => 'ki-filled ki-delivery-geolocation',
+                    'icon' => 'ki-duotone ki-cheque',
                     'children' => [
                         [
                             'title' => [
@@ -409,7 +412,7 @@ return [
                         'en' => 'Hostels',
                         'ar' => 'النزل'
                     ],
-                    'icon' => 'ki-filled ki-abstract-14',
+                    'icon' => 'ki-duotone ki-cheque',
                     'children' => [
                         [
                             'title' => [
@@ -439,7 +442,7 @@ return [
                         'en' => 'Lodges',
                         'ar' => 'أكواخ'
                     ],
-                    'icon' => 'ki-filled ki-abstract-44',
+                    'icon' => 'ki-duotone ki-cheque',
                     'children' => [
                         [
                             'title' => [
@@ -469,7 +472,7 @@ return [
                         'en' => 'Hotel Apartments',
                         'ar' => 'الشقق الفندقية'
                     ],
-                    'icon' => 'ki-filled ki-abstract-39',
+                    'icon' => 'ki-duotone ki-cheque',
                     'children' => [
                         [
                             'title' => [
@@ -640,10 +643,36 @@ return [
         ],
         [
             'title' => [
+                'en' => 'Air Transport',
+                'ar' => 'النقل الجوي'
+            ],
+            'icon' => 'ki-filled ki-airplane',
+            'permission' => null,
+            'children' => [
+                [
+                    'title' => [
+                        'en' => 'Airports',
+                        'ar' => 'المطارات'
+                    ],
+                    'icon' => 'ki-filled ki-airplane',
+                    'route' => '#',
+                ],
+                [
+                    'title' => [
+                        'en' => 'Airlines',
+                        'ar' => 'شركات الطيران'
+                    ],
+                    'icon' => 'ki-filled ki-airplane',
+                    'route' => '#',
+                ],
+            ],
+        ],
+        [
+            'title' => [
                 'en' => 'Vehicles',
                 'ar' => 'المركبات'
             ],
-            'icon' => 'ki-filled ki-truck',
+            'icon' => 'ki-filled ki-car',
             'permission' => null,
             'children' => [
                 [
@@ -685,7 +714,7 @@ return [
                 'en' => 'Tourist Sites',
                 'ar' => 'المواقع السياحية'
             ],
-            'icon' => 'ki-filled ki-map',
+            'icon' => 'ki-filled ki-geolocation',
             'permission' => null,
             'children' => [
                 [
@@ -711,7 +740,7 @@ return [
                 'en' => 'Crossings & Ports',
                 'ar' => 'المعابر والمنافذ'
             ],
-            'icon' => 'ki-filled ki-entrance-right',
+            'icon' => 'ki-filled ki-pointers',
             'permission' => null,
             'children' => [
                 [
@@ -719,7 +748,7 @@ return [
                         'en' => 'Land Crossings',
                         'ar' => 'المعابر البرية'
                     ],
-                    'icon' => 'ki-filled ki-road-sign',
+                    'icon' => 'ki-filled ki-pointers',
                     'route' => 'placeholder',
                 ],
                 [
@@ -727,14 +756,14 @@ return [
                         'en' => 'Airports',
                         'ar' => 'المطارات'
                     ],
-                    'icon' => 'ki-filled ki-airplane',
+                    'icon' => 'ki-filled ki-airplane-square',
                     'children' => [
                         [
                             'title' => [
                                 'en' => 'International Airports',
                                 'ar' => 'المطارات الدولية'
                             ],
-                            'icon' => 'ki-filled ki-airplane-square',
+                            'icon' => 'ki-solid ki-airplane-square',
                             'route' => 'placeholder',
                         ],
                         [
@@ -742,7 +771,7 @@ return [
                                 'en' => 'Domestic Airports',
                                 'ar' => 'المطارات المحلية'
                             ],
-                            'icon' => 'ki-filled ki-airplane',
+                            'icon' => 'ki-duotone ki-airplane',
                             'route' => 'placeholder',
                         ],
                     ],
@@ -779,7 +808,7 @@ return [
                 'en' => 'Suppliers & Providers',
                 'ar' => 'الموردين والمزودين'
             ],
-            'icon' => 'ki-filled ki-handshake',
+            'icon' => 'ki-filled ki-courier',
             'permission' => null,
             'children' => [
                 [
@@ -787,7 +816,7 @@ return [
                         'en' => 'Agents',
                         'ar' => 'الوكلاء'
                     ],
-                    'icon' => 'ki-filled ki-user-tick',
+                    'icon' => 'ki-filled ki-user-square',
                     'route' => 'placeholder',
                 ],
                 [
@@ -795,7 +824,7 @@ return [
                         'en' => 'Suppliers',
                         'ar' => 'الموردين'
                     ],
-                    'icon' => 'ki-filled ki-delivery-24',
+                    'icon' => 'ki-duotone ki-profile-circle',
                     'route' => 'placeholder',
                 ],
                 [
@@ -803,7 +832,7 @@ return [
                         'en' => 'Providers',
                         'ar' => 'المزودين'
                     ],
-                    'icon' => 'ki-filled ki-chart-line-up-2',
+                    'icon' => 'ki-duotone ki-user-square',
                     'route' => 'placeholder',
                 ],
                 [
@@ -856,7 +885,7 @@ return [
                 'en' => 'Activities',
                 'ar' => 'الأنشطة'
             ],
-            'icon' => 'ki-filled ki-soccer',
+            'icon' => 'ki-filled ki-price-tag',
             'permission' => null,
             'children' => [
                 [
@@ -890,7 +919,7 @@ return [
                 'en' => 'Marine Activities',
                 'ar' => 'الأنشطة البحرية'
             ],
-            'icon' => 'ki-filled ki-swimmer',
+            'icon' => 'ki-solid ki-paper-plane',
             'permission' => null,
             'children' => [
                 [
@@ -1028,7 +1057,7 @@ return [
                 'en' => 'APIs',
                 'ar' => 'واجهات API'
             ],
-            'icon' => 'ki-filled ki-code',
+            'icon' => 'ki-duotone ki-disconnect',
             'permission' => null,
             'children' => [
                 [
@@ -1044,7 +1073,7 @@ return [
                         'en' => 'Payment APIs',
                         'ar' => 'واجهات الدفع'
                     ],
-                    'icon' => 'ki-filled ki-credit-cart',
+                    'icon' => 'ki-duotone ki-two-credit-cart',
                     'route' => 'placeholder',
                 ],
                 [
@@ -1052,7 +1081,7 @@ return [
                         'en' => 'Maps APIs',
                         'ar' => 'واجهات الخرائط'
                     ],
-                    'icon' => 'ki-filled ki-geolocation',
+                    'icon' => 'ki-duotone ki-map',
                     'route' => 'placeholder',
                 ],
             ],
@@ -1062,7 +1091,7 @@ return [
                 'en' => 'Quotation System',
                 'ar' => 'نظام التسعير'
             ],
-            'icon' => 'ki-filled ki-calculator',
+            'icon' => 'ki-filled ki-delivery-2',
             'route' => 'placeholder',
             'permission' => null,
         ],
@@ -1071,7 +1100,7 @@ return [
                 'en' => 'Seasons',
                 'ar' => 'المواسم'
             ],
-            'icon' => 'ki-filled ki-calendar',
+            'icon' => 'ki-filled ki-calendar-remove',
             'permission' => null,
             'children' => [
                 [
@@ -1079,7 +1108,7 @@ return [
                         'en' => 'Off Season',
                         'ar' => 'موسم خامد'
                     ],
-                    'icon' => 'ki-filled ki-moon',
+                    'icon' => 'ki-filled ki-calendar-remove',
                     'route' => 'placeholder',
                 ],
                 [
@@ -1087,7 +1116,7 @@ return [
                         'en' => 'Low Season',
                         'ar' => 'موسم منخفض'
                     ],
-                    'icon' => 'ki-filled ki-arrow-down',
+                    'icon' => 'ki-filled ki-calendar-remove',
                     'route' => 'placeholder',
                 ],
                 [
@@ -1095,7 +1124,7 @@ return [
                         'en' => 'Moderate Season',
                         'ar' => 'موسم معتدل'
                     ],
-                    'icon' => 'ki-filled ki-abstract-26',
+                    'icon' => 'ki-filled ki-calendar-remove',
                     'route' => 'placeholder',
                 ],
                 [
@@ -1103,7 +1132,7 @@ return [
                         'en' => 'High Season',
                         'ar' => 'موسم عالي'
                     ],
-                    'icon' => 'ki-filled ki-arrow-up',
+                    'icon' => 'ki-filled ki-calendar-remove',
                     'route' => 'placeholder',
                 ],
                 [
@@ -1111,7 +1140,7 @@ return [
                         'en' => 'Peak Season',
                         'ar' => 'موسم الذروة'
                     ],
-                    'icon' => 'ki-filled ki-chart-line-up-2',
+                    'icon' => 'ki-filled ki-calendar-remove',
                     'route' => 'placeholder',
                 ],
             ],
@@ -1172,7 +1201,7 @@ return [
                     'en' => 'Update Profile',
                     'ar' => 'تحديث البروفايل'
                 ],
-                'icon' => 'ki-filled ki-profile-user',
+                'icon' => 'ki-duotone ki-user-edit',
                 'route' => 'profile.edit',
             ],
             [
