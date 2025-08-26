@@ -1,5 +1,5 @@
 {{-- Enhanced pagination information component --}}
-<div class="kt-card-header flex-wrap gap-2 border-b border-gray-200">
+<div class="flex-wrap gap-2">
     <div class="w-full flex justify-between items-center">
         <div>
             <h3 class="kt-card-title text-lg font-semibold">

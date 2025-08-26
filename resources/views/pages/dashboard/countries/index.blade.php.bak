@@ -1,0 +1,23 @@
+@extends('pages.dashboard.layouts.index')
+
+@section('table-content')
+    @component('includes.page-stats', [
+        'title' => 'إدارة البلدان',
+        'description' => 'إدارة وتنظيم البلدان في النظام',
+        'icon' => 'ki-filled ki-geolocation',
+        'total' => $totalCountries,
+        'entityName' => 'البلدان',
+        'quickActions' => true,
+        'createRoute' => route('countries.create'),
+        'additionalStats' => 'تحتوي على ' . number_format(\App\Models\City::count()) . 'City'
+    ])
+    @endcomponent
+
+    <!-- Container -->
+    <div class="flex flex-col gap-5">
+        <div class="kt-card kt-card-grid min-w-full">
+            <livewire:dashboard.country-table :countries="$countries" />
+        </div>
+    </div>
+    <!-- End of Container -->
+@endsection

@@ -7,26 +7,26 @@
                 <span class="text-secondary-foreground">
                     2025©
                 </span>
-                <a class="hover:text-primary text-secondary-foreground" href="https://keenthemes.com">
-                    Keenthemes Inc.
+                <a class="hover:text-primary text-secondary-foreground" href="https://www.mixjo.com">
+                    MixJo Inc.
                 </a>
             </div>
             <nav class="order-1 flex gap-4 text-sm font-normal text-secondary-foreground md:order-2">
-                <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs">
+                <a class="hover:text-primary" href="https://mixjo.com/">
                     Docs
                 </a>
-                <a class="hover:text-primary" href="https://1.envato.market/Vm7VRE">
+                <a class="hover:text-primary" href="https://www.mixjo.com">
                     Purchase
                 </a>
                 <a class="hover:text-primary"
-                    href="https://keenthemes.com/metronic/tailwind/docs/getting-started/license">
+                    href="https://www.mixjo.com/">
                     FAQ
                 </a>
-                <a class="hover:text-primary" href="https://devs.keenthemes.com">
+                <a class="hover:text-primary" href="https://www.mixjo.com">
                     Support
                 </a>
                 <a class="hover:text-primary"
-                    href="https://keenthemes.com/metronic/tailwind/docs/getting-started/license">
+                    href="https://www.mixjo.com">
                     License
                 </a>
             </nav>

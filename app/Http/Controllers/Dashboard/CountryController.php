@@ -90,4 +90,26 @@ class CountryController extends Controller
 
         return redirect()->route('countries.index')->with('error', 'Country update failed');
     }
+
+    /**
+     * Handle bulk edit actions for selected countries.
+     */
+    public function bulkEdit(Request $request)
+    {
+        $action = $request->input('bulk_action');
+        $ids = $request->input('selected_ids', []);
+
+        if (empty($ids) || !$action) {
+            return redirect()->back()->with('error', 'يرجى تحديد الدول والإجراء المطلوب.');
+        }
+
+        switch ($action) {
+            case 'delete':
+                $deleted = \App\Models\Country::whereIn('id', $ids)->delete();
+                return redirect()->back()->with('success', 'تم حذف ' . $deleted . ' دولة بنجاح.');
+            // يمكنك إضافة إجراءات أخرى هنا مثل التفعيل أو التعطيل
+            default:
+                return redirect()->back()->with('error', 'إجراء غير معروف.');
+        }
+    }
 }

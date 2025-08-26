@@ -6,8 +6,8 @@
 <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
 <meta content="Sign in page using Tailwind CSS" name="description" />
 
-<meta content="@keenthemes" name="twitter:site" />
-<meta content="@keenthemes" name="twitter:creator" />
+<meta content="@mixjo" name="twitter:site" />
+<meta content="@mixjo" name="twitter:creator" />
 <meta content="summary_large_image" name="twitter:card" />
 <meta content="Metronic - Tailwind CSS" name="twitter:title" />
 <meta content="Sign in page using Tailwind CSS" name="twitter:description" />
@@ -16,8 +16,8 @@
 <meta content="{{ url(request()->path()) }}" property="og:url" />
 <meta content="en_US" property="og:locale" />
 <meta content="website" property="og:type" />
-<meta content="@keenthemes" property="og:site_name" />
-<meta content="Metronic - Tailwind CSS" property="og:title" />
+<meta content="@mixjo" property="og:site_name" />
+<meta content="Metronic - Tailw اind CSS" property="og:title" />
 <meta content="Sign in page using Tailwind CSS" property="og:description" />
 <meta content="{{ asset('metronic/media/app/og-image.png') }}" property="og:image" />
 

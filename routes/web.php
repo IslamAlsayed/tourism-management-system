@@ -1,5 +1,5 @@
-<?php
 
+<?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -9,6 +9,10 @@ use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Admin\SidebarManagerController;
+
+Route::get('/dashboard/countries/metronic-table', function () {
+    return view('pages.dashboard.countries.metronic-table');
+})->middleware('auth');
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +52,7 @@ Route::get('/language/{locale}', function ($locale) {
     return redirect()->back();
 })->name('language.switch');
 
+
 // Admin routes
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Dashboard Main
@@ -72,10 +77,12 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::get('/', [CountryController::class, 'index'])->name('index');
         Route::get('/create', [CountryController::class, 'create'])->name('create');
         Route::post('/', [CountryController::class, 'store'])->name('store');
-        Route::get('/{id}', [CountryController::class, 'show'])->name('show');
+    Route::get('/{id}', [CountryController::class, 'show'])->where('id', '[0-9]+')->name('show');
         Route::get('/{id}/edit', [CountryController::class, 'edit'])->name('edit');
         Route::put('/{id}', [CountryController::class, 'update'])->name('update');
         Route::delete('/{id}', [CountryController::class, 'destroy'])->name('delete');
+    // Bulk edit route for countries
+    Route::post('/bulk-edit', [CountryController::class, 'bulkEdit'])->name('bulkEdit');
     });
 
     // Cities

@@ -1,8 +1,8 @@
 <div class="kt-card kt-card-grid min-w-full">
     @component('includes.pagination-info', [
         'data' => $data,
-        'title' => 'إدارة المدن',
-        'entityName' => 'مدينة',
+        'title' => ' Citys',
+        'entityName' => 'Citys',
         'showSearch' => true,
     ])
     @endcomponent
