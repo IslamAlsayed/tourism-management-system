@@ -36,3 +36,5 @@
     <!-- End of Container -->
 </header>
 <!-- End of Header -->
+
+@include('partials.modals.search')

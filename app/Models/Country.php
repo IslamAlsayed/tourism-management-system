@@ -3,21 +3,35 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Country extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
-        'code',
-        'flag_url',
-        'flag_emoji',
-        'currency_code',
-        'capital',
+        'iso3',
+        'iso2',
+        'numeric_code',
         'phone_code',
-        'continent',
-        'population',
-        'area',
-        'is_active',
+        'capital',
+        'currency',
+        'currency_name',
+        'currency_symbol',
+        'tld',
+        'native',
+        'region',
+        'region_id',
+        'subregion',
+        'subregion_id',
+        'nationality',
+        'timezones',
+        'latitude',
+        'longitude',
+        'emoji',
+        'emojiU',
+        'population'
     ];
 
     public function cities()

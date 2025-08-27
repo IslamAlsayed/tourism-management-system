@@ -25,7 +25,6 @@ return new class extends Migration {
             $table->string('preferred_language')->nullable();
             $table->string('timezone')->nullable();
             $table->json('preferences')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->string('avatar_url')->nullable();
             $table->boolean('is_active')->default(true);
@@ -45,7 +44,30 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['bio', 'phone', 'profile_photo']);
+            $table->dropColumn([
+                'bio',
+                'phone',
+                'first_name',
+                'last_name',
+                'mobile',
+                'address',
+                'user_code',
+                'employee_id',
+                'hire_date',
+                'department',
+                'position',
+                'preferred_language',
+                'timezone',
+                'preferences',
+                'is_admin',
+                'avatar_url',
+                'is_active',
+                'is_verified',
+                'force_password_change',
+                'last_login_at',
+                'last_login_ip',
+                'notes'
+            ]);
         });
     }
 };

@@ -1,4 +1,3 @@
-
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -77,12 +76,12 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::get('/', [CountryController::class, 'index'])->name('index');
         Route::get('/create', [CountryController::class, 'create'])->name('create');
         Route::post('/', [CountryController::class, 'store'])->name('store');
-    Route::get('/{id}', [CountryController::class, 'show'])->where('id', '[0-9]+')->name('show');
+        Route::get('/{id}', [CountryController::class, 'show'])->where('id', '[0-9]+')->name('show');
         Route::get('/{id}/edit', [CountryController::class, 'edit'])->name('edit');
         Route::put('/{id}', [CountryController::class, 'update'])->name('update');
         Route::delete('/{id}', [CountryController::class, 'destroy'])->name('delete');
-    // Bulk edit route for countries
-    Route::post('/bulk-edit', [CountryController::class, 'bulkEdit'])->name('bulkEdit');
+        // Bulk edit route for countries
+        Route::post('/bulk-edit', [CountryController::class, 'bulkEdit'])->name('bulkEdit');
     });
 
     // Cities
@@ -131,7 +130,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // User Profile (Alternative route)
     Route::get('/user/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('user.profile');
 
-        // === REPORTS ===
+    // === REPORTS ===
     Route::prefix('reports')->name('reports.')->group(function () {
         Route::get('/', [ReportsController::class, 'index'])->name('index');
         Route::get('/users', [ReportsController::class, 'users'])->name('users');

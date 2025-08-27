@@ -9,8 +9,10 @@
 
     <!--End of Notifications Drawer-->
     <!-- End of Notifications -->
-    <a class="kt-btn kt-btn-ghost kt-btn-icon size-8 hover:bg-background hover:[&amp;_i]:text-primary" href="#">
+    {{-- <a class="kt-btn kt-btn-ghost kt-btn-icon size-8 hover:bg-background hover:[&amp;_i]:text-primary" href="#">
         <i class="ki-filled ki-exit-right">
         </i>
-    </a>
+    </a> --}}
+
+    @include('partials.notification-drawer')
 </div>

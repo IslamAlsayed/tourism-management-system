@@ -158,7 +158,7 @@
                                         English
                                     </span>
                                 </span>
-                                @if(getCurrentLocale() === 'en')
+                                @if (getCurrentLocale() === 'en')
                                     <i class="ki-solid ki-check-circle ms-auto text-base text-green-500">
                                     </i>
                                 @endif
@@ -173,7 +173,7 @@
                                         العربية
                                     </span>
                                 </span>
-                                @if(getCurrentLocale() === 'ar')
+                                @if (getCurrentLocale() === 'ar')
                                     <i class="ki-solid ki-check-circle ms-auto text-base text-green-500">
                                     </i>
                                 @endif
