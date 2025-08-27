@@ -73,3 +73,30 @@ if (!function_exists('isRtlLocale')) {
         return in_array($locale, $rtlLocales);
     }
 }
+
+function isActive($route, $currentRoute)
+{
+    return isset($route) && $route === $currentRoute;
+}
+
+if (!function_exists('isActiveRoute')) {
+    function isActiveRoute($routeName, $currentRoute)
+    {
+        return isset($routeName) && $routeName === $currentRoute;
+    }
+}
+
+if (!function_exists('hasActiveChild')) {
+    function hasActiveChild(array $children, $currentRoute): bool
+    {
+        foreach ($children as $child) {
+            if (isset($child['route']) && $child['route'] === $currentRoute) {
+                return true;
+            }
+            if (isset($child['children']) && hasActiveChild($child['children'], $currentRoute)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

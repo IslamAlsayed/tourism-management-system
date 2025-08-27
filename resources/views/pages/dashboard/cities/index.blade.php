@@ -1,17 +1,40 @@
 @extends('pages.dashboard.layouts.index')
 
 @section('table-content')
-    @component('includes.page-stats', [
-        'title' => 'إدارة المدن',
-        'description' => 'إدارة وتنظيم المدن في النظام',
-        'icon' => 'ki-filled ki-map',
-        'total' => $totalCities,
-        'entityName' => 'المدن',
-        'quickActions' => true,
-        'createRoute' => route('cities.create'),
-        'additionalStats' => 'موزعة على ' . number_format(\App\Models\Country::count()) . ' بلد'
-    ])
-    @endcomponent
+    <!-- Container -->
+    <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-col justify-center gap-2">
+            <h1 class="text-xl font-medium leading-none text-mono">
+                Cities
+            </h1>
+            <div class="flex items-center flex-wrap gap-1.5 font-medium">
+                <span class="text-base text-secondary-foreground">
+                    Manage system cities
+                </span>
+            </div>
+        </div>
+        <div class="flex items-center gap-2.5">
+            <a class="kt-btn kt-btn-outline" href="#">
+                Import CSV
+            </a>
+            <a class="kt-btn kt-btn-primary" href="#">
+                Add Member
+            </a>
+        </div>
+    </div>
+    <!-- End of Container -->
+
+    {{-- @component('includes.page-stats', [
+    'title' => __('main.city_management_title'),
+    'description' => __('main.city_management_description'),
+    'icon' => 'ki-filled ki-map',
+    'total' => $totalCities,
+    'entityName' => __('main.cities'),
+    'quickActions' => true,
+    'createRoute' => route('cities.create'),
+    'additionalStats' => __('main.distributed_across') . ' ' . number_format(\App\Models\Country::count()) . ' ' . __('main.country_singular'),
+])
+    @endcomponent --}}
 
     <!-- Container -->
     <div class="grid gap-5 lg:gap-7.5">

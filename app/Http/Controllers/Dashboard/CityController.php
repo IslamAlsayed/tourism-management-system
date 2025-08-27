@@ -42,10 +42,10 @@ class CityController extends Controller
         City::create($validated);
 
         if ($request->has('save_and_add')) {
-            return redirect()->route('cities.create')->with('success', 'تم حفظ المدينة بنجاح! يمكنك إضافة مدينة أخرى.');
+            return redirect()->route('cities.create')->with('success', __('main.item_created', ['item' => __('main.city')]) . ' ' . __('main.add_new_city'));
         }
 
-        return redirect()->route('cities.index')->with('success', 'تم إضافة المدينة بنجاح!');
+        return redirect()->route('cities.index')->with('success', __('main.item_created', ['item' => __('main.city')]));
     }
 
     public function edit($id)
@@ -65,9 +65,9 @@ class CityController extends Controller
 
         $updated = $city->update($validated);
         if ($updated) {
-            return redirect()->route('cities.index')->with('success', 'City updated successfully');
+            return redirect()->route('cities.index')->with('success', __('main.item_updated', ['item' => __('main.city')]));
         }
 
-        return redirect()->route('cities.index')->with('error', 'City update failed');
+        return redirect()->route('cities.index')->with('error', __('main.operation_failed'));
     }
 }

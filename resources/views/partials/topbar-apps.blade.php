@@ -10,8 +10,8 @@
     <div class="kt-dropdown-menu w-screen max-w-[320px] p-0" data-kt-dropdown-menu="true">
         <div
             class="flex items-center justify-between gap-2.5 border-b border-b-border px-5 py-3 text-xs font-medium text-secondary-foreground">
-            <span>Apps</span>
-            <span>Enabled</span>
+            <span>{{ __('main.apps') }}</span>
+            <span>{{ __('main.enabled') }}</span>
         </div>
         <div class="kt-scrollable-y-auto flex max-h-[400px] flex-col divide-y divide-border">
             <div class="flex flex-wrap items-center justify-between gap-2 px-5 py-3.5">

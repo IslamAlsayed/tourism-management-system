@@ -3,95 +3,78 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Requests\User\UserCreateRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Country;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::paginate(20);
         $totalUsers = User::count();
-        $statusOptions = ['Active', 'Inactive'];
-        return view('pages.dashboard.users.index', compact('users', 'totalUsers', 'statusOptions'));
+        return view('pages.dashboard.users.index', compact('users', 'totalUsers'));
     }
 
     public function create()
     {
-        $countries = Country::orderBy('name_ar')->get();
+        $countries = Country::all();
         return view('pages.dashboard.users.create', compact('countries'));
     }
 
-    public function store(Request $request)
+    public function show($id)
     {
-        $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'username' => 'nullable|string|max:255|unique:users,username',
-            'phone' => 'nullable|string|max:20',
-            'birth_date' => 'nullable|date',
-            'gender' => 'nullable|in:male,female',
-            'country_id' => 'nullable|exists:countries,id',
-            'password' => 'required|min:8|confirmed',
-            'role' => 'required|in:admin,moderator,user',
-            'bio' => 'nullable|string',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_active' => 'boolean',
-            'email_verified' => 'boolean',
-            'notifications_enabled' => 'boolean',
-            'marketing_emails' => 'boolean',
-        ]);
+        $user = User::findOrFail($id);
+        return view('pages.dashboard.users.show', compact('user'));
+    }
 
-        // Handle photo upload
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('users/photos', 'public');
-            $validated['photo'] = $photoPath;
-        }
-
-        // Combine first and last name
+    public function store(UserCreateRequest $request)
+    {
+        $validated = $request->validated();
         $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
 
-        // Hash password
-        $validated['password'] = Hash::make($validated['password']);
+        $user = User::create($validated);
 
-        // Handle checkboxes
-        $validated['is_active'] = $request->has('is_active');
-        $validated['email_verified_at'] = $request->has('email_verified') ? now() : null;
-        $validated['notifications_enabled'] = $request->has('notifications_enabled');
-        $validated['marketing_emails'] = $request->has('marketing_emails');
-
-        User::create($validated);
-
-        if ($request->has('save_and_add')) {
-            return redirect()->route('users.create')->with('success', 'تم إنشاء المستخدم بنجاح! يمكنك إضافة مستخدم آخر.');
+        if ($request->hasFile('photo')) {
+            $filename = $request->file('photo')->hashName();
+            $path = $request->file('photo')->storeAs("profile-photos/{$user->id}", $filename, 'public');
+            $user->update(['avatar_url' => $path]);
         }
 
-        return redirect()->route('users.index')->with('success', 'تم إنشاء المستخدم بنجاح!');
+        return redirect()->route('users.index')->with('success', __('main.messages.user_created'));
     }
 
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('pages.dashboard.users.edit', compact('user'));
+        $countries = Country::all();
+        return view('pages.dashboard.users.edit', compact('user', 'countries'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-        ]);
+        $validated = $request->validated();
 
-        $updated = $user->update($validated);
-        if ($updated) {
-            return redirect()->route('users.index')->with('success', 'User updated successfully');
+        $validated['name'] = ($validated['first_name'] ?? $user->first_name) . ' ' . ($validated['last_name'] ?? $user->last_name);
+
+        if ($request->hasFile('photo')) {
+            if ($user->avatar_url) {
+                Storage::disk('public')->delete($user->avatar_url);
+            }
+
+            $filename = $request->file('photo')->hashName();
+            $path = $request->file('photo')->storeAs("profile-photos/{$user->id}", $filename, 'public');
+            $validated['avatar_url'] = $path;
         }
 
-        return redirect()->route('users.index')->with('error', 'User update failed');
+        $user->update($validated);
+
+        return redirect()->route('users.index')->with('success', __('main.messages.user_updated'));
     }
 
     public function destroy($id)
@@ -99,9 +82,9 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $deleted = $user->delete();
         if ($deleted) {
-            return redirect()->route('users.index')->with('success', 'User deleted successfully');
+            return redirect()->route('users.index')->with('success', __('main.messages.user_deleted'));
         }
 
-        return redirect()->route('users.index')->with('error', 'User deletion failed');
+        return redirect()->route('users.index')->with('error', __('main.messages.user_deletion_failed'));
     }
 }

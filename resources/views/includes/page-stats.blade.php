@@ -16,9 +16,9 @@
                 {{ number_format($total) }}
             </div>
             <div class="text-sm text-gray-500">
-                إجمالي {{ $entityName }}
+                {{ __('main.total') }} {{ $entityName }}
             </div>
-            @if(isset($additionalStats))
+            @if (isset($additionalStats))
                 <div class="text-xs text-gray-400 mt-1">
                     {{ $additionalStats }}
                 </div>
@@ -26,22 +26,24 @@
         </div>
     </div>
 
-    @if(isset($quickActions) && $quickActions)
-    <div class="mt-4 pt-4 border-t border-blue-200">
-        <div class="flex gap-2">
-            @if(isset($createRoute))
-                <a href="{{ $createRoute }}" class="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition-colors">
-                    <i class="ki-filled ki-plus text-sm"></i>
-                    إضافة {{ $entityName }}
-                </a>
-            @endif
-            @if(isset($exportRoute))
-                <a href="{{ $exportRoute }}" class="px-4 py-2 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition-colors">
-                    <i class="ki-filled ki-exit-down text-sm"></i>
-                    تصدير البيانات
-                </a>
-            @endif
+    @if (isset($quickActions) && $quickActions)
+        <div class="mt-4 pt-4 border-t border-blue-200">
+            <div class="flex gap-2">
+                @if (isset($createRoute))
+                    <a href="{{ $createRoute }}"
+                        class="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition-colors">
+                        <i class="ki-filled ki-plus text-sm"></i>
+                        {{ __('main.add') }} {{ $entityName }}
+                    </a>
+                @endif
+                @if (isset($exportRoute))
+                    <a href="{{ $exportRoute }}"
+                        class="px-4 py-2 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition-colors">
+                        <i class="ki-filled ki-exit-down text-sm"></i>
+                        {{ __('main.export') }}
+                    </a>
+                @endif
+            </div>
         </div>
-    </div>
     @endif
 </div>

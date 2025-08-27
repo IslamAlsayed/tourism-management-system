@@ -47,7 +47,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('user.profile')->with('success', 'Profile updated successfully.');
+        return redirect()->route('user.profile')->with('success', __('main.messages.profile_updated'));
     }
 
     /**
@@ -93,10 +93,10 @@ class ProfileController extends Controller
             $path = $request->file('photo')->storeAs('profile-photos' . '/' . $user->id, $filename, 'public');
             $user->avatar_url = $path;
             $user->save();
-            return redirect()->route('user.profile')->with('success', 'Profile photo updated successfully.');
+            return redirect()->route('user.profile')->with('success', __('main.messages.profile_photo_updated'));
         }
 
-        return redirect()->route('user.profile')->with('error', 'No photo uploaded.');
+        return redirect()->route('user.profile')->with('error', __('main.messages.no_photo_uploaded'));
     }
 
     /**

@@ -27,15 +27,6 @@ Route::get('/test-language', function () {
     return view('test-language');
 })->name('test.language');
 
-// Language switcher
-Route::get('/language/{locale}', function ($locale) {
-    if (in_array($locale, ['en', 'ar'])) {
-        session(['locale' => $locale]);
-        app()->setLocale($locale);
-    }
-    return redirect()->back();
-})->name('language.switch');
-
 // Admin routes
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Dashboard Main
@@ -98,7 +89,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::post('/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('update');
         Route::post('/photo', [App\Http\Controllers\ProfileController::class, 'updatePhoto'])->name('photo');
         Route::delete('/', [App\Http\Controllers\ProfileController::class, 'destroy'])->name('destroy');
-        
+
         // Profile Settings Pages
         Route::prefix('settings')->name('settings.')->group(function () {
             Route::get('/test', [App\Http\Controllers\ProfileController::class, 'settingsTest'])->name('test');
@@ -114,19 +105,28 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === REPORTS & ANALYTICS ===
     Route::prefix('reports')->name('reports.')->group(function () {
-        Route::get('/', function() { return view('dashboard.reports.index'); })->name('index');
-        Route::get('/users', function() { return view('dashboard.reports.users'); })->name('users');
-        Route::get('/locations', function() { return view('dashboard.reports.locations'); })->name('locations');
-        Route::get('/analytics', function() { return view('dashboard.reports.analytics'); })->name('analytics');
+        Route::get('/', function () {
+            return view('dashboard.reports.index'); })->name('index');
+        Route::get('/users', function () {
+            return view('dashboard.reports.users'); })->name('users');
+        Route::get('/locations', function () {
+            return view('dashboard.reports.locations'); })->name('locations');
+        Route::get('/analytics', function () {
+            return view('dashboard.reports.analytics'); })->name('analytics');
     });
 
     // === SYSTEM SETTINGS ===
     Route::prefix('settings')->name('settings.')->group(function () {
-        Route::get('/', function() { return view('dashboard.settings.index'); })->name('index');
-        Route::get('/general', function() { return view('dashboard.settings.general'); })->name('general');
-        Route::get('/security', function() { return view('dashboard.settings.security'); })->name('security');
-        Route::get('/notifications', function() { return view('dashboard.settings.notifications'); })->name('notifications');
-        Route::get('/backup', function() { return view('dashboard.settings.backup'); })->name('backup');
+        Route::get('/', function () {
+            return view('dashboard.settings.index'); })->name('index');
+        Route::get('/general', function () {
+            return view('dashboard.settings.general'); })->name('general');
+        Route::get('/security', function () {
+            return view('dashboard.settings.security'); })->name('security');
+        Route::get('/notifications', function () {
+            return view('dashboard.settings.notifications'); })->name('notifications');
+        Route::get('/backup', function () {
+            return view('dashboard.settings.backup'); })->name('backup');
     });
 });
 

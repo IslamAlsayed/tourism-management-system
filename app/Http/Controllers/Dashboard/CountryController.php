@@ -63,10 +63,10 @@ class CountryController extends Controller
         Country::create($validated);
 
         if ($request->has('save_and_add')) {
-            return redirect()->route('countries.create')->with('success', 'تم حفظ البلد بنجاح! يمكنك إضافة بلد آخر.');
+            return redirect()->route('countries.create')->with('success', __('main.item_created', ['item' => __('main.country')]) . ' ' . __('main.add_new_country'));
         }
 
-        return redirect()->route('countries.index')->with('success', 'تم إضافة البلد بنجاح!');
+        return redirect()->route('countries.index')->with('success', __('main.item_created', ['item' => __('main.country')]));
     }
 
     public function edit($id)
@@ -85,10 +85,10 @@ class CountryController extends Controller
 
         $updated = $country->update($validated);
         if ($updated) {
-            return redirect()->route('countries.index')->with('success', 'Country updated successfully');
+            return redirect()->route('countries.index')->with('success', __('main.item_updated', ['item' => __('main.country')]));
         }
 
-        return redirect()->route('countries.index')->with('error', 'Country update failed');
+        return redirect()->route('countries.index')->with('error', __('main.operation_failed'));
     }
 
     /**

@@ -2,23 +2,23 @@
 <div class="shrink-0" data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px" data-kt-dropdown-offset-rtl="-20px, 10px"
     data-kt-dropdown-placement="bottom-end" data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
     <div class="shrink-0 cursor-pointer" data-kt-dropdown-toggle="true">
-        <img alt="{{ $activeUser?->name ?? 'unknown user' }}"
+        <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
             class="size-9 shrink-0 rounded-full border-2 border-green-500"
             src="{{ $activeUser && $activeUser->avatar_url ? asset('storage/' . $activeUser->avatar_url) : asset('metronic/media/avatars/blank.png') }}" />
     </div>
     <div class="kt-dropdown-menu w-[300px]" data-kt-dropdown-menu="true">
         <div class="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
             <div class="flex items-center gap-2">
-                <img alt="{{ $activeUser?->name ?? 'unknown user' }}"
+                <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
                     class="size-9 shrink-0 rounded-full border-2 border-green-500"
                     src="{{ $activeUser && $activeUser->avatar_url ? asset('storage/' . $activeUser->avatar_url) : asset('metronic/media/avatars/blank.png') }}" />
                 <div class="flex flex-col gap-1.5">
                     <span class="text-sm font-semibold leading-none text-foreground">
-                        {{ $activeUser?->name ?? 'unknown user' }}
+                        {{ $activeUser?->name ?? __('main.unknown_user') }}
                     </span>
                     <a class="hover:text-primary text-xs font-medium leading-none text-secondary-foreground"
                         href="#">
-                        {{ $activeUser?->email ?? 'unknown email' }}
+                        {{ $activeUser?->email ?? __('main.unknown_email') }}
                     </a>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                 <a class="kt-dropdown-menu-link" href="{{ route('user.profile') }}">
                     <i class="ki-filled ki-profile-circle">
                     </i>
-                    My Profile
+                    {{ __('main.my_profile') }}
                 </a>
             </li>
             {{-- <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-trigger="hover">
@@ -139,46 +139,32 @@
                     <span class="flex items-center gap-2">
                         <i class="ki-filled ki-global">
                         </i>
-                        {{ getCurrentLocale() === 'ar' ? 'اللغة' : 'Language' }}
+                        {{ __('main.language') }}
                     </span>
                     <span class="kt-badge kt-badge-stroke ms-auto shrink-0">
-                        {{ getCurrentLocale() === 'ar' ? 'العربية' : 'English' }}
+                        {{ getCurrentLocale() === 'ar' ? __('main.arabic') : __('main.english') }}
                         <img alt="" class="inline-block size-3.5 rounded-full"
                             src="{{ getCurrentLocale() === 'ar' ? asset('metronic/media/flags/saudi-arabia.svg') : asset('metronic/media/flags/united-states.svg') }}" />
                     </span>
                 </button>
                 <div class="kt-dropdown-menu w-[180px]" data-kt-dropdown-menu="true">
                     <ul class="kt-dropdown-menu-sub">
-                        <li class="{{ getCurrentLocale() === 'en' ? 'active' : '' }}">
-                            <a class="kt-dropdown-menu-link" href="{{ route('language.switch', 'en') }}">
-                                <span class="flex items-center gap-2">
-                                    <img alt="" class="inline-block size-4 rounded-full"
-                                        src="{{ asset('metronic/media/flags/united-states.svg') }}" />
-                                    <span class="kt-menu-title">
-                                        English
+                        @foreach (config('languages.languages') as $languageKey => $languageName)
+                            <li class="{{ getCurrentLocale() === $languageKey ? 'active' : '' }}">
+                                <a class="kt-dropdown-menu-link" href="{{ route('languages.change', $languageKey) }}">
+                                    <span class="flex items-center gap-2">
+                                        <img alt="" class="inline-block size-4 rounded-full"
+                                            src="{{ asset('metronic/media/flags/languages/' . $languageKey . '.svg') }}" />
+                                        <span class="kt-menu-title">
+                                            {{ $languageName }}
+                                        </span>
                                     </span>
-                                </span>
-                                @if (getCurrentLocale() === 'en')
-                                    <i class="ki-solid ki-check-circle ms-auto text-base text-green-500">
-                                    </i>
-                                @endif
-                            </a>
-                        </li>
-                        <li class="{{ getCurrentLocale() === 'ar' ? 'active' : '' }}">
-                            <a class="kt-dropdown-menu-link" href="{{ route('language.switch', 'ar') }}">
-                                <span class="flex items-center gap-2">
-                                    <img alt="" class="inline-block size-4 rounded-full"
-                                        src="{{ asset('metronic/media/flags/saudi-arabia.svg') }}" />
-                                    <span class="kt-menu-title">
-                                        العربية
-                                    </span>
-                                </span>
-                                @if (getCurrentLocale() === 'ar')
-                                    <i class="ki-solid ki-check-circle ms-auto text-base text-green-500">
-                                    </i>
-                                @endif
-                            </a>
-                        </li>
+                                    @if (getCurrentLocale() === $languageKey)
+                                        <i class="ki-solid ki-check-circle ms-auto text-base text-green-500"></i>
+                                    @endif
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </li>
@@ -193,7 +179,7 @@
                     <i class="ki-filled ki-moon text-base text-muted-foreground">
                     </i>
                     <span class="text-2sm font-medium">
-                        Dark Mode
+                        {{ __('main.dark_mode') }}
                     </span>
                 </span>
                 <input class="kt-switch" data-kt-theme-switch-state="dark" data-kt-theme-switch-toggle="true"
@@ -202,7 +188,7 @@
             <a class="kt-btn kt-btn-outline justify-center w-full" href="{{ route('logout') }}">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="w-full text-left">Log out</button>
+                    <button type="submit" class="w-full text-left">{{ __('main.logout') }}</button>
                 </form>
             </a>
         </div>

@@ -1,8 +1,8 @@
 <div class="kt-card kt-card-grid min-w-full">
     @component('includes.pagination-info', [
         'data' => $data,
-        'title' => 'إدارة المستخدمين',
-        'entityName' => 'مستخدم',
+        'title' => __('main.user_management'),
+        'entityName' => __('main.user'),
         'showSearch' => true,
     ])
     @endcomponent
@@ -19,37 +19,37 @@
                             </th>
                             <th class="min-w-[300px]">
                                 <span class="kt-table-col">
-                                    <span class="kt-table-col-label">User</span>
+                                    <span class="kt-table-col-label">{{ __('main.user') }}</span>
                                     <span class="kt-table-col-sort"></span>
                                 </span>
                             </th>
                             <th>
                                 <span class="kt-table-col">
-                                    <span class="kt-table-col-label">Phone</span>
+                                    <span class="kt-table-col-label">{{ __('main.phone') }}</span>
                                     <span class="kt-table-col-sort"></span>
                                 </span>
                             </th>
                             <th>
                                 <span class="kt-table-col">
-                                    <span class="kt-table-col-label">Department</span>
+                                    <span class="kt-table-col-label">{{ __('main.department') }}</span>
                                     <span class="kt-table-col-sort"></span>
                                 </span>
                             </th>
                             <th>
                                 <span class="kt-table-col">
-                                    <span class="kt-table-col-label">Position</span>
+                                    <span class="kt-table-col-label">{{ __('main.position') }}</span>
                                     <span class="kt-table-col-sort"></span>
                                 </span>
                             </th>
                             <th>
                                 <span class="kt-table-col">
-                                    <span class="kt-table-col-label">Status</span>
+                                    <span class="kt-table-col-label">{{ __('main.status') }}</span>
                                     <span class="kt-table-col-sort"></span>
                                 </span>
                             </th>
                             <th>
                                 <span class="kt-table-col">
-                                    <span class="kt-table-col-label">Created At</span>
+                                    <span class="kt-table-col-label">{{ __('main.created_at') }}</span>
                                     <span class="kt-table-col-sort"></span>
                                 </span>
                             </th>
@@ -84,15 +84,15 @@
                                 <td>{{ $user->position }}</td>
                                 <td>
                                     @if ($user->is_active)
-                                        <span class="text-green-600 font-semibold">Active</span>
+                                        <span class="text-green-600 font-semibold">{{ __('main.active') }}</span>
                                     @else
-                                        <span class="text-red-600 font-semibold">Inactive</span>
+                                        <span class="text-red-600 font-semibold">{{ __('main.inactive') }}</span>
                                     @endif
                                 </td>
                                 <td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : '' }}</td>
                                 <td>
                                     <a href="{{ route('users.edit', $user->id) }}"
-                                        class="kt-btn kt-btn-sm kt-btn-primary">Edit</a>
+                                        class="kt-btn kt-btn-sm kt-btn-primary">{{ __('main.edit') }}</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -101,62 +101,7 @@
             </div>
 
             {{-- Enhanced Pagination Controls --}}
-            <div class="kt-card-footer border-t border-gray-200 bg-gray-50">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-4 p-4">
-                    {{-- Records per page selector --}}
-                    <div class="flex items-center gap-2 text-sm text-gray-600">
-                        <span>عرض</span>
-                        <select wire:model.live="perPage" class="kt-select w-20 px-2 py-1 border rounded">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                        <span>عنصر في كل صفحة</span>
-                    </div>
-
-                    {{-- Pagination info and links --}}
-                    <div class="flex items-center gap-4">
-                        <div class="text-sm text-gray-600">
-                            {{ $data->firstItem() }} - {{ $data->lastItem() }} من {{ $data->total() }}
-                        </div>
-
-                        {{-- Pagination Links --}}
-                        @if($data->hasPages())
-                        <div class="flex items-center gap-1">
-                            {{-- Previous Page Link --}}
-                            @if ($data->onFirstPage())
-                                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">السابق</span>
-                            @else
-                                <button wire:click="previousPage" class="px-3 py-1 text-blue-600 bg-white border border-gray-300 rounded hover:bg-blue-50">
-                                    السابق
-                                </button>
-                            @endif
-
-                            {{-- Page Numbers --}}
-                            @for ($i = max(1, $data->currentPage() - 2); $i <= min($data->lastPage(), $data->currentPage() + 2); $i++)
-                                @if ($i == $data->currentPage())
-                                    <span class="px-3 py-1 text-white bg-blue-600 rounded">{{ $i }}</span>
-                                @else
-                                    <button wire:click="gotoPage({{ $i }})" class="px-3 py-1 text-blue-600 bg-white border border-gray-300 rounded hover:bg-blue-50">
-                                        {{ $i }}
-                                    </button>
-                                @endif
-                            @endfor
-
-                            {{-- Next Page Link --}}
-                            @if ($data->hasMorePages())
-                                <button wire:click="nextPage" class="px-3 py-1 text-blue-600 bg-white border border-gray-300 rounded hover:bg-blue-50">
-                                    التالي
-                                </button>
-                            @else
-                                <span class="px-3 py-1 text-gray-400 bg-gray-200 rounded cursor-not-allowed">التالي</span>
-                            @endif
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
+            @include('includes.pagination', ['data' => $data])
         </div>
     </div>
 </div>
