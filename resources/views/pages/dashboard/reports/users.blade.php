@@ -1,24 +1,24 @@
 @extends('layouts.master')
 
-@section('title', 'تقارير المستخدمين')
+@section('title', __('main.user_reports'))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    تقارير المستخدمين
+                    {{ __('main.user_reports') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    إحصائيات مفصلة عن المستخدمين والنشاط
+                    {{ __('main.detailed_user_statistics') }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('reports.index') }}" class="kt-btn kt-btn-outline">
-                    العودة للتقارير
+                    {{ __('main.back_to_reports') }}
                 </a>
                 <button class="kt-btn kt-btn-primary">
-                    تصدير التقرير
+                    {{ __('main.export_report') }}
                 </button>
             </div>
         </div>
@@ -28,28 +28,59 @@
         <div class="grid gap-5 lg:gap-7.5">
             <!-- User Statistics -->
             <div class="grid lg:grid-cols-4 gap-5">
-                <div class="kt-card">
-                    <div class="kt-card-body text-center">
-                        <div class="text-3xl font-bold text-primary mb-2">{{ number_format($userStats['total_users']) }}</div>
-                        <div class="text-sm text-secondary-foreground">إجمالي المستخدمين</div>
+                <!-- Total Users -->
+                <div class="kt-card p-2">
+                    <div class="kt-card-body">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-3xl font-bold text-primary">
+                                {{ number_format($userStats['total_users']) }}
+                            </span>
+                            <span class="text-sm text-secondary-foreground">
+                                {{ __('main.total_users') }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="kt-card">
-                    <div class="kt-card-body text-center">
-                        <div class="text-3xl font-bold text-success mb-2">{{ number_format($userStats['active_users']) }}</div>
-                        <div class="text-sm text-secondary-foreground">المستخدمون النشطون</div>
+
+                {{-- Active Users --}}
+                <div class="kt-card p-2">
+                    <div class="kt-card-body">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-3xl font-bold text-primary">
+                                {{ number_format($userStats['active_users']) }}
+                            </span>
+                            <span class="text-sm text-secondary-foreground">
+                                {{ __('main.active_users_label') }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="kt-card">
-                    <div class="kt-card-body text-center">
-                        <div class="text-3xl font-bold text-warning mb-2">{{ number_format($userStats['new_users_this_month']) }}</div>
-                        <div class="text-sm text-secondary-foreground">مستخدمون جدد هذا الشهر</div>
+
+                {{-- New Users This Month --}}
+                <div class="kt-card p-2">
+                    <div class="kt-card-body">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-3xl font-bold text-primary">
+                                {{ number_format($userStats['new_users_this_month']) }}
+                            </span>
+                            <span class="text-sm text-secondary-foreground">
+                                {{ __('main.new_users_this_month') }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="kt-card">
-                    <div class="kt-card-body text-center">
-                        <div class="text-3xl font-bold text-info mb-2">{{ number_format($userStats['new_users_this_week']) }}</div>
-                        <div class="text-sm text-secondary-foreground">مستخدمون جدد هذا الأسبوع</div>
+
+                {{-- New Users This Week --}}
+                <div class="kt-card p-2">
+                    <div class="kt-card-body">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-3xl font-bold text-primary">
+                                {{ number_format($userStats['new_users_this_week']) }}
+                            </span>
+                            <span class="text-sm text-secondary-foreground">
+                                {{ __('main.new_users_this_week') }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,31 +88,31 @@
             <!-- Recent Users Table -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">المستخدمون الجدد</h3>
+                    <h3 class="kt-card-title">{{ __('main.recent_users') }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <div class="table-responsive">
                         <table class="kt-table">
                             <thead>
                                 <tr>
-                                    <th>الاسم</th>
-                                    <th>البريد الإلكتروني</th>
-                                    <th>الحالة</th>
-                                    <th>تاريخ التسجيل</th>
+                                    <th>{{ __('main.name') }}</th>
+                                    <th>{{ __('main.email') }}</th>
+                                    <th>{{ __('main.status') }}</th>
+                                    <th>{{ __('main.registration_date') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($recentUsers as $user)
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>
-                                        <span class="kt-badge kt-badge-{{ $user->is_active ? 'success' : 'danger' }}">
-                                            {{ $user->is_active ? 'نشط' : 'غير نشط' }}
-                                        </span>
-                                    </td>
-                                    <td>{{ $user->created_at->format('Y-m-d') }}</td>
-                                </tr>
+                                @foreach ($recentUsers as $user)
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>
+                                            <span class="kt-badge kt-badge-{{ $user->is_active ? 'success' : 'danger' }}">
+                                                {{ $user->is_active ? __('main.active') : __('main.inactive') }}
+                                            </span>
+                                        </td>
+                                        <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

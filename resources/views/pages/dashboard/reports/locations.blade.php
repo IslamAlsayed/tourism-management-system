@@ -1,24 +1,24 @@
 @extends('layouts.master')
 
-@section('title', 'تقارير المواقع')
+@section('title', __('main.location_reports'))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    تقارير المواقع
+                    {{ __('main.location_reports') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    إحصائيات البلدان والمدن والتوزيع الجغرافي
+                    {{ __('main.location_statistics') }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('reports.index') }}" class="kt-btn kt-btn-outline">
-                    العودة للتقارير
+                    {{ __('main.back_to_reports') }}
                 </a>
                 <button class="kt-btn kt-btn-primary">
-                    تصدير التقرير
+                    {{ __('main.export_report') }}
                 </button>
             </div>
         </div>
@@ -28,28 +28,59 @@
         <div class="grid gap-5 lg:gap-7.5">
             <!-- Location Statistics -->
             <div class="grid lg:grid-cols-4 gap-5">
-                <div class="kt-card">
-                    <div class="kt-card-body text-center">
-                        <div class="text-3xl font-bold text-primary mb-2">{{ number_format($locationStats['total_countries']) }}</div>
-                        <div class="text-sm text-secondary-foreground">إجمالي البلدان</div>
+                {{-- Total Countries --}}
+                <div class="kt-card p-2">
+                    <div class="kt-card-body">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-3xl font-bold text-primary">
+                                {{ number_format($locationStats['total_countries']) }}
+                            </span>
+                            <span class="text-sm text-secondary-foreground">
+                                {{ __('main.total_countries_count') }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="kt-card">
-                    <div class="kt-card-body text-center">
-                        <div class="text-3xl font-bold text-success mb-2">{{ number_format($locationStats['total_cities']) }}</div>
-                        <div class="text-sm text-secondary-foreground">إجمالي المدن</div>
+
+                {{-- Total Cities --}}
+                <div class="kt-card p-2">
+                    <div class="kt-card-body">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-3xl font-bold text-primary">
+                                {{ number_format($locationStats['total_cities']) }}
+                            </span>
+                            <span class="text-sm text-secondary-foreground">
+                                {{ __('main.total_cities_count') }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="kt-card">
-                    <div class="kt-card-body text-center">
-                        <div class="text-3xl font-bold text-warning mb-2">{{ $locationStats['avg_cities_per_country'] }}</div>
-                        <div class="text-sm text-secondary-foreground">متوسط المدن لكل بلد</div>
+
+                {{-- Avg Cities Per Country --}}
+                <div class="kt-card p-2">
+                    <div class="kt-card-body">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-3xl font-bold text-primary">
+                                {{ number_format($locationStats['avg_cities_per_country']) }}
+                            </span>
+                            <span class="text-sm text-secondary-foreground">
+                                {{ __('main.avg_cities_per_country') }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="kt-card">
-                    <div class="kt-card-body text-center">
-                        <div class="text-3xl font-bold text-info mb-2">{{ number_format($locationStats['countries_with_cities']) }}</div>
-                        <div class="text-sm text-secondary-foreground">بلدان تحتوي على مدن</div>
+
+                {{-- Countries With Cities --}}
+                <div class="kt-card p-2">
+                    <div class="kt-card-body">
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-3xl font-bold text-primary">
+                                {{ number_format($locationStats['countries_with_cities']) }}
+                            </span>
+                            <span class="text-sm text-secondary-foreground">
+                                {{ __('main.countries_with_cities') }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,32 +88,34 @@
             <!-- Top Countries Table -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">أكثر البلدان من حيث عدد المدن</h3>
+                    <h3 class="kt-card-title">{{ __('main.top_countries_by_cities') }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <div class="table-responsive">
                         <table class="kt-table">
                             <thead>
                                 <tr>
-                                    <th>الترتيب</th>
-                                    <th>اسم البلد</th>
-                                    <th>عدد المدن</th>
-                                    <th>النسبة المئوية</th>
+                                    <th>{{ __('main.rank') }}</th>
+                                    <th>{{ __('main.country_name') }}</th>
+                                    <th>{{ __('main.cities_count') }}</th>
+                                    <th>{{ __('main.percentage') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($topCountries as $index => $country)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $country->name }}</td>
-                                    <td>{{ number_format($country->cities_count) }}</td>
-                                    <td>
-                                        <div class="flex items-center gap-2">
-                                            <div class="progress-bar bg-primary" style="width: {{ ($country->cities_count / $locationStats['total_cities']) * 100 }}%"></div>
-                                            <span>{{ number_format(($country->cities_count / $locationStats['total_cities']) * 100, 1) }}%</span>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @foreach ($topCountries as $index => $country)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $country->name }}</td>
+                                        <td>{{ number_format($country->cities_count) }}</td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="progress-bar bg-primary"
+                                                    style="width: {{ ($country->cities_count / $locationStats['total_cities']) * 100 }}%">
+                                                </div>
+                                                <span>{{ number_format(($country->cities_count / $locationStats['total_cities']) * 100, 1) }}%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

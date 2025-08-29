@@ -1,22 +1,22 @@
 @extends('layouts.master')
 
-@section('title', 'لوحة التقارير')
+@section('title', __('main.reports_dashboard'))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    لوحة التقارير والإحصائيات
+                    {{ __('main.reports_and_statistics') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    تقارير شاملة عن أداء النظام والبيانات
+                    {{ __('main.comprehensive_reports') }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <button class="kt-btn kt-btn-primary">
                     <i class="ki-filled ki-printer text-sm"></i>
-                    طباعة التقرير
+                    {{ __('main.print_report') }}
                 </button>
             </div>
         </div>
@@ -27,10 +27,10 @@
             <!-- Statistics Overview -->
             <div class="grid lg:grid-cols-4 gap-5 lg:gap-7.5">
                 <!-- Total Users -->
-                <div class="kt-card">
+                <div class="kt-card p-2">
                     <div class="kt-card-body">
                         <div class="flex items-center justify-between gap-5">
-                            <div class="flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
                                 <span class="text-3xl font-bold text-primary">
                                     {{ number_format($stats['total_users']) }}
                                 </span>
@@ -46,10 +46,10 @@
                 </div>
 
                 <!-- Active Users -->
-                <div class="kt-card">
+                <div class="kt-card p-2">
                     <div class="kt-card-body">
                         <div class="flex items-center justify-between gap-5">
-                            <div class="flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
                                 <span class="text-3xl font-bold text-success">
                                     {{ number_format($stats['active_users']) }}
                                 </span>
@@ -65,10 +65,10 @@
                 </div>
 
                 <!-- Countries -->
-                <div class="kt-card">
+                <div class="kt-card p-2">
                     <div class="kt-card-body">
                         <div class="flex items-center justify-between gap-5">
-                            <div class="flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
                                 <span class="text-3xl font-bold text-info">
                                     {{ number_format($stats['total_countries']) }}
                                 </span>
@@ -84,10 +84,10 @@
                 </div>
 
                 <!-- Cities -->
-                <div class="kt-card">
+                <div class="kt-card p-2">
                     <div class="kt-card-body">
                         <div class="flex items-center justify-between gap-5">
-                            <div class="flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
                                 <span class="text-3xl font-bold text-warning">
                                     {{ number_format($stats['total_cities']) }}
                                 </span>
@@ -108,19 +108,19 @@
                 <!-- User Reports -->
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">تقارير المستخدمين</h3>
+                        <h3 class="kt-card-title">{{ __('main.user_reports') }}</h3>
                     </div>
-                    <div class="kt-card-body">
+                    <div class="kt-card-body p-2">
                         <p class="text-sm text-secondary-foreground mb-4">
-                            تقارير مفصلة عن المستخدمين والنشاط والنمو
+                            {{ __('main.detailed_user_reports') }}
                         </p>
                         <div class="flex items-center justify-between">
                             <div class="text-sm">
-                                <span class="text-success">{{ $stats['active_users'] }} نشط</span> /
-                                <span class="text-danger">{{ $stats['inactive_users'] }} غير نشط</span>
+                                <span class="text-success">{{ $stats['active_users'] }} {{ __('main.active_users_count_status') }}</span> /
+                                <span class="text-danger">{{ $stats['inactive_users'] }} {{ __('main.inactive_users_count_status') }}</span>
                             </div>
                             <a href="{{ route('reports.users') }}" class="kt-btn kt-btn-sm kt-btn-primary">
-                                عرض التقرير
+                                {{ __('main.view_report') }}
                             </a>
                         </div>
                     </div>
@@ -129,18 +129,18 @@
                 <!-- Location Reports -->
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">تقارير المواقع</h3>
+                        <h3 class="kt-card-title">{{ __('main.location_reports') }}</h3>
                     </div>
-                    <div class="kt-card-body">
+                    <div class="kt-card-body p-2">
                         <p class="text-sm text-secondary-foreground mb-4">
-                            إحصائيات البلدان والمدن والتوزيع الجغرافي
+                            {{ __('main.location_statistics') }}
                         </p>
                         <div class="flex items-center justify-between">
                             <div class="text-sm">
-                                {{ number_format($stats['total_cities'] / $stats['total_countries'], 1) }} مدينة/بلد
+                                {{ number_format($stats['total_cities'] / $stats['total_countries'], 1) }} {{ __('main.cities_per_country') }}
                             </div>
                             <a href="{{ route('reports.locations') }}" class="kt-btn kt-btn-sm kt-btn-primary">
-                                عرض التقرير
+                                {{ __('main.view_report') }}
                             </a>
                         </div>
                     </div>
@@ -149,18 +149,18 @@
                 <!-- Analytics -->
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">الإحصائيات التفصيلية</h3>
+                        <h3 class="kt-card-title">{{ __('main.detailed_analytics') }}</h3>
                     </div>
-                    <div class="kt-card-body">
+                    <div class="kt-card-body p-2">
                         <p class="text-sm text-secondary-foreground mb-4">
-                            تحليلات متقدمة ومقاييس الأداء والنمو
+                            {{ __('main.advanced_analytics') }}
                         </p>
                         <div class="flex items-center justify-between">
                             <div class="text-sm text-info">
-                                تحليلات متقدمة
+                                {{ __('main.advanced_analytics_short') }}
                             </div>
                             <a href="{{ route('reports.analytics') }}" class="kt-btn kt-btn-sm kt-btn-primary">
-                                عرض التحليلات
+                                {{ __('main.view_analytics') }}
                             </a>
                         </div>
                     </div>

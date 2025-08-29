@@ -263,7 +263,7 @@ return [
     'phone_code' => 'كود الهاتف',
     'continent' => 'القارة',
     'population' => 'عدد السكان',
-        'area' => 'المساحة',
+    'area' => 'المساحة',
     'region' => 'المنطقة',
 
     // Country Specific
@@ -391,7 +391,7 @@ return [
     'use_map_services' => 'استخدم خدمات الخرائط للحصول على إحداثيات دقيقة',
     'country_selection' => 'اختيار البلد',
     'select_country_before_city' => 'يجب تحديد البلد قبل إضافة المدينة',
-    
+
     // Country Management
     'add_country' => 'إضافة بلد',
     'edit_country' => 'تعديل بلد',
@@ -566,5 +566,48 @@ return [
         'london' => 'لندن',
         'america' => 'أمريكا',
         'new york' => 'نيويورك',
+        
+        // Reports Section
+        'reports_dashboard' => 'لوحة التقارير',
+        'reports_and_statistics' => 'لوحة التقارير والإحصائيات',
+        'comprehensive_reports' => 'تقارير شاملة عن أداء النظام والبيانات',
+        'print_report' => 'طباعة التقرير',
+        'user_reports' => 'تقارير المستخدمين',
+        'detailed_user_reports' => 'تقارير مفصلة عن المستخدمين والنشاط والنمو',
+        'active_users_count_status' => 'نشط',
+        'inactive_users_count_status' => 'غير نشط',
+        'view_report' => 'عرض التقرير',
+        'location_reports' => 'تقارير المواقع',
+        'location_statistics' => 'إحصائيات البلدان والمدن والتوزيع الجغرافي',
+        'cities_per_country' => 'مدينة/بلد',
+        'detailed_analytics' => 'الإحصائيات التفصيلية',
+        'advanced_analytics' => 'تحليلات متقدمة ومقاييس الأداء والنمو',
+        'advanced_analytics_short' => 'تحليلات متقدمة',
+        'view_analytics' => 'عرض التحليلات',
+        'export_report' => 'تصدير التقرير',
+        'back_to_reports' => 'العودة للتقارير',
+        'export_analytics' => 'تصدير التحليلات',
+        'growth_indicators' => 'مؤشرات النمو الشهرية',
+        'users_growth' => 'نمو المستخدمين',
+        'cities_growth' => 'نمو المدن',
+        'countries_growth' => 'نمو البلدان',
+        'user_distribution_by_status' => 'توزيع المستخدمين حسب الحالة',
+        'active_users_label' => 'المستخدمون النشطون',
+        'inactive_users_label' => 'المستخدمون غير النشطون',
+        'top_5_countries_by_cities' => 'أكثر 5 بلدان من حيث المدن',
+        'detailed_user_statistics' => 'إحصائيات مفصلة عن المستخدمين والنشاط',
+        'total_countries_count' => 'إجمالي البلدان',
+        'total_cities_count' => 'إجمالي المدن',
+        'avg_cities_per_country' => 'متوسط المدن لكل بلد',
+        'countries_with_cities' => 'بلدان تحتوي على مدن',
+        'top_countries_by_cities' => 'أكثر البلدان من حيث عدد المدن',
+        'rank' => 'الترتيب',
+        'country_name' => 'اسم البلد',
+        'cities_count' => 'عدد المدن',
+        'percentage' => 'النسبة المئوية',
+        'new_users_this_month' => 'مستخدمون جدد هذا الشهر',
+        'new_users_this_week' => 'مستخدمون جدد هذا الأسبوع',
+        'recent_users' => 'المستخدمون الجدد',
+        'registration_date' => 'تاريخ التسجيل'
     ]
 ];
