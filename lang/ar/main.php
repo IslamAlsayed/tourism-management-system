@@ -389,6 +389,14 @@ return [
     'use_map_services' => 'استخدم خدمات الخرائط للحصول على إحداثيات دقيقة',
     'country_selection' => 'اختيار البلد',
     'select_country_before_city' => 'يجب تحديد البلد قبل إضافة المدينة',
+    
+    // Country Management
+    'add_country' => 'إضافة بلد',
+    'edit_country' => 'تعديل بلد',
+    'back_to_countries' => 'العودة للبلدان',
+    'country_information' => 'معلومات البلد',
+    'country_flag' => 'علم البلد',
+    'edit_country_description' => 'تعديل بلد في قاعدة البيانات الجغرافية',
 
     // messages
     'messages' => [

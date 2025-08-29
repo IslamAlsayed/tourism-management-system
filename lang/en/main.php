@@ -123,6 +123,14 @@ return [
     'iso_codes_hint' => 'Make sure to use internationally recognized codes',
     'currency_hint' => 'Choose the official currency for the country',
 
+    // Country Management
+    'add_country' => 'Add Country',
+    'edit_country' => 'Edit Country',
+    'back_to_countries' => 'Back to Countries',
+    'country_information' => 'Country Information',
+    'country_flag' => 'Country Flag',
+    'edit_country_description' => 'Edit a country in the geographic database',
+
     // Page Headers
     'user_management_title' => 'User Management',
     'user_management_description' => 'Manage and organize system users',
