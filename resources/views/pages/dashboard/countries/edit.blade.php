@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
-@section('title', 'تعديل بلد')
+@section('title', __('main.edit_country'))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    تعديل بلد
+                    {{ __('main.edit_country') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    تعديل بلد إلى قاعدة البيانات الجغرافية
+                    {{ __('main.edit_country_description') }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
-                    العودة للبلدان
+                    {{ __('main.back_to_countries') }}
                 </a>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <!-- Country Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">معلومات البلد</h3>
+                    <h3 class="kt-card-title">{{ __('main.country_information') }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('countries.update', $country->id) }}"
@@ -39,7 +39,7 @@
                             <div class="relative inline-block">
                                 <div
                                     class="w-32 h-20 rounded-lg bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden flex items-center justify-center">
-                                    <img id="flag-preview" src="" alt="علم البلد"
+                                    <img id="flag-preview" src="" alt="{{ __('main.country_flag') }}"
                                         class="w-full h-full object-cover hidden">
                                     <div id="flag-placeholder" class="text-4xl">🏳️</div>
                                 </div>
@@ -49,7 +49,7 @@
                                 </label>
                                 <input type="file" id="flag" name="flag" class="hidden" accept="image/*">
                             </div>
-                            <div class="text-sm text-secondary-foreground">اضغط لتحميل علم البلد</div>
+                            <div class="text-sm text-secondary-foreground">{{ __('main.click_to_upload_flag') }}</div>
                             @error('flag')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -58,9 +58,9 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Country Name (Arabic) -->
                             <div class="mb-3">
-                                <label for="name_ar" class="kt-label required mb-2">اسم البلد (عربي)</label>
+                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.country_name_arabic') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input"
-                                    placeholder="أدخل اسم البلد بالعربية" required value="{{ $country->name_ar }}">
+                                    placeholder="{{ __('main.enter_country_name_arabic') }}" required value="{{ $country->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -68,9 +68,9 @@
 
                             <!-- Country Name (English) -->
                             <div class="mb-3">
-                                <label for="name" class="kt-label required mb-2">اسم البلد (إنجليزي)</label>
+                                <label for="name" class="kt-label required mb-2">{{ __('main.country_name_english') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input"
-                                    placeholder="Enter country name in English" required value="{{ $country->name }}">
+                                    placeholder="{{ __('main.enter_country_name_english') }}" required value="{{ $country->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -78,9 +78,9 @@
 
                             <!-- Phone Code -->
                             <div class="mb-3">
-                                <label for="phone_code" class="kt-label mb-2">كود الهاتف</label>
+                                <label for="phone_code" class="kt-label mb-2">{{ __('main.phone_code') }}</label>
                                 <input type="text" name="phone_code" id="phone_code" class="kt-input"
-                                    placeholder="مثال: +966" value="{{ $country->phone_code }}">
+                                    placeholder="{{ __('main.phone_code_example') }}" value="{{ $country->phone_code }}">
                                 @error('phone_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -90,9 +90,9 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Country Code (ISO 2) -->
                             <div class="mb-3">
-                                <label for="iso2" class="kt-label required mb-2">كود البلد (ISO 2)</label>
+                                <label for="iso2" class="kt-label required mb-2">{{ __('main.country_code_iso2') }}</label>
                                 <input type="text" name="iso2" id="iso2" class="kt-input"
-                                    placeholder="مثال: SA, AE" max="2" required value="{{ $country->iso2 }}">
+                                    placeholder="{{ __('main.iso2_example') }}" max="2" required value="{{ $country->iso2 }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

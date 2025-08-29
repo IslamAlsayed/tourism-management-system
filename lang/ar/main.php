@@ -267,7 +267,9 @@ return [
     'region' => 'المنطقة',
 
     // Country Specific
-    'country_name_english' => 'اسم البلد (بالإنجليزية)',
+    'country_name_arabic' => 'اسم البلد (بالعربية)',
+    'enter_country_name_arabic' => 'أدخل اسم البلد بالعربية',
+    'click_to_upload_flag' => 'اضغط لتحميل علم البلد',
     'enter_country_name_english' => 'أدخل اسم البلد بالإنجليزية',
     'phone_code_example' => 'مثال: +966',
     'country_code_iso2' => 'رمز البلد (ISO 2)',

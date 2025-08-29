@@ -86,7 +86,9 @@ return [
     'region' => 'Region',
 
     // Country Specific
-    'country_name_english' => 'Country Name (English)',
+    'country_name_arabic' => 'Country Name (Arabic)',
+    'enter_country_name_arabic' => 'Enter country name in Arabic',
+    'click_to_upload_flag' => 'Click to upload country flag',
     'enter_country_name_english' => 'Enter country name in English',
     'phone_code_example' => 'Example: +966',
     'country_code_iso2' => 'Country Code (ISO 2)',
