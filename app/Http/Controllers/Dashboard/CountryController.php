@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Countries\CreateCountriesRequest;
+use App\Http\Requests\Countries\UpdateCountriesRequest;
 use App\Models\Country;
 use App\Models\Currency;
 use Illuminate\Http\Request;
@@ -11,7 +13,7 @@ class CountryController extends Controller
 {
     public function index()
     {
-        $countries = Country::paginate(10);
+        $countries = Country::with('currency')->paginate(10);
         $totalCountries = Country::count();
         return view('pages.dashboard.countries.index', compact('countries', 'totalCountries'));
     }
@@ -22,31 +24,9 @@ class CountryController extends Controller
         return view('pages.dashboard.countries.create', compact('currencies'));
     }
 
-    public function store(Request $request)
+    public function store(CreateCountriesRequest $request)
     {
-        $validated = $request->validate([
-            'name_ar' => 'required|string|max:255',
-            'name_en' => 'required|string|max:255',
-            'code_iso2' => 'required|string|max:2|unique:countries,code_iso2',
-            'code_iso3' => 'nullable|string|max:3',
-            'phone_code' => 'nullable|string|max:10',
-            'capital' => 'nullable|string|max:255',
-            'currency_id' => 'nullable|exists:currencies,id',
-            'population' => 'nullable|integer',
-            'area' => 'nullable|numeric',
-            'continent' => 'nullable|string|max:255',
-            'region' => 'nullable|string|max:255',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
-            'timezone' => 'nullable|string|max:255',
-            'languages' => 'nullable|string',
-            'description' => 'nullable|string',
-            'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_active' => 'boolean',
-            'is_independent' => 'boolean',
-            'is_developed' => 'boolean',
-            'is_landlocked' => 'boolean',
-        ]);
+        $validated = $request->validated();
 
         // Handle flag upload
         if ($request->hasFile('flag')) {
@@ -60,35 +40,47 @@ class CountryController extends Controller
         $validated['is_developed'] = $request->has('is_developed');
         $validated['is_landlocked'] = $request->has('is_landlocked');
 
-        Country::create($validated);
+        $created = Country::create($validated);
 
-        if ($request->has('save_and_add')) {
-            return redirect()->route('countries.create')->with('success', __('main.item_created', ['item' => __('main.country')]) . ' ' . __('main.add_new_country'));
+        if ($created) {
+            if ($request->has('save_and_add')) {
+                return redirect()->route('countries.create')->with('success', __('main.messages.country_created'));
+            }
+            return redirect()->route('countries.index')->with('success', __('main.messages.country_created'));
         }
 
-        return redirect()->route('countries.index')->with('success', __('main.item_created', ['item' => __('main.country')]));
+        return redirect()->route('countries.index')->with('error', __('main.messages.country_creation_failed'));
     }
 
     public function edit($id)
     {
         $country = Country::findOrFail($id);
-        return view('pages.dashboard.countries.edit', compact('country'));
+        $currencies = Currency::orderBy('code')->get();
+        return view('pages.dashboard.countries.edit', compact('country', 'currencies'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCountriesRequest $request, $id)
     {
         $country = Country::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:3',
-        ]);
+        $validated = $request->validated();
 
         $updated = $country->update($validated);
         if ($updated) {
-            return redirect()->route('countries.index')->with('success', __('main.item_updated', ['item' => __('main.country')]));
+            return redirect()->route('countries.index')->with('success', __('main.messages.country_updated'));
         }
 
-        return redirect()->route('countries.index')->with('error', __('main.operation_failed'));
+        return redirect()->route('countries.index')->with('error', __('main.messages.country_updated_failed'));
+    }
+
+    public function destroy($id)
+    {
+        $country = Country::findOrFail($id);
+        $deleted = $country->delete();
+        if ($deleted) {
+            return redirect()->route('countries.index')->with('success', __('main.messages.country_deleted'));
+        }
+
+        return redirect()->route('countries.index')->with('error', __('main.messages.country_deletion_failed'));
     }
 
     /**
@@ -100,16 +92,16 @@ class CountryController extends Controller
         $ids = $request->input('selected_ids', []);
 
         if (empty($ids) || !$action) {
-            return redirect()->back()->with('error', 'يرجى تحديد الدول والإجراء المطلوب.');
+            return redirect()->back()->with('error', __('main.messages.select_countries_and_action'));
         }
 
         switch ($action) {
             case 'delete':
                 $deleted = \App\Models\Country::whereIn('id', $ids)->delete();
-                return redirect()->back()->with('success', 'تم حذف ' . $deleted . ' دولة بنجاح.');
+                return redirect()->back()->with('success', __('main.messages.countries_deleted', ['count' => $deleted]));
             // يمكنك إضافة إجراءات أخرى هنا مثل التفعيل أو التعطيل
             default:
-                return redirect()->back()->with('error', 'إجراء غير معروف.');
+                return redirect()->back()->with('error', __('main.messages.unknown_action'));
         }
     }
 }

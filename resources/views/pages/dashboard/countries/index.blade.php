@@ -1,7 +1,5 @@
 @extends('pages.dashboard.layouts.index')
 
-
-
 @section('table-content')
     <div class="p-6">
         <div class="flex flex-col gap-4">
@@ -47,15 +45,13 @@
                 <table class="min-w-full divide-y divide-gray-200 kt-table table-auto">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-4 py-3 text-center">
+                            <th class="w-[60px] px-4 py-3 text-center">
                                 <input type="checkbox" id="selectAllCountries" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}</th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.country_name') }}</th>
-                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('main.code') }}</th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.currency') }}</th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -77,19 +73,30 @@
                                     <span class="text-2xl">{{ $country->flag_emoji ?? '🏳️' }}</span>
                                     <span class="font-medium text-mono">{{ $country->name }}</span>
                                 </td>
-                                <td class="px-4 py-2 text-sm text-gray-700">{{ $country->code }}</td>
-                                <td class="px-4 py-2 text-sm text-gray-700">{{ $country->currency_code }}</td>
-                                <td class="px-4 py-2">
-                                    <span
-                                        class="inline-block px-2 py-1 rounded text-xs font-semibold {{ $country->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                        {{ $country->is_active ? __('Active') : __('Inactive') }}
+                                <td class="px-4 py-2 text-sm text-gray-700">{{ $country->currency?->code ?? '--' }}</td>
+                                <td>
+                                    <span class="text-{{ $country->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
+                                        {{ $country->is_active == 1 ? __('main.active') : __('main.inactive') }}
                                     </span>
                                 </td>
                                 <td class="px-4 py-2 text-sm text-gray-500">
                                     {{ $country->created_at ? $country->created_at->format('Y-m-d') : '-' }}</td>
                                 <td class="px-4 py-2 text-end">
-                                    <a href="{{ route('countries.edit', $country->id) }}"
-                                        class="kt-btn kt-btn-sm kt-btn-outline">{{ __('Edit') }}</a>
+                                    <div>
+                                        <a href="{{ route('countries.edit', $country->id) }}"
+                                            class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
+                                            {{ __('main.edit') }}
+                                        </a>
+
+                                        <a href="{{ route('countries.destroy', $country->id) }}"
+                                            class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
+                                            <form action="{{ route('countries.destroy', $country->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">{{ __('main.delete') }}</button>
+                                            </form>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

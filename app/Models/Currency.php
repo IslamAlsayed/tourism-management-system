@@ -19,6 +19,6 @@ class Currency extends Model
         'is_active',
         'is_major_currency',
         'is_base_currency',
-        'sort_order'
+        'sort_order',
     ];
 }

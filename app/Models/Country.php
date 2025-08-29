@@ -11,14 +11,13 @@ class Country extends Model
 
     protected $fillable = [
         'name',
+        'name_ar',
         'iso3',
         'iso2',
         'numeric_code',
         'phone_code',
         'capital',
-        'currency',
-        'currency_name',
-        'currency_symbol',
+        'currency_id',
         'tld',
         'native',
         'region',
@@ -26,13 +25,23 @@ class Country extends Model
         'subregion',
         'subregion_id',
         'nationality',
-        'timezones',
+        'timezone',
         'latitude',
         'longitude',
         'emoji',
         'emojiU',
-        'population'
+        'population',
+        'flag_url',
+        'flag_emoji',
+        'continent',
+        'area',
+        'is_active',
     ];
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
 
     public function cities()
     {

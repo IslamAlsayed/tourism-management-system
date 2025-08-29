@@ -21,7 +21,7 @@
             @include('layouts.header')
 
             <!-- Content -->
-            <main class="grow pt-5" id="content" role="content">
+            <main class="grow" id="content" role="content">
                 <div class="kt-container-fixed">
                     @if (session('success'))
                         <div class="kt-alert kt-alert-success mb-5" role="alert">
@@ -36,7 +36,7 @@
                     @endif
 
                     @if ($errors->any())
-                        <div class="kt-alert kt-alert-danger mb-5" role="alert">
+                        <div class="kt-alert kt-alert-danger mb-4" role="alert">
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>

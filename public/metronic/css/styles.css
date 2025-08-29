@@ -1632,6 +1632,10 @@
     width: calc(var(--spacing) * 56);
   }
 
+  .w-60 {
+    width: calc(var(--spacing) * 60);
+  }
+
   .w-80 {
     width: calc(var(--spacing) * 80);
   }
@@ -3106,6 +3110,10 @@
     background-color: var(--color-orange-100);
   }
 
+  .bg-danger {
+    background-color: var(--color-red-600);
+  }
+
   .bg-primary {
     background-color: var(--primary);
   }
@@ -4047,6 +4055,10 @@
 
   .text-green-600 {
     color: var(--color-green-600);
+  }
+
+  .text-red-600 {
+    color: var(--color-red-600);
   }
 
   .text-mono {
@@ -8736,6 +8748,15 @@
     }
   }
 
+  .kt-alert-danger {
+    background-color: var(--color-red-700);
+    color: var(--color-white);
+
+    .kt-alert-close>svg {
+      color: var(--color-white);
+    }
+  }
+
   .kt-alert-warning {
     background-color: var(--color-yellow-500);
     color: var(--color-white);
@@ -8782,6 +8803,12 @@
     &.kt-alert-info {
       .kt-alert-icon {
         color: var(--color-violet-600);
+      }
+    }
+
+    &.kt-alert-danger {
+      .kt-alert-icon {
+        color: var(--color-red-700);
       }
     }
   }
@@ -8843,6 +8870,14 @@
       border-color: var(--border);
       background-color: var(--background);
       color: var(--color-violet-600);
+    }
+
+    &.kt-alert-danger {
+      border-style: var(--tw-border-style);
+      border-width: 1px;
+      border-color: var(--border);
+      background-color: var(--background);
+      color: var(--color-red-700);
     }
 
     &.kt-alert-warning {
@@ -8970,6 +9005,34 @@
       border-width: 1px;
       border-color: var(--color-violet-200);
       background-color: var(--color-violet-50);
+      color: var(--foreground);
+
+      &:is(.dark *) {
+        border-color: color-mix(in srgb, oklch(28.3% 0.141 291.089) 50%, transparent);
+
+        @supports (color: color-mix(in lab, red, red)) {
+          border-color: color-mix(in oklab, var(--color-violet-950) 50%, transparent);
+        }
+      }
+
+      &:is(.dark *) {
+        background-color: color-mix(in srgb, oklch(28.3% 0.141 291.089) 30%, transparent);
+
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--color-violet-950) 30%, transparent);
+        }
+      }
+
+      .kt-alert-icon>svg {
+        color: var(--color-violet-500);
+      }
+    }
+
+    &.kt-alert-danger {
+      border-style: var(--tw-border-style);
+      border-width: 1px;
+      border-color: var(--color-red-200);
+      background-color: var(--color-red-50);
       color: var(--foreground);
 
       &:is(.dark *) {

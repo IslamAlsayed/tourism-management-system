@@ -97,6 +97,9 @@ return [
     'department' => 'القسم',
     'position' => 'المنصب',
     'manage_system_users' => 'إدارة مستخدمي النظام',
+    'manage_system_countries' => 'إدارة دول النظام',
+    'manage_system_currencies' => 'إدارة عملات النظام',
+    'manage_system_cities' => 'إدارة مدن النظام',
     'import_csv' => 'استيراد CSV',
     'add_member' => 'إضافة عضو',
 
@@ -247,7 +250,9 @@ return [
     'country_singular' => 'بلد',
     'active_users_count' => 'المستخدمون النشطون:',
     'create_new_user' => 'إضافة مستخدم جديد',
+    'edit_user' => 'تعديل مستخدم',
     'create_new_user_description' => 'إنشاء حساب مستخدم جديد في النظام',
+    'edit_user_description' => 'تعديل حساب مستخدم موجود في النظام',
     'back_to_users' => 'العودة للمستخدمين',
     'basic_user_info' => 'معلومات المستخدم الأساسية',
     'user_avatar' => 'صورة المستخدم',
@@ -341,5 +346,57 @@ return [
         'user_update_failed' => 'فشل في تحديث المستخدم',
         'user_deleted' => 'تم حذف المستخدم بنجاح',
         'user_deletion_failed' => 'فشل في حذف المستخدم',
+
+        // Currency Management
+        'currency_created' => 'تم إنشاء العملة بنجاح',
+        'currency_creation_failed' => 'فشل في إنشاء العملة',
+        'currency_updated' => 'تم تحديث العملة بنجاح',
+        'currency_update_failed' => 'فشل في تحديث العملة',
+        'currency_deleted' => 'تم حذف العملة بنجاح',
+        'currency_deletion_failed' => 'فشل في حذف العملة',
+
+        // Country Management
+        'country_created' => 'تم إنشاء الدولة بنجاح',
+        'country_creation_failed' => 'فشل في إنشاء الدولة',
+        'country_updated' => 'تم تحديث الدولة بنجاح',
+        'country_update_failed' => 'فشل في تحديث الدولة',
+        'country_deleted' => 'تم حذف الدولة بنجاح',
+        'country_deletion_failed' => 'فشل في حذف الدولة',
+
+        // City Management
+        'city_created' => 'تم إنشاء المدينة بنجاح',
+        'city_creation_failed' => 'فشل في إنشاء المدينة',
+        'city_updated' => 'تم تحديث المدينة بنجاح',
+        'city_update_failed' => 'فشل في تحديث المدينة',
+        'city_deleted' => 'تم حذف المدينة بنجاح',
+        'city_deletion_failed' => 'فشل في حذف المدينة',
+    ],
+
+    // maps
+    'maps' => [
+        'continent' => 'القارة',
+        'continents' => 'القارات',
+        'asia' => 'آسيا',
+        'africa' => 'أفريقيا',
+        'europe' => 'أوروبا',
+        'north america' => 'أمريكا الشمالية',
+        'south america' => 'أمريكا الجنوبية',
+        'australia' => 'أستراليا',
+        'antarctica' => 'أنتاركتيكا',
+        'asia/riyadh (+3)' => 'آسيا/الرياض (+3)',
+        'asia/dubai (+4)' => 'آسيا/دبي (+4)',
+        'asia/kuwait (+3)' => 'آسيا/الكويت (+3)',
+        'asia/baghdad (+3)' => 'آسيا/بغداد (+3)',
+        'africa/cairo (+2)' => 'أفريقيا/القاهرة (+2)',
+        'europe/london (+0)' => 'أوروبا/لندن (+0)',
+        'america/new york (-5)' => 'أمريكا/نيويورك (-5)',
+        'riyadh' => 'الرياض',
+        'dubai' => 'دبي',
+        'kuwait' => 'الكويت',
+        'baghdad' => 'بغداد',
+        'cairo' => 'القاهرة',
+        'london' => 'لندن',
+        'america' => 'أمريكا',
+        'new york' => 'نيويورك',
     ]
 ];

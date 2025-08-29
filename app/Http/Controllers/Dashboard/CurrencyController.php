@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
-use App\Models\Currency;
 use App\Models\Country;
+use App\Models\Currency;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Currency\CreateCurrencyRequest;
+use App\Http\Requests\Currency\UpdateCurrencyRequest;
 
 class CurrencyController extends Controller
 {
@@ -18,35 +20,14 @@ class CurrencyController extends Controller
 
     public function create()
     {
-        $countries = Country::orderBy('name_ar')->get();
+        $countries = Country::all();
         return view('pages.dashboard.currencies.create', compact('countries'));
     }
 
-    public function store(Request $request)
+    public function store(CreateCurrencyRequest $request)
     {
-        $validated = $request->validate([
-            'name_ar' => 'required|string|max:255',
-            'name_en' => 'required|string|max:255',
-            'code' => 'required|string|max:3|unique:currencies,code',
-            'symbol' => 'required|string|max:5',
-            'numeric_code' => 'nullable|integer|unique:currencies,numeric_code',
-            'exchange_rate' => 'required|numeric|min:0',
-            'decimal_places' => 'integer|min:0|max:4',
-            'countries' => 'array',
-            'countries.*' => 'exists:countries,id',
-            'type' => 'in:fiat,crypto,commodity',
-            'subunit_name' => 'nullable|string|max:100',
-            'subunit_ratio' => 'nullable|integer|min:1',
-            'symbol_position' => 'in:before,after',
-            'thousand_separator' => 'nullable|string|max:1',
-            'description' => 'nullable|string',
-            'is_active' => 'boolean',
-            'is_crypto' => 'boolean',
-            'auto_update_rate' => 'boolean',
-            'is_base_currency' => 'boolean',
-        ]);
+        $validated = $request->validated();
 
-        // Handle checkboxes
         $validated['is_active'] = $request->has('is_active');
         $validated['is_crypto'] = $request->has('is_crypto');
         $validated['auto_update_rate'] = $request->has('auto_update_rate');
@@ -54,16 +35,49 @@ class CurrencyController extends Controller
 
         $currency = Currency::create($validated);
 
-        // Attach countries if provided
         if ($request->has('countries')) {
             $currency->countries()->attach($request->countries);
         }
 
-        if ($request->has('save_and_add')) {
-            return redirect()->route('currencies.create')->with('success', 'تم حفظ العملة بنجاح! يمكنك إضافة عملة أخرى.');
+        if ($currency) {
+            if ($request->has('save_and_add')) {
+                return redirect()->route('currencies.create')->with('success', __('main.messages.currency_created'));
+            }
+            return redirect()->route('currencies.index')->with('success', __('main.messages.currency_created'));
         }
 
-        return redirect()->route('currencies.index')->with('success', 'تم إضافة العملة بنجاح!');
+        return redirect()->route('currencies.index')->with('error', __('main.messages.currency_creation_failed'));
+    }
+
+    public function edit($id)
+    {
+        $currency = Currency::findOrFail($id);
+        $countries = Country::all();
+        return view('pages.dashboard.currencies.edit', compact('currency', 'countries'));
+    }
+
+    public function update(UpdateCurrencyRequest $request, $id)
+    {
+        $currency = Currency::findOrFail($id);
+        $validated = $request->validated();
+        $updated = $currency->update($validated);
+
+        if ($updated) {
+            return redirect()->route('currencies.index')->with('success', __('main.messages.currency_updated'));
+        }
+
+        return redirect()->route('currencies.index')->with('error', __('main.messages.currency_updated_failed'));
+    }
+
+    public function destroy($id)
+    {
+        $currency = Currency::findOrFail($id);
+        $deleted = $currency->delete();
+        if ($deleted) {
+            return redirect()->route('currencies.index')->with('success', __('main.messages.currency_deleted'));
+        }
+
+        return redirect()->route('currencies.index')->with('error', __('main.messages.currency_deletion_failed'));
     }
 
     public function rates()
@@ -74,29 +88,6 @@ class CurrencyController extends Controller
     public function updateRates(Request $request)
     {
         // Logic for updating exchange rates
-        return redirect()->route('currencies.rates')->with('success', 'تم تحديث أسعار الصرف بنجاح!');
-    }
-
-    public function edit($id)
-    {
-        $currency = Currency::findOrFail($id);
-        return view('pages.dashboard.currencies.edit', compact('currency'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $currency = Currency::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:3',
-            'symbol' => 'required|string|max:5',
-        ]);
-
-        $updated = $currency->update($validated);
-        if ($updated) {
-            return redirect()->route('currencies.index')->with('success', 'Currency updated successfully');
-        }
-
-        return redirect()->route('currencies.index')->with('error', 'Currency update failed');
+        return redirect()->route('currencies.rates')->with('success', __('main.messages.rates_updated'));
     }
 }

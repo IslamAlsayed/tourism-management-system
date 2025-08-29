@@ -69,7 +69,9 @@ return [
     'country_singular' => 'country',
     'active_users_count' => 'Active users:',
     'create_new_user' => 'Add New User',
+    'edit_user' => 'Edit User',
     'create_new_user_description' => 'Create a new user account in the system',
+    'edit_user_description' => 'Edit an existing user account in the system',
     'back_to_users' => 'Back to Users',
     'basic_user_info' => 'Basic User Information',
     'user_avatar' => 'User Avatar',
@@ -148,6 +150,9 @@ return [
     'department' => 'Department',
     'position' => 'Position',
     'manage_system_users' => 'Manage system users',
+    'manage_system_countries' => 'Manage system countries',
+    'manage_system_currencies' => 'Manage system currencies',
+    'manage_system_cities' => 'Manage system cities',
     'import_csv' => 'Import CSV',
     'add_member' => 'Add Member',
 
@@ -339,5 +344,57 @@ return [
         'user_update_failed' => 'User update failed',
         'user_deleted' => 'User deleted successfully',
         'user_deletion_failed' => 'User deletion failed',
+
+        // Currency Management
+        'currency_created' => 'Currency created successfully',
+        'currency_creation_failed' => 'Currency creation failed',
+        'currency_updated' => 'Currency updated successfully',
+        'currency_update_failed' => 'Currency update failed',
+        'currency_deleted' => 'Currency deleted successfully',
+        'currency_deletion_failed' => 'Currency deletion failed',
+
+        // Country Management
+        'country_created' => 'Country created successfully',
+        'country_creation_failed' => 'Country creation failed',
+        'country_updated' => 'Country updated successfully',
+        'country_update_failed' => 'Country update failed',
+        'country_deleted' => 'Country deleted successfully',
+        'country_deletion_failed' => 'Country deletion failed',
+
+        // City Management
+        'city_created' => 'City created successfully',
+        'city_creation_failed' => 'City creation failed',
+        'city_updated' => 'City updated successfully',
+        'city_update_failed' => 'City update failed',
+        'city_deleted' => 'City deleted successfully',
+        'city_deletion_failed' => 'City deletion failed',
+    ],
+
+    // maps
+    'maps' => [
+        'continent' => 'continent',
+        'continents' => 'continents',
+        'asia' => 'asia',
+        'africa' => 'africa',
+        'europe' => 'europe',
+        'north america' => 'north america',
+        'south america' => 'south america',
+        'australia' => 'australia',
+        'antarctica' => 'antarctica',
+        'asia/riyadh (+3)' => 'asia/riyadh (+3)',
+        'asia/dubai (+4)' => 'asia/dubai (+4)',
+        'asia/kuwait (+3)' => 'asia/kuwait (+3)',
+        'asia/baghdad (+3)' => 'asia/baghdad (+3)',
+        'africa/cairo (+2)' => 'africa/cairo (+2)',
+        'europe/london (+0)' => 'europe/london (+0)',
+        'america/new york (-5)' => 'america/new york (-5)',
+        'riyadh' => 'riyadh',
+        'dubai' => 'dubai',
+        'kuwait' => 'kuwait',
+        'baghdad' => 'baghdad',
+        'cairo' => 'cairo',
+        'london' => 'london',
+        'america' => 'america',
+        'new_york' => 'new_york',
     ]
 ];

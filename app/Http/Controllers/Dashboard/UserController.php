@@ -7,8 +7,6 @@ use App\Http\Requests\User\UserCreateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Country;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -39,13 +37,16 @@ class UserController extends Controller
 
         $user = User::create($validated);
 
-        if ($request->hasFile('photo')) {
-            $filename = $request->file('photo')->hashName();
-            $path = $request->file('photo')->storeAs("profile-photos/{$user->id}", $filename, 'public');
-            $user->update(['avatar_url' => $path]);
+        if ($user) {
+            if ($request->hasFile('photo')) {
+                $filename = $request->file('photo')->hashName();
+                $path = $request->file('photo')->storeAs("profile-photos/{$user->id}", $filename, 'public');
+                $user->update(['avatar_url' => $path]);
+            }
+            return redirect()->route('users.index')->with('success', __('main.messages.user_created'));
         }
 
-        return redirect()->route('users.index')->with('success', __('main.messages.user_created'));
+        return redirect()->route('users.index')->with('error', __('main.messages.user_creation_failed'));
     }
 
     public function edit($id)

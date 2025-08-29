@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cities\CreateCitiesRequest;
+use App\Http\Requests\Cities\UpdateCitiesRequest;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\State;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -19,55 +22,54 @@ class CityController extends Controller
     public function create()
     {
         $countries = Country::orderBy('name_ar')->get();
-        return view('pages.dashboard.cities.create', compact('countries'));
+        $states = State::orderBy('name_ar')->get();
+        return view('pages.dashboard.cities.create', compact('countries', 'states'));
     }
 
-    public function store(Request $request)
+    public function store(CreateCitiesRequest $request)
     {
-        $validated = $request->validate([
-            'name_ar' => 'required|string|max:255',
-            'name_en' => 'required|string|max:255',
-            'country_id' => 'required|exists:countries,id',
-            'code' => 'nullable|string|max:10',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
-            'population' => 'nullable|integer',
-            'timezone' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'is_active' => 'boolean',
-        ]);
+        $validated = $request->validated();
+        $created = City::create($validated);
 
-        $validated['is_active'] = $request->has('is_active');
-
-        City::create($validated);
-
-        if ($request->has('save_and_add')) {
-            return redirect()->route('cities.create')->with('success', __('main.item_created', ['item' => __('main.city')]) . ' ' . __('main.add_new_city'));
+        if ($created) {
+            if ($request->has('save_and_add')) {
+                return redirect()->route('cities.create')->with('success', __('main.messages.city_created'));
+            }
+            return redirect()->route('cities.index')->with('success', __('main.messages.city_created'));
         }
 
-        return redirect()->route('cities.index')->with('success', __('main.item_created', ['item' => __('main.city')]));
+        return redirect()->route('cities.index')->with('error', __('main.messages.city_creation_failed'));
     }
 
     public function edit($id)
     {
         $city = City::with('country')->findOrFail($id);
         $countries = Country::all();
-        return view('pages.dashboard.cities.edit', compact('city', 'countries'));
+        $states = State::orderBy('name_ar')->get();
+        return view('pages.dashboard.cities.edit', compact('city', 'countries', 'states'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCitiesRequest $request, $id)
     {
         $city = City::findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'country_id' => 'required|exists:countries,id',
-        ]);
+        $validated = $request->validated();
 
         $updated = $city->update($validated);
         if ($updated) {
-            return redirect()->route('cities.index')->with('success', __('main.item_updated', ['item' => __('main.city')]));
+            return redirect()->route('cities.index')->with('success', __('main.messages.city_updated'));
         }
 
-        return redirect()->route('cities.index')->with('error', __('main.operation_failed'));
+        return redirect()->route('cities.index')->with('error', __('main.messages.city_update_failed'));
+    }
+
+    public function destroy($id)
+    {
+        $city = City::findOrFail($id);
+        $deleted = $city->delete();
+        if ($deleted) {
+            return redirect()->route('cities.index')->with('success', __('main.messages.city_deleted'));
+        }
+
+        return redirect()->route('cities.index')->with('error', __('main.messages.city_deletion_failed'));
     }
 }

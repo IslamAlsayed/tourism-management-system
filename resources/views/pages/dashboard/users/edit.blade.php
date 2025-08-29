@@ -56,8 +56,8 @@
 
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- First Name -->
-                            <div>
-                                <label for="first_name" class="kt-label required">{{ __('main.first_name') }}</label>
+                            <div class="mb-4">
+                                <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
                                 <input type="text" name="first_name" id="first_name" class="kt-input"
                                     placeholder="{{ __('main.first_name') }}" required value="{{ $user->first_name }}">
                                 @error('first_name')
@@ -66,8 +66,8 @@
                             </div>
 
                             <!-- Last Name -->
-                            <div>
-                                <label for="last_name" class="kt-label required">{{ __('main.last_name') }}</label>
+                            <div class="mb-4">
+                                <label for="last_name" class="kt-label required mb-2">{{ __('main.last_name') }}</label>
                                 <input type="text" name="last_name" id="last_name" class="kt-input"
                                     placeholder="{{ __('main.last_name') }}" required value="{{ $user->last_name }}">
                                 @error('last_name')
@@ -78,8 +78,8 @@
 
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Email -->
-                            <div>
-                                <label for="email" class="kt-label required">{{ __('main.email') }}</label>
+                            <div class="mb-4">
+                                <label for="email" class="kt-label required mb-2">{{ __('main.email') }}</label>
                                 <input type="hidden" name="email" required value="{{ $user->email }}">
                                 <input type="email" id="email" class="kt-input" placeholder="example@domain.com"
                                     required value="{{ $user->email }}" disabled>
@@ -89,8 +89,8 @@
                             </div>
 
                             <!-- Username -->
-                            <div>
-                                <label for="username" class="kt-label">{{ __('main.username') }}</label>
+                            <div class="mb-4">
+                                <label for="username" class="kt-label mb-2">{{ __('main.username') }}</label>
                                 <input type="text" name="username" id="username" class="kt-input"
                                     placeholder="username123" value="{{ $user->name }}">
                                 @error('username')
@@ -101,8 +101,8 @@
 
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Phone -->
-                            <div>
-                                <label for="phone" class="kt-label">{{ __('main.phone') }}</label>
+                            <div class="mb-4">
+                                <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
                                 <input type="tel" name="phone" id="phone" class="kt-input"
                                     placeholder="+966 50 123 4567" value="{{ $user->phone }}">
                                 @error('phone')
@@ -111,8 +111,8 @@
                             </div>
 
                             <!-- Date of Birth -->
-                            <div>
-                                <label for="birth_date" class="kt-label">{{ __('main.date_of_birth') }}</label>
+                            <div class="mb-4">
+                                <label for="birth_date" class="kt-label mb-2">{{ __('main.date_of_birth') }}</label>
                                 <input type="date" name="birth_date" id="birth_date" class="kt-input"
                                     value="{{ $user->birth_date }}">
                                 @error('birth_date')
@@ -123,8 +123,8 @@
 
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Gender -->
-                            <div>
-                                <label for="gender" class="kt-label">{{ __('main.gender') }}</label>
+                            <div class="mb-4">
+                                <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
                                 <select name="gender" id="gender" class="kt-select">
                                     <option value="">{{ __('main.select_status') }}</option>
                                     <option value="male" {{ $user->gender == 'male' ? 'selected' : '' }}>
@@ -138,8 +138,8 @@
                             </div>
 
                             <!-- Country -->
-                            <div>
-                                <label for="country_id" class="kt-label">{{ __('main.country') }}</label>
+                            <div class="mb-4">
+                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
                                 <select name="country_id" id="country_id" class="kt-select">
                                     <option value="">{{ __('main.select_status') }}</option>
                                     @foreach ($countries as $country)
@@ -157,8 +157,8 @@
 
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Password -->
-                            <div>
-                                <label for="password" class="kt-label required">{{ __('main.password') }}
+                            <div class="mb-4">
+                                <label for="password" class="kt-label required mb-2">{{ __('main.password') }}
                                     ({{ __('main.optional') }})</label>
                                 <input type="password" name="password" id="password" class="kt-input"
                                     placeholder="{{ __('main.enter_new_password') }}">
@@ -171,9 +171,9 @@
                             </div>
 
                             <!-- Confirm Password -->
-                            <div>
+                            <div class="mb-4">
                                 <label for="password_confirmation"
-                                    class="kt-label required">{{ __('main.confirm_password') }}
+                                    class="kt-label required mb-2">{{ __('main.confirm_password') }}
                                     ({{ __('main.optional') }})</label>
                                 <input type="password" name="password_confirmation" id="password_confirmation"
                                     class="kt-input" placeholder="{{ __('main.confirm_password') }}">
@@ -184,8 +184,8 @@
                         </div>
 
                         <!-- Role -->
-                        <div>
-                            <label for="role" class="kt-label required">{{ __('main.role') ?? 'Role' }}</label>
+                        <div class="mb-4">
+                            <label for="role" class="kt-label required mb-2">{{ __('main.role') ?? 'Role' }}</label>
                             <select name="role" id="role" class="kt-select" required>
                                 <option value="">{{ __('main.select_role') ?? 'Select user role' }}</option>
                                 <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>
@@ -201,8 +201,8 @@
                         </div>
 
                         <!-- Bio -->
-                        <div>
-                            <label for="bio" class="kt-label">{{ __('main.bio') }}</label>
+                        <div class="mb-4">
+                            <label for="bio" class="kt-label mb-2">{{ __('main.bio') }}</label>
                             <textarea name="bio" id="bio" rows="4" class="kt-input"
                                 placeholder="{{ __('main.additional_user_info') ?? 'Additional information about the user...' }}">{{ $user->bio }}</textarea>
                             @error('bio')
@@ -216,6 +216,7 @@
 
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_active" value="0">
                                     <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
                                         value="1" {{ $user->is_active ? 'checked' : '' }}>
                                     <label for="is_active"
@@ -271,7 +272,7 @@
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.security_tips') ?? 'Security Tips' }}</h3>
                 </div>
-                <div class="kt-card-body">
+                <div class="kt-card-body p-2">
                     <div class="space-y-3">
                         <div class="flex items-center gap-3">
                             <div class="bg-success-light rounded-full p-2">

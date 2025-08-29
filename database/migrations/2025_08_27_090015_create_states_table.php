@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('name_ar');
             $table->unsignedBigInteger('country_id');
             $table->string('country_code');
             $table->string('country_name');

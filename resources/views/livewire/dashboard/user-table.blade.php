@@ -83,16 +83,27 @@
                                 <td>{{ $user->department }}</td>
                                 <td>{{ $user->position }}</td>
                                 <td>
-                                    @if ($user->is_active)
-                                        <span class="text-green-600 font-semibold">{{ __('main.active') }}</span>
-                                    @else
-                                        <span class="text-red-600 font-semibold">{{ __('main.inactive') }}</span>
-                                    @endif
+                                    <span class="text-{{ $user->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
+                                        {{ $user->is_active == 1 ? __('main.active') : __('main.inactive') }}
+                                    </span>
                                 </td>
                                 <td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : '' }}</td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user->id) }}"
-                                        class="kt-btn kt-btn-sm kt-btn-primary">{{ __('main.edit') }}</a>
+                                    <div>
+                                        <a href="{{ route('users.edit', $user->id) }}"
+                                            class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
+                                            {{ __('main.edit') }}
+                                        </a>
+
+                                        <a href="{{ route('users.destroy', $user->id) }}"
+                                            class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
+                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">{{ __('main.delete') }}</button>
+                                            </form>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
