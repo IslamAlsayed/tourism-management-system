@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
-@section('title', 'إضافة بلد جديد')
+@section('title', __('main.add_new_country'))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    إضافة بلد جديد
+                    {{ __('main.add_new_country') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    إضافة بلد جديد إلى قاعدة البيانات الجغرافية
+                    {{ __('main.add_country_description') }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
-                    العودة للبلدان
+                    {{ __('main.back_to_countries') }}
                 </a>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <!-- Country Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">معلومات البلد</h3>
+                    <h3 class="kt-card-title">{{ __('main.country_information') }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('countries.store') }}" enctype="multipart/form-data"
@@ -38,7 +38,7 @@
                             <div class="relative inline-block">
                                 <div
                                     class="w-32 h-20 rounded-lg bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden flex items-center justify-center">
-                                    <img id="flag-preview" src="" alt="علم البلد"
+                                    <img id="flag-preview" src="" alt="{{ __('main.country_flag') }}"
                                         class="w-full h-full object-cover hidden">
                                     <div id="flag-placeholder" class="text-4xl">🏳️</div>
                                 </div>
@@ -48,7 +48,7 @@
                                 </label>
                                 <input type="file" id="flag" name="flag" class="hidden" accept="image/*">
                             </div>
-                            <div class="text-sm text-secondary-foreground">اضغط لتحميل علم البلد</div>
+                            <div class="text-sm text-secondary-foreground">{{ __('main.click_to_upload_flag') }}</div>
                             @error('flag')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -57,9 +57,9 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Country Name (Arabic) -->
                             <div class="mb-3">
-                                <label for="name_ar" class="kt-label required mb-2">اسم البلد (عربي)</label>
+                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.country_name_arabic') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input"
-                                    placeholder="أدخل اسم البلد بالعربية" required value="{{ old('name_ar') }}">
+                                    placeholder="{{ __('main.enter_country_name_arabic') }}" required value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -67,9 +67,9 @@
 
                             <!-- Country Name (English) -->
                             <div class="mb-3">
-                                <label for="name" class="kt-label required mb-2">اسم البلد (إنجليزي)</label>
+                                <label for="name" class="kt-label required mb-2">{{ __('main.country_name_english') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input"
-                                    placeholder="Enter country name in English" required value="{{ old('name') }}">
+                                    placeholder="{{ __('main.enter_country_name_english') }}" required value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -77,9 +77,9 @@
 
                             <!-- Phone Code -->
                             <div class="mb-3">
-                                <label for="phone_code" class="kt-label mb-2">كود الهاتف</label>
+                                <label for="phone_code" class="kt-label mb-2">{{ __('main.phone_code') }}</label>
                                 <input type="text" name="phone_code" id="phone_code" class="kt-input"
-                                    placeholder="مثال: +966" value="{{ old('phone_code') }}">
+                                    placeholder="{{ __('main.phone_code_example') }}" value="{{ old('phone_code') }}">
                                 @error('phone_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -89,9 +89,9 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Country Code (ISO 2) -->
                             <div class="mb-3">
-                                <label for="iso2" class="kt-label required mb-2">كود البلد (ISO 2)</label>
+                                <label for="iso2" class="kt-label required mb-2">{{ __('main.country_code_iso2') }}</label>
                                 <input type="text" name="iso2" id="iso2" class="kt-input"
-                                    placeholder="مثال: SA, AE" max="2" required value="{{ old('iso2') }}">
+                                    placeholder="{{ __('main.iso2_example') }}" max="2" required value="{{ old('iso2') }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -99,9 +99,9 @@
 
                             <!-- Country Code (ISO 3) -->
                             <div class="mb-3">
-                                <label for="iso3" class="kt-label mb-2">كود البلد (ISO 3)</label>
+                                <label for="iso3" class="kt-label mb-2">{{ __('main.country_code_iso3') }}</label>
                                 <input type="text" name="iso3" id="iso3" class="kt-input"
-                                    placeholder="مثال: SAU, ARE" max="3" value="{{ old('iso3') }}">
+                                    placeholder="{{ __('main.iso3_example') }}" max="3" value="{{ old('iso3') }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -110,9 +110,9 @@
 
                             <!-- Capital City -->
                             <div class="mb-3">
-                                <label for="capital" class="kt-label mb-2">العاصمة</label>
+                                <label for="capital" class="kt-label mb-2">{{ __('main.capital') }}</label>
                                 <input type="text" name="capital" id="capital" class="kt-input"
-                                    placeholder="مثال: الرياض" value="{{ old('capital') }}">
+                                    placeholder="{{ __('main.capital_example') }}" value="{{ old('capital') }}">
                                 @error('capital')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -122,9 +122,9 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Currency -->
                             <div class="mb-3">
-                                <label for="currency_id" class="kt-label mb-2">العملة الرسمية</label>
+                                <label for="currency_id" class="kt-label mb-2">{{ __('main.official_currency') }}</label>
                                 <select name="currency_id" id="currency_id" class="kt-select">
-                                    <option value="">اختر العملة</option>
+                                    <option value="">{{ __('main.select_currency') }}</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
                                             {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
@@ -139,9 +139,9 @@
 
                             <!-- Population -->
                             <div class="mb-3">
-                                <label for="population" class="kt-label mb-2">عدد السكان</label>
+                                <label for="population" class="kt-label mb-2">{{ __('main.population') }}</label>
                                 <input type="number" name="population" id="population" class="kt-input"
-                                    placeholder="مثال: 35000000" value="{{ old('population') }}">
+                                    placeholder="{{ __('main.population_example') }}" value="{{ old('population') }}">
                                 @error('population')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -149,9 +149,9 @@
 
                             <!-- Area (km²) -->
                             <div class="mb-3">
-                                <label for="area" class="kt-label mb-2">المساحة (كم²)</label>
+                                <label for="area" class="kt-label mb-2">{{ __('main.area') }}</label>
                                 <input type="number" step="any" name="area" id="area" class="kt-input"
-                                    placeholder="مثال: 2149690" value="{{ old('area') }}">
+                                    placeholder="{{ __('main.area_example') }}" value="{{ old('area') }}">
                                 @error('area')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -161,9 +161,9 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Continent -->
                             <div class="mb-3">
-                                <label for="continent" class="kt-label mb-2">القارة</label>
+                                <label for="continent" class="kt-label mb-2">{{ __('main.continent') }}</label>
                                 <select name="continent" id="continent" class="kt-select">
-                                    <option value="">اختر القارة</option>
+                                    <option value="">{{ __('main.select_continent') }}</option>
                                     @foreach (config('helpers.continents') as $continent)
                                         <option value="{{ $continent }}"
                                             {{ old('continent') == $continent ? 'selected' : '' }}>
@@ -178,9 +178,9 @@
 
                             <!-- Region -->
                             <div class="mb-3">
-                                <label for="region" class="kt-label mb-2">المنطقة</label>
+                                <label for="region" class="kt-label mb-2">{{ __('main.region') }}</label>
                                 <input type="text" name="region" id="region" class="kt-input"
-                                    placeholder="مثال: الشرق الأوسط" value="{{ old('region') }}">
+                                    placeholder="{{ __('main.region_example') }}" value="{{ old('region') }}">
                                 @error('region')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -188,9 +188,9 @@
 
                             <!-- Latitude -->
                             <div class="mb-3">
-                                <label for="latitude" class="kt-label mb-2">خط العرض</label>
+                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
                                 <input type="number" step="any" name="latitude" id="latitude" class="kt-input"
-                                    placeholder="مثال: 23.8859" value="{{ old('latitude') }}">
+                                    placeholder="{{ __('main.latitude_example') }}" value="{{ old('latitude') }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -200,9 +200,9 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Longitude -->
                             <div class="mb-3">
-                                <label for="longitude" class="kt-label mb-2">خط الطول</label>
+                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
                                 <input type="number" step="any" name="longitude" id="longitude" class="kt-input"
-                                    placeholder="مثال: 45.0792" value="{{ old('longitude') }}">
+                                    placeholder="{{ __('main.longitude_example') }}" value="{{ old('longitude') }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -210,9 +210,9 @@
 
                             <!-- Timezone -->
                             <div class="mb-3">
-                                <label for="timezone" class="kt-label mb-2">المنطقة الزمنية الرئيسية</label>
+                                <label for="timezone" class="kt-label mb-2">{{ __('main.main_timezone') }}</label>
                                 <select name="timezone" id="timezone" class="kt-select">
-                                    <option value="">اختر المنطقة الزمنية</option>
+                                    <option value="">{{ __('main.select_timezone') }}</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
                                             {{ old('timezone') == $zone ? 'selected' : '' }}>
@@ -227,11 +227,11 @@
 
                             <!-- Languages -->
                             <div class="mb-3">
-                                <label for="languages" class="kt-label mb-2">اللغات الرسمية</label>
+                                <label for="languages" class="kt-label mb-2">{{ __('main.official_languages') }}</label>
                                 <input type="text" name="languages" id="languages" class="kt-input"
-                                    placeholder="مثال: العربية، الإنجليزية" value="{{ old('languages') }}">
+                                    placeholder="{{ __('main.languages_example') }}" value="{{ old('languages') }}">
                                 <div class="text-xs text-secondary-foreground mt-1">
-                                    اكتب اللغات مفصولة بفواصل
+                                    {{ __('main.languages_hint') }}
                                 </div>
                                 @error('languages')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -242,9 +242,9 @@
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Description -->
                             <div class="mb-3">
-                                <label for="description" class="kt-label mb-2">وصف البلد</label>
+                                <label for="description" class="kt-label mb-2">{{ __('main.country_description') }}</label>
                                 <textarea name="description" id="description" rows="4" class="kt-input"
-                                    placeholder="معلومات عامة عن البلد...">{{ old('description') }}</textarea>
+                                    placeholder="{{ __('main.country_description_placeholder') }}">{{ old('description') }}</textarea>
                                 @error('description')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -253,32 +253,32 @@
 
                         <!-- Country Settings -->
                         <div class="space-y-4">
-                            <h4 class="font-semibold mb-1">إعدادات البلد</h4>
+                            <h4 class="font-semibold mb-1">{{ __('main.country_settings') }}</h4>
 
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
                                     <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
                                         value="1" {{ old('is_active', '1') ? 'checked' : '' }}>
-                                    <label for="is_active" class="kt-label mb-0">تفعيل البلد</label>
+                                    <label for="is_active" class="kt-label mb-0">{{ __('main.activate_country') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="is_independent" id="is_independent" class="kt-checkbox"
                                         value="1" {{ old('is_independent', '1') ? 'checked' : '' }}>
-                                    <label for="is_independent" class="kt-label mb-0">دولة مستقلة</label>
+                                    <label for="is_independent" class="kt-label mb-0">{{ __('main.independent_country') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="is_developed" id="is_developed" class="kt-checkbox"
                                         value="1" {{ old('is_developed') ? 'checked' : '' }}>
-                                    <label for="is_developed" class="kt-label mb-0">دولة متقدمة</label>
+                                    <label for="is_developed" class="kt-label mb-0">{{ __('main.developed_country') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="is_landlocked" id="is_landlocked" class="kt-checkbox"
                                         value="1" {{ old('is_landlocked') ? 'checked' : '' }}>
-                                    <label for="is_landlocked" class="kt-label mb-0">غير ساحلية</label>
+                                    <label for="is_landlocked" class="kt-label mb-0">{{ __('main.landlocked_country') }}</label>
                                 </div>
                             </div>
                         </div>
@@ -287,15 +287,15 @@
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                حفظ البلد
+                                {{ __('main.save_country') }}
                             </button>
                             <button type="submit" name="save_and_add" value="1"
                                 class="kt-btn kt-btn-outline kt-btn-outline-primary">
                                 <i class="ki-filled ki-plus text-sm me-2"></i>
-                                حفظ وإضافة آخر
+                                {{ __('main.save_and_add_another') }}
                             </button>
                             <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
-                                إلغاء
+                                {{ __('main.cancel') }}
                             </a>
                         </div>
                     </form>
@@ -305,7 +305,7 @@
             <!-- Geographic Info -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">معلومات جغرافية</h3>
+                    <h3 class="kt-card-title">{{ __('main.geographic_info') }}</h3>
                 </div>
                 <div class="kt-card-body p-2">
                     <div class="space-y-3">
@@ -314,9 +314,8 @@
                                 <i class="ki-filled ki-geolocation text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">الإحداثيات الجغرافية</div>
-                                <div class="text-sm text-secondary-foreground">استخدم خدمات الخرائط للحصول على إحداثيات
-                                    دقيقة</div>
+                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
                             </div>
                         </div>
 
@@ -325,8 +324,8 @@
                                 <i class="ki-filled ki-flag text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">أكواد ISO</div>
-                                <div class="text-sm text-secondary-foreground">تأكد من استخدام الأكواد الدولية المعتمدة
+                                <div class="font-semibold">{{ __('main.iso_codes') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.iso_codes_hint') }}
                                 </div>
                             </div>
                         </div>
@@ -336,8 +335,8 @@
                                 <i class="ki-filled ki-dollar text-warning"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">العملة الرسمية</div>
-                                <div class="text-sm text-secondary-foreground">اختر العملة الرسمية للبلد</div>
+                                <div class="font-semibold">{{ __('main.official_currency') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.currency_hint') }}</div>
                             </div>
                         </div>
                     </div>
