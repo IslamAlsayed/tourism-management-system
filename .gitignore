@@ -23,6 +23,7 @@ Homestead.yaml
 Thumbs.db
 
 /Source-mertonic
+/lang/ar/main copy.php
 /resources/vie2ws_old
 /resources/views/pages/dashboard/users/index_old.blade.php
 /resources/views/pages/dashboard/cities/index_old.blade.php
