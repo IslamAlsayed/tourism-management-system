@@ -76,7 +76,8 @@
                                 <i class="ki-filled ki-shield-tick text-success text-xl"></i>
                                 <div>
                                     <div class="font-semibold">{{ __('main.data_encryption') }}</div>
-                                    <div class="text-sm text-secondary-foreground">{{ __('main.important_security_notifications') }}</div>
+                                    <div class="text-sm text-secondary-foreground">
+                                        {{ __('main.important_security_notifications') }}</div>
                                 </div>
                             </div>
                             <div class="kt-badge kt-badge-success">{{ __('main.active') }}</div>
@@ -87,7 +88,8 @@
                                 <i class="ki-filled ki-key text-success text-xl"></i>
                                 <div>
                                     <div class="font-semibold">{{ __('main.csrf_protection') }}</div>
-                                    <div class="text-sm text-secondary-foreground">{{ __('main.important_security_notifications') }}</div>
+                                    <div class="text-sm text-secondary-foreground">
+                                        {{ __('main.important_security_notifications') }}</div>
                                 </div>
                             </div>
                             <div class="kt-badge kt-badge-success">{{ __('main.active') }}</div>
@@ -98,7 +100,8 @@
                                 <i class="ki-filled ki-security-user text-warning text-xl"></i>
                                 <div>
                                     <div class="font-semibold">{{ __('main.two_factor_auth') }}</div>
-                                    <div class="text-sm text-secondary-foreground">{{ __('main.important_security_notifications') }}</div>
+                                    <div class="text-sm text-secondary-foreground">
+                                        {{ __('main.important_security_notifications') }}</div>
                                 </div>
                             </div>
                             <div class="kt-badge kt-badge-warning">{{ __('main.not_enabled') }}</div>
@@ -117,14 +120,17 @@
                         <div class="flex items-center justify-between py-2 border-b p-4">
                             <div>
                                 <div class="text-sm font-semibold">{{ __('main.successful_login') }}</div>
-                                <div class="text-xs text-secondary-foreground">{{ __('main.from_ip_address') }}: 192.168.1.1</div>
+                                <div class="text-xs text-secondary-foreground">{{ __('main.from_ip_address') }}:
+                                    192.168.1.1</div>
                             </div>
-                            <div class="text-xs text-secondary-foreground">{{ __('main.minutes_ago', ['minutes' => 5]) }}</div>
+                            <div class="text-xs text-secondary-foreground">{{ __('main.minutes_ago', ['minutes' => 5]) }}
+                            </div>
                         </div>
                         <div class="flex items-center justify-between py-2 border-b">
                             <div>
                                 <div class="text-sm font-semibold">{{ __('main.password_change') }}</div>
-                                <div class="text-xs text-secondary-foreground">{{ __('main.password_updated_successfully') }}</div>
+                                <div class="text-xs text-secondary-foreground">
+                                    {{ __('main.password_updated_successfully') }}</div>
                             </div>
                             <div class="text-xs text-secondary-foreground">{{ __('main.hour_ago') }}</div>
                         </div>

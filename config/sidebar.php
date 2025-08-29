@@ -22,19 +22,7 @@ return [
                     'title' => 'add new user',
                     'icon' => 'ki-filled ki-plus',
                     'route' => 'users.create',
-                ],
-                [
-                    'title' => 'active users',
-                    'icon' => 'ki-filled ki-check-circle',
-                    'route' => 'users.index',
-                    'params' => ['status' => 'active'],
-                ],
-                [
-                    'title' => 'inactive users',
-                    'icon' => 'ki-filled ki-cross-circle',
-                    'route' => 'users.index',
-                    'params' => ['status' => 'inactive'],
-                ],
+                ]
             ],
         ],
 
@@ -454,7 +442,7 @@ return [
                     'title' => 'change password',
                     'icon' => 'ki-filled ki-lock',
                     'route' => '#'
-                ], // #
+                ],
             ],
         ],
 

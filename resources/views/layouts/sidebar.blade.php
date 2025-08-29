@@ -48,15 +48,17 @@
                         <div class="kt-menu-item {{ $hasActiveChild ? 'kt-menu-item-show' : '' }}"
                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                             <div
-                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px]">
+                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $hasActiveChild ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg">
                                 <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
-                                    <i class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} text-lg"></i>
+                                    <i
+                                        class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} text-lg {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
                                 </span>
-                                <span class="kt-menu-title text-sm font-medium text-foreground">
+                                <span
+                                    class="kt-menu-title text-sm font-medium text-foreground {{ $hasActiveChild ? 'text-primary font-semibold' : '' }}">
                                     {{ __('sidebar.' . $item['title']) }}
                                 </span>
                                 <span
-                                    class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px]">
+                                    class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px] {{ $hasActiveChild ? 'text-primary' : '' }}">
                                     <span class="inline-flex kt-menu-item-show:hidden"><i
                                             class="ki-filled ki-plus text-[11px]"></i></span>
                                     <span class="hidden kt-menu-item-show:inline-flex"><i
@@ -81,18 +83,20 @@
                                         <div class="kt-menu-item {{ $childHasActiveChild ? 'kt-menu-item-show' : '' }}"
                                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                                             <div
-                                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px]">
+                                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $childHasActiveChild ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg">
                                                 @if (isset($child['icon']))
                                                     <span
                                                         class="kt-menu-icon items-start text-muted-foreground w-[20px]">
-                                                        <i class="{{ $child['icon'] }}"></i>
+                                                        <i
+                                                            class="{{ $child['icon'] }} {{ $childHasActiveChild ? 'text-primary' : '' }}"></i>
                                                     </span>
                                                 @endif
-                                                <span class="kt-menu-title text-sm font-medium text-foreground">
+                                                <span
+                                                    class="kt-menu-title text-sm font-medium text-foreground {{ $childHasActiveChild ? 'text-primary font-semibold' : '' }}">
                                                     {{ __('sidebar.' . $child['title']) }}
                                                 </span>
                                                 <span
-                                                    class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px]">
+                                                    class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px] {{ $childHasActiveChild ? 'text-primary' : '' }}">
                                                     <span class="inline-flex kt-menu-item-show:hidden"><i
                                                             class="ki-filled ki-plus text-[11px]"></i></span>
                                                     <span class="hidden kt-menu-item-show:inline-flex"><i
@@ -106,7 +110,7 @@
                                                 @foreach ($child['children'] as $subChild)
                                                     @php $subChildIsActive = isActive($subChild['route'] ?? null, $currentRoute); @endphp
                                                     <div class="kt-menu-item">
-                                                        <a class="kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'kt-menu-item-active:bg-accent/60' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
+                                                        <a class="kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
                                                             href="{{ isset($subChild['route']) && $subChild['route'] !== '#' ? route($subChild['route']) : 'javascript:void(0)' }}"
                                                             {{ ($subChild['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                                             <span
@@ -123,7 +127,7 @@
                                     @else
                                         <!-- Simple child -->
                                         <div class="kt-menu-item">
-                                            <a class="kt-menu-link border border-transparent items-center grow {{ $childIsActive ? 'kt-menu-item-active:bg-accent/60' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
+                                            <a class="kt-menu-link border border-transparent items-center grow {{ $childIsActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
                                                 href="{{ isset($child['route']) && $child['route'] !== '#' ? route($child['route']) : 'javascript:void(0)' }}"
                                                 {{ ($child['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                                 <span
@@ -141,11 +145,12 @@
                     @else
                         <!-- Simple Menu Item -->
                         <div class="kt-menu-item">
-                            <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $isActive ? 'kt-menu-item-active:bg-accent/60' : '' }} hover:bg-accent/60 hover:rounded-lg"
+                            <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $isActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg"
                                 href="{{ isset($item['route']) && $item['route'] !== '#' ? route($item['route']) : 'javascript:void(0)' }}"
                                 {{ ($item['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                 <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
-                                    <i class="{{ $item['icon'] ?? 'ki-filled ki-folder' }}"></i>
+                                    <i
+                                        class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} {{ $isActive ? 'text-primary' : '' }}"></i>
                                 </span>
                                 <span
                                     class="kt-menu-title text-sm font-medium {{ $isActive ? 'text-primary font-semibold' : '' }}">

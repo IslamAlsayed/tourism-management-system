@@ -53,19 +53,23 @@
                                     <option value="UTC" {{ $settings['app_timezone'] == 'UTC' ? 'selected' : '' }}>UTC
                                     </option>
                                     <option value="Asia/Riyadh"
-                                        {{ $settings['app_timezone'] == 'Asia/Riyadh' ? 'selected' : '' }}>{{ __('main.maps.asia/riyadh (+3)') }}
+                                        {{ $settings['app_timezone'] == 'Asia/Riyadh' ? 'selected' : '' }}>
+                                        {{ __('main.maps.asia/riyadh (+3)') }}
                                     </option>
                                     <option value="Asia/Dubai"
-                                        {{ $settings['app_timezone'] == 'Asia/Dubai' ? 'selected' : '' }}>{{ __('main.maps.asia/dubai (+4)') }}
+                                        {{ $settings['app_timezone'] == 'Asia/Dubai' ? 'selected' : '' }}>
+                                        {{ __('main.maps.asia/dubai (+4)') }}
                                     </option>
                                 </select>
                             </div>
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.language') }}</label>
                                 <select class="kt-select">
-                                    <option value="en" {{ $settings['app_locale'] == 'en' ? 'selected' : '' }}>{{ __('main.english') }}
+                                    <option value="en" {{ $settings['app_locale'] == 'en' ? 'selected' : '' }}>
+                                        {{ __('main.english') }}
                                     </option>
-                                    <option value="ar" {{ $settings['app_locale'] == 'ar' ? 'selected' : '' }}>{{ __('main.arabic') }}
+                                    <option value="ar" {{ $settings['app_locale'] == 'ar' ? 'selected' : '' }}>
+                                        {{ __('main.arabic') }}
                                     </option>
                                 </select>
                             </div>

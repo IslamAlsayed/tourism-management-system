@@ -39,7 +39,8 @@
                                     <i class="ki-filled ki-sms text-xl text-primary"></i>
                                     <div>
                                         <div class="font-semibold">{{ __('main.email_notifications') }}</div>
-                                        <div class="text-sm text-secondary-foreground">{{ __('main.receive_notifications_via_email') }}</div>
+                                        <div class="text-sm text-secondary-foreground">
+                                            {{ __('main.receive_notifications_via_email') }}</div>
                                     </div>
                                 </div>
                                 <input type="checkbox" class="kt-checkbox kt-checkbox-lg"
@@ -51,7 +52,8 @@
                                     <i class="ki-filled ki-phone text-xl text-success"></i>
                                     <div>
                                         <div class="font-semibold">{{ __('main.sms_notifications') }}</div>
-                                        <div class="text-sm text-secondary-foreground">{{ __('main.receive_notifications_via_sms') }}</div>
+                                        <div class="text-sm text-secondary-foreground">
+                                            {{ __('main.receive_notifications_via_sms') }}</div>
                                     </div>
                                 </div>
                                 <input type="checkbox" class="kt-checkbox kt-checkbox-lg"
@@ -63,7 +65,8 @@
                                     <i class="ki-filled ki-notification-bing text-xl text-warning"></i>
                                     <div>
                                         <div class="font-semibold">{{ __('main.push_notifications') }}</div>
-                                        <div class="text-sm text-secondary-foreground">{{ __('main.instant_browser_notifications') }}</div>
+                                        <div class="text-sm text-secondary-foreground">
+                                            {{ __('main.instant_browser_notifications') }}</div>
                                     </div>
                                 </div>
                                 <input type="checkbox" class="kt-checkbox kt-checkbox-lg"
@@ -84,7 +87,8 @@
                         <div class="flex items-center justify-between border-b pb-2">
                             <div>
                                 <div class="font-semibold">{{ __('main.new_user') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.when_new_user_registers') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.when_new_user_registers') }}
+                                </div>
                             </div>
                             <input type="checkbox" class="kt-checkbox" checked />
                         </div>
@@ -92,7 +96,8 @@
                         <div class="flex items-center justify-between border-b pb-2">
                             <div>
                                 <div class="font-semibold">{{ __('main.data_updates') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.when_important_data_updates') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.when_important_data_updates') }}
+                                </div>
                             </div>
                             <input type="checkbox" class="kt-checkbox" checked />
                         </div>
@@ -100,7 +105,8 @@
                         <div class="flex items-center justify-between border-b pb-2">
                             <div>
                                 <div class="font-semibold">{{ __('main.system_reports') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.periodic_reports_on_system_status') }}</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    {{ __('main.periodic_reports_on_system_status') }}</div>
                             </div>
                             <input type="checkbox" class="kt-checkbox" />
                         </div>
@@ -108,7 +114,8 @@
                         <div class="flex items-center justify-between border-b pb-2">
                             <div>
                                 <div class="font-semibold">{{ __('main.security_updates') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.important_security_notifications') }}</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    {{ __('main.important_security_notifications') }}</div>
                             </div>
                             <input type="checkbox" class="kt-checkbox" checked />
                         </div>
