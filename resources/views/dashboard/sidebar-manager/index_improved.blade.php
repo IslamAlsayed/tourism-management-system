@@ -134,7 +134,7 @@ input:checked + .slider:before {
                         إدارة القائمة الجانبية
                     </h2>
                     <div class="d-flex gap-2">
-                        <a href="{{ route('admin.sidebar.test') }}" class="btn btn-light-info">
+                        <a href="{{ route('sidebar.test') }}" class="btn btn-light-info">
                             <i class="ki-filled ki-code me-1"></i>
                             اختبار السحب والإفلات
                         </a>

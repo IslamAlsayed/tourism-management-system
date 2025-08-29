@@ -5,7 +5,7 @@
     @include('includes.table-breadcrumb', [
         'title' => __('main.cities'),
         'description' => __('main.manage_system_cities'),
-        'import_url' => '#',
+        'import_url' => route('cities.import.form'),
         'page_add_url' => route('cities.create'),
         'page_add_title' => __('main.add_new_city'),
     ])

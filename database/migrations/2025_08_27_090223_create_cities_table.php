@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('country_id');
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
-            $table->string('timezone');
+            $table->string('timezone')->nullable();
             $table->string('wikiDataId')->nullable();
             $table->bigInteger('population')->nullable();
             $table->timestamps();

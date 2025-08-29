@@ -10,9 +10,11 @@
         </div>
     </div>
     <div class="flex items-center gap-2.5">
-        <a class="kt-btn kt-btn-outline" href="{{ $import_url }}">
-            {{ __('main.import_csv') }}
-        </a>
+        @if (isset($import_url))
+            <a class="kt-btn kt-btn-outline" href="{{ $import_url }}">
+                {{ __('main.import_csv') }}
+            </a>
+        @endif
         <a class="kt-btn kt-btn-primary" href="{{ $page_add_url }}">
             {{ $page_add_title }}
         </a>

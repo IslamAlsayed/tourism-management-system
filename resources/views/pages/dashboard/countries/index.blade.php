@@ -5,11 +5,11 @@
         <div class="flex flex-col gap-4">
             <!-- Container -->
             @include('includes.table-breadcrumb', [
-                'title' => __('main.currencies'),
-                'description' => __('main.manage_system_currencies'),
-                'import_url' => '#',
-                'page_add_url' => route('currencies.create'),
-                'page_add_title' => __('main.add_new_currency'),
+                'title' => __('main.countries'),
+                'description' => __('main.manage_system_countries'),
+                'import_url' => route('countries.import.form'),
+                'page_add_url' => route('countries.create'),
+                'page_add_title' => __('main.add_new_country'),
             ])
             <!-- End of Container -->
 

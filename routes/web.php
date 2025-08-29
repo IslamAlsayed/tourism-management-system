@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Admin\SidebarManagerController;
+use App\Http\Controllers\ImportController;
 
 Route::get('/dashboard/countries/metronic-table', function () {
     return view('pages.dashboard.countries.metronic-table');
@@ -37,17 +38,37 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('users/{id}/activate', [UserController::class, 'activate'])->name('users.activate');
     Route::post('users/{id}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
 
+    // User Import
+    Route::get('users/import/form', [ImportController::class, 'showUserImport'])->name('users.import.form');
+    Route::post('users/import', [ImportController::class, 'importUsers'])->name('users.import');
+    Route::get('users/import/sample', [ImportController::class, 'userSample'])->name('users.sample-import');
+
     // === LOCATION MANAGEMENT ===
     Route::resource('countries', CountryController::class)->names('countries');
     Route::post('countries/bulk-edit', [CountryController::class, 'bulkEdit'])->name('countries.bulkEdit');
 
+    // Country Import
+    Route::get('countries/import/form', [ImportController::class, 'showCountryImport'])->name('countries.import.form');
+    Route::post('countries/import', [ImportController::class, 'importCountries'])->name('countries.import');
+    Route::get('countries/import/sample', [ImportController::class, 'countrySample'])->name('countries.sample-import');
+
     Route::resource('cities', CityController::class)->names('cities');
     Route::get('cities/by-country/{countryId}', [CityController::class, 'getByCountry'])->name('cities.by-country');
+
+    // City Import
+    Route::get('cities/import/form', [ImportController::class, 'showCityImport'])->name('cities.import.form');
+    Route::post('cities/import', [ImportController::class, 'importCities'])->name('cities.import');
+    Route::get('cities/import/sample', [ImportController::class, 'citySample'])->name('cities.sample-import');
 
     // === FINANCIAL MANAGEMENT ===
     Route::resource('currencies', CurrencyController::class)->names('currencies');
     Route::get('currencies/rates', [CurrencyController::class, 'rates'])->name('currencies.rates');
     Route::post('currencies/rates/update', [CurrencyController::class, 'updateRates'])->name('currencies.rates.update');
+
+    // Currency Import
+    Route::get('currencies/import/form', [ImportController::class, 'showCurrencyImport'])->name('currencies.import.form');
+    Route::post('currencies/import', [ImportController::class, 'importCurrencies'])->name('currencies.import');
+    Route::get('currencies/import/sample', [ImportController::class, 'currencySample'])->name('currencies.sample-import');
 
     // === PROFILE MANAGEMENT ===
     Route::prefix('profile')->name('profile.')->group(function () {
@@ -89,9 +110,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     });
 
     // === ADMIN TOOLS ===
-    Route::prefix('admin/sidebar')->name('admin.sidebar.')->middleware('admin')->group(function () {
+    Route::prefix('admin/sidebar')->name('sidebar.')->middleware('admin')->group(function () {
         Route::get('/', [SidebarManagerController::class, 'index'])->name('index');
-        Route::get('/test', fn() => view('admin.sidebar-manager.test'))->name('test');
+        Route::get('/test', fn() => view('sidebar-manager.test'))->name('test');
         Route::post('/update-order', [SidebarManagerController::class, 'updateOrder'])->name('update-order');
         Route::post('/toggle-visibility', [SidebarManagerController::class, 'toggleVisibility'])->name('toggle-visibility');
         Route::post('/reset', [SidebarManagerController::class, 'resetToDefault'])->name('reset');

@@ -5,7 +5,7 @@
     @include('includes.table-breadcrumb', [
         'title' => __('main.currencies'),
         'description' => __('main.manage_system_currencies'),
-        'import_url' => '#',
+        'import_url' => route('currencies.import.form'),
         'page_add_url' => route('currencies.create'),
         'page_add_title' => __('main.add_new_currency'),
     ])

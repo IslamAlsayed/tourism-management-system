@@ -5,7 +5,7 @@
     @include('includes.table-breadcrumb', [
         'title' => __('main.users'),
         'description' => __('main.manage_system_users'),
-        'import_url' => '#',
+        'import_url' => route('users.import.form'),
         'page_add_url' => route('users.create'),
         'page_add_title' => __('main.add_new_user'),
     ])
