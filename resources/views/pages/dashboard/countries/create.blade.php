@@ -57,9 +57,11 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Country Name (Arabic) -->
                             <div class="mb-3">
-                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.country_name_arabic') }}</label>
+                                <label for="name_ar"
+                                    class="kt-label required mb-2">{{ __('main.country_name_arabic') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input"
-                                    placeholder="{{ __('main.enter_country_name_arabic') }}" required value="{{ old('name_ar') }}">
+                                    placeholder="{{ __('main.enter_country_name_arabic') }}" required
+                                    value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -67,9 +69,11 @@
 
                             <!-- Country Name (English) -->
                             <div class="mb-3">
-                                <label for="name" class="kt-label required mb-2">{{ __('main.country_name_english') }}</label>
+                                <label for="name"
+                                    class="kt-label required mb-2">{{ __('main.country_name_english') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input"
-                                    placeholder="{{ __('main.enter_country_name_english') }}" required value="{{ old('name') }}">
+                                    placeholder="{{ __('main.enter_country_name_english') }}" required
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -89,9 +93,11 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Country Code (ISO 2) -->
                             <div class="mb-3">
-                                <label for="iso2" class="kt-label required mb-2">{{ __('main.country_code_iso2') }}</label>
+                                <label for="iso2"
+                                    class="kt-label required mb-2">{{ __('main.country_code_iso2') }}</label>
                                 <input type="text" name="iso2" id="iso2" class="kt-input"
-                                    placeholder="{{ __('main.iso2_example') }}" max="2" required value="{{ old('iso2') }}">
+                                    placeholder="{{ __('main.iso2_example') }}" max="2" required
+                                    value="{{ old('iso2') }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -101,7 +107,8 @@
                             <div class="mb-3">
                                 <label for="iso3" class="kt-label mb-2">{{ __('main.country_code_iso3') }}</label>
                                 <input type="text" name="iso3" id="iso3" class="kt-input"
-                                    placeholder="{{ __('main.iso3_example') }}" max="3" value="{{ old('iso3') }}">
+                                    placeholder="{{ __('main.iso3_example') }}" max="3"
+                                    value="{{ old('iso3') }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -242,7 +249,8 @@
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Description -->
                             <div class="mb-3">
-                                <label for="description" class="kt-label mb-2">{{ __('main.country_description') }}</label>
+                                <label for="description"
+                                    class="kt-label mb-2">{{ __('main.country_description') }}</label>
                                 <textarea name="description" id="description" rows="4" class="kt-input"
                                     placeholder="{{ __('main.country_description_placeholder') }}">{{ old('description') }}</textarea>
                                 @error('description')
@@ -260,25 +268,29 @@
                                     <input type="hidden" name="is_active" value="0">
                                     <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
                                         value="1" {{ old('is_active', '1') ? 'checked' : '' }}>
-                                    <label for="is_active" class="kt-label mb-0">{{ __('main.activate_country') }}</label>
+                                    <label for="is_active"
+                                        class="kt-label mb-0">{{ __('main.activate_country') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="is_independent" id="is_independent" class="kt-checkbox"
                                         value="1" {{ old('is_independent', '1') ? 'checked' : '' }}>
-                                    <label for="is_independent" class="kt-label mb-0">{{ __('main.independent_country') }}</label>
+                                    <label for="is_independent"
+                                        class="kt-label mb-0">{{ __('main.independent_country') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="is_developed" id="is_developed" class="kt-checkbox"
                                         value="1" {{ old('is_developed') ? 'checked' : '' }}>
-                                    <label for="is_developed" class="kt-label mb-0">{{ __('main.developed_country') }}</label>
+                                    <label for="is_developed"
+                                        class="kt-label mb-0">{{ __('main.developed_country') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="is_landlocked" id="is_landlocked" class="kt-checkbox"
                                         value="1" {{ old('is_landlocked') ? 'checked' : '' }}>
-                                    <label for="is_landlocked" class="kt-label mb-0">{{ __('main.landlocked_country') }}</label>
+                                    <label for="is_landlocked"
+                                        class="kt-label mb-0">{{ __('main.landlocked_country') }}</label>
                                 </div>
                             </div>
                         </div>

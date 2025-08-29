@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
-@section('title', 'إضافة مدينة جديدة')
+@section('title', __('main.add_new_city'))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    إضافة مدينة جديدة
+                    {{ __('main.add_new_city') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    إضافة مدينة جديدة إلى قاعدة البيانات الجغرافية
+                    {{ __('main.add_city_description') }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('cities.index') }}" class="kt-btn kt-btn-outline">
-                    العودة للمدن
+                    {{ __('main.back_to_cities') }}
                 </a>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <!-- City Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">معلومات المدينة</h3>
+                    <h3 class="kt-card-title">{{ __('main.city_information') }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('cities.store') }}" class="space-y-6 p-4">
@@ -35,9 +35,10 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- City Name (Arabic) -->
                             <div class="mb-4">
-                                <label for="name_ar" class="kt-label required mb-2">اسم المدينة (عربي)</label>
+                                <label for="name_ar"
+                                    class="kt-label required mb-2">{{ __('main.city_name_arabic') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input"
-                                    placeholder="أدخل اسم المدينة بالعربية" required>
+                                    placeholder="{{ __('main.enter_city_name_arabic') }}" required>
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -45,9 +46,10 @@
 
                             <!-- City Name (English) -->
                             <div class="mb-4">
-                                <label for="name" class="kt-label required mb-2">اسم المدينة (إنجليزي)</label>
+                                <label for="name"
+                                    class="kt-label required mb-2">{{ __('main.city_name_english') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input"
-                                    placeholder="Enter city name in English" required>
+                                    placeholder="{{ __('main.enter_city_name_english') }}" required>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -56,11 +58,12 @@
                             <!-- Country -->
                             <div class="mb-4">
                                 <div class="flex items-center justify-between">
-                                    <label for="country_id" class="kt-label required mb-2">البلد</label>
-                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">إضافة</a>
+                                    <label for="country_id" class="kt-label required mb-2">{{ __('main.country') }}</label>
+                                    <a href="{{ route('countries.create') }}"
+                                        class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
                                 </div>
                                 <select name="country_id" id="country_id" class="kt-select" required>
-                                    <option value="">اختر البلد</option>
+                                    <option value="">{{ __('main.select_country') }}</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">{{ $country->name_ar }} -
                                             {{ $country->name_en }}</option>
@@ -75,11 +78,9 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- State -->
                             <div class="mb-4">
-                                {{-- <label for="state_id" class="kt-label required mb-2">الولاية</label>
-                                <select name="state_id" id="state_id" class="kt-select" required> --}}
-                                <label for="state_id" class="kt-label mb-2">الولاية</label>
+                                <label for="state_id" class="kt-label mb-2">{{ __('main.state') }}</label>
                                 <select name="state_id" id="state_id" class="kt-select">
-                                    <option value="">اختر الولاية</option>
+                                    <option value="">{{ __('main.select_state') }}</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}">
                                             {{ $state->name_ar }} - {{ $state->name_en }}
@@ -93,9 +94,9 @@
 
                             <!-- Latitude -->
                             <div class="mb-4">
-                                <label for="latitude" class="kt-label mb-2">خط العرض</label>
+                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
                                 <input type="number" step="any" name="latitude" id="latitude" class="kt-input"
-                                    placeholder="مثال: 24.7136">
+                                    placeholder="{{ __('main.latitude_example') }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -103,9 +104,9 @@
 
                             <!-- Longitude -->
                             <div class="mb-4">
-                                <label for="longitude" class="kt-label mb-2">خط الطول</label>
+                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
                                 <input type="number" step="any" name="longitude" id="longitude" class="kt-input"
-                                    placeholder="مثال: 46.6753">
+                                    placeholder="{{ __('main.longitude_example') }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -115,9 +116,9 @@
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Population -->
                             <div class="mb-4">
-                                <label for="population" class="kt-label mb-2">عدد السكان</label>
+                                <label for="population" class="kt-label mb-2">{{ __('main.population') }}</label>
                                 <input type="number" name="population" id="population" class="kt-input"
-                                    placeholder="مثال: 1000000">
+                                    placeholder="{{ __('main.population_example') }}">
                                 @error('population')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -125,9 +126,9 @@
 
                             <!-- Timezone -->
                             <div class="mb-3">
-                                <label for="timezone" class="kt-label mb-2">المنطقة الزمنية الرئيسية</label>
+                                <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
                                 <select name="timezone" id="timezone" class="kt-select">
-                                    <option value="">اختر المنطقة الزمنية</option>
+                                    <option value="">{{ __('main.select_timezone') }}</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
                                             {{ old('timezone') == $zone ? 'selected' : '' }}>
@@ -143,9 +144,9 @@
 
                         <!-- Description -->
                         <div class="mb-4">
-                            <label for="description" class="kt-label mb-2">وصف المدينة</label>
+                            <label for="description" class="kt-label mb-2">{{ __('main.city_description') }}</label>
                             <textarea name="description" id="description" rows="4" class="kt-input"
-                                placeholder="معلومات إضافية عن المدينة..."></textarea>
+                                placeholder="{{ __('main.additional_city_info') }}"></textarea>
                             @error('description')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -157,10 +158,10 @@
                                 <input type="hidden" name="is_active" value="0">
                                 <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
                                     value="1" checked>
-                                <label for="is_active" class="kt-label mb-0">تفعيل المدينة</label>
+                                <label for="is_active" class="kt-label mb-0">{{ __('main.activate_city') }}</label>
                             </div>
                             <div class="text-sm text-secondary-foreground mt-1">
-                                المدن المفعلة ستظهر في القوائم والتقارير
+                                {{ __('main.active_cities_will_appear') }}
                             </div>
                         </div>
 
@@ -168,15 +169,15 @@
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                حفظ المدينة
+                                {{ __('main.save_city') }}
                             </button>
                             <button type="submit" name="save_and_add" value="1"
                                 class="kt-btn kt-btn-outline kt-btn-outline-primary">
                                 <i class="ki-filled ki-plus text-sm me-2"></i>
-                                حفظ وإضافة أخرى
+                                {{ __('main.save_and_add_another') }}
                             </button>
                             <a href="{{ route('cities.index') }}" class="kt-btn kt-btn-outline">
-                                إلغاء
+                                {{ __('main.cancel') }}
                             </a>
                         </div>
                     </form>
@@ -187,7 +188,7 @@
             <!-- Quick Info -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">معلومات مهمة</h3>
+                    <h3 class="kt-card-title">{{ __('main.important_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-2">
                     <div class="space-y-3">
@@ -196,9 +197,9 @@
                                 <i class="ki-filled ki-information text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">تأكد من دقة البيانات</div>
-                                <div class="text-sm text-secondary-foreground">يُرجى التحقق من صحة إحداثيات المدينة قبل
-                                    الحفظ</div>
+                                <div class="font-semibold">{{ __('main.ensure_data_accuracy') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.verify_city_coordinates') }}
+                                </div>
                             </div>
                         </div>
 
@@ -207,9 +208,8 @@
                                 <i class="ki-filled ki-geolocation text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">الإحداثيات الجغرافية</div>
-                                <div class="text-sm text-secondary-foreground">استخدم خدمات الخرائط للحصول على إحداثيات
-                                    دقيقة</div>
+                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.use_map_services') }}</div>
                             </div>
                         </div>
 
@@ -218,8 +218,8 @@
                                 <i class="ki-filled ki-flag text-warning"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">اختيار البلد</div>
-                                <div class="text-sm text-secondary-foreground">يجب تحديد البلد قبل إضافة المدينة</div>
+                                <div class="font-semibold">{{ __('main.country_selection') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.must_select_country') }}</div>
                             </div>
                         </div>
                     </div>

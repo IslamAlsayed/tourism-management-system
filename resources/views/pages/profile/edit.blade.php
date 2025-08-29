@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Edit Profile')
+@section('title', __('main.edit_profile'))
 
 @section('content')
     <!-- Container -->
@@ -8,15 +8,15 @@
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    Edit Profile
+                    {{ __('main.edit_profile') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    Update your personal information
+                    {{ __('main.update_personal_info') }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a class="kt-btn kt-btn-outline" href="{{ route('user.profile') }}">
-                    View Profile
+                    {{ __('main.view_profile') }}
                 </a>
             </div>
         </div>
@@ -46,7 +46,7 @@
                 <div class="kt-card min-w-full">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            Profile Photo
+                            {{ __('main.profile_photo') }}
                         </h3>
                     </div>
                     <div class="kt-card-content p-6">
@@ -66,14 +66,14 @@
                                 </label>
                             </div>
                             <p class="text-sm text-secondary-foreground text-center">
-                                Click the image to change your profile photo. <br>
-                                Allowed formats: JPEG, PNG. Max size: 1MB.
+                                {{ __('main.click_to_change_photo') }} <br>
+                                {{ __('main.allowed_formats') }}
                             </p>
                             @error('photo')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                             <button type="submit" class="kt-btn kt-btn-primary w-full">
-                                Update Photo
+                                {{ __('main.update_photo') }}
                             </button>
                         </form>
                     </div>
@@ -83,7 +83,7 @@
                 <div class="kt-card min-w-full">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            Profile Information
+                            {{ __('main.profile_information') }}
                         </h3>
                     </div>
                     <div class="kt-card-content p-6">
@@ -92,19 +92,19 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div class="flex flex-col gap-1">
                                     <label class="kt-form-label text-mono">
-                                        Name
+                                        {{ __('main.name') }}
                                     </label>
-                                    <input class="kt-input" name="name" placeholder="Your Name" type="text"
-                                        value="{{ old('name', $user->name) }}" required />
+                                    <input class="kt-input" name="name" placeholder="{{ __('main.your_name') }}"
+                                        type="text" value="{{ old('name', $user->name) }}" required />
                                     @error('name')
                                         <span class="text-red-500 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="flex flex-col gap-1">
                                     <label class="kt-form-label text-mono">
-                                        Email
+                                        {{ __('main.email') }}
                                     </label>
-                                    <input class="kt-input" name="email" placeholder="your.email@example.com"
+                                    <input class="kt-input" name="email" placeholder="{{ __('main.your_email') }}"
                                         type="email" value="{{ old('email', $user->email) }}" required />
                                     @error('email')
                                         <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -114,10 +114,10 @@
 
                             <div class="flex flex-col gap-1">
                                 <label class="kt-form-label text-mono">
-                                    Phone
+                                    {{ __('main.phone') }}
                                 </label>
-                                <input class="kt-input" name="phone" placeholder="Your Phone Number" type="text"
-                                    value="{{ old('phone', $user->phone) }}" />
+                                <input class="kt-input" name="phone" placeholder="{{ __('main.your_phone') }}"
+                                    type="text" value="{{ old('phone', $user->phone) }}" />
                                 @error('phone')
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
@@ -125,9 +125,9 @@
 
                             <div class="flex flex-col gap-1">
                                 <label class="kt-form-label text-mono">
-                                    Bio
+                                    {{ __('main.bio') }}
                                 </label>
-                                <textarea class="kt-textarea" name="bio" placeholder="Tell us about yourself" rows="4">{{ old('bio', $user->bio) }}</textarea>
+                                <textarea class="kt-textarea" name="bio" placeholder="{{ __('main.tell_about_yourself') }}" rows="4">{{ old('bio', $user->bio) }}</textarea>
                                 @error('bio')
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
@@ -135,7 +135,7 @@
 
                             <div class="flex justify-end">
                                 <button type="submit" class="kt-btn kt-btn-primary">
-                                    Save Changes
+                                    {{ __('main.save_changes') }}
                                 </button>
                             </div>
                         </form>
@@ -146,13 +146,12 @@
                 <div class="kt-card min-w-full mt-5 lg:mt-7.5">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title text-danger">
-                            Delete Account
+                            {{ __('main.delete_account') }}
                         </h3>
                     </div>
                     <div class="kt-card-content p-6">
                         <p class="text-secondary-foreground mb-5">
-                            Once your account is deleted, all of its resources and data will be permanently deleted. Before
-                            deleting your account, please download any data or information that you wish to retain.
+                            {{ __('main.account_deletion_warning') }}
                         </p>
                         <form action="{{ route('profile.destroy') }}" method="POST">
                             @csrf
@@ -160,11 +159,11 @@
                             <div class="flex flex-col gap-4">
                                 <div class="flex flex-col gap-1">
                                     <label class="kt-form-label font-normal text-mono">
-                                        Password
+                                        {{ __('main.password') }}
                                     </label>
                                     <div class="kt-input" data-kt-toggle-password="true">
-                                        <input name="password" placeholder="Enter your current password" type="password"
-                                            required>
+                                        <input name="password" placeholder="{{ __('main.enter_current_password') }}"
+                                            type="password" required>
                                         <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                             data-kt-toggle-password-trigger="true" type="button">
                                             <span class="kt-toggle-password-active:hidden">
@@ -182,7 +181,7 @@
                                     @enderror
                                 </div>
                                 <button type="submit" class="kt-btn kt-btn-danger w-full sm:w-auto">
-                                    Delete Account
+                                    {{ __('main.delete_account') }}
                                 </button>
                             </div>
                         </form>

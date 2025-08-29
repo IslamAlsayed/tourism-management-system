@@ -58,9 +58,11 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Country Name (Arabic) -->
                             <div class="mb-3">
-                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.country_name_arabic') }}</label>
+                                <label for="name_ar"
+                                    class="kt-label required mb-2">{{ __('main.country_name_arabic') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input"
-                                    placeholder="{{ __('main.enter_country_name_arabic') }}" required value="{{ $country->name_ar }}">
+                                    placeholder="{{ __('main.enter_country_name_arabic') }}" required
+                                    value="{{ $country->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -68,9 +70,11 @@
 
                             <!-- Country Name (English) -->
                             <div class="mb-3">
-                                <label for="name" class="kt-label required mb-2">{{ __('main.country_name_english') }}</label>
+                                <label for="name"
+                                    class="kt-label required mb-2">{{ __('main.country_name_english') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input"
-                                    placeholder="{{ __('main.enter_country_name_english') }}" required value="{{ $country->name }}">
+                                    placeholder="{{ __('main.enter_country_name_english') }}" required
+                                    value="{{ $country->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -90,9 +94,11 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Country Code (ISO 2) -->
                             <div class="mb-3">
-                                <label for="iso2" class="kt-label required mb-2">{{ __('main.country_code_iso2') }}</label>
+                                <label for="iso2"
+                                    class="kt-label required mb-2">{{ __('main.country_code_iso2') }}</label>
                                 <input type="text" name="iso2" id="iso2" class="kt-input"
-                                    placeholder="{{ __('main.iso2_example') }}" max="2" required value="{{ $country->iso2 }}">
+                                    placeholder="{{ __('main.iso2_example') }}" max="2" required
+                                    value="{{ $country->iso2 }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

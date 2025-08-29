@@ -1,24 +1,24 @@
 @extends('layouts.master')
 
-@section('title', 'إعدادات الإشعارات')
+@section('title', __('main.notification_settings'))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    إعدادات الإشعارات
+                    {{ __('main.notification_settings') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    تكوين الإشعارات والتنبيهات والرسائل
+                    {{ __('main.configure_notifications_alerts') }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('settings.index') }}" class="kt-btn kt-btn-outline">
-                    العودة للإعدادات
+                    {{ __('main.back_to_settings') }}
                 </a>
                 <button class="kt-btn kt-btn-primary">
-                    حفظ التغييرات
+                    {{ __('main.save_changes') }}
                 </button>
             </div>
         </div>
@@ -29,42 +29,45 @@
             <!-- Notification Channels -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">قنوات الإشعارات</h3>
+                    <h3 class="kt-card-title">{{ __('main.notification_channels') }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form class="space-y-6">
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between p-4 border rounded">
+                        <div class="space-y-4 p-4">
+                            <div class="flex items-center justify-between border-b pb-2">
                                 <div class="flex items-center gap-3">
                                     <i class="ki-filled ki-sms text-xl text-primary"></i>
                                     <div>
-                                        <div class="font-semibold">إشعارات البريد الإلكتروني</div>
-                                        <div class="text-sm text-secondary-foreground">استقبال الإشعارات عبر البريد الإلكتروني</div>
+                                        <div class="font-semibold">{{ __('main.email_notifications') }}</div>
+                                        <div class="text-sm text-secondary-foreground">{{ __('main.receive_notifications_via_email') }}</div>
                                     </div>
                                 </div>
-                                <input type="checkbox" class="kt-checkbox kt-checkbox-lg" {{ $notificationSettings['email_notifications'] ? 'checked' : '' }} />
+                                <input type="checkbox" class="kt-checkbox kt-checkbox-lg"
+                                    {{ $notificationSettings['email_notifications'] ? 'checked' : '' }} />
                             </div>
 
-                            <div class="flex items-center justify-between p-4 border rounded">
+                            <div class="flex items-center justify-between border-b pb-2">
                                 <div class="flex items-center gap-3">
                                     <i class="ki-filled ki-phone text-xl text-success"></i>
                                     <div>
-                                        <div class="font-semibold">رسائل SMS</div>
-                                        <div class="text-sm text-secondary-foreground">استقبال الإشعارات عبر الرسائل النصية</div>
+                                        <div class="font-semibold">{{ __('main.sms_notifications') }}</div>
+                                        <div class="text-sm text-secondary-foreground">{{ __('main.receive_notifications_via_sms') }}</div>
                                     </div>
                                 </div>
-                                <input type="checkbox" class="kt-checkbox kt-checkbox-lg" {{ $notificationSettings['sms_notifications'] ? 'checked' : '' }} />
+                                <input type="checkbox" class="kt-checkbox kt-checkbox-lg"
+                                    {{ $notificationSettings['sms_notifications'] ? 'checked' : '' }} />
                             </div>
 
-                            <div class="flex items-center justify-between p-4 border rounded">
+                            <div class="flex items-center justify-between border-b pb-2">
                                 <div class="flex items-center gap-3">
                                     <i class="ki-filled ki-notification-bing text-xl text-warning"></i>
                                     <div>
-                                        <div class="font-semibold">الإشعارات المنبثقة</div>
-                                        <div class="text-sm text-secondary-foreground">إشعارات فورية في المتصفح</div>
+                                        <div class="font-semibold">{{ __('main.push_notifications') }}</div>
+                                        <div class="text-sm text-secondary-foreground">{{ __('main.instant_browser_notifications') }}</div>
                                     </div>
                                 </div>
-                                <input type="checkbox" class="kt-checkbox kt-checkbox-lg" {{ $notificationSettings['push_notifications'] ? 'checked' : '' }} />
+                                <input type="checkbox" class="kt-checkbox kt-checkbox-lg"
+                                    {{ $notificationSettings['push_notifications'] ? 'checked' : '' }} />
                             </div>
                         </div>
                     </form>
@@ -74,38 +77,38 @@
             <!-- Notification Types -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">أنواع الإشعارات</h3>
+                    <h3 class="kt-card-title">{{ __('main.notification_types') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
+                    <div class="space-y-4 p-4">
+                        <div class="flex items-center justify-between border-b pb-2">
                             <div>
-                                <div class="font-semibold">مستخدم جديد</div>
-                                <div class="text-sm text-secondary-foreground">عند تسجيل مستخدم جديد</div>
+                                <div class="font-semibold">{{ __('main.new_user') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.when_new_user_registers') }}</div>
                             </div>
                             <input type="checkbox" class="kt-checkbox" checked />
                         </div>
 
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between border-b pb-2">
                             <div>
-                                <div class="font-semibold">تحديث البيانات</div>
-                                <div class="text-sm text-secondary-foreground">عند تحديث بيانات مهمة</div>
+                                <div class="font-semibold">{{ __('main.data_updates') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.when_important_data_updates') }}</div>
                             </div>
                             <input type="checkbox" class="kt-checkbox" checked />
                         </div>
 
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between border-b pb-2">
                             <div>
-                                <div class="font-semibold">تقارير النظام</div>
-                                <div class="text-sm text-secondary-foreground">تقارير دورية عن حالة النظام</div>
+                                <div class="font-semibold">{{ __('main.system_reports') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.periodic_reports_on_system_status') }}</div>
                             </div>
                             <input type="checkbox" class="kt-checkbox" />
                         </div>
 
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between border-b pb-2">
                             <div>
-                                <div class="font-semibold">تحديثات الأمان</div>
-                                <div class="text-sm text-secondary-foreground">إشعارات أمنية مهمة</div>
+                                <div class="font-semibold">{{ __('main.security_updates') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.important_security_notifications') }}</div>
                             </div>
                             <input type="checkbox" class="kt-checkbox" checked />
                         </div>
@@ -116,24 +119,24 @@
             <!-- Test Notification -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">اختبار الإشعارات</h3>
+                    <h3 class="kt-card-title">{{ __('main.test_notifications') }}</h3>
                 </div>
-                <div class="kt-card-body">
+                <div class="kt-card-body p-4">
                     <p class="text-sm text-secondary-foreground mb-4">
-                        يمكنك إرسال إشعار تجريبي للتأكد من عمل الإعدادات بشكل صحيح
+                        {{ __('main.send_test_notification') }}
                     </p>
                     <div class="flex gap-3">
                         <button class="kt-btn kt-btn-outline kt-btn-outline-primary">
                             <i class="ki-filled ki-sms text-sm me-2"></i>
-                            اختبار البريد الإلكتروني
+                            {{ __('main.test_email') }}
                         </button>
                         <button class="kt-btn kt-btn-outline kt-btn-outline-success">
                             <i class="ki-filled ki-phone text-sm me-2"></i>
-                            اختبار SMS
+                            {{ __('main.test_sms') }}
                         </button>
                         <button class="kt-btn kt-btn-outline kt-btn-outline-warning">
                             <i class="ki-filled ki-notification-bing text-sm me-2"></i>
-                            اختبار الإشعار المنبثق
+                            {{ __('main.test_push_notification') }}
                         </button>
                     </div>
                 </div>

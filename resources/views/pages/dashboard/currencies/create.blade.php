@@ -35,9 +35,11 @@
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Currency Name (Arabic) -->
                             <div class="mb-3">
-                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.currency_name_arabic') }}</label>
+                                <label for="name_ar"
+                                    class="kt-label required mb-2">{{ __('main.currency_name_arabic') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input"
-                                    placeholder="{{ __('main.currency_name_arabic_example') }}" required value="{{ old('name_ar') }}">
+                                    placeholder="{{ __('main.currency_name_arabic_example') }}" required
+                                    value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -45,9 +47,11 @@
 
                             <!-- Currency Name (English) -->
                             <div class="mb-3">
-                                <label for="name" class="kt-label required mb-2">{{ __('main.currency_name_english') }}</label>
+                                <label for="name"
+                                    class="kt-label required mb-2">{{ __('main.currency_name_english') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input"
-                                    placeholder="{{ __('main.currency_name_english_example') }}" required value="{{ old('name') }}">
+                                    placeholder="{{ __('main.currency_name_english_example') }}" required
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -57,9 +61,11 @@
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Currency Code -->
                             <div class="mb-3">
-                                <label for="code" class="kt-label required mb-2">{{ __('main.currency_code_iso') }}</label>
+                                <label for="code"
+                                    class="kt-label required mb-2">{{ __('main.currency_code_iso') }}</label>
                                 <input type="text" name="code" id="code" class="kt-input"
-                                    placeholder="{{ __('main.currency_code_example') }}" maxlength="3" required value="{{ old('code') }}">
+                                    placeholder="{{ __('main.currency_code_example') }}" maxlength="3" required
+                                    value="{{ old('code') }}">
                                 <div class="text-xs text-secondary-foreground mt-1">
                                     {{ __('main.currency_code_hint') }}
                                 </div>
@@ -70,9 +76,11 @@
 
                             <!-- Currency Symbol -->
                             <div class="mb-3">
-                                <label for="symbol" class="kt-label required mb-2">{{ __('main.currency_symbol') }}</label>
+                                <label for="symbol"
+                                    class="kt-label required mb-2">{{ __('main.currency_symbol') }}</label>
                                 <input type="text" name="symbol" id="symbol" class="kt-input"
-                                    placeholder="{{ __('main.currency_symbol_example') }}" maxlength="5" required value="{{ old('symbol') }}">
+                                    placeholder="{{ __('main.currency_symbol_example') }}" maxlength="5" required
+                                    value="{{ old('symbol') }}">
                                 @error('symbol')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -95,7 +103,8 @@
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Exchange Rate to USD -->
                             <div class="mb-3">
-                                <label for="exchange_rate" class="kt-label required mb-2">{{ __('main.exchange_rate_usd') }}</label>
+                                <label for="exchange_rate"
+                                    class="kt-label required mb-2">{{ __('main.exchange_rate_usd') }}</label>
                                 <input type="number" step="0.0001" name="exchange_rate" id="exchange_rate"
                                     class="kt-input" placeholder="{{ __('main.exchange_rate_example') }}" required
                                     value="{{ old('exchange_rate') }}">
@@ -127,7 +136,8 @@
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Countries using this currency -->
                             <div class="mb-3">
-                                <label for="countries" class="kt-label mb-2">{{ __('main.countries_using_currency') }}</label>
+                                <label for="countries"
+                                    class="kt-label mb-2">{{ __('main.countries_using_currency') }}</label>
                                 <select name="countries[]" id="countries" class="kt-select" multiple>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">{{ $country->name_ar }} -
@@ -164,7 +174,8 @@
                             <div class="mb-3">
                                 <label for="subunit_name" class="kt-label mb-2">{{ __('main.subunit_name') }}</label>
                                 <input type="text" name="subunit_name" id="subunit_name" class="kt-input"
-                                    placeholder="{{ __('main.subunit_name_example') }}" value="{{ old('subunit_name') }}">
+                                    placeholder="{{ __('main.subunit_name_example') }}"
+                                    value="{{ old('subunit_name') }}">
                                 <div class="text-xs text-secondary-foreground mt-1">
                                     {{ __('main.subunit_name_hint') }}
                                 </div>
@@ -176,7 +187,8 @@
                             <div class="mb-3">
                                 <label for="subunit_ratio" class="kt-label mb-2">{{ __('main.subunit_ratio') }}</label>
                                 <input type="number" name="subunit_ratio" id="subunit_ratio" class="kt-input"
-                                    placeholder="{{ __('main.subunit_ratio_example') }}" value="{{ old('subunit_ratio', '100') }}">
+                                    placeholder="{{ __('main.subunit_ratio_example') }}"
+                                    value="{{ old('subunit_ratio', '100') }}">
                                 <div class="text-xs text-secondary-foreground mt-1">
                                     {{ __('main.subunit_ratio_hint') }}
                                 </div>
@@ -189,7 +201,8 @@
                         <!-- Symbol Position -->
                         <div class="grid lg:grid-cols-2 gap-6">
                             <div class="mb-3">
-                                <label for="symbol_position" class="kt-label mb-2">{{ __('main.symbol_position') }}</label>
+                                <label for="symbol_position"
+                                    class="kt-label mb-2">{{ __('main.symbol_position') }}</label>
                                 <select name="symbol_position" id="symbol_position" class="kt-select">
                                     <option value="before"
                                         {{ old('symbol_position', 'before') == 'before' ? 'selected' : '' }}>
@@ -203,7 +216,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="thousand_separator" class="kt-label mb-2">{{ __('main.thousand_separator') }}</label>
+                                <label for="thousand_separator"
+                                    class="kt-label mb-2">{{ __('main.thousand_separator') }}</label>
                                 <select name="thousand_separator" id="thousand_separator" class="kt-select">
                                     <option value="," {{ old('thousand_separator', ',') == ',' ? 'selected' : '' }}>
                                         {{ __('main.comma_separator') }}</option>
@@ -239,27 +253,31 @@
                                     <input type="hidden" name="is_active" value="0">
                                     <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
                                         value="1" {{ old('is_active', '1') ? 'checked' : '' }}>
-                                    <label for="is_active" class="kt-label mb-0">{{ __('main.activate_currency') }}</label>
+                                    <label for="is_active"
+                                        class="kt-label mb-0">{{ __('main.activate_currency') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="is_crypto" id="is_crypto" class="kt-checkbox"
                                         value="1" {{ old('is_crypto') ? 'checked' : '' }}>
-                                    <label for="is_crypto" class="kt-label mb-0">{{ __('main.is_crypto_currency') }}</label>
+                                    <label for="is_crypto"
+                                        class="kt-label mb-0">{{ __('main.is_crypto_currency') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="auto_update_rate" id="auto_update_rate"
                                         class="kt-checkbox" value="1"
                                         {{ old('auto_update_rate', '1') ? 'checked' : '' }}>
-                                    <label for="auto_update_rate" class="kt-label mb-0">{{ __('main.auto_update_rate') }}</label>
+                                    <label for="auto_update_rate"
+                                        class="kt-label mb-0">{{ __('main.auto_update_rate') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="is_base_currency" id="is_base_currency"
                                         class="kt-checkbox" value="1"
                                         {{ old('is_base_currency') ? 'checked' : '' }}>
-                                    <label for="is_base_currency" class="kt-label mb-0">{{ __('main.base_currency') }}</label>
+                                    <label for="is_base_currency"
+                                        class="kt-label mb-0">{{ __('main.base_currency') }}</label>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +337,8 @@
                             </div>
                             <div>
                                 <div class="font-semibold">{{ __('main.iso_4217_codes') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.use_standard_currency_codes') }}
+                                <div class="text-sm text-secondary-foreground">
+                                    {{ __('main.use_standard_currency_codes') }}
                                 </div>
                             </div>
                         </div>

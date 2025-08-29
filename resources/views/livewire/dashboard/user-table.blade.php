@@ -10,50 +10,25 @@
     <div class="kt-card-content">
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
             <div class="kt-scrollable-x-auto">
-                <table class="kt-table table-auto kt-table-border" data-kt-datatable-table="true">
+                <table class="kt-table table-auto" data-kt-datatable-table="true">
                     <thead>
                         <tr>
-                            <th class="w-[60px] text-center">
-                                <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true"
-                                    type="checkbox" />
+                            <th class="w-[60px] px-4 py-3 text-center">
+                                <input type="checkbox" id="selectAllCountries" class="kt-checkbox kt-checkbox-sm">
                             </th>
-                            <th class="min-w-[300px]">
-                                <span class="kt-table-col">
-                                    <span class="kt-table-col-label">{{ __('main.user') }}</span>
-                                    <span class="kt-table-col-sort"></span>
-                                </span>
-                            </th>
-                            <th>
-                                <span class="kt-table-col">
-                                    <span class="kt-table-col-label">{{ __('main.phone') }}</span>
-                                    <span class="kt-table-col-sort"></span>
-                                </span>
-                            </th>
-                            <th>
-                                <span class="kt-table-col">
-                                    <span class="kt-table-col-label">{{ __('main.department') }}</span>
-                                    <span class="kt-table-col-sort"></span>
-                                </span>
-                            </th>
-                            <th>
-                                <span class="kt-table-col">
-                                    <span class="kt-table-col-label">{{ __('main.position') }}</span>
-                                    <span class="kt-table-col-sort"></span>
-                                </span>
-                            </th>
-                            <th>
-                                <span class="kt-table-col">
-                                    <span class="kt-table-col-label">{{ __('main.status') }}</span>
-                                    <span class="kt-table-col-sort"></span>
-                                </span>
-                            </th>
-                            <th>
-                                <span class="kt-table-col">
-                                    <span class="kt-table-col-label">{{ __('main.created_at') }}</span>
-                                    <span class="kt-table-col-sort"></span>
-                                </span>
-                            </th>
-                            <th class="w-[60px]"></th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.id') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.user') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.phone') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.position') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.status') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.created_at') }}</th>
+                            <th class="px-4 py-3"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,6 +38,7 @@
                                     <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
                                         type="checkbox" value="1" />
                                 </td>
+                                <td class="px-4 py-2 text-sm text-gray-700">{{ $user->id }}</td>
                                 <td>
                                     <div class="flex items-center gap-2.5">
                                         <img src="{{ $user->avatar_url ? asset('storage/' . $user->avatar_url) : asset('metronic/media/avatars/blank.png') }}"
@@ -79,16 +55,16 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ $user->phone ?? $user->mobile }}</td>
-                                <td>{{ $user->department }}</td>
-                                <td>{{ $user->position }}</td>
+                                <td>{{ $user->phone ?? ($user->mobile ?? '--') }}</td>
+                                <td>{{ $user->position ?? '--' }}</td>
                                 <td>
                                     <span class="text-{{ $user->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
                                         {{ $user->is_active == 1 ? __('main.active') : __('main.inactive') }}
                                     </span>
                                 </td>
-                                <td>{{ $user->created_at ? $user->created_at->format('Y-m-d') : '' }}</td>
                                 <td>
+                                    {{ $user->created_at ? $user->created_at->format('Y-m-d') : '' }}</td>
+                                <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('users.edit', $user->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">

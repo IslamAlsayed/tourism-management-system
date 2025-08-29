@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', 'إعدادات النظام')
+@section('title', __('main.system_settings'))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    إعدادات النظام
+                    {{ __('main.system_settings') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    إدارة وتكوين إعدادات النظام العامة
+                    {{ __('main.manage_configure_system_settings') }}
                 </div>
             </div>
         </div>
@@ -22,64 +22,64 @@
             <div class="grid lg:grid-cols-2 xl:grid-cols-4 gap-5">
                 <!-- General Settings -->
                 <div class="kt-card hover:shadow-lg transition-shadow">
-                    <div class="kt-card-body text-center">
-                        <div class="bg-primary-light rounded-full p-4 mx-auto mb-4 w-fit">
+                    <div class="kt-card-body text-center p-4">
+                        <div class="bg-primary-light rounded-full mx-auto mb-4 w-fit">
                             <i class="ki-filled ki-setting-2 text-3xl text-primary"></i>
                         </div>
-                        <h3 class="text-lg font-semibold mb-2">الإعدادات العامة</h3>
+                        <h3 class="text-lg font-semibold mb-2">{{ __('main.general_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
-                            إعدادات التطبيق الأساسية والتكوين العام
+                            {{ __('main.configure_basic_app_settings') }}
                         </p>
                         <a href="{{ route('settings.general') }}" class="kt-btn kt-btn-primary kt-btn-sm">
-                            إدارة الإعدادات
+                            {{ __('main.manage_users') }}
                         </a>
                     </div>
                 </div>
 
                 <!-- Security Settings -->
                 <div class="kt-card hover:shadow-lg transition-shadow">
-                    <div class="kt-card-body text-center">
-                        <div class="bg-success-light rounded-full p-4 mx-auto mb-4 w-fit">
+                    <div class="kt-card-body text-center p-4">
+                        <div class="bg-success-light rounded-full mx-auto mb-4 w-fit">
                             <i class="ki-filled ki-shield-tick text-3xl text-success"></i>
                         </div>
-                        <h3 class="text-lg font-semibold mb-2">إعدادات الأمان</h3>
+                        <h3 class="text-lg font-semibold mb-2">{{ __('main.security_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
-                            إعدادات كلمات المرور والأمان والحماية
+                            {{ __('main.configure_security_password_settings') }}
                         </p>
                         <a href="{{ route('settings.security') }}" class="kt-btn kt-btn-success kt-btn-sm">
-                            إدارة الأمان
+                            {{ __('main.security') }}
                         </a>
                     </div>
                 </div>
 
                 <!-- Notification Settings -->
                 <div class="kt-card hover:shadow-lg transition-shadow">
-                    <div class="kt-card-body text-center">
-                        <div class="bg-warning-light rounded-full p-4 mx-auto mb-4 w-fit">
+                    <div class="kt-card-body text-center p-4">
+                        <div class="bg-warning-light rounded-full mx-auto mb-4 w-fit">
                             <i class="ki-filled ki-notification-bing text-3xl text-warning"></i>
                         </div>
-                        <h3 class="text-lg font-semibold mb-2">إعدادات الإشعارات</h3>
+                        <h3 class="text-lg font-semibold mb-2">{{ __('main.notification_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
-                            تكوين الإشعارات والتنبيهات والرسائل
+                            {{ __('main.configure_notifications_alerts') }}
                         </p>
                         <a href="{{ route('settings.notifications') }}" class="kt-btn kt-btn-warning kt-btn-sm">
-                            إدارة الإشعارات
+                            {{ __('main.notifications') }}
                         </a>
                     </div>
                 </div>
 
                 <!-- Backup Settings -->
                 <div class="kt-card hover:shadow-lg transition-shadow">
-                    <div class="kt-card-body text-center">
-                        <div class="bg-info-light rounded-full p-4 mx-auto mb-4 w-fit">
+                    <div class="kt-card-body text-center p-4">
+                        <div class="bg-info-light rounded-full mx-auto mb-4 w-fit">
                             <i class="ki-filled ki-cloud-download text-3xl text-info"></i>
                         </div>
-                        <h3 class="text-lg font-semibold mb-2">النسخ الاحتياطي</h3>
+                        <h3 class="text-lg font-semibold mb-2">{{ __('main.backup_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
-                            إدارة النسخ الاحتياطية واستعادة البيانات
+                            {{ __('main.manage_backup_restore_data') }}
                         </p>
                         <a href="{{ route('settings.backup') }}" class="kt-btn kt-btn-info kt-btn-sm">
-                            إدارة النسخ
+                            {{ __('main.backup_now') }}
                         </a>
                     </div>
                 </div>
@@ -88,21 +88,21 @@
             <!-- Quick Actions -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">إجراءات سريعة</h3>
+                    <h3 class="kt-card-title">{{ __('main.quick_actions') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <div class="grid lg:grid-cols-3 gap-4">
+                    <div class="grid lg:grid-cols-3 gap-4 p-4">
                         <button class="kt-btn kt-btn-outline kt-btn-outline-primary">
                             <i class="ki-filled ki-arrows-circle text-sm me-2"></i>
-                            مسح الذاكرة المؤقتة
+                            {{ __('main.clear_cache') }}
                         </button>
                         <button class="kt-btn kt-btn-outline kt-btn-outline-success">
                             <i class="ki-filled ki-check-circle text-sm me-2"></i>
-                            فحص النظام
+                            {{ __('main.system_check') }}
                         </button>
                         <button class="kt-btn kt-btn-outline kt-btn-outline-warning">
                             <i class="ki-filled ki-file-up text-sm me-2"></i>
-                            تحديث النظام
+                            {{ __('main.update_system') }}
                         </button>
                     </div>
                 </div>

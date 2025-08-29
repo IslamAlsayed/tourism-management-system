@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'User Profile')
+@section('title', __('main.user_profile'))
 
 @section('content')
     <!-- Container with Hero Background -->

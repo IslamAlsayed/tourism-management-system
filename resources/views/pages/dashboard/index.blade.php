@@ -230,10 +230,10 @@
                                 </div>
                             </div>
                             <div class="flex items-center gap-1 mb-1.5">
-                                <div class="bg-green-500 h-2 w-full max-w-[40%] rounded-xs"></div>
-                                <div class="bg-primary h-2 w-full max-w-[30%] rounded-xs"></div>
-                                <div class="bg-violet-500 h-2 w-full max-w-[20%] rounded-xs"></div>
-                                <div class="bg-orange-500 h-2 w-full max-w-[10%] rounded-xs"></div>
+                                <div class="kt-badge-success h-2 w-full max-w-[40%] rounded-xs"></div>
+                                <div class="kt-badge-primary h-2 w-full max-w-[30%] rounded-xs"></div>
+                                <div class="kt-badge-info h-2 w-full max-w-[20%] rounded-xs"></div>
+                                <div class="kt-badge-warning h-2 w-full max-w-[10%] rounded-xs"></div>
                             </div>
                             <div class="flex items-center flex-wrap gap-4 mb-1">
                                 <div class="flex items-center gap-1.5">

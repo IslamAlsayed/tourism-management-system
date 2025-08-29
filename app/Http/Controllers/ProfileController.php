@@ -16,7 +16,7 @@ class ProfileController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('pages.profile.index2', [
+        return view('pages.profile.index', [
             'user' => $request->user(),
         ]);
     }

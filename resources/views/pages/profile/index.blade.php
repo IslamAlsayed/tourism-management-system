@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'User Profile')
+@section('title', __('main.user_profile'))
 
 @section('content')
     <!-- Container -->
@@ -8,15 +8,15 @@
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    User Profile
+                    {{ __('main.user_profile') }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    Central Hub for Personal Customization
+                    {{ __('main.central_hub_customization') }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a class="kt-btn kt-btn-primary" href="{{ route('profile.edit') }}">
-                    Account Settings
+                    {{ __('main.account_settings') }}
                 </a>
             </div>
         </div>
@@ -57,7 +57,7 @@
                         </p>
                         <div class="flex items-center gap-2 mb-5">
                             <span class="kt-badge kt-badge-sm kt-badge-outline kt-badge-success">
-                                Active Account
+                                {{ __('main.active_account') }}
                             </span>
                         </div>
                         <div class="w-full border-t border-border pt-5">
@@ -69,7 +69,7 @@
                                             <i class="ki-solid ki-call text-primary"></i>
                                         </div>
                                         <div>
-                                            <span class="text-secondary-foreground text-sm">Phone</span>
+                                            <span class="text-secondary-foreground text-sm">{{ __('main.phone') }}</span>
                                             <p class="text-foreground">{{ $user->phone }}</p>
                                         </div>
                                     </li>
@@ -80,7 +80,7 @@
                                         <i class="ki-solid ki-sms text-primary"></i>
                                     </div>
                                     <div>
-                                        <span class="text-secondary-foreground text-sm">Email</span>
+                                        <span class="text-secondary-foreground text-sm">{{ __('main.email') }}</span>
                                         <p class="text-foreground">{{ $user->email }}</p>
                                     </div>
                                 </li>
@@ -90,8 +90,8 @@
                                         <i class="ki-solid ki-security-user text-primary"></i>
                                     </div>
                                     <div>
-                                        <span class="text-secondary-foreground text-sm">Role</span>
-                                        <p class="text-foreground">User</p>
+                                        <span class="text-secondary-foreground text-sm">{{ __('main.role') }}</span>
+                                        <p class="text-foreground">{{ __('main.user') }}</p>
                                     </div>
                                 </li>
                             </ul>
@@ -103,7 +103,7 @@
                 <div class="kt-card min-w-full mb-5 lg:mb-7.5">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            About
+                            {{ __('main.about') }}
                         </h3>
                         <div class="kt-card-toolbar">
                             <a href="{{ route('profile.edit') }}"
@@ -119,8 +119,9 @@
                             </p>
                         @else
                             <p class="text-secondary-foreground italic" style="padding: 10px">
-                                No bio information available. <a href="{{ route('profile.edit') }}"
-                                    class="text-primary hover:underline">Add your bio</a> to tell others about yourself.
+                                {{ __('main.no_bio_provided') }} <a href="{{ route('profile.edit') }}"
+                                    class="text-primary hover:underline">{{ __('main.add_your_bio') }}</a>
+                                {{ __('main.to_tell_about_yourself') }}
                             </p>
                         @endif
                     </div>
@@ -130,7 +131,7 @@
                 <div class="kt-card min-w-full">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            Recent Activity
+                            {{ __('main.recent_activity') }}
                         </h3>
                     </div>
                     <div class="kt-card-body p-6">
@@ -145,8 +146,9 @@
                                         <i class="ki-solid ki-user-edit text-primary fs-6"></i>
                                     </div>
                                     <div>
-                                        <h4 class="text-foreground font-medium">Profile Created</h4>
-                                        <p class="text-secondary-foreground text-sm">Account was created</p>
+                                        <h4 class="text-foreground font-medium">{{ __('main.profile_created') }}</h4>
+                                        <p class="text-secondary-foreground text-sm">{{ __('main.account_was_created') }}
+                                        </p>
                                         <span
                                             class="text-xs text-muted-foreground">{{ $user->created_at->diffForHumans() }}</span>
                                     </div>
@@ -159,8 +161,9 @@
                                             <i class="ki-solid ki-check text-success fs-6"></i>
                                         </div>
                                         <div>
-                                            <h4 class="text-foreground font-medium">Email Verified</h4>
-                                            <p class="text-secondary-foreground text-sm">Your email address was verified</p>
+                                            <h4 class="text-foreground font-medium">{{ __('main.email_verified') }}</h4>
+                                            <p class="text-secondary-foreground text-sm">
+                                                {{ __('main.email_was_verified') }}</p>
                                             <span
                                                 class="text-xs text-muted-foreground">{{ $user->email_verified_at->diffForHumans() }}</span>
                                         </div>
@@ -173,9 +176,10 @@
                                         <i class="ki-solid ki-abstract-26 text-muted-foreground fs-6"></i>
                                     </div>
                                     <div>
-                                        <h4 class="text-foreground font-medium">Future Activity</h4>
-                                        <p class="text-secondary-foreground text-sm">Your activity will appear here</p>
-                                        <span class="text-xs text-muted-foreground">Coming soon</span>
+                                        <h4 class="text-foreground font-medium">{{ __('main.future_activity') }}</h4>
+                                        <p class="text-secondary-foreground text-sm">
+                                            {{ __('main.activity_will_appear_here') }}</p>
+                                        <span class="text-xs text-muted-foreground">{{ __('main.coming_soon') }}</span>
                                     </div>
                                 </div>
                             </div>

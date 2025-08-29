@@ -116,8 +116,10 @@
                         </p>
                         <div class="flex items-center justify-between">
                             <div class="text-sm">
-                                <span class="text-success">{{ $stats['active_users'] }} {{ __('main.active_users_count_status') }}</span> /
-                                <span class="text-danger">{{ $stats['inactive_users'] }} {{ __('main.inactive_users_count_status') }}</span>
+                                <span class="text-success">{{ $stats['active_users'] }}
+                                    {{ __('main.active_users_count_status') }}</span> /
+                                <span class="text-danger">{{ $stats['inactive_users'] }}
+                                    {{ __('main.inactive_users_count_status') }}</span>
                             </div>
                             <a href="{{ route('reports.users') }}" class="kt-btn kt-btn-sm kt-btn-primary">
                                 {{ __('main.view_report') }}
@@ -137,7 +139,8 @@
                         </p>
                         <div class="flex items-center justify-between">
                             <div class="text-sm">
-                                {{ number_format($stats['total_cities'] / $stats['total_countries'], 1) }} {{ __('main.cities_per_country') }}
+                                {{ number_format($stats['total_cities'] / $stats['total_countries'], 1) }}
+                                {{ __('main.cities_per_country') }}
                             </div>
                             <a href="{{ route('reports.locations') }}" class="kt-btn kt-btn-sm kt-btn-primary">
                                 {{ __('main.view_report') }}

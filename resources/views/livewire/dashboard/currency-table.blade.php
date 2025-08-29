@@ -10,32 +10,23 @@
     <div class="kt-card-content">
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
             <div class="kt-scrollable-x-auto">
-                <table class="kt-table table-auto kt-table-border" data-kt-datatable-table="true">
+                <table class="kt-table table-auto" data-kt-datatable-table="true">
                     <thead>
                         <tr>
-                            <th class="w-[60px] text-center">
-                                <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true"
-                                    type="checkbox" />
+                            <th class="w-[60px] px-4 py-3 text-center">
+                                <input type="checkbox" id="selectAllCurrencies" class="kt-checkbox kt-checkbox-sm">
                             </th>
-                            <th>
-                                <span class="kt-table-col">
-                                    <span class="kt-table-col-label">{{ __('main.currency_name') }}</span>
-                                    <span class="kt-table-col-sort"></span>
-                                </span>
-                            </th>
-                            <th>
-                                <span class="kt-table-col">
-                                    <span class="kt-table-col-label">{{ __('main.currency_code') }}</span>
-                                    <span class="kt-table-col-sort"></span>
-                                </span>
-                            </th>
-                            <th>
-                                <span class="kt-table-col">
-                                    <span class="kt-table-col-label">{{ __('main.symbol') }}</span>
-                                    <span class="kt-table-col-sort"></span>
-                                </span>
-                            </th>
-                            <th class="w-[60px]"></th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.id') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.currency_name') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.currency_code') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.symbol') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.created_at') }}</th>
+                            <th class="px-4 py-3"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,10 +36,11 @@
                                     <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
                                         type="checkbox" value="1" />
                                 </td>
+                                <td>{{ $currency->id }}</td>
                                 <td>{{ $currency->name }}</td>
                                 <td>{{ $currency->code }}</td>
                                 <td>{{ $currency->symbol }}</td>
-                                <td>
+                                <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('currencies.edit', $currency->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
