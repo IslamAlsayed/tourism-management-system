@@ -664,6 +664,22 @@ return [
     'coming_soon' => 'Coming soon',
     'bio' => 'Bio',
 
+    // Language Management
+    'language_management' => 'Language Management',
+    'language_management_title' => 'Language Management',
+    'language_management_description' => 'Manage the languages used in the application.',
+    'languages' => 'Languages',
+    'create_new_language' => 'Create New Language',
+    'create_new_language_description' => 'Create a new language for the application.',
+    'back_to_languages' => 'Back to Languages',
+    'basic_language_info' => 'Basic Language Information',
+    'view_languages' => 'View Languages',
+    'create_language' => 'Create Language',
+    'all_languages' => 'All Languages',
+    'add_new_language' => 'Add New Language',
+    'language_name' => 'Language Name',
+    'language_code' => 'Language Code',
+
     // messages
     'messages' => [
         'Updated Successfully' => 'Updated Successfully',
@@ -680,6 +696,7 @@ return [
         'item_deleted' => 'Item Deleted',
         'operation_successful' => 'Operation Successful',
         'operation_failed' => 'Operation Failed',
+        'photo_uploaded_successfully' => 'Photo Uploaded Successfully',
         'no_photo_uploaded' => 'No Photo Uploaded',
         'changes_saved' => 'Changes Saved',
 
@@ -723,6 +740,14 @@ return [
         'city_update_failed' => 'City Update Failed',
         'city_deleted' => 'City Deleted',
         'city_deletion_failed' => 'City Deletion Failed',
+
+        // Language Management
+        'created_language_successfully' => 'Language created successfully.',
+        'created_not_language_successfully' => 'Language not created successfully.',
+        'change_language_successfully' => 'Language changed successfully.',
+        'change_language_not_successfully' => 'Language change not successful.',
+        'language_deleted_successfully' => 'Language deleted successfully.',
+        'language_deletion_failed' => 'Language deletion failed.',
     ],
 
     // maps

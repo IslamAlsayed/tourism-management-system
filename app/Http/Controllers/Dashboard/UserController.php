@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Country;
 use App\Http\Requests\User\UserCreateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
-use App\Models\Country;
-use App\Models\User;
-use Illuminate\Support\Facades\Storage;
+use App\Traits\PhotoUploadTrait;
 
 class UserController extends Controller
 {
+    use PhotoUploadTrait;
+
     public function index()
     {
         $users = User::paginate(20);
@@ -38,11 +40,7 @@ class UserController extends Controller
         $user = User::create($validated);
 
         if ($user) {
-            if ($request->hasFile('photo')) {
-                $filename = $request->file('photo')->hashName();
-                $path = $request->file('photo')->storeAs("profile-photos/{$user->id}", $filename, 'public');
-                $user->update(['avatar_url' => $path]);
-            }
+            $this->uploadPhoto($request, $user, 'avatar_url', "profile-photos");
             return redirect()->route('users.index')->with('success', __('main.messages.user_created'));
         }
 
@@ -63,15 +61,7 @@ class UserController extends Controller
 
         $validated['name'] = ($validated['first_name'] ?? $user->first_name) . ' ' . ($validated['last_name'] ?? $user->last_name);
 
-        if ($request->hasFile('photo')) {
-            if ($user->avatar_url) {
-                Storage::disk('public')->delete($user->avatar_url);
-            }
-
-            $filename = $request->file('photo')->hashName();
-            $path = $request->file('photo')->storeAs("profile-photos/{$user->id}", $filename, 'public');
-            $validated['avatar_url'] = $path;
-        }
+        $this->uploadPhoto($request, $user, 'avatar_url', "profile-photos");
 
         $user->update($validated);
 
@@ -83,6 +73,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $deleted = $user->delete();
         if ($deleted) {
+            $this->deletePhoto($user, 'avatar_url');
             return redirect()->route('users.index')->with('success', __('main.messages.user_deleted'));
         }
 

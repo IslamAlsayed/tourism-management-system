@@ -3,26 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
-use Illuminate\Http\Request;
+use App\Traits\PhotoUploadTrait;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
+use App\Http\Requests\CreateLanguageRequest;
 
 class LanguageController extends Controller
 {
+    use PhotoUploadTrait;
+
     public function index()
     {
-        $languages = Language::all();
-        return view('dashboard.languages', compact('languages'));
+        $data = Language::paginate(10);
+        return view('pages.dashboard.languages.index', compact('data'));
     }
 
-    public function update(Request $request, Language $language)
+    public function create()
     {
-        $updated = $language->update(['status' => $request->status]);
-        if ($updated) {
+        return view('pages.dashboard.languages.create');
+    }
+
+    public function store(CreateLanguageRequest $request)
+    {
+        $language = Language::create($request->validated());
+
+        if ($language) {
             $this->loadActiveLanguages();
-            return redirect()->back()->withSuccess(__('main.messages.Updated Successfully'));
+            $this->uploadPhoto($request, $language, 'flag', "languages");
+            return redirect()->route('languages.index')->with('success', __('main.messages.created_language_successfully'));
         }
-        return redirect()->back()->withError(__('main.messages.Failed to update language status. Please try again.'));
+
+        return redirect()->route('languages.index')->with('error', __('main.messages.created_not_language_successfully'));
     }
 
     public function locale($locale = 'en')
@@ -31,15 +42,30 @@ class LanguageController extends Controller
             $this->loadActiveLanguages();
             session()->put('locale', $locale);
             App::setLocale($locale);
-            return redirect()->back()->withSuccess(__('main.messages.Change Language Successfully'));
+            return redirect()->back()->withSuccess(__('main.messages.change_language_successfully'));
         }
 
-        return redirect()->back()->withError(__('main.messages.Change Language Not Successfully'));
+        return redirect()->back()->withError(__('main.messages.change_language_not_successfully'));
+    }
+
+    public function destroy($id)
+    {
+        $language = Language::findOrFail($id);
+        if ($language->code == app()->getLocale()) {
+            $this->locale(array_rand(config('languages.languages')));
+        }
+        $deleted = $language->delete();
+        if ($deleted) {
+            $this->deletePhoto($language, 'flag');
+            return redirect()->route('languages.index')->with('success', __('main.messages.language_deleted_successfully'));
+        }
+
+        return redirect()->route('languages.index')->with('error', __('main.messages.language_deletion_failed'));
     }
 
     public function loadActiveLanguages(): void
     {
-        $languages = Language::where('status', 1)->pluck('name', 'code')->toArray();
+        $languages = Language::pluck('name', 'code')->toArray();
         Config::set('languages.languages', $languages);
     }
 

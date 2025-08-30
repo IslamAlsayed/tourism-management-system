@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('code');
             $table->string('name');
-            $table->boolean('status')->default(1);
+            $table->string('flag')->nullable();
             $table->timestamps();
         });
     }

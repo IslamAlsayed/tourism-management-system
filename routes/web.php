@@ -1,7 +1,8 @@
 <?php
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CountryController;
@@ -10,7 +11,6 @@ use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Admin\SidebarManagerController;
-use App\Http\Controllers\ImportController;
 
 Route::get('/dashboard/countries/metronic-table', function () {
     return view('pages.dashboard.countries.metronic-table');
@@ -30,7 +30,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // === LANGUAGES ===
-    Route::get('languages/{locale}', [LanguageController::class, 'locale'])->name('languages.change');
+    Route::get('languages/{locale}/locale', [LanguageController::class, 'locale'])->name('languages.change');
     Route::resource('languages', LanguageController::class)->names('languages');
 
     // === USER MANAGEMENT ===

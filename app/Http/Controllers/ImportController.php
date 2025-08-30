@@ -292,7 +292,6 @@ class ImportController extends Controller
         }
     }
 
-
     /**
      * Process the import for currencies
      */

@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\UserUpdateRequest;
+use App\Traits\PhotoUploadTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    use PhotoUploadTrait;
     /**
      * Show the application's profile dashboard.
      */
@@ -74,29 +75,20 @@ class ProfileController extends Controller
     /**
      * Update the user's profile photo.
      */
-    public function updatePhoto(Request $request): RedirectResponse
+    public function updatePhoto(Request $request)
     {
         $request->validate([
-            'photo' => ['required', 'image', 'max:1024'],
+            'photo' => ['required', 'image', 'max:2048'],
         ]);
 
         $user = $request->user();
 
-        if ($request->hasFile('photo')) {
-            if ($user->avatar_url) {
-                // Delete the old photo
-                Storage::disk('public')->delete($user->avatar_url);
-            }
-
-            // Store the new photo
-            $filename = $request->file('photo')->hashName();
-            $path = $request->file('photo')->storeAs('profile-photos' . '/' . $user->id, $filename, 'public');
-            $user->avatar_url = $path;
-            $user->save();
-            return redirect()->route('user.profile')->with('success', __('main.messages.profile_photo_updated'));
+        try {
+            $this->uploadPhoto($request, $user, 'avatar_url', 'profile-photos');
+            return redirect()->route('user.profile')->with('success', __('main.messages.photo_uploaded_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->route('user.profile')->with('error', __('main.messages.no_photo_uploaded'));
         }
-
-        return redirect()->route('user.profile')->with('error', __('main.messages.no_photo_uploaded'));
     }
 
     /**

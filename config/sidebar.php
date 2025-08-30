@@ -372,7 +372,7 @@ return [
 
         // ================= Tourist Sites =================
         [
-            'title' => 'Tourist sites',
+            'title' => 'tourist sites',
             'icon' => 'ki-filled ki-geolocation',
             'children' => [
                 [
@@ -422,6 +422,23 @@ return [
             ],
         ],
 
+        // ================= Languages =================
+        [
+            'title' => 'languages management',
+            'icon' => 'ki-filled ki-global',
+            'children' => [
+                [
+                    'title' => 'view_languages',
+                    'icon' => 'ki-filled ki-global',
+                    'route' => 'languages.index'
+                ],
+                [
+                    'title' => 'create_language',
+                    'icon' => 'ki-filled ki-plus',
+                    'route' => 'languages.create'
+                ]
+            ],
+        ],
 
         // ================= Profile =================
         [
