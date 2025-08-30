@@ -664,6 +664,22 @@ return [
     'coming_soon' => 'قريباً',
     'bio' => 'السيرة الذاتية',
 
+    // Language Management
+    'language_management' => 'إدارة اللغات',
+    'language_management_title' => 'إدارة اللغات',
+    'language_management_description' => 'إدارة اللغات المستخدمة في التطبيق.',
+    'languages' => 'اللغات',
+    'create_new_language' => 'إنشاء لغة جديدة',
+    'create_new_language_description' => 'إنشاء لغة جديدة للتطبيق.',
+    'back_to_languages' => 'العودة إلى اللغات',
+    'basic_language_info' => 'معلومات اللغة الأساسية',
+    'view_languages' => 'عرض اللغات',
+    'create_language' => 'إنشاء لغة',
+    'all_languages' => 'جميع اللغات',
+    'add_new_language' => 'إضافة لغة جديدة',
+    'language_name' => 'اسم اللغة',
+    'language_code' => 'رمز اللغة',
+
     // messages
     'messages' => [
         'no_backup'=>'لم يتم إنشاء نسخة احتياطية بعد',
@@ -681,6 +697,7 @@ return [
         'item_deleted' => 'تم حذف العنصر',
         'operation_successful' => 'تمت العملية بنجاح',
         'operation_failed' => 'فشلت العملية',
+        'photo_uploaded_successfully' => 'تم تحميل الصورة بنجاح',
         'no_photo_uploaded' => 'لم يتم تحميل أي صورة',
         'changes_saved' => 'تم حفظ التغييرات',
 
@@ -724,6 +741,14 @@ return [
         'city_update_failed' => 'فشل تحديث المدينة',
         'city_deleted' => 'تم حذف المدينة',
         'city_deletion_failed' => 'فشل حذف المدينة',
+
+        // Language Management
+        'created_language_successfully' => 'تم إنشاء اللغة بنجاح.',
+        'created_not_language_successfully' => 'لم يتم إنشاء اللغة بنجاح.',
+        'change_language_successfully' => 'تم تغيير اللغة بنجاح.',
+        'change_language_not_successfully' => 'لم يتم تغيير اللغة بنجاح.',
+        'language_deleted_successfully' => 'تم حذف اللغة بنجاح.',
+        'language_deletion_failed' => 'فشل حذف اللغة.',
     ],
 
     // maps

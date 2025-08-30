@@ -25,20 +25,6 @@
 
     <!-- Container -->
     <div class="kt-container-fixed">
-        <!-- Status Message -->
-        {{-- @if (session('status'))
-            <div class="p-4 mb-5 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-                role="alert">
-                @if (session('status') == 'profile-updated')
-                    Profile information updated successfully.
-                @elseif (session('status') == 'photo-updated')
-                    Profile photo updated successfully.
-                @else
-                    {{ session('status') }}
-                @endif
-            </div>
-        @endif --}}
-
         <!-- begin: grid -->
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 lg:gap-7.5">
             <!-- Profile Photo Column -->
@@ -53,16 +39,16 @@
                         <form action="{{ route('profile.photo') }}" method="POST" enctype="multipart/form-data"
                             class="flex flex-col items-center gap-5">
                             @csrf
-                            {{-- <div class="kt-image-input size-32" data-kt-image-input="true"> --}}
                             <div class="" data-kt-image-input="true">
                                 <label class="kt-image-input-change" data-kt-image-input-trigger="true"
                                     style="cursor: pointer">
                                     <div style="width: 150px; margin: auto;">
-                                        <img src="{{ $user->avatar_url ? asset('storage/' . $user->avatar_url) : asset('metronic/media/avatars/blank.png') }}"
+                                        <img id="avatar-preview"
+                                            src="{{ $user->avatar_url ? asset('storage/' . $user->avatar_url) : asset('metronic/media/avatars/blank.png') }}"
                                             alt="{{ $user->name }}" style="width: 100%;">
                                     </div>
                                     <input accept=".png, .jpg, .jpeg, .webp" name="photo" type="file"
-                                        style="display: none;" />
+                                        style="display: none;" id="photo-input" />
                                 </label>
                             </div>
                             <p class="text-sm text-secondary-foreground text-center">
@@ -72,7 +58,7 @@
                             @error('photo')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
-                            <button type="submit" class="kt-btn kt-btn-primary w-full">
+                            <button type="submit" class="kt-btn kt-btn-primary w-full" id="upload-button" disabled>
                                 {{ __('main.update_photo') }}
                             </button>
                         </form>
@@ -200,6 +186,25 @@
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof KTUI !== 'undefined') {
                 KTUI.imageInput.init();
+            }
+        });
+    </script>
+
+    <script>
+        // Adding an event listener for when the user selects a file
+        document.getElementById('photo-input').addEventListener('change', function(event) {
+            const file = event.target.files[0]; // Get the selected file
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Update the preview image source to the selected file
+                document.getElementById('avatar-preview').src = e.target.result;
+            };
+
+            if (file) {
+                reader.readAsDataURL(file); // Read the file as a Data URL
+                let uploadButton = document.getElementById('upload-button');
+                if (uploadButton) uploadButton.disabled = false; // Enable the upload button
             }
         });
     </script>

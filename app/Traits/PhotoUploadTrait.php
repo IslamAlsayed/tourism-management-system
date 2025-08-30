@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Traits;
+
+use Illuminate\Support\Facades\Storage;
+
+trait PhotoUploadTrait
+{
+    /**
+     * Upload and delete old photo for any model.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $model
+     * @param  string  $photoColumn
+     * @param  string  $folder
+     * @return void
+     */
+    public function uploadPhoto($request, $model, $photoColumn = 'photo', $folder = 'other')
+    {
+        if ($request->hasFile('photo')) {
+            // Delete the old photo if exists
+            if ($model->{$photoColumn}) {
+                Storage::disk('public')->delete($model->{$photoColumn});
+            }
+
+            // Store the new photo
+            $filename = $request->file('photo')->hashName();
+            $path = $request->file('photo')->storeAs($folder . '/' . $model->id, $filename, 'public');
+
+            // Update the model with the new photo path
+            $model->{$photoColumn} = $path;
+            $model->save();
+        }
+    }
+
+    public function deletePhoto($model, $photoColumn = 'photo')
+    {
+        // Check if the photo exists before attempting to delete it
+        if (!empty($model->{$photoColumn})) {
+            // Delete the photo
+            Storage::disk('public')->delete($model->{$photoColumn});
+
+            // Delete the folder if it's empty
+            $folderPath = dirname($model->{$photoColumn});
+            if (Storage::disk('public')->exists($folderPath) && count(Storage::disk('public')->files($folderPath)) == 0) {
+                Storage::disk('public')->deleteDirectory($folderPath);
+            }
+        }
+    }
+}

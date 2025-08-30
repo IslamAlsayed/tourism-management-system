@@ -15,7 +15,11 @@ class LanguageSeeder extends Seeder
         Language::truncate();
 
         foreach (config('languages.languages') as $key => $language) {
-            Language::create(['code' => $key, 'name' => $language]);
+            Language::create([
+                'code' => $key,
+                'name' => $language,
+                'flag' => $key . '.svg'
+            ]);
         }
     }
 }

@@ -145,4 +145,12 @@ return [
     'quick tools' => 'أدوات سريعة',
     'update profile' => 'تحديث الملف الشخصي',
     'logout' => 'تسجيل الخروج',
+    'languages management' => 'إدارة اللغات',
+    'languages' => 'اللغات',
+    'view_languages' => 'عرض اللغات',
+    'create_language' => 'إنشاء لغة',
+    'all_languages' => 'جميع اللغات',
+    'add_new_language' => 'إضافة لغة جديدة',
+    'language_name' => 'اسم اللغة',
+    'language_code' => 'رمز اللغة',
 ];
