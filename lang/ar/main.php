@@ -666,6 +666,7 @@ return [
 
     // messages
     'messages' => [
+        'no_backup'=>'لم يتم إنشاء نسخة احتياطية بعد',
         'Updated Successfully' => 'تم التحديث بنجاح',
         'Failed to update language status. Please try again.' => 'فشل تحديث حالة اللغة. يرجى المحاولة مرة أخرى.',
         'Change Language Successfully' => 'تم تغيير اللغة بنجاح',

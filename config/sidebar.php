@@ -372,7 +372,7 @@ return [
 
         // ================= Tourist Sites =================
         [
-            'title' => 'Tourist sites',
+            'title' => 'tourist sites',
             'icon' => 'ki-filled ki-geolocation',
             'children' => [
                 [

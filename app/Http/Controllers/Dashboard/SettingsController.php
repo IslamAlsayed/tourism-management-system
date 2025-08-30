@@ -53,7 +53,7 @@ class SettingsController extends Controller
     public function backup()
     {
         $backupInfo = [
-            'last_backup' => Cache::get('last_backup_date', 'لم يتم إنشاء نسخة احتياطية بعد'),
+            'last_backup' => Cache::get('last_backup_date', __('main.messages.no_backup')),
             'backup_size' => $this->getBackupSize(),
             'auto_backup_enabled' => Cache::get('auto_backup_enabled', false),
             'backup_frequency' => Cache::get('backup_frequency', 'weekly'),
