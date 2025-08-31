@@ -27,9 +27,9 @@
     <div class="kt-container-fixed">
         <div class="grid gap-5 lg:gap-7.5">
             <!-- Location Statistics -->
-            <div class="grid lg:grid-cols-4 gap-5">
+            <div class="grid gap-5 lg:grid-cols-4">
                 {{-- Total Countries --}}
-                <div class="kt-card p-2">
+                <div class="p-2 kt-card">
                     <div class="kt-card-body">
                         <div class="flex items-center justify-center gap-2">
                             <span class="text-3xl font-bold text-primary">
@@ -43,7 +43,7 @@
                 </div>
 
                 {{-- Total Cities --}}
-                <div class="kt-card p-2">
+                <div class="p-2 kt-card">
                     <div class="kt-card-body">
                         <div class="flex items-center justify-center gap-2">
                             <span class="text-3xl font-bold text-primary">
@@ -57,7 +57,7 @@
                 </div>
 
                 {{-- Avg Cities Per Country --}}
-                <div class="kt-card p-2">
+                <div class="p-2 kt-card">
                     <div class="kt-card-body">
                         <div class="flex items-center justify-center gap-2">
                             <span class="text-3xl font-bold text-primary">
@@ -71,7 +71,7 @@
                 </div>
 
                 {{-- Countries With Cities --}}
-                <div class="kt-card p-2">
+                <div class="p-2 kt-card">
                     <div class="kt-card-body">
                         <div class="flex items-center justify-center gap-2">
                             <span class="text-3xl font-bold text-primary">
@@ -110,9 +110,9 @@
                                         <td>
                                             <div class="flex items-center gap-2">
                                                 <div class="progress-bar bg-primary"
-                                                    style="width: {{ ($country->cities_count / $locationStats['total_cities']) * 100 }}%">
+                                                    style="width: {{ $locationStats['total_cities'] > 0 ? ($country->cities_count / $locationStats['total_cities']) * 100 : 0 }}%">
                                                 </div>
-                                                <span>{{ number_format(($country->cities_count / $locationStats['total_cities']) * 100, 1) }}%</span>
+                                                <span>{{ $locationStats['total_cities'] > 0 ? number_format(($country->cities_count / $locationStats['total_cities']) * 100, 1) : 0 }}%</span>
                                             </div>
                                         </td>
                                     </tr>

@@ -4,25 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+class CreateRestaurantsTable extends Migration
+{
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
-            $table->string('country');
-            $table->string('city');
+            $table->string('country')->nullable();
+            $table->string('city')->nullable();
             $table->string('type')->nullable();
-            $table->string('category')->nullable();
-            $table->string('restaurants_name_arabic');
-            $table->string('restaurants_name_english');
+            $table->string('cat')->nullable();
+            $table->string('resturants_name_arabic')->nullable();
+            $table->string('resturants_name_english')->nullable();
             $table->string('company_name_ar')->nullable();
             $table->string('specialty')->nullable();
-            $table->string('phone_02')->nullable();
-            $table->string('fax')->nullable();
             $table->string('phone_01')->nullable();
+            $table->string('fax')->nullable();
+            $table->string('phone_02')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('email_01')->nullable();
             $table->string('email_02')->nullable();
@@ -43,4 +44,4 @@ return new class extends Migration {
     {
         Schema::dropIfExists('restaurants');
     }
-};
+}

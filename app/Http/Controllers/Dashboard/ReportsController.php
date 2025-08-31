@@ -49,10 +49,7 @@ class ReportsController extends Controller
             'avg_cities_per_country' => round(City::count() / Country::count(), 2),
         ];
 
-        $topCountries = Country::withCount('cities')
-            ->orderBy('cities_count', 'desc')
-            ->take(10)
-            ->get();
+        $topCountries = Country::withCount('cities')->orderBy('cities_count', 'desc')->take(10)->get();
 
         return view('pages.dashboard.reports.locations', compact('locationStats', 'topCountries'));
     }

@@ -80,24 +80,24 @@ This integration includes 10 complete demo layouts, each showcasing different UI
 ### ✅ Core Implementation
 
 1. **Laravel MVC Architecture**
-   - Dedicated controllers for each demo (Demo1Controller - Demo10Controller)
-   - Clean routing structure with named routes
-   - Blade template inheritance and components
+    - Dedicated controllers for each demo (Demo1Controller - Demo10Controller)
+    - Clean routing structure with named routes
+    - Blade template inheritance and components
 
 2. **Asset Management**
-   - Metronic CSS and JavaScript assets properly integrated
-   - Laravel asset helpers for proper path resolution
-   - Vite integration for development workflow
+    - Metronic CSS and JavaScript assets properly integrated
+    - Laravel asset helpers for proper path resolution
+    - Vite integration for development workflow
 
 3. **Template System**
-   - Blade layouts for each demo with proper inheritance
-   - Reusable partials for headers, sidebars, and footers
-   - Component-based architecture for UI elements
+    - Blade layouts for each demo with proper inheritance
+    - Reusable partials for headers, sidebars, and footers
+    - Component-based architecture for UI elements
 
 4. **Responsive Design**
-   - Mobile-first responsive layouts
-   - Touch-friendly navigation
-   - Adaptive components across all screen sizes
+    - Mobile-first responsive layouts
+    - Touch-friendly navigation
+    - Adaptive components across all screen sizes
 
 ### 🎨 Design System
 
@@ -109,6 +109,7 @@ This integration includes 10 complete demo layouts, each showcasing different UI
 ## Getting Started
 
 ### Prerequisites
+
 - PHP 8.2 or higher
 - Composer
 - Node.js (LTS version)
@@ -117,34 +118,40 @@ This integration includes 10 complete demo layouts, each showcasing different UI
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/keenthemes/metronic-tailwind-html-integration.git
 cd metronic-tailwind-html-integration/metronic-tailwind-laravel
 ```
 
 2. **Install PHP dependencies**
+
 ```bash
 composer install
 ```
 
 3. **Install Node.js dependencies**
+
 ```bash
 npm install
 ```
 
 4. **Copy Metronic assets**
+
 ```bash
 # Copy assets from metronic-tailwind-html/dist/assets to public/assets/
 cp -r ../metronic-tailwind-html/dist/assets public/
 ```
 
 5. **Environment setup**
+
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
 6. **Start development servers**
+
 ```bash
 # Terminal 1: Laravel server
 php artisan serve
@@ -154,6 +161,7 @@ npm run dev
 ```
 
 ### Available Routes
+
 - **Demo 1**: `/demo1` - Sidebar Layout
 - **Demo 2**: `/demo2` - Header Layout
 - **Demo 3**: `/demo3` - Minimal Layout
@@ -168,6 +176,7 @@ npm run dev
 ## Production Deployment
 
 ### Build for Production
+
 ```bash
 # Build optimized assets
 npm run build
@@ -184,12 +193,14 @@ composer install --optimize-autoloader --no-dev
 ## Customization
 
 ### Adding Your Own Content
+
 1. **Controllers**: Modify demo controllers to return your actual data
 2. **Views**: Customize Blade templates with your content
 3. **Components**: Create new Blade components for your specific needs
 4. **Styling**: Add custom CSS in `resources/css/app.css`
 
 ### Extending Layouts
+
 - Each demo layout is independent and can be customized separately
 - Shared partials allow for consistent elements across demos
 - Component system enables reusable UI elements
@@ -197,12 +208,14 @@ composer install --optimize-autoloader --no-dev
 ## Architecture
 
 ### Design Principles
+
 - **MVC Pattern**: Clean separation using Laravel's MVC architecture
 - **Component-Based**: Reusable Blade components for UI elements
 - **Asset Integration**: Proper integration of Metronic assets with Laravel
 - **Responsive Design**: Mobile-first approach across all layouts
 
 ### File Organization
+
 - **Controllers**: One controller per demo layout
 - **Views**: Organized by demo with shared layouts and partials
 - **Assets**: Metronic assets properly integrated in `public/assets/`
@@ -215,6 +228,7 @@ For detailed integration steps and customization guides, refer to the complete d
 ## Support
 
 For questions and support:
+
 - Review the integration documentation
 - Check the demo implementations for examples
 - Refer to Laravel documentation for framework-specific questions

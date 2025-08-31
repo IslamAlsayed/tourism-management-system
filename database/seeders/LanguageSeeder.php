@@ -7,19 +7,12 @@ use Illuminate\Database\Seeder;
 
 class LanguageSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Language::truncate();
 
         foreach (config('languages.languages') as $key => $language) {
-            Language::create([
-                'code' => $key,
-                'name' => $language,
-                'flag' => $key . '.svg'
-            ]);
+            Language::create(['code' => $key, 'name' => $language, 'flag' => $key . '.svg']);
         }
     }
 }

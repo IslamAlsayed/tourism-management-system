@@ -32,7 +32,7 @@
                     <h3 class="kt-card-title">{{ __('main.growth_indicators') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <div class="grid lg:grid-cols-3 gap-5">
+                    <div class="grid gap-5 lg:grid-cols-3">
                         <div class="flex items-center justify-center gap-2 p-2">
                             <div
                                 class="text-2xl font-bold text-primary {{ $analytics['growth_metrics']['users_growth'] >= 0 ? 'text-success' : 'text-danger' }}">
@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-5">
+            <div class="grid gap-5 lg:grid-cols-2">
                 <!-- User Status Distribution -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -70,7 +70,7 @@
                                 <span>{{ __('main.active_users_label') }}</span>
                                 <div class="flex items-center gap-2">
                                     <div class="w-24 h-2 bg-gray-200 rounded">
-                                        <div class="h-2 bg-success rounded"
+                                        <div class="h-2 rounded bg-success"
                                             style="width: {{ ($analytics['distribution']['users_by_status']['active'] / ($analytics['distribution']['users_by_status']['active'] + $analytics['distribution']['users_by_status']['inactive'])) * 100 }}%">
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@
                                 <span>{{ __('main.inactive_users_label') }}</span>
                                 <div class="flex items-center gap-2">
                                     <div class="w-24 h-2 bg-gray-200 rounded">
-                                        <div class="h-2 bg-danger rounded"
+                                        <div class="h-2 rounded bg-danger"
                                             style="width: {{ ($analytics['distribution']['users_by_status']['inactive'] / ($analytics['distribution']['users_by_status']['active'] + $analytics['distribution']['users_by_status']['inactive'])) * 100 }}%">
                                         </div>
                                     </div>
@@ -100,14 +100,14 @@
                         <h3 class="kt-card-title">{{ __('main.top_5_countries_by_cities') }}</h3>
                     </div>
                     <div class="kt-card-body">
-                        <div class="space-y-3 p-4">
+                        <div class="p-4 space-y-3">
                             @foreach ($analytics['distribution']['cities_by_country'] as $country)
-                                <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between">
                                     <span class="text-sm">{{ $country->name }}</span>
                                     <div class="flex items-center gap-2">
                                         <div class="w-16 h-2 bg-gray-200 rounded">
-                                            <div class="h-2 bg-primary rounded"
-                                                style="width: {{ ($country->cities_count / $analytics['distribution']['cities_by_country']->first()->cities_count) * 100 }}%">
+                                            <div class="h-2 rounded bg-primary"
+                                                style="width: {{ $analytics['distribution']['cities_by_country']->first()->cities_count > 0 ? ($country->cities_count / $analytics['distribution']['cities_by_country']->first()->cities_count) * 100 : 0 }}%">
                                             </div>
                                         </div>
                                         <span
