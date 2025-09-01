@@ -10,6 +10,7 @@ class CreateHotelSupplementsTable extends Migration
     {
         Schema::create('hotel_supplements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
             $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
             $table->string('name');
             $table->decimal('price', 12, 2);

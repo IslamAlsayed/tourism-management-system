@@ -2,6 +2,7 @@
 
 return [
     'dashboard' => 'Dashboard',
+    'booking simulator' => 'Booking Simulator',
     'user management' => 'User Management',
     'all users' => 'All Users',
     'add new user' => 'Add New User',

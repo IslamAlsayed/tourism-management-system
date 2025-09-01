@@ -2,16 +2,23 @@
 
 namespace Database\Seeders;
 
+use App\Models\HotelSupplement;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class HotelSupplementSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('hotel_supplements')->insert([
+        Schema::disableForeignKeyConstraints();
+        HotelSupplement::truncate();
+        Schema::enableForeignKeyConstraints();
+
+        HotelSupplement::insert([
             [
-                'accommodation_id' => 1,
+                'hotel_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
+                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
                 'name' => 'New Year Eve Dinner',
                 'price' => 60.00,
                 'is_per_person' => true,
@@ -19,7 +26,8 @@ class HotelSupplementSeeder extends Seeder
                 'applicable_date' => '2025-12-31',
             ],
             [
-                'accommodation_id' => 1,
+                'hotel_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
+                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
                 'name' => 'Lunch Supplement',
                 'price' => 15.00,
                 'is_per_person' => true,

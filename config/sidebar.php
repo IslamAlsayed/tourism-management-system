@@ -7,6 +7,11 @@ return [
             'icon' => 'ki-filled ki-element-11',
             'route' => 'dashboard',
         ],
+        [
+            'title' => 'booking simulator',
+            'icon' => 'ki-filled ki-element-11',
+            'route' => 'dashboard.multi-step-form.step1',
+        ],
 
         // ================= Users =================
         [

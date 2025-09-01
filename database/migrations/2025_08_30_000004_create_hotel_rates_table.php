@@ -10,6 +10,7 @@ class CreateHotelRatesTable extends Migration
     {
         Schema::create('hotel_rates', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
             $table->foreignId('hotel_season_id')->constrained('hotel_seasons')->onDelete('cascade');
             $table->foreignId('room_type_id')->constrained('hotel_room_types')->onDelete('cascade');
             $table->enum('meal_plan', ['BB', 'HB', 'FB'])->default('BB');

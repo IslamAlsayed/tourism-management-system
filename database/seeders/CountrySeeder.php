@@ -4,15 +4,17 @@ namespace Database\Seeders;
 
 use App\Models\Country;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Schema;
 
 class CountrySeeder extends Seeder
 {
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
         Country::truncate();
+        Schema::enableForeignKeyConstraints();
 
-        DB::table('countries')->insert([
+        Country::insert([
             [
                 'name' => 'Jordan',
                 'name_ar' => 'الأردن',
@@ -21,13 +23,13 @@ class CountrySeeder extends Seeder
                 'numeric_code' => 400,
                 'phone_code' => '962',
                 'capital' => 'Amman',
-                'currency_id' => 1,
+                'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
                 'tld' => '.jo',
                 'native' => 'الأردن',
                 'region' => 'Asia',
-                'region_id' => 1,
+                'region_id' => \App\Models\Region::inRandomOrder()->first()?->id ?? 1,
                 'subregion' => 'Western Asia',
-                'subregion_id' => null,
+                'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id ?? null,
                 'nationality' => 'Jordanian',
                 'timezone' => 'Asia/Amman',
                 'latitude' => 31.963158,
@@ -49,13 +51,13 @@ class CountrySeeder extends Seeder
                 'numeric_code' => 818,
                 'phone_code' => '20',
                 'capital' => 'Cairo',
-                'currency_id' => 2,
+                'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
                 'tld' => '.eg',
                 'native' => 'مصر',
                 'region' => 'Africa',
-                'region_id' => 2,
+                'region_id' => \App\Models\Region::inRandomOrder()->first()?->id ?? 1,
                 'subregion' => 'Northern Africa',
-                'subregion_id' => null,
+                'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id ?? null,
                 'nationality' => 'Egyptian',
                 'timezone' => 'Africa/Cairo',
                 'latitude' => 26.820553,

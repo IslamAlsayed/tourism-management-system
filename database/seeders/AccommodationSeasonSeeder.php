@@ -3,15 +3,20 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\AccommodationSeason;
+use Illuminate\Support\Facades\Schema;
 
 class AccommodationSeasonSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('accommodation_seasons')->insert([
+        Schema::disableForeignKeyConstraints();
+        AccommodationSeason::truncate();
+        Schema::enableForeignKeyConstraints();
+
+        AccommodationSeason::insert([
             [
-                'accommodation_id' => 1,
+                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
                 'season_name' => 'High Season',
                 'start_date' => '2025-06-01',
                 'end_date' => '2025-08-31',
@@ -19,7 +24,7 @@ class AccommodationSeasonSeeder extends Seeder
                 'special_type' => null,
             ],
             [
-                'accommodation_id' => 1,
+                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
                 'season_name' => 'Eid Holiday',
                 'start_date' => '2025-03-25',
                 'end_date' => '2025-04-05',
@@ -27,7 +32,7 @@ class AccommodationSeasonSeeder extends Seeder
                 'special_type' => 'Eid',
             ],
             [
-                'accommodation_id' => 2,
+                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
                 'season_name' => 'Summer',
                 'start_date' => '2025-05-01',
                 'end_date' => '2025-09-15',

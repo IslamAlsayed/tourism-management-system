@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Dashboard\MultiStepFormController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
@@ -28,6 +29,15 @@ Route::get('/', fn() => view('welcome'));
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Dashboard Main
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Multi-step form routes
+    Route::get('/multi-step-form', [MultiStepFormController::class, 'step1'])->name('dashboard.multi-step-form.step1');
+    Route::post('/multi-step-form/step2', [MultiStepFormController::class, 'step2'])->name('dashboard.multi-step-form.step2');
+    Route::post('/multi-step-form/step3', [MultiStepFormController::class, 'step3'])->name('dashboard.multi-step-form.step3');
+    Route::post('/multi-step-form/step4', [MultiStepFormController::class, 'step4'])->name('dashboard.multi-step-form.step4');
+    Route::post('/multi-step-form/submit', [MultiStepFormController::class, 'submit'])->name('dashboard.multi-step-form.submit');
+
+    Route::get('/main-form', [DashboardController::class, 'mainForm'])->name('dashboard.mainForm');
 
     // === LANGUAGES ===
     Route::get('languages/{locale}/locale', [LanguageController::class, 'locale'])->name('languages.change');

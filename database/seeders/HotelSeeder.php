@@ -12,7 +12,7 @@ class HotelSeeder extends Seeder
     {
         $hotels = [
             [
-                'accommodation_id' => Accommodation::where('trade_name', "Ma'in Hot Springs Resort")->first()->id,
+                'accommodation_id' => Accommodation::where('trade_name', "Ma'in Hot Springs Resort")->first()?->id || 1,
                 'sales_man' => 'Omar Ali',
                 'sales_phone' => '+962799999900',
                 'sales_mail' => 'omar.ali@mainresort.jo',
@@ -24,7 +24,7 @@ class HotelSeeder extends Seeder
                 'acc_phone' => '+962799999902',
             ],
             [
-                'accommodation_id' => Accommodation::where('trade_name', "Petra Palace Hotel")->first()->id,
+                'accommodation_id' => Accommodation::where('trade_name', "Petra Palace Hotel")->first()?->id || 1,
                 'sales_man' => 'Samir Jaber',
                 'sales_phone' => '+962798888800',
                 'sales_mail' => 'samir.jaber@petrapalace.jo',

@@ -3,22 +3,27 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\TransportationRate;
+use Illuminate\Support\Facades\Schema;
 
 class TransportationRateSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('transportation_rates')->insert([
+        Schema::disableForeignKeyConstraints();
+        TransportationRate::truncate();
+        Schema::enableForeignKeyConstraints();
+
+        TransportationRate::insert([
             [
-                'company_id' => 1,
-                'bus_type_id' => 1,
+                'company_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
+                'bus_type_id' => \App\Models\BusType::inRandomOrder()->first()?->id ?? 1,
                 'route' => 'Amman - Petra',
                 'price' => 100.00,
             ],
             [
-                'company_id' => 1,
-                'bus_type_id' => 2,
+                'company_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
+                'bus_type_id' => \App\Models\BusType::inRandomOrder()->first()?->id ?? 1,
                 'route' => 'Amman - Dead Sea',
                 'price' => 80.00,
             ],

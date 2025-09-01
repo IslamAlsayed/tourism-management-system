@@ -33,6 +33,23 @@ class Hotel extends Model
         'resvr_mail',
         'accounting_person',
         'acc_mail',
-        'acc_phone'
+        'acc_phone',
+        'accommodation_id',
+        'name',
+        'hotel_chain',
+        'sales_man',
+        'sales_phone',
+        'sales_mail',
+        'resv_man',
+        'resv_phone',
+        'resvr_mail',
+        'accounting_person',
+        'acc_mail',
+        'acc_phone',
     ];
+
+    public function accommodation()
+    {
+        return $this->belongsTo(Accommodation::class);
+    }
 }

@@ -10,6 +10,7 @@ class CreateHotelPoliciesTable extends Migration
     {
         Schema::create('hotel_policies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
             $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
             $table->string('policy_type');
             $table->text('details');

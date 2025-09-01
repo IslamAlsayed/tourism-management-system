@@ -3,15 +3,20 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use App\Models\AccommodationSupplement;
 
 class AccommodationSupplementSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('accommodation_supplements')->insert([
+        Schema::disableForeignKeyConstraints();
+        AccommodationSupplement::truncate();
+        Schema::enableForeignKeyConstraints();
+
+        AccommodationSupplement::insert([
             [
-                'accommodation_id' => 1,
+                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
                 'name' => 'New Year Gala Dinner',
                 'price' => 50.00,
                 'is_per_person' => true,
@@ -19,7 +24,7 @@ class AccommodationSupplementSeeder extends Seeder
                 'applicable_date' => '2025-12-31',
             ],
             [
-                'accommodation_id' => 1,
+                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
                 'name' => 'Lunch Supplement',
                 'price' => 20.00,
                 'is_per_person' => true,

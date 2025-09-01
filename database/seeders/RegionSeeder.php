@@ -5,14 +5,17 @@ namespace Database\Seeders;
 use App\Models\Region;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class RegionSeeder extends Seeder
 {
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
         Region::truncate();
+        Schema::enableForeignKeyConstraints();
 
-        DB::table('regions')->insert([
+        Region::insert([
             ['name' => 'Amman', 'wikiDataId' => null],
             ['name' => 'Aqaba', 'wikiDataId' => null],
         ]);

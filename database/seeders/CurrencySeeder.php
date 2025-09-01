@@ -4,24 +4,26 @@ namespace Database\Seeders;
 
 use App\Models\Currency;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class CurrencySeeder extends Seeder
 {
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
         Currency::truncate();
+        Schema::enableForeignKeyConstraints();
 
-        DB::table('currencies')->insert(values: [
+        Currency::insert([
             [
-                'code' => 'JOD',
-                'name' => 'Jordanian Dinar',
-                'symbol' => 'JD',
+                'code' => 'EGP',
+                'name' => 'Egyptian Pound',
+                'symbol' => 'E£',
             ],
             [
-                'code' => 'USD',
-                'name' => 'US Dollar',
-                'symbol' => '$',
+                'code' => 'SPR',
+                'name' => 'Saudi Riyal',
+                'symbol' => 'SR',
             ],
         ]);
     }

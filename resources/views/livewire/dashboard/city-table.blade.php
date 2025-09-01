@@ -32,8 +32,11 @@
                                     <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
                                         type="checkbox" value="1" />
                                 </td>
-                                <td>{{ $city->name }}</td>
+                                <td>{{ $city->id }}</td>
                                 <td>{{ $city->country?->name }}</td>
+                                <td>
+                                    {{ $city->created_at ? $city->created_at->format('Y-m-d') : '-' }}
+                                </td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('cities.edit', $city->id) }}"

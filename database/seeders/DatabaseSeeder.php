@@ -2,61 +2,51 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
         $this->call([
-            // الماستر/المرجعية أولاً
+                // 1. Basic system data
+            UserSeeder::class,
             LanguageSeeder::class,
             CurrencySeeder::class,
+
+                // 2. Geographical data (regions before countries)
             RegionSeeder::class,
             CountrySeeder::class,
             NationalitySeeder::class,
 
-            // شركات النقل قبل أنواع الحافلات
+                // 3. Transportation (company before bus types before rates)
             TransportationCompanySeeder::class,
             BusTypeSeeder::class,
             TransportationRateSeeder::class,
 
-            // accommodations والفنادق
+                // 4. Accommodation basic data
             AccommodationSeeder::class,
             HotelSeeder::class,
             AccommodationSeasonSeeder::class,
-
-            // *** الأهم هنا: HotelRoomTypeSeeder يجب أن يكون قبل AccommodationRateSeeder ***
             HotelRoomTypeSeeder::class,
 
+                // 5. Hotel seasons before rates
+            HotelSeasonSeeder::class,
+
+                // 6. Rates and policies (after basic data is seeded)
             AccommodationRateSeeder::class,
             AccommodationRateNationalitySeeder::class,
-            AccommodationSupplementSeeder::class,
-
-            HotelPolicySeeder::class,
-
-            // ضع HotelSeasonSeeder هنا قبل HotelRateSeeder
-            HotelSeasonSeeder::class,
             HotelRateSeeder::class,
 
+                // 7. Supplements and additional services
+            AccommodationSupplementSeeder::class,
             HotelSupplementSeeder::class,
+            HotelPolicySeeder::class,
+
+                // 8. Other services and locations
             OtherServiceSeeder::class,
             RouteSeeder::class,
             SiteSeeder::class,
-        ]);
-
-        // إذا أردت إعادة تعيين المستخدمين أزل التعليق عن الكود التالي:
-
-        Schema::disableForeignKeyConstraints();
-        User::truncate();
-        Schema::enableForeignKeyConstraints();
-
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => '12345678'
         ]);
     }
 }

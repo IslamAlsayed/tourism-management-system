@@ -2,14 +2,19 @@
 
 namespace Database\Seeders;
 
+use App\Models\Route;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class RouteSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('routes')->insert([
+        Schema::disableForeignKeyConstraints();
+        Route::truncate();
+        Schema::enableForeignKeyConstraints();
+
+        Route::insert([
             [
                 'name_ar' => 'عمان - البحر الميت',
                 'name_en' => 'Amman - Dead Sea',

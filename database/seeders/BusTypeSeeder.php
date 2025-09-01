@@ -2,14 +2,19 @@
 
 namespace Database\Seeders;
 
+use App\Models\BusType;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class BusTypeSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('bus_types')->insert([
+        Schema::disableForeignKeyConstraints();
+        BusType::truncate();
+        Schema::enableForeignKeyConstraints();
+
+        BusType::insert([
             [
                 'company_id' => 1,
                 'name' => 'Sedan',
