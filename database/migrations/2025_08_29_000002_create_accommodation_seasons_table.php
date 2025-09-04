@@ -10,12 +10,12 @@ class CreateAccommodationSeasonsTable extends Migration
     {
         Schema::create('accommodation_seasons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
             $table->string('season_name');
             $table->boolean('is_special')->default(false);
             $table->string('special_type')->nullable();
             $table->date('start_date');
             $table->date('end_date');
+            $table->unsignedBigInteger('accommodation_id')->nullable();
             $table->timestamps();
         });
     }

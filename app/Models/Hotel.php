@@ -10,43 +10,38 @@ class Hotel extends Model
     use HasFactory;
 
     protected $fillable = [
-        'country',
-        'city',
-        'street',
-        'cat',
-        'type',
-        'trade_name',
-        'arabic_name',
-        'general_mobile',
-        'general_email',
-        'website',
-        'phone',
-        'phone_ext',
-        'fax',
-        'box',
-        'postal_code',
-        'sales_man',
-        'sales_phone',
-        'sales_mail',
-        'resv_man',
-        'resv_phone',
-        'resvr_mail',
-        'accounting_person',
-        'acc_mail',
-        'acc_phone',
-        'accommodation_id',
         'name',
-        'hotel_chain',
+        'created_by',
         'sales_man',
         'sales_phone',
         'sales_mail',
-        'resv_man',
-        'resv_phone',
-        'resvr_mail',
+        'reservation_man',
+        'reservation_phone',
+        'reservation_mail',
         'accounting_person',
-        'acc_mail',
-        'acc_phone',
+        'accounting_mail',
+        'accounting_phone',
+        'description',
+        'city_id',
+        'region_id',
+        'subregion_id',
+        'accommodation_id',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
+    }
 
     public function accommodation()
     {

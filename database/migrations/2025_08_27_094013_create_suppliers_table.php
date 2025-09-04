@@ -13,10 +13,6 @@ return new class extends Migration {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
             $table->string('continent');
-            $table->string('country');
-            $table->string('country_code');
-            $table->string('state');
-            $table->string('city');
             $table->string('timezone');
             $table->string('nationality');
             $table->string('category');
@@ -43,6 +39,11 @@ return new class extends Migration {
             $table->string('tax_id')->nullable();
             $table->string('status')->default('active');
             $table->text('notes')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->unsignedBigInteger('region_id')->nullable();
+            $table->unsignedBigInteger('subregion_id')->nullable();
             $table->timestamps();
         });
     }

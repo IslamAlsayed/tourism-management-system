@@ -11,9 +11,8 @@ class State extends Model
 
     protected $fillable = [
         'name',
+        'name_ar',
         'country_id',
-        'country_code',
-        'country_name',
         'iso2',
         'iso3166_2',
         'fips_code',
@@ -22,6 +21,6 @@ class State extends Model
         'parent_id',
         'latitude',
         'longitude',
-        'timezone'
+        'timezone',
     ];
 }

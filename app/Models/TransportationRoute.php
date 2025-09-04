@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class TransportationRoute extends Model
 {
     protected $fillable = [
-        'transportation_company_id',
-        'route_name',
         'start_location',
-        'end_location',
-        'distance_km',
+        'end_location'
     ];
+
+    // الطريق ده ممكن يكون ليه أسعار مختلفة عند شركات مختلفة + باصات مختلفة
+    public function rates()
+    {
+        return $this->hasMany(TransportationRate::class, 'route_id');
+    }
 }

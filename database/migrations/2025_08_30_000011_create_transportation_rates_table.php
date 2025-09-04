@@ -10,14 +10,11 @@ class CreateTransportationRatesTable extends Migration
     {
         Schema::create('transportation_rates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('bus_type_id');
-            $table->string('route');
-            $table->decimal('price', 10, 2);
+            $table->decimal('price_per_day', 10, 2);
+            $table->foreignId('company_id')->constrained('transportation_companies')->onDelete('cascade');
+            $table->foreignId('bus_type_id')->constrained('bus_types')->onDelete('cascade');
+            $table->foreignId('route_id')->constrained('transportation_routes')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('company_id')->references('id')->on('transportation_companies')->onDelete('cascade');
-            $table->foreign('bus_type_id')->references('id')->on('bus_types')->onDelete('cascade');
         });
     }
 

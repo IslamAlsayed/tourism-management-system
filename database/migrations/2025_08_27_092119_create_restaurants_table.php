@@ -17,9 +17,8 @@ class CreateRestaurantsTable extends Migration
             $table->string('city')->nullable();
             $table->string('type')->nullable();
             $table->string('cat')->nullable();
-            $table->string('resturants_name_arabic')->nullable();
-            $table->string('resturants_name_english')->nullable();
-            $table->string('company_name_ar')->nullable();
+            $table->string('restaurants_name')->nullable();
+            $table->string('restaurants_name_ar')->nullable();
             $table->string('specialty')->nullable();
             $table->string('phone_01')->nullable();
             $table->string('fax')->nullable();
@@ -33,6 +32,9 @@ class CreateRestaurantsTable extends Migration
             $table->string('mobile')->nullable();
             $table->string('website')->nullable();
             $table->text('note')->nullable();
+            $table->unsignedBigInteger('region_id')->nullable();
+            $table->unsignedBigInteger('subregion_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->timestamps();
         });
     }

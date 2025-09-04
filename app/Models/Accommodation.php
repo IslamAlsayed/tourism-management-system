@@ -13,7 +13,7 @@ class Accommodation extends Model
         'type',
         'trade_name',
         'name_ar',
-        'name_en',
+        'name',
         'country',
         'city',
         'city_name',
@@ -39,4 +39,17 @@ class Accommodation extends Model
         'contract_file_path',
         'is_active',
     ];
+
+    public function hotel()
+    {
+        return $this->hasOne(Hotel::class);
+    }
+
+    /**
+     * Rates associated with this accommodation.
+     */
+    public function rates()
+    {
+        return $this->hasMany(AccommodationRate::class);
+    }
 }

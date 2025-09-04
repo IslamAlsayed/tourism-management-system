@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->string('home_city');
             $table->unsignedBigInteger('national_guide_id');
             $table->unsignedBigInteger('tourism_ministry_id');
-            $table->string('guide_name_arabic');
-            $table->string('guide_name_english');
+            $table->string('guide_name_ar');
+            $table->string('guide_name');
             $table->decimal('FD_Day_fees', 10, 2)->nullable();
             $table->decimal('HD_Day_fees', 10, 2)->nullable();
             $table->decimal('extra_fees_1', 10, 2)->nullable();

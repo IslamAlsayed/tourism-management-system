@@ -8,9 +8,9 @@ return [
             'route' => 'dashboard',
         ],
         [
-            'title' => 'booking simulator',
+            'title' => 'quotation requests',
             'icon' => 'ki-filled ki-element-11',
-            'route' => 'dashboard.multi-step-form.step1',
+            'route' => 'dashboard.quote.step1',
         ],
 
         // ================= Users =================

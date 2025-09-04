@@ -14,18 +14,16 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('name_ar');
-            $table->unsignedBigInteger('country_id');
-            $table->string('country_code');
-            $table->string('country_name');
             $table->string('iso2');
             $table->string('iso3166_2');
             $table->string('fips_code');
             $table->string('type');
             $table->integer('level');
-            $table->unsignedBigInteger('parent_id')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
             $table->string('timezone');
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();
         });
     }

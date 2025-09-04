@@ -14,12 +14,9 @@ class Step4Request extends FormRequest
     public function rules(): array
     {
         return [
-            'transportation_company_ids' => ['nullable', 'array'],
-            'transportation_company_ids.*' => ['exists:transportation_companies,id'],
-            'other_service_ids' => ['nullable', 'array'],
-            'other_service_ids.*' => ['exists:other_services,id'],
-            'supplier_ids' => ['nullable', 'array'],
-            'supplier_ids.*' => ['exists:suppliers,id'],
+            // optional manual adjustments
+            'discount' => 'nullable|numeric|min:0',
+            'tax' => 'nullable|numeric|min:0',
         ];
     }
 }

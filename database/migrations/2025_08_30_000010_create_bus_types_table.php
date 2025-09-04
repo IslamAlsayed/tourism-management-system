@@ -10,12 +10,10 @@ class CreateBusTypesTable extends Migration
     {
         Schema::create('bus_types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id');
             $table->string('name');
             $table->integer('seats');
+            $table->foreignId('company_id')->constrained('transportation_companies')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('company_id')->references('id')->on('transportation_companies')->onDelete('cascade');
         });
     }
 

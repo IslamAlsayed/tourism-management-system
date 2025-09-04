@@ -17,14 +17,14 @@ class SiteSeeder extends Seeder
         Site::insert([
             [
                 'name_ar' => 'البتراء',
-                'name_en' => 'Petra',
+                'name' => 'Petra',
                 'entry_fee' => 50.00,
                 'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
                 'city' => 'Petra',
             ],
             [
                 'name_ar' => 'جرش',
-                'name_en' => 'Jerash',
+                'name' => 'Jerash',
                 'entry_fee' => 10.00,
                 'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
                 'city' => 'Jerash',

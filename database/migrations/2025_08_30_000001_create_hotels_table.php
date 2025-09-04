@@ -10,21 +10,23 @@ class CreateHotelsTable extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('accommodation_id');
-            $table->string('name')->nullable();
-            $table->string('hotel_chain')->nullable();
+            $table->string('name');
+            $table->string('created_by');
             $table->string('sales_man')->nullable();
             $table->string('sales_phone')->nullable();
             $table->string('sales_mail')->nullable();
-            $table->string('resv_man')->nullable();
-            $table->string('resv_phone')->nullable();
-            $table->string('resvr_mail')->nullable();
+            $table->string('reservation_man')->nullable();
+            $table->string('reservation_phone')->nullable();
+            $table->string('reservation_mail')->nullable();
             $table->string('accounting_person')->nullable();
-            $table->string('acc_mail')->nullable();
-            $table->string('acc_phone')->nullable();
+            $table->string('accounting_mail')->nullable();
+            $table->string('accounting_phone')->nullable();
+            $table->longText('description')->nullable();
+            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade');
+            $table->foreignId('region_id')->constrained('regions')->onDelete('cascade');
+            $table->foreignId('subregion_id')->constrained('subregions')->onDelete('cascade');
+            $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('accommodation_id')->references('id')->on('accommodations')->onDelete('cascade');
         });
     }
 

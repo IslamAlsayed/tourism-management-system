@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hotel;
 use App\Models\HotelRate;
+use App\Models\HotelSeason;
+use App\Models\Accommodation;
+use App\Models\HotelRoomType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -14,31 +18,36 @@ class HotelRateSeeder extends Seeder
         HotelRate::truncate();
         Schema::enableForeignKeyConstraints();
 
-        HotelRate::insert([
-            [
-                'hotel_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
-                'hotel_season_id' => \App\Models\HotelSeason::inRandomOrder()->first()?->id ?? 1,
-                'room_type_id' => \App\Models\HotelRoomType::inRandomOrder()->first()?->id ?? 1,
-                'meal_plan' => 'BB',
-                'rate_per_person' => 55.00,
-                'single_supplement' => 20.00,
-            ],
-            [
-                'hotel_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
-                'hotel_season_id' => \App\Models\HotelSeason::inRandomOrder()->first()?->id ?? 1,
-                'room_type_id' => \App\Models\HotelRoomType::inRandomOrder()->first()?->id ?? 1,
-                'meal_plan' => 'BB',
-                'rate_per_person' => 75.00,
-                'single_supplement' => 25.00,
-            ],
-            [
-                'hotel_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
-                'hotel_season_id' => \App\Models\HotelSeason::inRandomOrder()->first()?->id ?? 1,
-                'room_type_id' => \App\Models\HotelRoomType::inRandomOrder()->first()?->id ?? 1,
-                'meal_plan' => 'BB',
-                'rate_per_person' => 40.00,
-                'single_supplement' => 15.00,
-            ],
-        ]);
+        $roomTypes = HotelRoomType::all();
+
+        foreach (Hotel::all() as $hotel) {
+            $seasons = HotelSeason::where('hotel_id', $hotel->id)->get();
+
+            foreach ($seasons as $season) {
+                foreach ($roomTypes as $roomType) {
+                    HotelRate::create([
+                        'meal_plan' => fake()->randomElement(['BB', 'HB', 'FB', 'AI']),
+                        'rate_per_person' => fake()->randomFloat(2, 30, 200),
+                        'single_supplement' => fake()->randomFloat(2, 10, 100),
+                        'hotel_id' => $hotel->id,
+                        'hotel_season_id' => $season->id,
+                        'room_type_id' => $roomType->id,
+                        'accommodation_id' => $hotel->accommodation_id,
+                    ]);
+                }
+            }
+        }
+
+        // for ($i = 0; $i < count(Hotel::all()); $i++) {
+        //     HotelRate::create([
+        //         'meal_plan' => fake()->randomElement(['BB', 'HB', 'FB', 'AI']),
+        //         'rate_per_person' => fake()->randomFloat(2, 30, 200),
+        //         'single_supplement' => fake()->randomFloat(2, 10, 100),
+        //         'hotel_id' => Hotel::inRandomOrder()->first()?->id ?? 1,
+        //         'hotel_season_id' => HotelSeason::inRandomOrder()->first()?->id ?? 1,
+        //         'room_type_id' => HotelRoomType::inRandomOrder()->first()?->id ?? 1,
+        //         'accommodation_id' => Accommodation::inRandomOrder()->first()?->id ?? 1,
+        //     ]);
+        // }
     }
 }

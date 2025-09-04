@@ -10,10 +10,11 @@ class CreateHotelSeasonsTable extends Migration
     {
         Schema::create('hotel_seasons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
             $table->string('season_name');
             $table->date('start_date');
             $table->date('end_date');
+            $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
+            // $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
             $table->timestamps();
         });
     }

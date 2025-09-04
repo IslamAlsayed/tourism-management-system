@@ -11,9 +11,9 @@ class CreateTransportationCompaniesTable extends Migration
         Schema::create('transportation_companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('contact_person')->nullable();
-            $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('contact_person')->nullable();
             $table->timestamps();
         });
     }

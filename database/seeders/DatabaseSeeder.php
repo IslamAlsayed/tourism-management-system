@@ -18,20 +18,26 @@ class DatabaseSeeder extends Seeder
             RegionSeeder::class,
             CountrySeeder::class,
             NationalitySeeder::class,
+            SubregionSeeder::class,
+
+            CitySeeder::class,
+            StatesSeeder::class,
+            SupplierSeeder::class,
 
                 // 3. Transportation (company before bus types before rates)
             TransportationCompanySeeder::class,
+            TransportationRouteSeeder::class,
             BusTypeSeeder::class,
             TransportationRateSeeder::class,
 
                 // 4. Accommodation basic data
             AccommodationSeeder::class,
-            HotelSeeder::class,
-            AccommodationSeasonSeeder::class,
             HotelRoomTypeSeeder::class,
+            AccommodationSeasonSeeder::class,
+            HotelSeeder::class,
+            HotelSeasonSeeder::class,
 
                 // 5. Hotel seasons before rates
-            HotelSeasonSeeder::class,
 
                 // 6. Rates and policies (after basic data is seeded)
             AccommodationRateSeeder::class,
@@ -45,7 +51,6 @@ class DatabaseSeeder extends Seeder
 
                 // 8. Other services and locations
             OtherServiceSeeder::class,
-            RouteSeeder::class,
             SiteSeeder::class,
         ]);
     }

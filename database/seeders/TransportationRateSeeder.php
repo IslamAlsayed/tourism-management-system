@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\BusType;
+use App\Models\TransportationCompany;
 use App\Models\TransportationRate;
+use App\Models\TransportationRoute;
 use Illuminate\Support\Facades\Schema;
 
 class TransportationRateSeeder extends Seeder
@@ -16,16 +19,16 @@ class TransportationRateSeeder extends Seeder
 
         TransportationRate::insert([
             [
-                'company_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
-                'bus_type_id' => \App\Models\BusType::inRandomOrder()->first()?->id ?? 1,
-                'route' => 'Amman - Petra',
-                'price' => 100.00,
+                'price_per_day' => fake()->randomFloat(2, 50, 200),
+                'company_id' => TransportationCompany::inRandomOrder()->first()?->id ?? 1,
+                'bus_type_id' => BusType::inRandomOrder()->first()?->id ?? 1,
+                'route_id' => TransportationRoute::inRandomOrder()->first()?->id ?? 1,
             ],
             [
-                'company_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
-                'bus_type_id' => \App\Models\BusType::inRandomOrder()->first()?->id ?? 1,
-                'route' => 'Amman - Dead Sea',
-                'price' => 80.00,
+                'price_per_day' => fake()->randomFloat(2, 50, 200),
+                'company_id' => TransportationCompany::inRandomOrder()->first()?->id ?? 1,
+                'bus_type_id' => BusType::inRandomOrder()->first()?->id ?? 1,
+                'route_id' => TransportationRoute::inRandomOrder()->first()?->id ?? 1,
             ],
         ]);
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hotel;
 use App\Models\HotelSupplement;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,25 +16,17 @@ class HotelSupplementSeeder extends Seeder
         HotelSupplement::truncate();
         Schema::enableForeignKeyConstraints();
 
-        HotelSupplement::insert([
-            [
-                'hotel_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
-                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
-                'name' => 'New Year Eve Dinner',
-                'price' => 60.00,
-                'is_per_person' => true,
-                'is_mandatory' => true,
-                'applicable_date' => '2025-12-31',
-            ],
-            [
-                'hotel_id' => \App\Models\Hotel::inRandomOrder()->first()?->id ?? 1,
-                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
-                'name' => 'Lunch Supplement',
-                'price' => 15.00,
-                'is_per_person' => true,
-                'is_mandatory' => false,
-                'applicable_date' => null,
-            ]
-        ]);
+        foreach (Hotel::all() as $hotel) {
+            HotelSupplement::create([
+                'hotel_id' => $hotel->id,
+                'accommodation_id' => $hotel->accommodation_id,
+                'name' => fake()->randomElement(['New Year Eve Dinner', 'Christmas Dinner', 'Easter Brunch']),
+                'price' => fake()->randomFloat(2, 20, 100),
+                'is_per_person' => fake()->boolean(),
+                'is_mandatory' => fake()->boolean(),
+                'applicable_date' => fake()->dateTimeBetween('2025-01-01', '2025-12-31')->format('Y-m-d'),
+            ]);
+        }
+
     }
 }

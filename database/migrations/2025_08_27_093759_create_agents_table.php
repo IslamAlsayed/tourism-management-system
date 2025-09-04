@@ -36,7 +36,7 @@ return new class extends Migration {
             $table->string('address_02')->nullable();
             $table->string('website')->nullable();
             $table->string('establishment_number')->nullable();
-            $table->string('office_name_en')->nullable();
+            $table->string('office_name')->nullable();
             $table->string('gm_name')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

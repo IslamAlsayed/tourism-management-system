@@ -17,14 +17,14 @@ class OtherServiceSeeder extends Seeder
         OtherService::insert([
             [
                 'name_ar' => 'دليل سياحي مرخص',
-                'name_en' => 'Licensed Tourist Guide',
+                'name' => 'Licensed Tourist Guide',
                 'price_type' => 'Per Day',
                 'price' => 70.00,
                 'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
             ],
             [
                 'name_ar' => 'جيب 4x4 في وادي رم',
-                'name_en' => '4x4 Jeep in Wadi Rum',
+                'name' => '4x4 Jeep in Wadi Rum',
                 'price_type' => 'Per Group',
                 'price' => 85.00,
                 'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,

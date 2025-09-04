@@ -14,12 +14,10 @@ class Step3Request extends FormRequest
     public function rules(): array
     {
         return [
-            'rate_ids' => ['required', 'array', 'min:1'],
-            'rate_ids.*' => ['exists:rates,id'],
-            'supplement_ids' => ['nullable', 'array'],
-            'supplement_ids.*' => ['exists:supplements,id'],
-            'policy_ids' => ['nullable', 'array'],
-            'policy_ids.*' => ['exists:policies,id'],
+            'itinerary' => 'required|array|min:1',
+            'itinerary.*.day_number' => 'required|integer|min:1',
+            'itinerary.*.city_id' => 'nullable|exists:cities,id',
+            'itinerary.*.description' => 'nullable|string',
         ];
     }
 }

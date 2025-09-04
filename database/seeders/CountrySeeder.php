@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Country;
-use Illuminate\Database\Seeder;
 use Schema;
+use App\Models\Region;
+use App\Models\Country;
+use App\Models\Currency;
+use App\Models\Subregion;
+use Illuminate\Database\Seeder;
 
 class CountrySeeder extends Seeder
 {
@@ -14,7 +17,7 @@ class CountrySeeder extends Seeder
         Country::truncate();
         Schema::enableForeignKeyConstraints();
 
-        Country::insert([
+        $countries = [
             [
                 'name' => 'Jordan',
                 'name_ar' => 'الأردن',
@@ -23,13 +26,13 @@ class CountrySeeder extends Seeder
                 'numeric_code' => 400,
                 'phone_code' => '962',
                 'capital' => 'Amman',
-                'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
+                'currency_id' => Currency::inRandomOrder()->first()?->id ?? 1,
                 'tld' => '.jo',
                 'native' => 'الأردن',
                 'region' => 'Asia',
-                'region_id' => \App\Models\Region::inRandomOrder()->first()?->id ?? 1,
+                'region_id' => Region::inRandomOrder()->first()?->id ?? 1,
                 'subregion' => 'Western Asia',
-                'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id ?? null,
+                'subregion_id' => Subregion::inRandomOrder()->first()?->id ?? null,
                 'nationality' => 'Jordanian',
                 'timezone' => 'Asia/Amman',
                 'latitude' => 31.963158,
@@ -51,13 +54,13 @@ class CountrySeeder extends Seeder
                 'numeric_code' => 818,
                 'phone_code' => '20',
                 'capital' => 'Cairo',
-                'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
+                'currency_id' => Currency::inRandomOrder()->first()?->id ?? 1,
                 'tld' => '.eg',
                 'native' => 'مصر',
                 'region' => 'Africa',
-                'region_id' => \App\Models\Region::inRandomOrder()->first()?->id ?? 1,
+                'region_id' => Region::inRandomOrder()->first()?->id ?? 1,
                 'subregion' => 'Northern Africa',
-                'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id ?? null,
+                'subregion_id' => Subregion::inRandomOrder()->first()?->id ?? null,
                 'nationality' => 'Egyptian',
                 'timezone' => 'Africa/Cairo',
                 'latitude' => 26.820553,
@@ -70,7 +73,9 @@ class CountrySeeder extends Seeder
                 'continent' => 'Africa',
                 'area' => 1002450,
                 'is_active' => true,
-            ],
-        ]);
+            ]
+        ];
+
+        Country::insert($countries);
     }
 }

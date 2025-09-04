@@ -10,10 +10,10 @@ class CreateHotelRoomTypesTable extends Migration
     {
         Schema::create('hotel_room_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
+            $table->string('name');
             $table->string('name_ar');
-            $table->string('name_en');
             $table->unsignedTinyInteger('max_occupancy');
+            $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
             $table->timestamps();
         });
     }

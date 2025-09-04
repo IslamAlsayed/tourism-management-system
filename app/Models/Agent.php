@@ -35,7 +35,7 @@ class Agent extends Model
         'email_05',
         'website',
         'establishment_number',
-        'office_name_en',
+        'office_name',
         'gm_name',
         'notes'
     ];

@@ -12,33 +12,39 @@ return new class extends Migration {
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('currency_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('hotel_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('hotel_room_type_id')->nullable()->constrained('hotel_room_types')->onDelete('set null');
-            $table->foreignId('hotel_season_id')->nullable()->constrained('hotel_seasons')->onDelete('set null');
+
+            // ownership + lifecycle
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->enum('status', ['draft', 'submitted', 'cancelled'])->default('draft');
+
+            // customer info (step 1)
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('nationality')->nullable();
+            $table->unsignedInteger('adults')->default(1);
+            $table->unsignedInteger('children')->default(0);
+            $table->unsignedInteger('infants')->default(0);
+            $table->date('arrival_date')->nullable();
+            $table->date('departure_date')->nullable();
+
+            // core references (optional if applicable in quote)
+            $table->foreignId('currency_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('hotel_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('hotel_room_type_id')->nullable()->constrained('hotel_room_types')->nullOnDelete();
+            $table->foreignId('hotel_season_id')->nullable()->constrained('hotel_seasons')->nullOnDelete();
+
+            // pricing snapshot (step 4)
+            $table->decimal('subtotal_hotels', 12, 2)->default(0);
+            $table->decimal('subtotal_transport', 12, 2)->default(0);
+            $table->decimal('subtotal_services', 12, 2)->default(0);
+            $table->decimal('discount', 12, 2)->default(0);
+            $table->decimal('tax', 12, 2)->default(0);
+            $table->decimal('grand_total', 12, 2)->default(0);
+
             $table->timestamps();
         });
-
-        // Pivot tables للـ relations
-        Schema::create('booking_transportation_company', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('booking_id')->constrained()->onDelete('cascade');
-            $table->foreignId('transportation_company_id')->constrained()->onDelete('cascade');
-        });
-
-        Schema::create('booking_other_service', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('booking_id')->constrained()->onDelete('cascade');
-            $table->foreignId('other_service_id')->constrained()->onDelete('cascade');
-        });
-
-        Schema::create('booking_supplier', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('booking_id')->constrained()->onDelete('cascade');
-            $table->foreignId('supplier_id')->constrained()->onDelete('cascade');
-        });
-
     }
 
     /**

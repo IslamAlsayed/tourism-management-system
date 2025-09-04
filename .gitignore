@@ -32,3 +32,20 @@ Thumbs.db
 /database - Copy30aug25at1842pm
 /database/seeders - Copy
 /database/seeders.zip
+
+/app/Livewire/Booking
+/app/Livewire/Quote
+/app/Livewire/BaseComponent.php
+/app/Livewire/BookingStep1.php
+/app/Livewire/BookingStep2.php
+/app/Livewire/BookingStep2_old.php
+/app/Livewire/BookingStep3.php
+/app/Livewire/BookingStep4.php
+/app/Http/Controllers/Dashboard/BookingController2.php
+/app/Http/Middleware/WrapInLayout.php
+/app/Http/Requests/MultiStep
+/app/Traits/BookingStateTrait.php
+/app/View
+/resources/views/livewire/quote
+/resources/views/pages/dashboard/quote
+/resources/views/pages/dashboard/multi-step-form

@@ -8,7 +8,7 @@ class Site extends Model
 {
     protected $fillable = [
         'name_ar',
-        'name_en',
+        'name',
         'entry_fee',
         'currency_id',
         'city',

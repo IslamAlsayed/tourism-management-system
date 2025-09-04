@@ -2,7 +2,7 @@
 
 return [
     'dashboard' => 'لوحة التحكم',
-    'booking simulator' => 'محاكي الحجز',
+    'quotation requests' => 'طلبات الاقتباس',
     'user management' => 'إدارة المستخدمين',
     'all users' => 'جميع المستخدمين',
     'add new user' => 'إضافة مستخدم جديد',

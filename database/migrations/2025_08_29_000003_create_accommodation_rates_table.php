@@ -10,15 +10,11 @@ class CreateAccommodationRatesTable extends Migration
     {
         Schema::create('accommodation_rates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('accommodation_id');
+            $table->decimal('price', 10, 2)->nullable();
+            $table->unsignedBigInteger('accommodation_id')->nullable();
             $table->unsignedBigInteger('season_id')->nullable();
             $table->unsignedBigInteger('room_type_id')->nullable();
-            $table->decimal('price', 10, 2)->nullable();
             $table->timestamps();
-
-            $table->foreign('accommodation_id')->references('id')->on('accommodations')->onDelete('cascade');
-            $table->foreign('season_id')->references('id')->on('accommodation_seasons')->onDelete('set null');
-            $table->foreign('room_type_id')->references('id')->on('hotel_room_types')->onDelete('set null');
         });
     }
 

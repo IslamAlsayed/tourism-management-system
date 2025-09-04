@@ -11,7 +11,7 @@ class CreateOtherServicesTable extends Migration
         Schema::create('other_services', function (Blueprint $table) {
             $table->id();
             $table->string('name_ar');
-            $table->string('name_en');
+            $table->string('name');
             $table->enum('price_type', ['Per Person', 'Per Group', 'Per Day'])->default('Per Person');
             $table->decimal('price', 12, 2);
             $table->foreignId('currency_id')->constrained('currencies')->onDelete('cascade');

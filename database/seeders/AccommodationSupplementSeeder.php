@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Accommodation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use App\Models\AccommodationSupplement;
@@ -16,20 +17,20 @@ class AccommodationSupplementSeeder extends Seeder
 
         AccommodationSupplement::insert([
             [
-                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
                 'name' => 'New Year Gala Dinner',
                 'price' => 50.00,
                 'is_per_person' => true,
                 'is_mandatory' => true,
                 'applicable_date' => '2025-12-31',
+                'accommodation_id' => Accommodation::inRandomOrder()->first()?->id ?? 1,
             ],
             [
-                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
                 'name' => 'Lunch Supplement',
                 'price' => 20.00,
                 'is_per_person' => true,
                 'is_mandatory' => false,
                 'applicable_date' => null,
+                'accommodation_id' => Accommodation::inRandomOrder()->first()?->id ?? 1,
             ],
         ]);
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hotel;
 use App\Models\HotelRoomType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -14,25 +15,18 @@ class HotelRoomTypeSeeder extends Seeder
         HotelRoomType::truncate();
         Schema::enableForeignKeyConstraints();
 
-        HotelRoomType::insert([
-            [
-                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
-                'name_ar' => 'مفردة',
-                'name_en' => 'Single',
-                'max_occupancy' => 1,
-            ],
-            [
-                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
-                'name_ar' => 'مزدوجة',
-                'name_en' => 'Double',
-                'max_occupancy' => 2,
-            ],
-            [
-                'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? 1,
-                'name_ar' => 'جناح',
-                'name_en' => 'Suite',
-                'max_occupancy' => 3,
-            ],
-        ]);
+        $roomTypes = [
+            ['name' => 'Single', 'name_ar' => 'مفردة', 'max_occupancy' => 1],
+            ['name' => 'Double', 'name_ar' => 'مزدوجة', 'max_occupancy' => 2],
+            ['name' => 'Suite', 'name_ar' => 'جناح', 'max_occupancy' => 3],
+        ];
+
+        foreach (Hotel::all() as $hotel) {
+            foreach ($roomTypes as $type) {
+                HotelRoomType::create(array_merge($type, [
+                    'hotel_id' => $hotel->id,
+                ]));
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ class CreateAccommodationsTable extends Migration
             $table->string('type'); // hotel, resort, camp, chalet, apartment, etc.
             $table->string('trade_name')->nullable();
             $table->string('name_ar')->nullable();
-            $table->string('name_en')->nullable();
+            $table->string('name')->nullable();
             $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->string('city_name')->nullable();
