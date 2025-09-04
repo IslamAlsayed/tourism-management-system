@@ -12,6 +12,7 @@ class CreateTransportationRoutesTable extends Migration
             $table->id();
             $table->string('start_location');
             $table->string('end_location');
+            $table->decimal('distance_km', 8, 2)->nullable();
             $table->timestamps();
         });
     }

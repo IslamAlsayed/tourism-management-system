@@ -11,9 +11,11 @@ class CreateTransportationRatesTable extends Migration
         Schema::create('transportation_rates', function (Blueprint $table) {
             $table->id();
             $table->decimal('price_per_day', 10, 2);
+            $table->decimal('price_per_km', 10, 2)->nullable();
             $table->foreignId('company_id')->constrained('transportation_companies')->onDelete('cascade');
             $table->foreignId('bus_type_id')->constrained('bus_types')->onDelete('cascade');
             $table->foreignId('route_id')->constrained('transportation_routes')->onDelete('cascade');
+            $table->unique(['company_id', 'bus_type_id', 'route_id']);
             $table->timestamps();
         });
     }

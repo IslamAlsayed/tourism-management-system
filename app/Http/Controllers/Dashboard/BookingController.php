@@ -104,9 +104,10 @@ class BookingController extends Controller
         ));
     }
 
-    public function postStep2(Step2Request $request, Booking $booking)
+    public function postStep2(Step2Request $request, $id)
     {
-        $data = $request->validated();
+        $data = $request->all();
+        $booking = Booking::findOrFail($id);
 
         // تحديث بيانات الحجز
         $booking->update([
@@ -125,12 +126,13 @@ class BookingController extends Controller
             'subtotal_hotels' => $hotelSubtotal,
         ]);
 
-        return redirect()->route('dashboard.quote.step3', $booking);
+        return redirect()->route('dashboard.quote.step3', $booking->id);
     }
 
-    public function postStep2_old(Step2Request $request, Booking $booking)
+    public function postStep2_old(Step2Request $request, $id)
     {
         $data = $request->validated();
+        $booking = Booking::findOrFail($id);
 
         // تحديث بيانات الحجز الأساسية
         $booking->update([
@@ -237,14 +239,16 @@ class BookingController extends Controller
     }
 
     // STEP 3 — Itinerary
-    public function step3(Booking $booking)
+    public function step3($id)
     {
+        $booking = Booking::findOrFail($id);
         $cities = City::all();
         return view('pages.dashboard.quote.step3', compact('booking', 'cities'));
     }
 
-    public function postStep3(Step3Request $request, Booking $booking)
+    public function postStep3(Step3Request $request, $id)
     {
+        $booking = Booking::findOrFail($id);
         $booking->itineraries()->delete();
         foreach ($request->validated()['itinerary'] as $row) {
             $booking->itineraries()->create($row);
@@ -338,7 +342,6 @@ class BookingController extends Controller
 
         return $arrival->diffInDays($departure);
     }
-
 
     // دالة لحساب الـ subtotal للفنادق
     private function calculateHotelSubtotal($roomsData, $hotelId, $seasonId, $nights, $adults, $children)

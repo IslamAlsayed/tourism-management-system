@@ -12,6 +12,7 @@ class CreateBusTypesTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('seats');
+            $table->boolean('has_ac')->default(true);
             $table->foreignId('company_id')->constrained('transportation_companies')->onDelete('cascade');
             $table->timestamps();
         });

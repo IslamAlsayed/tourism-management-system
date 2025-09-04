@@ -17,19 +17,23 @@ class TransportationRateSeeder extends Seeder
         TransportationRate::truncate();
         Schema::enableForeignKeyConstraints();
 
-        TransportationRate::insert([
-            [
-                'price_per_day' => fake()->randomFloat(2, 50, 200),
-                'company_id' => TransportationCompany::inRandomOrder()->first()?->id ?? 1,
-                'bus_type_id' => BusType::inRandomOrder()->first()?->id ?? 1,
-                'route_id' => TransportationRoute::inRandomOrder()->first()?->id ?? 1,
-            ],
-            [
-                'price_per_day' => fake()->randomFloat(2, 50, 200),
-                'company_id' => TransportationCompany::inRandomOrder()->first()?->id ?? 1,
-                'bus_type_id' => BusType::inRandomOrder()->first()?->id ?? 1,
-                'route_id' => TransportationRoute::inRandomOrder()->first()?->id ?? 1,
-            ],
-        ]);
+        $companies = TransportationCompany::all();
+        $routes = TransportationRoute::all();
+
+        foreach ($companies as $company) {
+            $busTypes = $company->busTypes; // كل أنواع الحافلات الخاصة بالشركة
+
+            foreach ($busTypes as $busType) {
+                foreach ($routes as $route) {
+                    TransportationRate::create([
+                        'company_id' => $company->id,
+                        'bus_type_id' => $busType->id,
+                        'route_id' => $route->id,
+                        'price_per_day' => fake()->randomFloat(2, 50, 200),
+                        'price_per_km' => fake()->randomFloat(2, 0.5, 5),
+                    ]);
+                }
+            }
+        }
     }
 }

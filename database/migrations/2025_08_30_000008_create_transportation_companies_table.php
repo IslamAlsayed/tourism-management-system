@@ -14,6 +14,7 @@ class CreateTransportationCompaniesTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('contact_person')->nullable();
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }

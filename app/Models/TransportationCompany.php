@@ -11,15 +11,14 @@ class TransportationCompany extends Model
         'email',
         'phone',
         'contact_person',
+        'address'
     ];
 
-    // شركة واحدة ليها أنواع أتوبيسات كتير
     public function busTypes()
     {
         return $this->hasMany(BusType::class, 'company_id');
     }
 
-    // شركة واحدة ليها أسعار كتير (حسب نوع الباص + الطريق)
     public function rates()
     {
         return $this->hasMany(TransportationRate::class, 'company_id');

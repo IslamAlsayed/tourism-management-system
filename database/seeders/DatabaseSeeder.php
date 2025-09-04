@@ -32,9 +32,9 @@ class DatabaseSeeder extends Seeder
 
                 // 4. Accommodation basic data
             AccommodationSeeder::class,
-            HotelRoomTypeSeeder::class,
             AccommodationSeasonSeeder::class,
             HotelSeeder::class,
+            HotelRoomTypeSeeder::class,
             HotelSeasonSeeder::class,
 
                 // 5. Hotel seasons before rates
