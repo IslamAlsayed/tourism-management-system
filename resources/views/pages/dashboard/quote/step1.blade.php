@@ -52,15 +52,7 @@
                 </select>
             </div>
 
-            <div>
-                <label class="kt-label mb-2">Arrival Date</label>
-                <input type="date" name="arrival_date" class="kt-input" value="{{ old('arrival_date') }}">
-            </div>
-
-            <div>
-                <label class="kt-label mb-2">Departure Date</label>
-                <input type="date" name="departure_date" class="kt-input" value="{{ old('departure_date') }}">
-            </div>
+            @livewire('quote.step1.dates')
 
             <div>
                 <label class="kt-label mb-2">Adults</label>
