@@ -15,15 +15,15 @@
                 {{-- الشركة --}}
                 <div class="flex items-center gap-2">
                     <label>
-                        <input type="checkbox" name="rows[{{ $company->id }}][selected]"
-                            wire:model.live="rows.{{ $company->id }}.selected" />
+                        <input type="checkbox" name="buses[{{ $company->id }}][selected]"
+                            wire:model.live="buses.{{ $company->id }}.selected" />
                         {{ $company->name }}
                     </label>
                 </div>
 
                 {{-- نوع الباص --}}
-                <select name="rows[{{ $company->id }}][bus_type_id]"
-                    wire:model.live="rows.{{ $company->id }}.bus_type_id" class="kt-select">
+                <select name="buses[{{ $company->id }}][bus_type_id]"
+                    wire:model.live="buses.{{ $company->id }}.bus_type_id" class="kt-select">
                     <option value="">Select Bus</option>
                     @foreach ($company->busTypes as $busType)
                         <option value="{{ $busType->id }}">
@@ -33,22 +33,22 @@
                 </select>
 
                 {{-- السعر --}}
-                <input type="number" name="rows[{{ $company->id }}][price]" readonly
-                    value="{{ $rows[$company->id]['price'] ?? 0 }}" class="kt-input bg-gray-100 cursor-not-allowed" />
+                <input type="number" name="buses[{{ $company->id }}][price]" readonly
+                    value="{{ $buses[$company->id]['price'] ?? 0 }}" class="kt-input bg-gray-100 cursor-not-allowed" />
 
                 {{-- عدد الأيام --}}
-                <input type="number" min="1" name="rows[{{ $company->id }}][days]"
-                    wire:model.live="rows.{{ $company->id }}.days" class="kt-input" />
+                <input type="number" min="0" name="buses[{{ $company->id }}][days]"
+                    wire:model.live="buses.{{ $company->id }}.days" class="kt-input" />
 
                 {{-- السعر الإجمالي --}}
-                <input type="number" name="rows[{{ $company->id }}][total_price]" readonly
-                    value="{{ $rows[$company->id]['total_price'] ?? 0 }}"
+                <input type="number" name="buses[{{ $company->id }}][total_price]" readonly
+                    value="{{ $buses[$company->id]['total_price'] ?? 0 }}"
                     class="kt-input bg-gray-100 cursor-not-allowed" />
             </div>
         @endforeach
     </div>
 
     <div class="mt-4 font-semibold">
-        Subtotal: {{ $currency_symbol }}{{ number_format($subtotal_transportation, 2) }}
+        Subtotal: {{ $currency_symbol }} {{ number_format($subtotal_transport, 2) }}
     </div>
 </div>

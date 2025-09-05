@@ -19,6 +19,7 @@ class Booking extends Model
         'infants',
         'arrival_date',
         'departure_date',
+        'nights',
         'currency_id',
         'hotel_id',
         'hotel_room_type_id',
@@ -42,9 +43,11 @@ class Booking extends Model
         return $this->belongsTo(Hotel::class);
     }
 
-    public function roomType()
+    public function roomTypes()
     {
-        return $this->belongsTo(HotelRoomType::class, 'hotel_room_type_id');
+        return $this->belongsToMany(HotelRoomType::class, 'booking_room_types', 'booking_id', 'hotel_room_type_id')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
 
     public function season()
@@ -53,16 +56,28 @@ class Booking extends Model
     }
 
     // pivots
-    public function transportationCompanies()
+    // public function transportationCompanies()
+    // {
+    //     return $this->belongsToMany(TransportationCompany::class, 'booking_transportation_companies')
+    //         ->withPivot(['day', 'price_per_day']);
+    // }
+
+    // public function transportationCompanies()
+    // {
+    //     return $this->belongsToMany(TransportationCompany::class, 'booking_transportation_companies')
+    //         ->withPivot(['day', 'price_per_day']);
+    // }
+
+    public function bookingOtherService()
     {
-        return $this->belongsToMany(TransportationCompany::class, 'booking_transportation_company')
-            ->withPivot(['days', 'price_per_day']);
+        return $this->hasMany(BookingOtherService::class, 'booking_other_service_id');
     }
 
     public function otherServices()
     {
-        return $this->belongsToMany(OtherService::class, 'booking_other_service')
-            ->withPivot(['qty', 'unit_price']);
+        return $this->belongsToMany(OtherService::class, 'booking_other_services')
+            ->withPivot(['selected', 'quantity', 'price'])
+            ->withTimestamps();
     }
 
     public function suppliers()
@@ -77,8 +92,9 @@ class Booking extends Model
 
     public function transportation()
     {
-        return $this->belongsToMany(TransportationCompany::class, 'booking_transportation')
-            ->withPivot(['bus_type_id', 'route_id', 'days', 'price_per_day'])
-            ->withTimestamps();
+        return $this->hasMany(BookingTransportationCompany::class);
+        // return $this->belongsToMany(TransportationCompany::class, 'booking_transportation')
+        //     ->withPivot(['bus_type_id', 'route_id', 'day', 'price_per_day'])
+        //     ->withTimestamps();
     }
 }

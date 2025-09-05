@@ -2,60 +2,113 @@
 
 namespace App\Livewire\Quote\Step2;
 
-use Livewire\Component;
-use App\Models\HotelRate;
 use App\Models\Hotel;
 use App\Models\Booking;
+use Livewire\Component;
+use App\Models\Currency;
+use App\Models\HotelRate;
 use App\Models\HotelSeason;
 use App\Models\HotelRoomType;
 
 class Hotels extends Component
 {
     public $hotels = [];
-    public $seasons = [];           // مواسم الفندق بناءً على الفندق المحدد
-    public $roomTypes = [];         // أنواع الغرف بناءً على الفندق والموسم
-    public $rates = [];             // أسعار الغرف بناءً على الموسم والفندق
-
+    public $seasons = [];
+    public $roomTypes = [];
+    public $rates = [];
     public $booking;
-
     public $hotel_id = '';
     public $hotel_season_id = '';
-    public $rooms = [];             // [room_type_id => qty]
-
+    public $rooms = [];
     public $nights = 0;
     public $subtotal_hotels = 0.0;
-    public $currency_symbol = '$';
+    public $currency_symbol = '';
 
     public function mount($id)
     {
         $this->booking = Booking::findOrFail($id);
         $this->hotels = Hotel::orderBy('name')->get();
+        $this->currency_symbol = Currency::where('id', $this->booking->currency_id)->value('symbol') ?? '$';
 
-        // تحميل الاختيارات السابقة إن وجدت
         $this->hotel_id = $this->booking->hotel_id ?? '';
         $this->hotel_season_id = $this->booking->hotel_season_id ?? '';
+        $this->nights = $this->booking->nights ?? 0;
 
-        $this->computeNights();
+        // $this->computeNights();
         $this->loadDependentData();
         $this->recalculateSubtotal();
     }
 
-    public function updatedHotelId()
+    protected function rules()
     {
-        $this->loadDependentData();
+        return [
+            'hotel_id' => 'nullable|exists:hotels,id',
+            'hotel_season_id' => 'nullable|exists:hotel_seasons,id',
+            'rooms' => 'array',
+            'rooms.*' => 'nullable|integer|min:0',
+        ];
     }
 
-    public function updatedHotelSeasonId()
+    protected $messages = [
+        'hotel_id.exists' => 'Selected hotel is invalid.',
+        'hotel_season_id.exists' => 'Selected season is invalid.',
+        'rooms.*.integer' => 'Room quantities must be numbers.',
+        'rooms.*.min' => 'Room quantities cannot be negative.',
+    ];
+
+    public function updated($propertyName)
     {
+        $this->validateOnly($propertyName);
+        $this->recalculateSubtotal();
+
+        $this->booking->update([
+            'hotel_id' => $this->hotel_id ?: null,
+            'hotel_season_id' => $this->hotel_season_id ?: null,
+            'subtotal_hotels' => $this->subtotal_hotels,
+        ]);
+    }
+
+    public function updatedHotelId($value)
+    {
+        $this->hotel_season_id = '';
+        $this->rooms = [];
+        $this->seasons = [];
+        $this->roomTypes = [];
+        $this->rates = [];
+
         $this->loadDependentData();
+
+        if ($this->booking->id) {
+            $this->booking->roomTypes()->sync([]);
+        }
+    }
+
+    public function updatedHotelSeasonId($value)
+    {
+        $this->rooms = [];
+        $this->rates = [];
+        $this->roomTypes = [];
+
+        $this->loadDependentData();
+
+        if ($this->booking->id) {
+            $this->booking->roomTypes()->sync([]);
+        }
     }
 
     public function updatedRooms($value, $key)
     {
         $this->recalculateSubtotal();
+        $syncData = [];
+        foreach ($this->rooms as $roomTypeId => $quantity) {
+            if ($quantity > 0) {
+                $syncData[$roomTypeId] = ['quantity' => $quantity];
+            }
+        }
+
+        $this->booking->roomTypes()->sync($syncData);
     }
 
-    // تحميل البيانات التابعة (مثل أنواع الغرف والأسعار بناءً على الموسم)
     public function loadDependentData()
     {
         if ($this->hotel_id) {
@@ -63,28 +116,25 @@ class Hotels extends Component
         }
 
         if ($this->hotel_season_id) {
-            // هات الأسعار المتاحة للفندق + الموسم
             $this->rates = HotelRate::with('roomType')
                 ->where('hotel_id', $this->hotel_id)
                 ->where('hotel_season_id', $this->hotel_season_id)
                 ->get();
 
-            // استخرج الغرف الخاصة بالفندق فقط
             $this->roomTypes = HotelRoomType::where('hotel_id', $this->hotel_id)->get();
         }
 
         $this->recalculateSubtotal();
     }
 
-    // حساب إجمالي المبلغ بناءً على الغرف المختارة
     public function recalculateSubtotal()
     {
         $this->subtotal_hotels = 0;
 
-        if ($this->nights <= 0 || empty($this->rooms) || $this->rates->isEmpty())
+        if ($this->nights <= 0 || empty($this->rooms) || $this->rates->isEmpty()) {
             return;
+        }
 
-        // إعادة ترتيب الأسعار بحسب room_type_id
         $ratesByRoom = $this->rates->keyBy('room_type_id');
 
         foreach ($this->rooms as $roomTypeId => $quantity) {
@@ -97,42 +147,32 @@ class Hotels extends Component
                 $occupancy = $rate->roomType->max_occupancy ?? 1;
                 $totalPeople = min($occupancy, $this->booking->adults + $this->booking->children);
 
-                // حساب السعر للغرفة
                 $roomTotal = $quantity * $rate->rate_per_person * $totalPeople * $this->nights;
 
-                // حساب single supplement
                 $singleSupplementAmount = 0;
                 if ($totalPeople == 1 && $rate->single_supplement) {
                     $singleSupplementAmount = $rate->single_supplement * $quantity;
                 }
 
-                // إضافة الأسعار للـ subtotal
                 $this->subtotal_hotels += $roomTotal + $singleSupplementAmount;
             }
         }
-
-        // $this->emit('subtotalUpdated', [
-        //     'hotels' => $this->subtotal_hotels,
-        // ]);
     }
 
-    // حساب عدد الليالي بناءً على تاريخ الوصول والمغادرة
-    public function computeNights()
-    {
-        if ($this->booking->arrival_date && $this->booking->departure_date) {
-            $arrival = \Carbon\Carbon::parse($this->booking->arrival_date);
-            $departure = \Carbon\Carbon::parse($this->booking->departure_date);
+    // public function computeNights()
+    // {
+    //     if ($this->booking->arrival_date && $this->booking->departure_date) {
+    //         $arrival = \Carbon\Carbon::parse($this->booking->arrival_date);
+    //         $departure = \Carbon\Carbon::parse($this->booking->departure_date);
 
-            // عدد الليالي = الفرق بالأيام
-            $this->nights = (int) $arrival->diffInDays($departure);
-        }
-    }
+    //         $this->nights = (int) $arrival->diffInDays($departure);
+    //     }
+    // }
 
     public function checkOccupancy()
     {
-        if (!$this->hotel_season_id) {
+        if (!$this->hotel_season_id)
             return true;
-        }
 
         $totalPeople = $this->booking->adults + ($this->booking->children * 0.5) + ($this->booking->infants * 0);
         $coveredPeople = 0;

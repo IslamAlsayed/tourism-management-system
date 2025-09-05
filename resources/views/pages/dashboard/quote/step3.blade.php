@@ -1,53 +1,9 @@
 @extends('pages.dashboard.quote.layout', ['step' => 3])
 
 @section('form-content')
-    <form method="POST" action="{{ route('dashboard.quote.postStep3', $booking) }}" class="space-y-6">
-        @csrf
-
-        <div class="space-y-4">
-            <div class="kt-card p-4 mb-4">
-                <h4 class="text-lg font-semibold mb-3">Itinerary</h4>
-
-                <div class="space-y-4">
-                    <div class="grid lg:grid-cols-3 gap-4 font-semibold text-sm text-gray-500">
-                        <div>Day #</div>
-                        <div>City</div>
-                        <div>Description</div>
-                    </div>
-
-                    <div id="transport-rows" class="space-y-3">
-                        @for ($i = 1; $i <= 5; $i++)
-                            <div class="grid lg:grid-cols-3 gap-4">
-
-                                {{-- Day number --}}
-                                <input type="number" name="itinerary[{{ $i }}][day_number]" class="kt-input"
-                                    value="{{ $i }}">
-
-                                {{-- City --}}
-                                <select name="itinerary[{{ $i }}][city_id]" id="city_{{ $i }}"
-                                    class="kt-select">
-                                    <option value="">-- Select City --</option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                    @endforeach
-                                </select>
-
-                                {{-- Description --}}
-                                <textarea name="itinerary[{{ $i }}][description]" class="kt-input"
-                                    placeholder="Visits, activities, notes..."></textarea>
-                            </div>
-                        @endfor
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex justify-between">
-            <a href="{{ route('dashboard.quote.step2', $booking) }}" class="kt-btn kt-btn-light">Back</a>
-            <button class="kt-btn kt-btn-primary">Next</button>
-        </div>
-    </form>
+    <livewire:quote.step3.itinerary :id="$booking->id" :cities="$cities" />
 @endsection
+
 
 
 

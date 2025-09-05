@@ -14,29 +14,29 @@
                 {{-- اختيار الخدمة --}}
                 <div class="flex items-center gap-2">
                     <label>
-                        <input type="checkbox" name="rows[{{ $service->id }}][selected]"
-                            wire:model.live="rows.{{ $service->id }}.selected" class="kt-checkbox" />
+                        <input type="checkbox" name="services[{{ $service->id }}][selected]"
+                            wire:model="services.{{ $service->id }}.selected" class="kt-checkbox" />
                         {{ $service->name_en ?? $service->name }}
                     </label>
                 </div>
 
                 {{-- الكمية --}}
-                <input type="number" min="1" name="rows[{{ $service->id }}][quantity]"
-                    wire:model.live="rows.{{ $service->id }}.quantity" class="kt-input" placeholder="Quantity">
+                <input type="number" min="0" wire:model.live="services.{{ $service->id }}.quantity"
+                    class="kt-input" placeholder="Quantity" />
 
-                {{-- السعر للوحدة --}}
-                <input type="number" min="0" step="0.01" name="rows[{{ $service->id }}][unit_price]"
-                    class="kt-input bg-gray-100 cursor-not-allowed" value="{{ $rows[$service->id]['unit_price'] ?? 0 }}"
-                    readonly>
+                {{-- السعر --}}
+                <input type="number" readonly wire:model="services.{{ $service->id }}.price"
+                    class="kt-input bg-gray-100 cursor-not-allowed" />
 
                 {{-- السعر الإجمالي --}}
-                <input type="number" name="rows[{{ $service->id }}][total_price]"
-                    class="kt-input bg-gray-100 cursor-not-allowed"
-                    value="{{ $rows[$service->id]['total_price'] ?? 0 }}" readonly>
+                <input type="number" name="services[{{ $service->id }}][total_price]" readonly
+                    value="{{ $services[$service->id]['total_price'] ?? 0 }}"
+                    class="kt-input bg-gray-100 cursor-not-allowed" />
             </div>
         @endforeach
     </div>
+
     <div class="mt-4 font-semibold">
-        Subtotal: {{ $currency_symbol }}{{ number_format($subtotal_other_services, 2) }}
+        Subtotal: {{ $currency_symbol }} {{ number_format($subtotal_services, 2) }}
     </div>
 </div>

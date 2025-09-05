@@ -2,6 +2,7 @@
 
 @section('form-content')
     <div class="space-y-8">
+        {{-- Information --}}
         <div class="kt-card p-4 mb-4">
             <div class="grid lg:grid-cols-2 gap-6">
                 <div>
@@ -9,39 +10,55 @@
                     <div>{{ $booking->first_name }} {{ $booking->last_name }}</div>
                     <div>{{ $booking->email }} <strong>|</strong> {{ $booking->phone }}</div>
                     <div><strong>Nationality:</strong> {{ $booking->nationality ?? '-' }}</div>
-                    <div><strong>Dates:</strong> {{ $booking->arrival_date }} → {{ $booking->departure_date }}</div>
-                    <div><strong>Pax: </strong> A{{ $booking->adults }} / C{{ $booking->children }} /
-                        I{{ $booking->infants }}</div>
+                    <div><strong>Dates:</strong> {{ $booking->arrival_date }} → {{ $booking->departure_date }}
+                        ({{ $booking->nights }} nights)</div>
+                    <div>
+                        <strong>Pax: </strong> A{{ $booking->adults }} / C{{ $booking->children }} /
+                        I{{ $booking->infants }}
+                    </div>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Hotel (optional)</h4>
                     <div><strong>Hotel:</strong> {{ $booking->hotel->accommodation->name ?? '-' }}</div>
-                    <div><strong>Room:</strong> {{ $booking->roomType->name_en ?? '-' }}</div>
+                    <div><strong>Rooms:</strong>
+                        [@foreach ($booking->roomTypes as $key => $room)
+                            {{ $room->pivot->quantity . ' x ' . $room->name ?? '-' }} {{ $key > 0 ? ', ' : '' }}
+                        @endforeach]
+                    </div>
                     <div><strong>Season:</strong> {{ $booking->season->season_name ?? '-' }}</div>
                     <div><strong>Currency:</strong> {{ $booking->currency->code ?? '-' }}</div>
                 </div>
             </div>
         </div>
 
+        {{-- Transportation --}}
         <div class="kt-card p-4 mb-4">
             <h4 class="text-lg font-semibold mb-4">Transportation</h4>
             <div class="rounded">
                 <table class="table w-full text-left">
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Days</th>
-                            <th>Price/Day</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($booking->transportationCompanies as $t)
+                    @if (!$booking->transportation->isEmpty())
+                        <thead>
                             <tr>
-                                <td>{{ $t->name ?? $t->name_en }}</td>
-                                <td>{{ $t->pivot->days }}</td>
-                                <td>{{ number_format($t->pivot->price_per_day, 2) }}</td>
-                                <td>{{ number_format($t->pivot->days * $t->pivot->price_per_day, 2) }}</td>
+                                <th>Company</th>
+                                <th>Days</th>
+                                <th>Price/Day</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                    @endif
+                    <tbody>
+                        @forelse($booking->transportation as $transport)
+                            <tr>
+                                <td>{{ $transport->company->name }}</td>
+                                <td>{{ $transport->day }}</td>
+                                <td>
+                                    {{ $booking->currency->symbol ?? '' }}
+                                    {{ number_format($transport->price_per_day, 2) }}
+                                </td>
+                                <td>
+                                    {{ $booking->currency->symbol ?? '' }}
+                                    {{ number_format($transport->day * $transport->price_per_day, 2) }}
+                                </td>
                             </tr>
                         @empty
                             <tr>
@@ -53,25 +70,34 @@
             </div>
         </div>
 
+        {{-- Other Services --}}
         <div class="kt-card p-4 mb-4">
             <h4 class="text-lg font-semibold mb-4">Other Services</h4>
             <div class="rounded">
                 <table class="table w-full text-left">
-                    <thead>
-                        <tr>
-                            <th>Service</th>
-                            <th>Qty</th>
-                            <th>Unit</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($booking->otherServices as $s)
+                    @if (!$booking->otherServices->isEmpty())
+                        <thead>
                             <tr>
-                                <td>{{ $s->name_en ?? $s->name }}</td>
-                                <td>{{ $s->pivot->qty }}</td>
-                                <td>{{ number_format($s->pivot->unit_price, 2) }}</td>
-                                <td>{{ number_format($s->pivot->qty * $s->pivot->unit_price, 2) }}</td>
+                                <th>Service</th>
+                                <th>Qty</th>
+                                <th>Unit</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                    @endif
+                    <tbody>
+                        @forelse($booking->otherServices as $services)
+                            <tr>
+                                <td>{{ $services->name }}</td>
+                                <td>{{ $services->quantity }}</td>
+                                <td>
+                                    {{ $booking->currency->symbol }}
+                                    {{ number_format($services->price, 2) }}
+                                </td>
+                                <td>
+                                    {{ $booking->currency->symbol }}
+                                    {{ number_format($services->quantity * $services->price, 2) }}
+                                </td>
                             </tr>
                         @empty
                             <tr>
@@ -83,23 +109,26 @@
             </div>
         </div>
 
+        {{-- Itinerary --}}
         <div class="kt-card p-4 mb-4">
             <h4 class="text-lg font-semibold mb-4">Itinerary</h4>
             <div class="rounded">
                 <table class="table w-full text-left">
-                    <thead>
-                        <tr>
-                            <th>Day</th>
-                            <th>City</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($booking->itineraries as $i)
+                    @if (!$booking->itineraries->isEmpty())
+                        <thead>
                             <tr>
-                                <td>{{ $i->day_number }}</td>
-                                <td>{{ $i->city->name }}</td>
-                                <td>{{ $i->description }}</td>
+                                <th>Day</th>
+                                <th>City</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                    @endif
+                    <tbody>
+                        @forelse($booking->itineraries as $itinerary)
+                            <tr>
+                                <td>{{ $itinerary->day_number }}</td>
+                                <td>{{ $itinerary->city->name }}</td>
+                                <td>{{ $itinerary->description ?: '--' }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -111,9 +140,9 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('dashboard.quote.submit', $booking) }}" class="space-y-4">
+        <form method="POST" action="{{ route('dashboard.quote.submit', $booking->id) }}" class="space-y-4">
             @csrf
-            <div class="grid lg:grid-cols-3 gap-4">
+            {{-- <div class="grid lg:grid-cols-3 gap-4">
                 <div>
                     <label class="kt-label mb-2">Discount</label>
                     <input type="number" step="0.01" name="discount" class="kt-input" value="{{ old('discount', 0) }}">
@@ -122,35 +151,103 @@
                     <label class="kt-label mb-2">Tax</label>
                     <input type="number" step="0.01" name="tax" class="kt-input" value="{{ old('tax', 0) }}">
                 </div>
-            </div>
-            <div class="flex items-start">
+            </div> --}}
+
+            <livewire:quote.step4.totals :id="$booking->id" />
+            {{-- <livewire:quote.step4.discount :id="$booking->id" />
+
+            <div wire:init="loadTotals" wire:poll.1s="loadTotals">
+                <div class="grid grid-cols-4 gap-4">
+                    <span>Subtotal Hotels:</span>
+                    <strong>
+                        {{ $booking->currency->symbol }}
+                        {{ number_format($totals['subtotal_hotels'], 2) }}
+                    </strong>
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <span>Subtotal Transport:</span>
+                    <strong>
+                        {{ $booking->currency->symbol }}
+                        {{ number_format($totals['subtotal_transport'], 2) }}
+                    </strong>
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <span>Subtotal Services:</span>
+                    <strong>
+                        {{ $booking->currency->symbol }}
+                        {{ number_format($totals['subtotal_services'], 2) }}
+                    </strong>
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <span>Discount:</span>
+                    <strong>
+                        {{ $booking->currency->symbol }}
+                        {{ number_format($booking->discount ?? 0, 2) }}
+                    </strong>
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <span>Tax:</span>
+                    <strong>
+                        {{ $booking->currency->symbol }}
+                        {{ number_format($booking->tax ?? 0, 2) }}
+                    </strong>
+                </div>
+                <div class="grid grid-cols-4 gap-4 text-lg mt-2">
+                    <strong>Grand Total:</strong>
+                    <strong>
+                        {{ $booking->currency->symbol }}
+                        {{ number_format($booking->grand_total ?? 0, 2) }}
+                    </strong>
+                </div>
+            </div> --}}
+
+            {{-- Summary --}}
+            {{-- <div class="flex items-start">
                 <div class="w-full">
                     <div class="grid grid-cols-4 gap-4">
                         <span>Subtotal Hotels:</span>
-                        <strong>{{ number_format($totals['subtotal_hotels'], 2) }}</strong>
+                        <strong>
+                            {{ $booking->currency->symbol }}
+                            {{ number_format($totals['subtotal_hotels'], 2) }}
+                        </strong>
                     </div>
                     <div class="grid grid-cols-4 gap-4">
                         <span>Subtotal Transport:</span>
-                        <strong>{{ number_format($totals['subtotal_transport'], 2) }}</strong>
+                        <strong>
+                            {{ $booking->currency->symbol }}
+                            {{ number_format($totals['subtotal_transport'], 2) }}
+                        </strong>
                     </div>
                     <div class="grid grid-cols-4 gap-4">
                         <span>Subtotal Services:</span>
-                        <strong>{{ number_format($totals['subtotal_services'], 2) }}</strong>
+                        <strong>
+                            {{ $booking->currency->symbol }}
+                            {{ number_format($totals['subtotal_services'], 2) }}
+                        </strong>
                     </div>
                     <div class="grid grid-cols-4 gap-4">
                         <span>Discount:</span>
-                        <strong>{{ number_format($totals['discount'], 2) }}</strong>
+                        <strong>
+                            {{ $booking->currency->symbol }}
+                            {{ number_format($totals['discount'], 2) }}
+                        </strong>
                     </div>
                     <div class="grid grid-cols-4 gap-4">
                         <span>Tax:</span>
-                        <strong>{{ number_format($totals['tax'], 2) }}</strong>
+                        <strong>
+                            {{ $booking->currency->symbol }}
+                            {{ number_format($totals['tax'], 2) }}
+                        </strong>
                     </div>
                     <div class="grid grid-cols-4 gap-4 text-lg mt-2">
                         <strong>Grand Total:</strong>
-                        <strong>{{ number_format($totals['grand_total'], 2) }}</strong>
+                        <strong>
+                            {{ $booking->currency->symbol }}
+                            {{ number_format($totals['grand_total'], 2) }}
+                        </strong>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="flex justify-between">
                 <a href="{{ route('dashboard.quote.step3', $booking) }}" class="kt-btn kt-btn-light">Back</a>

@@ -74,9 +74,11 @@ if (!function_exists('isRtlLocale')) {
     }
 }
 
-function isActive($route, $currentRoute)
-{
-    return isset($route) && $route === $currentRoute;
+if (!function_exists('isActive')) {
+    function isActive($route, $currentRoute)
+    {
+        return isset($route) && $route === $currentRoute;
+    }
 }
 
 if (!function_exists('isActiveRoute')) {

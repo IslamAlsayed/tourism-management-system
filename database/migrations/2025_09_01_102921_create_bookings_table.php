@@ -28,11 +28,12 @@ return new class extends Migration {
             $table->unsignedInteger('infants')->default(0);
             $table->date('arrival_date')->nullable();
             $table->date('departure_date')->nullable();
+            $table->unsignedInteger('nights')->nullable()->default(0);
 
             // core references (optional if applicable in quote)
-            $table->foreignId('currency_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('hotel_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('hotel_room_type_id')->nullable()->constrained('hotel_room_types')->nullOnDelete();
+            $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
+            $table->foreignId('hotel_id')->nullable()->constrained('hotels')->nullOnDelete();
+            // $table->foreignId('hotel_room_type_id')->nullable()->constrained('hotel_room_types')->nullOnDelete();
             $table->foreignId('hotel_season_id')->nullable()->constrained('hotel_seasons')->nullOnDelete();
 
             // pricing snapshot (step 4)

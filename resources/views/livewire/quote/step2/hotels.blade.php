@@ -78,7 +78,7 @@
     <div class="mt-2 flex items-center justify-between border-t pt-4">
         <div>
             <span class="font-semibold">Hotel Subtotal:</span>
-            <span>{{ $currency_symbol }}{{ number_format($subtotal_hotels, 2) }}</span>
+            <span>{{ $currency_symbol }} {{ number_format($subtotal_hotels, 2) }}</span>
         </div>
     </div>
 </div>

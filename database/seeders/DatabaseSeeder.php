@@ -2,12 +2,28 @@
 
 namespace Database\Seeders;
 
+use App\Models\Booking;
+use App\Models\BookingRoomType;
+use App\Models\BookingSupplier;
 use Illuminate\Database\Seeder;
+use App\Models\BookingItinerary;
+use App\Models\BookingOtherService;
+use Illuminate\Support\Facades\Schema;
+use App\Models\BookingTransportationCompany;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Schema::disableForeignKeyConstraints();
+        // Booking::truncate();
+        // BookingRoomType::truncate();
+        // BookingItinerary::truncate();
+        // BookingTransportationCompany::truncate();
+        // BookingOtherService::truncate();
+        // BookingSupplier::truncate();
+        // Schema::enableForeignKeyConstraints();
+
         $this->call([
                 // 1. Basic system data
             UserSeeder::class,

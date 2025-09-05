@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BookingItinerary extends Model
+class BookingOtherService extends Model
 {
     protected $fillable = [
-        'day_number',
-        'description',
+        'selected',
+        'quantity',
+        'price',
         'booking_id',
-        'city_id',
+        'other_service_id',
     ];
 
     public function booking()
@@ -18,8 +19,8 @@ class BookingItinerary extends Model
         return $this->belongsTo(Booking::class);
     }
 
-    public function city()
+    public function otherService()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(OtherService::class);
     }
 }

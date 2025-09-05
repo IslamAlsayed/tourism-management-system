@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\Dashboard\BookingController;
+use App\Http\Controllers\Dashboard\QuoteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
@@ -32,17 +32,17 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // Legacy multi-step form routes (keeping for reference)
     Route::prefix('quote')->group(function () {
-        Route::get('step1', [BookingController::class, 'step1'])->name('dashboard.quote.step1');
-        Route::post('step1', [BookingController::class, 'postStep1'])->name('dashboard.quote.postStep1');
+        Route::get('step1', [QuoteController::class, 'step1'])->name('dashboard.quote.step1');
+        Route::post('step1', [QuoteController::class, 'postStep1'])->name('dashboard.quote.postStep1');
 
-        Route::get('{id}/step2', [BookingController::class, 'step2'])->name('dashboard.quote.step2');
-        Route::post('{id}/step2', [BookingController::class, 'postStep2'])->name('dashboard.quote.postStep2');
+        Route::get('{id}/step2', [QuoteController::class, 'step2'])->name('dashboard.quote.step2');
+        Route::post('{id}/step2', [QuoteController::class, 'postStep2'])->name('dashboard.quote.postStep2');
 
-        Route::get('{id}/step3', [BookingController::class, 'step3'])->name('dashboard.quote.step3');
-        Route::post('{id}/step3', [BookingController::class, 'postStep3'])->name('dashboard.quote.postStep3');
+        Route::get('{id}/step3', [QuoteController::class, 'step3'])->name('dashboard.quote.step3');
+        Route::post('{id}/step3', [QuoteController::class, 'postStep3'])->name('dashboard.quote.postStep3');
 
-        Route::get('{id}/step4', [BookingController::class, 'step4'])->name('dashboard.quote.step4');
-        Route::post('{id}/submit', [BookingController::class, 'submit'])->name('dashboard.quote.submit');
+        Route::get('{id}/step4', [QuoteController::class, 'step4'])->name('dashboard.quote.step4');
+        Route::post('{id}/submit', [QuoteController::class, 'submit'])->name('dashboard.quote.submit');
     });
 
     Route::get('/main-form', [DashboardController::class, 'mainForm'])->name('dashboard.mainForm');

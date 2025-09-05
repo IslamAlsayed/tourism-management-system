@@ -10,12 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('booking_itineraries', function (Blueprint $table) {
+        Schema::create('booking_transportation_companies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('day_number');
-            $table->text('description')->nullable();
+            $table->integer('day')->default(1);
+            $table->decimal('price_per_day', 12, 2)->default(0);
             $table->foreignId('booking_id')->constrained('bookings')->cascadeOnDelete();
-            $table->foreignId('city_id')->constrained('cities')->cascadeOnDelete();
+            $table->foreignId('company_id')->constrained('transportation_companies')->cascadeOnDelete();
+            $table->foreignId('bus_type_id')->constrained('bus_types')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('booking_itineraries');
+        Schema::dropIfExists('booking_transportation_companies');
     }
 };
