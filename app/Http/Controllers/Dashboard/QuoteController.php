@@ -248,39 +248,6 @@ class QuoteController extends Controller
             ->with('success', 'Quote submitted and email sent successfully.');
     }
 
-
-    public function submit_old(Step4Request $request, Booking $booking)
-    {
-        $this->eagerLoadBooking($booking);
-        $discount = max(0, (float) ($request->discount ?? 0));
-        $tax = (float) ($request->tax ?? 0); // Already absolute value in legacy design
-        $totals = $this->calculateTotals($booking, $discount, $tax);
-
-        DB::transaction(function () use ($booking, $totals) {
-            $booking->update([
-                'discount' => $totals['discount'],
-                'tax' => $totals['tax'],
-                'subtotal_hotels' => $totals['subtotal_hotels'],
-                'subtotal_transport' => $totals['subtotal_transport'],
-                'subtotal_services' => $totals['subtotal_services'],
-                'grand_total' => $totals['grand_total'],
-                'status' => 'submitted',
-            ]);
-        });
-
-        $pdf = Pdf::loadView('pdf.booking_summary', [
-            'booking' => $booking,
-            'totals' => $totals,
-        ]);
-
-        if ($booking->email) {
-            Mail::to($booking->email)->send(new BookingSummaryMail($booking, $pdf));
-        }
-
-        return redirect()->route('dashboard.quote.step1')
-            ->with('success', 'Quote submitted and email sent successfully.');
-    }
-
     /**
      * Centralized relationships eager load.
      */
