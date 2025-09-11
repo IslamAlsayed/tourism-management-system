@@ -22,6 +22,7 @@ class CreateHotelsTable extends Migration
             $table->string('accounting_mail')->nullable();
             $table->string('accounting_phone')->nullable();
             $table->longText('description')->nullable();
+            $table->foreignId('country_id')->constrained('countries')->onDelete('cascade');
             $table->foreignId('city_id')->constrained('cities')->onDelete('cascade');
             $table->foreignId('region_id')->constrained('regions')->onDelete('cascade');
             $table->foreignId('subregion_id')->constrained('subregions')->onDelete('cascade');

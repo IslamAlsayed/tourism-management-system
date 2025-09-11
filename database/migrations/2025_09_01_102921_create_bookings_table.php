@@ -22,7 +22,6 @@ return new class extends Migration {
             $table->string('last_name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('nationality')->nullable();
             $table->unsignedInteger('adults')->default(1);
             $table->unsignedInteger('children')->default(0);
             $table->unsignedInteger('infants')->default(0);
@@ -31,6 +30,7 @@ return new class extends Migration {
             $table->unsignedInteger('nights')->nullable()->default(0);
 
             // core references (optional if applicable in quote)
+            $table->foreignId('nationality_id')->nullable()->constrained('nationalities')->nullOnDelete();
             $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
             $table->foreignId('hotel_id')->nullable()->constrained('hotels')->nullOnDelete();
             // $table->foreignId('hotel_room_type_id')->nullable()->constrained('hotel_room_types')->nullOnDelete();

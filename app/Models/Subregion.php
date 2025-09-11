@@ -13,6 +13,15 @@ class Subregion extends Model
     protected $fillable = [
         'name',
         'region_id',
-        'wikiDataId'
     ];
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function countries()
+    {
+        return $this->hasMany(Country::class);
+    }
 }

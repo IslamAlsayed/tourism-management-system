@@ -22,11 +22,17 @@ class Hotel extends Model
         'accounting_mail',
         'accounting_phone',
         'description',
+        'country_id',
         'city_id',
         'region_id',
         'subregion_id',
         'accommodation_id',
     ];
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 
     public function city()
     {

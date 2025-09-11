@@ -13,13 +13,13 @@ class Booking extends Model
         'last_name',
         'email',
         'phone',
-        'nationality',
         'adults',
         'children',
         'infants',
         'arrival_date',
         'departure_date',
         'nights',
+        'nationality_id',
         'currency_id',
         'hotel_id',
         'hotel_room_type_id',
@@ -33,6 +33,11 @@ class Booking extends Model
     ];
 
     // core refs
+    public function nationality()
+    {
+        return $this->belongsTo(Nationality::class);
+    }
+
     public function currency()
     {
         return $this->belongsTo(Currency::class);
@@ -55,18 +60,12 @@ class Booking extends Model
         return $this->belongsTo(HotelSeason::class, 'hotel_season_id');
     }
 
-    // pivots
-    // public function transportationCompanies()
-    // {
-    //     return $this->belongsToMany(TransportationCompany::class, 'booking_transportation_companies')
-    //         ->withPivot(['day', 'price_per_day']);
-    // }
-
-    // public function transportationCompanies()
-    // {
-    //     return $this->belongsToMany(TransportationCompany::class, 'booking_transportation_companies')
-    //         ->withPivot(['day', 'price_per_day']);
-    // }
+    public function transportationCompanies()
+    {
+        return $this->belongsToMany(TransportationCompany::class, 'booking_transportation_companies', 'booking_id', 'company_id')
+            ->withPivot(['bus_type_id', 'day', 'price_per_day'])
+            ->withTimestamps();
+    }
 
     public function bookingOtherService()
     {

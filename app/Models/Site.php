@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Site extends Model
 {
     protected $fillable = [
-        'name_ar',
         'name',
+        'name_ar',
         'entry_fee',
-        'currency_id',
-        'city',
+        'city_id',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }

@@ -10,10 +10,14 @@ class Nationality extends Model
     use HasFactory;
 
     protected $fillable = [
-        'country_id',
-        'nationality_ar',
-        'nationality_en',
+        'name',
+        'name_ar',
         'is_active',
-        'nationality_id',
+        'country_id',
     ];
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

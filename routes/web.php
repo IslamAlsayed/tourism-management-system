@@ -1,9 +1,10 @@
 <?php
-use App\Http\Controllers\Dashboard\QuoteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
+use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CountryController;
@@ -31,18 +32,31 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Legacy multi-step form routes (keeping for reference)
-    Route::prefix('quote')->group(function () {
-        Route::get('step1', [QuoteController::class, 'step1'])->name('dashboard.quote.step1');
-        Route::post('step1', [QuoteController::class, 'postStep1'])->name('dashboard.quote.postStep1');
+    Route::prefix('quote/v1')->group(function () {
+        Route::get('step1', [QuoteControllerV1::class, 'step1'])->name('dashboard.quote.v1.step1');
+        Route::post('step1', [QuoteControllerV1::class, 'postStep1'])->name('dashboard.quote.v1.postStep1');
 
-        Route::get('{id}/step2', [QuoteController::class, 'step2'])->name('dashboard.quote.step2');
-        Route::post('{id}/step2', [QuoteController::class, 'postStep2'])->name('dashboard.quote.postStep2');
+        Route::get('{id}/step2', [QuoteControllerV1::class, 'step2'])->name('dashboard.quote.v1.step2');
+        Route::post('{id}/step2', [QuoteControllerV1::class, 'postStep2'])->name('dashboard.quote.v1.postStep2');
 
-        Route::get('{id}/step3', [QuoteController::class, 'step3'])->name('dashboard.quote.step3');
-        Route::post('{id}/step3', [QuoteController::class, 'postStep3'])->name('dashboard.quote.postStep3');
+        Route::get('{id}/step3', [QuoteControllerV1::class, 'step3'])->name('dashboard.quote.v1.step3');
+        Route::post('{id}/step3', [QuoteControllerV1::class, 'postStep3'])->name('dashboard.quote.v1.postStep3');
 
-        Route::get('{id}/step4', [QuoteController::class, 'step4'])->name('dashboard.quote.step4');
-        Route::post('{id}/submit', [QuoteController::class, 'submit'])->name('dashboard.quote.submit');
+        Route::get('{id}/step4', [QuoteControllerV1::class, 'step4'])->name('dashboard.quote.v1.step4');
+        Route::post('{id}/submit', [QuoteControllerV1::class, 'submit'])->name('dashboard.quote.v1.submit');
+    });
+
+    Route::prefix('quote/v2')->group(function () {
+        Route::get('/', [QuoteControllerV2::class, 'index'])->name('dashboard.quote.v2.index');
+        Route::get('step1', [QuoteControllerV2::class, 'step1'])->name('dashboard.quote.v2.step1');
+        Route::post('step1', [QuoteControllerV2::class, 'postStep1'])->name('dashboard.quote.v2.postStep1');
+        Route::get('step2', [QuoteControllerV2::class, 'step2'])->name('dashboard.quote.v2.step2');
+        Route::get('step3', [QuoteControllerV2::class, 'step3'])->name('dashboard.quote.v2.step3');
+        Route::get('step4', [QuoteControllerV2::class, 'step4'])->name('dashboard.quote.v2.step4');
+        Route::post('step4', [QuoteControllerV2::class, 'postStep4'])->name('dashboard.quote.v2.postStep4');
+        Route::get('submit', [QuoteControllerV2::class, 'submit'])->name('dashboard.quote.v2.submit');
+        Route::post('get-hotels-by-countries-and-cities', [QuoteControllerV2::class, 'getHotelsByCountriesAndCities']);
+        Route::post('get-transportation', [QuoteControllerV2::class, 'getTransportation']);
     });
 
     Route::get('/main-form', [DashboardController::class, 'mainForm'])->name('dashboard.mainForm');

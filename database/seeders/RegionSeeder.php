@@ -16,8 +16,11 @@ class RegionSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         Region::insert([
-            ['name' => 'Amman', 'wikiDataId' => null],
-            ['name' => 'Aqaba', 'wikiDataId' => null],
+            ['name' => 'Africa'],
+            ['name' => 'Asia'],
+            ['name' => 'Middle East'],
+            ['name' => 'Europe'],
+            ['name' => 'Americas'],
         ]);
     }
 }

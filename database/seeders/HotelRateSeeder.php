@@ -18,10 +18,28 @@ class HotelRateSeeder extends Seeder
         HotelRate::truncate();
         Schema::enableForeignKeyConstraints();
 
-        $roomTypes = HotelRoomType::all();
+        // foreach (Hotel::all() as $hotel) {
+        //     $roomTypes = HotelRoomType::where('hotel_id', $hotel->id)->get();
+        //     $seasons = HotelSeason::where('hotel_id', $hotel->id)->get();
+
+        //     foreach ($seasons as $season) {
+        //         foreach ($roomTypes as $roomType) {
+        //             HotelRate::create([
+        //                 'meal_plan' => fake()->randomElement(['BB', 'HB', 'FB', 'AI']),
+        //                 'rate_per_person' => fake()->randomFloat(2, 30, 200),
+        //                 'single_supplement' => fake()->randomFloat(2, 10, 100),
+        //                 'hotel_id' => $hotel->id,
+        //                 'hotel_season_id' => $season->id,
+        //                 'room_type_id' => $roomType->id,
+        //                 'accommodation_id' => $hotel->accommodation_id,
+        //             ]);
+        //         }
+        //     }
+        // }
 
         foreach (Hotel::all() as $hotel) {
             $seasons = HotelSeason::where('hotel_id', $hotel->id)->get();
+            $roomTypes = HotelRoomType::where('hotel_id', $hotel->id)->get(); // غرف الفندق نفسه
 
             foreach ($seasons as $season) {
                 foreach ($roomTypes as $roomType) {
@@ -37,6 +55,7 @@ class HotelRateSeeder extends Seeder
                 }
             }
         }
+
 
         // for ($i = 0; $i < count(Hotel::all()); $i++) {
         //     HotelRate::create([

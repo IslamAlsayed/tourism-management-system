@@ -14,7 +14,7 @@ class CreateOtherServicesTable extends Migration
             $table->string('name_ar');
             $table->enum('price_type', ['Per Person', 'Per Group', 'Per Day'])->default('Per Person');
             $table->decimal('price', 12, 2);
-            $table->foreignId('currency_id')->constrained('currencies')->cascadeOnDelete();
+            // $table->foreignId('currency_id')->constrained('currencies')->cascadeOnDelete();
             $table->timestamps();
         });
     }

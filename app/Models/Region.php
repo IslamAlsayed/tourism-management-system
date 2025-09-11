@@ -9,8 +9,10 @@ class Region extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'wikiDataId',
-    ];
+    protected $fillable = ['name'];
+
+    public function subregions()
+    {
+        return $this->hasMany(Subregion::class);
+    }
 }

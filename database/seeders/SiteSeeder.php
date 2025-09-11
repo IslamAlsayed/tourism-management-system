@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\Site;
+use App\Models\Currency;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -16,18 +18,16 @@ class SiteSeeder extends Seeder
 
         Site::insert([
             [
-                'name_ar' => 'البتراء',
                 'name' => 'Petra',
-                'entry_fee' => 50.00,
-                'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
-                'city' => 'Petra',
+                'name_ar' => 'البتراء',
+                'entry_fee' => fake()->randomFloat(2, 30, 100),
+                'city_id' => City::inRandomOrder()->first()?->id ?? 1,
             ],
             [
-                'name_ar' => 'جرش',
                 'name' => 'Jerash',
-                'entry_fee' => 10.00,
-                'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
-                'city' => 'Jerash',
+                'name_ar' => 'جرش',
+                'entry_fee' => fake()->randomFloat(2, 30, 100),
+                'city_id' => City::inRandomOrder()->first()?->id ?? 1,
             ]
         ]);
     }

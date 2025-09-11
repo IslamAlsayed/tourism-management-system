@@ -14,6 +14,7 @@ class Currency extends Model
         'name',
         'name_ar',
         'symbol',
+        'country',
         'exchange_rate',
         'decimal_places',
         'is_active',
@@ -21,4 +22,9 @@ class Currency extends Model
         'is_base_currency',
         'sort_order',
     ];
+
+    public function countries()
+    {
+        return $this->hasMany(Country::class);
+    }
 }

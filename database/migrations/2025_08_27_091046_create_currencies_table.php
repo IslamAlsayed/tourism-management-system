@@ -13,6 +13,7 @@ class CreateCurrenciesTable extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('symbol')->nullable();
+            $table->string('country')->nullable();
             $table->timestamps();
         });
     }

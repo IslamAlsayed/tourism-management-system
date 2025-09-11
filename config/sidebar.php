@@ -8,9 +8,14 @@ return [
             'route' => 'dashboard',
         ],
         [
-            'title' => 'quotation requests',
+            'title' => 'quotation requests v1',
             'icon' => 'ki-filled ki-element-11',
-            'route' => 'dashboard.quote.step1',
+            'route' => 'dashboard.quote.v1.step1',
+        ],
+        [
+            'title' => 'quotation requests v2',
+            'icon' => 'ki-filled ki-element-11',
+            'route' => 'dashboard.quote.v2.index',
         ],
 
         // ================= Users =================
@@ -129,167 +134,197 @@ return [
             'icon' => 'ki-filled ki-home-2',
             'children' => [
                 [
-                    'title' => 'hotels',
-                    'icon' => 'ki-duotone ki-cheque',
-                    'children' => [
-                        [
-                            'title' => 'all hotels',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'add hotel',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'hotel categories',
-                            'route' => '#'
-                        ],
-                    ],
+                    'title' => 'all hotels',
+                    'icon' => 'ki-filled ki-chart-line-up',
+                    'route' => '#'
                 ],
                 [
-                    'title' => 'resorts',
-                    'icon' => 'ki-duotone ki-cheque',
-                    'children' => [
-                        [
-                            'title' => 'all resorts',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'add resort',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'resort facilities',
-                            'route' => '#'
-                        ],
-                    ],
+                    'title' => 'all resorts',
+                    'icon' => 'ki-filled ki-chart-line-up',
+                    'route' => '#'
                 ],
                 [
-                    'title' => 'tourist camps',
-                    'icon' => 'ki-duotone ki-cheque',
-                    'children' => [
-                        [
-                            'title' => 'all camps',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'add camp',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'camp activities',
-                            'route' => '#'
-                        ],
-                    ],
+                    'title' => 'all camps',
+                    'icon' => 'ki-filled ki-chart-line-up',
+                    'route' => '#'
                 ],
                 [
-                    'title' => 'hostels',
-                    'icon' => 'ki-duotone ki-cheque',
-                    'children' => [
-                        [
-                            'title' => 'all hostels',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'add hostel',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'hostel services',
-                            'route' => '#'
-                        ],
-                    ],
+                    'title' => 'all hostels',
+                    'icon' => 'ki-filled ki-chart-line-up',
+                    'route' => '#'
                 ],
                 [
-                    'title' => 'lodges',
-                    'icon' => 'ki-duotone ki-cheque',
-                    'children' => [
-                        [
-                            'title' => 'all lodges',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'add lodge',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'lodge features',
-                            'route' => '#'
-                        ],
-                    ],
+                    'title' => 'all lodges',
+                    'icon' => 'ki-filled ki-chart-line-up',
+                    'route' => '#'
                 ],
                 [
-                    'title' => 'hotel apartments',
-                    'icon' => 'ki-duotone ki-cheque',
-                    'children' => [
-                        [
-                            'title' => 'all apartments',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'add apartment',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'apartment amenities',
-                            'route' => '#'
-                        ],
-                    ],
+                    'title' => 'all apartments',
+                    'icon' => 'ki-filled ki-chart-line-up',
+                    'route' => '#'
                 ],
-                [
-                    'title' => 'rooms',
-                    'icon' => 'ki-filled ki-abstract-33',
-                    'children' => [
-                        [
-                            'title' => 'all rooms',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'add room',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'room availability',
-                            'route' => '#'
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'room types',
-                    'icon' => 'ki-filled ki-category',
-                    'children' => [
-                        [
-                            'title' => 'all room types',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'add room type',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'type features',
-                            'route' => '#'
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'room names',
-                    'icon' => 'ki-filled ki-tag',
-                    'children' => [
-                        [
-                            'title' => 'all room names',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'add room name',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'name templates',
-                            'route' => '#'
-                        ],
-                    ],
-                ],
+                // [
+                //     'title' => 'hotels',
+                //     'icon' => 'ki-duotone ki-cheque',
+                //     'children' => [
+                //         [
+                //             'title' => 'all hotels',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'add hotel',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'hotel categories',
+                //             'route' => '#'
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'resorts',
+                //     'icon' => 'ki-duotone ki-cheque',
+                //     'children' => [
+                //         [
+                //             'title' => 'all resorts',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'add resort',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'resort facilities',
+                //             'route' => '#'
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'tourist camps',
+                //     'icon' => 'ki-duotone ki-cheque',
+                //     'children' => [
+                //         [
+                //             'title' => 'all camps',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'add camp',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'camp activities',
+                //             'route' => '#'
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'hostels',
+                //     'icon' => 'ki-duotone ki-cheque',
+                //     'children' => [
+                //         [
+                //             'title' => 'all hostels',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'add hostel',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'hostel services',
+                //             'route' => '#'
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'lodges',
+                //     'icon' => 'ki-duotone ki-cheque',
+                //     'children' => [
+                //         [
+                //             'title' => 'all lodges',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'add lodge',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'lodge features',
+                //             'route' => '#'
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'hotel apartments',
+                //     'icon' => 'ki-duotone ki-cheque',
+                //     'children' => [
+                //         [
+                //             'title' => 'all apartments',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'add apartment',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'apartment amenities',
+                //             'route' => '#'
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'rooms',
+                //     'icon' => 'ki-filled ki-abstract-33',
+                //     'children' => [
+                //         [
+                //             'title' => 'all rooms',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'add room',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'room availability',
+                //             'route' => '#'
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'room types',
+                //     'icon' => 'ki-filled ki-category',
+                //     'children' => [
+                //         [
+                //             'title' => 'all room types',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'add room type',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'type features',
+                //             'route' => '#'
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'room names',
+                //     'icon' => 'ki-filled ki-tag',
+                //     'children' => [
+                //         [
+                //             'title' => 'all room names',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'add room name',
+                //             'route' => '#'
+                //         ],
+                //         [
+                //             'title' => 'name templates',
+                //             'route' => '#'
+                //         ],
+                //     ],
+                // ],
             ],
         ],
 
@@ -326,6 +361,32 @@ return [
                     'icon' => 'ki-filled ki-delivery-2',
                     'route' => '#'
                 ],
+                [
+                    'title' => 'vehicles',
+                    'icon' => 'ki-filled ki-car',
+                    'children' => [
+                        [
+                            'title' => 'tourist buses',
+                            'icon' => 'ki-filled ki-bus',
+                            'route' => '#'
+                        ],
+                        [
+                            'title' => 'transport vehicles',
+                            'icon' => 'ki-filled ki-delivery',
+                            'route' => '#'
+                        ],
+                        [
+                            'title' => 'tourist transport companies',
+                            'icon' => 'ki-filled ki-category',
+                            'route' => '#'
+                        ],
+                        [
+                            'title' => '4x4 vehicles',
+                            'icon' => 'ki-filled ki-car',
+                            'route' => '#'
+                        ],
+                    ],
+                ],
             ],
         ],
 
@@ -348,32 +409,32 @@ return [
         ],
 
         // ================= Vehicles =================
-        [
-            'title' => 'vehicles',
-            'icon' => 'ki-filled ki-car',
-            'children' => [
-                [
-                    'title' => 'tourist buses',
-                    'icon' => 'ki-filled ki-bus',
-                    'route' => '#'
-                ],
-                [
-                    'title' => 'transport vehicles',
-                    'icon' => 'ki-filled ki-delivery',
-                    'route' => '#'
-                ],
-                [
-                    'title' => 'tourist transport companies',
-                    'icon' => 'ki-filled ki-category',
-                    'route' => '#'
-                ],
-                [
-                    'title' => '4x4 vehicles',
-                    'icon' => 'ki-filled ki-car',
-                    'route' => '#'
-                ],
-            ],
-        ],
+        // [
+        //     'title' => 'vehicles',
+        //     'icon' => 'ki-filled ki-car',
+        //     'children' => [
+        //         [
+        //             'title' => 'tourist buses',
+        //             'icon' => 'ki-filled ki-bus',
+        //             'route' => '#'
+        //         ],
+        //         [
+        //             'title' => 'transport vehicles',
+        //             'icon' => 'ki-filled ki-delivery',
+        //             'route' => '#'
+        //         ],
+        //         [
+        //             'title' => 'tourist transport companies',
+        //             'icon' => 'ki-filled ki-category',
+        //             'route' => '#'
+        //         ],
+        //         [
+        //             'title' => '4x4 vehicles',
+        //             'icon' => 'ki-filled ki-car',
+        //             'route' => '#'
+        //         ],
+        //     ],
+        // ],
 
         // ================= Tourist Sites =================
         [

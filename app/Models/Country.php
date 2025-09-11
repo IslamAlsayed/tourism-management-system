@@ -20,9 +20,8 @@ class Country extends Model
         'currency_id',
         'tld',
         'native',
-        'region',
+        'city_id',
         'region_id',
-        'subregion',
         'subregion_id',
         'nationality',
         'timezone',
@@ -38,9 +37,24 @@ class Country extends Model
         'is_active',
     ];
 
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
     public function currency()
     {
         return $this->belongsTo(Currency::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
+    }
+
+    public function hotels()
+    {
+        return $this->hasMany(Hotel::class);
     }
 
     public function cities()

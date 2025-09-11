@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Currency;
 use App\Models\OtherService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -16,18 +17,25 @@ class OtherServiceSeeder extends Seeder
 
         OtherService::insert([
             [
-                'name_ar' => 'دليل سياحي مرخص',
                 'name' => 'Licensed Tourist Guide',
+                'name_ar' => 'دليل سياحي مرخص',
                 'price_type' => 'Per Day',
-                'price' => 70.00,
-                'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
+                'price' => fake()->randomFloat(2, 50, 150),
+                // 'currency_id' => Currency::inRandomOrder()->first()?->id ?? 1,s
             ],
             [
-                'name_ar' => 'جيب 4x4 في وادي رم',
                 'name' => '4x4 Jeep in Wadi Rum',
+                'name_ar' => 'جيب 4x4 في وادي رم',
                 'price_type' => 'Per Group',
-                'price' => 85.00,
-                'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? 1,
+                'price' => fake()->randomFloat(2, 50, 150),
+                // 'currency_id' => Currency::inRandomOrder()->first()?->id ?? 1,s
+            ],
+            [
+                'name' => 'Petra Entrance Fee',
+                'name_ar' => 'رسوم دخول البتراء',
+                'price_type' => 'Per Person',
+                'price' => fake()->randomFloat(2, 50, 150),
+                // 'currency_id' => Currency::inRandomOrder()->first()?->id ?? 1,s
             ]
         ]);
     }

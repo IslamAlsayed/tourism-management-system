@@ -1,0 +1,158 @@
+.multi-select-tag {
+    all: revert !important;
+    font-family: inherit !important
+}
+
+.multi-select-tag .wrapper {
+    position: relative
+}
+
+.multi-select-tag .tag-container {
+    display: flex;
+    padding: .5rem;
+    flex-wrap: wrap;
+    gap: .5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: .25rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    background-color: #fff
+}
+
+.multi-select-tag .tag-input {
+    padding: .25rem;
+    flex-grow: 1;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border: none;
+    background-color: #fff;
+    margin: 0;
+    line-height: 1.25rem
+}
+
+.multi-select-tag .dropdown {
+    overflow: auto;
+    position: absolute;
+    z-index: 10;
+    padding: 0;
+    margin-top: .25rem;
+    border-radius: .25rem;
+    border: 1px solid #e5e7eb;
+    width: 100%;
+    max-height: 15rem;
+    background-color: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -2px rgba(0, 0, 0, .05)
+}
+
+.multi-select-tag .li {
+    padding: .5rem;
+    cursor: pointer;
+    list-style-type: none
+}
+
+.multi-select-tag .li:hover {
+    background-color: #e5e7eb
+}
+
+.multi-select-tag .li-arrow {
+    background-color: #d1d5db
+}
+
+.multi-select-tag .tag-item {
+    display: flex;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    align-items: center;
+    border-radius: .25rem;
+    color: #1e40af;
+    background-color: #dbeafe
+}
+
+.multi-select-tag .cross {
+    margin-left: .25rem;
+    cursor: pointer
+}
+
+.multi-select-tag .hidden {
+    display: none
+}
+
+[data-value="no-data"],
+.disabled-option {
+    color: #6b7280;
+    pointer-events: none;
+    background-color: #f3f4f6
+}
+
+.containerCompanies,
+.trip {
+    position: relative;
+}
+
+.addCompany,
+.removeTrip {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    display: grid;
+    cursor: pointer;
+    border-radius: 50%;
+    align-content: center;
+    transform: translateY(-50%);
+}
+
+.addCompany {
+    width: 18px;
+    height: 18px;
+    top: 65%;
+    left: -25px;
+    color: white;
+    font-size: 10px;
+    background-color: #1379f0;
+}
+
+.removeTrip {
+    left: -30px;
+    color: white;
+    color: red;
+    font-size: 12px;
+    background-color: #1379f0;
+    background-color: #e4e4e7;
+}
+
+#containerHotels {
+    min-height: 70px;
+    position: relative;
+}
+
+#containerHotels .loader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: 1000;
+    position: absolute;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: #e6e6ec;
+}
+
+#containerHotels .loader::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #1379f0 transparent #1379f0 #1379f0;
+    animation: loader 0.3s infinite linear;
+}
+
+@keyframes loader {
+    to {
+        transform: rotate(1turn);
+    }
+}

@@ -46,6 +46,12 @@ return [
     'show' => 'Show',
     'hide' => 'Hide',
     'close' => 'Close',
+    'status' => 'status',
+    'adults' => 'adults',
+    'arrival_date' => 'arrival_date',
+    'departure_date' => 'departure_date',
+    'nights' => 'nights',
+    'grand_total' => 'grand_total',
 
     // Form and UI Components
     'actions' => 'Actions',
@@ -124,6 +130,12 @@ return [
     'iso_codes' => 'ISO Codes',
     'iso_codes_hint' => 'Make sure to use internationally recognized codes',
     'currency_hint' => 'Choose the official currency for the country',
+
+    // Quote Management
+    'quotation' => 'Quotation',
+    'quotations' => 'Quotations',
+    'manage_system_quotations' => 'Manage system quotations',
+    'add_new_quotation' => 'Add New quotation',
 
     // Country Management
     'add_country' => 'Add Country',

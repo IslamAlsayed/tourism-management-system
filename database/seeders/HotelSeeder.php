@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Country;
 use App\Models\Subregion;
 use Illuminate\Database\Seeder;
 use App\Models\Hotel;
@@ -18,7 +19,7 @@ class HotelSeeder extends Seeder
         Hotel::truncate();
         Schema::enableForeignKeyConstraints();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 90; $i++) {
             Hotel::create([
                 'name' => fake()->company() . ' Hotel',
                 'created_by' => auth()->id() ?? 1,
@@ -32,6 +33,7 @@ class HotelSeeder extends Seeder
                 'accounting_mail' => fake()->unique()->safeEmail(),
                 'accounting_phone' => '+962' . rand(100000, 999999) . '902',
                 'description' => fake()->paragraph(),
+                'country_id' => Country::inRandomOrder()->first()?->id ?? 1,
                 'city_id' => City::inRandomOrder()->first()?->id ?? 1,
                 'region_id' => Region::inRandomOrder()->first()?->id ?? 1,
                 'subregion_id' => Subregion::inRandomOrder()->first()?->id ?? 1,

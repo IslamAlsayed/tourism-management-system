@@ -46,6 +46,12 @@ return [
     'show' => 'إظهار',
     'hide' => 'إخفاء',
     'close' => 'إغلاق',
+    'status' => 'الحالة',
+    'adults' => 'البالغين',
+    'arrival_date' => 'موعد الوصول',
+    'departure_date' => 'موعد الرجوع',
+    'nights' => 'الايام',
+    'grand_total' => 'كامل الاجمالي',
 
     // Form and UI Components
     'actions' => 'الإجراءات',
@@ -124,6 +130,12 @@ return [
     'iso_codes' => 'رموز ISO',
     'iso_codes_hint' => 'تأكد من استخدام الرموز المعترف بها دولياً',
     'currency_hint' => 'اختر العملة الرسمية للدولة',
+
+    // Quote Management
+    'quotation' => 'الحجز',
+    'quotations' => 'الحجوزات',
+    'manage_system_quotations' => 'إدارة حجوزات النظام',
+    'add_new_quotation' => 'إضافة حجز جديد',
 
     // Country Management
     'add_country' => 'إضافة دولة',

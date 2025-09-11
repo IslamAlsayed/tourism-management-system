@@ -10,11 +10,10 @@ class CreateNationalitiesTable extends Migration
     {
         Schema::create('nationalities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('country_id');
-            $table->string('nationality_ar');
-            $table->string('nationality_en');
+            $table->string('name');
+            $table->string('name_ar');
             $table->boolean('is_active')->default(true);
-            $table->unsignedBigInteger('nationality_id')->nullable();
+            $table->foreignId('country_id')->constrained('countries')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -11,13 +11,13 @@ class OtherService extends Model
         'name_ar',
         'price_type',
         'price',
-        'currency_id',
+        // 'currency_id',
     ];
 
-    public function currency()
-    {
-        return $this->belongsTo(Currency::class);
-    }
+    // public function currency()
+    // {
+    //     return $this->belongsTo(Currency::class);
+    // }
 
     public function bookings()
     {

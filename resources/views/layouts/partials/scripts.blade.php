@@ -9,6 +9,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- End of Scripts -->
 
+{{-- Multi Select JS --}}
+<script src="{{ asset('assets/js/special-multiple.js') }}"></script>
+
 <!-- Compiled App Scripts -->
 @vite(['resources/js/app.js'])
 @yield('scripts')

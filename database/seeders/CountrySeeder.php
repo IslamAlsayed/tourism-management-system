@@ -18,6 +18,58 @@ class CountrySeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         $countries = [
+            ['name' => 'Egypt', 'subregion_id' => 1, 'currency_id' => 1],
+            ['name' => 'Saudi Arabia', 'subregion_id' => 3, 'currency_id' => 2],
+            ['name' => 'United Arab Emirates', 'subregion_id' => 3, 'currency_id' => 3],
+            ['name' => 'Jordan', 'subregion_id' => 4, 'currency_id' => 4],
+            ['name' => 'Lebanon', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Palestine', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Syria', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Iraq', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Libya', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Tunisia', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Morocco', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Mauritania', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Oman', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Kuwait', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Bahrain', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Yemen', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Sudan', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Somalia', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Qatar', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Djibouti', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Comoros', 'subregion_id' => 1, 'currency_id' => 5],
+        ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $countries = [
             [
                 'name' => 'Jordan',
                 'name_ar' => 'الأردن',

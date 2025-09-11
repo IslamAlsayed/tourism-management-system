@@ -10,11 +10,10 @@ class CreateSitesTable extends Migration
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
-            $table->string('name_ar');
             $table->string('name');
+            $table->string('name_ar');
             $table->decimal('entry_fee', 12, 2)->default(0);
-            $table->foreignId('currency_id')->constrained('currencies')->onDelete('cascade');
-            $table->string('city')->nullable();
+            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade');
             $table->timestamps();
         });
     }
