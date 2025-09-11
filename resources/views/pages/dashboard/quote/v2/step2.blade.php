@@ -185,8 +185,7 @@
                 </div>
 
                 {{-- Transportation Target --}}
-                {{-- <div class="mb-4" style="display: none; visibility: hidden;" data-programdetail-target="transportation"> --}}
-                <div class="mb-4" data-programdetail-target="transportation">
+                <div class="mb-4" style="display: none; visibility: hidden;" data-programdetail-target="transportation">
                     <livewire:quote.v2.step2.transportation />
                 </div>
             </div>

@@ -76,6 +76,6 @@
     </div>
 </div>
 
-@push('scripts')
+{{-- @push('scripts')
     <script src="{{ asset('assets/js/transportation.js') }}"></script>
-@endpush
+@endpush --}}

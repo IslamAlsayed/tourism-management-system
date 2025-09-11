@@ -277,7 +277,7 @@ function confirmMultiSelect(multiSelect) {
         initMultiSelect(multiSelect, function (values) {
             dataToSend.countries = values;
             if (multiSelect.dataset.type != "hotels") {
-                fetchData();
+                fetchHotels();
             }
         });
     }
@@ -330,12 +330,12 @@ if (specialMultiples.length > 0) {
 if (specialCheckboxes.length > 0) {
     initMultiCheckbox(".starsOptions", function (values) {
         dataToSend.stars = values;
-        fetchData();
+        fetchHotels();
     });
 }
 
 // ✅ Fetch Hotels
-function fetchData() {
+function fetchHotels() {
     if (
         dataToSend.countries.length === 0 &&
         dataToSend.cities.length === 0 &&
@@ -358,14 +358,15 @@ function fetchData() {
         body: JSON.stringify(dataToSend),
     })
         .then((response) => response.json())
-
         .then((data) => {
             loadData();
 
             let containerHotels = document.getElementById("containerHotels");
+            containerHotels.innerHTML = ""; // reset
 
-            // Object.keys لأن data.data عبارة عن object فيها countries
-            if (JSON.stringify(data.data).length > 0) {
+            if (Object.keys(data.data).length > 0) {
+                console.log("✅ data found");
+                allHotels.parentElement.style.display = "none";
                 closeAllConfirmMultiSelect();
 
                 Object.keys(data.data).forEach((countryId, i) => {
@@ -416,7 +417,35 @@ function fetchData() {
                     confirmMultiSelect(multiSelect);
                 });
             } else {
+                console.log("⚠ no data");
                 allHotels.parentElement.style.display = "block";
+
+                // اعمل div + select فاضي
+                let div = document.createElement("div");
+                let label = document.createElement("label");
+                label.setAttribute("for", `hotels_empty_`);
+                label.className = "kt-label mb-2";
+                label.innerHTML = `Hotels - <span class="text-red-600">No options available</span>`;
+                div.appendChild(label);
+
+                let newSelect = document.createElement("select");
+                newSelect.className = "injection-select";
+                newSelect.id = `hotels_empty_`;
+                newSelect.name = `hotels_empty_Options[]`;
+                newSelect.setAttribute("data-type", "hotels");
+                newSelect.setAttribute("special-multiple", "special-multiple");
+
+                // Option "No options available"
+                let option = document.createElement("option");
+                option.textContent = "No options available";
+                option.disabled = true;
+                option.classList.add("disabled-option");
+                newSelect.appendChild(option);
+
+                div.appendChild(newSelect);
+                containerHotels.appendChild(div);
+
+                confirmMultiSelect(newSelect);
             }
 
             if (document.querySelector(".loader")) {
