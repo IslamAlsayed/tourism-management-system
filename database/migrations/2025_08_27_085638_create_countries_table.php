@@ -12,24 +12,19 @@ return new class extends Migration {
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('name_ar');
-            $table->string('iso2');
-            $table->string('iso3');
+            $table->string('name')->nullable();
+            $table->string('name_ar')->nullable();
+            $table->string('iso2', 2)->nullable();
+            $table->string('iso3', 3)->nullable();
             $table->integer('numeric_code')->nullable();
-            $table->string('phone_code');
+            $table->string('phone_code')->nullable();
             $table->string('capital')->nullable();
             $table->string('tld')->nullable();
             $table->string('native')->nullable();
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
-            $table->foreignId('city_id')->nullable()->constrained('cities')->nullOnDelete();
-            $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->nullOnDelete();
-            $table->string('nationality')->nullable();
-            $table->text('timezone');
+            $table->json('timezone')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
-            $table->string('emoji')->nullable();
+            $table->string('emoji', 8)->nullable();
             $table->string('emojiU')->nullable();
             $table->bigInteger('population')->nullable();
             $table->string('flag_url')->nullable();
@@ -37,6 +32,7 @@ return new class extends Migration {
             $table->string('continent')->nullable();
             $table->float('area')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
             $table->timestamps();
         });
     }

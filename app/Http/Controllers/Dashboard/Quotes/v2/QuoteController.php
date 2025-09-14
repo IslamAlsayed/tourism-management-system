@@ -18,8 +18,18 @@ class QuoteController extends Controller
 {
     public function index()
     {
-        $quotations = Booking::all();
-        return view('pages.dashboard.quote.v2.index', compact('quotations'));
+        // $quotations = Booking::all();
+        $quotations = [];
+        $fileTypes = [1 => 'Client', 2 => 'Tour Operator', 3 => 'Travel Agent', 4 => 'Website', 5 => 'Offers', 6 => 'Special Request', 7 => 'Other'];
+        $clients = [1 => 'Client A', 2 => 'Client B', 3 => 'Client C', 4 => 'Client D', 5 => 'Client E'];
+        $tourOperators = [1 => 'Tour Operator A', 2 => 'Tour Operator B', 3 => 'Tour Operator C'];
+        $travelAgents = [1 => 'Travel Agent A', 2 => 'Travel Agent B', 3 => 'Travel Agent C'];
+        $nationalities = Nationality::all();
+        $countries = Country::all();
+        $currencies = Currency::all();
+        $subregions = Subregion::all();
+
+        return view('pages.dashboard.quote.v2.step1', compact('quotations', 'fileTypes', 'clients', 'tourOperators', 'travelAgents', 'nationalities', 'currencies', 'countries', 'subregions'));
     }
 
     public function step1()
@@ -38,7 +48,8 @@ class QuoteController extends Controller
 
     public function postStep1(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
+        $data = $request->except(['nationalitiesOptions', 'subregionsOption']);
 
         return redirect()->route('dashboard.quote.v2.step2');
     }
@@ -66,6 +77,14 @@ class QuoteController extends Controller
         return view('pages.dashboard.quote.v2.step2', compact('programDetails', 'stars', 'countries', 'cities', 'hotels', 'transportCompanies'));
     }
 
+    public function postStep2(Request $request)
+    {
+        // $data = $request->except(['nationalitiesOptions', 'subregionsOption']);
+        dd($request->all());
+
+        return redirect()->route('dashboard.quote.v2.step2');
+    }
+
     public function step3()
     {
         $hotels = Hotel::all();
@@ -74,6 +93,14 @@ class QuoteController extends Controller
         $stars = [1, 2, 3, 4, 5];
 
         return view('pages.dashboard.quote.v2.step3', compact('hotels', 'countries', 'cities', 'stars'));
+    }
+
+    public function postStep3(Request $request)
+    {
+        // $data = $request->except(['nationalitiesOptions', 'subregionsOption']);
+        dd($request->all());
+
+        return redirect()->route('dashboard.quote.v2.step2');
     }
 
     public function postStep4(Request $request)

@@ -273,7 +273,6 @@ function closeAllDropdown() {
 
 function confirmMultiSelect(multiSelect) {
     if (multiSelect) {
-        multiSelect.name = `${multiSelect.id}_Options[]`;
         initMultiSelect(multiSelect, function (values) {
             dataToSend.countries = values;
             if (multiSelect.dataset.type != "hotels") {
@@ -297,8 +296,9 @@ function loadData(container = null) {
         container || document.getElementById("containerHotels");
     let loader = document.createElement("div");
     loader.className = "loader";
-    containerHotels.appendChild(loader);
-    console.log("loader");
+    if (containerHotels) {
+        containerHotels.appendChild(loader);
+    }
 }
 
 document.addEventListener("click", function (e) {
@@ -341,7 +341,7 @@ function fetchHotels() {
         dataToSend.cities.length === 0 &&
         dataToSend.stars.length === 0
     ) {
-        allHotels.parentElement.style.display = "block";
+        if (allHotels) allHotels.parentElement.style.display = "block";
         console.log("No countries or cities or stars selected.");
         if (hotelsMultiSelect) {
             hotelsMultiSelect.updateOptions(hotelsSelect, []);
@@ -362,11 +362,11 @@ function fetchHotels() {
             loadData();
 
             let containerHotels = document.getElementById("containerHotels");
-            containerHotels.innerHTML = ""; // reset
+            if (containerHotels) containerHotels.innerHTML = ""; // reset
 
             if (Object.keys(data.data).length > 0) {
                 console.log("✅ data found");
-                allHotels.parentElement.style.display = "none";
+                if (allHotels) allHotels.parentElement.style.display = "none";
                 closeAllConfirmMultiSelect();
 
                 Object.keys(data.data).forEach((countryId, i) => {
@@ -375,7 +375,7 @@ function fetchHotels() {
                     // Label للدولة
                     let div = document.createElement("div");
                     let label = document.createElement("label");
-                    label.setAttribute("for", `hotels_${i}_`);
+                    label.setAttribute("for", `hotelsOptions${i}`);
                     label.className = "kt-label mb-2";
                     label.innerHTML = `Hotels - <span class="text-primary">${countryData.country_name}</span>`;
                     div.appendChild(label);
@@ -384,8 +384,8 @@ function fetchHotels() {
                     // New Select لكل دولة
                     let newSelect = document.createElement("select");
                     newSelect.className = "injection-select";
-                    newSelect.id = `hotels_${i}_`;
-                    newSelect.name = `hotels_${i}_Options[]`;
+                    newSelect.id = `hotelsOptions${i}`;
+                    newSelect.name = `hotelsOptions${i}[]`;
                     newSelect.setAttribute("data-type", "hotels");
                     newSelect.setAttribute(
                         "special-multiple",
@@ -418,32 +418,33 @@ function fetchHotels() {
                 });
             } else {
                 console.log("⚠ no data");
-                allHotels.parentElement.style.display = "block";
+                if (allHotels) allHotels.parentElement.style.display = "block";
 
                 // اعمل div + select فاضي
                 let div = document.createElement("div");
                 let label = document.createElement("label");
-                label.setAttribute("for", `hotels_empty_`);
+                label.setAttribute("for", `hotelsOptionsEmpty`);
                 label.className = "kt-label mb-2";
                 label.innerHTML = `Hotels - <span class="text-red-600">No options available</span>`;
                 div.appendChild(label);
 
                 let newSelect = document.createElement("select");
                 newSelect.className = "injection-select";
-                newSelect.id = `hotels_empty_`;
-                newSelect.name = `hotels_empty_Options[]`;
+                newSelect.id = `hotelsOptionsEmpty`;
+                newSelect.name = `hotelsOptionsEmpty[]`;
                 newSelect.setAttribute("data-type", "hotels");
                 newSelect.setAttribute("special-multiple", "special-multiple");
 
                 // Option "No options available"
                 let option = document.createElement("option");
                 option.textContent = "No options available";
+                option.className = "disabled-option";
                 option.disabled = true;
                 option.classList.add("disabled-option");
                 newSelect.appendChild(option);
 
                 div.appendChild(newSelect);
-                containerHotels.appendChild(div);
+                if (containerHotels) containerHotels.appendChild(div);
 
                 confirmMultiSelect(newSelect);
             }

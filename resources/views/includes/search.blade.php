@@ -5,7 +5,7 @@
     </h3>
     <div class="flex flex-wrap gap-2 lg:gap-5">
         <div class="flex">
-            <label class="kt-input">
+            <label class="kt-input h-[45px]">
                 <i class="ki-filled ki-magnifier"></i>
                 <input wire:model.live="search" data-kt-datatable-search="#team_crew_table"
                     placeholder="{{ __('main.search_placeholder') }}" type="text" value="" />

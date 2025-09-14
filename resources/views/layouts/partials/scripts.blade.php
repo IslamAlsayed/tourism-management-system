@@ -10,7 +10,14 @@
 <!-- End of Scripts -->
 
 {{-- Multi Select JS --}}
-<script src="{{ asset('assets/js/special-multiple.js') }}"></script>
+<script src="{{ asset('assets/js/multiSelect.js') }}"></script>
+<script src="{{ asset('assets/js/multiCheckbox.js') }}"></script>
+<script src="{{ asset('assets/js/helpers.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+
+{{-- <script type="module" src="{{ asset('assets/js/main.js') }}"></script> --}}
+{{-- <script src="{{ asset('assets/js/special-multiple.js') }}"></script> --}}
 
 <!-- Compiled App Scripts -->
 @vite(['resources/js/app.js'])

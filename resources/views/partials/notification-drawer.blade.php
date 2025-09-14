@@ -171,7 +171,7 @@
                                         For an expert opinion, check out what Mike has to say on this topic!
                                     </span>
                                 </div>
-                                <div class="kt-input">
+                                <div class="kt-input h-[45px]">
                                     <input placeholder="Reply" type="text" value="" />
                                     <button class="kt-btn kt-btn-ghost kt-btn-icon size-6 -me-1.5">
                                         <i class="ki-filled ki-picture">
@@ -978,7 +978,7 @@
                                         design is simply stunning! From layout to color, it's a work of art!
                                     </span>
                                 </div>
-                                <div class="kt-input">
+                                <div class="kt-input h-[45px]">
                                     <input placeholder="Reply" type="text" value="" />
                                     <button class="kt-btn kt-btn-ghost kt-btn-icon size-6 -me-1.5">
                                         <i class="ki-filled ki-picture">

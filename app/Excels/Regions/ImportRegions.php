@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Excels\Regions;
+
+use App\Models\Region;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+
+class ImportRegions implements ToCollection
+{
+    public $rowCount = 0;
+
+    public function collection(Collection $rows)
+    {
+        $fillable = (new Region())->getFillable();
+        $headers = $rows->first()->toArray();
+
+        foreach ($rows as $index => $row) {
+            if ($index == 0)
+                continue;
+
+            $data = [];
+
+            foreach ($fillable as $column) {
+                if (in_array($column, $headers)) {
+                    $excelKey = array_search($column, $headers);
+                    if ($excelKey !== false && isset($row[$excelKey])) {
+                        $data[$column] = $row[$excelKey];
+                    }
+                }
+            }
+
+            Region::create($data);
+            $this->rowCount++;
+        }
+    }
+}

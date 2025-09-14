@@ -60,7 +60,7 @@
                             <div class="mb-3">
                                 <label for="name_ar"
                                     class="kt-label required mb-2">{{ __('main.country_name_arabic') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input"
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.enter_country_name_arabic') }}" required
                                     value="{{ $country->name_ar }}">
                                 @error('name_ar')
@@ -72,7 +72,7 @@
                             <div class="mb-3">
                                 <label for="name"
                                     class="kt-label required mb-2">{{ __('main.country_name_english') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input"
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.enter_country_name_english') }}" required
                                     value="{{ $country->name }}">
                                 @error('name')
@@ -83,7 +83,7 @@
                             <!-- Phone Code -->
                             <div class="mb-3">
                                 <label for="phone_code" class="kt-label mb-2">{{ __('main.phone_code') }}</label>
-                                <input type="text" name="phone_code" id="phone_code" class="kt-input"
+                                <input type="text" name="phone_code" id="phone_code" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.phone_code_example') }}" value="{{ $country->phone_code }}">
                                 @error('phone_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -96,7 +96,7 @@
                             <div class="mb-3">
                                 <label for="iso2"
                                     class="kt-label required mb-2">{{ __('main.country_code_iso2') }}</label>
-                                <input type="text" name="iso2" id="iso2" class="kt-input"
+                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.iso2_example') }}" max="2" required
                                     value="{{ $country->iso2 }}">
                                 @error('iso2')
@@ -107,7 +107,7 @@
                             <!-- Country Code (ISO 3) -->
                             <div class="mb-3">
                                 <label for="iso3" class="kt-label mb-2">كود البلد (ISO 3)</label>
-                                <input type="text" name="iso3" id="iso3" class="kt-input"
+                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]"
                                     placeholder="مثال: SAU, ARE" max="3" value="{{ $country->iso3 }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -117,7 +117,7 @@
                             <!-- Capital City -->
                             <div class="mb-3">
                                 <label for="capital" class="kt-label mb-2">العاصمة</label>
-                                <input type="text" name="capital" id="capital" class="kt-input"
+                                <input type="text" name="capital" id="capital" class="kt-input h-[45px]"
                                     placeholder="مثال: الرياض" value="{{ $country->capital }}">
                                 @error('capital')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -129,7 +129,7 @@
                             <!-- Currency -->
                             <div class="mb-3">
                                 <label for="currency_id" class="kt-label mb-2">العملة الرسمية</label>
-                                <select name="currency_id" id="currency_id" class="kt-select">
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]">
                                     <option value="">اختر العملة</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -146,7 +146,7 @@
                             <!-- Population -->
                             <div class="mb-3">
                                 <label for="population" class="kt-label mb-2">عدد السكان</label>
-                                <input type="number" name="population" id="population" class="kt-input"
+                                <input type="number" name="population" id="population" class="kt-input h-[45px]"
                                     placeholder="مثال: 35000000" value="{{ $country->population }}">
                                 @error('population')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -156,8 +156,8 @@
                             <!-- Area (km²) -->
                             <div class="mb-3">
                                 <label for="area" class="kt-label mb-2">المساحة (كم²)</label>
-                                <input type="number" step="any" name="area" id="area" class="kt-input"
-                                    placeholder="مثال: 2149690" value="{{ $country->area }}">
+                                <input type="number" step="any" name="area" id="area"
+                                    class="kt-input h-[45px]" placeholder="مثال: 2149690" value="{{ $country->area }}">
                                 @error('area')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -168,7 +168,7 @@
                             <!-- Continent -->
                             <div class="mb-3">
                                 <label for="continent" class="kt-label mb-2">القارة</label>
-                                <select name="continent" id="continent" class="kt-select">
+                                <select name="continent" id="continent" class="kt-select h-[45px]">
                                     <option value="">اختر القارة</option>
                                     @foreach (config('helpers.continents') as $continent)
                                         <option value="{{ $continent }}"
@@ -185,7 +185,7 @@
                             <!-- Region -->
                             <div class="mb-3">
                                 <label for="region" class="kt-label mb-2">المنطقة</label>
-                                <input type="text" name="region" id="region" class="kt-input"
+                                <input type="text" name="region" id="region" class="kt-input h-[45px]"
                                     placeholder="مثال: الشرق الأوسط" value="{{ $country->region }}">
                                 @error('region')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -195,8 +195,9 @@
                             <!-- Latitude -->
                             <div class="mb-3">
                                 <label for="latitude" class="kt-label mb-2">خط العرض</label>
-                                <input type="number" step="any" name="latitude" id="latitude" class="kt-input"
-                                    placeholder="مثال: 23.8859" value="{{ $country->latitude }}">
+                                <input type="number" step="any" name="latitude" id="latitude"
+                                    class="kt-input h-[45px]" placeholder="مثال: 23.8859"
+                                    value="{{ $country->latitude }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -207,8 +208,9 @@
                             <!-- Longitude -->
                             <div class="mb-3">
                                 <label for="longitude" class="kt-label mb-2">خط الطول</label>
-                                <input type="number" step="any" name="longitude" id="longitude" class="kt-input"
-                                    placeholder="مثال: 45.0792" value="{{ $country->longitude }}">
+                                <input type="number" step="any" name="longitude" id="longitude"
+                                    class="kt-input h-[45px]" placeholder="مثال: 45.0792"
+                                    value="{{ $country->longitude }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -217,7 +219,7 @@
                             <!-- Timezone -->
                             <div class="mb-3">
                                 <label for="timezone" class="kt-label mb-2">المنطقة الزمنية الرئيسية</label>
-                                <select name="timezone" id="timezone" class="kt-select">
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]">
                                     <option value="">اختر المنطقة الزمنية</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
@@ -234,7 +236,7 @@
                             <!-- Languages -->
                             <div class="mb-3">
                                 <label for="languages" class="kt-label mb-2">اللغات الرسمية</label>
-                                <input type="text" name="languages" id="languages" class="kt-input"
+                                <input type="text" name="languages" id="languages" class="kt-input h-[45px]"
                                     placeholder="مثال: العربية، الإنجليزية" value="{{ $country->languages }}">
                                 <div class="text-xs text-secondary-foreground mt-1">
                                     اكتب اللغات مفصولة بفواصل
@@ -249,7 +251,7 @@
                             <!-- Description -->
                             <div class="mb-3">
                                 <label for="description" class="kt-label mb-2">وصف البلد</label>
-                                <textarea name="description" id="description" rows="4" class="kt-input"
+                                <textarea name="description" id="description" rows="4" class="kt-input h-[45px]"
                                     placeholder="معلومات عامة عن البلد...">{{ $country->description }}</textarea>
                                 @error('description')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

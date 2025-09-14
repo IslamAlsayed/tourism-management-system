@@ -43,28 +43,16 @@
                                 </label>
 
                                 <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
-                                    class="border p-2" /> {{-- <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"> --}}
+                                    class="border rounded p-2"
+                                    onchange="document.getElementById('submit-button').disabled = !this.files.length" />
+
                                 @error('file')
                                     <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <div class="bg-gray-100 p-4 rounded-lg mb-6">
-                                <h3 class="font-semibold mb-2">{{ __('main.required_columns') }}:</h3>
-                                <ul class="list-disc pl-5">
-                                    <li>code ({{ __('main.required') }})</li>
-                                    <li>name ({{ __('main.required') }})</li>
-                                    <li>symbol ({{ __('main.required') }})</li>
-                                    <li>name_ar</li>
-                                    <li>exchange_rate</li>
-                                    <li>is_active</li>
-                                    <li>... {{ __('main.other_optional_fields') }}</li>
-                                </ul>
-                            </div>
-
                             <div class="flex items-center gap-4">
-                                <button type="submit" class="kt-btn kt-btn-primary">
+                                <button type="submit" class="kt-btn kt-btn-primary" id="submit-button" disabled>
                                     {{ __('main.upload_and_import') }}
                                 </button>
                                 <a href="{{ route('currencies.index') }}" class="kt-btn kt-btn-outline ml-4">

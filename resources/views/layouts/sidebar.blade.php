@@ -56,6 +56,12 @@
                                 <span
                                     class="kt-menu-title text-sm font-medium text-foreground {{ $hasActiveChild ? 'text-primary font-semibold' : '' }}">
                                     {{ __('sidebar.' . $item['title']) }}
+                                    @if (isset($item['statue']))
+                                        <span
+                                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            {{ strtoupper($item['statue']) }}
+                                        </span>
+                                    @endif
                                 </span>
                                 <span
                                     class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px] {{ $hasActiveChild ? 'text-primary' : '' }}">
@@ -68,7 +74,7 @@
 
                             <!-- Children -->
                             <div
-                                class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border">
+                                class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border{{ $hasActiveChild ? ' show' : '' }}">
                                 @foreach ($item['children'] as $child)
                                     @php
                                         $childHasChildren = isset($child['children']);
@@ -94,6 +100,12 @@
                                                 <span
                                                     class="kt-menu-title text-sm font-medium text-foreground {{ $childHasActiveChild ? 'text-primary font-semibold' : '' }}">
                                                     {{ __('sidebar.' . $child['title']) }}
+                                                    @if (isset($child['statue']))
+                                                        <span
+                                                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            {{ strtoupper($child['statue']) }}
+                                                        </span>
+                                                    @endif
                                                 </span>
                                                 <span
                                                     class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px] {{ $childHasActiveChild ? 'text-primary' : '' }}">
@@ -135,6 +147,13 @@
                                                 <span
                                                     class="kt-menu-title text-2sm font-normal {{ $childIsActive ? 'text-primary font-semibold' : '' }}">
                                                     {{ __('sidebar.' . $child['title']) }}
+
+                                                    @if (isset($child['statue']))
+                                                        <span
+                                                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            {{ strtoupper($child['statue']) }}
+                                                        </span>
+                                                    @endif
                                                 </span>
                                             </a>
                                         </div>

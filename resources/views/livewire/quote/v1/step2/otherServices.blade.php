@@ -24,20 +24,20 @@
 
                 {{-- الكمية --}}
                 <input type="number" min="1" wire:model.live="services.{{ $service->id }}.quantity"
-                    class="kt-input" placeholder="Quantity" />
+                    class="kt-input h-[45px]" placeholder="Quantity" />
 
                 {{-- السعر للفرد --}}
-                <input type="number" readonly class="kt-input bg-gray-100 cursor-not-allowed"
+                <input type="number" readonly class="kt-input h-[45px] bg-gray-100 cursor-not-allowed"
                     value="{{ $services[$service->id]['total_price'] / $groups }}" />
 
                 {{-- السعر --}}
                 <input type="number" readonly wire:model="services.{{ $service->id }}.price"
-                    class="kt-input bg-gray-100 cursor-not-allowed" />
+                    class="kt-input h-[45px] bg-gray-100 cursor-not-allowed" />
 
                 {{-- السعر الإجمالي --}}
                 <input type="number" name="services[{{ $service->id }}][total_price]" readonly
                     value="{{ $services[$service->id]['total_price'] ?? 0 }}"
-                    class="kt-input bg-gray-100 cursor-not-allowed" />
+                    class="kt-input h-[45px] bg-gray-100 cursor-not-allowed" />
             </div>
         @endforeach
     </div>

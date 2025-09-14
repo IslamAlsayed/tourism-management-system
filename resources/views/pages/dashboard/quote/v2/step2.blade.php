@@ -1,7 +1,7 @@
 @extends('pages.dashboard.quote.v2.layout', ['step' => 2])
 
 @section('form-content')
-    <form method="POST" action="#" class="space-y-8">
+    <form class="space-y-6" action="{{ route('dashboard.quote.v2.postStep2') }}" method="POST">
         @csrf
 
         <div class="mb-4">

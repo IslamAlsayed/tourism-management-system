@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use Schema;
-use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
-use App\Models\Subregion;
 use Illuminate\Database\Seeder;
 
 class CountrySeeder extends Seeder
@@ -18,116 +16,90 @@ class CountrySeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         $countries = [
-            ['name' => 'Egypt', 'subregion_id' => 1, 'currency_id' => 1],
-            ['name' => 'Saudi Arabia', 'subregion_id' => 3, 'currency_id' => 2],
-            ['name' => 'United Arab Emirates', 'subregion_id' => 3, 'currency_id' => 3],
-            ['name' => 'Jordan', 'subregion_id' => 4, 'currency_id' => 4],
-            ['name' => 'Lebanon', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Palestine', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Syria', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Iraq', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Libya', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Tunisia', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Morocco', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Mauritania', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Oman', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Kuwait', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Bahrain', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Yemen', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Sudan', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Somalia', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Qatar', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Djibouti', 'subregion_id' => 1, 'currency_id' => 5],
-            ['name' => 'Comoros', 'subregion_id' => 1, 'currency_id' => 5],
+            ['name' => 'Egypt', 'name_ar' => 'مصر', 'currency_id' => Currency::where('code', 'EGP')->first()?->id],
+            ['name' => 'Saudi Arabia', 'name_ar' => 'السعودية', 'currency_id' => Currency::where('code', 'SAR')->first()?->id],
+            ['name' => 'United Arab Emirates', 'name_ar' => 'الإمارات', 'currency_id' => Currency::where('code', 'AED')->first()?->id],
+            ['name' => 'Jordan', 'name_ar' => 'الأردن', 'currency_id' => Currency::where('code', 'JOD')->first()?->id],
+            ['name' => 'Lebanon', 'name_ar' => 'لبنان', 'currency_id' => Currency::where('code', 'LBP')->first()?->id],
+            ['name' => 'Palestine', 'name_ar' => 'فلسطين', 'currency_id' => Currency::where('code', 'JOD')->first()?->id],
+            ['name' => 'Syria', 'name_ar' => 'سوريا', 'currency_id' => Currency::where('code', 'SYP')->first()?->id],
+            ['name' => 'Iraq', 'name_ar' => 'العراق', 'currency_id' => Currency::where('code', 'IQD')->first()?->id],
+            ['name' => 'Libya', 'name_ar' => 'ليبيا', 'currency_id' => Currency::where('code', 'LYD')->first()?->id],
+            ['name' => 'Tunisia', 'name_ar' => 'تونس', 'currency_id' => Currency::where('code', 'TND')->first()?->id],
+            ['name' => 'Morocco', 'name_ar' => 'المغرب', 'currency_id' => Currency::where('code', 'MAD')->first()?->id],
+            ['name' => 'Mauritania', 'name_ar' => 'موريتانيا', 'currency_id' => Currency::where('code', 'MRU')->first()?->id],
+            ['name' => 'Oman', 'name_ar' => 'عمان', 'currency_id' => Currency::where('code', 'OMR')->first()?->id],
+            ['name' => 'Kuwait', 'name_ar' => 'الكويت', 'currency_id' => Currency::where('code', 'KWD')->first()?->id],
+            ['name' => 'Bahrain', 'name_ar' => 'البحرين', 'currency_id' => Currency::where('code', 'BHD')->first()?->id],
+            ['name' => 'Yemen', 'name_ar' => 'اليمن', 'currency_id' => Currency::where('code', 'YER')->first()?->id],
+            ['name' => 'Sudan', 'name_ar' => 'السودان', 'currency_id' => Currency::where('code', 'SDG')->first()?->id],
+            ['name' => 'Somalia', 'name_ar' => 'الصومال', 'currency_id' => Currency::where('code', 'SOS')->first()?->id],
+            ['name' => 'Qatar', 'name_ar' => 'قطر', 'currency_id' => Currency::where('code', 'QAR')->first()?->id],
+            ['name' => 'Djibouti', 'name_ar' => 'جيبوتي', 'currency_id' => Currency::where('code', 'DJF')->first()?->id],
+            ['name' => 'Comoros', 'name_ar' => 'جزر القمر', 'currency_id' => Currency::where('code', 'KMF')->first()?->id],
         ];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        $countries = [
-            [
-                'name' => 'Jordan',
-                'name_ar' => 'الأردن',
-                'iso2' => 'JO',
-                'iso3' => 'JOR',
-                'numeric_code' => 400,
-                'phone_code' => '962',
-                'capital' => 'Amman',
-                'currency_id' => Currency::inRandomOrder()->first()?->id ?? 1,
-                'tld' => '.jo',
-                'native' => 'الأردن',
-                'region' => 'Asia',
-                'region_id' => Region::inRandomOrder()->first()?->id ?? 1,
-                'subregion' => 'Western Asia',
-                'subregion_id' => Subregion::inRandomOrder()->first()?->id ?? null,
-                'nationality' => 'Jordanian',
-                'timezone' => 'Asia/Amman',
-                'latitude' => 31.963158,
-                'longitude' => 35.930359,
-                'emoji' => '🇯🇴',
-                'emojiU' => null,
-                'population' => 10000000,
-                'flag_url' => null,
-                'flag_emoji' => null,
-                'continent' => 'Asia',
-                'area' => 89342,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Egypt',
-                'name_ar' => 'مصر',
-                'iso2' => 'EG',
-                'iso3' => 'EGY',
-                'numeric_code' => 818,
-                'phone_code' => '20',
-                'capital' => 'Cairo',
-                'currency_id' => Currency::inRandomOrder()->first()?->id ?? 1,
-                'tld' => '.eg',
-                'native' => 'مصر',
-                'region' => 'Africa',
-                'region_id' => Region::inRandomOrder()->first()?->id ?? 1,
-                'subregion' => 'Northern Africa',
-                'subregion_id' => Subregion::inRandomOrder()->first()?->id ?? null,
-                'nationality' => 'Egyptian',
-                'timezone' => 'Africa/Cairo',
-                'latitude' => 26.820553,
-                'longitude' => 30.802498,
-                'emoji' => '🇪🇬',
-                'emojiU' => null,
-                'population' => 100000000,
-                'flag_url' => null,
-                'flag_emoji' => null,
-                'continent' => 'Africa',
-                'area' => 1002450,
-                'is_active' => true,
-            ]
-        ];
-
-        Country::insert($countries);
+        // Country::insert($countries);
     }
 }
+
+// $countries = [
+//     'countries_id' => '',
+//     'countries_name_en' => '',
+//     'countries_name_ar' => '',
+//     'iso2' => '',
+//     'iso3' => '',
+//     'numeric_code' => '',
+//     'phone_code' => '',
+//     'capital	curr' => '',
+//     'ency_id' => '',
+//     'tld' => '',
+//     'native' => '',
+//     'region' => '',
+//     'region_id' => '',
+//     'subregion' => '',
+//     'subregion_id' => '',
+//     'nationality' => '',
+//     'timezone' => '',
+//     'latitude' => '',
+//     'longitude' => '',
+//     'emoji' => '',
+//     'emojiU' => '',
+//     'population' => '',
+//     'flag_url' => '',
+//     'flag_emoji' => '',
+//     'continent' => '',
+//     'area' => '',
+//     'is_active' => '',
+//     'wikipedia_link' => '',
+// ];
+
+// countries_id
+// countries_name_en
+// countries_name_ar
+// iso2
+// iso3
+// numeric_code
+// phone_code
+// capital
+// currency_id
+// tld
+// native
+// region_id
+// region_ar
+// subregion_id
+// subregion_ar
+// nationality_id
+// nationality_ar
+// timezone
+// latitude
+// longitude
+// emoji
+// emojiU
+// population
+// flag_url
+// flag_emoji
+// continent
+// area
+// is_active
+// wikipedia_link

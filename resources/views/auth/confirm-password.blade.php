@@ -76,7 +76,7 @@
                     <label class="kt-form-label text-mono">
                         New Password
                     </label>
-                    <label class="kt-input" data-kt-toggle-password="true">
+                    <label class="kt-input h-[45px]" data-kt-toggle-password="true">
                         <input name="user_new_password" placeholder="Enter a new password" type="password" value="" />
                         <div class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                             data-kt-toggle-password-trigger="true">
@@ -95,7 +95,7 @@
                     <label class="kt-form-label font-normal text-mono">
                         Confirm New Password
                     </label>
-                    <label class="kt-input" data-kt-toggle-password="true">
+                    <label class="kt-input h-[45px]" data-kt-toggle-password="true">
                         <input name="user_confirm_password" placeholder="Re-enter a new Password" type="password"
                             value="" />
                         <div class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"

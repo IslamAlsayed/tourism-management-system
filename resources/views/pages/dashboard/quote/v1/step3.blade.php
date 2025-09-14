@@ -102,7 +102,7 @@
             <div class="mb-4">
                 <!-- Supplement -->
                 <label for="supplement_id" class="kt-label mb-2">{{ __('main.supplement') }}</label>
-                <select name="supplement_id" id="supplement_id" class="kt-select">
+                <select name="supplement_id" id="supplement_id" class="kt-select h-[45px]">
                     @foreach ($hotelSupplements as $supplement)
                         <option value="{{ $supplement->id }}"
                             {{ old('supplement_id') == $supplement->id ? 'selected' : '' }}>
@@ -118,7 +118,7 @@
             <div class="mb-4">
                 <!-- Policy -->
                 <label for="hotel_policy_id" class="kt-label mb-2">{{ __('main.policy') }}</label>
-                <select name="hotel_policy_id" id="hotel_policy_id" class="kt-select">
+                <select name="hotel_policy_id" id="hotel_policy_id" class="kt-select h-[45px]">
                     @foreach ($hotelPolicies as $policy)
                         <option value="{{ $policy->id }}" {{ old('hotel_policy_id') == $policy->id ? 'selected' : '' }}>
                             {{ $policy->policy_type }} </option>

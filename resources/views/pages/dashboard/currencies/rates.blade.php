@@ -83,7 +83,7 @@
                     <h3 class="kt-card-title">جدول أسعار الصرف</h3>
                     <div class="kt-card-toolbar">
                         <div class="flex items-center gap-2">
-                            <select class="kt-select kt-select-sm">
+                            <select class="kt-select h-[45px] kt-select-sm">
                                 <option value="all">جميع العملات</option>
                                 <option value="major">العملات الرئيسية</option>
                                 <option value="arab">العملات العربية</option>
@@ -260,14 +260,15 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <div class="font-semibold">تفعيل التحديث التلقائي</div>
-                                <div class="text-sm text-secondary-foreground">تحديث أسعار الصرف تلقائياً من مصادر خارجية</div>
+                                <div class="text-sm text-secondary-foreground">تحديث أسعار الصرف تلقائياً من مصادر خارجية
+                                </div>
                             </div>
                             <input type="checkbox" class="kt-checkbox kt-checkbox-lg" checked />
                         </div>
 
                         <div>
                             <label class="kt-label">تكرار التحديث</label>
-                            <select class="kt-select">
+                            <select class="kt-select h-[45px]">
                                 <option value="15min">كل 15 دقيقة</option>
                                 <option value="30min">كل 30 دقيقة</option>
                                 <option value="1hour" selected>كل ساعة</option>
@@ -277,7 +278,7 @@
 
                         <div>
                             <label class="kt-label">مصدر البيانات</label>
-                            <select class="kt-select">
+                            <select class="kt-select h-[45px]">
                                 <option value="fixer">Fixer.io</option>
                                 <option value="exchangerate" selected>ExchangeRate-API</option>
                                 <option value="currencylayer">CurrencyLayer</option>

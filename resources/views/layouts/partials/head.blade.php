@@ -35,7 +35,7 @@
 <link href="{{ asset('assets/css/custom-input.css') }}" rel="stylesheet" />
 
 {{-- Multi Select CSS --}}
-<link href="{{ asset('assets/multi-select/style.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/multi-select.css') }}" rel="stylesheet">
 
 <link href="{{ asset('metronic/css/styles.css') }}" rel="stylesheet" />
 

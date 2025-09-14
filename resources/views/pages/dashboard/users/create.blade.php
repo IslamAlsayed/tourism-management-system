@@ -57,7 +57,7 @@
                             <!-- First Name -->
                             <div class="mb-4">
                                 <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
-                                <input type="text" name="first_name" id="first_name" class="kt-input"
+                                <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.first_name') }}" required value="{{ old('first_name') }}">
                                 @error('first_name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -67,7 +67,7 @@
                             <!-- Last Name -->
                             <div class="mb-4">
                                 <label for="last_name" class="kt-label required mb-2">{{ __('main.last_name') }}</label>
-                                <input type="text" name="last_name" id="last_name" class="kt-input"
+                                <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.last_name') }}" required value="{{ old('last_name') }}">
                                 @error('last_name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -79,7 +79,7 @@
                             <!-- Email -->
                             <div class="mb-4">
                                 <label for="email" class="kt-label required mb-2">{{ __('main.email') }}</label>
-                                <input type="email" name="email" id="email" class="kt-input"
+                                <input type="email" name="email" id="email" class="kt-input h-[45px]"
                                     placeholder="example@domain.com" required value="{{ old('email') }}">
                                 @error('email')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -89,7 +89,7 @@
                             <!-- Username -->
                             <div class="mb-4">
                                 <label for="username" class="kt-label mb-2">{{ __('main.username') }}</label>
-                                <input type="text" name="username" id="username" class="kt-input"
+                                <input type="text" name="username" id="username" class="kt-input h-[45px]"
                                     placeholder="username123" value="{{ old('username') }}">
                                 @error('username')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -101,7 +101,7 @@
                             <!-- Phone -->
                             <div class="mb-4">
                                 <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
-                                <input type="tel" name="phone" id="phone" class="kt-input"
+                                <input type="tel" name="phone" id="phone" class="kt-input h-[45px]"
                                     placeholder="+966 50 123 4567" value="{{ old('phone') }}">
                                 @error('phone')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -111,7 +111,7 @@
                             <!-- Date of Birth -->
                             <div class="mb-4">
                                 <label for="birth_date" class="kt-label mb-2">{{ __('main.date_of_birth') }}</label>
-                                <input type="date" name="birth_date" id="birth_date" class="kt-input"
+                                <input type="date" name="birth_date" id="birth_date" class="kt-input h-[45px]"
                                     value="{{ old('birth_date') }}">
                                 @error('birth_date')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -123,7 +123,7 @@
                             <!-- Gender -->
                             <div class="mb-4">
                                 <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
-                                <select name="gender" id="gender" class="kt-select">
+                                <select name="gender" id="gender" class="kt-select h-[45px]">
                                     <option value="">{{ __('main.select_status') }}</option>
                                     <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>
                                         {{ __('main.male') }}</option>
@@ -138,7 +138,7 @@
                             <!-- Country -->
                             <div class="mb-4">
                                 <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
-                                <select name="country_id" id="country_id" class="kt-select">
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]">
                                     <option value="">{{ __('main.select_status') }}</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
@@ -157,7 +157,7 @@
                             <!-- Password -->
                             <div class="mb-4">
                                 <label for="password" class="kt-label required mb-2">{{ __('main.password') }}</label>
-                                <input type="password" name="password" id="password" class="kt-input"
+                                <input type="password" name="password" id="password" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.enter_new_password') }}" required>
                                 <div class="text-xs text-secondary-foreground mt-1">
                                     {{ __('main.password_hint') ?? 'Must be at least 8 characters' }}
@@ -172,7 +172,7 @@
                                 <label for="password_confirmation"
                                     class="kt-label required mb-2">{{ __('main.confirm_password') }}</label>
                                 <input type="password" name="password_confirmation" id="password_confirmation"
-                                    class="kt-input" placeholder="{{ __('main.confirm_password') }}" required>
+                                    class="kt-input h-[45px]" placeholder="{{ __('main.confirm_password') }}" required>
                                 @error('password_confirmation')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -182,7 +182,7 @@
                         <!-- Role -->
                         <div class="mb-4">
                             <label for="role" class="kt-label required mb-2">{{ __('main.role') ?? 'Role' }}</label>
-                            <select name="role" id="role" class="kt-select" required>
+                            <select name="role" id="role" class="kt-select h-[45px]" required>
                                 <option value="">{{ __('main.select_role') ?? 'Select user role' }}</option>
                                 <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>
                                     {{ __('main.admin') ?? 'Admin' }}</option>
@@ -199,7 +199,7 @@
                         <!-- Bio -->
                         <div class="mb-4">
                             <label for="bio" class="kt-label mb-2">{{ __('main.bio') }}</label>
-                            <textarea name="bio" id="bio" rows="4" class="kt-input"
+                            <textarea name="bio" id="bio" rows="4" class="kt-input h-[45px]"
                                 placeholder="{{ __('main.additional_user_info') ?? 'Additional information about the user...' }}">{{ old('bio') }}</textarea>
                             @error('bio')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

@@ -24,7 +24,7 @@
 
                 {{-- نوع الباص --}}
                 <select name="buses[{{ $company->id }}][bus_type_id]"
-                    wire:model.live="buses.{{ $company->id }}.bus_type_id" class="kt-select">
+                    wire:model.live="buses.{{ $company->id }}.bus_type_id" class="kt-select h-[45px]">
                     <option value="">Select Bus</option>
                     @foreach ($company->busTypes as $busType)
                         <option value="{{ $busType->id }}">
@@ -35,16 +35,17 @@
 
                 {{-- السعر --}}
                 <input type="number" name="buses[{{ $company->id }}][price]" readonly
-                    value="{{ $buses[$company->id]['price'] ?? 0 }}" class="kt-input bg-gray-100 cursor-not-allowed" />
+                    value="{{ $buses[$company->id]['price'] ?? 0 }}"
+                    class="kt-input h-[45px] bg-gray-100 cursor-not-allowed" />
 
                 {{-- عدد الأيام --}}
                 <input type="number" min="0" name="buses[{{ $company->id }}][days]"
-                    wire:model.live="buses.{{ $company->id }}.days" class="kt-input" />
+                    wire:model.live="buses.{{ $company->id }}.days" class="kt-input h-[45px]" />
 
                 {{-- السعر الإجمالي --}}
                 <input type="number" name="buses[{{ $company->id }}][total_price]" readonly
                     value="{{ $buses[$company->id]['total_price'] ?? 0 }}"
-                    class="kt-input bg-gray-100 cursor-not-allowed" />
+                    class="kt-input h-[45px] bg-gray-100 cursor-not-allowed" />
             </div>
         @endforeach
     </div>

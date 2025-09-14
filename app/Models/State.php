@@ -14,7 +14,7 @@ class State extends Model
         'name_ar',
         'country_id',
         'iso2',
-        'iso3166_2',
+        'iso3',
         'fips_code',
         'type',
         'level',

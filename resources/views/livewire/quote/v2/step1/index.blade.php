@@ -27,7 +27,7 @@
                 @if (strtolower($type) == strtolower('Client'))
                     <div class="mb-4">
                         <label class="kt-label mb-2">Client Name</label>
-                        <select class="kt-select">
+                        <select class="kt-select h-[45px]">
                             <option value="">Select client</option>
                             @foreach ($clients as $client)
                                 <option value="{{ $client }}">{{ $client }}</option>
@@ -40,7 +40,7 @@
                 @elseif (strtolower($type) == strtolower('Tour Operator'))
                     <div class="mb-4">
                         <label class="kt-label mb-2">Tour Operator</label>
-                        <select class="kt-select">
+                        <select class="kt-select h-[45px]">
                             <option value="">Select tour operator</option>
                             @foreach ($tourOperators as $tourOperator)
                                 <option value="{{ $tourOperator }}">{{ $tourOperator }}</option>
@@ -53,7 +53,7 @@
                 @elseif (strtolower($type) == strtolower('travel agent'))
                     <div class="mb-4">
                         <label class="kt-label mb-2">Travel Agent</label>
-                        <select class="kt-select">
+                        <select class="kt-select h-[45px]">
                             <option value="">Select travel agent</option>
                             @foreach ($travelAgents as $travelAgent)
                                 <option value="{{ $travelAgent }}">{{ $travelAgent }}</option>
@@ -66,7 +66,7 @@
                 @elseif (strtolower($type) == strtolower('other'))
                     <div class="mb-4">
                         <label class="kt-label mb-2">Other</label>
-                        <input type="text" class="kt-input">
+                        <input type="text" class="kt-input h-[45px]">
                         @error('other')
                             <div class="text-red-600 text-sm">{{ $message }}</div>
                         @enderror

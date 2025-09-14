@@ -2,7 +2,7 @@
     <div class="grid lg:grid-cols-3 gap-6">
         <div>
             <label class="kt-label mb-2">First Name</label>
-            <input type="text" wire:model.live="first_name" class="kt-input">
+            <input type="text" wire:model.live="first_name" class="kt-input h-[45px]">
             @error('first_name')
                 <div class="text-red-600 text-sm">{{ $message }}</div>
             @enderror
@@ -10,7 +10,7 @@
 
         <div>
             <label class="kt-label mb-2">Last Name</label>
-            <input type="text" wire:model.live="last_name" class="kt-input">
+            <input type="text" wire:model.live="last_name" class="kt-input h-[45px]">
             @error('last_name')
                 <div class="text-red-600 text-sm">{{ $message }}</div>
             @enderror
@@ -18,7 +18,7 @@
 
         <div>
             <label class="kt-label mb-2">Email</label>
-            <input type="email" wire:model.live="email" class="kt-input">
+            <input type="email" wire:model.live="email" class="kt-input h-[45px]">
             @error('email')
                 <div class="text-red-600 text-sm">{{ $message }}</div>
             @enderror
@@ -26,7 +26,7 @@
 
         <div>
             <label class="kt-label mb-2">Phone</label>
-            <input type="number" min="0000001" max="99999999999999" wire:model.live="phone" class="kt-input">
+            <input type="number" min="0000001" max="99999999999999" wire:model.live="phone" class="kt-input h-[45px]">
             @error('phone')
                 <div class="text-red-600 text-sm">{{ $message }}</div>
             @enderror
@@ -34,7 +34,7 @@
 
         <div>
             <label class="kt-label mb-2">Nationality</label>
-            <select wire:model.live="nationality_id" class="kt-select">
+            <select wire:model.live="nationality_id" class="kt-select h-[45px]">
                 <option value="">Select nationality</option>
                 @foreach ($nationalities as $nationality)
                     <option value="{{ $nationality->id }}">{{ $nationality->name }}</option>
@@ -47,7 +47,7 @@
 
         <div>
             <label class="kt-label mb-2">Currency</label>
-            <select wire:model.live="currency_id" class="kt-select">
+            <select wire:model.live="currency_id" class="kt-select h-[45px]">
                 <option value="">Select currency</option>
                 @foreach ($currencies as $currency)
                     <option value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})</option>
@@ -61,7 +61,7 @@
         <div class="grid lg:grid-cols-2 gap-6 col-span-3">
             <div>
                 <label class="kt-label mb-2">Arrival Date</label>
-                <input type="date" wire:model.live="arrival_date" class="kt-input">
+                <input type="date" wire:model.live="arrival_date" class="kt-input h-[45px]">
                 @error('arrival_date')
                     <div class="text-red-600 text-sm">{{ $message }}</div>
                 @enderror
@@ -69,7 +69,7 @@
 
             <div>
                 <label class="kt-label mb-2">Departure Date</label>
-                <input type="date" wire:model.live="departure_date" class="kt-input">
+                <input type="date" wire:model.live="departure_date" class="kt-input h-[45px]">
                 @error('departure_date')
                     <div class="text-red-600 text-sm">{{ $message }}</div>
                 @enderror
@@ -78,7 +78,7 @@
 
         <div>
             <label class="kt-label mb-2">Adults</label>
-            <input type="number" min="1" wire:model.live="adults" class="kt-input">
+            <input type="number" min="1" wire:model.live="adults" class="kt-input h-[45px]">
             @error('adults')
                 <div class="text-red-600 text-sm">{{ $message }}</div>
             @enderror
@@ -86,12 +86,12 @@
 
         <div>
             <label class="kt-label mb-2">Children</label>
-            <input type="number" min="0" wire:model.live="children" class="kt-input">
+            <input type="number" min="0" wire:model.live="children" class="kt-input h-[45px]">
         </div>
 
         <div>
             <label class="kt-label mb-2">Infants</label>
-            <input type="number" min="0" wire:model.live="infants" class="kt-input">
+            <input type="number" min="0" wire:model.live="infants" class="kt-input h-[45px]">
         </div>
     </div>
 

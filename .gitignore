@@ -57,6 +57,7 @@ Thumbs.db
 /resources/views/livewire/quote/v2/step1/index.blade deepseek.php
 /resources/views/livewire/quote/v2/step1/index.blade original-code.php
 
+/MD
 /ToDo.md
 /public/assets/js/transportation.js
 /app/Http/Controllers/Dashboard/Quotes/v2/QuoteControllercopy.php
@@ -64,3 +65,5 @@ Thumbs.db
 /app/Livewire/Quote/v2/Step12
 /resources/views/pages/dashboard/quote/v2/step2.blade copy.php
 /resources/views/livewire/quote/v2/step2/transportation.blade copy.php
+
+/storage/app/private

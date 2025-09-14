@@ -17,14 +17,16 @@
                                 </label>
 
                                 <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
-                                    class="border p-2 rounded" />
+                                    class="border rounded p-2"
+                                    onchange="document.getElementById('submit-button').disabled = !this.files.length" />
+
                                 @error('file')
                                     <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <div class="flex items-center gap-4">
-                                <button type="submit" class="kt-btn kt-btn-primary">
+                                <button type="submit" class="kt-btn kt-btn-primary" id="submit-button" disabled>
                                     {{ __('main.upload_and_import') }}
                                 </button>
                                 <a href="{{ route('cities.index') }}" class="kt-btn kt-btn-outline ml-4">

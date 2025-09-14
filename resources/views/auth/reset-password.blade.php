@@ -87,7 +87,7 @@
 
                 <!--begin::Input group-->
                 <div class="flex flex-col gap-1">
-                    <input class="kt-input" placeholder="email@email.com" type="text" name="email"
+                    <input class="kt-input h-[45px]" placeholder="email@email.com" type="text" name="email"
                         value="{{ old('email', $request->email) }}" />
                     @error('email')
                         <div class="fv-plugins-message-container">
@@ -99,7 +99,7 @@
 
                 <!--begin::Input group-->
                 <div class="flex flex-col gap-1">
-                    <input class="kt-input" placeholder="New Password" type="password" name="password" />
+                    <input class="kt-input h-[45px]" placeholder="New Password" type="password" name="password" />
                     @error('password')
                         <div class="fv-plugins-message-container">
                             <div class="fv-help-block"><span role="alert">{{ $message }}</span></div>
@@ -110,7 +110,7 @@
 
                 <!--begin::Input group-->
                 <div class="flex flex-col gap-1">
-                    <input class="kt-input" placeholder="Confirm New Password" type="password"
+                    <input class="kt-input h-[45px]" placeholder="Confirm New Password" type="password"
                         name="password_confirmation" />
                     @error('password_confirmation')
                         <div class="fv-plugins-message-container">

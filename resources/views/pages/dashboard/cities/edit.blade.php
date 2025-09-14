@@ -38,7 +38,7 @@
                             <div class="mb-4">
                                 <label for="name_ar"
                                     class="kt-label required mb-2">{{ __('main.city_name_arabic') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input"
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.enter_city_name_arabic') }}" required
                                     value="{{ $city->name_ar }}">
                                 @error('name_ar')
@@ -50,7 +50,7 @@
                             <div class="mb-4">
                                 <label for="name"
                                     class="kt-label required mb-2">{{ __('main.city_name_english') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input"
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.enter_city_name_english') }}" required
                                     value="{{ $city->name }}">
                                 @error('name')
@@ -65,7 +65,7 @@
                                     <a href="{{ route('countries.create') }}"
                                         class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
                                 </div>
-                                <select name="country_id" id="country_id" class="kt-select" required>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" required>
                                     <option value="">{{ __('main.select_country') }}</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}" @selected($country->id == $city->country_id)>
@@ -83,9 +83,9 @@
                             <!-- State -->
                             <div class="mb-4">
                                 {{-- <label for="state_id" class="kt-label required mb-2">الولاية</label>
-                                <select name="state_id" id="state_id" class="kt-select" required> --}}
+                                <select name="state_id" id="state_id" class="kt-select h-[45px]" required> --}}
                                 <label for="state_id" class="kt-label mb-2">{{ __('main.state') }}</label>
-                                <select name="state_id" id="state_id" class="kt-select">
+                                <select name="state_id" id="state_id" class="kt-select h-[45px]">
                                     <option value="">{{ __('main.select_state') }}</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}" @selected($state->id == $city->state_id)>
@@ -101,8 +101,9 @@
                             <!-- Latitude -->
                             <div class="mb-4">
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" step="any" name="latitude" id="latitude" class="kt-input"
-                                    placeholder="{{ __('main.latitude_example') }}" value="{{ $city->latitude }}">
+                                <input type="number" step="any" name="latitude" id="latitude"
+                                    class="kt-input h-[45px]" placeholder="{{ __('main.latitude_example') }}"
+                                    value="{{ $city->latitude }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -111,8 +112,9 @@
                             <!-- Longitude -->
                             <div class="mb-4">
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" step="any" name="longitude" id="longitude" class="kt-input"
-                                    placeholder="{{ __('main.longitude_example') }}" value="{{ $city->longitude }}">
+                                <input type="number" step="any" name="longitude" id="longitude"
+                                    class="kt-input h-[45px]" placeholder="{{ __('main.longitude_example') }}"
+                                    value="{{ $city->longitude }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -123,7 +125,7 @@
                             <!-- Population -->
                             <div class="mb-4">
                                 <label for="population" class="kt-label mb-2">{{ __('main.population') }}</label>
-                                <input type="number" name="population" id="population" class="kt-input"
+                                <input type="number" name="population" id="population" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.population_example') }}" value="{{ $city->population }}">
                                 @error('population')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -133,7 +135,7 @@
                             <!-- Timezone -->
                             <div class="mb-3">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select">
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]">
                                     <option value="">{{ __('main.select_timezone') }}</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
@@ -151,7 +153,7 @@
                         <!-- Description -->
                         <div class="mb-4">
                             <label for="description" class="kt-label mb-2">{{ __('main.city_description') }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input"
+                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]"
                                 placeholder="{{ __('main.additional_city_info') }}">{{ $city->description }}</textarea>
                             @error('description')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

@@ -43,31 +43,16 @@
                                 </label>
 
                                 <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
-                                    class="border p-2" />
-                                {{-- <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
-                                    class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"> --}}
+                                    class="border rounded p-2"
+                                    onchange="document.getElementById('submit-button').disabled = !this.files.length" />
+
                                 @error('file')
                                     <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <div class="bg-gray-100 p-4 rounded-lg mb-6">
-                                <h3 class="font-semibold mb-2">{{ __('main.required_columns') }}:</h3>
-                                <ul class="list-disc pl-5">
-                                    <li>name ({{ __('main.required') }})</li>
-                                    <li>email ({{ __('main.required') }})</li>
-                                    <li>password ({{ __('main.required') }})</li>
-                                    <li>first_name</li>
-                                    <li>last_name</li>
-                                    <li>phone</li>
-                                    <li>mobile</li>
-                                    <li>address</li>
-                                    <li>... {{ __('main.other_optional_fields') }}</li>
-                                </ul>
-                            </div>
-
                             <div class="flex items-center gap-4">
-                                <button type="submit" class="kt-btn kt-btn-primary">
+                                <button type="submit" class="kt-btn kt-btn-primary" id="submit-button" disabled>
                                     {{ __('main.upload_and_import') }}
                                 </button>
                                 <a href="{{ route('users.index') }}" class="kt-btn kt-btn-outline ml-4">

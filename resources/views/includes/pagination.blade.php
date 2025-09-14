@@ -4,7 +4,7 @@
         {{-- Records per page selector --}}
         <div class="flex items-center gap-2 text-sm text-gray-600">
             <span>{{ __('main.show') }}</span>
-            <select wire:model.live="perPage" class="kt-select w-20 px-2 py-1 border rounded">
+            <select wire:model.live="perPage" class="kt-select w-20 h-[45px] px-2 py-1 border rounded">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>

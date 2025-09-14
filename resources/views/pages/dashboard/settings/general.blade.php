@@ -36,12 +36,12 @@
                         <div class="grid lg:grid-cols-2 gap-6 p-4">
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.name') }}</label>
-                                <input type="text" class="kt-input" value="{{ $settings['app_name'] }}" />
+                                <input type="text" class="kt-input h-[45px]" value="{{ $settings['app_name'] }}" />
                                 <div class="text-xs text-secondary-foreground mt-1">{{ __('main.app_info') }}</div>
                             </div>
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.app_url') }}</label>
-                                <input type="url" class="kt-input" value="{{ $settings['app_url'] }}" />
+                                <input type="url" class="kt-input h-[45px]" value="{{ $settings['app_url'] }}" />
                                 <div class="text-xs text-secondary-foreground mt-1">{{ __('main.app_info') }}</div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                         <div class="grid lg:grid-cols-2 gap-6 p-4">
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select class="kt-select">
+                                <select class="kt-select h-[45px]">
                                     <option value="UTC" {{ $settings['app_timezone'] == 'UTC' ? 'selected' : '' }}>UTC
                                     </option>
                                     <option value="Asia/Riyadh"
@@ -64,7 +64,7 @@
                             </div>
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.language') }}</label>
-                                <select class="kt-select">
+                                <select class="kt-select h-[45px]">
                                     <option value="en" {{ $settings['app_locale'] == 'en' ? 'selected' : '' }}>
                                         {{ __('main.english') }}
                                     </option>

@@ -36,13 +36,13 @@
                         <div class="grid lg:grid-cols-2 gap-6 p-4">
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.min_password_length') }}</label>
-                                <input type="number" class="kt-input"
+                                <input type="number" class="kt-input h-[45px]"
                                     value="{{ $securitySettings['password_min_length'] }}" min="6" max="20" />
                                 <div class="text-xs text-secondary-foreground mt-1">{{ __('main.password_hint') }}</div>
                             </div>
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.session_timeout') }}</label>
-                                <input type="number" class="kt-input"
+                                <input type="number" class="kt-input h-[45px]"
                                     value="{{ $securitySettings['session_lifetime'] }}" />
                                 <div class="text-xs text-secondary-foreground mt-1">{{ __('main.password_hint') }}</div>
                             </div>

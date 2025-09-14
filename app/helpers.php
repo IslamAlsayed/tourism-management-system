@@ -102,3 +102,12 @@ if (!function_exists('hasActiveChild')) {
         return false;
     }
 }
+
+
+if (!function_exists('generateUniqueFilename')) {
+    function generateUniqueFilename($prefix = 'export')
+    {
+        // return $prefix . '_' . substr(md5(uniqid(mt_rand(), true)), 0, 6);
+        return $prefix . '_' . date('Y_m_d_H_i_s');
+    }
+}

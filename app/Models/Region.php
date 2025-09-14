@@ -9,7 +9,11 @@ class Region extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'name_ar',
+        'wiki_data_id'
+    ];
 
     public function subregions()
     {

@@ -83,7 +83,7 @@
 
                         <div>
                             <label class="mb-2 kt-label">{{ __('main.backup_frequency') }}</label>
-                            <select class="kt-select">
+                            <select class="kt-select h-[45px]">
                                 <option value="daily" {{ $backupInfo['backup_frequency'] == 'daily' ? 'selected' : '' }}>
                                     {{ __('main.daily') }}</option>
                                 <option value="weekly" {{ $backupInfo['backup_frequency'] == 'weekly' ? 'selected' : '' }}>
@@ -188,7 +188,7 @@
 
                     <div>
                         <label class="mb-2 kt-label">{{ __('main.select_backup_file') }}</label>
-                        <input type="file" class="kt-input w-[350px]" accept=".zip,.sql" />
+                        <input type="file" class="kt-input w-[350px] h-[45px]" accept=".zip,.sql" />
                         <div class="mt-1 text-xs text-secondary-foreground">{{ __('main.select_backup_file') }}</div>
                     </div>
 

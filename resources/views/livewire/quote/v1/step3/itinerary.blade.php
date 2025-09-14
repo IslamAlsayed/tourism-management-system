@@ -15,11 +15,12 @@
                         @foreach ($itinerary as $i => $row)
                             <div class="grid lg:grid-cols-3 gap-4">
                                 {{-- Day number --}}
-                                <input type="number" class="kt-input"
+                                <input type="number" class="kt-input h-[45px]"
                                     wire:model.live="itinerary.{{ $i }}.day_number" disabled>
 
                                 {{-- City --}}
-                                <select class="kt-select" wire:model.live="itinerary.{{ $i }}.city_id">
+                                <select class="kt-select h-[45px]"
+                                    wire:model.live="itinerary.{{ $i }}.city_id">
                                     <option value="">-- Select City --</option>
                                     @foreach ($cities as $city)
                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
@@ -27,7 +28,7 @@
                                 </select>
 
                                 {{-- Description --}}
-                                <textarea class="kt-input" wire:model.live="itinerary.{{ $i }}.description"
+                                <textarea class="kt-input h-[45px]" wire:model.live="itinerary.{{ $i }}.description"
                                     placeholder="Visits, activities, notes..."></textarea>
                             </div>
                         @endforeach

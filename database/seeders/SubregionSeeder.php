@@ -15,33 +15,9 @@ class SubregionSeeder extends Seeder
         Subregion::truncate();
         Schema::enableForeignKeyConstraints();
 
-        $subregions = [
-            [
-                'name' => 'Western Asia',
-                'region_id' => Region::where('name', 'Asia')->first()->id,
-            ],
-            [
-                'name' => 'North Africa',
-                'region_id' => Region::where('name', 'Africa')->first()->id,
-            ],
-            [
-                'name' => 'East Africa',
-                'region_id' => Region::where('name', 'Africa')->first()->id,
-            ],
-            [
-                'name' => 'Gulf',
-                'region_id' => Region::where('name', 'Asia')->first()->id,
-            ],
-            [
-                'name' => 'Levant',
-                'region_id' => Region::where('name', 'Asia')->first()->id,
-            ],
-            [
-                'name' => 'South Europe',
-                'region_id' => Region::where('name', 'Europe')->first()->id,
-            ],
-        ];
-
-        Subregion::insert($subregions);
+        Subregion::insert([
+            ['name' => 'Levant', 'wiki_data_id' => 'Q35323', 'region_id' => Region::where('name', 'Middle East')->first()?->id],
+            ['name' => 'Maghreb', 'wiki_data_id' => 'Q27479', 'region_id' => Region::where('name', 'North Africa')->first()?->id],
+        ]);
     }
 }

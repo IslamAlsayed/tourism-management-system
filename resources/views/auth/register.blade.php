@@ -105,21 +105,21 @@
                     <label class="kt-form-label text-mono">
                         Name
                     </label>
-                    <input class="kt-input" name="name" placeholder="Your Name" type="text"
+                    <input class="kt-input h-[45px]" name="name" placeholder="Your Name" type="text"
                         value="{{ old('name') }}" required autofocus />
                 </div>
                 <div class="flex flex-col gap-1">
                     <label class="kt-form-label text-mono">
                         Email
                     </label>
-                    <input class="kt-input" name="email" placeholder="email@email.com" type="text"
+                    <input class="kt-input h-[45px]" name="email" placeholder="email@email.com" type="text"
                         value="{{ old('email') }}" required />
                 </div>
                 <div class="flex flex-col gap-1">
                     <label class="kt-form-label font-normal text-mono">
                         Password
                     </label>
-                    <div class="kt-input" data-kt-toggle-password="true">
+                    <div class="kt-input h-[45px]" data-kt-toggle-password="true">
                         <input name="password" placeholder="Enter Password" type="password" required>
                         <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                             data-kt-toggle-password-trigger="true" type="button">
@@ -139,7 +139,7 @@
                     <label class="kt-form-label font-normal text-mono">
                         Confirm Password
                     </label>
-                    <div class="kt-input" data-kt-toggle-password="true">
+                    <div class="kt-input h-[45px]" data-kt-toggle-password="true">
                         <input name="password_confirmation" placeholder="Re-enter Password" type="password" required />
                         <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                             data-kt-toggle-password-trigger="true" type="button">

@@ -40,6 +40,10 @@
                                 <td>{{ $currency->name }}</td>
                                 <td>{{ $currency->code }}</td>
                                 <td>{{ $currency->symbol }}</td>
+                                <td>
+                                    {{ $currency->created_at ? $currency->created_at->format('Y-m-d') : '' }}
+                                </td>
+
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('currencies.edit', $currency->id) }}"

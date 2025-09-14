@@ -12,18 +12,13 @@ class Country extends Model
     protected $fillable = [
         'name',
         'name_ar',
-        'iso3',
         'iso2',
+        'iso3',
         'numeric_code',
         'phone_code',
         'capital',
-        'currency_id',
         'tld',
         'native',
-        'city_id',
-        'region_id',
-        'subregion_id',
-        'nationality',
         'timezone',
         'latitude',
         'longitude',
@@ -35,6 +30,7 @@ class Country extends Model
         'continent',
         'area',
         'is_active',
+        'currency_id',
     ];
 
     public function city()

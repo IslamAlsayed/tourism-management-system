@@ -1,12 +1,12 @@
 @extends('pages.dashboard.quote.v1.layout', ['step' => 3])
 
 @section('form-content')
-    <form action="{{ route('dashboard.quote.v2.postStep4') }}" class="form" id="kt_form_3" method="POST">
+    <form action="{{ route('dashboard.quote.v2.postStep3') }}" class="form" id="kt_form_3" method="POST">
         @csrf
 
         <div>
-            <label for="countries" class="kt-label mb-2">Country</label>
-            <select id="countries" name="countriesOptions[]" multiple special-multiple>
+            <label for="countries1" class="kt-label mb-2">Country 1</label>
+            <select id="countries1" name="countriesOptions[]" special-multiple>
                 <option value="">--</option>
                 @foreach ($countries as $country)
                     <option value="{{ $country->id }}">
@@ -20,56 +20,16 @@
         </div>
 
         <div>
-            <label for="cities" class="kt-label mb-2">City</label>
-            <select id="cities" name="citiesOptions[]" multiple special-multiple>
+            <label for="countries2" class="kt-label mb-2">Country 2</label>
+            <select id="countries2" name="countriesOptions[]" special-multiple>
                 <option value="">--</option>
-                @foreach ($cities as $city)
-                    <option value="{{ $city->id }}">
-                        {{ $city->name }}
+                @foreach ($countries as $country)
+                    <option value="{{ $country->id }}">
+                        {{ $country->name }}
                     </option>
                 @endforeach
             </select>
-            @error('citiesOptions')
-                <div class="text-red-600 text-sm">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-4">
-            <label for="stars" class="kt-label mb-2">Stars:</label>
-            <div>
-                <div class="inline-flex flex-wrap items-center gap-6">
-                    @foreach ($stars as $star)
-                        <div class="custom-input">
-                            <input type="checkbox" name="starsOptions[]" class="mb-0 starsOptions" id="{{ $star }}"
-                                value="{{ $star }}">
-
-                            <label for="{{ $star }}" special-multiple-checkbox>
-                                {{ $star }}
-
-                                @for ($i = 0; $i < $star; $i++)
-                                    <i class="fas fa-star" style="color: #ffdd00"></i>
-                                @endfor
-                            </label>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            @error('starsOptions')
-                <div class="text-red-600 text-sm">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div>
-            <label for="hotelsOptions" class="kt-label mb-2">Hotels</label>
-            <select id="hotelsOptions" name="hotelsOptions[]" multiple special-multiple>
-                <option value="">--</option>
-                @foreach ($hotels as $hotel)
-                    <option value="{{ $hotel->id }}">
-                        {{ $hotel->name }}
-                    </option>
-                @endforeach
-            </select>
-            @error('hotelsOptions')
+            @error('countriesOptions')
                 <div class="text-red-600 text-sm">{{ $message }}</div>
             @enderror
         </div>
@@ -176,7 +136,7 @@
             <div class="mb-4">
                 <!-- Supplement -->
                 <label for="supplement_id" class="kt-label mb-2">{{ __('main.supplement') }}</label>
-                <select name="supplement_id" id="supplement_id" class="kt-select">
+                <select name="supplement_id" id="supplement_id" class="kt-select h-[45px]">
                     @foreach ($hotelSupplements as $supplement)
                         <option value="{{ $supplement->id }}"
                             {{ old('supplement_id') == $supplement->id ? 'selected' : '' }}>
@@ -192,7 +152,7 @@
             <div class="mb-4">
                 <!-- Policy -->
                 <label for="hotel_policy_id" class="kt-label mb-2">{{ __('main.policy') }}</label>
-                <select name="hotel_policy_id" id="hotel_policy_id" class="kt-select">
+                <select name="hotel_policy_id" id="hotel_policy_id" class="kt-select h-[45px]">
                     @foreach ($hotelPolicies as $policy)
                         <option value="{{ $policy->id }}" {{ old('hotel_policy_id') == $policy->id ? 'selected' : '' }}>
                             {{ $policy->policy_type }} </option>

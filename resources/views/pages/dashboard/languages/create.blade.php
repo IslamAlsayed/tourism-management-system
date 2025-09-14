@@ -37,7 +37,7 @@
                             <!-- Language Code -->
                             <div class="mb-4">
                                 <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>
-                                <input type="text" name="code" id="code" class="kt-input"
+                                <input type="text" name="code" id="code" class="kt-input h-[45px]"
                                     placeholder="ar, en and fr" min="2" required value="{{ old('code') }}">
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -47,7 +47,7 @@
                             <!-- Language Name -->
                             <div class="mb-4">
                                 <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input"
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     placeholder="arabic, english and french" required value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -57,7 +57,7 @@
                             <!-- Language Flag -->
                             <div class="mb-4">
                                 <label for="photo" class="kt-label required mb-2">{{ __('main.flag') }}</label>
-                                <input type="file" name="photo" id="photo" class="kt-input"
+                                <input type="file" name="photo" id="photo" class="kt-input h-[45px]"
                                     accept=".png, .jpg, .jpeg">
                                 @error('flag')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

@@ -1,18 +1,21 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ImportController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Dashboard\CityController;
+use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\StateController;
+use App\Http\Controllers\Dashboard\RegionController;
+use App\Http\Controllers\Dashboard\CountryController;
+use App\Http\Controllers\Dashboard\ReportsController;
+use App\Http\Controllers\Dashboard\CurrencyController;
+use App\Http\Controllers\Dashboard\SettingsController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\SubregionController;
+use App\Http\Controllers\Admin\SidebarManagerController;
+use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Controllers\Dashboard\CountryController;
-use App\Http\Controllers\Dashboard\CityController;
-use App\Http\Controllers\Dashboard\CurrencyController;
-use App\Http\Controllers\Dashboard\ReportsController;
-use App\Http\Controllers\Dashboard\SettingsController;
-use App\Http\Controllers\Admin\SidebarManagerController;
 
 Route::get('/dashboard/countries/metronic-table', function () {
     return view('pages.dashboard.countries.metronic-table');
@@ -51,7 +54,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::get('step1', [QuoteControllerV2::class, 'step1'])->name('dashboard.quote.v2.step1');
         Route::post('step1', [QuoteControllerV2::class, 'postStep1'])->name('dashboard.quote.v2.postStep1');
         Route::get('step2', [QuoteControllerV2::class, 'step2'])->name('dashboard.quote.v2.step2');
+        Route::post('step2', [QuoteControllerV2::class, 'postStep2'])->name('dashboard.quote.v2.postStep2');
         Route::get('step3', [QuoteControllerV2::class, 'step3'])->name('dashboard.quote.v2.step3');
+        Route::post('step3', [QuoteControllerV2::class, 'postStep3'])->name('dashboard.quote.v2.postStep3');
         Route::get('step4', [QuoteControllerV2::class, 'step4'])->name('dashboard.quote.v2.step4');
         Route::post('step4', [QuoteControllerV2::class, 'postStep4'])->name('dashboard.quote.v2.postStep4');
         Route::get('submit', [QuoteControllerV2::class, 'submit'])->name('dashboard.quote.v2.submit');
@@ -70,39 +75,60 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('users/{id}/activate', [UserController::class, 'activate'])->name('users.activate');
     Route::post('users/{id}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
 
-    // User Import
-    Route::get('users/import/form', [ImportController::class, 'showUserImport'])->name('users.import.form');
-    Route::post('users/import', [ImportController::class, 'importUsers'])->name('users.import');
-    Route::get('users/import/sample', [ImportController::class, 'userSample'])->name('users.sample-import');
-
     // === LOCATION MANAGEMENT ===
-    Route::resource('countries', CountryController::class)->names('countries');
-    Route::post('countries/bulk-edit', [CountryController::class, 'bulkEdit'])->name('countries.bulkEdit');
+    // Route::resource('countries', CountryController::class)->names('countries');
+    // Route::post('countries/bulk-edit', [CountryController::class, 'bulkEdit'])->name('countries.bulkEdit');
 
-    // Country Import
-    Route::get('countries/import/form', [ImportController::class, 'showCountryImport'])->name('countries.import.form');
-    Route::post('countries/import', [ImportController::class, 'importCountries'])->name('countries.import');
-    Route::get('countries/import/sample', [ImportController::class, 'countrySample'])->name('countries.sample-import');
+    // === CURRENCY MANAGEMENT ===
+    Route::resource('currencies', CurrencyController::class)->names('currencies');
+    Route::get('currencies/import/data', [CurrencyController::class, 'getCurrenciesToImport'])->name('currencies.import');
+    Route::post('currencies/import/post', [CurrencyController::class, 'postCurrenciesToImport'])->name('currencies.import.post');
+    Route::get('currencies/export/data', [CurrencyController::class, 'getCurrenciesToExport'])->name('currencies.export');
+
+    // === COUNTRIES MANAGEMENT ===
+    Route::resource('countries', CountryController::class)->names('countries');
+    Route::get('countries/import/data', [CountryController::class, 'getCountriesToImport'])->name('countries.import');
+    Route::post('countries/import/post', [CountryController::class, 'postCountriesToImport'])->name('countries.import.post');
+    Route::get('countries/export/data', [CountryController::class, 'getCountriesToExport'])->name('countries.export');
+
+    // === STATES MANAGEMENT ===
+    Route::resource('states', StateController::class)->names('states');
+    Route::get('states/import/data', [StateController::class, 'getStatesToImport'])->name('states.import');
+    Route::post('states/import/post', [StateController::class, 'postStatesToImport'])->name('states.import.post');
+    Route::get('states/export/data', [StateController::class, 'getStatesToExport'])->name('states.export');
+
+    // === CITIES MANAGEMENT ===
+    Route::resource('cities', CityController::class)->names('cities');
+    Route::get('cities/import/data', [CityController::class, 'getCitiesToImport'])->name('cities.import');
+    Route::post('cities/import/post', [CityController::class, 'postCitiesToImport'])->name('cities.import.post');
+    Route::get('cities/export/data', [CityController::class, 'getCitiesToExport'])->name('cities.export');
+
+    // === REGIONS MANAGEMENT ===
+    Route::resource('regions', RegionController::class)->names('regions');
+    Route::get('regions/import/data', [RegionController::class, 'getRegionsToImport'])->name('regions.import');
+    Route::post('regions/import/post', [RegionController::class, 'postRegionsToImport'])->name('regions.import.post');
+    Route::get('regions/export/data', [RegionController::class, 'getRegionsToExport'])->name('regions.export');
+
+    // === SUBREGIONS MANAGEMENT ===
+    Route::resource('subregions', SubregionController::class)->names('subregions');
+    Route::get('subregions/import/data', [SubregionController::class, 'getSubregionsToImport'])->name('subregions.import');
+    Route::post('subregions/import/post', [SubregionController::class, 'postSubregionsToImport'])->name('subregions.import.post');
+    Route::get('subregions/export/data', [SubregionController::class, 'getSubregionsToExport'])->name('subregions.export');
+
+    // === NATIONALITIES MANAGEMENT ===
+    Route::resource('nationalities', NationalityController::class)->names('nationalities');
+    Route::get('nationalities/import/data', [NationalityController::class, 'getNationalitiesToImport'])->name('nationalities.import');
+    Route::post('nationalities/import/post', [NationalityController::class, 'postNationalitiesToImport'])->name('nationalities.import.post');
+    Route::get('nationalities/export/data', [NationalityController::class, 'getNationalitiesToExport'])->name('nationalities.export');
 
     Route::resource('cities', CityController::class)->names('cities');
     Route::get('cities/by-country/{countryId}', [CityController::class, 'getByCountry'])->name('cities.by-country');
 
-    // City Import
-    Route::get('cities/import/form', [ImportController::class, 'showCityImport'])->name('cities.import.form');
-    Route::post('cities/import', [ImportController::class, 'importCities'])->name('cities.import');
-    Route::get('cities/import/sample', [ImportController::class, 'citySample'])->name('cities.sample-import');
-
     // === FINANCIAL MANAGEMENT ===
-    Route::resource('currencies', CurrencyController::class)->names('currencies');
-    Route::get('currencies/rates', [CurrencyController::class, 'rates'])->name('currencies.rates');
-    Route::post('currencies/rates/update', [CurrencyController::class, 'updateRates'])->name('currencies.rates.update');
+    // Route::get('currencies/rates', [CurrencyController::class, 'rates'])->name('currencies.rates');
+    // Route::post('currencies/rates/update', [CurrencyController::class, 'updateRates'])->name('currencies.rates.update');
 
-    // Currency Import
-    Route::get('currencies/import/form', [ImportController::class, 'showCurrencyImport'])->name('currencies.import.form');
-    Route::post('currencies/import', [ImportController::class, 'importCurrencies'])->name('currencies.import');
-    Route::get('currencies/import/sample', [ImportController::class, 'currencySample'])->name('currencies.sample-import');
 
-    // === PROFILE MANAGEMENT ===
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');

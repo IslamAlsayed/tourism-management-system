@@ -5,7 +5,7 @@
         <!-- Guests Information -->
         <div>
             <label class="kt-label mb-2">Guests</label>
-            <input type="text" class="kt-input mb-2"
+            <input type="text" class="kt-input h-[45px] mb-2"
                 value="{{ $booking->adults }} adults, {{ $booking->children }} children, {{ $booking->infants }} infants"
                 readonly />
         </div>
@@ -13,7 +13,7 @@
         <!-- Nights Information -->
         <div>
             <label class="kt-label mb-2">Nights</label>
-            <input type="text" class="kt-input mb-2" name="nights" wire:model="nights" readonly />
+            <input type="text" class="kt-input h-[45px] mb-2" name="nights" wire:model="nights" readonly />
         </div>
 
         <div>
@@ -50,7 +50,7 @@
             <!-- Hotel Selection -->
             <div>
                 <label class="kt-label mb-2">Hotel 3 stars</label>
-                <select class="kt-select mb-2" wire:model.live="hotel_id">
+                <select class="kt-select h-[45px] mb-2" wire:model.live="hotel_id">
                     <option value="">Select hotel</option>
                     @foreach ($hotels as $hotel)
                         <option value="{{ $hotel->id }}">{{ $hotel->name }}</option>
@@ -65,7 +65,7 @@
             <!-- Hotel Selection -->
             <div>
                 <label class="kt-label mb-2">Hotel 4 stars</label>
-                <select class="kt-select mb-2" wire:model.live="hotel_id">
+                <select class="kt-select h-[45px] mb-2" wire:model.live="hotel_id">
                     <option value="">Select hotel</option>
                     @foreach ($hotels as $hotel)
                         <option value="{{ $hotel->id }}">{{ $hotel->name }}</option>
@@ -99,7 +99,7 @@
         </div>
         {{-- <div>
             <label class="kt-label mb-2">Season</label>
-            <select class="kt-select mb-2" wire:model.live="hotel_season_id" @disabled(!$hotel_id)>
+            <select class="kt-select h-[45px] mb-2" wire:model.live="hotel_season_id" @disabled(!$hotel_id)>
                 <option value="">Select season</option>
                 @if ($seasons && $seasons->count())
                     @foreach ($seasons as $season)
@@ -126,7 +126,7 @@
                     </label>
 
                     <input type="checkbox" min="0" wire:model.live="rooms.{{ $type->id }}"
-                        class="kt-input mb-2" id="room-{{ $type->id }}" placeholder="0">
+                        class="kt-input h-[45px] mb-2" id="room-{{ $type->id }}" placeholder="0">
                 </div>
             @empty
                 <p class="text-sm text-gray-500">No room types available.</p>

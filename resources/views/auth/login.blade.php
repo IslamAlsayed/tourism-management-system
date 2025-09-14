@@ -104,7 +104,7 @@
                     <label class="kt-form-label font-normal text-mono">
                         Email
                     </label>
-                    <input class="kt-input" placeholder="email@email.com" type="email" name="email"
+                    <input class="kt-input h-[45px]" placeholder="email@email.com" type="email" name="email"
                         value="admin@example.com" />
                 </div>
                 <div class="flex flex-col gap-1">
@@ -116,7 +116,7 @@
                             Forgot Password?
                         </a>
                     </div>
-                    <div class="kt-input" data-kt-toggle-password="true">
+                    <div class="kt-input h-[45px]" data-kt-toggle-password="true">
                         <input name="password" placeholder="Enter Password" type="password" value="12345678" />
                         <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                             data-kt-toggle-password-trigger="true" type="button">

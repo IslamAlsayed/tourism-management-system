@@ -18,7 +18,7 @@
         @if (isset($showSearch) && $showSearch)
             <div class="flex flex-wrap gap-2 lg:gap-5">
                 <div class="flex">
-                    <label class="kt-input">
+                    <label class="kt-input h-[45px]">
                         <i class="ki-filled ki-magnifier"></i>
                         <input wire:model.live="search"
                             placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..."

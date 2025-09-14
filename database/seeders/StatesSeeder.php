@@ -2,25 +2,29 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Country;
 use App\Models\State;
+use App\Models\Country;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class StatesSeeder extends Seeder
 {
     public function run(): void
     {
-        for ($i = 0; $i < 7; $i++) {
+        Schema::disableForeignKeyConstraints();
+        State::truncate();
+        Schema::enableForeignKeyConstraints();
+
+        foreach (range(1, 7) as $i) {
             State::create([
                 'name' => fake()->state(),
-                'name_ar' => fake()->state(),
-                'country_id' => Country::inRandomOrder()->first()?->id ?? 1,
+                'name_ar' => fake()->city(),
+                'country_id' => Country::inRandomOrder()->first()?->id,
                 'iso2' => fake()->countryCode(),
-                'iso3166_2' => fake()->stateAbbr(),
-                'fips_code' => fake()->word(),
+                'iso3' => null,
+                'fips_code' => fake()->lexify('??'),
                 'type' => fake()->randomElement(['State', 'Province', 'Region']),
                 'level' => fake()->numberBetween(1, 3),
-                'parent_id' => State::inRandomOrder()->first()?->id ?? null,
                 'latitude' => fake()->latitude(),
                 'longitude' => fake()->longitude(),
                 'timezone' => fake()->timezone(),
