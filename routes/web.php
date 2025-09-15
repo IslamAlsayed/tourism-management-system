@@ -102,6 +102,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('cities/import/data', [CityController::class, 'getCitiesToImport'])->name('cities.import');
     Route::post('cities/import/post', [CityController::class, 'postCitiesToImport'])->name('cities.import.post');
     Route::get('cities/export/data', [CityController::class, 'getCitiesToExport'])->name('cities.export');
+    // Route::get('cities/by-country/{countryId}', [CityController::class, 'getByCountry'])->name('cities.by-country');
 
     // === REGIONS MANAGEMENT ===
     Route::resource('regions', RegionController::class)->names('regions');
@@ -120,9 +121,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('nationalities/import/data', [NationalityController::class, 'getNationalitiesToImport'])->name('nationalities.import');
     Route::post('nationalities/import/post', [NationalityController::class, 'postNationalitiesToImport'])->name('nationalities.import.post');
     Route::get('nationalities/export/data', [NationalityController::class, 'getNationalitiesToExport'])->name('nationalities.export');
-
-    Route::resource('cities', CityController::class)->names('cities');
-    Route::get('cities/by-country/{countryId}', [CityController::class, 'getByCountry'])->name('cities.by-country');
 
     // === FINANCIAL MANAGEMENT ===
     // Route::get('currencies/rates', [CurrencyController::class, 'rates'])->name('currencies.rates');

@@ -1,0 +1,93 @@
+@extends('layouts.master')
+
+@section('content')
+    <div class="container mx-auto px-6 py-8">
+        <div class="flex flex-col">
+            <div class="-mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
+                <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                        <h1 class="text-xl font-semibold mb-6">{{ $title }}</h1>
+                        <p class="mb-6">{{ $description }}</p>
+
+                        <form action="{{ route('cities.import.post') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-6">
+                                <label for="file" class="inline-block text-gray-700 text-sm font-bold mb-2">
+                                    {{ __('main.import_file') }}
+                                    <strong>only (.csv,.xlsx,.xls)</strong>
+                                </label>
+
+                                <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
+                                    class="border rounded p-2 block"
+                                    onchange="document.getElementById('submit-button').disabled = !this.files.length" />
+
+                                @error('file')
+                                    <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <button type="submit" class="kt-btn kt-btn-primary" id="submit-button" disabled>
+                                    {{ __('main.upload_and_import') }}
+                                </button>
+                                <a href="{{ route('cities.index') }}" class="kt-btn kt-btn-outline ml-4">
+                                    {{ __('main.cancel') }}
+                                </a>
+                            </div>
+                        </form>
+
+                        <div class="mt-4">
+                            <a href="{{ route('cities.export') }}" class="kt-btn kt-btn-outline">
+                                {{ __('main.export') }}
+                            </a>
+                        </div>
+
+                        <strong class="block mt-6 mb-2">Required Fields</strong>
+                        <table class="border min-w-full divide-y text-center divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th class="border">name</th>
+                                    <th class="border">name_ar</th>
+                                    <th class="border">state_id</th>
+                                    <th class="border">country_id</th>
+                                    <th class="border">timezone</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="border">Andorra la Vella</td>
+                                    <td class="border">أندورا</td>
+                                    <td class="border">488</td>
+                                    <td class="border">6</td>
+                                    <td class="border">[{"tzName": "Afghanistan Time","zoneName":
+                                        "Asia/Kabul","gmtOffset":16200,"abbreviation": "AFT","gmtOffsetName": "UTC+04:30"}]
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <strong class="block mt-6 mb-2">Optional Fields</strong>
+                        <table class="border min-w-half divide-y text-center divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th class="border">latitude</th>
+                                    <th class="border">longitude</th>
+                                    <th class="border">wikiDataId</th>
+                                    <th class="border">population</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="border">42.50779</td>
+                                    <td class="border">1.52109</td>
+                                    <td class="border">Q1863</td>
+                                    <td class="border">468416843</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

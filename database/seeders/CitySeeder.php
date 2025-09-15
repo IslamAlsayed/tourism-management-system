@@ -22,7 +22,7 @@ class CitySeeder extends Seeder
             ['name' => 'Dubai', 'name_ar' => 'دبي', 'state_id' => State::inRandomOrder()->first()?->id, 'country_id' => Country::where('name', 'United Arab Emirates')->first()?->id, 'latitude' => 25.276987, 'longitude' => 55.296249, 'timezone' => 'Asia/Dubai', 'wiki_data_id' => 'Q613', 'population' => 3500000],
         ];
 
-        City::insert($cities);
+        // City::insert($cities);
 
         // $cities = [
         //     ['name' => 'Ashkāsham', 'name_ar' => 'أشكاشم', 'state_id' => State::inRandomOrder()->first()?->id ?? 1, 'country_id' => Country::inRandomOrder()->first()?->id ?? 1, 'latitude' => 36.68333, 'longitude' => 71.53333, 'timezone' => null, 'wikidataId' => 'Q4805192', 'population' => null],
