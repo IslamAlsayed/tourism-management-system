@@ -25,8 +25,8 @@ class RegionController extends Controller
 
     public function getRegionsToImport()
     {
-        $title = __('main.import_regions');
-        $description = __('main.import_regions_description');
+        $title = __('main.import_types', ['types' => __('main.regions')]);
+        $description = __('main.import_types_description', ['types' => __('main.regions')]);
 
         return view('pages.dashboard.regions.import', compact('title', 'description'));
     }

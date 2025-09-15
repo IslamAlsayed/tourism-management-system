@@ -64,7 +64,7 @@
                                     @endif
                                 </span>
                                 <span
-                                    class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px] {{ $hasActiveChild ? 'text-primary' : '' }}">
+                                    class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $hasActiveChild ? 'text-primary' : '' }}">
                                     <span class="inline-flex kt-menu-item-show:hidden"><i
                                             class="ki-filled ki-plus text-[11px]"></i></span>
                                     <span class="hidden kt-menu-item-show:inline-flex"><i
@@ -74,7 +74,7 @@
 
                             <!-- Children -->
                             <div
-                                class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border{{ $hasActiveChild ? ' show' : '' }}">
+                                class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border {{ $hasActiveChild ? 'show' : '' }}">
                                 @foreach ($item['children'] as $child)
                                     @php
                                         $childHasChildren = isset($child['children']);
@@ -86,7 +86,7 @@
 
                                     @if ($childHasChildren)
                                         <!-- Nested submenu -->
-                                        <div class="kt-menu-item {{ $childHasActiveChild ? 'kt-menu-item-show' : '' }}"
+                                        <div class="kt-menu-item {{ $childHasActiveChild ? 'kt-menu-item-show show' : '' }}"
                                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                                             <div
                                                 class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $childHasActiveChild ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg">
@@ -108,7 +108,7 @@
                                                     @endif
                                                 </span>
                                                 <span
-                                                    class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px] {{ $childHasActiveChild ? 'text-primary' : '' }}">
+                                                    class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $childHasActiveChild ? 'text-primary' : '' }}">
                                                     <span class="inline-flex kt-menu-item-show:hidden"><i
                                                             class="ki-filled ki-plus text-[11px]"></i></span>
                                                     <span class="hidden kt-menu-item-show:inline-flex"><i

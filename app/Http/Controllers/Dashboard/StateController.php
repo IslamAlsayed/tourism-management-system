@@ -18,10 +18,15 @@ class StateController extends Controller
         return view('pages.dashboard.states.index', compact('states', 'totalStates'));
     }
 
+    public function create()
+    {
+        return 'code...';
+    }
+
     public function getStatesToImport()
     {
-        $title = __('main.import_states');
-        $description = __('main.import_states_description');
+        $title = __('main.import_types', ['types' => __('main.states')]);
+        $description = __('main.import_types_description', ['types' => __('main.states')]);
 
         return view('pages.dashboard.states.import', compact('title', 'description'));
     }

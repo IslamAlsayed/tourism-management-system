@@ -4,10 +4,10 @@
     <!-- Container -->
     @include('includes.table-breadcrumb', [
         'title' => __('main.nationalities'),
-        'description' => __('main.manage_system_nationalities'),
+        'description' => __('main.manage_system_types', ['types' => __('main.nationalities')]),
         'import_url' => route('nationalities.import'),
         'page_add_url' => route('nationalities.create'),
-        'page_add_title' => __('main.add_new_subregion'),
+        'page_add_title' => __('main.add_new_type', ['type' => __('main.nationality')]),
     ])
     <!-- End of Container -->
 

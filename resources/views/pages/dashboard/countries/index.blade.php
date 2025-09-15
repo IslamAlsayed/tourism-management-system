@@ -6,10 +6,10 @@
             <!-- Container -->
             @include('includes.table-breadcrumb', [
                 'title' => __('main.countries'),
-                'description' => __('main.manage_system_countries'),
+                'description' => __('main.manage_system_types', ['types' => __('main.countries')]),
                 'import_url' => route('countries.import'),
                 'page_add_url' => route('countries.create'),
-                'page_add_title' => __('main.add_new_country'),
+                'page_add_title' => __('main.add_new_type', ['type' => __('main.country')]),
             ])
             <!-- End of Container -->
 

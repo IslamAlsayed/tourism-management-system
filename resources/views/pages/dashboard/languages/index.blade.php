@@ -7,7 +7,7 @@
         'description' => __('main.language_management_description'),
         'import_url' => '#',
         'page_add_url' => route('languages.create'),
-        'page_add_title' => __('main.add_new_language'),
+        'page_add_title' => __('main.add_new_type', ['type' => __('main.language')]),
     ])
     <!-- End of Container -->
 

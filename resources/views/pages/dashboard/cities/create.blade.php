@@ -1,13 +1,13 @@
 @extends('layouts.master')
 
-@section('title', __('main.add_new_city'))
+@section('title', __('main.add_new_type', ['type' => __('main.city')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.add_new_city') }}
+                    {{ __('main.add_new_type', ['type' => __('main.city')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
                     {{ __('main.add_city_description') }}

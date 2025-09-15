@@ -4,10 +4,10 @@
     <!-- Container -->
     @include('includes.table-breadcrumb', [
         'title' => __('main.states'),
-        'description' => __('main.manage_system_states'),
+        'description' => __('main.manage_system_types', ['types' => __('main.states')]),
         'import_url' => route('states.import'),
         'page_add_url' => route('states.create'),
-        'page_add_title' => __('main.add_new_state'),
+        'page_add_title' => __('main.add_new_type', ['type' => __('main.state')]),
     ])
     <!-- End of Container -->
 

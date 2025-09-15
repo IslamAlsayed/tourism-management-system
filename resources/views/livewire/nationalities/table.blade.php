@@ -42,14 +42,14 @@
                                 <td>{{ $nationality->is_active }}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
-                                        <a href="{{ route('nationality.edit', $nationality->id) }}"
+                                        <a href="{{ route('nationalities.edit', $nationality->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
                                             {{ __('main.edit') }}
                                         </a>
 
-                                        <a href="{{ route('nationality.destroy', $nationality->id) }}"
+                                        <a href="{{ route('nationalities.destroy', $nationality->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form action="{{ route('nationality.destroy', $nationality->id) }}"
+                                            <form action="{{ route('nationalities.destroy', $nationality->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')

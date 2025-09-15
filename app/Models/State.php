@@ -23,4 +23,9 @@ class State extends Model
         'longitude',
         'timezone',
     ];
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

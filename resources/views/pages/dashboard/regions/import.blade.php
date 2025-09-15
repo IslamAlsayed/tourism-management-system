@@ -12,13 +12,13 @@
                         <form action="{{ route('regions.import.post') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-6">
-                                <label for="file" class="block text-gray-700 text-sm font-bold mb-2">
+                                <label for="file" class="inline-block text-gray-700 text-sm font-bold mb-2">
                                     {{ __('main.import_file') }}
                                     <strong>only (.csv,.xlsx,.xls)</strong>
                                 </label>
 
                                 <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
-                                    class="border rounded p-2"
+                                    class="border rounded p-2 block"
                                     onchange="document.getElementById('submit-button').disabled = !this.files.length" />
 
                                 @error('file')

@@ -7,7 +7,7 @@
         'description' => __('main.manage_system_quotations'),
         'import_url' => '#',
         'page_add_url' => route('dashboard.quote.v2.step1'),
-        'page_add_title' => __('main.add_new_quotation'),
+        'page_add_title' => __('main.add_new_type', ['type' => __('main.quotation')]),
     ])
     <!-- End of Container -->
 

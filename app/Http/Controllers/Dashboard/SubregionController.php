@@ -25,8 +25,8 @@ class SubregionController extends Controller
 
     public function getSubregionsToImport()
     {
-        $title = __('main.import_subregions');
-        $description = __('main.import_subregions_description');
+        $title = __('main.import_types', ['types' => __('main.subregions')]);
+        $description = __('main.import_types_description', ['types' => __('main.subregions')]);
 
         return view('pages.dashboard.subregions.import', compact('title', 'description'));
     }

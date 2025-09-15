@@ -27,6 +27,10 @@ return [
     'manage_users' => 'إدارة المستخدمين',
     'total' => 'الإجمالي',
     'get_started' => 'ابدأ الآن',
+    'manage_system_types' => 'إدارة الأنواع :types',
+    'add_new_type' => 'إضافة نوع جديد :type',
+    'required_fields' => 'الحقول المطلوبة',
+    'optional_fields' => 'الحقول الاختيارية',
 
     // Common Actions
     'save' => 'حفظ',
@@ -90,6 +94,9 @@ return [
     'population' => 'عدد السكان',
     'area' => 'المساحة',
     'region' => 'المنطقة',
+    'regions' => 'المناطق',
+    'subregion' => 'المنطقة الفرعية',
+    'subregions' => 'المناطق الفرعية',
 
     // Country Specific
     'country_name_arabic' => 'اسم الدولة (عربي)',
@@ -108,6 +115,7 @@ return [
     'area_example' => 'مثال: 2149690',
     'select_continent' => 'اختر القارة',
     'region_example' => 'مثال: الشرق الأوسط',
+    'subregion_example' => 'مثال: الشرق الأوسط',
     'latitude_example' => 'مثال: 23.8859',
     'longitude_example' => 'مثال: 45.0792',
     'main_timezone' => 'المنطقة الزمنية الرئيسية',
@@ -134,8 +142,6 @@ return [
     // Quote Management
     'quotation' => 'الحجز',
     'quotations' => 'الحجوزات',
-    'manage_system_quotations' => 'إدارة حجوزات النظام',
-    'add_new_quotation' => 'إضافة حجز جديد',
 
     // Country Management
     'add_country' => 'إضافة دولة',
@@ -144,6 +150,10 @@ return [
     'country_information' => 'معلومات الدولة',
     'country_flag' => 'علم الدولة',
     'edit_country_description' => 'تعديل دولة في قاعدة البيانات الجغرافية',
+
+    // Nationalities Management
+    'nationality' => 'الجنسية',
+    'nationalities' => 'الجنسيات',
 
     // Page Headers
     'user_management_title' => 'إدارة المستخدمين',
@@ -166,6 +176,8 @@ return [
     'password' => 'كلمة المرور',
     'email' => 'البريد الإلكتروني',
     'name' => 'الاسم',
+    'name_ar' => 'الاسم (عربي)',
+    'is_active' => 'نشط',
     'first_name' => 'الاسم الأول',
     'last_name' => 'اسم العائلة',
     'phone' => 'الهاتف',
@@ -189,7 +201,6 @@ return [
     // User Management
     'user_management' => 'إدارة المستخدمين',
     'all_users' => 'جميع المستخدمين',
-    'add_new_user' => 'إضافة مستخدم جديد',
     'active_users' => 'المستخدمون النشطون',
     'inactive_users' => 'المستخدمون غير النشطين',
     'my_profile' => 'ملفي الشخصي',
@@ -209,22 +220,12 @@ return [
     'status' => 'الحالة',
     'department' => 'القسم',
     'position' => 'المنصب',
-    'manage_system_users' => 'إدارة مستخدمي النظام',
-    'manage_system_countries' => 'إدارة دول النظام',
-    'manage_system_currencies' => 'إدارة عملات النظام',
-    'manage_system_cities' => 'إدارة مدن النظام',
     'import_csv' => 'استيراد CSV/Excel',
     'add_member' => 'إضافة عضو',
 
     // Import functionality
-    'import_users' => 'استيراد المستخدمين',
-    'import_countries' => 'استيراد الدول',
-    'import_cities' => 'استيراد المدن',
-    'import_currencies' => 'استيراد العملات',
-    'import_users_description' => 'تحميل ملف CSV أو Excel لاستيراد المستخدمين',
-    'import_countries_description' => 'تحميل ملف CSV أو Excel لاستيراد الدول',
-    'import_cities_description' => 'تحميل ملف CSV أو Excel لاستيراد المدن',
-    'import_currencies_description' => 'تحميل ملف CSV أو Excel لاستيراد العملات',
+    'import_types' => 'استيراد :types',
+    'import_types_description' => 'قم بتحميل ملف CSV أو Excel لاستيراد :types',
     'import_file' => 'اختر ملف الاستيراد',
     'upload_and_import' => 'تحميل واستيراد',
     'required_columns' => 'الأعمدة المطلوبة',
@@ -233,7 +234,7 @@ return [
     'sample_file' => 'ملف عينة',
     'download_sample_file' => 'تنزيل قالب ملف عينة',
     'download_sample' => 'تنزيل عينة',
-    'import_success' => 'تم استيراد :count سجل بنجاح',
+    'import_success' => 'تم استيراد :count سجل بنجاح.',
     'import_error' => 'خطأ أثناء الاستيراد: ',
     'import_partial_errors' => 'اكتمل الاستيراد مع بعض الأخطاء. يرجى التحقق من القائمة أدناه.',
     'import_errors' => 'أخطاء الاستيراد',
@@ -243,16 +244,13 @@ return [
     'location_management' => 'إدارة المواقع',
     'countries' => 'الدول',
     'all_countries' => 'جميع الدول',
-    'add_new_country' => 'إضافة دولة جديدة',
     'cities' => 'المدن',
     'all_cities' => 'جميع المدن',
-    'add_new_city' => 'إضافة مدينة جديدة',
     'city_name' => 'اسم المدينة',
 
     // Currency Management
     'currency_management' => 'إدارة العملات',
     'all_currencies' => 'جميع العملات',
-    'add_new_currency' => 'إضافة عملة جديدة',
     'exchange_rates' => 'أسعار الصرف',
     'update_rates' => 'تحديث الأسعار',
     'currencies' => 'العملات',
@@ -494,6 +492,7 @@ return [
     'enter_city_name_english' => 'أدخل اسم المدينة بالإنجليزية',
     'select_country' => 'اختر الدولة',
     'state' => 'الولاية',
+    'states' => 'الولايات',
     'select_state' => 'اختر الولاية',
     'latitude' => 'خط العرض',
     'longitude' => 'خط الطول',
@@ -688,7 +687,6 @@ return [
     'view_languages' => 'عرض اللغات',
     'create_language' => 'إنشاء لغة',
     'all_languages' => 'جميع اللغات',
-    'add_new_language' => 'إضافة لغة جديدة',
     'language_name' => 'اسم اللغة',
     'language_code' => 'رمز اللغة',
     'currency' => 'العملة',

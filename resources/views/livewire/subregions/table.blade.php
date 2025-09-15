@@ -39,14 +39,14 @@
                                 <td>{{ $subregion->name_ar }}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
-                                        <a href="{{ route('subregion.edit', $subregion->id) }}"
+                                        <a href="{{ route('subregions.edit', $subregion->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
                                             {{ __('main.edit') }}
                                         </a>
 
-                                        <a href="{{ route('subregion.destroy', $subregion->id) }}"
+                                        <a href="{{ route('subregions.destroy', $subregion->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form action="{{ route('subregion.destroy', $subregion->id) }}"
+                                            <form action="{{ route('subregions.destroy', $subregion->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')

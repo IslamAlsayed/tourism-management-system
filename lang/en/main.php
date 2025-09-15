@@ -27,6 +27,10 @@ return [
     'manage_users' => 'Manage Users',
     'total' => 'total',
     'get_started' => 'Get Started',
+    'manage_system_types' => 'Manage system :types',
+    'add_new_type' => 'Add New :type',
+    'required_fields' => 'Required Fields',
+    'optional_fields' => 'Optional Fields',
 
     // Common Actions
     'save' => 'Save',
@@ -90,6 +94,9 @@ return [
     'population' => 'Population',
     'area' => 'Area',
     'region' => 'Region',
+    'regions' => 'Regions',
+    'subregion' => 'Subregion',
+    'subregions' => 'Subregions',
 
     // Country Specific
     'country_name_arabic' => 'Country Name (Arabic)',
@@ -108,6 +115,7 @@ return [
     'area_example' => 'Example: 2149690',
     'select_continent' => 'Select Continent',
     'region_example' => 'Example: Middle East',
+    'subregion_example' => 'Example: Middle East',
     'latitude_example' => 'Example: 23.8859',
     'longitude_example' => 'Example: 45.0792',
     'main_timezone' => 'Main Timezone',
@@ -134,8 +142,6 @@ return [
     // Quote Management
     'quotation' => 'Quotation',
     'quotations' => 'Quotations',
-    'manage_system_quotations' => 'Manage system quotations',
-    'add_new_quotation' => 'Add New quotation',
 
     // Country Management
     'add_country' => 'Add Country',
@@ -144,6 +150,10 @@ return [
     'country_information' => 'Country Information',
     'country_flag' => 'Country Flag',
     'edit_country_description' => 'Edit a country in the geographic database',
+
+    // Nationalities Management
+    'nationality' => 'Nationality',
+    'nationalities' => 'Nationalities',
 
     // Page Headers
     'user_management_title' => 'User Management',
@@ -166,6 +176,8 @@ return [
     'password' => 'Password',
     'email' => 'Email',
     'name' => 'Name',
+    'name_ar' => 'Name (Arabic)',
+    'is_active' => 'Is Active',
     'first_name' => 'First Name',
     'last_name' => 'Last Name',
     'phone' => 'Phone',
@@ -189,7 +201,6 @@ return [
     // User Management
     'user_management' => 'User Management',
     'all_users' => 'All Users',
-    'add_new_user' => 'Add New User',
     'active_users' => 'Active Users',
     'inactive_users' => 'Inactive Users',
     'my_profile' => 'My Profile',
@@ -209,22 +220,12 @@ return [
     'status' => 'Status',
     'department' => 'Department',
     'position' => 'Position',
-    'manage_system_users' => 'Manage system users',
-    'manage_system_countries' => 'Manage system countries',
-    'manage_system_currencies' => 'Manage system currencies',
-    'manage_system_cities' => 'Manage system cities',
     'import_csv' => 'Import CSV/Excel',
     'add_member' => 'Add Member',
 
     // Import functionality
-    'import_users' => 'Import Users',
-    'import_countries' => 'Import Countries',
-    'import_cities' => 'Import Cities',
-    'import_currencies' => 'Import Currencies',
-    'import_users_description' => 'Upload a CSV or Excel file to import users',
-    'import_countries_description' => 'Upload a CSV or Excel file to import countries',
-    'import_cities_description' => 'Upload a CSV or Excel file to import cities',
-    'import_currencies_description' => 'Upload a CSV or Excel file to import currencies',
+    'import_types' => 'Import :types',
+    'import_types_description' => 'Upload a CSV or Excel file to import :types',
     'import_file' => 'Choose Import File',
     'upload_and_import' => 'Upload and Import',
     'required_columns' => 'Required Columns',
@@ -243,16 +244,13 @@ return [
     'location_management' => 'Location Management',
     'countries' => 'Countries',
     'all_countries' => 'All Countries',
-    'add_new_country' => 'Add New Country',
     'cities' => 'Cities',
     'all_cities' => 'All Cities',
-    'add_new_city' => 'Add New City',
     'city_name' => 'City Name',
 
     // Currency Management
     'currency_management' => 'Currency Management',
     'all_currencies' => 'All Currencies',
-    'add_new_currency' => 'Add New Currency',
     'exchange_rates' => 'Exchange Rates',
     'update_rates' => 'Update Rates',
     'currencies' => 'Currencies',
@@ -494,6 +492,7 @@ return [
     'enter_city_name_english' => 'Enter city name in English',
     'select_country' => 'Select Country',
     'state' => 'State',
+    'states' => 'States',
     'select_state' => 'Select State',
     'latitude' => 'Latitude',
     'longitude' => 'Longitude',
@@ -688,7 +687,6 @@ return [
     'view_languages' => 'View Languages',
     'create_language' => 'Create Language',
     'all_languages' => 'All Languages',
-    'add_new_language' => 'Add New Language',
     'language_name' => 'Language Name',
     'language_code' => 'Language Code',
     'currency' => 'Currency',

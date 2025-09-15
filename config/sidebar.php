@@ -40,7 +40,7 @@ return [
         [
             'title' => 'location management',
             'icon' => 'ki-filled ki-geolocation',
-            'statue' => 'news 4',
+            'statue' => 'updated 1',
             'children' => [
                 [
                     'title' => 'countries',
@@ -59,23 +59,24 @@ return [
                 [
                     'title' => 'states',
                     'icon' => 'ki-filled ki-flag',
-                    'statue' => 'new',
+                    // 'statue' => 'new',
                     'children' => [
                         [
                             'title' => 'all states',
                             'route' => 'states.index',
-                            'statue' => 'new'
+                            // 'statue' => 'new'
                         ],
                         [
                             'title' => 'add new state',
                             'route' => 'states.create',
-                            'statue' => 'new',
+                            // 'statue' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'cities',
                     'icon' => 'ki-filled ki-home-2',
+                    'statue' => 'updated',
                     'children' => [
                         [
                             'title' => 'all cities',
@@ -90,52 +91,52 @@ return [
                 [
                     'title' => 'regions',
                     'icon' => 'ki-filled ki-home-2',
-                    'statue' => 'new',
+                    // 'statue' => 'new',
 
                     'children' => [
                         [
                             'title' => 'all regions',
                             'route' => 'regions.index',
-                            'statue' => 'new',
+                            // 'statue' => 'new',
                         ],
                         [
                             'title' => 'add new region',
                             'route' => 'regions.create',
-                            'statue' => 'new',
+                            // 'statue' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'subregions',
                     'icon' => 'ki-filled ki-home-2',
-                    'statue' => 'new',
+                    // 'statue' => 'new',
                     'children' => [
                         [
                             'title' => 'all subregions',
                             'route' => 'subregions.index',
-                            'statue' => 'new',
+                            // 'statue' => 'new',
                         ],
                         [
                             'title' => 'add new region',
                             'route' => 'subregions.create',
-                            'statue' => 'new',
+                            // 'statue' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'nationalities',
                     'icon' => 'ki-filled ki-home-2',
-                    'statue' => 'new',
+                    // 'statue' => 'new',
                     'children' => [
                         [
                             'title' => 'all nationalities',
                             'route' => 'nationalities.index',
-                            'statue' => 'new',
+                            // 'statue' => 'new',
                         ],
                         [
                             'title' => 'add new nationality',
                             'route' => 'nationalities.create',
-                            'statue' => 'new',
+                            // 'statue' => 'new',
                         ],
                     ],
                 ],
@@ -146,19 +147,19 @@ return [
         [
             'title' => 'currency management',
             'icon' => 'ki-filled ki-dollar',
-            'statue' => 'updated 2',
+            // 'statue' => 'updated 2',
             'children' => [
                 [
                     'title' => 'all currencies',
                     'icon' => 'ki-filled ki-bill',
                     'route' => 'currencies.index',
-                    'statue' => 'updated',
+                    // 'statue' => 'updated',
                 ],
                 [
                     'title' => 'add new currency',
                     'icon' => 'ki-filled ki-plus',
                     'route' => 'currencies.create',
-                    'statue' => 'updated',
+                    // 'statue' => 'updated',
                 ],
                 // [
                 //     'title' => 'exchange rates',
