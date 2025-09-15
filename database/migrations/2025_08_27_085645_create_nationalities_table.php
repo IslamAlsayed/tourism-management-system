@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('nationalities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('name_ar');
+            $table->string('name')->nullable();
+            $table->string('name_ar')->nullable();
             $table->boolean('is_active')->default(true);
             $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();
             $table->timestamps();

@@ -25,7 +25,7 @@ class NationalitySeeder extends Seeder
             ['name' => 'Emirati', 'name_ar' => 'إماراتي', 'country_id' => Country::where('name', 'United Arab Emirates')->first()?->id],
         ];
 
-        Nationality::insert($nationalities);
+        // Nationality::insert($nationalities);
 
         // $nationalities = [
         //     ['nationality_ar' => 'السعودية', 'nationality' => 'Saudi', 'country' => 'Saudi Arabia', 'country_ar' => 'السعودية', 'capital' => 'Riyadh', 'iso2' => 'SA', 'iso3' => 'SAU', 'phone_code' => '966', 'tld' => '.sa', 'timezone' => 'Asia/Riyadh', 'region' => 'Asia', 'subregion' => 'Western Asia'],

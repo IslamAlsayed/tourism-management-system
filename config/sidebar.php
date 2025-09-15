@@ -510,6 +510,24 @@ return [
         //     ],
         // ],
 
+             // ================= Tourist Sites =================
+        [
+            'title' => 'clients',
+            'icon' => 'ki-filled ki-geolocation',
+            'children' => [
+                [
+                    'title' => 'clients',
+                    'icon' => 'ki-filled ki-geolocation',
+                    'route' => '#'
+                ],
+                [
+                    'title' => 'site entrance fees',
+                    'icon' => 'ki-filled ki-dollar',
+                    'route' => '#'
+                ],
+            ],
+        ],
+
         // ================= Tourist Sites =================
         [
             'title' => 'tourist sites',

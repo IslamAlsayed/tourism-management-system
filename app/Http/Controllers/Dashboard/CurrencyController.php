@@ -27,6 +27,13 @@ class CurrencyController extends Controller
         return view('pages.dashboard.currencies.create', compact('countries'));
     }
 
+    public function edit($id)
+    {
+        $currency = Currency::findOrFail($id);
+        $countries = Country::all();
+        return view('pages.dashboard.currencies.edit', compact('currency', 'countries'));
+    }
+
     public function store(CreateCurrencyRequest $request)
     {
         $validated = $request->validated();
@@ -40,13 +47,6 @@ class CurrencyController extends Controller
         }
 
         return redirect()->route('currencies.index')->with('error', __('main.messages.currency_creation_failed'));
-    }
-
-    public function edit($id)
-    {
-        $currency = Currency::findOrFail($id);
-        $countries = Country::all();
-        return view('pages.dashboard.currencies.edit', compact('currency', 'countries'));
     }
 
     public function update(UpdateCurrencyRequest $request, $id)

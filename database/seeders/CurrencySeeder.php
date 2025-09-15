@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Country;
 use App\Models\Currency;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -12,7 +11,7 @@ class CurrencySeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        Country::truncate();
+        Currency::truncate();
         Schema::enableForeignKeyConstraints();
 
         $currencies = [
