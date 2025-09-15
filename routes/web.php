@@ -74,6 +74,10 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class)->names('users');
     Route::post('users/{id}/activate', [UserController::class, 'activate'])->name('users.activate');
     Route::post('users/{id}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
+    Route::get('users/import/data', [UserController::class, 'getusersToImport'])->name('users.import');
+    Route::post('users/import/post', [UserController::class, 'postusersToImport'])->name('users.import.post');
+    Route::get('users/export/data', [UserController::class, 'getusersToExport'])->name('users.export');
+
 
     // === LOCATION MANAGEMENT ===
     // Route::resource('countries', CountryController::class)->names('countries');
