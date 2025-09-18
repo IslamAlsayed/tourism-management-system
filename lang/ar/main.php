@@ -22,6 +22,7 @@ return [
     'total_records' => 'إجمالي السجلات',
     'active' => 'نشط',
     'users' => 'المستخدمين',
+    'users_' => 'مستخدمين',
     'auto_refresh' => 'تحديث تلقائي',
     'quick_actions' => 'إجراءات سريعة',
     'manage_users' => 'إدارة المستخدمين',
@@ -31,6 +32,10 @@ return [
     'add_new_type' => 'إضافة نوع جديد :type',
     'required_fields' => 'الحقول المطلوبة',
     'optional_fields' => 'الحقول الاختيارية',
+    'there_must_be' => 'يجب أن يكون هناك',
+    'available' => 'متاح',
+    'you_must_add' => 'يجب عليك إضافة',
+    'first' => 'الأول',
 
     // Common Actions
     'save' => 'حفظ',
@@ -95,8 +100,10 @@ return [
     'area' => 'المساحة',
     'region' => 'المنطقة',
     'regions' => 'المناطق',
+    'regions_' => 'مناطق',
     'subregion' => 'المنطقة الفرعية',
     'subregions' => 'المناطق الفرعية',
+    'subregions_' => 'مناطق الفرعية',
 
     // Country Specific
     'country_name_arabic' => 'اسم الدولة (عربي)',
@@ -154,6 +161,7 @@ return [
     // Nationalities Management
     'nationality' => 'الجنسية',
     'nationalities' => 'الجنسيات',
+    'nationalities_' => 'جنسيات',
 
     // Page Headers
     'user_management_title' => 'إدارة المستخدمين',
@@ -189,6 +197,7 @@ return [
     'gender' => 'الجنس',
     'male' => 'ذكر',
     'female' => 'أنثى',
+    'and' => 'و',
 
     // Authentication
     'login' => 'تسجيل الدخول',
@@ -243,8 +252,10 @@ return [
     // Location Management
     'location_management' => 'إدارة المواقع',
     'countries' => 'الدول',
+    'countries_' => 'دول',
     'all_countries' => 'جميع الدول',
     'cities' => 'المدن',
+    'cities_' => 'مدن',
     'all_cities' => 'جميع المدن',
     'city_name' => 'اسم المدينة',
 
@@ -254,6 +265,7 @@ return [
     'exchange_rates' => 'أسعار الصرف',
     'update_rates' => 'تحديث الأسعار',
     'currencies' => 'العملات',
+    'currencies_' => 'عملات',
     'currency_name' => 'اسم العملة',
     'currency_code' => 'كود العملة',
     'symbol' => 'الرمز',

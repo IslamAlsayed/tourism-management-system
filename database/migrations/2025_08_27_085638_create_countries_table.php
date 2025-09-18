@@ -33,6 +33,7 @@ return new class extends Migration {
             $table->float('area')->nullable();
             $table->boolean('is_active')->default(true);
             $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
+            $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
             $table->timestamps();
         });
     }

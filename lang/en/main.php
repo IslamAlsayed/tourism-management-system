@@ -22,6 +22,7 @@ return [
     'total_records' => 'Total Records',
     'active' => 'Active',
     'users' => 'Users',
+    'users_' => 'Users',
     'auto_refresh' => 'Auto refresh',
     'quick_actions' => 'Quick Actions',
     'manage_users' => 'Manage Users',
@@ -31,6 +32,10 @@ return [
     'add_new_type' => 'Add New :type',
     'required_fields' => 'Required Fields',
     'optional_fields' => 'Optional Fields',
+    'there_must_be' => 'There must be',
+    'available' => 'available',
+    'you_must_add' => 'You must add',
+    'first' => 'first',
 
     // Common Actions
     'save' => 'Save',
@@ -95,8 +100,10 @@ return [
     'area' => 'Area',
     'region' => 'Region',
     'regions' => 'Regions',
+    'regions_' => 'Regions',
     'subregion' => 'Subregion',
     'subregions' => 'Subregions',
+    'subregions_' => 'Subregions',
 
     // Country Specific
     'country_name_arabic' => 'Country Name (Arabic)',
@@ -154,6 +161,7 @@ return [
     // Nationalities Management
     'nationality' => 'Nationality',
     'nationalities' => 'Nationalities',
+    'nationalities_' => 'Nationalities',
 
     // Page Headers
     'user_management_title' => 'User Management',
@@ -189,6 +197,7 @@ return [
     'gender' => 'Gender',
     'male' => 'Male',
     'female' => 'Female',
+    'and' => 'And',
 
     // Authentication
     'login' => 'Log in',
@@ -243,8 +252,10 @@ return [
     // Location Management
     'location_management' => 'Location Management',
     'countries' => 'Countries',
+    'countries_' => 'Countries',
     'all_countries' => 'All Countries',
     'cities' => 'Cities',
+    'cities_' => 'Cities',
     'all_cities' => 'All Cities',
     'city_name' => 'City Name',
 
@@ -254,6 +265,7 @@ return [
     'exchange_rates' => 'Exchange Rates',
     'update_rates' => 'Update Rates',
     'currencies' => 'Currencies',
+    'currencies_' => 'Currencies',
     'currency_name' => 'Currency Name',
     'currency_code' => 'Currency Code',
     'symbol' => 'Symbol',

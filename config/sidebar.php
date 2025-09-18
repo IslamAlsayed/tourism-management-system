@@ -40,7 +40,7 @@ return [
         [
             'title' => 'location management',
             'icon' => 'ki-filled ki-geolocation',
-            'statue' => 'updated 1',
+            'statue' => 'updated 6',
             'children' => [
                 [
                     'title' => 'countries',
@@ -51,25 +51,25 @@ return [
                             'route' => 'countries.index'
                         ],
                         [
-                            'title' => 'add new country',
-                            'route' => 'countries.create'
+                            'title' => 'import country',
+                            'route' => 'countries.import',
+                            'statue' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'states',
                     'icon' => 'ki-filled ki-flag',
-                    // 'statue' => 'new',
+                    'statue' => 'updated',
                     'children' => [
                         [
                             'title' => 'all states',
                             'route' => 'states.index',
-                            // 'statue' => 'new'
                         ],
                         [
-                            'title' => 'add new state',
-                            'route' => 'states.create',
-                            // 'statue' => 'new',
+                            'title' => 'import state',
+                            'route' => 'states.import',
+                            'statue' => 'new',
                         ],
                     ],
                 ],
@@ -83,60 +83,57 @@ return [
                             'route' => 'cities.index',
                         ],
                         [
-                            'title' => 'add new city',
-                            'route' => 'cities.create',
+                            'title' => 'import city',
+                            'route' => 'cities.import',
+                            'statue' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'regions',
                     'icon' => 'ki-filled ki-home-2',
-                    // 'statue' => 'new',
-
+                    'statue' => 'updated',
                     'children' => [
                         [
                             'title' => 'all regions',
                             'route' => 'regions.index',
-                            // 'statue' => 'new',
                         ],
                         [
-                            'title' => 'add new region',
-                            'route' => 'regions.create',
-                            // 'statue' => 'new',
+                            'title' => 'import region',
+                            'route' => 'regions.import',
+                            'statue' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'subregions',
                     'icon' => 'ki-filled ki-home-2',
-                    // 'statue' => 'new',
+                    'statue' => 'updated',
                     'children' => [
                         [
                             'title' => 'all subregions',
                             'route' => 'subregions.index',
-                            // 'statue' => 'new',
                         ],
                         [
-                            'title' => 'add new region',
-                            'route' => 'subregions.create',
-                            // 'statue' => 'new',
+                            'title' => 'import subregion',
+                            'route' => 'subregions.import',
+                            'statue' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'nationalities',
                     'icon' => 'ki-filled ki-home-2',
-                    // 'statue' => 'new',
+                    'statue' => 'updated',
                     'children' => [
                         [
                             'title' => 'all nationalities',
                             'route' => 'nationalities.index',
-                            // 'statue' => 'new',
                         ],
                         [
-                            'title' => 'add new nationality',
-                            'route' => 'nationalities.create',
-                            // 'statue' => 'new',
+                            'title' => 'import nationality',
+                            'route' => 'nationalities.import',
+                            'statue' => 'new',
                         ],
                     ],
                 ],
@@ -147,19 +144,16 @@ return [
         [
             'title' => 'currency management',
             'icon' => 'ki-filled ki-dollar',
-            // 'statue' => 'updated 2',
             'children' => [
                 [
                     'title' => 'all currencies',
                     'icon' => 'ki-filled ki-bill',
                     'route' => 'currencies.index',
-                    // 'statue' => 'updated',
                 ],
                 [
-                    'title' => 'add new currency',
+                    'title' => 'import currency',
                     'icon' => 'ki-filled ki-plus',
-                    'route' => 'currencies.create',
-                    // 'statue' => 'updated',
+                    'route' => 'currencies.import',
                 ],
                 // [
                 //     'title' => 'exchange rates',
@@ -510,7 +504,7 @@ return [
         //     ],
         // ],
 
-             // ================= Tourist Sites =================
+        // ================= Tourist Sites =================
         [
             'title' => 'clients',
             'icon' => 'ki-filled ki-geolocation',

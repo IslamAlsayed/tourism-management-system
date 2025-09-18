@@ -110,8 +110,8 @@ class CountryController extends Controller
 
     public function getCountriesToImport()
     {
-        $title = __('main.import_countries');
-        $description = __('main.import_countries_description');
+        $title = __('main.import_types', ['types' => __('main.countries')]);
+        $description = __('main.import_types_description', ['types' => __('main.countries')]);
 
         return view('pages.dashboard.countries.import', compact('title', 'description'));
     }

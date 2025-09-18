@@ -45,18 +45,18 @@
                         <table class="border min-w-half divide-y text-center divide-gray-200 mt-6">
                             <thead>
                                 <tr>
-                                    <th class="border">name</th>
-                                    <th class="border">code</th>
-                                    <th class="border">symbol</th>
-                                    <th class="border">is_active</th>
+                                    <th class="border px-2">name</th>
+                                    <th class="border px-2">code</th>
+                                    <th class="border px-2">symbol</th>
+                                    <th class="border px-2">is_active</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="border">Egyptian pound</td>
-                                    <td class="border">EGP</td>
-                                    <td class="border">ج.م</td>
-                                    <td class="border">1</td>
+                                    <td class="border px-2">Egyptian pound</td>
+                                    <td class="border px-2">EGP</td>
+                                    <td class="border px-2">ج.م</td>
+                                    <td class="border px-2">1</td>
                                 </tr>
                             </tbody>
                         </table>

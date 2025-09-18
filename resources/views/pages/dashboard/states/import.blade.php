@@ -9,22 +9,35 @@
                         <h1 class="text-xl font-semibold mb-6">{{ $title }}</h1>
                         <p class="mb-6">{{ $description }}</p>
 
-                        <form action="{{ route('states.import.post') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('states.import.post') }}" method="POST" enctype="multipart/form-data"
+                            class="w-half">
                             @csrf
-                            <div class="mb-6">
+
+                            <div class="mb-4">
                                 <label for="file" class="inline-block text-gray-700 text-sm font-bold mb-2">
                                     {{ __('main.import_file') }}
                                     <strong>only (.csv,.xlsx,.xls)</strong>
                                 </label>
 
                                 <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
-                                    class="border rounded p-2 block"
+                                    class="border rounded p-2 block w-full"
                                     onchange="document.getElementById('submit-button').disabled = !this.files.length" />
 
                                 @error('file')
                                     <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            @if (\App\Models\Country::count() == 0)
+                                <div class="kt-alert bg-danger text-white flex items-center mb-4">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    {{ __('main.you_must_add') }}
+                                    <a href="{{ route('countries.index') }}" class="text-primary underline">
+                                        {{ __('main.countries_') }}
+                                    </a>
+                                    {{ __('main.first') }}.
+                                </div>
+                            @endif
 
                             <div class="flex items-center gap-4">
                                 <button type="submit" class="kt-btn kt-btn-primary" id="submit-button" disabled>
@@ -46,20 +59,20 @@
                         <table class="border min-w-half divide-y text-center divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="border">name</th>
-                                    <th class="border">iso2</th>
-                                    <th class="border">iso3</th>
-                                    <th class="border">timezone</th>
-                                    <th class="border">country_id</th>
+                                    <th class="border px-2">name</th>
+                                    <th class="border px-2">iso2</th>
+                                    <th class="border px-2">iso3</th>
+                                    <th class="border px-2">timezone</th>
+                                    <th class="border px-2">country_id</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="border">Banwa</td>
-                                    <td class="border">BAN</td>
-                                    <td class="border">BF-BAN</td>
-                                    <td class="border">Africa/Ouagadougou</td>
-                                    <td class="border">35</td>
+                                    <td class="border px-2">Banwa</td>
+                                    <td class="border px-2">BAN</td>
+                                    <td class="border px-2">BF-BAN</td>
+                                    <td class="border px-2">Africa/Ouagadougou</td>
+                                    <td class="border px-2">35</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -68,22 +81,22 @@
                         <table class="border min-w-half divide-y text-center divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="border">fips_code</th>
-                                    <th class="border">type</th>
-                                    <th class="border">level</th>
-                                    <th class="border">latitude</th>
-                                    <th class="border">longitude</th>
-                                    <th class="border">parent_id</th>
+                                    <th class="border px-2">fips_code</th>
+                                    <th class="border px-2">type</th>
+                                    <th class="border px-2">level</th>
+                                    <th class="border px-2">latitude</th>
+                                    <th class="border px-2">longitude</th>
+                                    <th class="border px-2">parent_id</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="border">46</td>
-                                    <td class="border">province</td>
-                                    <td class="border">1</td>
-                                    <td class="border">12.226557</td>
-                                    <td class="border">-4.191334</td>
-                                    <td class="border">3138</td>
+                                    <td class="border px-2">46</td>
+                                    <td class="border px-2">province</td>
+                                    <td class="border px-2">1</td>
+                                    <td class="border px-2">12.226557</td>
+                                    <td class="border px-2">-4.191334</td>
+                                    <td class="border px-2">3138</td>
                                 </tr>
                             </tbody>
                         </table>

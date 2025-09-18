@@ -31,6 +31,7 @@ class Country extends Model
         'area',
         'is_active',
         'currency_id',
+        'region_id',
     ];
 
     public function city()
@@ -43,9 +44,9 @@ class Country extends Model
         return $this->belongsTo(Currency::class);
     }
 
-    public function subregion()
+    public function region()
     {
-        return $this->belongsTo(Subregion::class);
+        return $this->belongsTo(Region::class);
     }
 
     public function hotels()

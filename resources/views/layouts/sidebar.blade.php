@@ -130,6 +130,13 @@
                                                             <span
                                                                 class="kt-menu-title text-2sm font-normal {{ $subChildIsActive ? 'text-primary font-semibold' : '' }}">
                                                                 {{ __('sidebar.' . $subChild['title']) }}
+
+                                                                @if (isset($subChild['statue']))
+                                                                    <span
+                                                                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                                        {{ strtoupper($subChild['statue']) }}
+                                                                    </span>
+                                                                @endif
                                                             </span>
                                                         </a>
                                                     </div>

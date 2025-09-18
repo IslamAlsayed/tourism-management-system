@@ -46,14 +46,14 @@
                         <table class="border min-w-half divide-y text-center divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="border">name</th>
-                                    <th class="border">name_ar</th>
+                                    <th class="border px-2">name</th>
+                                    <th class="border px-2">name_ar</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="border">Egyptian</td>
-                                    <td class="border">مصري</td>
+                                    <td class="border px-2">Egyptian</td>
+                                    <td class="border px-2">مصري</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -62,12 +62,12 @@
                         <table class="border min-w-half divide-y text-center divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th class="border">wiki_data_id</th>
+                                    <th class="border px-2">wiki_data_id</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr>
-                                    <td class="border">Q155</td>
+                                    <td class="border px-2">Q155</td>
                                 </tr>
                             </tbody>
                         </table>
