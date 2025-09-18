@@ -2,32 +2,33 @@
 
 namespace Database\Seeders;
 
-use App\Models\Booking;
-use App\Models\BookingRoomType;
-use App\Models\BookingSupplier;
+use App\Models\City;
+use App\Models\State;
+use App\Models\Region;
+use App\Models\Country;
 use App\Models\Currency;
+use App\Models\Subregion;
+use App\Models\Nationality;
 use Illuminate\Database\Seeder;
-use App\Models\BookingItinerary;
-use App\Models\BookingOtherService;
 use Illuminate\Support\Facades\Schema;
-use App\Models\BookingTransportationCompany;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        Currency::truncate();
+        Country::truncate();
+        State::truncate();
+        City::truncate();
+        Region::truncate();
+        Subregion::truncate();
+        Nationality::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $this->call([
             UserSeeder::class,
             LanguageSeeder::class,
-            CurrencySeeder::class,
-
-
-            // CountrySeeder::class,
-            // StatesSeeder::class,
-            // CitySeeder::class,
-            // RegionSeeder::class,
-            // SubregionSeeder::class,
-            // NationalitySeeder::class,
         ]);
 
         // $this->call([

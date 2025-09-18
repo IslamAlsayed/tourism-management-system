@@ -12,13 +12,13 @@ class City extends Model
     protected $fillable = [
         'name',
         'name_ar',
-        'state_id',
-        'country_id',
         'latitude',
         'longitude',
         'timezone',
-        'wikiDataId',
-        'population'
+        'wiki_data_id',
+        'population',
+        'state_id',
+        'country_id',
     ];
 
     public function state()

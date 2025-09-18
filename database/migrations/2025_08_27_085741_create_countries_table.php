@@ -31,7 +31,7 @@ return new class extends Migration {
             $table->string('flag_emoji', 8)->nullable();
             $table->string('continent')->nullable();
             $table->float('area')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->nullable()->default(true);
             $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
             $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
             $table->timestamps();

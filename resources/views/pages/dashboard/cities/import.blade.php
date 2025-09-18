@@ -63,14 +63,13 @@
                         </div>
 
                         <strong class="block mt-6 mb-2">Required Fields</strong>
-                        <table class="border min-w-full divide-y text-center divide-gray-200">
+                        <table class="border min-w-half divide-y text-center divide-gray-200">
                             <thead>
                                 <tr>
                                     <th class="border px-2">name</th>
                                     <th class="border px-2">name_ar</th>
                                     <th class="border px-2">state_id</th>
                                     <th class="border px-2">country_id</th>
-                                    <th class="border px-2">timezone</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -79,21 +78,19 @@
                                     <td class="border px-2">أندورا</td>
                                     <td class="border px-2">488</td>
                                     <td class="border px-2">6</td>
-                                    <td class="border px-2">
-                                        [{"tzName": "Afghanistan Time","zoneName":"Asia/Kabul",...}]
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
 
                         <strong class="block mt-6 mb-2">Optional Fields</strong>
-                        <table class="border min-w-half divide-y text-center divide-gray-200">
+                        <table class="border min-w-full divide-y text-center divide-gray-200">
                             <thead>
                                 <tr>
                                     <th class="border px-2">latitude</th>
                                     <th class="border px-2">longitude</th>
                                     <th class="border px-2">wikiDataId</th>
                                     <th class="border px-2">population</th>
+                                    <th class="border px-2">timezone</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -102,6 +99,9 @@
                                     <td class="border px-2">1.52109</td>
                                     <td class="border px-2">Q1863</td>
                                     <td class="border px-2">468416843</td>
+                                    <td class="border px-2">
+                                        [{"tzName": "Afghanistan Time","zoneName":"Asia/Kabul",...}]
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

@@ -15,6 +15,8 @@ class ImportStates implements ToCollection
         $fillable = (new State())->getFillable();
         $headers = $rows->first()->toArray();
 
+        $stateData = [];
+
         foreach ($rows as $index => $row) {
             if ($index == 0)
                 continue;
@@ -26,12 +28,24 @@ class ImportStates implements ToCollection
                     $excelKey = array_search($column, $headers);
                     if ($excelKey !== false && isset($row[$excelKey])) {
                         $data[$column] = $row[$excelKey];
+                    } else {
+                        $data[$column] = null;
                     }
                 }
             }
 
-            State::updateOrCreate(['name' => $data['name']], $data);
-            $this->rowCount++;
+            $stateData[] = $data;
+
+            if (count($stateData) >= 1000) {
+                State::insert($stateData);
+                $this->rowCount += count($stateData);
+                $stateData = [];
+            }
+        }
+
+        if (count($stateData) > 0) {
+            State::insert($stateData);
+            $this->rowCount += count($stateData);
         }
     }
 }

@@ -11,17 +11,16 @@ class State extends Model
 
     protected $fillable = [
         'name',
-        'name_ar',
-        'country_id',
         'iso2',
         'iso3',
         'fips_code',
         'type',
         'level',
-        'parent_id',
         'latitude',
         'longitude',
         'timezone',
+        'parent_id',
+        'country_id',
     ];
 
     public function country()

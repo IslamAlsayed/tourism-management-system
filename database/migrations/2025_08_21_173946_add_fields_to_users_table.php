@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->json('preferences')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->string('avatar_url')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->nullable()->default(true);
             $table->boolean('is_verified')->default(false);
             $table->boolean('force_password_change')->default(false);
             $table->timestamp('last_login_at')->nullable();

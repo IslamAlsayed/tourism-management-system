@@ -36,6 +36,34 @@ return [
             ],
         ],
 
+        // ================= Currencies =================
+        [
+            'title' => 'currency management',
+            'icon' => 'ki-filled ki-dollar',
+            'children' => [
+                [
+                    'title' => 'all currencies',
+                    'icon' => 'ki-filled ki-bill',
+                    'route' => 'currencies.index',
+                ],
+                [
+                    'title' => 'import currency',
+                    'icon' => 'ki-filled ki-plus',
+                    'route' => 'currencies.import',
+                ],
+                // [
+                //     'title' => 'exchange rates',
+                //     'icon' => 'ki-filled ki-chart-line',
+                //     'route' => 'currencies.rates'
+                // ],
+                // [
+                //     'title' => 'updated rates',
+                //     'icon' => 'ki-filled ki-arrows-circle',
+                //     'route' => 'currencies.rates.updated'
+                // ],
+            ],
+        ],
+
         // ================= Locations =================
         [
             'title' => 'location management',
@@ -137,34 +165,6 @@ return [
                         ],
                     ],
                 ],
-            ],
-        ],
-
-        // ================= Currencies =================
-        [
-            'title' => 'currency management',
-            'icon' => 'ki-filled ki-dollar',
-            'children' => [
-                [
-                    'title' => 'all currencies',
-                    'icon' => 'ki-filled ki-bill',
-                    'route' => 'currencies.index',
-                ],
-                [
-                    'title' => 'import currency',
-                    'icon' => 'ki-filled ki-plus',
-                    'route' => 'currencies.import',
-                ],
-                // [
-                //     'title' => 'exchange rates',
-                //     'icon' => 'ki-filled ki-chart-line',
-                //     'route' => 'currencies.rates'
-                // ],
-                // [
-                //     'title' => 'updated rates',
-                //     'icon' => 'ki-filled ki-arrows-circle',
-                //     'route' => 'currencies.rates.updated'
-                // ],
             ],
         ],
 

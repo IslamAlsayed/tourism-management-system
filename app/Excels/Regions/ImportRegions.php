@@ -26,11 +26,13 @@ class ImportRegions implements ToCollection
                     $excelKey = array_search($column, $headers);
                     if ($excelKey !== false && isset($row[$excelKey])) {
                         $data[$column] = $row[$excelKey];
+                    } else {
+                        $data[$column] = null;
                     }
                 }
             }
 
-            Region::create($data);
+            Region::updateOrCreate(['name' => $data['name']], $data);
             $this->rowCount++;
         }
     }

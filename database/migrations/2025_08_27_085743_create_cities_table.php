@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('timezone')->nullable();
             $table->string('wiki_data_id')->nullable();
             $table->bigInteger('population')->nullable();
-            $table->foreignId('state_id')->nullable()->constrained('states')->nullOnDelete();
+            $table->foreignId('state_id')->nullable()->constrained('states')->nulOnDelete();
             $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();
             $table->timestamps();
         });

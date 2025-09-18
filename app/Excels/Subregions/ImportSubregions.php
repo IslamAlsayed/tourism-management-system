@@ -26,11 +26,13 @@ class ImportSubregions implements ToCollection
                     $excelKey = array_search($column, $headers);
                     if ($excelKey !== false && isset($row[$excelKey])) {
                         $data[$column] = $row[$excelKey];
+                    } else {
+                        $data[$column] = null;
                     }
                 }
             }
 
-            Subregion::create($data);
+            Subregion::updateOrCreate(['name' => $data['name']], $data);
             $this->rowCount++;
         }
     }

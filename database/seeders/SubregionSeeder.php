@@ -15,9 +15,9 @@ class SubregionSeeder extends Seeder
         Subregion::truncate();
         Schema::enableForeignKeyConstraints();
 
-        Subregion::insert([
-            ['name' => 'Levant', 'wiki_data_id' => 'Q35323', 'region_id' => Region::where('name', 'Middle East')->first()?->id],
-            ['name' => 'Maghreb', 'wiki_data_id' => 'Q27479', 'region_id' => Region::where('name', 'North Africa')->first()?->id],
-        ]);
+        // Subregion::insert([
+        //     ['name' => 'Levant', 'wiki_data_id' => 'Q35323', 'region_id' => Region::where('name', 'Middle East')->first()?->id],
+        //     ['name' => 'Maghreb', 'wiki_data_id' => 'Q27479', 'region_id' => Region::where('name', 'North Africa')->first()?->id],
+        // ]);
     }
 }
