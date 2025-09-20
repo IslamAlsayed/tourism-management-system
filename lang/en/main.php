@@ -270,6 +270,24 @@ return [
     'currency_code' => 'Currency Code',
     'symbol' => 'Symbol',
 
+    // Accommodations Management
+    'accommodations_management' => 'Accommodations Management',
+    'accommodations' => 'Accommodations',
+    'accommodation' => 'Accommodation',
+    'all_accommodations' => 'All Accommodations',
+    'accommodation_name' => 'Accommodation Name',
+    'accommodation_type' => 'Accommodation Type',
+    'accommodation_location' => 'Accommodation Location',
+    'accommodation_price' => 'Accommodation Price',
+    'hotels' => 'Hotels',
+    'room_types' => 'Room Types',
+    'accommodations_types' => 'Accommodations Types',
+    'seasons' => 'Seasons',
+    'supplements' => 'Supplements',
+    'rates' => 'Rates',
+    'rate_nationalities' => 'Rate Nationalities',
+    'facilities' => 'Facilities',
+
     // Profile & Account Settings
     'delete_account' => 'Delete Account',
     'account_settings' => 'Account Settings',

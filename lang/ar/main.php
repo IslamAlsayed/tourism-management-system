@@ -270,6 +270,24 @@ return [
     'currency_code' => 'كود العملة',
     'symbol' => 'الرمز',
 
+    // Accommodations Management
+    'accommodations_management' => 'إدارة أماكن الإقامة',
+    'accommodations' => 'الإقامات',
+    'accommodation' => 'الإقامة',
+    'all_accommodations' => 'كل الإقامات',
+    'accommodation_name' => 'اسم الإقامة',
+    'accommodation_type' => 'نوع الاقامة',
+    'accommodation_location' => 'عنوان الإقامة',
+    'accommodation_price' => 'سعر الإقامة',
+    'hotels' => 'الفنادق',
+    'room_types' => 'انواع الغرف',
+    'accommodations_types' => 'انواع الاقامات',
+    'seasons' => 'المواسم',
+    'supplements' => 'الملحقات',
+    'rates' => 'التقييمات',
+    'rate_nationalities' => 'تقيمات الجنسيات',
+    'facilities' => 'المرافق',
+
     // Profile & Account Settings
     'delete_account' => 'حذف الحساب',
     'account_settings' => 'إعدادات الحساب',

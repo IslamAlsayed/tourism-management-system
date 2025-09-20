@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Season;
 use Illuminate\Database\Seeder;
-use App\Models\Accommodation;
 use Illuminate\Support\Facades\Schema;
 
-class AccommodationSeeder extends Seeder
+class SeasonSeeder extends Seeder
 {
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        Accommodation::truncate();
+        Season::truncate();
         Schema::enableForeignKeyConstraints();
     }
 }

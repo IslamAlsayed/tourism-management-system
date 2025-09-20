@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models2;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Accommodation extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'type_id',
         'name',
@@ -36,4 +39,14 @@ class Accommodation extends Model
         'longitude',
         'contract_file_path',
     ];
+
+    public function hotel()
+    {
+        return $this->hasOne(Hotel::class);
+    }
+
+    public function rates()
+    {
+        return $this->hasMany(AccommodationRate::class);
+    }
 }

@@ -10,11 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('hotel_policies', function (Blueprint $table) {
+        Schema::create('supplements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hotel_id')->constrained()->cascadeOnDelete();
-            $table->string('policy_type'); // مثل: Cancellation, Child Policy
-            $table->text('details');
+            $table->string('name');
+            $table->decimal('price', 10, 2);
+            // $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
+            $table->unsignedBigInteger('accommodation_id')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('hotel_policies');
+        Schema::dropIfExists('supplements');
     }
 };

@@ -16,15 +16,15 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Currency::truncate();
-        Country::truncate();
-        State::truncate();
-        City::truncate();
-        Region::truncate();
-        Subregion::truncate();
-        Nationality::truncate();
-        Schema::enableForeignKeyConstraints();
+        // Schema::disableForeignKeyConstraints();
+        // Currency::truncate();
+        // Country::truncate();
+        // State::truncate();
+        // City::truncate();
+        // Region::truncate();
+        // Subregion::truncate();
+        // Nationality::truncate();
+        // Schema::enableForeignKeyConstraints();
 
         $this->call([
             UserSeeder::class,

@@ -2,24 +2,27 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Excels\Accommodations\Hotels\ExportHotels;
-use App\Livewire\Quote\Step2\Hotels;
-use App\Models\HotelRoomType;
+use App\Models\Supplement;
 use App\Models\Nationality;
 use Illuminate\Http\Request;
 use App\Models\Accommodation;
+use App\Models\HotelRoomType;
 use App\Models\AccommodationType;
 use App\Models\AccommodationTypes;
 use App\Models\AccommodationSeason;
 use App\Http\Controllers\Controller;
+use App\Livewire\Quote\Step2\Hotels;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Excels\Accommodations\Types\ExportTypes;
 use App\Excels\Accommodations\Types\ImportTypes;
 use App\Excels\Nationalities\ExportNationalities;
 use App\Excels\Nationalities\ImportNationalities;
+use App\Excels\Accommodations\Hotels\ExportHotels;
 use App\Excels\Accommodations\Hotels\ImportHotels;
 use App\Excels\Accommodations\Seasons\ExportSeasons;
 use App\Excels\Accommodations\Seasons\ImportSeasons;
+use App\Excels\Accommodations\Supplements\ExportSupplements;
+use App\Excels\Accommodations\Supplements\ImportSupplements;
 use App\Excels\Accommodations\Accommodations\ExportAccommodations;
 use App\Excels\Accommodations\Accommodations\ImportAccommodations;
 use App\Excels\Accommodations\HotelsRoomsTypes\ImportHotelsRoomsTypes;
@@ -55,7 +58,6 @@ class AccommodationController extends Controller
         }
 
         try {
-            // if (!$request->has('import_type') || !in_array($request->input('import_type'), ['types','accommodations', 'seasons', 'rates', 'rate_nationalities', 'facilities', 'supplements'])) {
             if (!$request->has('import_type')) {
                 return redirect()->back()->withError(__('Please Select Import Type.'));
             }
@@ -75,12 +77,14 @@ class AccommodationController extends Controller
                 $importer = new ImportHotels();
             } else if ($request->input('import_type') == 'room_types') {
                 $importer = new ImportHotelsRoomsTypes();
-            } else if ($request->input('import_type') == 'types') {
+            } else if ($request->input('import_type') == 'accommodations_types') {
                 $importer = new ImportTypes();
             } else if ($request->input('import_type') == 'accommodations') {
                 $importer = new ImportAccommodations();
             } else if ($request->input('import_type') == 'seasons') {
                 $importer = new ImportSeasons();
+            } else if ($request->input('import_type') == 'supplements') {
+                $importer = new ImportSupplements();
             } else {
                 dd('other');
             }
@@ -114,18 +118,22 @@ class AccommodationController extends Controller
             $roomTypes = HotelRoomType::all();
             $filename = generateUniqueFilename('room_types') . '.csv';
             return Excel::download(new ExportTypes($roomTypes), $filename);
-        } else if ($type == 'types') {
-            $AccommodationTypes = AccommodationType::all();
-            $filename = generateUniqueFilename('accommodation_types') . '.csv';
-            return Excel::download(new ExportTypes($AccommodationTypes), $filename);
+        } else if ($type == 'accommodations_types') {
+            $types = AccommodationType::all();
+            $filename = generateUniqueFilename('accommodations_types') . '.csv';
+            return Excel::download(new ExportTypes($types), $filename);
         } else if ($type == 'accommodations') {
-            $AccommodationTypes = Accommodation::all();
+            $accommodations = Accommodation::all();
             $filename = generateUniqueFilename('accommodations') . '.csv';
-            return Excel::download(new ExportAccommodations($AccommodationTypes), $filename);
+            return Excel::download(new ExportAccommodations($accommodations), $filename);
         } else if ($type == 'seasons') {
-            $AccommodationSeasons = AccommodationSeason::all();
-            $filename = generateUniqueFilename('accommodation_seasons') . '.csv';
-            return Excel::download(new ExportSeasons($AccommodationSeasons), $filename);
+            $seasons = AccommodationSeason::all();
+            $filename = generateUniqueFilename('seasons') . '.csv';
+            return Excel::download(new ExportSeasons($seasons), $filename);
+        } else if ($type == 'supplements') {
+            $supplements = Supplement::all();
+            $filename = generateUniqueFilename('supplements') . '.csv';
+            return Excel::download(new ExportSupplements($supplements), $filename);
         }
 
         return 'code...';

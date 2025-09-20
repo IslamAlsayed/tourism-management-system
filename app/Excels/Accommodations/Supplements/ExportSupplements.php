@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Excels\Accommodations\Seasons;
+namespace App\Excels\Accommodations\Supplements;
 
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 
-class ExportSeasons implements FromArray, WithHeadings, WithCustomCsvSettings
+class ExportSupplements implements FromArray, WithHeadings, WithCustomCsvSettings
 {
     protected $arrayData;
 
@@ -21,10 +21,7 @@ class ExportSeasons implements FromArray, WithHeadings, WithCustomCsvSettings
         foreach ($this->arrayData as $data) {
             $list[] = [
                 $data->name,
-                $data->season_from,
-                $data->season_to,
-                $data->is_special,
-                $data->special_type,
+                $data->price,
                 $data->accommodation_id,
             ];
         }
@@ -35,10 +32,7 @@ class ExportSeasons implements FromArray, WithHeadings, WithCustomCsvSettings
     {
         return [
             'name',
-            'season_from',
-            'season_to',
-            'is_special',
-            'special_type',
+            'price',
             'accommodation_id',
         ];
     }

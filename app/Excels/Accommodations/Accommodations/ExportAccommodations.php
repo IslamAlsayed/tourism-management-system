@@ -20,12 +20,14 @@ class ExportAccommodations implements FromArray, WithHeadings, WithCustomCsvSett
         $list = [];
         foreach ($this->arrayData as $data) {
             $list[] = [
-                $data->trade_name,
-                $data->name_ar,
+                $data->type_id,
                 $data->name,
+                $data->name_ar,
                 $data->classification,
                 $data->stars,
                 $data->cat,
+                $data->description,
+                $data->is_active,
                 $data->general_mobile,
                 $data->general_email,
                 $data->email,
@@ -37,10 +39,6 @@ class ExportAccommodations implements FromArray, WithHeadings, WithCustomCsvSett
                 $data->contact_position,
                 $data->contact_mobile,
                 $data->contact_email,
-                $data->description,
-                $data->contract_file_path,
-                $data->is_active,
-                $data->type_id,
                 $data->country_id,
                 $data->city_id,
                 $data->region_id,
@@ -49,6 +47,7 @@ class ExportAccommodations implements FromArray, WithHeadings, WithCustomCsvSett
                 $data->postal_code,
                 $data->latitude,
                 $data->longitude,
+                $data->contract_file_path,
             ];
         }
         return $list;
@@ -57,12 +56,14 @@ class ExportAccommodations implements FromArray, WithHeadings, WithCustomCsvSett
     public function headings(): array
     {
         return [
-            'trade_name',
-            'name_ar',
+            'type_id',
             'name',
+            'name_ar',
             'classification',
             'stars',
             'cat',
+            'description',
+            'is_active',
             'general_mobile',
             'general_email',
             'email',
@@ -74,10 +75,6 @@ class ExportAccommodations implements FromArray, WithHeadings, WithCustomCsvSett
             'contact_position',
             'contact_mobile',
             'contact_email',
-            'description',
-            'contract_file_path',
-            'is_active',
-            'type_id',
             'country_id',
             'city_id',
             'region_id',
@@ -86,6 +83,7 @@ class ExportAccommodations implements FromArray, WithHeadings, WithCustomCsvSett
             'postal_code',
             'latitude',
             'longitude',
+            'contract_file_path',
         ];
     }
 

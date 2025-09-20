@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AccommodationType extends Model
+class Supplement extends Model
 {
     protected $fillable = [
         'name',
-        'name_ar'
+        'price',
+        'accommodation_id',
     ];
 }

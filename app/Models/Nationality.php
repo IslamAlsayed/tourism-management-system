@@ -21,3 +21,4 @@ class Nationality extends Model
         return $this->belongsTo(Country::class);
     }
 }
+

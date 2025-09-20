@@ -14,19 +14,25 @@
                                 <div class="inline-flex gap-4 mb-4">
                                     @foreach (['hotels', 'room_types'] as $item)
                                         <div class="custom-input">
-                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger" id="{{ $item }}" data-toggle-target="{{ $item }}" data-toggle-id="{{ $item }}" value="{{ $item }}">
+                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger" id="{{ $item }}" data-toggle-target="{{ $item }}" data-toggle-id="{{ $item }}" value="{{ $item }}" {{in_array($item, ['room_types']) ? 'disabled' : '' }}>
                                             <label for="{{ $item }}">
-                                                {{ $item }}
+                                                @if(in_array($item, ['room_types']))
+                                                    <i class="fas fa-xmark text-red-600"></i>
+                                                @endif
+                                                {{ str_replace('_', ' ', ucfirst($item)) }}
                                             </label>
                                         </div>
                                     @endforeach
                                 </div>
                                 <div class="inline-flex gap-4 mb-4">
-                                    @foreach (['types', 'accommodations', 'seasons', 'rates', 'rate_nationalities', 'facilities', 'supplements'] as $item)
+                                    @foreach (['accommodations_types', 'accommodations', 'seasons', 'supplements', 'rates', 'rate_nationalities', 'facilities'] as $item)
                                         <div class="custom-input">
-                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger" id="{{ $item }}" data-toggle-target="{{ $item }}" data-toggle-id="{{ $item }}" value="{{ $item }}">
+                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger" id="{{ $item }}" data-toggle-target="{{ $item }}" data-toggle-id="{{ $item }}" value="{{ $item }}" {{in_array($item, ['supplements', 'rates', 'rate_nationalities', 'facilities']) ? 'disabled' : '' }}>
                                             <label for="{{ $item }}">
-                                                {{ $item }}
+                                                @if(in_array($item, ['supplements', 'rates', 'rate_nationalities', 'facilities']))
+                                                    <i class="fas fa-xmark text-red-600"></i>
+                                                @endif
+                                                {{ str_replace('_', ' ', ucfirst($item)) }}
                                             </label>
                                         </div>
                                     @endforeach
@@ -63,12 +69,12 @@
                                 </form>
 
                                 <div class="mt-4">
-                                    <a href="{{ route('accommodations.export', 'types') }}" id="export-data" class="kt-btn kt-btn-outline">
+                                    <a href="{{ route('accommodations.export', 'accommodations_types') }}" id="export-data" class="kt-btn kt-btn-outline">
                                         {{ __('main.export') }}
                                     </a>
                                 </div>
 
-                                <div data-hotels-target="hotels" class="target-trigger" style="display: none">
+                                <div data-hotels-target="hotels" class="target-trigger mt-4" style="display: none">
                                     <strong class="block mt-6 mb-2">Required Fields</strong>
                                     <table class="border min-w-half divide-y text-center divide-gray-200">
                                         <thead>
@@ -128,7 +134,7 @@
                                     </table>
                                 </div>
 
-                                <div data-room_types-target="room_types" class="target-trigger" style="display: none">
+                                <div data-room_types-target="room_types" class="target-trigger mt-4" style="display: none">
                                     <table class="border min-w-half divide-y text-center divide-gray-200">
                                         <thead>
                                             <tr>
@@ -149,7 +155,7 @@
                                     </table>
                                 </div>
 
-                                <div data-types-target="types" class="target-trigger" style="display: none">
+                                <div data-accommodations_types-target="accommodations_types" class="target-trigger mt-4" style="display: none">
                                     <table class="border min-w-half divide-y text-center divide-gray-200 mt-6">
                                         <thead>
                                             <tr>
@@ -166,7 +172,7 @@
                                     </table>
                                 </div>
 
-                                <div data-accommodations-target="accommodations" class="target-trigger" style="display: none">
+                                <div data-accommodations-target="accommodations" class="target-trigger mt-4" style="display: none">
                                     <strong class="block mt-6 mb-2">Required Fields</strong>
                                     <table class="border min-w-full divide-y text-center divide-gray-200">
                                         <thead>
@@ -259,7 +265,7 @@
                                     </table>
                                 </div>
 
-                                <div data-seasons-target="seasons" class="target-trigger" style="display: none">
+                                <div data-seasons-target="seasons" class="target-trigger mt-4" style="display: none">
                                     <strong class="block mt-6 mb-2">Required Fields</strong>
                                     <table class="border min-w-half divide-y text-center divide-gray-200">
                                         <thead>
@@ -298,20 +304,35 @@
                                     </table>
                                 </div>
 
-                                <div data-rates-target="rates" class="target-trigger" style="display: none">
+                                <div data-supplements-target="supplements" class="target-trigger mt-4" style="display: none">
+                                    <table class="border min-w-half divide-y text-center divide-gray-200">
+                                        <thead>
+                                            <tr>
+                                                <th class="border px-2">name</th>
+                                                <th class="border px-2">price</th>
+                                                <th class="border px-2">accommodation_id</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            <tr>
+                                                <td class="border px-2">New Year Gala Dinner</td>
+                                                <td class="border px-2">50</td>
+                                                <td class="border px-2">1</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div data-rates-target="rates" class="target-trigger mt-4" style="display: none">
                                     rates
                                 </div>
 
-                                <div data-rate_nationalities-target="rate_nationalities" class="target-trigger" style="display: none">
+                                <div data-rate_nationalities-target="rate_nationalities" class="target-trigger mt-4" style="display: none">
                                     rate_nationalities
                                 </div>
 
-                                <div data-facilities-target="facilities" class="target-trigger" style="display: none">
+                                <div data-facilities-target="facilities" class="target-trigger mt-4" style="display: none">
                                     facilities
-                                </div>
-
-                                <div data-supplements-target="supplements" class="target-trigger" style="display: none">
-                                    supplements
                                 </div>
                             </div>
                         </div>

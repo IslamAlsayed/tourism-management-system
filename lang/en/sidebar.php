@@ -5,6 +5,8 @@ return [
     'quotation requests' => 'Quotation Requests',
     'quotation requests v1' => 'Quotation Requests V1',
     'quotation requests v2' => 'Quotation Requests V2',
+    'imports' => 'Imports',
+    'import' => 'Import',
     'user management' => 'User Management',
     'all users' => 'All Users',
     'add new user' => 'Add New User',

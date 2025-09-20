@@ -209,7 +209,7 @@ return [
                 [
                     'title' => 'all hotels',
                     'icon' => 'ki-filled ki-chart-line-up',
-                    'route' => 'hotels.index'
+                    'route' => '#'
                 ],
                 [
                     'title' => 'all resorts',

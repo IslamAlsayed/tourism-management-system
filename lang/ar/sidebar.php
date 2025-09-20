@@ -5,6 +5,8 @@ return [
     'quotation requests' => 'طلبات الاقتباس',
     'quotation requests v1' => 'طلبات الاقتباس V1',
     'quotation requests v2' => 'طلبات الاقتباس V2',
+    'imports' => 'استيرادات',
+    'import' => 'استيراد',
     'user management' => 'إدارة المستخدمين',
     'all users' => 'جميع المستخدمين',
     'add new user' => 'إضافة مستخدم جديد',

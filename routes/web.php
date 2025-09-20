@@ -4,7 +4,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Controllers\Dashboard\HotelController;
 use App\Http\Controllers\Dashboard\StateController;
 use App\Http\Controllers\Dashboard\RegionController;
 use App\Http\Controllers\Dashboard\CountryController;
@@ -127,8 +126,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('nationalities/import/post', [NationalityController::class, 'postNationalitiesToImport'])->name('nationalities.import.post');
     Route::get('nationalities/export/data', [NationalityController::class, 'getNationalitiesToExport'])->name('nationalities.export');
 
-    // // === HOTELS MANAGEMENT ===
-    Route::resource('hotels', HotelController::class)->names('hotels');
+    // === HOTELS MANAGEMENT ===
+    // Route::resource('hotels', HotelController::class)->names('hotels');
     // Route::get('hotels/import/data', [HotelController::class, 'getHotelsToImport'])->name('hotels.import');
     // Route::post('hotels/import/post', [HotelController::class, 'postHotelsToImport'])->name('hotels.import.post');
     // Route::get('hotels/export/data', [HotelController::class, 'getHotelsToExport'])->name('hotels.export');

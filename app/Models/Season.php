@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AccommodationSeason extends Model
+class Season extends Model
 {
     protected $fillable = [
-        'season_name',
+        'name',
         'season_from',
         'season_to',
         'is_special',

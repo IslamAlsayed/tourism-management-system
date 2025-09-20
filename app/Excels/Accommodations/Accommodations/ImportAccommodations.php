@@ -4,6 +4,7 @@ namespace App\Excels\Accommodations\Accommodations;
 
 use App\Models\City;
 use App\Models\Accommodation;
+use App\Models\AccommodationType;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -34,6 +35,12 @@ class ImportAccommodations implements ToCollection
                             $data['city_id'] = $city_id;
                         }
 
+                    } else if ($column == 'type') {
+                        if ($type = AccommodationType::where('name', 'like', '%' . $row[$excelKey] . '%')->first()) {
+                            $data['type_id'] = $type?->id ?? null;
+                        } else {
+                            $data['type_id'] = null;
+                        }
                     } else if ($excelKey !== false && isset($row[$excelKey])) {
                         $data[$column] = $row[$excelKey];
                     } else {

@@ -2,8 +2,10 @@
 
 namespace App\Excels\Accommodations\Seasons;
 
-use App\Models\AccommodationSeason;
+use App\Models\Season;
+use App\Models\Accommodation;
 use Illuminate\Support\Collection;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class ImportSeasons implements ToCollection
@@ -12,7 +14,7 @@ class ImportSeasons implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new AccommodationSeason())->getFillable();
+        $fillable = (new Season())->getFillable();
         $headers = $rows->first()->toArray();
 
         foreach ($rows as $index => $row) {
@@ -24,10 +26,22 @@ class ImportSeasons implements ToCollection
             foreach ($fillable as $column) {
                 if (in_array($column, $headers)) {
                     $excelKey = array_search($column, $headers);
-                    if ($column == 'season_from' && isset($row[$excelKey])) {
-                        $data['season_from'] = date('Y-m-d', strtotime($row[$excelKey]));
-                    } else if ($column == 'season_to' && isset($row[$excelKey])) {
-                        $data['season_to'] = date('Y-m-d', strtotime($row[$excelKey]));
+                    if (in_array($column, ['season_from', 'season_to'])) {
+                        if (!empty($row[$excelKey])) {
+                            if (is_numeric($row[$excelKey])) {
+                                $data[$column] = Date::excelToDateTimeObject($row[$excelKey])->format('Y-m-d');
+                            } else {
+                                $data[$column] = date('Y-m-d', strtotime($row[$excelKey]));
+                            }
+                        } else {
+                            $data[$column] = null;
+                        }
+                    } else if ($column == 'accommodation_name') {
+                        if ($accommodation = Accommodation::where('name', 'like', '%' . $row[$excelKey] . '%')->first()) {
+                            $data['accommodation_id'] = $accommodation?->id ?? null;
+                        } else {
+                            $data['accommodation_id'] = null;
+                        }
                     } else if ($excelKey !== false && isset($row[$excelKey])) {
                         $data[$column] = $row[$excelKey];
                     } else {
@@ -36,7 +50,7 @@ class ImportSeasons implements ToCollection
                 }
             }
 
-            AccommodationSeason::create($data);
+            Season::create($data);
             $this->rowCount++;
         }
     }
