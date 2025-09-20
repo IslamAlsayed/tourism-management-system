@@ -79,8 +79,8 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('error', __('main.messages.user_deletion_failed'));
     }
-    
-     public function getCurrenciesToImport()
+
+    public function getCurrenciesToImport()
     {
         return 'import';
         $title = __('main.import_currencies');

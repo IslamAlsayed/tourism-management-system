@@ -67,3 +67,6 @@ Thumbs.db
 /resources/views/livewire/quote/v2/step2/transportation.blade copy.php
 
 /storage/app/private
+
+/database/migrations1
+/database/migrations2

@@ -10,19 +10,12 @@ class Accommodation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'type',
+        'type_id',
         'trade_name',
         'name_ar',
         'name',
-        'country',
-        'city',
-        'city_name',
-        'region',
-        'street',
-        'box',
-        'postal_code',
         'classification',
-        'star_rating',
+        'stars',
         'cat',
         'general_mobile',
         'general_email',
@@ -38,6 +31,14 @@ class Accommodation extends Model
         'description',
         'contract_file_path',
         'is_active',
+        'country_id',
+        'city_id',
+        'region_id',
+        'street',
+        'box',
+        'postal_code',
+        'latitude',
+        'longitude'
     ];
 
     public function hotel()

@@ -202,9 +202,14 @@ return [
             'icon' => 'ki-filled ki-home-2',
             'children' => [
                 [
+                    'title' => 'imports',
+                    'icon' => 'ki-filled ki-chart-line-up',
+                    'route' => 'accommodations.import'
+                ],
+                [
                     'title' => 'all hotels',
                     'icon' => 'ki-filled ki-chart-line-up',
-                    'route' => '#'
+                    'route' => 'hotels.index'
                 ],
                 [
                     'title' => 'all resorts',

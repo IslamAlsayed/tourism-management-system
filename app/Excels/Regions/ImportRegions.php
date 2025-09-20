@@ -32,7 +32,7 @@ class ImportRegions implements ToCollection
                 }
             }
 
-            Region::updateOrCreate(['name' => $data['name']], $data);
+            Region::create($data);
             $this->rowCount++;
         }
     }

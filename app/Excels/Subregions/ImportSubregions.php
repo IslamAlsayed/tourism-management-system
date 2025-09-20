@@ -32,7 +32,7 @@ class ImportSubregions implements ToCollection
                 }
             }
 
-            Subregion::updateOrCreate(['name' => $data['name']], $data);
+            Subregion::create($data);
             $this->rowCount++;
         }
     }

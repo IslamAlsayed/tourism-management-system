@@ -25,10 +25,11 @@ class NationalityController extends Controller
 
     public function getNationalitiesToImport()
     {
+        $model = 'nationalities';
         $title = __('main.import_types', ['types' => __('main.nationalities')]);
         $description = __('main.import_types_description', ['types' => __('main.nationalities')]);
 
-        return view('pages.dashboard.nationalities.import', compact('title', 'description'));
+        return view('pages.dashboard.nationalities.import', compact('model', 'title', 'description'));
     }
 
     public function postNationalitiesToImport(Request $request)

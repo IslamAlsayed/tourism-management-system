@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\HotelController;
 use App\Http\Controllers\Dashboard\StateController;
 use App\Http\Controllers\Dashboard\RegionController;
 use App\Http\Controllers\Dashboard\CountryController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\SubregionController;
 use App\Http\Controllers\Admin\SidebarManagerController;
 use App\Http\Controllers\Dashboard\NationalityController;
+use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
 
@@ -124,6 +126,18 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('nationalities/import/data', [NationalityController::class, 'getNationalitiesToImport'])->name('nationalities.import');
     Route::post('nationalities/import/post', [NationalityController::class, 'postNationalitiesToImport'])->name('nationalities.import.post');
     Route::get('nationalities/export/data', [NationalityController::class, 'getNationalitiesToExport'])->name('nationalities.export');
+
+    // // === HOTELS MANAGEMENT ===
+    Route::resource('hotels', HotelController::class)->names('hotels');
+    // Route::get('hotels/import/data', [HotelController::class, 'getHotelsToImport'])->name('hotels.import');
+    // Route::post('hotels/import/post', [HotelController::class, 'postHotelsToImport'])->name('hotels.import.post');
+    // Route::get('hotels/export/data', [HotelController::class, 'getHotelsToExport'])->name('hotels.export');
+
+    // === ACCOMMODATIONS MANAGEMENT ===
+    Route::resource('accommodations', AccommodationController::class)->names('accommodations');
+    Route::get('accommodations/import/data', [AccommodationController::class, 'getAccommodationsToImport'])->name('accommodations.import');
+    Route::post('accommodations/import/post', [AccommodationController::class, 'postAccommodationsToImport'])->name('accommodations.import.post');
+    Route::get('accommodations/export/data/{type}', [AccommodationController::class, 'getAccommodationsToExport'])->name('accommodations.export');
 
     // === FINANCIAL MANAGEMENT ===
     // Route::get('currencies/rates', [CurrencyController::class, 'rates'])->name('currencies.rates');

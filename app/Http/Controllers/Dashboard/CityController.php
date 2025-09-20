@@ -78,6 +78,7 @@ class CityController extends Controller
 
     public function getCitiesToImport()
     {
+        $model = 'cities';
         $title = __('main.import_types', ['types' => __('main.cities')]);
         $description = __('main.import_types_description', ['types' => __('main.cities')]);
 

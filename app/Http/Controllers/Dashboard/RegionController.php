@@ -25,10 +25,11 @@ class RegionController extends Controller
 
     public function getRegionsToImport()
     {
+        $model = 'regions';
         $title = __('main.import_types', ['types' => __('main.regions')]);
         $description = __('main.import_types_description', ['types' => __('main.regions')]);
 
-        return view('pages.dashboard.regions.import', compact('title', 'description'));
+        return view('pages.dashboard.regions.import', compact('model', 'title', 'description'));
     }
 
     public function postRegionsToImport(Request $request)

@@ -31,7 +31,7 @@ class SidebarMenuOrder extends Model
     public function children(): HasMany
     {
         return $this->hasMany(SidebarMenuOrder::class, 'parent_key', 'menu_key')
-                    ->orderBy('order');
+            ->orderBy('order');
     }
 
     /**

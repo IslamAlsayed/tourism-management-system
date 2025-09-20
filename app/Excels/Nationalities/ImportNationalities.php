@@ -32,7 +32,7 @@ class ImportNationalities implements ToCollection
                 }
             }
 
-            Nationality::updateOrCreate($data);
+            Nationality::create($data);
             $this->rowCount++;
         }
     }

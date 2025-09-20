@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class AccommodationSeason extends Model
 {
     protected $fillable = [
-        'accommodation_id',
         'season_name',
+        'season_from',
+        'season_to',
         'is_special',
         'special_type',
-        'start_date',
-        'end_date',
+        'accommodation_id',
     ];
 }

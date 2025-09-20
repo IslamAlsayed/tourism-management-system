@@ -25,10 +25,11 @@ class StateController extends Controller
 
     public function getStatesToImport()
     {
+        $model = 'states';
         $title = __('main.import_types', ['types' => __('main.states')]);
         $description = __('main.import_types_description', ['types' => __('main.states')]);
 
-        return view('pages.dashboard.states.import', compact('title', 'description'));
+        return view('pages.dashboard.states.import', compact('model', 'title', 'description'));
     }
 
     public function postStatesToImport(Request $request)

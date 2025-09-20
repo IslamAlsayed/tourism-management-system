@@ -86,10 +86,11 @@ class CurrencyController extends Controller
 
     public function getCurrenciesToImport()
     {
+        $model = 'currencies';
         $title = __('main.import_types', ['types' => 'currencies']);
         $description = __('main.import_types_description', ['types' => 'currencies']);
 
-        return view('pages.dashboard.currencies.import', compact('title', 'description'));
+        return view('pages.dashboard.currencies.import', compact('model', 'title', 'description'));
     }
 
     public function postCurrenciesToImport(Request $request)

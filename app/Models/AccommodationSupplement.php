@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class AccommodationSupplement extends Model
 {
     protected $fillable = [
-        'accommodation_id',
-        'supplement_name',
+        'name',
         'price',
-        'currency_id',
-        'applicable_to',
+        'is_per_person',
+        'is_mandatory',
+        'applicable_date',
+        'accommodation_id',
     ];
 }

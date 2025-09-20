@@ -21,12 +21,12 @@ class HotelRoomTypeSeeder extends Seeder
             ['name' => 'Suite', 'name_ar' => 'جناح', 'max_occupancy' => 3],
         ];
 
-        foreach (Hotel::all() as $hotel) {
-            foreach ($roomTypes as $type) {
-                HotelRoomType::create(array_merge($type, [
-                    'hotel_id' => $hotel->id,
-                ]));
-            }
-        }
+        // foreach (Hotel::all() as $hotel) {
+        //     foreach ($roomTypes as $type) {
+        //         HotelRoomType::create(array_merge($type, [
+        //             'hotel_id' => $hotel->id,
+        //         ]));
+        //     }
+        // }
     }
 }

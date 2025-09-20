@@ -15,8 +15,6 @@ class ImportCurrencies implements ToCollection
         $fillable = (new Currency())->getFillable();
         $headers = $rows->first()->toArray();
 
-        $currencyData = [];
-
         foreach ($rows as $index => $row) {
             if ($index == 0)
                 continue;
@@ -34,18 +32,8 @@ class ImportCurrencies implements ToCollection
                 }
             }
 
-            $currencyData[] = $data;
-
-            if (count($currencyData) >= 1000) {
-                Currency::insert($currencyData);
-                $this->rowCount += count($currencyData);
-                $currencyData = [];
-            }
-        }
-
-        if (count($currencyData) > 0) {
-            Currency::insert($currencyData);
-            $this->rowCount += count($currencyData);
+            Currency::create($data);
+            $this->rowCount += count($data);
         }
     }
 }

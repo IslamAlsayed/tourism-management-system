@@ -10,22 +10,19 @@
                         <p class="mb-6">{{ $description }}</p>
 
                         @if (session('success'))
-                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6"
-                                role="alert">
+                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
                                 <span class="block sm:inline">{{ session('success') }}</span>
                             </div>
                         @endif
 
                         @if (session('error'))
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6"
-                                role="alert">
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
                                 <span class="block sm:inline">{{ session('error') }}</span>
                             </div>
                         @endif
 
                         @if (session('import_errors'))
-                            <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-6"
-                                role="alert">
+                            <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-6" role="alert">
                                 <span class="font-bold block mb-2">{{ __('main.import_errors') }}:</span>
                                 <ul class="list-disc pl-5">
                                     @foreach (session('import_errors') as $error)
@@ -35,16 +32,14 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('currencies.import') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route("$model.import.post") }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-6">
                                 <label for="file" class="block text-gray-700 text-sm font-bold mb-2">
                                     {{ __('main.import_file') }}
                                 </label>
 
-                                <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
-                                    class="border rounded p-2"
-                                    onchange="document.getElementById('submit-button').disabled = !this.files.length" />
+                                <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls" class="border rounded p-2" onchange="document.getElementById('submit-button').disabled = !this.files.length" />
 
                                 @error('file')
                                     <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>

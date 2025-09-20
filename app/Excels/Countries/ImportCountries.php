@@ -34,7 +34,7 @@ class ImportCountries implements ToCollection
 
             $data['timezone'] = $this->fixTimezone($data['timezone']);
 
-            Country::updateOrCreate(['name' => $data['name']], $data);
+            Country::create($data);
             $this->rowCount++;
         }
     }

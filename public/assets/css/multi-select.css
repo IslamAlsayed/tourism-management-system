@@ -80,10 +80,15 @@
 }
 
 [data-value="no-data"],
+.disabled,
 .disabled-option {
     color: #6b7280;
     pointer-events: none;
     background-color: #f3f4f6
+}
+
+.disabled {
+    background-color: transparent;
 }
 
 .containerCompanies,

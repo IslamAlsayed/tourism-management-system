@@ -11,6 +11,8 @@ class Hotel extends Model
 
     protected $fillable = [
         'name',
+        'name_ar',
+        'description',
         'created_by',
         'sales_man',
         'sales_phone',
@@ -21,12 +23,10 @@ class Hotel extends Model
         'accounting_person',
         'accounting_mail',
         'accounting_phone',
-        'description',
         'country_id',
         'city_id',
         'region_id',
         'subregion_id',
-        'accommodation_id',
     ];
 
     public function country()
