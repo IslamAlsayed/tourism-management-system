@@ -68,7 +68,7 @@ return [
         [
             'title' => 'location management',
             'icon' => 'ki-filled ki-geolocation',
-            'statue' => 'updated 6',
+            'status' => 'updated 6',
             'children' => [
                 [
                     'title' => 'countries',
@@ -81,14 +81,14 @@ return [
                         [
                             'title' => 'import country',
                             'route' => 'countries.import',
-                            'statue' => 'new',
+                            'status' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'states',
                     'icon' => 'ki-filled ki-flag',
-                    'statue' => 'updated',
+                    'status' => 'updated',
                     'children' => [
                         [
                             'title' => 'all states',
@@ -97,14 +97,14 @@ return [
                         [
                             'title' => 'import state',
                             'route' => 'states.import',
-                            'statue' => 'new',
+                            'status' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'cities',
                     'icon' => 'ki-filled ki-home-2',
-                    'statue' => 'updated',
+                    'status' => 'updated',
                     'children' => [
                         [
                             'title' => 'all cities',
@@ -113,14 +113,14 @@ return [
                         [
                             'title' => 'import city',
                             'route' => 'cities.import',
-                            'statue' => 'new',
+                            'status' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'regions',
                     'icon' => 'ki-filled ki-home-2',
-                    'statue' => 'updated',
+                    'status' => 'updated',
                     'children' => [
                         [
                             'title' => 'all regions',
@@ -129,14 +129,14 @@ return [
                         [
                             'title' => 'import region',
                             'route' => 'regions.import',
-                            'statue' => 'new',
+                            'status' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'subregions',
                     'icon' => 'ki-filled ki-home-2',
-                    'statue' => 'updated',
+                    'status' => 'updated',
                     'children' => [
                         [
                             'title' => 'all subregions',
@@ -145,14 +145,14 @@ return [
                         [
                             'title' => 'import subregion',
                             'route' => 'subregions.import',
-                            'statue' => 'new',
+                            'status' => 'new',
                         ],
                     ],
                 ],
                 [
                     'title' => 'nationalities',
                     'icon' => 'ki-filled ki-home-2',
-                    'statue' => 'updated',
+                    'status' => 'updated',
                     'children' => [
                         [
                             'title' => 'all nationalities',
@@ -161,7 +161,7 @@ return [
                         [
                             'title' => 'import nationality',
                             'route' => 'nationalities.import',
-                            'statue' => 'new',
+                            'status' => 'new',
                         ],
                     ],
                 ],
@@ -200,11 +200,13 @@ return [
         [
             'title' => 'accommodations',
             'icon' => 'ki-filled ki-home-2',
+            'status' => 'new 1',
             'children' => [
                 [
                     'title' => 'imports',
                     'icon' => 'ki-filled ki-chart-line-up',
-                    'route' => 'accommodations.import'
+                    'route' => 'accommodations.import',
+                    'status' => 'new',
                 ],
                 [
                     'title' => 'all hotels',
