@@ -19,20 +19,20 @@
                                                 @if(in_array($item, ['room_types']))
                                                     <i class="fas fa-xmark text-red-600"></i>
                                                 @endif
-                                                {{ str_replace('_', ' ', ucfirst($item)) }}
+                                                {{ __('main.' . $item) }}
                                             </label>
                                         </div>
                                     @endforeach
                                 </div>
                                 <div class="inline-flex gap-4 mb-4">
-                                    @foreach (['accommodations_types', 'accommodations', 'seasons', 'supplements', 'rates', 'rate_nationalities', 'facilities'] as $item)
+                                    @foreach (['accommodations_types', 'accommodations', 'seasons', 'supplements', 'rates', 'rate_nationalities'] as $item)
                                         <div class="custom-input">
-                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger" id="{{ $item }}" data-toggle-target="{{ $item }}" data-toggle-id="{{ $item }}" value="{{ $item }}" {{in_array($item, ['supplements', 'rates', 'rate_nationalities', 'facilities']) ? 'disabled' : '' }}>
+                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger" id="{{ $item }}" data-toggle-target="{{ $item }}" data-toggle-id="{{ $item }}" value="{{ $item }}" {{in_array($item, ['supplements', 'rates', 'rate_nationalities']) ? 'disabled' : '' }}>
                                             <label for="{{ $item }}">
-                                                @if(in_array($item, ['supplements', 'rates', 'rate_nationalities', 'facilities']))
+                                                @if(in_array($item, ['supplements', 'rates', 'rate_nationalities']))
                                                     <i class="fas fa-xmark text-red-600"></i>
                                                 @endif
-                                                {{ str_replace('_', ' ', ucfirst($item)) }}
+                                                {{ __('main.' . $item) }}
                                             </label>
                                         </div>
                                     @endforeach
