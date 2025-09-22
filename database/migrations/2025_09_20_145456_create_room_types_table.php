@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->string('name');
             $table->string('name_ar')->nullable();
             $table->unsignedTinyInteger('max_occupancy');
-            // $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
             $table->unsignedBigInteger('accommodation_id')->nullable();
             $table->timestamps();
         });

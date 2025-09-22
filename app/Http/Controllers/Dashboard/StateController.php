@@ -13,7 +13,7 @@ class StateController extends Controller
 {
     public function index()
     {
-        $states = State::with('country')->paginate(10);
+        $states = State::with('country')->paginate(getPaginate());
         $totalStates = State::count();
         return view('pages.dashboard.states.index', compact('states', 'totalStates'));
     }

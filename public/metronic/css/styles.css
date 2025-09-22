@@ -2529,6 +2529,10 @@
     gap: calc(var(--spacing) * 10);
   }
 
+  .md\:gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
+
   .gap-\[5px\] {
     gap: 5px;
   }

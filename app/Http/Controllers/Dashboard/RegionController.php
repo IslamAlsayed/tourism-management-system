@@ -13,7 +13,7 @@ class RegionController extends Controller
 {
     public function index()
     {
-        $regions = Region::paginate(10);
+        $regions = Region::paginate(getPaginate());
         $total = Region::count();
         return view('pages.dashboard.regions.index', compact('regions', 'total'));
     }

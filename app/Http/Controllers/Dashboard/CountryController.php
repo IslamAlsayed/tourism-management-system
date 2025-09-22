@@ -16,7 +16,7 @@ class CountryController extends Controller
 {
     public function index()
     {
-        $countries = Country::with('currency')->paginate(10);
+        $countries = Country::with('currency')->paginate(getPaginate());
         $totalCountries = Country::count();
         return view('pages.dashboard.countries.index', compact('countries', 'totalCountries'));
     }

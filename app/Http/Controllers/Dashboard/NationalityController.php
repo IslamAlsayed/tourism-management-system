@@ -13,7 +13,7 @@ class NationalityController extends Controller
 {
     public function index()
     {
-        $nationalities = Nationality::paginate(10);
+        $nationalities = Nationality::paginate(getPaginate());
         $total = Nationality::count();
         return view('pages.dashboard.nationalities.index', compact('nationalities', 'total'));
     }

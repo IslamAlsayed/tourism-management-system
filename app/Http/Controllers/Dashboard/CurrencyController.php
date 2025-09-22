@@ -16,7 +16,7 @@ class CurrencyController extends Controller
 {
     public function index()
     {
-        $currencies = Currency::paginate(10);
+        $currencies = Currency::paginate(getPaginate());
         $totalCurrencies = Currency::count();
         return view('pages.dashboard.currencies.index', compact('currencies', 'totalCurrencies'));
     }

@@ -14,7 +14,7 @@ class LanguageController extends Controller
 
     public function index()
     {
-        $data = Language::paginate(10);
+        $data = Language::paginate(getPaginate());
         return view('pages.dashboard.languages.index', compact('data'));
     }
 

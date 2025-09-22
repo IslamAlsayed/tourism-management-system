@@ -6,13 +6,13 @@ use App\Models\Country;
 use Livewire\Component;
 use App\Models\Currency;
 use Livewire\WithPagination;
+use App\Traits\CustomPagination;
 
 class CountryTable extends Component
 {
-    use WithPagination;
+    use WithPagination, CustomPagination;
     public $search = '';
     public $totalCount = '';
-    public $perPage = 50;
     public array $columns = [];
 
     public function updatingSearch()
@@ -33,6 +33,7 @@ class CountryTable extends Component
     public function mount()
     {
         $this->resetPage();
+        $this->mountWithCustomPagination();
         // عرض جميع أعمدة العملات (id, name, code, symbol, created_at, updated_at)
         $this->columns = ['id', 'name', 'code', 'created_at', 'updated_at'];
     }
@@ -54,8 +55,7 @@ class CountryTable extends Component
                         $q->orWhere($column, 'like', '%' . $search . '%');
                     }
                 });
-            })
-            ->paginate($this->perPage);
+            })->paginate(getPaginate());
 
         return view('livewire.dashboard.country-table', [
             'data' => $data,

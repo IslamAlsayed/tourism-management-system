@@ -75,10 +75,21 @@ if (!function_exists('isRtlLocale')) {
 }
 
 if (!function_exists('isActive')) {
-    function isActive($route, $currentRoute)
+    function isActive($route, $parameters, $currentRoute, $currentParameters = [])
     {
-        return isset($route) && $route === $currentRoute;
+        if (!isset($route) || $route !== $currentRoute) {
+            return false;
+        }
+
+        foreach ($parameters as $key => $value) {
+            if (($currentParameters[$key] ?? null) != $value) {
+                return false;
+            }
+        }
+
+        return true;
     }
+
 }
 
 if (!function_exists('isActiveRoute')) {
@@ -89,13 +100,29 @@ if (!function_exists('isActiveRoute')) {
 }
 
 if (!function_exists('hasActiveChild')) {
-    function hasActiveChild(array $children, $currentRoute): bool
+    function hasActiveChild(array $children, $currentRoute, array $currentParameters = []): bool
     {
         foreach ($children as $child) {
-            if (isset($child['route']) && $child['route'] === $currentRoute) {
-                return true;
+            if (isset($child['route'])) {
+                if ($child['route'] === $currentRoute) {
+                    if (isset($child['parameters'])) {
+                        $allMatch = true;
+                        foreach ($child['parameters'] as $key => $value) {
+                            if (($currentParameters[$key] ?? null) != $value) {
+                                $allMatch = false;
+                                break;
+                            }
+                        }
+                        if ($allMatch) {
+                            return true;
+                        }
+                    } else {
+                        return true;
+                    }
+                }
             }
-            if (isset($child['children']) && hasActiveChild($child['children'], $currentRoute)) {
+
+            if (isset($child['children']) && hasActiveChild($child['children'], $currentRoute, $currentParameters)) {
                 return true;
             }
         }
@@ -109,5 +136,16 @@ if (!function_exists('generateUniqueFilename')) {
     {
         // return $prefix . '_' . substr(md5(uniqid(mt_rand(), true)), 0, 6);
         return $prefix . '_' . date('Y_m_d_H_i_s');
+    }
+}
+
+if (!function_exists('getPaginate')) {
+    function getPaginate()
+    {
+        if (session()->has('paginate_count')) {
+            return session('paginate_count');
+        }
+
+        return config('app.paginate_count');
     }
 }

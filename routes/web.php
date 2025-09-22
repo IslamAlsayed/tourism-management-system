@@ -2,17 +2,24 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\dashboard\CampController;
 use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\HotelController;
+use App\Http\Controllers\dashboard\LodgeController;
 use App\Http\Controllers\Dashboard\StateController;
+use App\Http\Controllers\dashboard\HostelController;
 use App\Http\Controllers\Dashboard\RegionController;
+use App\Http\Controllers\dashboard\ResortController;
 use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\SettingsController;
+use App\Http\Controllers\dashboard\ApartmentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\SubregionController;
 use App\Http\Controllers\Admin\SidebarManagerController;
+use App\Http\Controllers\Dashboard\RestaurantController;
 use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
@@ -126,17 +133,25 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('nationalities/import/post', [NationalityController::class, 'postNationalitiesToImport'])->name('nationalities.import.post');
     Route::get('nationalities/export/data', [NationalityController::class, 'getNationalitiesToExport'])->name('nationalities.export');
 
-    // === HOTELS MANAGEMENT ===
-    // Route::resource('hotels', HotelController::class)->names('hotels');
-    // Route::get('hotels/import/data', [HotelController::class, 'getHotelsToImport'])->name('hotels.import');
-    // Route::post('hotels/import/post', [HotelController::class, 'postHotelsToImport'])->name('hotels.import.post');
-    // Route::get('hotels/export/data', [HotelController::class, 'getHotelsToExport'])->name('hotels.export');
+    // === RESTAURANTS MANAGEMENT ===
+    Route::resource('restaurants', RestaurantController::class)->names('restaurants');
+    Route::get('restaurants/import/data', [RestaurantController::class, 'getRestaurantsToImport'])->name('restaurants.import');
+    Route::post('restaurants/import/post', [RestaurantController::class, 'postRestaurantsToImport'])->name('restaurants.import.post');
+    Route::get('restaurants/export/data', [RestaurantController::class, 'getRestaurantsToExport'])->name('restaurants.export');
 
     // === ACCOMMODATIONS MANAGEMENT ===
     Route::resource('accommodations', AccommodationController::class)->names('accommodations');
+    Route::get('accommodations/{type}/type', [AccommodationController::class, 'getResultType'])->name('accommodations.type');
     Route::get('accommodations/import/data', [AccommodationController::class, 'getAccommodationsToImport'])->name('accommodations.import');
     Route::post('accommodations/import/post', [AccommodationController::class, 'postAccommodationsToImport'])->name('accommodations.import.post');
     Route::get('accommodations/export/data/{type}', [AccommodationController::class, 'getAccommodationsToExport'])->name('accommodations.export');
+
+    // Route::get('hotels/create', [HotelController::class, 'create'])->name('hotels.create');
+    // Route::get('resorts/create', [ResortController::class, 'create'])->name('resorts.create');
+    // Route::get('camps/create', [CampController::class, 'create'])->name('camps.create');
+    // Route::get('hostels/create', [HostelController::class, 'create'])->name('hostels.create');
+    // Route::get('lodges/create', [LodgeController::class, 'create'])->name('lodges.create');
+    // Route::get('apartments/create', [ApartmentController::class, 'create'])->name('apartments.create');
 
     // === FINANCIAL MANAGEMENT ===
     // Route::get('currencies/rates', [CurrencyController::class, 'rates'])->name('currencies.rates');

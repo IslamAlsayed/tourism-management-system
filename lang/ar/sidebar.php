@@ -177,4 +177,8 @@ return [
     'add_new_language' => 'إضافة لغة جديدة',
     'language_name' => 'اسم اللغة',
     'language_code' => 'رمز اللغة',
+    'tour guides' => 'الادلاء السياحيين',
+    'rooms types' => 'أنواع الغرف',
+    'camps' => 'المخيمات',
+    'clients' => 'العملاء',
 ];

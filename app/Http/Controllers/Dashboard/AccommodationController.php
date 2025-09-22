@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Excels\Accommodations\RateDetails\ImportRateDetails;
+use App\Models\Country;
+use App\Models\RateDetail;
 use App\Models\Supplement;
-use App\Models\Nationality;
 use Illuminate\Http\Request;
 use App\Models\Accommodation;
 use App\Models\HotelRoomType;
-use App\Models\AccommodationType;
-use App\Models\AccommodationTypes;
+use App\Models\AccommodationRate;
+use App\Models\Type;
 use App\Models\AccommodationSeason;
 use App\Http\Controllers\Controller;
 use App\Livewire\Quote\Step2\Hotels;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Excels\Accommodations\Rates\ExportRates;
+use App\Excels\Accommodations\Rates\ImportRates;
 use App\Excels\Accommodations\Types\ExportTypes;
 use App\Excels\Accommodations\Types\ImportTypes;
-use App\Excels\Nationalities\ExportNationalities;
-use App\Excels\Nationalities\ImportNationalities;
 use App\Excels\Accommodations\Hotels\ExportHotels;
 use App\Excels\Accommodations\Hotels\ImportHotels;
 use App\Excels\Accommodations\Seasons\ExportSeasons;
@@ -31,15 +33,32 @@ class AccommodationController extends Controller
 {
     public function index()
     {
-        return 'code...';
-        // $nationalities = Nationality::paginate(10);
-        // $total = Nationality::count();
-        // return view('pages.dashboard.nationalities.index', compact('nationalities', 'total'));
+        $accommodations = Accommodation::paginate(getPaginate());
+        $total = Accommodation::count();
+
+        return view('pages.dashboard.accommodations.index', compact('accommodations', 'total'));
     }
 
+    public function getResultType($type)
+    {
+        $dataType = Accommodation::with('type')->whereHas('type', function ($query) use ($type) {
+            $query->where('name', $type);
+        })->paginate(getPaginate());
+
+        $total = count($dataType);
+
+        return view('pages.dashboard.accommodations.type', compact('dataType', 'total'));
+    }
+
+    public function getCreateType($type)
+    {
+        dd($type);
+        // $types = Type::all();
+        // return view('pages.dashboard.accommodations.create-type', compact('types'));
+    }
     public function create()
     {
-        return 'code...';
+        return 'No Create View..!';
     }
 
     public function getAccommodationsToImport()
@@ -77,7 +96,7 @@ class AccommodationController extends Controller
                 $importer = new ImportHotels();
             } else if ($request->input('import_type') == 'room_types') {
                 $importer = new ImportHotelsRoomsTypes();
-            } else if ($request->input('import_type') == 'accommodations_types') {
+            } else if ($request->input('import_type') == 'types') {
                 $importer = new ImportTypes();
             } else if ($request->input('import_type') == 'accommodations') {
                 $importer = new ImportAccommodations();
@@ -85,6 +104,10 @@ class AccommodationController extends Controller
                 $importer = new ImportSeasons();
             } else if ($request->input('import_type') == 'supplements') {
                 $importer = new ImportSupplements();
+            } else if ($request->input('import_type') == 'rates') {
+                $importer = new ImportRates();
+            } else if ($request->input('import_type') == 'rate_details') {
+                $importer = new ImportRateDetails();
             } else {
                 dd('other');
             }
@@ -118,9 +141,9 @@ class AccommodationController extends Controller
             $roomTypes = HotelRoomType::all();
             $filename = generateUniqueFilename('room_types') . '.csv';
             return Excel::download(new ExportTypes($roomTypes), $filename);
-        } else if ($type == 'accommodations_types') {
-            $types = AccommodationType::all();
-            $filename = generateUniqueFilename('accommodations_types') . '.csv';
+        } else if ($type == 'types') {
+            $types = Type::all();
+            $filename = generateUniqueFilename('types') . '.csv';
             return Excel::download(new ExportTypes($types), $filename);
         } else if ($type == 'accommodations') {
             $accommodations = Accommodation::all();
@@ -134,8 +157,16 @@ class AccommodationController extends Controller
             $supplements = Supplement::all();
             $filename = generateUniqueFilename('supplements') . '.csv';
             return Excel::download(new ExportSupplements($supplements), $filename);
+        } else if ($type == 'rates') {
+            $rates = AccommodationRate::all();
+            $filename = generateUniqueFilename('accommodations_rates') . '.csv';
+            return Excel::download(new ExportRates($rates), $filename);
+        } else if ($type == 'rate_details') {
+            $rateDetails = RateDetail::all();
+            $filename = generateUniqueFilename('accommodations_rate_details') . '.csv';
+            return Excel::download(new ExportRates($rateDetails), $filename);
         }
 
-        return 'code...';
+        return 'No Export..!';
     }
 }

@@ -17,7 +17,7 @@ class CityController extends Controller
 {
     public function index()
     {
-        $cities = City::with('country')->paginate(10);
+        $cities = City::with('country')->paginate(getPaginate());
         $totalCities = City::count();
         return view('pages.dashboard.cities.index', compact('cities', 'totalCities'));
     }

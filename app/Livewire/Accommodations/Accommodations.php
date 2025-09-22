@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Livewire\Accommodations\Hotels;
+namespace App\Livewire\Accommodations;
 
-use App\Models\Hotel;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\Accommodation;
+use App\Traits\CustomPagination;
 
-class Table extends Component
+class Accommodations extends Component
 {
-    use WithPagination;
+    use WithPagination, CustomPagination;
+
     public $search = '';
     public $totalCount = '';
-    public $perPage = 50;
     public array $columns = [];
 
     public function updatingSearch()
@@ -32,6 +33,7 @@ class Table extends Component
     public function mount()
     {
         $this->resetPage();
+        $this->mountWithCustomPagination();
         $this->columns = ['id', 'name', 'name_ar', 'created_at', 'updated_at'];
     }
 
@@ -42,9 +44,9 @@ class Table extends Component
 
     public function render()
     {
-        $this->totalCount = Hotel::count();
+        $this->totalCount = Accommodation::count();
 
-        $data = Hotel::query()
+        $data = Accommodation::query()
             ->when($this->search, function ($query) {
                 $search = strtolower($this->search);
                 $query->where(function ($q) use ($search) {
@@ -52,23 +54,11 @@ class Table extends Component
                         $q->orWhere($column, 'like', '%' . $search . '%');
                     }
                 });
-            })
-            ->paginate($this->perPage);
+            })->paginate(getPaginate());
 
-        return view('livewire.accommodations.hotels.table', [
+        return view('livewire.accommodations.accommodations', [
             'data' => $data,
             'totalCount' => $this->totalCount,
         ]);
-    }
-
-    // Toggle active status for a region
-    public function toggleActive($id)
-    {
-        $hotel = Hotel::find($id);
-        if ($hotel) {
-            $hotel->is_active = !$hotel->is_active;
-            $hotel->save();
-            session()->flash('message', __('تم تحديث حالة العملة بنجاح.'));
-        }
     }
 }

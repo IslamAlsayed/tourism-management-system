@@ -2,37 +2,27 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Hotel;
-use App\Models\Nationality;
-use Illuminate\Http\Request;
-use App\Models\Accommodation;
 use App\Models\AccommodationType;
-use App\Models\AccommodationTypes;
-use App\Models\AccommodationSeason;
+use App\Models\Hotel;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Excels\Accommodations\Types\ExportTypes;
-use App\Excels\Accommodations\Types\ImportTypes;
-use App\Excels\Nationalities\ExportNationalities;
-use App\Excels\Nationalities\ImportNationalities;
 use App\Excels\Accommodations\Hotels\ImportHotels;
-use App\Excels\Accommodations\Seasons\ExportSeasons;
-use App\Excels\Accommodations\Seasons\ImportSeasons;
-use App\Excels\Accommodations\Accommodations\ExportAccommodations;
-use App\Excels\Accommodations\Accommodations\ImportAccommodations;
 
 class HotelController extends Controller
 {
     public function index()
     {
-        $hotels = Hotel::paginate(10);
+        $hotels = Hotel::paginate(getPaginate());
         $total = Hotel::count();
         return view('pages.dashboard.accommodations.hotels.index', compact('hotels', 'total'));
     }
 
     public function create()
     {
-        return 'code...';
+        $types = AccommodationType::all();
+        return view('pages.dashboard.accommodations.create', compact('types'));
     }
 
     public function getHotelsToImport()

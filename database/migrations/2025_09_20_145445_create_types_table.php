@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('accommodation_types', function (Blueprint $table) {
+        Schema::create('types', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable(); // e.g., hotel, transport, tour, other
             $table->string('name_ar')->nullable(); // e.g., فندق، نقل، جولة، أخرى
@@ -25,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('accommodation_types');
+        Schema::dropIfExists('types');
     }
 };

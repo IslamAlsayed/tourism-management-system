@@ -23,7 +23,7 @@
                         <input wire:model.live="search"
                             placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..."
                             type="text"
-                            class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            class="px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </label>
                 </div>
             </div>

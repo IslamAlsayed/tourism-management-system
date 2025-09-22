@@ -276,17 +276,28 @@ return [
     'accommodation' => 'الإقامة',
     'all_accommodations' => 'كل الإقامات',
     'accommodation_name' => 'اسم الإقامة',
-    'accommodation_type' => 'نوع الاقامة',
+    'accommodation_types' => 'أنواع الإقامة',
     'accommodation_location' => 'عنوان الإقامة',
     'accommodation_price' => 'سعر الإقامة',
     'hotels' => 'الفنادق',
+    'camps' => 'المخيمات',
     'room_types' => 'انواع الغرف',
     'accommodations_types' => 'انواع الاقامات',
     'seasons' => 'المواسم',
     'supplements' => 'الملحقات',
-    'rates' => 'التقييمات',
+    'rates' => 'الاسعار',
+    'rate_details' => 'تفاصيل الاسعار',
     'rate_nationalities' => 'تقيمات الجنسيات',
     'facilities' => 'المرافق',
+
+    // Food & Beverage Management
+    'food_and_beverage_management' => 'إدارة الطعام والشراب',
+    'menu_items' => 'عناصر القائمة',
+    'special_offers' => 'عروض خاصة',
+    'food_categories' => 'فئات الطعام',
+    'beverage_categories' => 'فئات المشروبات',
+    'restaurants' => 'المطاعم',
+    'restaurant' => 'مطعم',
 
     // Profile & Account Settings
     'delete_account' => 'حذف الحساب',
@@ -608,6 +619,17 @@ return [
     'formatting_display' => 'التنسيق والعرض',
     'check_format_hint' => 'تأكد من ضبط موضع الرمز وفاصل الآلاف بشكل صحيح',
 
+    // Restaurant Management
+    'is_active' => 'نشط',
+    'free_wifi' => 'واي فاي مجاني',
+    'parking' => 'موقف سيارات',
+    'swimming_pool' => 'مسبح',
+    'gym' => 'صالة ألعاب رياضية',
+    'indoor' => 'داخلي',
+    'outdoor' => 'خارجي',
+    'spa' => 'سبا',
+    'wheelchair_accessible'=> 'مناسب للكراسي المتحركة',
+
     // Reports Section
     'reports_dashboard' => 'لوحة التقارير',
     'reports_and_statistics' => 'لوحة التقارير والإحصائيات',
@@ -821,6 +843,14 @@ return [
         'change_language_not_successfully' => 'لم يتم تغيير اللغة بنجاح.',
         'language_deleted_successfully' => 'تم حذف اللغة بنجاح.',
         'language_deletion_failed' => 'فشل حذف اللغة.',
+
+        // Restaurant Management
+        'restaurant_created' => 'تم إنشاء المطعم',
+        'restaurant_creation_failed' => 'فشل إنشاء المطعم',
+        'restaurant_updated' => 'تم تحديث المطعم',
+        'restaurant_update_failed' => 'فشل تحديث المطعم',
+        'restaurant_deleted' => 'تم حذف المطعم',
+        'restaurant_deletion_failed' => 'فشل حذف المطعم',
     ],
 
     // maps

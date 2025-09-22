@@ -1,4 +1,12 @@
 <div class="kt-card kt-card-grid min-w-full">
+    @component('includes.pagination-info', [
+        'data' => $data,
+        'title' => __('main.accommodations'),
+        'entityName' => __('main.accommodation'),
+        'showSearch' => true,
+    ])
+    @endcomponent
+
     <div class="kt-card-content">
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
             <div class="kt-scrollable-x-auto">
@@ -24,25 +32,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $hotel)
+                        @foreach ($data as $accommodation)
                             <tr>
                                 <td class="text-center">
-                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" type="checkbox" value="1" />
+                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
+                                        type="checkbox" value="1" />
                                 </td>
-                                <td>{{ $hotel->id }}</td>
-                                <td>{{ $hotel->name }}</td>
-                                <td>{{ $hotel->name_ar }}</td>
+                                <td>{{ $accommodation->id }}</td>
+                                <td>{{ $accommodation->name }}</td>
+                                <td>{{ $accommodation->name_ar }}</td>
                                 <td>
-                                    {{ $hotel->created_at ? $hotel->created_at->format('Y-m-d') : '' }}
+                                    {{ $accommodation->created_at ? $accommodation->created_at->format('Y-m-d') : '' }}
                                 </td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
-                                        <a href="{{ route('hotels.edit', $hotel->id) }}" class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
+                                        <a href="{{ route('accommodations.edit', $accommodation->id) }}"
+                                            class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
                                             {{ __('main.edit') }}
                                         </a>
 
-                                        <a href="{{ route('hotels.destroy', $hotel->id) }}" class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form action="{{ route('hotels.destroy', $hotel->id) }}" method="POST">
+                                        <a href="{{ route('accommodations.destroy', $accommodation->id) }}"
+                                            class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
+                                            <form action="{{ route('accommodations.destroy', $accommodation->id) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit">{{ __('main.delete') }}</button>

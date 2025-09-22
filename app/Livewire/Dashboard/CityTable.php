@@ -2,16 +2,16 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\City;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\City;
+use App\Traits\CustomPagination;
 
 class CityTable extends Component
 {
-    use WithPagination;
+    use WithPagination, CustomPagination;
     public $search = '';
     public $totalCount = '';
-    public $perPage = 50;
     public array $columns = [];
 
     public function updatingSearch()
@@ -32,6 +32,7 @@ class CityTable extends Component
     public function mount()
     {
         $this->resetPage();
+        $this->mountWithCustomPagination();
         // عرض جميع أعمدة المدن (id, name, country_id, created_at, updated_at)
         $this->columns = ['id', 'name', 'country_id', 'created_at', 'updated_at'];
     }
@@ -54,7 +55,7 @@ class CityTable extends Component
                     }
                 });
             })
-            ->with('country')->paginate($this->perPage);
+            ->with('country')->paginate($this->paginate ?: getPaginate());
 
         return view('livewire.dashboard.city-table', [
             'data' => $data,

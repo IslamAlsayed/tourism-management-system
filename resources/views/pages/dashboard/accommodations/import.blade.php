@@ -11,12 +11,31 @@
 
                         <div id="import-section">
                             <div class="grid grid-cols-1">
-                                <div class="inline-flex gap-4 mb-4">
+                                <div class="inline-flex flex-wrap gap-4 mb-4">
+                                    @foreach (['types', 'accommodations', 'seasons', 'supplements', 'rates', 'rate_details', 'rate_nationalities'] as $item)
+                                        <div class="custom-input">
+                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger"
+                                                id="{{ $item }}" data-toggle-target="{{ $item }}"
+                                                data-toggle-id="{{ $item }}" value="{{ $item }}"
+                                                {{ in_array($item, ['rate_nationalities']) ? 'disabled' : '' }}>
+                                            <label for="{{ $item }}">
+                                                @if (in_array($item, ['rate_nationalities']))
+                                                    <i class="fas fa-xmark text-red-600"></i>
+                                                @endif
+                                                {{ __('main.' . $item) }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="inline-flex flex-wrap gap-4 mb-4">
                                     @foreach (['hotels', 'room_types'] as $item)
                                         <div class="custom-input">
-                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger" id="{{ $item }}" data-toggle-target="{{ $item }}" data-toggle-id="{{ $item }}" value="{{ $item }}" {{in_array($item, ['room_types']) ? 'disabled' : '' }}>
+                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger"
+                                                id="{{ $item }}" data-toggle-target="{{ $item }}"
+                                                data-toggle-id="{{ $item }}" value="{{ $item }}"
+                                                {{ in_array($item, ['room_types']) ? 'disabled' : '' }}>
                                             <label for="{{ $item }}">
-                                                @if(in_array($item, ['room_types']))
+                                                @if (in_array($item, ['room_types']))
                                                     <i class="fas fa-xmark text-red-600"></i>
                                                 @endif
                                                 {{ __('main.' . $item) }}
@@ -24,24 +43,13 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <div class="inline-flex gap-4 mb-4">
-                                    @foreach (['accommodations_types', 'accommodations', 'seasons', 'supplements', 'rates', 'rate_nationalities'] as $item)
-                                        <div class="custom-input">
-                                            <input type="radio" name="accommodationOptions" class="mb-0 toggle-trigger" id="{{ $item }}" data-toggle-target="{{ $item }}" data-toggle-id="{{ $item }}" value="{{ $item }}" {{in_array($item, ['supplements', 'rates', 'rate_nationalities']) ? 'disabled' : '' }}>
-                                            <label for="{{ $item }}">
-                                                @if(in_array($item, ['supplements', 'rates', 'rate_nationalities']))
-                                                    <i class="fas fa-xmark text-red-600"></i>
-                                                @endif
-                                                {{ __('main.' . $item) }}
-                                            </label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <p class="text-red-600" id="import-error" style="display: none">Please select an option to enable the import functionality.</p>
+                                <p class="text-red-600" id="import-error" style="display: none">Please select an option to
+                                    enable the import functionality.</p>
                             </div>
 
                             <div>
-                                <form action="{{ route("$model.import.post") }}" method="POST" enctype="multipart/form-data" class="w-half">
+                                <form action="{{ route("$model.import.post") }}" method="POST"
+                                    enctype="multipart/form-data" class="w-half">
                                     @csrf
                                     <input type="hidden" name="import_type" id="import_type" value="" />
 
@@ -51,7 +59,9 @@
                                             <strong>only (.csv,.xlsx,.xls)</strong>
                                         </label>
 
-                                        <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls" class="border rounded p-2 block w-full" onchange="document.getElementById('submit-button').disabled = !this.files.length" />
+                                        <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
+                                            class="border rounded p-2 block w-full"
+                                            onchange="document.getElementById('submit-button').disabled = !this.files.length" />
 
                                         @error('file')
                                             <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
@@ -69,7 +79,8 @@
                                 </form>
 
                                 <div class="mt-4">
-                                    <a href="{{ route('accommodations.export', 'accommodations_types') }}" id="export-data" class="kt-btn kt-btn-outline">
+                                    <a href="{{ route('accommodations.export', 'types') }}" id="export-data"
+                                        class="kt-btn kt-btn-outline">
                                         {{ __('main.export') }}
                                     </a>
                                 </div>
@@ -134,7 +145,8 @@
                                     </table>
                                 </div>
 
-                                <div data-room_types-target="room_types" class="target-trigger mt-4" style="display: none">
+                                <div data-room_types-target="room_types" class="target-trigger mt-4"
+                                    style="display: none">
                                     <table class="border min-w-half divide-y text-center divide-gray-200">
                                         <thead>
                                             <tr>
@@ -155,7 +167,7 @@
                                     </table>
                                 </div>
 
-                                <div data-accommodations_types-target="accommodations_types" class="target-trigger mt-4" style="display: none">
+                                <div data-types-target="types" class="target-trigger mt-4" style="display: none">
                                     <table class="border min-w-half divide-y text-center divide-gray-200 mt-6">
                                         <thead>
                                             <tr>
@@ -172,9 +184,10 @@
                                     </table>
                                 </div>
 
-                                <div data-accommodations-target="accommodations" class="target-trigger mt-4" style="display: none">
+                                <div data-accommodations-target="accommodations" class="target-trigger mt-4"
+                                    style="display: none">
                                     <strong class="block mt-6 mb-2">Required Fields</strong>
-                                    <table class="border min-w-full divide-y text-center divide-gray-200">
+                                    <table class="border min-w-half divide-y text-center divide-gray-200">
                                         <thead>
                                             <tr>
                                                 <th class="border px-2">name</th>
@@ -190,7 +203,7 @@
                                             <tr>
                                                 <td class="border px-2">CAPTAIN’S MAIN CAMP</td>
                                                 <td class="border px-2">مخيم الكابتن الرئيسي</td>
-                                                <td class="border px-2">{{rand(1, 5)}}</td>
+                                                <td class="border px-2">{{ rand(1, 5) }}</td>
                                                 <td class="border px-2">45</td>
                                                 <td class="border px-2">15</td>
                                                 <td class="border px-2">15</td>
@@ -200,7 +213,7 @@
                                     </table>
 
                                     <strong class="block mt-6 mb-2">Optional Fields</strong>
-                                    <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
+                                    <table class="border min-w-half divide-y text-center divide-gray-200 mb-4">
                                         <thead>
                                             <tr>
                                                 <th class="border px-2">trade_name</th>
@@ -221,11 +234,11 @@
                                                 <td class="border px-2">null</td>
                                                 <td class="border px-2">null</td>
                                                 <td class="border px-2">null</td>
-                                                <td class="border px-2">{{fake()->phoneNumber()}}</td>
-                                                <td class="border px-2">{{fake()->email()}}</td>
-                                                <td class="border px-2">{{fake()->email()}}</td>
-                                                <td class="border px-2">{{fake()->url()}}</td>
-                                                <td class="border px-2">{{fake()->phoneNumber()}}</td>
+                                                <td class="border px-2">{{ fake()->phoneNumber() }}</td>
+                                                <td class="border px-2">{{ fake()->email() }}</td>
+                                                <td class="border px-2">{{ fake()->email() }}</td>
+                                                <td class="border px-2">{{ fake()->url() }}</td>
+                                                <td class="border px-2">{{ fake()->phoneNumber() }}</td>
                                                 <td class="border px-2">null</td>
                                                 <td class="border px-2">null</td>
                                                 <td class="border px-2">null</td>
@@ -233,7 +246,7 @@
                                         </tbody>
                                     </table>
 
-                                    <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
+                                    <table class="border min-w-half divide-y text-center divide-gray-200 mb-4">
                                         <thead>
                                             <tr>
                                                 <th class="border px-2">contact_mobile</th>
@@ -304,7 +317,8 @@
                                     </table>
                                 </div>
 
-                                <div data-supplements-target="supplements" class="target-trigger mt-4" style="display: none">
+                                <div data-supplements-target="supplements" class="target-trigger mt-4"
+                                    style="display: none">
                                     <table class="border min-w-half divide-y text-center divide-gray-200">
                                         <thead>
                                             <tr>
@@ -324,14 +338,57 @@
                                 </div>
 
                                 <div data-rates-target="rates" class="target-trigger mt-4" style="display: none">
-                                    rates
+                                    <table class="border min-w-half divide-y text-center divide-gray-200">
+                                        <thead>
+                                            <tr>
+                                                <th class="border px-2">price</th>
+                                                <th class="border px-2">currency_id</th>
+                                                <th class="border px-2">accommodation_id</th>
+                                                <th class="border px-2">season_id</th>
+                                                <th class="border px-2">room_type_id</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            <tr>
+                                                <td class="border px-2">50.00</td>
+                                                <td class="border px-2">1</td>
+                                                <td class="border px-2">1</td>
+                                                <td class="border px-2">1</td>
+                                                <td class="border px-2">1</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
 
-                                <div data-rate_nationalities-target="rate_nationalities" class="target-trigger mt-4" style="display: none">
+                                <div data-rate_details-target="rate_details" class="target-trigger mt-4"
+                                    style="display: none">
+                                    <table class="border min-w-half divide-y text-center divide-gray-200">
+                                        <thead>
+                                            <tr>
+                                                <th class="border px-2">rate_id</th>
+                                                <th class="border px-2">room_type_id</th>
+                                                <th class="border px-2">price</th>
+                                                <th class="border px-2">price_type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            <tr>
+                                                <td class="border px-2">1</td>
+                                                <td class="border px-2">null</td>
+                                                <td class="border px-2">50.00</td>
+                                                <td class="border px-2">double_room</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div data-rate_nationalities-target="rate_nationalities" class="target-trigger mt-4"
+                                    style="display: none">
                                     rate_nationalities
                                 </div>
 
-                                <div data-facilities-target="facilities" class="target-trigger mt-4" style="display: none">
+                                <div data-facilities-target="facilities" class="target-trigger mt-4"
+                                    style="display: none">
                                     facilities
                                 </div>
                             </div>
@@ -358,7 +415,7 @@
             });
         });
 
-        document.addEventListener('click', function (event) {
+        document.addEventListener('click', function(event) {
             if (event.target.closest('#import-section')) {
                 updateFormState(true);
             }

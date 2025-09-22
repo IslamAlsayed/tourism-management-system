@@ -177,4 +177,8 @@ return [
     'add_new_language' => 'Add New Language',
     'language_name' => 'Language Name',
     'language_code' => 'Language Code',
+    'tour guides' => 'Tour Guides',
+    'rooms types' => 'Room Types',
+    'camps' => 'Camps',
+    'clients' => 'Clients',
 ];

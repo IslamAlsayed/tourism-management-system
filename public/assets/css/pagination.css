@@ -1,0 +1,71 @@
+.custom-pagination {
+    display: flex;
+    margin: 20px 0;
+    align-items: center;
+    justify-content: end;
+    color: var(--main-color);
+}
+
+.showing {
+    font-size: 10px;
+}
+
+.pagination-list {
+    display: flex;
+    gap: 5px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination-btn {
+    border: none;
+    font-size: 12px;
+    border: 1px solid var(--main-color-70);
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    color: var(--main-color);
+    background: var(--light-color);
+    transition: background 0.2s, color 0.2s;
+
+    &:not(:disabled):not(.active):hover {
+        background: var(--main-color-70);
+    }
+
+    &:not(:hover, :disabled):active {
+        color: var(--light-color);
+        background: var(--main-color);
+    }
+}
+
+.pagination-btn.active,
+.pagination-btn[aria-current="page"] {
+    font-weight: bold;
+    cursor: not-allowed;
+    color: var(--light-color);
+    background: var(--main-color);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-ellipsis {
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: var(--main-color);
+    background: var(--light-color-50);
+}
+
+@media (max-width: 767px) {
+    .pagination-list>li:not(:first-child):not(:last-child) {
+        display: none;
+    }
+
+    .pagination-list>li.active,
+    .pagination-list>li [aria-current="page"] {
+        display: inline-block;
+    }
+}

@@ -13,7 +13,7 @@ class SubregionController extends Controller
 {
     public function index()
     {
-        $subregions = Subregion::paginate(10);
+        $subregions = Subregion::paginate(getPaginate());
         $total = Subregion::count();
         return view('pages.dashboard.subregions.index', compact('subregions', 'total'));
     }

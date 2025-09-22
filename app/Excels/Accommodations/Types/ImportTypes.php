@@ -2,7 +2,7 @@
 
 namespace App\Excels\Accommodations\Types;
 
-use App\Models\AccommodationType;
+use App\Models\Type;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -12,7 +12,7 @@ class ImportTypes implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new AccommodationType())->getFillable();
+        $fillable = (new Type())->getFillable();
         $headers = $rows->first()->toArray();
 
         foreach ($rows as $index => $row) {
@@ -32,7 +32,7 @@ class ImportTypes implements ToCollection
                 }
             }
 
-            AccommodationType::create($data);
+            Type::updateOrCreate(['name' => $data['name']], $data);
             $this->rowCount++;
         }
     }

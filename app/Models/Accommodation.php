@@ -36,4 +36,9 @@ class Accommodation extends Model
         'longitude',
         'contract_file_path',
     ];
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class, 'type_id');
+    }
 }

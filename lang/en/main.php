@@ -276,17 +276,28 @@ return [
     'accommodation' => 'Accommodation',
     'all_accommodations' => 'All Accommodations',
     'accommodation_name' => 'Accommodation Name',
-    'accommodation_type' => 'Accommodation Type',
+    'accommodation_types' => 'Accommodation Types',
     'accommodation_location' => 'Accommodation Location',
     'accommodation_price' => 'Accommodation Price',
     'hotels' => 'Hotels',
+    'camps' => 'Camps',
     'room_types' => 'Room Types',
     'accommodations_types' => 'Accommodations Types',
     'seasons' => 'Seasons',
     'supplements' => 'Supplements',
     'rates' => 'Rates',
+    'rate_details' => 'Rate Details',
     'rate_nationalities' => 'Rate Nationalities',
     'facilities' => 'Facilities',
+
+    // Food & Beverage Management
+    'food_and_beverage_management' => 'Food & Beverage Management',
+    'menu_items' => 'Menu Items',
+    'special_offers' => 'Special Offers',
+    'food_categories' => 'Food Categories',
+    'beverage_categories' => 'Beverage Categories',
+    'restaurants' => 'Restaurants',
+    'restaurant' => 'Restaurant',
 
     // Profile & Account Settings
     'delete_account' => 'Delete Account',
@@ -608,6 +619,17 @@ return [
     'formatting_display' => 'Formatting and Display',
     'check_format_hint' => 'Make sure to set the symbol position and thousand separator correctly',
 
+    // Restaurant Management
+    'is_active' => 'Is Active',
+    'free_wifi' => 'Free Wifi',
+    'parking' => 'Parking',
+    'swimming_pool' => 'Swimming Pool',
+    'gym' => 'Gym',
+    'indoor' => 'Indoor',
+    'outdoor' => 'Outdoor',
+    'spa' => 'Spa',
+    'wheelchair_accessible' => 'Wheelchair Accessible',
+
     // Reports Section
     'reports_dashboard' => 'Reports Dashboard',
     'reports_and_statistics' => 'Reports and Statistics Dashboard',
@@ -821,6 +843,14 @@ return [
         'change_language_not_successfully' => 'Language change not successful.',
         'language_deleted_successfully' => 'Language deleted successfully.',
         'language_deletion_failed' => 'Language deletion failed.',
+
+        // Restaurant Management
+        'restaurant_created' => 'Restaurant Created',
+        'restaurant_creation_failed' => 'Restaurant Creation Failed',
+        'restaurant_updated' => 'Restaurant Updated',
+        'restaurant_update_failed' => 'Restaurant Update Failed',
+        'restaurant_deleted' => 'Restaurant Deleted',
+        'restaurant_deletion_failed' => 'Restaurant Deletion Failed',
     ],
 
     // maps

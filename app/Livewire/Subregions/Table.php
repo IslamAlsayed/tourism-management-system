@@ -5,13 +5,13 @@ namespace App\Livewire\Subregions;
 use Livewire\Component;
 use App\Models\Subregion;
 use Livewire\WithPagination;
+use App\Traits\CustomPagination;
 
 class Table extends Component
 {
-    use WithPagination;
+    use WithPagination, CustomPagination;
     public $search = '';
     public $totalCount = '';
-    public $perPage = 50;
     public array $columns = [];
 
     public function updatingSearch()
@@ -32,6 +32,7 @@ class Table extends Component
     public function mount()
     {
         $this->resetPage();
+        $this->mountWithCustomPagination();
         $this->columns = ['id', 'name', 'name_ar', 'created_at', 'updated_at'];
     }
 
@@ -52,8 +53,7 @@ class Table extends Component
                         $q->orWhere($column, 'like', '%' . $search . '%');
                     }
                 });
-            })
-            ->paginate($this->perPage);
+            })->paginate(getPaginate());
 
         return view('livewire.subregions.table', [
             'data' => $data,

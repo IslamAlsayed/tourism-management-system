@@ -3,15 +3,15 @@
 namespace App\Livewire\Dashboard;
 
 use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\Currency;
+use Livewire\WithPagination;
+use App\Traits\CustomPagination;
 
 class CurrencyTable extends Component
 {
-    use WithPagination;
+    use WithPagination, CustomPagination;
     public $search = '';
     public $totalCount = '';
-    public $perPage = 50;
     public array $columns = [];
 
     public function updatingSearch()
@@ -32,6 +32,7 @@ class CurrencyTable extends Component
     public function mount()
     {
         $this->resetPage();
+        $this->mountWithCustomPagination();
         // عرض جميع أعمدة العملات (id, name, code, symbol, created_at, updated_at)
         $this->columns = ['id', 'name', 'code', 'symbol', 'created_at', 'updated_at'];
     }
@@ -53,9 +54,7 @@ class CurrencyTable extends Component
                         $q->orWhere($column, 'like', '%' . $search . '%');
                     }
                 });
-            })
-            ->paginate($this->perPage);
-
+            })->paginate(getPaginate());
         return view('livewire.dashboard.currency-table', [
             'data' => $data,
             'totalCount' => $this->totalCount,

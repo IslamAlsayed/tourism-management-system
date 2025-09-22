@@ -12,13 +12,9 @@ return new class extends Migration {
     {
         Schema::create('rates', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price', 10, 2);
-            $table->string('currency', 3)->default('USD');
-            // $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
+            $table->unsignedBigInteger('currency_id')->nullable();
             $table->unsignedBigInteger('accommodation_id')->nullable();
-            // $table->foreignId('season_id')->nullable()->constrained('seasons')->onDelete('cascade');
             $table->unsignedBigInteger('season_id')->nullable();
-            // $table->foreignId('room_type_id')->nullable()->constrained('room_types')->onDelete('cascade'); // للفنادق فقط
             $table->unsignedBigInteger('room_type_id')->nullable();
             $table->timestamps();
         });

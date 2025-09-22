@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'paginate_array' => ['1', '2', '10', '25', '50', '100'],
+    'paginate_count' => env('PAGINATE_COUNT', 50),
 
     /*
     |--------------------------------------------------------------------------

@@ -38,8 +38,11 @@
                                 </td>
                                 <td>{{ $country->id }}</td>
                                 <td>
-                                    <span class="text-2xl">{{ $country->flag_emoji ?? '🏳️' }}</span>
-                                    <span class="font-medium text-mono">{{ $country->name }}</span>
+                                    <img src="{{ asset('metronic/media/flags/' . strtolower($country->flag_emoji) . '.svg') }}"
+                                        alt="{{ $country->name }}" class="inline-block w-6 h-4 mr-2 align-middle">
+                                    <span class="font-medium text-mono">
+                                        {{ $country->name }}
+                                    </span>
                                 </td>
                                 <td>{{ $country->currency?->code ?? '--' }}</td>
                                 <td>
