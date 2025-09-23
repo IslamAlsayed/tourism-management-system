@@ -2,7 +2,7 @@
     @component('includes.pagination-info', [
         'data' => $data,
         'title' => __('main.cities'),
-        'entityName' => __('main.cities'),
+        'entityName' => __('main.city'),
         'showSearch' => true,
     ])
     @endcomponent
@@ -14,10 +14,12 @@
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllCountries" class="kt-checkbox kt-checkbox-sm">
+                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}</th>
+                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('main.name') }}</th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.country_name') }}</th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -29,14 +31,13 @@
                         @foreach ($data as $city)
                             <tr>
                                 <td class="text-center">
-                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                        type="checkbox" value="1" />
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $city->id }}"
+                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
-                                <td>{{ $city->id }}</td>
-                                <td>{{ $city->country?->name }}</td>
-                                <td>
-                                    {{ $city->created_at ? $city->created_at->format('Y-m-d') : '-' }}
-                                </td>
+                                <td>{!! highlightSearch($city->id, $search) !!}</td>
+                                <td>{!! highlightSearch($city->name ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($city->country?->name ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($city->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('cities.edit', $city->id) }}"

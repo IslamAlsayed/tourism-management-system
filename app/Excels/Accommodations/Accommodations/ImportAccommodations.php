@@ -4,6 +4,7 @@ namespace App\Excels\Accommodations\Accommodations;
 
 use App\Models\City;
 use App\Models\Accommodation;
+use App\Jobs\ImportDataToDBJob;
 use App\Models\AccommodationType;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -16,6 +17,9 @@ class ImportAccommodations implements ToCollection
     {
         $fillable = (new Accommodation())->getFillable();
         $headers = $rows->first()->toArray();
+
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -49,8 +53,20 @@ class ImportAccommodations implements ToCollection
                 }
             }
 
-            Accommodation::create($data);
-            $this->rowCount++;
+            $batchData[] = $data;
+
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportDataToDBJob::dispatch(Accommodation::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
+            }
+        }
+
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportDataToDBJob::dispatch(Accommodation::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 }

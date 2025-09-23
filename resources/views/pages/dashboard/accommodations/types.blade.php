@@ -7,7 +7,7 @@
             @include('includes.table-breadcrumb', [
                 'title' => __('main.accommodations'),
                 'description' => __('main.manage_system_types', ['types' => __('main.accommodations')]),
-                'import_url' => route('accommodations.import'),
+                'import_url' => route('import.data', ['model' => 'accommodations']),
                 'page_add_url' => route('accommodations.create'),
                 'page_add_title' => __('main.add_new_type', ['type' => __('main.accommodation')]),
             ])
@@ -16,7 +16,7 @@
             <!-- Container -->
             <div class="grid gap-5 lg:gap-7.5">
                 <div class="kt-card kt-card-grid min-w-full">
-                    <livewire:accommodations.accommodations :accommodations="$dataType" />
+                    <livewire:accommodations.types :type="$type" />
                 </div>
             </div>
             <!-- End of Container -->

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Excels\Accommodations\HotelsRoomsTypes;
+namespace App\Excels\Accommodations\RoomsTypes;
 
+use Schema;
 use App\Models\Hotel;
 use App\Models\HotelRoomType;
+use App\Jobs\ImportDataToDBJob;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Schema;
 
-class ImportHotelsRoomsTypes implements ToCollection
+class ImportRoomsTypes implements ToCollection
 {
     public $rowCount = 0;
 
@@ -16,6 +17,9 @@ class ImportHotelsRoomsTypes implements ToCollection
     {
         $fillable = (new HotelRoomType())->getFillable();
         $headers = $rows->first()->toArray();
+
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -34,8 +38,20 @@ class ImportHotelsRoomsTypes implements ToCollection
                 }
             }
 
-            HotelRoomType::create($data);
-            $this->rowCount++;
+            $batchData[] = $data;
+
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportDataToDBJob::dispatch(HotelRoomType::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
+            }
+        }
+
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportDataToDBJob::dispatch(HotelRoomType::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 }

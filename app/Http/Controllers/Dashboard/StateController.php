@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Region;
 use App\Models\State;
-use Illuminate\Http\Request;
-use App\Excels\States\ExportStates;
-use App\Excels\States\ImportStates;
+use App\Models\Country;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\States\StateCreateRequest;
+use App\Http\Requests\States\StateUpdateRequest;
+use App\Http\Requests\States\UpdateStatesRequest;
 
 class StateController extends Controller
 {
@@ -20,61 +21,41 @@ class StateController extends Controller
 
     public function create()
     {
-        return 'code...';
+        $countries = Country::orderBy('name')->get();
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.states.create', compact('countries', 'regions'));
     }
 
-    public function getStatesToImport()
+    public function store(StateCreateRequest $request)
     {
-        $model = 'states';
-        $title = __('main.import_types', ['types' => __('main.states')]);
-        $description = __('main.import_types_description', ['types' => __('main.states')]);
+        $validated = $request->validated();
+        $state = State::create($validated);
 
-        return view('pages.dashboard.states.import', compact('model', 'title', 'description'));
-    }
-
-    public function postStatesToImport(Request $request)
-    {
-        if (!$request) {
-            return redirect()->back()->withError(__('Please Select File.'));
+        if ($state) {
+            return redirect()->route('states.index')->with('success', __('main.messages.state_created'));
         }
 
-        try {
-            if (!$request->hasFile('file')) {
-                return redirect()->back()->withError(__('No file uploaded.'));
-            }
-
-            $file = $request->file('file');
-            $fileExtension = $file->getClientOriginalExtension();
-
-            if (!in_array($fileExtension, ['csv', 'xlsx', 'xls'])) {
-                return redirect()->back()->withError(__('This file extension is not allowed. <br/> please select a valid CSV file.'));
-            }
-
-            $importer = new ImportStates();
-
-            Excel::import($importer, $file->getRealPath());
-
-            $rowCount = $importer->rowCount;
-
-            if ($rowCount > 0) {
-                $filename = 'states' . '_' . now()->format('Y_m_d_His') . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('uploads/excels/' . 'states', $filename);
-
-                $rowCount = $importer->rowCount;
-
-                return redirect()->back()->withSuccess(__("Data Imported Successfully. $rowCount rows added."));
-            }
-
-            return redirect()->back()->withError(__('Excel file does not contain data'));
-        } catch (\Exception $e) {
-            return redirect()->back()->withError(__('Import Failed: ' . $e->getMessage()));
-        }
+        return redirect()->route('states.index')->with('error', __('main.messages.state_creation_failed'));
     }
 
-    public function getStatesToExport()
+    public function edit($id)
     {
-        $states = State::all();
-        $filename = generateUniqueFilename('states') . '.csv';
-        return Excel::download(new ExportStates($states), $filename);
+        $state = State::findOrFail($id);
+        $countries = Country::orderBy('name')->get();
+        $regions = Country::orderBy('name')->get();
+        return view('pages.dashboard.states.edit', compact('state', 'countries', 'regions'));
+    }
+
+    public function update(StateUpdateRequest $request, $id)
+    {
+        $state = State::findOrFail($id);
+        $validated = $request->validated();
+
+        $updated = $state->update($validated);
+        if ($updated) {
+            return redirect()->route('states.index')->with('success', __('main.messages.state_updated'));
+        }
+
+        return redirect()->route('states.index')->with('error', __('main.messages.state_updated_failed'));
     }
 }

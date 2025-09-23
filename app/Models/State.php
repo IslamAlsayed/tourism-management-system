@@ -11,6 +11,7 @@ class State extends Model
 
     protected $fillable = [
         'name',
+        'name_ar',
         'iso2',
         'iso3',
         'fips_code',

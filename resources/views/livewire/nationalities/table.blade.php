@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllNationalities" class="kt-checkbox kt-checkbox-sm">
+                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}</th>
@@ -33,13 +33,21 @@
                         @foreach ($data as $nationality)
                             <tr>
                                 <td class="text-center">
-                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                        type="checkbox" value="1" />
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $nationality->id }}"
+                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
-                                <td>{{ $nationality->id }}</td>
-                                <td>{{ $nationality->name }}</td>
-                                <td>{{ $nationality->name_ar }}</td>
-                                <td>{{ $nationality->is_active }}</td>
+                                <td>{!! highlightSearch($nationality->id, $search) !!}</td>
+                                <td>{!! highlightSearch($nationality->name ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($nationality->name_ar ?? '--', $search) !!}</td>
+                                <td>
+                                    <span
+                                        class="text-{{ $nationality->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
+                                        {!! $nationality->is_active == 1
+                                            ? highlightSearch(__('main.active'), $search)
+                                            : highlightSearch(__('main.inactive'), $search) !!}
+                                    </span>
+                                </td>
+                                <td>{!! highlightSearch($nationality->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('nationalities.edit', $nationality->id) }}"

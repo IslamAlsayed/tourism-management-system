@@ -1,7 +1,7 @@
 <div class="kt-card kt-card-grid min-w-full">
     @component('includes.pagination-info', [
         'data' => $data,
-        'title' => __('main.user_management'),
+        'title' => __('main.users'),
         'entityName' => __('main.user'),
         'showSearch' => true,
     ])
@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllCountries" class="kt-checkbox kt-checkbox-sm">
+                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}</th>
@@ -35,10 +35,11 @@
                         @foreach ($data as $user)
                             <tr>
                                 <td class="text-center">
-                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                        type="checkbox" value="1" />
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $user->id }}"
+                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
-                                <td class="px-4 py-2 text-sm text-gray-700">{{ $user->id }}</td>
+                                <td>{!! highlightSearch($user->id, $search) !!}</td>
+
                                 <td>
                                     <div class="flex items-center gap-2.5">
                                         <img src="{{ $user->avatar_url ? asset('storage/' . $user->avatar_url) : asset('metronic/media/avatars/blank.png') }}"
@@ -46,24 +47,25 @@
                                         <div class="flex flex-col">
                                             <a class="text-sm font-medium text-mono hover:text-primary mb-px"
                                                 href="#">
-                                                {{ $user->name }}
+                                                {!! highlightSearch($user->name ?? '--', $search) !!}
                                             </a>
                                             <a class="text-sm text-secondary-foreground font-normal hover:text-primary"
                                                 href="#">
-                                                {{ $user->email }}
+                                                {!! highlightSearch($user->email, $search) !!}
                                             </a>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ $user->phone ?? ($user->mobile ?? '--') }}</td>
-                                <td>{{ $user->position ?? '--' }}</td>
+                                <td>{!! highlightSearch($user->phone ?? ($user->mobile ?? '--'), $search) !!}</td>
+                                <td>{!! highlightSearch($user->position ?? '--', $search) !!}</td>
                                 <td>
                                     <span class="text-{{ $user->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
-                                        {{ $user->is_active == 1 ? __('main.active') : __('main.inactive') }}
+                                        {!! $user->is_active == 1
+                                            ? highlightSearch(__('main.active'), $search)
+                                            : highlightSearch(__('main.inactive'), $search) !!}
                                     </span>
                                 </td>
-                                <td>
-                                    {{ $user->created_at ? $user->created_at->format('Y-m-d') : '' }}</td>
+                                <td>{!! highlightSearch($user->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('users.edit', $user->id) }}"

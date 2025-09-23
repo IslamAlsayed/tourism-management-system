@@ -3,8 +3,8 @@
 @section('table-content')
     <!-- Container -->
     @include('includes.table-breadcrumb', [
-        'title' => __('main.language_management_title'),
-        'description' => __('main.language_management_description'),
+        'title' => __('main.type_management_title', ['type' => __('main.language')]),
+        'description' => __('main.types_management_description', ['types' => __('main.language')]),
         'import_url' => '#',
         'page_add_url' => route('languages.create'),
         'page_add_title' => __('main.add_new_type', ['type' => __('main.language')]),
@@ -53,6 +53,7 @@
                                         {{ $language->code == getCurrentLocale() ? __('main.active') : __('main.inactive') }}
                                     </span>
                                 </td>
+                                <td>{!! highlightSearch($language->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     @if ($language->code != getCurrentLocale())
                                         <a href="{{ route('languages.change', $language->code) }}"

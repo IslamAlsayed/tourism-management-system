@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllNationalities" class="kt-checkbox kt-checkbox-sm">
+                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}</th>
@@ -37,20 +37,21 @@
                         @foreach ($data as $restaurant)
                             <tr>
                                 <td class="text-center">
-                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                        type="checkbox" value="1" />
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $restaurant->id }}"
+                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
-                                <td>{{ $restaurant->id }}</td>
-                                <td>{{ $restaurant->name }}</td>
-                                <td>{{ $restaurant->name_ar }}</td>
-                                <td>{{ $restaurant->country?->name ?? 'unknown' }}</td>
-                                <td>{{ $restaurant->city?->name ?? 'unknown' }}</td>
+                                <td>{!! highlightSearch($restaurant->id, $search) !!}</td>
+                                <td>{!! highlightSearch($restaurant->name ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($restaurant->name_ar ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($restaurant->country?->name ?? 'unknown', $search) !!}</td>
+                                <td>{!! highlightSearch($restaurant->city?->name ?? 'unknown', $search) !!}</td>
                                 <td>
                                     <span
                                         class="text-{{ $restaurant->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
-                                        {{ $restaurant->is_active == 1 ? __('main.active') : __('main.inactive') }}
+                                        {!! highlightSearch($restaurant->is_active == 1 ? __('main.active') : __('main.inactive'), $search) !!}
                                     </span>
                                 </td>
+                                <td>{!! highlightSearch($restaurant->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('restaurants.edit', $restaurant->id) }}"

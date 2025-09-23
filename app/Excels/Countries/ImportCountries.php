@@ -3,6 +3,7 @@
 namespace App\Excels\Countries;
 
 use App\Models\Country;
+use App\Jobs\ImportDataToDBJob;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -14,6 +15,9 @@ class ImportCountries implements ToCollection
     {
         $fillable = (new Country())->getFillable();
         $headers = $rows->first()->toArray();
+
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -34,8 +38,20 @@ class ImportCountries implements ToCollection
 
             $data['timezone'] = $this->fixTimezone($data['timezone']);
 
-            Country::create($data);
-            $this->rowCount++;
+            $batchData[] = $data;
+
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportDataToDBJob::dispatch(Country::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
+            }
+        }
+
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportDataToDBJob::dispatch(Country::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 

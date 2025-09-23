@@ -23,7 +23,6 @@ class User extends Authenticatable
         'email',
         'password',
         'bio',
-        'phone',
         'first_name',
         'last_name',
         'phone',
@@ -46,8 +45,6 @@ class User extends Authenticatable
         'last_login_at',
         'last_login_ip',
         'notes',
-        'created_by',
-        'updated_by',
     ];
 
     /**

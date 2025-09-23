@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Excels\Countries\ExportCountries;
-use App\Excels\Countries\ImportCountries;
 use App\Http\Requests\Countries\CreateCountriesRequest;
 use App\Http\Requests\Countries\UpdateCountriesRequest;
 
@@ -24,7 +22,8 @@ class CountryController extends Controller
     public function create()
     {
         $currencies = Currency::orderBy('code')->get();
-        return view('pages.dashboard.countries.create', compact('currencies'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.countries.create', compact('currencies', 'regions'));
     }
 
     public function store(CreateCountriesRequest $request)
@@ -59,7 +58,8 @@ class CountryController extends Controller
     {
         $country = Country::findOrFail($id);
         $currencies = Currency::orderBy('code')->get();
-        return view('pages.dashboard.countries.edit', compact('country', 'currencies'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'regions'));
     }
 
     public function update(UpdateCountriesRequest $request, $id)
@@ -106,60 +106,5 @@ class CountryController extends Controller
             default:
                 return redirect()->back()->with('error', __('main.messages.unknown_action'));
         }
-    }
-
-    public function getCountriesToImport()
-    {
-        $model = 'countries';
-        $title = __('main.import_types', ['types' => __('main.countries')]);
-        $description = __('main.import_types_description', ['types' => __('main.countries')]);
-
-        return view('pages.dashboard.countries.import', compact('model', 'title', 'description'));
-    }
-
-    public function postCountriesToImport(Request $request)
-    {
-        if (!$request) {
-            return redirect()->back()->withError(__('Please Select File.'));
-        }
-
-        try {
-            if (!$request->hasFile('file')) {
-                return redirect()->back()->withError(__('No file uploaded.'));
-            }
-
-            $file = $request->file('file');
-            $fileExtension = $file->getClientOriginalExtension();
-
-            if (!in_array($fileExtension, ['csv', 'xlsx', 'xls'])) {
-                return redirect()->back()->withError(__('This file extension is not allowed. <br/> please select a valid CSV file.'));
-            }
-
-            $importer = new ImportCountries();
-
-            Excel::import($importer, $file->getRealPath());
-
-            $rowCount = $importer->rowCount;
-
-            if ($rowCount > 0) {
-                $filename = 'countries' . '_' . now()->format('Y_m_d_His') . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('uploads/excels/' . 'countries', $filename);
-
-                $rowCount = $importer->rowCount;
-
-                return redirect()->back()->withSuccess(__("Data Imported Successfully. $rowCount rows added."));
-            }
-
-            return redirect()->back()->withError(__('Excel file does not contain data'));
-        } catch (\Exception $e) {
-            return redirect()->back()->withError(__('Import Failed: ' . $e->getMessage()));
-        }
-    }
-
-    public function getCountriesToExport()
-    {
-        $countries = Country::all();
-        $filename = generateUniqueFilename('countries') . '.csv';
-        return Excel::download(new ExportCountries($countries), $filename);
     }
 }

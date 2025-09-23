@@ -12,6 +12,7 @@
 {{-- Multi Select JS --}}
 <script src="{{ asset('assets/js/multiSelect.js') }}"></script>
 <script src="{{ asset('assets/js/multiCheckbox.js') }}"></script>
+<script src="{{ asset('assets/js/multiDelete.js') }}"></script>
 <script src="{{ asset('assets/js/helpers.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 

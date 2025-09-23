@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Excels\Accommodations\HotelsRoomsTypes;
+namespace App\Excels\Accommodations\RoomsTypes;
 
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 
-class ExportHotelsRoomsTypes implements FromArray, WithHeadings, WithCustomCsvSettings
+class ExportRoomsTypes implements FromArray, WithHeadings, WithCustomCsvSettings
 {
     protected $arrayData;
 

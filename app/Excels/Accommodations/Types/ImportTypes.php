@@ -4,6 +4,7 @@ namespace App\Excels\Accommodations\Types;
 
 use App\Models\Type;
 use Illuminate\Support\Collection;
+use App\Jobs\ImportUpdateDataToDBJob;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class ImportTypes implements ToCollection
@@ -14,6 +15,9 @@ class ImportTypes implements ToCollection
     {
         $fillable = (new Type())->getFillable();
         $headers = $rows->first()->toArray();
+
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -32,8 +36,20 @@ class ImportTypes implements ToCollection
                 }
             }
 
-            Type::updateOrCreate(['name' => $data['name']], $data);
-            $this->rowCount++;
+            $batchData[] = $data;
+
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportUpdateDataToDBJob::dispatch(Type::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
+            }
+        }
+
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportUpdateDataToDBJob::dispatch(Type::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 }

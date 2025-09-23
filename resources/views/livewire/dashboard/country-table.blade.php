@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllCountries" class="kt-checkbox kt-checkbox-sm">
+                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}</th>
@@ -36,24 +36,23 @@
                                     <input type="checkbox" class="kt-checkbox kt-checkbox-sm country-checkbox"
                                         value="{{ $country->id }}">
                                 </td>
-                                <td>{{ $country->id }}</td>
+                                <td>{!! highlightSearch($country->id, $search) !!}</td>
                                 <td>
                                     <img src="{{ asset('metronic/media/flags/' . strtolower($country->flag_emoji) . '.svg') }}"
                                         alt="{{ $country->name }}" class="inline-block w-6 h-4 mr-2 align-middle">
                                     <span class="font-medium text-mono">
                                         {{ $country->name }}
+                                        {!! highlightSearch($country->name ?? '--', $search) !!}
                                     </span>
                                 </td>
-                                <td>{{ $country->currency?->code ?? '--' }}</td>
+                                <td>{!! highlightSearch($country->currency?->code ?? '--', $search) !!}</td>
                                 <td>
                                     <span
                                         class="text-{{ $country->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
-                                        {{ $country->is_active == 1 ? __('main.active') : __('main.inactive') }}
+                                        {!! highlightSearch($country->is_active == 1 ? __('main.active') : __('main.inactive'), $search) !!}
                                     </span>
                                 </td>
-                                <td>
-                                    {{ $country->created_at ? $country->created_at->format('Y-m-d') : '-' }}
-                                </td>
+                                <td>{!! highlightSearch($country->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('countries.edit', $country->id) }}"

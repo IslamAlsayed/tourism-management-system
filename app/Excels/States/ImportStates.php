@@ -3,6 +3,7 @@
 namespace App\Excels\States;
 
 use App\Models\State;
+use App\Jobs\ImportDataToDBJob;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -15,7 +16,8 @@ class ImportStates implements ToCollection
         $fillable = (new State())->getFillable();
         $headers = $rows->first()->toArray();
 
-        $stateData = [];
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -34,18 +36,20 @@ class ImportStates implements ToCollection
                 }
             }
 
-            $stateData[] = $data;
+            $batchData[] = $data;
 
-            if (count($stateData) >= 1000) {
-                State::insert($stateData);
-                $this->rowCount += count($stateData);
-                $stateData = [];
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportDataToDBJob::dispatch(State::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
             }
         }
 
-        if (count($stateData) > 0) {
-            State::insert($stateData);
-            $this->rowCount += count($stateData);
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportDataToDBJob::dispatch(State::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 }

@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllCurrencies" class="kt-checkbox kt-checkbox-sm">
+                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}</th>
@@ -33,17 +33,14 @@
                         @foreach ($data as $currency)
                             <tr>
                                 <td class="text-center">
-                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                        type="checkbox" value="1" />
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $currency->id }}"
+                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
-                                <td>{{ $currency->id }}</td>
-                                <td>{{ $currency->name }}</td>
-                                <td>{{ $currency->code }}</td>
-                                <td>{{ $currency->symbol }}</td>
-                                <td>
-                                    {{ $currency->created_at ? $currency->created_at->format('Y-m-d') : '' }}
-                                </td>
-
+                                <td>{!! highlightSearch($currency->id, $search) !!}</td>
+                                <td>{!! highlightSearch($currency->name ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($currency->code, $search) !!}</td>
+                                <td>{!! highlightSearch($currency->symbol, $search) !!}</td>
+                                <td>{!! highlightSearch($currency->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('currencies.edit', $currency->id) }}"

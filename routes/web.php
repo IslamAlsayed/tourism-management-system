@@ -2,20 +2,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\dashboard\CampController;
 use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Controllers\Dashboard\HotelController;
-use App\Http\Controllers\dashboard\LodgeController;
+use App\Http\Controllers\Dashboard\ExcelController;
 use App\Http\Controllers\Dashboard\StateController;
-use App\Http\Controllers\dashboard\HostelController;
 use App\Http\Controllers\Dashboard\RegionController;
-use App\Http\Controllers\dashboard\ResortController;
 use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\SettingsController;
-use App\Http\Controllers\dashboard\ApartmentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\SubregionController;
 use App\Http\Controllers\Admin\SidebarManagerController;
@@ -41,6 +36,8 @@ Route::get('/', fn() => view('welcome'));
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Dashboard Main
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::delete('delete-all-selected-items', [DashboardController::class, 'deleteAll'])->name('deleteAll');
 
     // Legacy multi-step form routes (keeping for reference)
     Route::prefix('quote/v1')->group(function () {
@@ -80,83 +77,35 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === USER MANAGEMENT ===
     Route::resource('users', UserController::class)->names('users');
-    Route::post('users/{id}/activate', [UserController::class, 'activate'])->name('users.activate');
-    Route::post('users/{id}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
-    Route::get('users/import/data', [UserController::class, 'getUsersToImport'])->name('users.import');
-    Route::post('users/import/post', [UserController::class, 'postUsersToImport'])->name('users.import.post');
-    Route::get('users/export/data', [UserController::class, 'getUsersToExport'])->name('users.export');
-
-    // === LOCATION MANAGEMENT ===
-    // Route::resource('countries', CountryController::class)->names('countries');
-    // Route::post('countries/bulk-edit', [CountryController::class, 'bulkEdit'])->name('countries.bulkEdit');
 
     // === CURRENCY MANAGEMENT ===
     Route::resource('currencies', CurrencyController::class)->names('currencies');
-    Route::get('currencies/import/data', [CurrencyController::class, 'getCurrenciesToImport'])->name('currencies.import');
-    Route::post('currencies/import/post', [CurrencyController::class, 'postCurrenciesToImport'])->name('currencies.import.post');
-    Route::get('currencies/export/data', [CurrencyController::class, 'getCurrenciesToExport'])->name('currencies.export');
 
     // === COUNTRIES MANAGEMENT ===
     Route::resource('countries', CountryController::class)->names('countries');
-    Route::get('countries/import/data', [CountryController::class, 'getCountriesToImport'])->name('countries.import');
-    Route::post('countries/import/post', [CountryController::class, 'postCountriesToImport'])->name('countries.import.post');
-    Route::get('countries/export/data', [CountryController::class, 'getCountriesToExport'])->name('countries.export');
 
     // === STATES MANAGEMENT ===
     Route::resource('states', StateController::class)->names('states');
-    Route::get('states/import/data', [StateController::class, 'getStatesToImport'])->name('states.import');
-    Route::post('states/import/post', [StateController::class, 'postStatesToImport'])->name('states.import.post');
-    Route::get('states/export/data', [StateController::class, 'getStatesToExport'])->name('states.export');
 
     // === CITIES MANAGEMENT ===
     Route::resource('cities', CityController::class)->names('cities');
-    Route::get('cities/import/data', [CityController::class, 'getCitiesToImport'])->name('cities.import');
-    Route::post('cities/import/post', [CityController::class, 'postCitiesToImport'])->name('cities.import.post');
-    Route::get('cities/export/data', [CityController::class, 'getCitiesToExport'])->name('cities.export');
     Route::get('cities/by-country/{countryId}', [CityController::class, 'getByCountry'])->name('cities.by-country');
 
     // === REGIONS MANAGEMENT ===
     Route::resource('regions', RegionController::class)->names('regions');
-    Route::get('regions/import/data', [RegionController::class, 'getRegionsToImport'])->name('regions.import');
-    Route::post('regions/import/post', [RegionController::class, 'postRegionsToImport'])->name('regions.import.post');
-    Route::get('regions/export/data', [RegionController::class, 'getRegionsToExport'])->name('regions.export');
 
     // === SUBREGIONS MANAGEMENT ===
     Route::resource('subregions', SubregionController::class)->names('subregions');
-    Route::get('subregions/import/data', [SubregionController::class, 'getSubregionsToImport'])->name('subregions.import');
-    Route::post('subregions/import/post', [SubregionController::class, 'postSubregionsToImport'])->name('subregions.import.post');
-    Route::get('subregions/export/data', [SubregionController::class, 'getSubregionsToExport'])->name('subregions.export');
 
     // === NATIONALITIES MANAGEMENT ===
     Route::resource('nationalities', NationalityController::class)->names('nationalities');
-    Route::get('nationalities/import/data', [NationalityController::class, 'getNationalitiesToImport'])->name('nationalities.import');
-    Route::post('nationalities/import/post', [NationalityController::class, 'postNationalitiesToImport'])->name('nationalities.import.post');
-    Route::get('nationalities/export/data', [NationalityController::class, 'getNationalitiesToExport'])->name('nationalities.export');
 
     // === RESTAURANTS MANAGEMENT ===
     Route::resource('restaurants', RestaurantController::class)->names('restaurants');
-    Route::get('restaurants/import/data', [RestaurantController::class, 'getRestaurantsToImport'])->name('restaurants.import');
-    Route::post('restaurants/import/post', [RestaurantController::class, 'postRestaurantsToImport'])->name('restaurants.import.post');
-    Route::get('restaurants/export/data', [RestaurantController::class, 'getRestaurantsToExport'])->name('restaurants.export');
 
     // === ACCOMMODATIONS MANAGEMENT ===
     Route::resource('accommodations', AccommodationController::class)->names('accommodations');
     Route::get('accommodations/{type}/type', [AccommodationController::class, 'getResultType'])->name('accommodations.type');
-    Route::get('accommodations/import/data', [AccommodationController::class, 'getAccommodationsToImport'])->name('accommodations.import');
-    Route::post('accommodations/import/post', [AccommodationController::class, 'postAccommodationsToImport'])->name('accommodations.import.post');
-    Route::get('accommodations/export/data/{type}', [AccommodationController::class, 'getAccommodationsToExport'])->name('accommodations.export');
-
-    // Route::get('hotels/create', [HotelController::class, 'create'])->name('hotels.create');
-    // Route::get('resorts/create', [ResortController::class, 'create'])->name('resorts.create');
-    // Route::get('camps/create', [CampController::class, 'create'])->name('camps.create');
-    // Route::get('hostels/create', [HostelController::class, 'create'])->name('hostels.create');
-    // Route::get('lodges/create', [LodgeController::class, 'create'])->name('lodges.create');
-    // Route::get('apartments/create', [ApartmentController::class, 'create'])->name('apartments.create');
-
-    // === FINANCIAL MANAGEMENT ===
-    // Route::get('currencies/rates', [CurrencyController::class, 'rates'])->name('currencies.rates');
-    // Route::post('currencies/rates/update', [CurrencyController::class, 'updateRates'])->name('currencies.rates.update');
-
 
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');
@@ -205,6 +154,10 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::post('/reset', [SidebarManagerController::class, 'resetToDefault'])->name('reset');
         Route::get('/export', [SidebarManagerController::class, 'exportConfig'])->name('export');
     });
+
+    Route::get('import/{model}/data', [ExcelController::class, 'getToImport'])->name('import.data');
+    Route::post('import/{model}/data/{type?}', [ExcelController::class, 'postToImport'])->name('import.data.post');
+    Route::get('export/{model}/data/{type?}', [ExcelController::class, 'getToExport'])->name('export.data');
 });
 
 require __DIR__ . '/auth.php';

@@ -3,6 +3,7 @@
 namespace App\Excels\Subregions;
 
 use App\Models\Subregion;
+use App\Jobs\ImportDataToDBJob;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -14,6 +15,9 @@ class ImportSubregions implements ToCollection
     {
         $fillable = (new Subregion())->getFillable();
         $headers = $rows->first()->toArray();
+
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -32,8 +36,20 @@ class ImportSubregions implements ToCollection
                 }
             }
 
-            Subregion::create($data);
-            $this->rowCount++;
+            $batchData[] = $data;
+
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportDataToDBJob::dispatch(Subregion::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
+            }
+        }
+
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportDataToDBJob::dispatch(Subregion::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 }

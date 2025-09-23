@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.edit_currency'))
+@section('title', __('main.edit_type', ['type' => __('main.currency')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.edit_currency') }}
+                    {{ __('main.edit_type', ['type' => __('main.currency')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.edit_currency_description') }}
+                    {{ __('main.edit_type_description', ['type' => __('main.currency')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-6">
             <!-- Currency Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -33,11 +33,10 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="grid lg:grid-cols-2 gap-6">
+                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
                             <!-- Currency Name -->
-                            <div class="mb-3">
-                                <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.currency_name') }}</label>
+                            <div class="">
+                                <label for="name" class="kt-label required mb-2">{{ __('main.currency_name') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.currency_name_english_example') }}" required
                                     value="{{ $currency->name }}">
@@ -47,7 +46,7 @@
                             </div>
 
                             <!-- Currency Code -->
-                            <div class="mb-3">
+                            <div class="">
                                 <label for="code"
                                     class="kt-label required mb-2">{{ __('main.currency_code_iso') }}</label>
                                 <input type="text" name="code" id="code" class="kt-input h-[45px]"
@@ -59,7 +58,7 @@
                             </div>
 
                             <!-- Currency Symbol -->
-                            <div class="mb-3">
+                            <div class="">
                                 <label for="symbol"
                                     class="kt-label required mb-2">{{ __('main.currency_symbol') }}</label>
                                 <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]"
@@ -88,29 +87,6 @@
                                         value="1" {{ $currency->auto_update_rate == 1 ? 'checked' : '' }}>
                                     <label for="auto_update_rate"
                                         class="kt-label mb-0">{{ __('main.auto_update_rate') }}</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Preview -->
-                        <div class="kt-card bg-secondary-light mt-4">
-                            <div class="kt-card-header">
-                                <h4 class="kt-card-title">{{ __('main.format_preview') }}</h4>
-                            </div>
-                            <div class="kt-card-body p-4">
-                                <div class="space-y-2">
-                                    <div class="flex justify-between w-60">
-                                        <span>{{ __('main.amount_example') }}:</span>
-                                        <span id="amount-preview" class="font-mono">$ 1,234.56</span>
-                                    </div>
-                                    <div class="flex justify-between w-60">
-                                        <span>{{ __('main.symbol') }}:</span>
-                                        <span id="symbol-preview" class="font-mono">$</span>
-                                    </div>
-                                    <div class="flex justify-between w-60">
-                                        <span>{{ __('main.code') }}:</span>
-                                        <span id="code-preview" class="font-mono">USD</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>

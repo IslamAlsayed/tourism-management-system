@@ -3,8 +3,9 @@
 namespace App\Excels\Accommodations\Rates;
 
 use App\Models\Rate;
-use App\Models\Currency;
 use App\Models\Season;
+use App\Models\Currency;
+use App\Jobs\ImportDataToDBJob;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -17,6 +18,9 @@ class ImportRates implements ToCollection
     {
         $fillable = (new Rate())->getFillable();
         $headers = $rows->first()->toArray();
+
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -40,8 +44,20 @@ class ImportRates implements ToCollection
                 }
             }
 
-            Rate::create($data);
-            $this->rowCount++;
+            $batchData[] = $data;
+
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportDataToDBJob::dispatch(Rate::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
+            }
+        }
+
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportDataToDBJob::dispatch(Rate::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 }

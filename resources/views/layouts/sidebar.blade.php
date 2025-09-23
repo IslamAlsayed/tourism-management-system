@@ -58,6 +58,7 @@
                                     <i
                                         class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} text-lg {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
                                 </span>
+
                                 <span
                                     class="kt-menu-title text-sm font-medium text-foreground {{ $hasActiveChild ? 'text-primary font-semibold' : '' }}">
                                     {{ __('sidebar.' . $item['title']) }}
@@ -67,6 +68,17 @@
                                             {{ strtoupper($item['status']) }}
                                         </span>
                                     @endif
+
+                                    @isset($item['fixed'])
+                                        <span
+                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            @if (gettype($item['fixed']) == 'boolean')
+                                                <i class="fas fa-xmark"></i>
+                                            @else
+                                                {{ $item['fixed'] }}
+                                            @endif
+                                        </span>
+                                    @endisset
                                 </span>
                                 <span
                                     class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $hasActiveChild ? 'text-primary' : '' }}">
@@ -109,6 +121,7 @@
                                                             class="{{ $child['icon'] }} {{ $childHasActiveChild ? 'text-primary' : '' }}"></i>
                                                     </span>
                                                 @endif
+
                                                 <span
                                                     class="kt-menu-title text-sm font-medium text-foreground {{ $childHasActiveChild ? 'text-primary font-semibold' : '' }}">
                                                     {{ __('sidebar.' . $child['title']) }}
@@ -118,6 +131,17 @@
                                                             {{ strtoupper($child['status']) }}
                                                         </span>
                                                     @endif
+
+                                                    @isset($child['fixed'])
+                                                        <span
+                                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            @if (gettype($child['fixed']) == 'boolean')
+                                                                <i class="fas fa-xmark"></i>
+                                                            @else
+                                                                {{ $child['fixed'] }}
+                                                            @endif
+                                                        </span>
+                                                    @endisset
                                                 </span>
                                                 <span
                                                     class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $childHasActiveChild ? 'text-primary' : '' }}">
@@ -140,7 +164,9 @@
                                                             href="{{ isset($subChild['route']) && $subChild['route'] !== '#' ? route($subChild['route'], isset($subChild['parameters']) ? $subChild['parameters'] : []) : 'javascript:void(0)' }}"
                                                             {{ ($subChild['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                                             <span
-                                                                class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $subChildIsActive ? 'before:bg-primary' : '' }}"></span>
+                                                                class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $subChildIsActive ? 'before:bg-primary' : '' }}">
+                                                            </span>
+
                                                             <span
                                                                 class="kt-menu-title text-2sm font-normal {{ $subChildIsActive ? 'text-primary font-semibold' : '' }}">
                                                                 {{ __('sidebar.' . $subChild['title']) }}
@@ -151,6 +177,17 @@
                                                                         {{ strtoupper($subChild['status']) }}
                                                                     </span>
                                                                 @endif
+
+                                                                @isset($subChild['fixed'])
+                                                                    <span
+                                                                        class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                                        @if (gettype($subChild['fixed']) == 'boolean')
+                                                                            <i class="fas fa-xmark"></i>
+                                                                        @else
+                                                                            {{ $subChild['fixed'] }}
+                                                                        @endif
+                                                                    </span>
+                                                                @endisset
                                                             </span>
                                                         </a>
                                                     </div>
@@ -164,7 +201,9 @@
                                                 href="{{ isset($child['route']) && $child['route'] !== '#' ? route($child['route'], isset($child['parameters']) ? $child['parameters'] : []) : 'javascript:void(0)' }}"
                                                 {{ ($child['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                                 <span
-                                                    class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $childIsActive ? 'before:bg-primary' : '' }}"></span>
+                                                    class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $childIsActive ? 'before:bg-primary' : '' }}">
+                                                </span>
+
                                                 <span
                                                     class="kt-menu-title text-2sm font-normal {{ $childIsActive ? 'text-primary font-semibold' : '' }}">
                                                     {{ __('sidebar.' . $child['title']) }}
@@ -175,6 +214,17 @@
                                                             {{ strtoupper($child['status']) }}
                                                         </span>
                                                     @endif
+
+                                                    @isset($child['fixed'])
+                                                        <span
+                                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            @if (gettype($child['fixed']) == 'boolean')
+                                                                <i class="fas fa-xmark"></i>
+                                                            @else
+                                                                {{ $child['fixed'] }}
+                                                            @endif
+                                                        </span>
+                                                    @endisset
                                                 </span>
                                             </a>
                                         </div>
@@ -192,6 +242,7 @@
                                     <i
                                         class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} {{ $isActive ? 'text-primary' : '' }}"></i>
                                 </span>
+
                                 <span
                                     class="kt-menu-title text-sm font-medium {{ $isActive ? 'text-primary font-semibold' : '' }}">
                                     {{ __('sidebar.' . $item['title']) }}
@@ -202,6 +253,17 @@
                                             {{ strtoupper($item['status']) }}
                                         </span>
                                     @endif
+
+                                    @isset($item['fixed'])
+                                        <span
+                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            @if (gettype($item['fixed']) == 'boolean')
+                                                <i class="fas fa-xmark"></i>
+                                            @else
+                                                {{ $item['fixed'] }}
+                                            @endif
+                                        </span>
+                                    @endisset
                                 </span>
                             </a>
                         </div>

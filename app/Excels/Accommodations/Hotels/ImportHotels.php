@@ -3,6 +3,7 @@
 namespace App\Excels\Accommodations\Hotels;
 
 use App\Models\Hotel;
+use App\Jobs\ImportDataToDBJob;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -14,6 +15,9 @@ class ImportHotels implements ToCollection
     {
         $fillable = (new Hotel())->getFillable();
         $headers = $rows->first()->toArray();
+
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -32,8 +36,20 @@ class ImportHotels implements ToCollection
                 }
             }
 
-            Hotel::create($data);
-            $this->rowCount++;
+            $batchData[] = $data;
+
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportDataToDBJob::dispatch(Hotel::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
+            }
+        }
+
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportDataToDBJob::dispatch(Hotel::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 }

@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
-@section('title', 'تعديل عملة')
+@section('title', __('main.edit_type', ['type' => __('main.state')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    إضافة عملة جديدة
+                    {{ __('main.edit_type', ['type' => __('main.state')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    إضافة عملة جديدة إلى النظام المالي
+                    {{ __('main.edit_type_description', ['type' => __('main.state')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('currencies.index') }}" class="kt-btn kt-btn-outline">
-                    العودة للعملات
+                <a href="{{ route('states.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_states') }}
                 </a>
             </div>
         </div>
@@ -23,275 +23,181 @@
 
     <div class="kt-container-fixed">
         <div class="grid gap-5 lg:gap-7.5">
-            <!-- Currency Form -->
+            <!-- State Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">معلومات العملة</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.state')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('currencies.update', $currency->id) }}" class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('states.update', $state->id) }}" enctype="multipart/form-data"
+                        class="space-y-6 p-4">
                         @csrf
                         @method('PUT')
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Currency Name (Arabic) -->
-                            <div class="mb-3">
-                                <label for="name_ar" class="kt-label mb-2">اسم العملة (عربي)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    placeholder="مثال: الريال السعودي" value="{{ $currency->name_ar }}">
+                        <div class="grid lg:grid-cols-3 gap-4 mb-4">
+                            <!-- State Name (Arabic) -->
+                            <div class="">
+                                <label for="name_ar"
+                                    class="kt-label required mb-2">{{ __('main.type_name_arabic', ['type' => __('main.state')]) }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
+                                    value="{{ $state->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Currency Name (English) -->
-                            <div class="mb-3">
-                                <label for="name" class="kt-label mb-2">اسم العملة (إنجليزي)</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    placeholder="Example: Saudi Riyal" value="{{ $currency->name }}">
+                            <!-- State Name (English) -->
+                            <div class="">
+                                <label for="name"
+                                    class="kt-label required mb-2">{{ __('main.type_name_english', ['type' => __('main.state')]) }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ $state->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
-                            <!-- Currency Code -->
-                            <div class="mb-3">
-                                <label for="code" class="kt-label mb-2">كود العملة (ISO)</label>
-                                <input type="text" name="code" id="code" class="kt-input h-[45px]"
-                                    placeholder="مثال: SAR, USD" maxlength="3" value="{{ $currency->code }}">
-                                <div class="text-xs text-secondary-foreground mt-1">
-                                    كود ISO 4217 المعياري (3 أحرف)
-                                </div>
-                                @error('code')
+                            <!-- FIPS Code -->
+                            <div class="">
+                                <label for="fips_code" class="kt-label mb-2">{{ __('main.fips_code') }}</label>
+                                <input type="text" name="fips_code" id="fips_code" class="kt-input h-[45px]"
+                                    placeholder="{{ __('main.fips_code_example') }}" value="{{ $state->fips_code }}">
+                                @error('fips_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Currency Symbol -->
-                            <div class="mb-3">
-                                <label for="symbol" class="kt-label mb-2">رمز العملة</label>
-                                <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]"
-                                    placeholder="مثال: ﷼، $" maxlength="5" value="{{ $currency->symbol }}">
-                                @error('symbol')
+                            <!-- State Code (ISO 2) -->
+                            <div class="">
+                                <label for="iso2" class="kt-label required mb-2">{{ __('main.code_iso2') }}</label>
+                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]"
+                                    placeholder="{{ __('main.iso2_example') }}" max="2" required
+                                    value="{{ $state->iso2 }}">
+                                @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Numeric Code -->
-                            <div class="mb-3">
-                                <label for="numeric_code" class="kt-label mb-2">الكود الرقمي</label>
-                                <input type="number" name="numeric_code" id="numeric_code" class="kt-input h-[45px]"
-                                    placeholder="مثال: 682" value="{{ $currency->numeric_code }}">
-                                <div class="text-xs text-secondary-foreground mt-1">
-                                    كود ISO 4217 الرقمي (3 أرقام)
-                                </div>
-                                @error('numeric_code')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Exchange Rate to USD -->
-                            <div class="mb-3">
-                                <label for="exchange_rate" class="kt-label mb-2">سعر الصرف مقابل الدولار</label>
-                                <input type="number" step="0.0001" name="exchange_rate" id="exchange_rate"
-                                    class="kt-input h-[45px]" placeholder="مثال: 3.7500"
-                                    value="{{ $currency->exchange_rate }}">
-                                <div class="text-xs text-secondary-foreground mt-1">
-                                    1 USD = كم وحدة من هذه العملة
-                                </div>
-                                @error('exchange_rate')
+                            <!-- State Code (ISO 3) -->
+                            <div class="">
+                                <label for="iso3" class="kt-label mb-2">{{ __('main.code_iso3') }}</label>
+                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" max="3"
+                                    value="{{ $state->iso3 }}">
+                                @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Decimal Places -->
-                            <div class="mb-3">
-                                <label for="decimal_places" class="kt-label mb-2">عدد المنازل العشرية</label>
-                                <select name="decimal_places" id="decimal_places" class="kt-select h-[45px]">
-                                    <option value="0" {{ $currency->decimal_places == '0' ? 'selected' : '' }}>0 (بدون
-                                        كسور)</option>
-                                    <option value="2" {{ $currency->decimal_places == '2' ? 'selected' : '' }}>2
-                                        (افتراضي)</option>
-                                    <option value="3" {{ $currency->decimal_places == '3' ? 'selected' : '' }}>3
-                                    </option>
-                                    <option value="4" {{ $currency->decimal_places == '4' ? 'selected' : '' }}>4
-                                    </option>
-                                </select>
-                                @error('decimal_places')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Countries using this currency -->
-                            <div class="mb-3">
-                                <label for="countries" class="kt-label mb-2">البلدان التي تستخدم هذه العملة</label>
-                                <select name="countries[]" id="countries" class="kt-select h-[45px]" multiple>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ in_array($country->id, $currency->countries->pluck('id')->toArray()) ? 'selected' : '' }}>
-                                            {{ $country->name_ar }} - {{ $country->name_en }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div class="text-xs text-secondary-foreground mt-1">
-                                    يمكنك اختيار عدة بلدان
-                                </div>
-                                @error('countries')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Currency Type -->
-                            <div class="mb-3">
-                                <label for="type" class="kt-label mb-2">نوع العملة</label>
-                                <select name="type" id="type" class="kt-select h-[45px]">
-                                    <option value="fiat" {{ $currency->type == 'fiat' ? 'selected' : '' }}>عملة
-                                        ورقية</option>
-                                    <option value="crypto" {{ $currency->type == 'crypto' ? 'selected' : '' }}>عملة رقمية
-                                    </option>
-                                    <option value="commodity" {{ $currency->type == 'commodity' ? 'selected' : '' }}>عملة
-                                        سلعية</option>
-                                </select>
+                            <!-- Type -->
+                            <div class="">
+                                <label for="type" class="kt-label mb-2">{{ __('main.type') }}</label>
+                                <input type="text" name="type" id="type" class="kt-input h-[45px]"
+                                    value="{{ $state->type }}">
                                 @error('type')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <!-- Subunits -->
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <div class="mb-3">
-                                <label for="subunit_name" class="kt-label mb-2">اسم الوحدة الفرعية</label>
-                                <input type="text" name="subunit_name" id="subunit_name" class="kt-input h-[45px]"
-                                    placeholder="مثال: هللة، سنت" value="{{ $currency->subunit_name }}">
-                                <div class="text-xs text-secondary-foreground mt-1">
-                                    الوحدة الأصغر من العملة (مثل الهللة للريال)
-                                </div>
-                                @error('subunit_name')
+                            <!-- Level -->
+                            <div class="">
+                                <label for="level" class="kt-label mb-2">{{ __('main.level') }}</label>
+                                <input type="text" name="level" id="level" class="kt-input h-[45px]"
+                                    value="{{ $state->level }}">
+                                @error('level')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
-                                <label for="subunit_ratio" class="kt-label mb-2">نسبة الوحدة الفرعية</label>
-                                <input type="number" name="subunit_ratio" id="subunit_ratio" class="kt-input h-[45px]"
-                                    placeholder="مثال: 100" value="{{ $currency->subunit_ratio }}">
-                                <div class="text-xs text-secondary-foreground mt-1">
-                                    كم وحدة فرعية تساوي وحدة واحدة أساسية
-                                </div>
-                                @error('subunit_ratio')
+                            <!-- Latitude -->
+                            <div class="">
+                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
+                                <input type="number" step="any" name="latitude" id="latitude"
+                                    class="kt-input h-[45px]" placeholder="{{ __('main.latitude_example') }}"
+                                    value="{{ $state->latitude }}">
+                                @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <!-- Symbol Position -->
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <div class="mb-3">
-                                <label for="symbol_position" class="kt-label mb-2">موضع الرمز</label>
-                                <select name="symbol_position" id="symbol_position" class="kt-select h-[45px]">
-                                    <option value="before" {{ $currency->symbol_position == 'before' ? 'selected' : '' }}>
-                                        قبل الرقم ($
-                                        100)</option>
-                                    <option value="after" {{ $currency->symbol_position == 'after' ? 'selected' : '' }}>
-                                        بعد
-                                        الرقم (100 ﷼)</option>
+                            <!-- Longitude -->
+                            <div class="">
+                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
+                                <input type="number" step="any" name="longitude" id="longitude"
+                                    class="kt-input h-[45px]" placeholder="{{ __('main.longitude_example') }}"
+                                    value="{{ $state->longitude }}">
+                                @error('longitude')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Timezone -->
+                            <div class="">
+                                <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]">
+                                    <option value="">
+                                        {{ __('main.select_type', ['type' => __('main.timezone')]) }}
+                                    </option>
+                                    @foreach (config('helpers.timezones') as $zone)
+                                        <option value="{{ $zone }}"
+                                            {{ $state->timezone == $zone ? 'selected' : '' }}>
+                                            {{ __('main.maps.' . $zone) }}
+                                        </option>
+                                    @endforeach
                                 </select>
-                                @error('symbol_position')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="thousand_separator" class="kt-label mb-2">فاصل الآلاف</label>
-                                <select name="thousand_separator" id="thousand_separator" class="kt-select h-[45px]">
-                                    <option value="," {{ $currency->thousand_separator == ',' ? 'selected' : '' }}>
-                                        فاصلة (1,000)</option>
-                                    <option value="." {{ $currency->thousand_separator == '.' ? 'selected' : '' }}>
-                                        نقطة
-                                        (1.000)</option>
-                                    <option value=" " {{ $currency->thousand_separator == ' ' ? 'selected' : '' }}>
-                                        مسافة
-                                        (1 000)</option>
-                                    <option value="" {{ $currency->thousand_separator == '' ? 'selected' : '' }}>
-                                        بدون
-                                        فاصل</option>
-                                </select>
-                                @error('thousand_separator')
+                                @error('timezone')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
-                        <!-- Description -->
-                        <div>
-                            <label for="description" class="kt-label mb-2">وصف العملة</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]"
-                                placeholder="معلومات إضافية عن العملة...">{{ $currency->description }}</textarea>
-                            @error('description')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
+                        <div class="grid lg:grid-cols-2 gap-4 mb-4">
+                            <!-- Description -->
+                            <div class="">
+                                <label for="description"
+                                    class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.state')]) }}</label>
+                                <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ $state->description }}</textarea>
+                                @error('description')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
-                        <!-- Currency Settings -->
-                        <div class="space-y-4">
-                            <h4 class="font-semibold">إعدادات العملة</h4>
+                        <!-- State Settings -->
+                        <div class="space-y-4 mb-4">
+                            <h4 class="font-semibold mb-1">{{ __('main.type_settings', ['type' => __('main.state')]) }}
+                            </h4>
 
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
                                     <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                        value="1" {{ $currency->is_active ? 'checked' : '' }}>
-                                    <label for="is_active" class="kt-label mb-0">تفعيل العملة</label>
+                                        value="1" {{ $state->is_active == '1' ? 'checked' : '' }}>
+                                    <label for="is_active"
+                                        class="kt-label mb-0">{{ __('main.activate_type', ['type' => __('main.state')]) }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="is_crypto" id="is_crypto" class="kt-checkbox"
-                                        value="1" {{ $currency->is_crypto ? 'checked' : '' }}>
-                                    <label for="is_crypto" class="kt-label mb-0">عملة رقمية</label>
+                                    <input type="hidden" name="is_independent" value="0">
+                                    <input type="checkbox" name="is_independent" id="is_independent" class="kt-checkbox"
+                                        value="1" {{ $state->is_independent == '1' ? 'checked' : '' }}>
+                                    <label for="is_independent"
+                                        class="kt-label mb-0">{{ __('main.independent_type', ['type' => __('main.state')]) }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="auto_update_rate" id="auto_update_rate"
-                                        class="kt-checkbox" value="1"
-                                        {{ $currency->auto_update_rate ? 'checked' : '' }}>
-                                    <label for="auto_update_rate" class="kt-label mb-0">تحديث السعر تلقائياً</label>
+                                    <input type="hidden" name="is_developed" value="0">
+                                    <input type="checkbox" name="is_developed" id="is_developed" class="kt-checkbox"
+                                        value="1" {{ $state->is_developed == '1' ? 'checked' : '' }}>
+                                    <label for="is_developed"
+                                        class="kt-label mb-0">{{ __('main.developed_type', ['type' => __('main.state')]) }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="is_base_currency" id="is_base_currency"
-                                        class="kt-checkbox" value="1"
-                                        {{ $currency->is_base_currency ? 'checked' : '' }}>
-                                    <label for="is_base_currency" class="kt-label mb-0">العملة الأساسية</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Preview -->
-                        <div class="kt-card bg-secondary-light mt-4">
-                            <div class="kt-card-header">
-                                <h4 class="kt-card-title">معاينة التنسيق</h4>
-                            </div>
-                            <div class="kt-card-body p-4">
-                                <div class="space-y-2">
-                                    <div class="flex justify-between w-60">
-                                        <span>مثال على المبلغ:</span>
-                                        <span id="amount-preview" class="font-mono">$ 1,234.56</span>
-                                    </div>
-                                    <div class="flex justify-between w-60">
-                                        <span>الرمز:</span>
-                                        <span id="symbol-preview" class="font-mono">$</span>
-                                    </div>
-                                    <div class="flex justify-between w-60">
-                                        <span>الكود:</span>
-                                        <span id="code-preview" class="font-mono">USD</span>
-                                    </div>
+                                    <input type="hidden" name="is_landlocked" value="0">
+                                    <input type="checkbox" name="is_landlocked" id="is_landlocked" class="kt-checkbox"
+                                        value="1" {{ $state->is_landlocked == '1' ? 'checked' : '' }}>
+                                    <label for="is_landlocked"
+                                        class="kt-label mb-0">{{ __('main.landlocked_type', ['type' => __('main.state')]) }}</label>
                                 </div>
                             </div>
                         </div>
@@ -300,41 +206,40 @@
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                تحديث العملة
+                                {{ __('main.update_type', ['type' => __('main.state')]) }}
                             </button>
-                            <a href="{{ route('currencies.index') }}" class="kt-btn kt-btn-outline">
-                                إلغاء
+                            <a href="{{ route('states.index') }}" class="kt-btn kt-btn-outline">
+                                {{ __('main.cancel') }}
                             </a>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Currency Info -->
+            <!-- Geographic Info -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">معلومات مهمة</h3>
+                    <h3 class="kt-card-title">{{ __('main.geographic_info') }}</h3>
                 </div>
                 <div class="kt-card-body p-2">
                     <div class="space-y-3">
                         <div class="flex items-center gap-3">
                             <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-primary"></i>
+                                <i class="ki-filled ki-geolocation text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">أكواد ISO 4217</div>
-                                <div class="text-sm text-secondary-foreground">استخدم الأكواد المعيارية الدولية للعملات
-                                </div>
+                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3">
                             <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-chart-line text-success"></i>
+                                <i class="ki-filled ki-flag text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">أسعار الصرف</div>
-                                <div class="text-sm text-secondary-foreground">سيتم تحديث الأسعار تلقائياً من مصادر موثوقة
+                                <div class="font-semibold">{{ __('main.iso_codes') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.iso_codes_hint') }}
                                 </div>
                             </div>
                         </div>
@@ -344,9 +249,8 @@
                                 <i class="ki-filled ki-dollar text-warning"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">التنسيق والعرض</div>
-                                <div class="text-sm text-secondary-foreground">تأكد من ضبط موضع الرمز وفاصل الآلاف بشكل
-                                    صحيح</div>
+                                <div class="font-semibold">{{ __('main.official_currency') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.currency_hint') }}</div>
                             </div>
                         </div>
                     </div>
@@ -358,49 +262,44 @@
 
 @push('scripts')
     <script>
-        // Live preview update
-        function updatePreview() {
-            const symbol = document.getElementById('symbol').value || '$';
-            const code = document.getElementById('code').value || 'USD';
-            const position = document.getElementById('symbol_position').value;
-            const separator = document.getElementById('thousand_separator').value || ',';
-
-            // Update previews
-            document.getElementById('symbol-preview').textContent = symbol;
-            document.getElementById('code-preview').textContent = code;
-
-            // Format sample amount
-            let amount = '1234.56';
-            if (separator) {
-                amount = '1' + separator + '234.56';
-            }
-
-            const formattedAmount = position === 'before' ? symbol + ' ' + amount : amount + ' ' + symbol;
-            document.getElementById('amount-preview').textContent = formattedAmount;
-        }
-
-        // Add event listeners
-        ['symbol', 'code', 'symbol_position', 'thousand_separator'].forEach(id => {
-            document.getElementById(id).addEventListener('input', updatePreview);
-            document.getElementById(id).addEventListener('change', updatePreview);
-        });
-
-        // Auto-uppercase code
-        document.getElementById('code').addEventListener('input', function() {
-            this.value = this.value.toUpperCase();
-        });
-
-        // Crypto currency toggle
-        document.getElementById('is_crypto').addEventListener('change', function() {
-            const typeField = document.getElementById('type');
-            if (this.checked) {
-                typeField.value = 'crypto';
-            } else {
-                typeField.value = 'fiat';
+        // Flag preview
+        document.getElementById('flag').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('flag-preview');
+                    const placeholder = document.getElementById('flag-placeholder');
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
             }
         });
 
-        // Initialize preview
-        updatePreview();
+        // Auto-generate ISO codes
+        document.getElementById('name').addEventListener('blur', function() {
+            const name = this.value.toUpperCase();
+            const iso2Field = document.getElementById('iso2');
+            const iso3Field = document.getElementById('iso3');
+
+            if (name && !iso2Field.value) {
+                // Auto-generate basic codes (you can improve this logic)
+                iso2Field.value = name.substring(0, 2);
+            }
+
+            if (name && !iso3Field.value) {
+                iso3Field.value = name.substring(0, 3);
+            }
+        });
+
+        // Phone code formatting
+        document.getElementById('phone_code').addEventListener('input', function() {
+            let value = this.value.replace(/[^\d]/g, '');
+            if (value && !value.startsWith('+')) {
+                this.value = '+' + value;
+            }
+        });
     </script>
 @endpush

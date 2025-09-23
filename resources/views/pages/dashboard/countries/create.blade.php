@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.add_new_type', ['type' => __('main.country')]))
+@section('title', __('main.add_type', ['type' => __('main.country')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.add_new_type', ['type' => __('main.country')]) }}
+                    {{ __('main.add_type', ['type' => __('main.country')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.add_country_description') }}
+                    {{ __('main.add_type_description', ['type' => __('main.country')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -37,14 +37,14 @@
                         <div class="text-center mb-4">
                             <div class="relative inline-block">
                                 <div
-                                    class="w-32 h-20 rounded-lg bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden flex items-center justify-center">
-                                    <img id="flag-preview" src="" alt="{{ __('main.country_flag') }}"
-                                        class="w-full h-full object-cover hidden">
-                                    <div id="flag-placeholder" class="text-4xl">🏳️</div>
+                                    class="w-32 h-32 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
+                                    <img id="profile-preview" src="{{ asset('metronic/media/avatars/blank.png') }}"
+                                        alt="" class="w-full h-full object-cover">
                                 </div>
                                 <label for="flag"
-                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark">
-                                    <i class="ki-filled ki-camera text-sm"></i>
+                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark"
+                                    style="padding-inline: 12px">
+                                    <i class="fas fa-camera text-sm"></i>
                                 </label>
                                 <input type="file" id="flag" name="flag" class="hidden" accept="image/*">
                             </div>
@@ -114,7 +114,6 @@
                                 @enderror
                             </div>
 
-
                             <!-- Capital City -->
                             <div class="mb-3">
                                 <label for="capital" class="kt-label mb-2">{{ __('main.capital') }}</label>
@@ -131,11 +130,13 @@
                             <div class="mb-3">
                                 <label for="currency_id" class="kt-label mb-2">{{ __('main.official_currency') }}</label>
                                 <select name="currency_id" id="currency_id" class="kt-select h-[45px]">
-                                    <option value="">{{ __('main.select_currency') }}</option>
+                                    <option value="">
+                                        {{ __('main.select_type', ['type' => __('main.currency')]) }}
+                                    </option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
                                             {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
-                                            {{ $currency->code }} - {{ $currency->name_ar }}
+                                            {{ $currency->code }} - {{ $currency->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -166,12 +167,14 @@
                             </div>
                         </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
+                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
                             <!-- Continent -->
-                            <div class="mb-3">
+                            <div class="">
                                 <label for="continent" class="kt-label mb-2">{{ __('main.continent') }}</label>
                                 <select name="continent" id="continent" class="kt-select h-[45px]">
-                                    <option value="">{{ __('main.select_continent') }}</option>
+                                    <option value="">
+                                        {{ __('main.select_type', ['type' => __('main.continent')]) }}
+                                    </option>
                                     @foreach (config('helpers.continents') as $continent)
                                         <option value="{{ $continent }}"
                                             {{ old('continent') == $continent ? 'selected' : '' }}>
@@ -185,17 +188,26 @@
                             </div>
 
                             <!-- Region -->
-                            <div class="mb-3">
-                                <label for="region" class="kt-label mb-2">{{ __('main.region') }}</label>
-                                <input type="text" name="region" id="region" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.region_example') }}" value="{{ old('region') }}">
-                                @error('region')
+                            <div class="">
+                                <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]">
+                                    <option value="">
+                                        {{ __('main.select_type', ['type' => __('main.region')]) }}
+                                    </option>
+                                    @foreach ($regions as $region)
+                                        <option value="{{ $region->id }}"
+                                            {{ old('region_id') == $region->id ? 'selected' : '' }}>
+                                            {{ $region->code }} - {{ $region->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('region_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Latitude -->
-                            <div class="mb-3">
+                            <div class="">
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
                                 <input type="number" step="any" name="latitude" id="latitude"
                                     class="kt-input h-[45px]" placeholder="{{ __('main.latitude_example') }}"
@@ -208,7 +220,7 @@
 
                         <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Longitude -->
-                            <div class="mb-3">
+                            <div class="">
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
                                 <input type="number" step="any" name="longitude" id="longitude"
                                     class="kt-input h-[45px]" placeholder="{{ __('main.longitude_example') }}"
@@ -219,10 +231,12 @@
                             </div>
 
                             <!-- Timezone -->
-                            <div class="mb-3">
+                            <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.main_timezone') }}</label>
                                 <select name="timezone" id="timezone" class="kt-select h-[45px]">
-                                    <option value="">{{ __('main.select_timezone') }}</option>
+                                    <option value="">
+                                        {{ __('main.select_type', ['type' => __('main.timezone')]) }}
+                                    </option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
                                             {{ old('timezone') == $zone ? 'selected' : '' }}>
@@ -236,7 +250,7 @@
                             </div>
 
                             <!-- Languages -->
-                            <div class="mb-3">
+                            <div class="">
                                 <label for="languages" class="kt-label mb-2">{{ __('main.official_languages') }}</label>
                                 <input type="text" name="languages" id="languages" class="kt-input h-[45px]"
                                     placeholder="{{ __('main.languages_example') }}" value="{{ old('languages') }}">
@@ -263,7 +277,7 @@
                         </div>
 
                         <!-- Country Settings -->
-                        <div class="space-y-4">
+                        <div class="space-y-4 mb-4">
                             <h4 class="font-semibold mb-1">{{ __('main.country_settings') }}</h4>
 
                             <div class="grid lg:grid-cols-2 gap-4">
@@ -302,7 +316,7 @@
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.save_country') }}
+                                {{ __('main.save_type', ['type' => __('main.country')]) }}
                             </button>
                             <button type="submit" name="save_and_add" value="1"
                                 class="kt-btn kt-btn-outline kt-btn-outline-primary">

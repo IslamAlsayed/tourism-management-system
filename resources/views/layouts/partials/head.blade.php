@@ -32,6 +32,7 @@
 
 <link href="{{ asset('metronic/vendors/apexcharts/apexcharts.css') }}" rel="stylesheet" />
 <link href="{{ asset('metronic/vendors/keenicons/styles.bundle.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/main.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/custom-input.css') }}" rel="stylesheet" />
 
 {{-- Multi Select CSS --}}

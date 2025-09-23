@@ -10,6 +10,9 @@
                 <a class="hover:text-primary text-secondary-foreground" href="https://www.mixjo.com">
                     MixJo Inc.
                 </a>
+                <span class="text-secondary-foreground">
+                    v.3.1.0
+                </span>
             </div>
             <nav class="order-1 flex gap-4 text-sm font-normal text-secondary-foreground md:order-2">
                 <a class="hover:text-primary" href="https://mixjo.com/">
@@ -18,15 +21,13 @@
                 <a class="hover:text-primary" href="https://www.mixjo.com">
                     Purchase
                 </a>
-                <a class="hover:text-primary"
-                    href="https://www.mixjo.com/">
+                <a class="hover:text-primary" href="https://www.mixjo.com/">
                     FAQ
                 </a>
                 <a class="hover:text-primary" href="https://www.mixjo.com">
                     Support
                 </a>
-                <a class="hover:text-primary"
-                    href="https://www.mixjo.com">
+                <a class="hover:text-primary" href="https://www.mixjo.com">
                     License
                 </a>
             </nav>

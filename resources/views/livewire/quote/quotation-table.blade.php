@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllCountries" class="kt-checkbox kt-checkbox-sm">
+                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}</th>
@@ -39,8 +39,8 @@
                         @foreach ($data as $book)
                             <tr>
                                 <td class="text-center">
-                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                        type="checkbox" value="1" />
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $book->id }}"
+                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
                                 <td class="px-4 py-2 text-sm text-gray-700">{{ $book->id }}</td>
                                 <td>
@@ -49,13 +49,12 @@
                                         {{ $book->status }}
                                     </span>
                                 </td>
-                                <td>{{ $book->adults }}</td>
-                                <td>{{ $book->arrival_date }}</td>
-                                <td>{{ $book->departure_date }}</td>
-                                <td>{{ $book->nights }}</td>
-                                <td>{{ $book->grand_total }}</td>
-                                <td>
-                                    {{ $book->created_at ? $book->created_at->format('Y-m-d') : '' }}</td>
+                                <td>{!! highlightSearch($book->adults, $search) !!}</td>
+                                <td>{!! highlightSearch($book->arrival_date, $search) !!}</td>
+                                <td>{!! highlightSearch($book->departure_date, $search) !!}</td>
+                                <td>{!! highlightSearch($book->nights, $search) !!}</td>
+                                <td>{!! highlightSearch($book->grand_total, $search) !!}</td>
+                                <td>{!! highlightSearch($book->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="/" class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">

@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Livewire\Dashboard;
+namespace App\Livewire\Users;
 
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomPagination;
 
-class UserTable extends Component
+class Table extends Component
 {
     use WithPagination, CustomPagination;
     public $search = '';
     public $totalCount = '';
     public array $columns = [];
-    public array $statusOptions = [];
-
 
     public function updatingSearch()
     {
@@ -35,42 +33,37 @@ class UserTable extends Component
     {
         $this->resetPage();
         $this->mountWithCustomPagination();
-        // عرض جميع أعمدة المستخدمين المهمة
         $this->columns = [
             'name',
             'email',
+            'password',
+            'bio',
             'phone',
+            'first_name',
+            'last_name',
+            'phone',
+            'mobile',
+            'address',
+            'user_code',
+            'employee_id',
+            'hire_date',
             'department',
             'position',
-            'bio',
-            'address',
-            'city',
-            'country',
-            'postal_code',
-            'website',
-            'linkedin',
-            'twitter',
-            'facebook',
-            'instagram',
-            'github',
-            'company_name',
-            'industry',
-            'experience_years',
-            'education_level',
             'preferred_language',
             'timezone',
-            'date_of_birth',
-            'gender',
-            'marital_status',
-            'emergency_contact',
-            'emergency_phone',
-            'skills',
-            'interests',
-            'created_at',
-            'updated_at'
+            'preferences',
+            'email_verified_at',
+            'is_admin',
+            'avatar_url',
+            'is_active',
+            'is_verified',
+            'force_password_change',
+            'last_login_at',
+            'last_login_ip',
+            'notes',
+            'created_by',
+            'updated_by',
         ];
-
-        $this->statusOptions = array_merge(['all', ...User::select('is_active')->distinct()->get()->pluck('is_active')->toArray()]);
     }
 
     public function resetFilters()
@@ -92,10 +85,9 @@ class UserTable extends Component
                 });
             })->paginate(getPaginate());
 
-        return view('livewire.dashboard.user-table', [
+        return view('livewire.users.table', [
             'data' => $data,
             'totalCount' => $this->totalCount,
-            'statusOptions' => $this->statusOptions,
         ]);
     }
 }

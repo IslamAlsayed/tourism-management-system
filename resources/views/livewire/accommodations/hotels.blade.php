@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllHotels" class="kt-checkbox kt-checkbox-sm">
+                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}
@@ -35,15 +35,13 @@
                         @foreach ($data as $hotel)
                             <tr>
                                 <td class="text-center">
-                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                        type="checkbox" value="1" />
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $hotel->id }}"
+                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
-                                <td>{{ $hotel->id }}</td>
-                                <td>{{ $hotel->name }}</td>
-                                <td>{{ $hotel->name_ar }}</td>
-                                <td>
-                                    {{ $hotel->created_at ? $hotel->created_at->format('Y-m-d') : '' }}
-                                </td>
+                                <td>{!! highlightSearch($hotel->id, $search) !!}</td>
+                                <td>{!! highlightSearch($hotel->name ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($hotel->name_ar ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($hotel->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('hotels.edit', $hotel->id) }}"

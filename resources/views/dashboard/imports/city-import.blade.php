@@ -9,14 +9,16 @@
                         <h1 class="text-xl font-semibold mb-6">{{ $title }}</h1>
                         <p class="mb-6">{{ $description }}</p>
 
-                        <form action="{{ route("$model.import.post") }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route("$models.import.post") }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-6">
                                 <label for="file" class="block text-gray-700 text-sm font-bold mb-2">
                                     {{ __('main.import_file') }}
                                 </label>
 
-                                <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls" class="border rounded p-2" onchange="document.getElementById('submit-button').disabled = !this.files.length" />
+                                <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
+                                    class="border rounded p-2"
+                                    onchange="document.getElementById('submit-button').disabled = !this.files.length" />
 
                                 @error('file')
                                     <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>

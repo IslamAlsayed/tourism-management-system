@@ -37,7 +37,7 @@ class UserUpdateRequest extends FormRequest
             'position' => ['nullable', 'string', 'max:255'],
             'preferred_language' => ['nullable', 'string', 'max:255'],
             'timezone' => ['nullable', 'string', 'max:255'],
-            'preferences' => ['nullable', 'array'],
+            'preferences' => ['nullable', 'string', 'max:255'],
             'email_verified_at' => ['nullable', 'date'],
             'is_admin' => ['nullable', 'boolean'],
             'avatar_url' => ['nullable', 'string', 'max:255'],

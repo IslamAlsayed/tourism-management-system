@@ -4,6 +4,7 @@ namespace App\Excels\Accommodations\Seasons;
 
 use App\Models\Season;
 use App\Models\Accommodation;
+use App\Jobs\ImportDataToDBJob;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -16,6 +17,9 @@ class ImportSeasons implements ToCollection
     {
         $fillable = (new Season())->getFillable();
         $headers = $rows->first()->toArray();
+
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -50,8 +54,20 @@ class ImportSeasons implements ToCollection
                 }
             }
 
-            Season::create($data);
-            $this->rowCount++;
+            $batchData[] = $data;
+
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportDataToDBJob::dispatch(Season::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
+            }
+        }
+
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportDataToDBJob::dispatch(Season::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 }

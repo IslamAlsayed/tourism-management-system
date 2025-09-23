@@ -9,7 +9,8 @@
                         <h1 class="text-xl font-semibold mb-6">{{ $title }}</h1>
                         <p class="mb-6">{{ $description }}</p>
 
-                        <form action="{{ route("$model.import.post") }}" method="POST" enctype="multipart/form-data" class="w-half">
+                        <form action="{{ route('import.data.post', ['model' => $models]) }}" method="POST"
+                            enctype="multipart/form-data" class="w-half">
                             @csrf
 
                             <div class="mb-4">
@@ -18,7 +19,9 @@
                                     <strong>only (.csv,.xlsx,.xls)</strong>
                                 </label>
 
-                                <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls" class="border rounded p-2 block w-full" onchange="document.getElementById('submit-button').disabled = !this.files.length" />
+                                <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
+                                    class="border rounded p-2 block w-full"
+                                    onchange="document.getElementById('submit-button').disabled = !this.files.length" />
 
                                 @error('file')
                                     <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
@@ -26,7 +29,7 @@
                             </div>
 
                             @if (\App\Models\Country::count() == 0)
-                                <div class="kt-alert bg-danger text-white flex items-center mb-4">
+                                <div class="kt-alert text-block flex items-center mb-4" style="background: #ff7c7f">
                                     <i class="fas fa-exclamation-circle"></i>
                                     {{ __('main.you_must_add') }}
                                     <a href="{{ route('countries.index') }}" class="text-primary underline">
@@ -40,19 +43,19 @@
                                 <button type="submit" class="kt-btn kt-btn-primary" id="submit-button" disabled>
                                     {{ __('main.upload_and_import') }}
                                 </button>
-                                <a href="{{ route("$model.index") }}" class="kt-btn kt-btn-outline ml-4">
+                                <a href="{{ route("$models.index") }}" class="kt-btn kt-btn-outline ml-4">
                                     {{ __('main.cancel') }}
                                 </a>
                             </div>
                         </form>
 
                         <div class="mt-4">
-                            <a href="{{ route("$model.export") }}" class="kt-btn kt-btn-outline">
+                            <a href="{{ route('export.data', ['model' => $models]) }}" class="kt-btn kt-btn-outline">
                                 {{ __('main.export') }}
                             </a>
                         </div>
 
-                        <strong class="block mt-6 mb-2">Required Fields</strong>
+                        <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
                         <table class="border min-w-half divide-y text-center divide-gray-200">
                             <thead>
                                 <tr>
@@ -74,7 +77,7 @@
                             </tbody>
                         </table>
 
-                        <strong class="block mt-6 mb-2">Optional Fields</strong>
+                        <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
                         <table class="border min-w-half divide-y text-center divide-gray-200">
                             <thead>
                                 <tr>

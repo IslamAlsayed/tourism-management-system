@@ -15,19 +15,28 @@
             </p>
         </div>
 
-        @if (isset($showSearch) && $showSearch)
+        <div class="flex gap-2">
             <div class="flex flex-wrap gap-2 lg:gap-5">
-                <div class="flex">
-                    <label class="kt-input h-[45px]">
-                        <i class="ki-filled ki-magnifier"></i>
-                        <input wire:model.live="search"
-                            placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..."
-                            type="text"
-                            class="px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </label>
-                </div>
+                <button type="button" id="deleteAllBtn" data-route="{{ route('deleteAll') }}"
+                    data-model="{{ lcfirst($entityName) }}"
+                    class="deleteAllBtn hidden kt-btn kt-btn-outline bg-secondary text-white px-3 h-[45px]">
+                    <i class="fas fa-trash"></i>
+                </button>
             </div>
-        @endif
+
+            @if (isset($showSearch) && $showSearch)
+                <div class="flex flex-wrap gap-2 lg:gap-5">
+                    <div class="flex">
+                        <label class="kt-input h-[45px]">
+                            <i class="ki-filled ki-magnifier"></i>
+                            <input wire:model.live="search" type="text"
+                                placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..."
+                                class="px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </label>
+                    </div>
+                </div>
+            @endif
+        </div>
     </div>
 
     {{-- Progress bar showing current page position --}}

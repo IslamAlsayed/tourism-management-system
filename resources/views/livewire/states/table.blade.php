@@ -14,7 +14,7 @@
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllStates" class="kt-checkbox kt-checkbox-sm">
+                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
                             <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('main.id') }}</th>
@@ -31,12 +31,13 @@
                         @foreach ($data as $state)
                             <tr>
                                 <td class="text-center">
-                                    <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                        type="checkbox" value="1" />
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $state->id }}"
+                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
-                                <td>{{ $state->id }}</td>
-                                <td>{{ $state->name }}</td>
-                                <td>{{ $state->country->name }}</td>
+                                <td>{!! highlightSearch($state->id, $search) !!}</td>
+                                <td>{!! highlightSearch($state->name ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($state->country->name ?? '--', $search) !!}</td>
+                                <td>{!! highlightSearch($state->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('states.edit', $state->id) }}"

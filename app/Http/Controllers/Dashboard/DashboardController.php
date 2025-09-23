@@ -146,4 +146,24 @@ class DashboardController extends Controller
             'data' => $formData
         ]);
     }
+
+    public function deleteAll(Request $request)
+    {
+        $modelName = ucfirst($request->input('model'));
+        $modelClass = "App\\Models\\$modelName";
+
+        if (!class_exists($modelClass)) {
+            return redirect()->back()->with('error', 'Invalid model specified.');
+        }
+
+        $ids = $request->input('selectedItems');
+
+        if (!$ids || !is_array($ids)) {
+            return redirect()->back()->with('error', 'No items selected.');
+        }
+
+        $modelClass::whereIn('id', $ids)->delete();
+
+        return redirect()->back()->with('success', 'Selected items deleted successfully. ' . count($ids) . ' items removed.');
+    }
 }

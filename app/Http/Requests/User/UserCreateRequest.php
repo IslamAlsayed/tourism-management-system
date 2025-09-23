@@ -37,7 +37,7 @@ class UserCreateRequest extends FormRequest
             'position' => ['nullable', 'string', 'max:100'],
             'preferred_language' => ['nullable', 'string', 'max:10'],
             'timezone' => ['nullable', 'string', 'max:50'],
-            'preferences' => ['nullable', 'json'],
+            'preferences' => ['nullable', 'string', 'max:255'],
             'email_verified_at' => ['nullable', 'date'],
             'is_admin' => ['boolean'],
             'avatar_url' => ['nullable', 'url'],

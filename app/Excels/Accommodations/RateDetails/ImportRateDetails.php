@@ -3,9 +3,10 @@
 namespace App\Excels\Accommodations\RateDetails;
 
 use App\Models\Rate;
-use App\Models\RateDetail;
-use App\Models\Currency;
 use App\Models\Season;
+use App\Models\Currency;
+use App\Models\RateDetail;
+use App\Jobs\ImportDataToDBJob;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -16,6 +17,9 @@ class ImportRateDetails implements ToCollection
     public function collection(Collection $rows)
     {
         $headers = $rows->first()->toArray();
+
+        $batchSize = 1000;
+        $batchData = [];
 
         foreach ($rows as $index => $row) {
             if ($index == 0)
@@ -56,11 +60,20 @@ class ImportRateDetails implements ToCollection
                 }
             }
 
-            foreach ($data as $detail) {
-                RateDetail::create($detail);
-                \Log::info('Importing RateDetail:', $detail);
-                $this->rowCount++;
+            $batchData[] = $data;
+
+            // Send batch job when full
+            if (count($batchData) >= $batchSize) {
+                ImportDataToDBJob::dispatch(RateDetail::class, $batchData);
+                $this->rowCount += count($batchData);
+                $batchData = [];
             }
+        }
+
+        // Send remaining data
+        if (count($batchData) > 0) {
+            ImportDataToDBJob::dispatch(RateDetail::class, $batchData);
+            $this->rowCount += count($batchData);
         }
     }
 }

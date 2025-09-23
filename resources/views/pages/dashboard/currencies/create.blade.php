@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', __('main.add_currency'))
+@section('title', __('main.add_type', ['type' => __('main.currency')]))
 
 @section('content')
     <div class="kt-container-fixed">
@@ -106,29 +106,6 @@
                                         value="1" {{ old('auto_update_rate', '1') ? 'checked' : '' }}>
                                     <label for="auto_update_rate"
                                         class="kt-label mb-0">{{ __('main.auto_update_rate') }}</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Preview -->
-                        <div class="kt-card bg-secondary-light mt-4">
-                            <div class="kt-card-header">
-                                <h4 class="kt-card-title">{{ __('main.format_preview') }}</h4>
-                            </div>
-                            <div class="kt-card-body p-4">
-                                <div class="space-y-2">
-                                    <div class="flex justify-between w-60">
-                                        <span>{{ __('main.amount_example') }}:</span>
-                                        <span id="amount-preview" class="font-mono">$ 1,234.56</span>
-                                    </div>
-                                    <div class="flex justify-between w-60">
-                                        <span>{{ __('main.symbol') }}:</span>
-                                        <span id="symbol-preview" class="font-mono">$</span>
-                                    </div>
-                                    <div class="flex justify-between w-60">
-                                        <span>{{ __('main.code') }}:</span>
-                                        <span id="code-preview" class="font-mono">USD</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
