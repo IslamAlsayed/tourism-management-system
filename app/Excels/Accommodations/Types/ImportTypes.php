@@ -41,6 +41,9 @@ class ImportTypes implements ToCollection
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
                 ImportUpdateDataToDBJob::dispatch(Type::class, $batchData);
+                foreach ($batchData as $item) {
+                    Type::updateOrCreate(['name' => $item['name']], $item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -48,7 +51,10 @@ class ImportTypes implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportUpdateDataToDBJob::dispatch(Type::class, $batchData);
+            // ImportUpdateDataToDBJob::dispatch(Type::class, $batchData);
+            foreach ($batchData as $item) {
+                Type::updateOrCreate(['name' => $item['name']], $item);
+            }
             $this->rowCount += count($batchData);
         }
     }

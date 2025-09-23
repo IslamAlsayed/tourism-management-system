@@ -40,7 +40,10 @@ class ImportNationalities implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(Nationality::class, $batchData);
+                // ImportDataToDBJob::dispatch(Nationality::class, $batchData);
+                foreach ($batchData as $item) {
+                    Nationality::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -48,7 +51,10 @@ class ImportNationalities implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(Nationality::class, $batchData);
+            // ImportDataToDBJob::dispatch(Nationality::class, $batchData);
+            foreach ($batchData as $item) {
+                Nationality::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

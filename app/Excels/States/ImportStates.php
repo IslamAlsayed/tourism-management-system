@@ -40,7 +40,10 @@ class ImportStates implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(State::class, $batchData);
+                // ImportDataToDBJob::dispatch(State::class, $batchData);
+                foreach ($batchData as $item) {
+                    State::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -48,7 +51,10 @@ class ImportStates implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(State::class, $batchData);
+            // ImportDataToDBJob::dispatch(State::class, $batchData);
+            foreach ($batchData as $item) {
+                State::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

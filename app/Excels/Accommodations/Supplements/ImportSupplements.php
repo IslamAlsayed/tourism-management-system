@@ -41,7 +41,10 @@ class ImportSupplements implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(Supplement::class, $batchData);
+                // ImportDataToDBJob::dispatch(Supplement::class, $batchData);
+                foreach ($batchData as $item) {
+                    Supplement::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -49,7 +52,10 @@ class ImportSupplements implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(Supplement::class, $batchData);
+            // ImportDataToDBJob::dispatch(Supplement::class, $batchData);
+            foreach ($batchData as $item) {
+                Supplement::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

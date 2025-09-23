@@ -14,9 +14,9 @@ class RegionSeeder extends Seeder
         Region::truncate();
         Schema::enableForeignKeyConstraints();
 
-        Region::insert([
-            ['name' => 'Middle East', 'wiki_data_id' => 'Q7204'],
-            ['name' => 'North Africa', 'wiki_data_id' => 'Q27479'],
-        ]);
+        // Region::insert([
+        //     ['name' => 'Middle East', 'wiki_data_id' => 'Q7204'],
+        //     ['name' => 'North Africa', 'wiki_data_id' => 'Q27479'],
+        // ]);
     }
 }

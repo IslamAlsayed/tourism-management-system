@@ -3,13 +3,14 @@
     data-kt-drawer="true" data-kt-drawer-class="kt-drawer kt-drawer-start top-0 bottom-0" id="sidebar">
 
     <!-- Sidebar Header -->
-    <div class="kt-sidebar-header hidden lg:flex items-center relative px-3 lg:px-4 shrink-0 py-2" id="sidebar_header">
-        <a class="dark:hidden flex items-center" href="{{ route('dashboard') }}">
+    <div class="kt-sidebar-header hidden lg:flex text-center justify-center relative px-3 lg:px-4 shrink-0 py-2"
+        id="sidebar_header">
+        <a class="dark:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
             <img class="default-logo h-[45px] w-auto max-w-none"
                 src="{{ asset('metronic/media/app/default-logo.svg') }}" />
             <img class="small-logo h-[45px] w-auto max-w-none" src="{{ asset('metronic/media/app/mini-logo.svg') }}" />
         </a>
-        <a class="hidden dark:flex items-center" href="{{ route('dashboard') }}">
+        <a class="light:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
             <img class="default-logo h-[45px] w-auto max-w-none"
                 src="{{ asset('metronic/media/app/default-logo-dark.svg') }}" />
             <img class="small-logo h-[45px] w-auto max-w-none" src="{{ asset('metronic/media/app/mini-logo.svg') }}" />

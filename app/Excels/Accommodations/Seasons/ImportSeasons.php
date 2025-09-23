@@ -58,7 +58,10 @@ class ImportSeasons implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(Season::class, $batchData);
+                // ImportDataToDBJob::dispatch(Season::class, $batchData);
+                foreach ($batchData as $item) {
+                    Season::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -66,7 +69,10 @@ class ImportSeasons implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(Season::class, $batchData);
+            // ImportDataToDBJob::dispatch(Season::class, $batchData);
+            foreach ($batchData as $item) {
+                Season::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

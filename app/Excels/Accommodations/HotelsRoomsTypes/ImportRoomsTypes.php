@@ -42,7 +42,10 @@ class ImportRoomsTypes implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(HotelRoomType::class, $batchData);
+                // ImportDataToDBJob::dispatch(HotelRoomType::class, $batchData);
+                foreach ($batchData as $item) {
+                    HotelRoomType::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -50,7 +53,10 @@ class ImportRoomsTypes implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(HotelRoomType::class, $batchData);
+            // ImportDataToDBJob::dispatch(HotelRoomType::class, $batchData);
+            foreach ($batchData as $item) {
+                HotelRoomType::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

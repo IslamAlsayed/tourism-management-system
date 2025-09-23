@@ -57,7 +57,10 @@ class ImportAccommodations implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(Accommodation::class, $batchData);
+                // ImportDataToDBJob::dispatch(Accommodation::class, $batchData);
+                foreach ($batchData as $item) {
+                    Accommodation::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -65,7 +68,10 @@ class ImportAccommodations implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(Accommodation::class, $batchData);
+            // ImportDataToDBJob::dispatch(Accommodation::class, $batchData);
+            foreach ($batchData as $item) {
+                Accommodation::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

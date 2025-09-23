@@ -70,3 +70,5 @@ Thumbs.db
 
 /database/migrations1
 /database/migrations2
+/import_file_generator.php
+/IMPORT_SYSTEM_README.md

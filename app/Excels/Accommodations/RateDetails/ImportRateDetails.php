@@ -64,7 +64,10 @@ class ImportRateDetails implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(RateDetail::class, $batchData);
+                // ImportDataToDBJob::dispatch(RateDetail::class, $batchData);
+                foreach ($batchData as $item) {
+                    RateDetail::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -72,7 +75,10 @@ class ImportRateDetails implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(RateDetail::class, $batchData);
+            // ImportDataToDBJob::dispatch(RateDetail::class, $batchData);
+            foreach ($batchData as $item) {
+                RateDetail::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

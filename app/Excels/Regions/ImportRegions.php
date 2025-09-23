@@ -40,7 +40,10 @@ class ImportRegions implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(Region::class, $batchData);
+                // ImportDataToDBJob::dispatch(Region::class, $batchData);
+                foreach ($batchData as $item) {
+                    Region::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -48,7 +51,10 @@ class ImportRegions implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(Region::class, $batchData);
+            // ImportDataToDBJob::dispatch(Region::class, $batchData);
+            foreach ($batchData as $item) {
+                Region::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

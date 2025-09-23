@@ -40,7 +40,10 @@ class ImportCurrencies implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(Currency::class, $batchData);
+                // ImportDataToDBJob::dispatch(Currency::class, $batchData);
+                foreach ($batchData as $item) {
+                    Currency::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -48,7 +51,10 @@ class ImportCurrencies implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(Currency::class, $batchData);
+            // ImportDataToDBJob::dispatch(Currency::class, $batchData);
+            foreach ($batchData as $item) {
+                Currency::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

@@ -40,7 +40,10 @@ class ImportUsers implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(User::class, $batchData);
+                // ImportDataToDBJob::dispatch(User::class, $batchData);
+                foreach ($batchData as $item) {
+                    User::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -48,7 +51,10 @@ class ImportUsers implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(User::class, $batchData);
+            // ImportDataToDBJob::dispatch(User::class, $batchData);
+            foreach ($batchData as $item) {
+                User::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

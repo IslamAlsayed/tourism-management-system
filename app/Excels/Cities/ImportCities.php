@@ -47,7 +47,10 @@ class ImportCities implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(City::class, $batchData);
+                // ImportDataToDBJob::dispatch(City::class, $batchData);
+                foreach ($batchData as $item) {
+                    City::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -55,7 +58,10 @@ class ImportCities implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(City::class, $batchData);
+            // ImportDataToDBJob::dispatch(City::class, $batchData);
+            foreach ($batchData as $item) {
+                City::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }

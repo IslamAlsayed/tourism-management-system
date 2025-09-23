@@ -41,7 +41,10 @@ class ImportRestaurants implements ToCollection
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                ImportDataToDBJob::dispatch(Restaurant::class, $batchData);
+                // ImportDataToDBJob::dispatch(Restaurant::class, $batchData);
+                foreach ($batchData as $item) {
+                    Restaurant::create($item);
+                }
                 $this->rowCount += count($batchData);
                 $batchData = [];
             }
@@ -49,7 +52,10 @@ class ImportRestaurants implements ToCollection
 
         // Send remaining data
         if (count($batchData) > 0) {
-            ImportDataToDBJob::dispatch(Restaurant::class, $batchData);
+            // ImportDataToDBJob::dispatch(Restaurant::class, $batchData);
+            foreach ($batchData as $item) {
+                Restaurant::create($item);
+            }
             $this->rowCount += count($batchData);
         }
     }
