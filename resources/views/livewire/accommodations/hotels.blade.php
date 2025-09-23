@@ -10,7 +10,7 @@
     <div class="kt-card-content">
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
             <div class="kt-scrollable-x-auto">
-                <table class="kt-table table-auto" class="kt-table table-auto text-nowrap" data>
+                <table class="kt-table table-auto text-nowrap" data-kt-datatable-table="true">
                     <thead>
                         <tr>
                             <th class="w-[60px] px-4 py-3 text-center">
