@@ -36,6 +36,7 @@ class ImportCountries implements ToCollection
                 }
             }
 
+            $data['flag_emoji'] = str_replace(' ', '-', lcfirst($data['name']));
             $data['timezone'] = $this->fixTimezone($data['timezone']);
 
             $batchData[] = $data;

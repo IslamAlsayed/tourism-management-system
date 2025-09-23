@@ -33,23 +33,23 @@
                         enctype="multipart/form-data" class="space-y-6 p-4">
                         @csrf
 
-                        <!-- Flag Upload -->
+                        <!-- Flag emoji upload -->
                         <div class="text-center mb-4">
                             <div class="relative inline-block">
                                 <div
                                     class="w-32 h-32 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="profile-preview" src="{{ asset('metronic/media/avatars/blank.png') }}"
+                                    <img id="flag-preview" src="{{ asset('metronic/media/avatars/blank.png') }}"
                                         alt="" class="w-full h-full object-cover">
                                 </div>
-                                <label for="flag"
+                                <label for="flag_emoji"
                                     class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark"
                                     style="padding-inline: 12px">
                                     <i class="fas fa-camera text-sm"></i>
                                 </label>
-                                <input type="file" id="flag" name="flag" class="hidden" accept="image/*">
+                                <input type="file" id="flag_emoji" name="flag_emoji" class="hidden" accept="image/*">
                             </div>
-                            <div class="text-sm text-secondary-foreground">{{ __('main.click_to_upload_flag') }}</div>
-                            @error('flag')
+                            <div class="text-sm text-secondary-foreground">{{ __('main.click_to_upload_flag_emoji') }}</div>
+                            @error('flag_emoji')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
@@ -375,8 +375,8 @@
 
 @push('scripts')
     <script>
-        // Flag preview
-        document.getElementById('flag').addEventListener('change', function(e) {
+        // Flag emoji preview
+        document.getElementById('flag_emoji').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
