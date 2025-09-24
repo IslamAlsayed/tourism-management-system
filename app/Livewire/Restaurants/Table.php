@@ -31,8 +31,8 @@ class Table extends Component
 
     public function mount()
     {
-        $this->resetPage();
         $this->mountWithCustomPagination();
+        $this->resetPage();
         $this->columns = ['id', 'name', 'name_ar', 'is_active', 'created_at', 'updated_at'];
     }
 

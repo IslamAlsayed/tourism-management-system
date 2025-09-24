@@ -230,6 +230,7 @@ return [
     'type_settings' => 'اعدادات :type',
     'type_name_arabic' => ':type الاسم (عربي)',
     'type_name_english' => ':type الاسم (انجليزي)',
+    'back_to_types' => 'العودة إلى :types',
     'add_type_description' => 'إضافة :type جديدة إلى النظام',
     'edit_type_description' => 'تعديل :type موجود في النظام',
 
@@ -275,6 +276,7 @@ return [
     'and' => 'و',
     'code_iso2' => 'رمز ISO 3166-1 Alpha-2',
     'code_iso3' => 'رمز ISO 3166-1 Alpha-3',
+    'wiki_data_id' => 'معرف ويكي بيانات',
 
     // Authentication
     'login' => 'تسجيل الدخول',
@@ -296,7 +298,9 @@ return [
     'update_profile' => 'تحديث الملف الشخصي',
     'change_password' => 'تغيير كلمة المرور',
     'current_password' => 'كلمة المرور الحالية',
+    'old_password' => 'كلمة المرور القديمة',
     'new_password' => 'كلمة المرور الجديدة',
+    'edit_password' => 'تعديل كلمة المرور',
     'confirm_password' => 'تأكيد كلمة المرور',
     'optional' => 'اختياري',
     'unknown_user' => 'مستخدم غير معروف',
@@ -634,7 +638,9 @@ return [
     'use_map_services' => 'استخدم خدمات الخرائط للحصول على إحداثيات دقيقة',
     'select_country_before_city' => 'يجب اختيار الدولة قبل إضافة المدينة',
     'country_selection' => 'اختيار الدولة',
+    'type_selection' => 'اختيار :type',
     'must_select_country' => 'يجب اختيار الدولة قبل إضافة المدينة',
+    'must_select_type1_before_creating_type2' => 'يجب اختيار النوع :type1 قبل إنشاء النوع :type2',
 
     // Currency Management
     'add_currency' => 'إضافة عملة',
@@ -758,6 +764,8 @@ return [
     'your_name' => 'اسمك',
     'your_email' => 'بريدك الإلكتروني',
     'your_phone' => 'هاتفك',
+    'update_your_password' => 'تحديث كلمة المرور الخاصة بك',
+    'profile_information' => 'معلومات الملف الشخصي',
     'tell_about_yourself' => 'أخبرنا عن نفسك',
     'account_deletion_warning' => 'هل أنت متأكد من أنك تريد حذف حسابك؟',
     'active_account' => 'حساب نشط',
@@ -883,6 +891,14 @@ return [
         'invalid_input' => 'إدخال غير صالح',
         'validation_error' => 'خطأ في التحقق',
         'server_error' => 'خطأ في الخادم',
+
+        // Type Creation
+        'type_created' => 'تم إنشاء :type',
+        'type_creation_failed' => 'فشل إنشاء :type',
+        'type_updated' => 'تم تحديث :type',
+        'type_update_failed' => 'فشل تحديث :type',
+        'type_deleted' => 'تم حذف :type',
+        'type_deletion_failed' => 'فشل حذف :type',
 
         // User Creation
         'user_created' => 'تم إنشاء المستخدم',

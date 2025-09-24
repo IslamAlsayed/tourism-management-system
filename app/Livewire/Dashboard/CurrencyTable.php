@@ -31,9 +31,8 @@ class CurrencyTable extends Component
 
     public function mount()
     {
-        $this->resetPage();
         $this->mountWithCustomPagination();
-        // عرض جميع أعمدة العملات (id, name, code, symbol, created_at, updated_at)
+        $this->resetPage();
         $this->columns = ['id', 'name', 'code', 'symbol', 'created_at', 'updated_at'];
     }
 
@@ -55,6 +54,7 @@ class CurrencyTable extends Component
                     }
                 });
             })->paginate(getPaginate());
+
         return view('livewire.dashboard.currency-table', [
             'data' => $data,
             'totalCount' => $this->totalCount,

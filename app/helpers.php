@@ -1,5 +1,13 @@
 <?php
 
+if (!function_exists('getActiveUser')) {
+    function getActiveUser($id = null)
+    {
+        $user = Auth::check() ? Auth::user() : null;
+        return $id ? $user->find($id) : $user;
+    }
+}
+
 if (!function_exists('getLocalizedText')) {
     /**
      * Get localized text based on current locale
@@ -142,11 +150,24 @@ if (!function_exists('generateUniqueFilename')) {
 if (!function_exists('getPaginate')) {
     function getPaginate()
     {
-        if (session()->has('paginate_count')) {
-            return session('paginate_count');
-        }
+        return session('paginate_count', config('app.paginate_count'));
+        // $sessionValue = session('paginate_count');
+        // $configValue = config('app.paginate_count');
+        // $allowedValues = config('app.paginate_array', [10, 25, 50, 100]);
 
-        return config('app.paginate_count');
+        // // Return session value if exists and is valid
+        // if ($sessionValue && in_array((int) $sessionValue, $allowedValues)) {
+        //     return (int) $sessionValue;
+        // }
+
+        // // Fallback to config value and set it in session
+        // $configInt = (int) $configValue;
+        // if (!in_array($configInt, $allowedValues)) {
+        //     $configInt = 50; // Safe fallback to middle value
+        // }
+
+        // session(['paginate_count' => $configInt]);
+        // return $configInt;
     }
 }
 

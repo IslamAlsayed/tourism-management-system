@@ -65,7 +65,7 @@
                                     {{ __('sidebar.' . $item['title']) }}
                                     @if (isset($item['status']))
                                         <span
-                                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             {{ strtoupper($item['status']) }}
                                         </span>
                                     @endif
@@ -128,7 +128,7 @@
                                                     {{ __('sidebar.' . $child['title']) }}
                                                     @if (isset($child['status']))
                                                         <span
-                                                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             {{ strtoupper($child['status']) }}
                                                         </span>
                                                     @endif
@@ -174,7 +174,7 @@
 
                                                                 @if (isset($subChild['status']))
                                                                     <span
-                                                                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                                        class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                                         {{ strtoupper($subChild['status']) }}
                                                                     </span>
                                                                 @endif
@@ -211,7 +211,7 @@
 
                                                     @if (isset($child['status']))
                                                         <span
-                                                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             {{ strtoupper($child['status']) }}
                                                         </span>
                                                     @endif

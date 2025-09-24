@@ -54,7 +54,7 @@
                             @enderror
                         </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!-- Country Name (Arabic) -->
                             <div class="mb-3">
                                 <label for="name_ar"
@@ -88,9 +88,7 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Country Code (ISO 2) -->
                             <div class="mb-3">
                                 <label for="iso2"
@@ -123,9 +121,7 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Currency -->
                             <div class="mb-3">
                                 <label for="currency_id" class="kt-label mb-2">{{ __('main.official_currency') }}</label>
@@ -165,9 +161,7 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
                             <!-- Continent -->
                             <div class="">
                                 <label for="continent" class="kt-label mb-2">{{ __('main.continent') }}</label>
@@ -216,9 +210,7 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Longitude -->
                             <div class="">
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
@@ -261,9 +253,7 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Description -->
                             <div class="mb-3">
                                 <label for="description"
@@ -274,58 +264,60 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <!-- Country Settings -->
-                        <div class="space-y-4 mb-4">
-                            <h4 class="font-semibold mb-1">{{ __('main.country_settings') }}</h4>
+                            <!-- Country Settings -->
+                            <div class="space-y-4 mb-4">
+                                <h4 class="font-semibold mb-1">{{ __('main.country_settings') }}</h4>
 
-                            <div class="grid lg:grid-cols-2 gap-4">
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_active" value="0">
-                                    <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                        value="1" {{ old('is_active', '1') ? 'checked' : '' }}>
-                                    <label for="is_active"
-                                        class="kt-label mb-0">{{ __('main.activate_country') }}</label>
-                                </div>
+                                <div class="grid lg:grid-cols-2 gap-4">
+                                    <div class="flex items-center gap-3">
+                                        <input type="hidden" name="is_active" value="0">
+                                        <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
+                                            value="1" {{ old('is_active', '1') ? 'checked' : '' }}>
+                                        <label for="is_active"
+                                            class="kt-label mb-0">{{ __('main.activate_country') }}</label>
+                                    </div>
 
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="is_independent" id="is_independent" class="kt-checkbox"
-                                        value="1" {{ old('is_independent', '1') ? 'checked' : '' }}>
-                                    <label for="is_independent"
-                                        class="kt-label mb-0">{{ __('main.independent_country') }}</label>
-                                </div>
+                                    <div class="flex items-center gap-3">
+                                        <input type="checkbox" name="is_independent" id="is_independent"
+                                            class="kt-checkbox" value="1"
+                                            {{ old('is_independent', '1') ? 'checked' : '' }}>
+                                        <label for="is_independent"
+                                            class="kt-label mb-0">{{ __('main.independent_country') }}</label>
+                                    </div>
 
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="is_developed" id="is_developed" class="kt-checkbox"
-                                        value="1" {{ old('is_developed') ? 'checked' : '' }}>
-                                    <label for="is_developed"
-                                        class="kt-label mb-0">{{ __('main.developed_country') }}</label>
-                                </div>
+                                    <div class="flex items-center gap-3">
+                                        <input type="checkbox" name="is_developed" id="is_developed" class="kt-checkbox"
+                                            value="1" {{ old('is_developed') ? 'checked' : '' }}>
+                                        <label for="is_developed"
+                                            class="kt-label mb-0">{{ __('main.developed_country') }}</label>
+                                    </div>
 
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="is_landlocked" id="is_landlocked" class="kt-checkbox"
-                                        value="1" {{ old('is_landlocked') ? 'checked' : '' }}>
-                                    <label for="is_landlocked"
-                                        class="kt-label mb-0">{{ __('main.landlocked_country') }}</label>
+                                    <div class="flex items-center gap-3">
+                                        <input type="checkbox" name="is_landlocked" id="is_landlocked"
+                                            class="kt-checkbox" value="1"
+                                            {{ old('is_landlocked') ? 'checked' : '' }}>
+                                        <label for="is_landlocked"
+                                            class="kt-label mb-0">{{ __('main.landlocked_country') }}</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4 pt-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.save_type', ['type' => __('main.country')]) }}
-                            </button>
-                            <button type="submit" name="save_and_add" value="1"
-                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                                <i class="ki-filled ki-plus text-sm me-2"></i>
-                                {{ __('main.save_and_add_another') }}
-                            </button>
-                            <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
+                            <!-- Submit Buttons -->
+                            <div class="flex items-center gap-4 pt-4">
+                                <button type="submit" class="kt-btn kt-btn-primary">
+                                    <i class="ki-filled ki-check text-sm me-2"></i>
+                                    {{ __('main.save_type', ['type' => __('main.country')]) }}
+                                </button>
+                                <button type="submit" name="save_and_add" value="1"
+                                    class="kt-btn kt-btn-outline kt-btn-outline-primary">
+                                    <i class="ki-filled ki-plus text-sm me-2"></i>
+                                    {{ __('main.save_and_add_another') }}
+                                </button>
+                                <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
+                                    {{ __('main.cancel') }}
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>

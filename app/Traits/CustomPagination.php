@@ -4,11 +4,11 @@ namespace App\Traits;
 
 trait CustomPagination
 {
-    public $paginate = 20;
+    public $paginate;
 
     public function mountWithCustomPagination()
     {
-        $this->paginate = session('paginate_count') ?: config('app.paginate_count');
+        $this->paginate = getPaginate();
     }
 
     public function updatedPaginate($value)

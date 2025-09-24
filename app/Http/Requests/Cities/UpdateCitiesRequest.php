@@ -22,21 +22,15 @@ class UpdateCitiesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'name_ar' => ['required', 'string', 'max:255'],
-            // 'state_id' => ['required', 'exists:states,id'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
             'state_id' => ['nullable', 'exists:states,id'],
-            'country_id' => ['required', 'exists:countries,id'],
+            'country_id' => ['nullable', 'exists:countries,id'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'timezone' => ['required', 'string', 'max:255'],
+            'timezone' => ['nullable', 'string', 'max:255'],
             'wikiDataId' => ['nullable', 'string', 'max:255'],
             'population' => ['nullable', 'integer'],
-            'is_active' => ['nullable', 'boolean'],
-            'is_independent' => ['nullable', 'boolean'],
-            'is_developed' => ['nullable', 'boolean'],
-            'is_landlocked' => ['nullable', 'boolean'],
-            'flag' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
 }

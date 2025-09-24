@@ -8,7 +8,7 @@
             {{-- Generate options from config array --}}
             @if (config('app.paginate_array'))
                 <select wire:model.live="paginate" name="paginate" id="paginate"
-                    class="kt-select w-20 px-2 py-1 border rounded">
+                    class="kt-select w-20 px-2 py-1 border rounded" style="width: 65px">
                     @foreach (config('app.paginate_array') as $limit)
                         <option value="{{ $limit }}">{{ $limit }}</option>
                     @endforeach
@@ -94,6 +94,5 @@
                 </span>
             </div>
         </div>
-
     </div>
 </div>

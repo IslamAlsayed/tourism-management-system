@@ -14,15 +14,13 @@ class CityController extends Controller
 {
     public function index()
     {
-        $cities = City::with('country')->paginate(getPaginate());
-        $totalCities = City::count();
-        return view('pages.dashboard.cities.index', compact('cities', 'totalCities'));
+        return view('pages.dashboard.cities.index');
     }
 
     public function create()
     {
-        $countries = Country::orderBy('name_ar')->get();
-        $states = State::orderBy('name_ar')->get();
+        $states = State::orderBy('name')->get();
+        $countries = Country::orderBy('name')->get();
         return view('pages.dashboard.cities.create', compact('countries', 'states'));
     }
 
@@ -43,9 +41,9 @@ class CityController extends Controller
 
     public function edit($id)
     {
-        $city = City::with('country')->findOrFail($id);
-        $countries = Country::all();
-        $states = State::orderBy('name_ar')->get();
+        $city = City::with(['country', 'state'])->findOrFail($id);
+        $states = State::orderBy('name')->get();
+        $countries = Country::orderBy('name')->get();
         return view('pages.dashboard.cities.edit', compact('city', 'countries', 'states'));
     }
 

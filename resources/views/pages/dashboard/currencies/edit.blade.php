@@ -33,7 +33,7 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!-- Currency Name -->
                             <div class="">
                                 <label for="name" class="kt-label required mb-2">{{ __('main.currency_name') }}</label>
@@ -89,22 +89,22 @@
                                         class="kt-label mb-0">{{ __('main.auto_update_rate') }}</label>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4 pt-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.save_currency') }}
-                            </button>
-                            <button type="submit" name="save_and_edit" value="1"
-                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                                <i class="ki-filled ki-plus text-sm me-2"></i>
-                                {{ __('main.save_and_edit_another') }}
-                            </button>
-                            <a href="{{ route('currencies.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
+                            <!-- Submit Buttons -->
+                            <div class="flex items-center gap-4 pt-4">
+                                <button type="submit" class="kt-btn kt-btn-primary">
+                                    <i class="ki-filled ki-check text-sm me-2"></i>
+                                    {{ __('main.save_currency') }}
+                                </button>
+                                <button type="submit" name="save_and_edit" value="1"
+                                    class="kt-btn kt-btn-outline kt-btn-outline-primary">
+                                    <i class="ki-filled ki-plus text-sm me-2"></i>
+                                    {{ __('main.save_and_edit_another') }}
+                                </button>
+                                <a href="{{ route('currencies.index') }}" class="kt-btn kt-btn-outline">
+                                    {{ __('main.cancel') }}
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>

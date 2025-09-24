@@ -32,8 +32,8 @@ class Accommodations extends Component
 
     public function mount()
     {
-        $this->resetPage();
         $this->mountWithCustomPagination();
+        $this->resetPage();
         $this->columns = ['id', 'name', 'name_ar', 'created_at', 'updated_at'];
     }
 

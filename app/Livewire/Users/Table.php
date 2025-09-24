@@ -31,39 +31,9 @@ class Table extends Component
 
     public function mount()
     {
-        $this->resetPage();
         $this->mountWithCustomPagination();
-        $this->columns = [
-            'name',
-            'email',
-            'password',
-            'bio',
-            'phone',
-            'first_name',
-            'last_name',
-            'phone',
-            'mobile',
-            'address',
-            'user_code',
-            'employee_id',
-            'hire_date',
-            'department',
-            'position',
-            'preferred_language',
-            'timezone',
-            'preferences',
-            'email_verified_at',
-            'is_admin',
-            'avatar_url',
-            'is_active',
-            'is_verified',
-            'force_password_change',
-            'last_login_at',
-            'last_login_ip',
-            'notes',
-            'created_by',
-            'updated_by',
-        ];
+        $this->resetPage();
+        $this->columns = ['id', 'user', 'phone', 'position', 'status', 'created_at'];
     }
 
     public function resetFilters()

@@ -1,11 +1,8 @@
 {{-- Enhanced pagination information component --}}
-<div class="flex-wrap gap-2 p-4">
-    <div class="w-full flex justify-between items-center">
+<div class="flex-wrap gap-2 p-2">
+    <div class="w-full flex justify-between items-start">
         <div>
-            <h3 class="kt-card-title text-lg font-semibold">
-                {{ $title ?? __('main.records') }}
-            </h3>
-            <p class="text-sm text-gray-600 mt-1">
+            <p class="text-sm text-gray-600 p-2">
                 {{ __('main.showing') }} {{ $data->firstItem() ?? 0 }} - {{ $data->lastItem() ?? 0 }}
                 {{ __('main.of') }} {{ $data->total() }} {{ $entityName ?? __('main.items') }}
                 @if ($data->hasPages())

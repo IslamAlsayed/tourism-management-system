@@ -31,8 +31,8 @@ class Table extends Component
 
     public function mount()
     {
-        $this->resetPage();
         $this->mountWithCustomPagination();
+        $this->resetPage();
         $this->columns = ['id', 'name', 'name_ar', 'created_at', 'updated_at'];
     }
 
@@ -59,16 +59,5 @@ class Table extends Component
             'data' => $data,
             'totalCount' => $this->totalCount,
         ]);
-    }
-
-    // Toggle active status for a region
-    public function toggleActive($id)
-    {
-        $currency = Currency::find($id);
-        if ($currency) {
-            $currency->is_active = !$currency->is_active;
-            $currency->save();
-            session()->flash('message', __('تم تحديث حالة العملة بنجاح.'));
-        }
     }
 }

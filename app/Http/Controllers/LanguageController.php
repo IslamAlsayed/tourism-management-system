@@ -30,10 +30,16 @@ class LanguageController extends Controller
         if ($language) {
             $this->loadActiveLanguages();
             $this->uploadPhoto($request, $language, 'flag', "languages");
-            return redirect()->route('languages.index')->with('success', __('main.messages.created_language_successfully'));
+            return redirect()->route('languages.index')->with('success', __('main.messages.type_created', ['type' => __('main.language')]));
         }
 
-        return redirect()->route('languages.index')->with('error', __('main.messages.created_not_language_successfully'));
+        return redirect()->route('nationalities.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.language')]));
+    }
+
+    public function edit($id)
+    {
+        $language = Language::findOrFail($id);
+        return view('pages.dashboard.languages.edit', compact('language'));
     }
 
     public function locale($locale = 'en')
@@ -57,13 +63,13 @@ class LanguageController extends Controller
         $deleted = $language->delete();
         if ($deleted) {
             $this->deletePhoto($language, 'flag');
-            return redirect()->route('languages.index')->with('success', __('main.messages.language_deleted_successfully'));
+            return redirect()->route('nationalities.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.language')]));
         }
 
-        return redirect()->route('languages.index')->with('error', __('main.messages.language_deletion_failed'));
+        return redirect()->route('nationalities.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.language')]));
     }
 
-    public function loadActiveLanguages(): void
+    public function loadActiveLanguages()
     {
         $languages = Language::pluck('name', 'code')->toArray();
         Config::set('languages.languages', $languages);

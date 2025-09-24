@@ -110,6 +110,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
+        Route::get('/change_password', [ProfileController::class, 'changePassword'])->name('change_password');
         Route::post('/update', [ProfileController::class, 'update'])->name('update');
         Route::post('/photo', [ProfileController::class, 'updatePhoto'])->name('photo');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');

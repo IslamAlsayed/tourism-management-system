@@ -1,3 +1,4 @@
+{{-- restaurants\index.blade.php --}}
 @extends('pages.dashboard.layouts.index')
 
 @section('table-content')
@@ -14,7 +15,7 @@
     <!-- Container -->
     <div class="grid gap-5 lg:gap-7.5">
         <div class="kt-card kt-card-grid min-w-full">
-            <livewire:restaurants.table :restaurants="$restaurants" />
+            <livewire:restaurants.table />
         </div>
     </div>
     <!-- End of Container -->

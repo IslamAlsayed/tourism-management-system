@@ -219,7 +219,7 @@ return [
 
     // Page Headers
     'type_management_title' => ':type Management',
-    'types_management_description' => 'Edit a :type in the system',
+    'types_management_description' => 'Management and Organization of :types in the system',
 
     'add_type' => 'Add :type',
     'save_type' => 'Save :type',
@@ -231,6 +231,7 @@ return [
     'type_settings' => ':type Settings',
     'type_name_arabic' => ':type Name (Arabic)',
     'type_name_english' => ':type Name (English)',
+    'back_to_types' => 'Back to :types',
     'add_type_description' => 'Add a new :type to the system',
     'edit_type_description' => 'Edit an existing :type in the system',
 
@@ -275,6 +276,7 @@ return [
     'and' => 'And',
     'code_iso2' => 'ISO 3166-1 Alpha-2 Code',
     'code_iso3' => 'ISO 3166-1 Alpha-3 Code',
+    'wiki_data_id' => 'Wiki Data ID',
 
     // Authentication
     'login' => 'Log in',
@@ -296,7 +298,9 @@ return [
     'update_profile' => 'Update Profile',
     'change_password' => 'Change Password',
     'current_password' => 'Current Password',
+    'old_password' => 'Old Password',
     'new_password' => 'New Password',
+    'edit_password' => 'Edit Password',
     'confirm_password' => 'Confirm Password',
     'optional' => 'Optional',
     'unknown_user' => 'Unknown user',
@@ -634,7 +638,9 @@ return [
     'use_map_services' => 'Use map services to get accurate coordinates',
     'select_country_before_city' => 'Country must be selected before adding a city',
     'country_selection' => 'Country Selection',
+    'type_selection' => ':type Selection',
     'must_select_country' => 'Country must be selected before adding a city',
+    'must_select_type1_before_creating_type2' => ':type1 must be selected before creating :type2',
 
     // Currency Management
     'add_currency' => 'Add Currency',
@@ -758,6 +764,8 @@ return [
     'your_name' => 'Your Name',
     'your_email' => 'Your Email',
     'your_phone' => 'Your Phone',
+    'update_your_password' => 'Update Your Password',
+    'profile_information' => 'Profile Information',
     'tell_about_yourself' => 'Tell us about yourself',
     'account_deletion_warning' => 'Are you sure you want to delete your account?',
     'active_account' => 'Active Account',
@@ -883,6 +891,14 @@ return [
         'invalid_input' => 'Invalid Input',
         'validation_error' => 'Validation Error',
         'server_error' => 'Server Error',
+
+        // Type Creation
+        'type_created' => ':type Created',
+        'type_creation_failed' => ':type Creation Failed',
+        'type_updated' => ':type Updated',
+        'type_update_failed' => ':type Update Failed',
+        'type_deleted' => ':type Deleted',
+        'type_deletion_failed' => ':type Deletion Failed',
 
         // User Creation
         'user_created' => 'User Created',

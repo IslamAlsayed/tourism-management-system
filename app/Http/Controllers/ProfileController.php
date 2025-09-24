@@ -17,9 +17,7 @@ class ProfileController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('pages.profile.index', [
-            'user' => $request->user(),
-        ]);
+        return view('pages.profile.index', ['user' => getActiveUser()]);
     }
 
     /**
@@ -27,9 +25,15 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('pages.profile.edit', [
-            'user' => $request->user(),
-        ]);
+        return view('pages.profile.edit', ['user' => getActiveUser()]);
+    }
+
+    /**
+     * Display the user's change password form.
+     */
+    public function changePassword(Request $request): View
+    {
+        return view('pages.profile.change-password', ['user' => getActiveUser()]);
     }
 
     /**

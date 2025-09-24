@@ -8,7 +8,6 @@ use App\Models\Region;
 use App\Models\Country;
 use App\Models\Subregion;
 use App\Models\Restaurant;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Restaurant\RestaurantCreateRequest;
 use App\Http\Requests\Restaurant\RestaurantUpdateRequest;
@@ -17,9 +16,7 @@ class RestaurantController extends Controller
 {
     public function index()
     {
-        $restaurants = Restaurant::with(['country', 'city'])->paginate(getPaginate());
-        $total = Restaurant::count();
-        return view('pages.dashboard.restaurants.index', compact('restaurants', 'total'));
+        return view('pages.dashboard.restaurants.index');
     }
 
     public function create()

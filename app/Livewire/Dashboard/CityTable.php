@@ -31,9 +31,8 @@ class CityTable extends Component
 
     public function mount()
     {
-        $this->resetPage();
         $this->mountWithCustomPagination();
-        // عرض جميع أعمدة المدن (id, name, country_id, created_at, updated_at)
+        $this->resetPage();
         $this->columns = ['id', 'name', 'country_id', 'created_at', 'updated_at'];
     }
 
@@ -54,8 +53,8 @@ class CityTable extends Component
                         $q->orWhere($column, 'like', '%' . $search . '%');
                     }
                 });
-            })
-            ->with('country')->paginate($this->paginate ?: getPaginate());
+            })->with('country')
+            ->paginate(getPaginate());
 
         return view('livewire.dashboard.city-table', [
             'data' => $data,

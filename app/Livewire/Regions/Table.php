@@ -31,8 +31,8 @@ class Table extends Component
 
     public function mount()
     {
-        $this->resetPage();
         $this->mountWithCustomPagination();
+        $this->resetPage();
         $this->columns = ['id', 'name', 'name_ar', 'created_at', 'updated_at'];
     }
 
@@ -59,16 +59,5 @@ class Table extends Component
             'data' => $data,
             'totalCount' => $this->totalCount,
         ]);
-    }
-
-    // Toggle active status for a region
-    public function toggleActive($id)
-    {
-        $region = Region::find($id);
-        if ($region) {
-            $region->is_active = !$region->is_active;
-            $region->save();
-            session()->flash('message', __('تم تحديث حالة الدولة بنجاح.'));
-        }
     }
 }

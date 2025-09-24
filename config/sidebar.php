@@ -24,7 +24,7 @@ return [
         [
             'title' => 'user management',
             'icon' => 'ki-outline ki-users',
-            'status' => 'new +2',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'all users',
@@ -32,16 +32,14 @@ return [
                     'route' => 'users.index',
                 ],
                 [
-                    'title' => 'add new user',
+                    'title' => 'create user',
                     'icon' => 'ki-filled ki-people',
-                    'status' => 'new',
                     'route' => 'users.create',
                 ],
                 [
                     'title' => 'import users',
                     'icon' => 'ki-filled ki-plus',
                     'route' => 'import.data',
-                    'status' => 'new',
                     'parameters' => ['model' => 'users'],
                 ]
             ],
@@ -51,7 +49,7 @@ return [
         [
             'title' => 'currency management',
             'icon' => 'ki-filled ki-dollar',
-            'status' => 'new +1',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'all currencies',
@@ -59,9 +57,8 @@ return [
                     'route' => 'currencies.index',
                 ],
                 [
-                    'title' => 'add new currency',
+                    'title' => 'create currency',
                     'icon' => 'ki-filled ki-people',
-                    'status' => 'new',
                     'route' => 'currencies.create',
                 ],
                 [
@@ -77,21 +74,19 @@ return [
         [
             'title' => 'location management',
             'icon' => 'ki-filled ki-geolocation',
-            'status' => 'updated +1',
+            'status' => 'done all',
             'children' => [
                 [
                     'title' => 'countries',
                     'icon' => 'ki-filled ki-flag',
-                    'status' => 'new +1',
                     'children' => [
                         [
                             'title' => 'all countries',
                             'route' => 'countries.index'
                         ],
                         [
-                            'title' => 'add new country',
+                            'title' => 'create country',
                             'icon' => 'ki-filled ki-people',
-                            'status' => 'new',
                             'route' => 'countries.create',
                         ],
                         [
@@ -104,16 +99,14 @@ return [
                 [
                     'title' => 'states',
                     'icon' => 'ki-filled ki-flag',
-                    'status' => 'new +1',
                     'children' => [
                         [
                             'title' => 'all states',
                             'route' => 'states.index',
                         ],
                         [
-                            'title' => 'add new state',
+                            'title' => 'create state',
                             'icon' => 'ki-filled ki-people',
-                            'status' => 'new',
                             'route' => 'states.create',
                         ],
                         [
@@ -126,17 +119,21 @@ return [
                 [
                     'title' => 'cities',
                     'icon' => 'ki-filled ki-home-2',
-                    'status' => 'updated',
                     'children' => [
                         [
                             'title' => 'all cities',
                             'route' => 'cities.index',
                         ],
                         [
+                            'title' => 'create city',
+                            'icon' => 'ki-filled ki-people',
+                            'route' => 'cities.create',
+                        ],
+                        [
                             'title' => 'import cities',
+                            'icon' => 'ki-filled ki-people',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'cities'],
-                            'status' => 'updated',
                         ],
                     ],
                 ],
@@ -147,6 +144,11 @@ return [
                         [
                             'title' => 'all regions',
                             'route' => 'regions.index',
+                        ],
+                        [
+                            'title' => 'create region',
+                            'icon' => 'ki-filled ki-people',
+                            'route' => 'regions.create',
                         ],
                         [
                             'title' => 'import regions',
@@ -164,6 +166,11 @@ return [
                             'route' => 'subregions.index',
                         ],
                         [
+                            'title' => 'create subregion',
+                            'icon' => 'ki-filled ki-people',
+                            'route' => 'subregions.create',
+                        ],
+                        [
                             'title' => 'import subregions',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'subregions'],
@@ -177,6 +184,11 @@ return [
                         [
                             'title' => 'all nationalities',
                             'route' => 'nationalities.index',
+                        ],
+                        [
+                            'title' => 'create nationality',
+                            'icon' => 'ki-filled ki-people',
+                            'route' => 'nationalities.create',
                         ],
                         [
                             'title' => 'import nationalities',
@@ -220,11 +232,12 @@ return [
         [
             'title' => 'accommodations',
             'icon' => 'ki-filled ki-home-2',
-            'status' => 'updated +7',
+            'status' => 'updating...',
             'children' => [
                 [
                     'title' => 'imports',
                     'icon' => 'ki-filled ki-chart-line-up',
+                    'status' => 'updating...',
                     'route' => 'import.data',
                     'parameters' => ['model' => 'accommodations'],
                 ],
@@ -233,65 +246,50 @@ return [
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'hotel'],
-                    'status' => 'updated',
+                    'status' => 'updating...',
                 ],
                 [
                     'title' => 'resorts',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'resort'],
-                    'status' => 'updated',
+                    'status' => 'updating...',
                 ],
                 [
                     'title' => 'campings',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'camping'],
-                    'status' => 'updated',
+                    'status' => 'updating...',
                 ],
                 [
                     'title' => 'hostels',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'hostel'],
-                    'status' => 'updated',
+                    'status' => 'updating...',
                 ],
                 [
                     'title' => 'lodges',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'lodge'],
-                    'status' => 'updated',
+                    'status' => 'updating...',
                 ],
                 [
                     'title' => 'rooms types',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'rooms-types'],
-                    'status' => 'updated',
+                    'status' => 'updating...',
                 ],
                 [
                     'title' => 'seasons',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'season'],
-                    'status' => 'updated',
+                    'status' => 'updating...',
                 ]
-            ],
-        ],
-
-        // ================= Tour Guides =================
-        [
-            'title' => 'tour guides',
-            'fixed' => '+1',
-            'icon' => 'ki-filled ki-coffee',
-            'children' => [
-                [
-                    'title' => 'tour guides',
-                    'fixed' => false,
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => '#'
-                ],
             ],
         ],
 
@@ -299,6 +297,7 @@ return [
         [
             'title' => 'food & beverage',
             'icon' => 'ki-filled ki-coffee',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'restaurants',
@@ -310,6 +309,21 @@ return [
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'import.data',
                     'parameters' => ['model' => 'restaurants'],
+                ],
+            ],
+        ],
+
+        // ================= Tour Guides =================
+        [
+            'title' => 'tour guides',
+            'status' => 'updating...',
+            'icon' => 'ki-filled ki-coffee',
+            'children' => [
+                [
+                    'title' => 'tour guides',
+                    'status' => 'updating...',
+                    'icon' => 'ki-filled ki-home-2',
+                    'route' => '#'
                 ],
             ],
         ],
@@ -506,18 +520,16 @@ return [
         // ================= Languages =================
         [
             'title' => 'languages management',
-            'fixed' => '+2',
-            'icon' => 'ki-filled ki-global',
+            'icon' => 'fas fa-globe',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'view_languages',
-                    'fixed' => false,
                     'icon' => 'ki-filled ki-global',
                     'route' => 'languages.index'
                 ],
                 [
                     'title' => 'create_language',
-                    'fixed' => false,
                     'icon' => 'ki-filled ki-plus',
                     'route' => 'languages.create'
                 ]
@@ -527,8 +539,8 @@ return [
         // ================= Profile =================
         [
             'title' => 'profile management',
-            'fixed' => '+1',
             'icon' => 'ki-filled ki-profile-circle',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'view profile',
@@ -542,9 +554,8 @@ return [
                 ],
                 [
                     'title' => 'change password',
-                    'fixed' => false,
                     'icon' => 'ki-filled ki-lock',
-                    'route' => '#'
+                    'route' => 'profile.change_password'
                 ],
             ],
         ],

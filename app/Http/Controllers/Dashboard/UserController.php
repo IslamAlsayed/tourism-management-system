@@ -15,9 +15,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::paginate(20);
-        $totalUsers = User::count();
-        return view('pages.dashboard.users.index', compact('users', 'totalUsers'));
+        return view('pages.dashboard.users.index');
     }
 
     public function create()
