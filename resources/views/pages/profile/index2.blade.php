@@ -18,7 +18,7 @@
         <div class="kt-container-fixed">
             <div class="flex flex-col items-center gap-2 lg:gap-3.5 py-4 lg:pt-5 lg:pb-10">
                 <img class="rounded-full border-3 border-green-500 size-[100px] shrink-0"
-                    src="{{ $user->avatar_url ? asset('storage/' . $user->avatar_url) : asset('metronic/media/avatars/300-2.png') }}">
+                    src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/300-2.png') }}">
                 <div class="flex items-center gap-1.5">
                     <div class="text-lg leading-5 font-semibold text-mono">
                         {{ $user->name ?? 'Jenny Klabber' }}
@@ -452,7 +452,7 @@
                             <div class="flex flex-col gap-3.5">
                                 <div class="flex items-start gap-3.5">
                                     <img alt="" class="rounded-full size-9 shrink-0"
-                                        src="{{ $user->avatar_url ? asset('storage/' . $user->avatar_url) : asset('metronic/media/avatars/300-2.png') }}" />
+                                        src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/300-2.png') }}" />
                                     <div class="flex flex-col gap-1 grow">
                                         <div class="flex items-center gap-2 mb-1">
                                             <span class="text-sm font-medium text-mono">
@@ -475,7 +475,7 @@
 
                                 <div class="flex items-start gap-3.5">
                                     <img alt="" class="rounded-full size-9 shrink-0"
-                                        src="{{ $user->avatar_url ? asset('storage/' . $user->avatar_url) : asset('metronic/media/avatars/300-2.png') }}" />
+                                        src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/300-2.png') }}" />
                                     <div class="flex flex-col gap-1 grow">
                                         <div class="flex items-center gap-2 mb-1">
                                             <span class="text-sm font-medium text-mono">

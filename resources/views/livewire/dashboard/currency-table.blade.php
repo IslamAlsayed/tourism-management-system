@@ -1,4 +1,12 @@
 <div class="kt-card kt-card-grid min-w-full">
+    @component('includes.pagination-info', [
+        'data' => $data,
+        'title' => __('main.currencies'),
+        'entityName' => __('main.currency'),
+        'showSearch' => true,
+    ])
+    @endcomponent
+
     <div class="kt-card-content">
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
             <div class="kt-scrollable-x-auto">

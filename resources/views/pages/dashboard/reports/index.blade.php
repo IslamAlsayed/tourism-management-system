@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <button class="kt-btn kt-btn-primary">
+                <button class="kt-btn kt-btn-primary" onclick="window.print()">
                     <i class="ki-filled ki-printer text-sm"></i>
                     {{ __('main.print_report') }}
                 </button>
@@ -35,7 +35,7 @@
                                     {{ number_format($stats['total_users']) }}
                                 </span>
                                 <span class="text-sm text-secondary-foreground">
-                                    إجمالي المستخدمين
+                                    {{ __('main.total_users') }}
                                 </span>
                             </div>
                             <div class="bg-primary-light rounded-full p-3">
@@ -54,7 +54,7 @@
                                     {{ number_format($stats['active_users']) }}
                                 </span>
                                 <span class="text-sm text-secondary-foreground">
-                                    المستخدمون النشطون
+                                    {{ __('main.total_active_users') }}
                                 </span>
                             </div>
                             <div class="bg-success-light rounded-full p-3">
@@ -73,7 +73,7 @@
                                     {{ number_format($stats['total_countries']) }}
                                 </span>
                                 <span class="text-sm text-secondary-foreground">
-                                    البلدان
+                                    {{ __('main.countries') }}
                                 </span>
                             </div>
                             <div class="bg-info-light rounded-full p-3">
@@ -92,7 +92,7 @@
                                     {{ number_format($stats['total_cities']) }}
                                 </span>
                                 <span class="text-sm text-secondary-foreground">
-                                    المدن
+                                    {{ __('main.cities') }}
                                 </span>
                             </div>
                             <div class="bg-warning-light rounded-full p-3">
@@ -139,7 +139,7 @@
                         </p>
                         <div class="flex items-center justify-between">
                             <div class="text-sm">
-                                {{ number_format($stats['total_cities'] / $stats['total_countries'], 1) }}
+                                {{ $stats['total_countries'] > 0 ? number_format($stats['total_cities'] / $stats['total_countries'], 1) : 0 }}
                                 {{ __('main.cities_per_country') }}
                             </div>
                             <a href="{{ route('reports.locations') }}" class="kt-btn kt-btn-sm kt-btn-primary">

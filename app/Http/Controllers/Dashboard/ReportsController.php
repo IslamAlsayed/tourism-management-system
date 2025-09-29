@@ -46,7 +46,7 @@ class ReportsController extends Controller
             'total_cities' => City::count(),
             'countries_with_cities' => Country::whereHas('cities')->count(),
             'countries_without_cities' => Country::whereDoesntHave('cities')->count(),
-            'avg_cities_per_country' => round(City::count() / Country::count(), 2),
+            'avg_cities_per_country' => round(City::count() / (Country::count() ?: 1), 2),
         ];
 
         $topCountries = Country::withCount('cities')->orderBy('cities_count', 'desc')->take(10)->get();
@@ -79,7 +79,7 @@ class ReportsController extends Controller
 
     private function calculateGrowthRate($type)
     {
-        $model = match($type) {
+        $model = match ($type) {
             'users' => User::class,
             'cities' => City::class,
             'countries' => Country::class,
@@ -89,7 +89,8 @@ class ReportsController extends Controller
         $currentMonth = $model::whereMonth('created_at', now()->month)->count();
         $lastMonth = $model::whereMonth('created_at', now()->subMonth()->month)->count();
 
-        if ($lastMonth == 0) return 100;
+        if ($lastMonth == 0)
+            return 100;
         return round((($currentMonth - $lastMonth) / $lastMonth) * 100, 2);
     }
 }

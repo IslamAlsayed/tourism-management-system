@@ -1,4 +1,14 @@
 <div class="kt-card kt-card-grid min-w-full">
+    @component('includes.pagination-info', [
+        'data' => $data,
+        'columns' => $columns,
+        'title' => __('main.types'),
+        'entityName' => __('main.type'),
+        'showSearch' => true,
+    ])
+        @include('components.columns', ['allColumns' => $allColumns ?? []])
+    @endcomponent
+
     <div class="kt-card-content">
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
             <div class="kt-scrollable-x-auto">
@@ -8,42 +18,39 @@
                             <th class="w-[60px] px-4 py-3 text-center">
                                 <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
                             </th>
-                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('main.id') }}
-                            </th>
-                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('main.name') }}
-                            </th>
-                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('main.name_ar') }}
-                            </th>
-                            <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('main.created_at') }}
-                            </th>
+                            @foreach ($columns as $column)
+                                <th
+                                    class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    {{ __('main.' . $column) }}
+                                </th>
+                            @endforeach
                             <th class="px-4 py-3"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $accommodation)
+                        @foreach ($data as $type)
                             <tr>
                                 <td class="text-center">
-                                    <input type="checkbox" name="selectedItems[]" value="{{ $accommodation->id }}"
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $type->id }}"
                                         class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
-                                <td>{!! highlightSearch($accommodation->id, $search) !!}</td>
-                                <td>{!! highlightSearch($accommodation->name ?? '--', $search) !!}</td>
-                                <td>{!! highlightSearch($accommodation->name_ar ?? '--', $search) !!}</td>
-                                <td>{!! highlightSearch($accommodation->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
+                                @foreach ($columns as $column)
+                                    @include('components.static-columns', [
+                                        'column' => $column,
+                                        'model' => $type,
+                                        'search' => $search,
+                                    ])
+                                @endforeach
                                 <td class="px-4 py-2 text-end">
                                     <div>
-                                        <a href="{{ route('accommodations.edit', $accommodation->id) }}"
+                                        <a href="{{ route('accommodations.edit', $type->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
                                             {{ __('main.edit') }}
                                         </a>
 
-                                        <a href="{{ route('accommodations.destroy', $accommodation->id) }}"
+                                        <a href="{{ route('accommodations.destroy', $type->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form action="{{ route('accommodations.destroy', $accommodation->id) }}"
+                                            <form action="{{ route('accommodations.destroy', $type->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')

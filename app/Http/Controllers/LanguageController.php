@@ -25,11 +25,14 @@ class LanguageController extends Controller
 
     public function store(CreateLanguageRequest $request)
     {
-        $language = Language::create($request->validated());
+        $validated = $request->validated();
+        $validated = $request->safe()->except('photo');
+
+        $language = Language::create($validated);
 
         if ($language) {
             $this->loadActiveLanguages();
-            $this->uploadPhoto($request, $language, 'flag', "languages");
+            $this->uploadPhoto($request, $language, 'photo', "languages");
             return redirect()->route('languages.index')->with('success', __('main.messages.type_created', ['type' => __('main.language')]));
         }
 
@@ -38,7 +41,10 @@ class LanguageController extends Controller
 
     public function edit($id)
     {
-        $language = Language::findOrFail($id);
+        $language = Language::find($id);
+        if (!$language) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.language')]));
+        }
         return view('pages.dashboard.languages.edit', compact('language'));
     }
 
@@ -56,7 +62,10 @@ class LanguageController extends Controller
 
     public function destroy($id)
     {
-        $language = Language::findOrFail($id);
+        $language = Language::find($id);
+        if (!$language) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.language')]));
+        }
         if ($language->code == app()->getLocale()) {
             $this->locale(array_rand(config('languages.languages')));
         }

@@ -34,25 +34,7 @@
                         @csrf
 
                         <!-- Profile Photo -->
-                        <div class="text-center mb-4">
-                            <div class="relative inline-block">
-                                <div
-                                    class="w-32 h-32 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="profile-preview" src="{{ asset('metronic/media/avatars/blank.png') }}"
-                                        alt="" class="w-full h-full object-cover">
-                                </div>
-                                <label for="photo"
-                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark"
-                                    style="padding-inline: 12px">
-                                    <i class="fas fa-camera text-sm"></i>
-                                </label>
-                                <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
-                            </div>
-                            <div class="text-sm text-secondary-foreground">{{ __('main.upload_profile_photo') }}</div>
-                            @error('photo')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @include('components.input-image', ['columnName' => 'user'])
 
                         <div class="grid lg:grid-cols-3 gap-6 mb-4">
                             <!-- First Name -->
@@ -97,13 +79,16 @@
                                 @enderror
                             </div>
 
-                            <!-- Confirm Password -->
+                            <!-- Confirmation Password -->
                             <div class="">
-                                <label for="password_confirmation"
+                                <label for="confirmation_password"
                                     class="kt-label required mb-2">{{ __('main.confirm_password') }}</label>
-                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                <input type="password" name="confirmation_password" id="confirmation_password"
                                     class="kt-input h-[45px]" placeholder="{{ __('main.confirm_password_placeholder') }}"
                                     required>
+                                @error('confirmation_password')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -128,8 +113,7 @@
                                     <div class="">
                                         <label for="mobile" class="kt-label mb-2">{{ __('main.mobile') }}</label>
                                         <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.mobile_placeholder') }}"
-                                            value="{{ old('mobile') }}">
+                                            placeholder="{{ __('main.mobile_placeholder') }}" value="{{ old('mobile') }}">
                                         @error('mobile')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -281,18 +265,6 @@
                                             </option>
                                         </select>
                                         @error('timezone')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <!-- Avatar URL -->
-                                    <div class="">
-                                        <label for="avatar_url" class="kt-label mb-2">{{ __('main.avatar_url') }}</label>
-                                        <input type="url" name="avatar_url" id="avatar_url"
-                                            class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.avatar_url_placeholder') }}"
-                                            value="{{ old('avatar_url') }}">
-                                        @error('avatar_url')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>

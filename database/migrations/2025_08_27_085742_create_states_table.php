@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->string('name_ar')->nullable();
             $table->string('iso2')->nullable();
             $table->string('iso3')->nullable();
             $table->string('fips_code')->nullable();

@@ -13,7 +13,10 @@ class ImportHotels implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Hotel())->getFillable();
+        $allFillable = (new Hotel())->getFillable();
+        $relations = method_exists((new Hotel()), 'getRelationshipNames') ? (new Hotel())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;

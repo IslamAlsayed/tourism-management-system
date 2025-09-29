@@ -13,7 +13,10 @@ class ImportCountries implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Country())->getFillable();
+        $allFillable = (new Country())->getFillable();
+        $relations = method_exists((new Country()), 'getRelationshipNames') ? (new Country())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;
@@ -36,7 +39,7 @@ class ImportCountries implements ToCollection
                 }
             }
 
-            $data['flag_emoji'] = str_replace(' ', '-', lcfirst($data['name']));
+            $data['photo'] = str_replace(' ', '-', lcfirst($data['name'])) ?? null;
             $data['timezone'] = $this->fixTimezone($data['timezone']);
 
             $batchData[] = $data;

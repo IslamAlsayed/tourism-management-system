@@ -12,7 +12,20 @@
             </p>
         </div>
 
+        {{-- <div class="flex flex-wrap items-center gap-4">
+             @foreach ($columns as $column)
+                <div class="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+                    <input type="checkbox" name="selectedColumns[]" wire:model.live="selectedColumns"
+                        value="{{ $column }}" class="kt-checkbox kt-checkbox-sm"
+                        data-kt-datatable-row-check="true" style="width: 15px; height: 15px;" />
+                    <label for="{{ $column }}">{{ __('main.' . $column) }}</label>
+                </div>
+            @endforeach
+        </div> --}}
+
         <div class="flex gap-2">
+            {{ $slot }}
+
             <div class="flex flex-wrap gap-2 lg:gap-5">
                 <button type="button" id="deleteAllBtn" data-route="{{ route('deleteAll') }}"
                     data-model="{{ lcfirst($entityName) }}"

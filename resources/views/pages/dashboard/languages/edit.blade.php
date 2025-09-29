@@ -34,6 +34,12 @@
                         @csrf
                         @method('PUT')
 
+                        <!-- Languages Photo -->
+                        @include('components.input-image', [
+                            'columnName' => 'languages',
+                            'photoUrl' => $languages->photo,
+                        ])
+
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Language Code -->
                             <div class="">

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->string('type')->nullable();
+            $table->tinyInteger('rating')->checkBetween([1, 5])->default(3)->nullable();
             $table->string('cat')->nullable();
             $table->string('company_name_ar')->nullable();
             $table->string('specialty')->nullable();
@@ -33,8 +34,17 @@ return new class extends Migration {
             $table->string('street')->nullable();
             $table->string('mobile')->nullable();
             $table->string('website')->nullable();
+            $table->string('photo')->nullable();
             $table->text('notes')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->boolean('wheelchair_accessible')->default(true);
+            $table->boolean('free_wifi')->default(false);
+            $table->boolean('parking')->default(false);
+            $table->boolean('swimming_pool')->default(false);
+            $table->boolean('gym')->default(false);
+            $table->boolean('indoor')->default(false);
+            $table->boolean('outdoor')->default(false);
+            $table->boolean('spa')->default(false);
             $table->timestamps();
         });
     }

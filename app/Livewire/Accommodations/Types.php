@@ -6,16 +6,16 @@ use App\Models\Type;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Accommodation;
+use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 
 class Types extends Component
 {
-    use WithPagination, CustomPagination;
+    use WithPagination, CustomPagination, CustomColumns;
 
     public $search = '';
     public $totalCount = '';
     public $type = '';
-    public array $columns = [];
 
     public function updatingSearch()
     {
@@ -36,8 +36,8 @@ class Types extends Component
     {
         $this->type = $type;
         $this->mountWithCustomPagination();
+        $this->mountWithCustomColumns(Accommodation::class, 5);
         $this->resetPage();
-        $this->columns = ['id', 'name', 'name_ar', 'created_at', 'updated_at'];
     }
 
     public function resetFilters()

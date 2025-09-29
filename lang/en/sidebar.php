@@ -88,6 +88,8 @@ return [
     'add resort' => 'Add Resort',
     'resort facilities' => 'Resort Facilities',
     'tourist camps' => 'Tourist Camps',
+    'guides types' => 'Guides Types',
+    'guides reviews' => 'Guides Reviews',
     'Page under construction' => 'Page under construction',
     'all camps' => 'All Camps',
     'add camp' => 'Add Camp',
@@ -196,4 +198,9 @@ return [
     'rooms types' => 'Room Types',
     'campings' => 'Campings',
     'clients' => 'Clients',
+    'update' => 'Update',
+    'updated' => 'Updated',
+    'updating' => 'Updating',
+    'updating...' => 'Updating...',
+    'done' => 'Done',
 ];

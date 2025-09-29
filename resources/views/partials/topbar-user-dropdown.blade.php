@@ -4,14 +4,14 @@
     <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
         <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
             class="border-2 border-green-500 rounded-full size-9 shrink-0"
-            src="{{ $activeUser && $activeUser->avatar_url ? asset('storage/' . $activeUser->avatar_url) : asset('metronic/media/avatars/blank.png') }}" />
+            src="{{ $activeUser && $activeUser->photo ? asset('storage/' . $activeUser->photo) : asset('metronic/media/avatars/blank.png') }}" />
     </div>
     <div class="kt-dropdown-menu w-[300px]" data-kt-dropdown-menu="true">
         <div class="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
             <div class="flex items-center gap-2">
                 <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
                     class="border-2 border-green-500 rounded-full size-9 shrink-0"
-                    src="{{ $activeUser && $activeUser->avatar_url ? asset('storage/' . $activeUser->avatar_url) : asset('metronic/media/avatars/blank.png') }}" />
+                    src="{{ $activeUser && $activeUser->photo ? asset('storage/' . $activeUser->photo) : asset('metronic/media/avatars/blank.png') }}" />
                 <div class="flex flex-col gap-1.5">
                     <span class="text-sm font-semibold leading-none text-foreground">
                         {{ $activeUser?->name ?? __('main.unknown_user') }}

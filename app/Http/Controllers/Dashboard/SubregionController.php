@@ -38,14 +38,20 @@ class SubregionController extends Controller
 
     public function edit($id)
     {
-        $subregion = Subregion::findOrFail($id);
+        $subregion = Subregion::find($id);
+        if (!$subregion) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.subregion')]));
+        }
         $regions = Region::orderBy('name')->get();
         return view('pages.dashboard.subregions.edit', compact('subregion', 'regions'));
     }
 
     public function update(SubregionsUpdateRequest $request, $id)
     {
-        $subregions = Subregion::findOrFail($id);
+        $subregions = Subregion::find($id);
+        if (!$subregions) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.subregions')]));
+        }
         $validated = $request->validated();
 
         $updated = $subregions->update($validated);
@@ -58,7 +64,10 @@ class SubregionController extends Controller
 
     public function destroy($id)
     {
-        $subregions = Subregion::findOrFail($id);
+        $subregions = Subregion::find($id);
+        if (!$subregions) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.subregions')]));
+        }
         $deleted = $subregions->delete();
         if ($deleted) {
             return redirect()->route('subregions.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.subregion')]));

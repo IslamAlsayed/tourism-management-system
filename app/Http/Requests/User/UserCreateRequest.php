@@ -40,7 +40,7 @@ class UserCreateRequest extends FormRequest
             'preferences' => ['nullable', 'string', 'max:255'],
             'email_verified_at' => ['nullable', 'date'],
             'is_admin' => ['boolean'],
-            'avatar_url' => ['nullable', 'url'],
+            'photo' => ['required', 'image', 'max:2048', 'mimes:png,jpg,jpeg,gif'],
             'is_active' => ['boolean'],
             'is_verified' => ['boolean'],
             'force_password_change' => ['boolean'],

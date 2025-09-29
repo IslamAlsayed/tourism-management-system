@@ -71,8 +71,7 @@
                                     </a>
                                 </label>
                                 <select name="country_id" id="country_id" class="kt-select h-[45px]" required>
-                                    <option value="">{{ __('main.select_type', ['type' => __('main.country')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">
                                             {{ $country->name_ar }} - {{ $country->name }}</option>
@@ -87,8 +86,7 @@
                             <div class="">
                                 <label for="state_id" class="kt-label mb-2">{{ __('main.state') }}</label>
                                 <select name="state_id" id="state_id" class="kt-select h-[45px]">
-                                    <option value="">{{ __('main.select_type', ['type' => __('main.state')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}">
                                             {{ $state->name_ar }} - {{ $state->name }}</option>

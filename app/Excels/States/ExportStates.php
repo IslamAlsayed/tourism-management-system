@@ -21,6 +21,7 @@ class ExportStates implements FromArray, WithHeadings, WithCustomCsvSettings
         foreach ($this->arrayData as $data) {
             $list[] = [
                 $data->name,
+                $data->name_ar,
                 $data->iso2,
                 $data->iso3,
                 $data->fips_code,
@@ -40,6 +41,7 @@ class ExportStates implements FromArray, WithHeadings, WithCustomCsvSettings
     {
         return [
             'name',
+            'name_ar',
             'iso2',
             'iso3',
             'fips_code',

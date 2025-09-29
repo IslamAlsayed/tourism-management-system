@@ -19,13 +19,15 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'id',
+        'photo',
         'name',
         'email',
         'password',
         'bio',
+        'phone',
         'first_name',
         'last_name',
-        'phone',
         'mobile',
         'address',
         'user_code',
@@ -36,16 +38,36 @@ class User extends Authenticatable
         'preferred_language',
         'timezone',
         'preferences',
-        'email_verified_at',
         'is_admin',
-        'avatar_url',
         'is_active',
         'is_verified',
         'force_password_change',
         'last_login_at',
         'last_login_ip',
         'notes',
+        'created_by',
+        'updated_by',
     ];
+
+    public function getExcludedColumns()
+    {
+        return [
+            'password',
+            'bio',
+            'first_name',
+            'last_name',
+            'employee_id',
+            'email_verified_at',
+            'force_password_change',
+            'preferred_language',
+            'preferences',
+            'last_login_at',
+            'last_login_ip',
+            'notes',
+            'created_by',
+            'updated_by',
+        ];
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -51,7 +51,7 @@
 
                     @if ($hasChildren)
                         <!-- Menu with Children -->
-                        <div class="kt-menu-item {{ $hasActiveChild ? 'kt-menu-item-show' : '' }}"
+                        <div class="kt-menu-item {{ $hasActiveChild ? 'show' : '' }}"
                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                             <div
                                 class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $hasActiveChild ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg">
@@ -66,7 +66,7 @@
                                     @if (isset($item['status']))
                                         <span
                                             class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
-                                            {{ strtoupper($item['status']) }}
+                                            {{ __('sidebar.' . $item['status']) }}
                                         </span>
                                     @endif
 
@@ -129,7 +129,7 @@
                                                     @if (isset($child['status']))
                                                         <span
                                                             class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
-                                                            {{ strtoupper($child['status']) }}
+                                                            {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif
 
@@ -175,7 +175,7 @@
                                                                 @if (isset($subChild['status']))
                                                                     <span
                                                                         class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
-                                                                        {{ strtoupper($subChild['status']) }}
+                                                                        {{ __('sidebar.' . $subChild['status']) }}
                                                                     </span>
                                                                 @endif
 
@@ -212,7 +212,7 @@
                                                     @if (isset($child['status']))
                                                         <span
                                                             class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
-                                                            {{ strtoupper($child['status']) }}
+                                                            {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif
 
@@ -251,7 +251,7 @@
                                     @if (isset($item['status']))
                                         <span
                                             class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
-                                            {{ strtoupper($item['status']) }}
+                                            {{ __('sidebar.' . $item['status']) }}
                                         </span>
                                     @endif
 

@@ -33,23 +33,26 @@
                         enctype="multipart/form-data">
                         @csrf
 
-                        <div class="grid lg:grid-cols-3 gap-6">
+                        <!-- Restaurant Photo -->
+                        @include('components.input-image', ['columnName' => 'restaurant'])
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                             <!-- Name -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="name" class="kt-label required mb-2">Name (English)</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     placeholder="Enter accommodation name" required>
                             </div>
 
                             <!-- Name Arabic -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="name_ar" class="kt-label required mb-2">Name (Arabic)</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     placeholder="أدخل اسم الإقامة" required>
                             </div>
 
                             <!-- Country -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="country_id" class="kt-label required mb-2">Country</label>
                                 <select name="country_id" id="country_id" class="kt-select h-[45px]" required>
                                     <option value="">Select Country</option>
@@ -58,11 +61,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- City -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="city_id" class="kt-label required mb-2">City</label>
                                 <select name="city_id" id="city_id" class="kt-select h-[45px]" required>
                                     <option value="">Select City</option>
@@ -73,7 +74,7 @@
                             </div>
 
                             <!-- Region -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="region_id" class="kt-label required mb-2">Region</label>
                                 <select name="region_id" id="region_id" class="kt-select h-[45px]" required>
                                     <option value="">Select Region</option>
@@ -84,7 +85,7 @@
                             </div>
 
                             <!-- Subregion -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="subregion_id" class="kt-label required mb-2">Subregion</label>
                                 <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" required>
                                     <option value="">Select Subregion</option>
@@ -93,11 +94,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Type -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="type" class="kt-label required mb-2">Type</label>
                                 <select name="type" id="type" class="kt-select h-[45px]" required>
                                     <option value="">Select Type</option>
@@ -108,7 +107,7 @@
                             </div>
 
                             <!-- Rating -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="rating" class="kt-label required mb-2">Star Rating</label>
                                 <select name="rating" id="rating" class="kt-select h-[45px]" required>
                                     <option value="">Select Rating</option>
@@ -121,16 +120,14 @@
                             </div>
 
                             <!-- Specialty -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="specialty" class="kt-label required mb-2">Specialty</label>
                                 <input type="text" name="specialty" id="specialty" class="kt-input h-[45px]"
                                     placeholder="Enter company name in Arabic" required>
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Company Name (Arabic) -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="company_name_ar" class="kt-label required mb-2">Company Name
                                     (Arabic)</label>
                                 <input type="text" name="company_name_ar" id="company_name_ar"
@@ -138,95 +135,89 @@
                             </div>
 
                             <!-- phone_01 -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="phone_01" class="kt-label required mb-2">Phone 01</label>
                                 <input type="text" name="phone_01" id="phone_01" class="kt-input h-[45px]"
                                     placeholder="Enter phone number" required>
                             </div>
 
                             <!-- phone_02 -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="phone_02" class="kt-label required mb-2">Phone 02</label>
                                 <input type="text" name="phone_02" id="phone_02" class="kt-input h-[45px]"
                                     placeholder="Enter phone number" required>
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- fax -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="fax" class="kt-label required mb-2">Fax</label>
                                 <input type="text" name="fax" id="fax" class="kt-input h-[45px]"
                                     placeholder="Enter fax number" required>
                             </div>
 
                             <!-- email_01 -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="email_01" class="kt-label required mb-2">Email 1</label>
                                 <input type="text" name="email_01" id="email_01" class="kt-input h-[45px]"
                                     placeholder="Enter email_01 number" required>
                             </div>
 
                             <!-- email_02 -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="email_02" class="kt-label required mb-2">Email 2</label>
                                 <input type="text" name="email_02" id="email_02" class="kt-input h-[45px]"
                                     placeholder="Enter email_02 number" required>
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Contact Person -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="contact_person" class="kt-label required mb-2">Contact Person</label>
                                 <input type="text" name="contact_person" id="contact_person"
                                     class="kt-input h-[45px]" placeholder="Enter contact person name" required>
                             </div>
 
                             <!-- Box -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="box" class="kt-label required mb-2">Box</label>
                                 <input type="text" name="box" id="box" class="kt-input h-[45px]"
                                     placeholder="Enter box number" required>
                             </div>
 
                             <!-- Postal Code -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="postal_code" class="kt-label required mb-2">Postal Code</label>
                                 <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]"
                                     placeholder="Enter postal code" required>
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Mobile -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="mobile" class="kt-label required mb-2">Mobile</label>
                                 <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
                                     placeholder="Enter mobile number" required>
                             </div>
 
                             <!-- Website -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="website" class="kt-label required mb-2">Website</label>
                                 <input type="text" name="website" id="website" class="kt-input h-[45px]"
                                     placeholder="Enter website URL" required>
                             </div>
 
                             <!-- Note -->
-                            <div class="mb-4">
+                            <div class="">
                                 <label for="note" class="kt-label mb-2">Note</label>
                                 <textarea name="note" id="note" rows="3" class="kt-input h-[45px]"
                                     placeholder="Enter any additional notes"></textarea>
                             </div>
-                        </div>
 
-                        <div class="flex items-center gap-3 mb-6">
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_active" value="0">
-                                <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                    value="1">
-                                <label for="is_active" class="kt-label mb-0">{{ __('main.is_active') }}</label>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_active" value="0">
+                                    <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
+                                        value="1">
+                                    <label for="is_active" class="kt-label mb-0">{{ __('main.is_active') }}</label>
+                                </div>
                             </div>
                         </div>
 
@@ -326,7 +317,8 @@
 
                         <div class="flex items-center gap-3">
                             <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-camera text-warning"></i>
+                                {{-- <i class="ki-filled ki-camera text-warning"></i> --}}
+                                <i class="ki-filled ki-information text-success"></i>
                             </div>
                             <div>
                                 <div class="font-semibold">High Quality Photos</div>

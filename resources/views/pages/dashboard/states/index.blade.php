@@ -14,7 +14,7 @@
     <!-- Container -->
     <div class="grid gap-5 lg:gap-7.5">
         <div class="kt-card kt-card-grid min-w-full">
-            <livewire:states.table :states="$states" />
+            <livewire:states />
         </div>
     </div>
     <!-- End of Container -->

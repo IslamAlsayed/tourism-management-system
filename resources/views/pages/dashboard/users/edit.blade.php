@@ -35,33 +35,17 @@
                         @method('PUT')
 
                         <!-- Profile Photo -->
-                        <div class="text-center mb-4">
-                            <div class="relative inline-block">
-                                <div
-                                    class="w-32 h-32 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="profile-preview"
-                                        src="{{ $user->avatar_url ? asset($user->avatar_url) : asset('metronic/media/avatars/blank.png') }}"
-                                        alt="" class="w-full h-full object-cover">
-                                </div>
-                                <label for="photo"
-                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark"
-                                    style="padding-inline: 12px">
-                                    <i class="fas fa-camera text-sm"></i>
-                                </label>
-                                <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
-                            </div>
-                            <div class="text-sm text-secondary-foreground">{{ __('main.upload_profile_photo') }}</div>
-                            @error('photo')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @include('components.input-image', [
+                            'columnName' => 'profile',
+                            'photoUrl' => $user->photo,
+                        ])
 
                         <div class="grid lg:grid-cols-3 gap-6 mb-4">
                             <!-- First Name -->
                             <div class="">
                                 <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
                                 <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.first_name') }}" value="{{ $user->first_name }}" required>
+                                    value="{{ $user->first_name }}" required>
                                 @error('first_name')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -71,7 +55,7 @@
                             <div class="">
                                 <label for="last_name" class="kt-label required mb-2">{{ __('main.last_name') }}</label>
                                 <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.last_name') }}" value="{{ $user->last_name }}" required>
+                                    value="{{ $user->last_name }}" required>
                                 @error('last_name')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -81,7 +65,7 @@
                             <div class="">
                                 <label for="email" class="kt-label required mb-2">{{ __('main.email') }}</label>
                                 <input type="email" name="email" id="email" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.email') }}" value="{{ $user->email }}" required>
+                                    value="{{ $user->email }}" required>
                                 @error('email')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -99,7 +83,7 @@
                                     <div class="">
                                         <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
                                         <input type="text" name="phone" id="phone" class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.phone') }}" value="{{ $user->phone }}">
+                                            value="{{ $user->phone }}">
                                         @error('phone')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -109,7 +93,7 @@
                                     <div class="">
                                         <label for="mobile" class="kt-label mb-2">{{ __('main.mobile') }}</label>
                                         <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.mobile_placeholder') }}" value="{{ $user->mobile }}">
+                                            value="{{ $user->mobile }}">
                                         @error('mobile')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -119,7 +103,6 @@
                                     <div class="">
                                         <label for="address" class="kt-label mb-2">{{ __('main.address') }}</label>
                                         <input type="text" name="address" id="address" class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.address_placeholder') }}"
                                             value="{{ $user->address }}">
                                         @error('address')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -140,7 +123,6 @@
                                     <div class="">
                                         <label for="user_code" class="kt-label mb-2">{{ __('main.user_code') }}</label>
                                         <input type="text" name="user_code" id="user_code" class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.user_code_placeholder') }}"
                                             value="{{ $user->user_code }}">
                                         @error('user_code')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -149,11 +131,8 @@
 
                                     <!-- Employee ID -->
                                     <div class="">
-                                        <label for="employee_id"
-                                            class="kt-label mb-2">{{ __('main.employee_id') }}</label>
-                                        <input type="text" name="employee_id" id="employee_id"
-                                            class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.employee_id_placeholder') }}"
+                                        <label for="employee_id" class="kt-label mb-2">{{ __('main.employee_id') }}</label>
+                                        <input type="text" name="employee_id" id="employee_id" class="kt-input h-[45px]"
                                             value="{{ $user->employee_id }}">
                                         @error('employee_id')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -176,9 +155,7 @@
                                     <div class="">
                                         <label for="department" class="kt-label mb-2">{{ __('main.department') }}</label>
                                         <input type="text" name="department" id="department"
-                                            class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.department_placeholder') }}"
-                                            value="{{ $user->department }}">
+                                            class="kt-input h-[45px]" value="{{ $user->department }}">
                                         @error('department')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -188,7 +165,6 @@
                                     <div class="">
                                         <label for="position" class="kt-label mb-2">{{ __('main.position') }}</label>
                                         <input type="text" name="position" id="position" class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.position_placeholder') }}"
                                             value="{{ $user->position }}">
                                         @error('position')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -198,8 +174,7 @@
                                     <!-- Bio -->
                                     <div class="">
                                         <label for="bio" class="kt-label mb-2">{{ __('main.bio') }}</label>
-                                        <textarea name="bio" id="bio" rows="3" class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.bio_placeholder') }}">{{ old('bio') }}</textarea>
+                                        <textarea name="bio" id="bio" rows="3" class="kt-input h-[45px]">{{ old('bio') }}</textarea>
                                         @error('bio')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -221,12 +196,12 @@
                                             class="kt-label mb-2">{{ __('main.preferred_language') }}</label>
                                         <select name="preferred_language" id="preferred_language"
                                             class="kt-select h-[45px]">
-                                            <option value="">{{ __('main.select_language') }}</option>
+                                            <option value="">--</option>
                                             <option value="en"
-                                                {{ old('preferred_language') == 'en' ? 'selected' : '' }}>
+                                                {{ $user->preferred_language == 'en' ? 'selected' : '' }}>
                                                 {{ __('main.english') }}</option>
                                             <option value="ar"
-                                                {{ old('preferred_language') == 'ar' ? 'selected' : '' }}>
+                                                {{ $user->preferred_language == 'ar' ? 'selected' : '' }}>
                                                 {{ __('main.arabic') }}</option>
                                         </select>
                                         @error('preferred_language')
@@ -239,40 +214,28 @@
                                         <label for="timezone"
                                             class="kt-label mb-2">{{ __('main.timezone_field') }}</label>
                                         <select name="timezone" id="timezone" class="kt-select h-[45px]">
-                                            <option value="">{{ __('main.select_timezone') }}</option>
-                                            <option value="UTC" {{ old('timezone') == 'UTC' ? 'selected' : '' }}>
+                                            <option value="">--</option>
+                                            <option value="UTC" {{ $user->timezone == 'UTC' ? 'selected' : '' }}>
                                                 UTC
                                             </option>
                                             <option value="Asia/Riyadh"
-                                                {{ old('timezone') == 'Asia/Riyadh' ? 'selected' : '' }}>
+                                                {{ $user->timezone == 'Asia/Riyadh' ? 'selected' : '' }}>
                                                 Asia/Riyadh
                                             </option>
                                             <option value="Asia/Dubai"
-                                                {{ old('timezone') == 'Asia/Dubai' ? 'selected' : '' }}>
+                                                {{ $user->timezone == 'Asia/Dubai' ? 'selected' : '' }}>
                                                 Asia/Dubai
                                             </option>
                                             <option value="Europe/London"
-                                                {{ old('timezone') == 'Europe/London' ? 'selected' : '' }}>
+                                                {{ $user->timezone == 'Europe/London' ? 'selected' : '' }}>
                                                 Europe/London
                                             </option>
                                             <option value="America/New_York"
-                                                {{ old('timezone') == 'America/New_York' ? 'selected' : '' }}>
+                                                {{ $user->timezone == 'America/New_York' ? 'selected' : '' }}>
                                                 America/New_York
                                             </option>
                                         </select>
                                         @error('timezone')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <!-- Avatar URL -->
-                                    <div class="">
-                                        <label for="avatar_url" class="kt-label mb-2">{{ __('main.avatar_url') }}</label>
-                                        <input type="url" name="avatar_url" id="avatar_url"
-                                            class="kt-input h-[45px]"
-                                            placeholder="{{ __('main.avatar_url_placeholder') }}"
-                                            value="{{ $user->avatar_url }}">
-                                        @error('avatar_url')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -283,21 +246,21 @@
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_admin" value="0">
                                         <input type="checkbox" name="is_admin" id="is_admin" class="kt-checkbox"
-                                            value="1" {{ old('is_admin') ? 'checked' : '' }}>
+                                            value="1" {{ $user->is_admin == 1 ? 'checked' : '' }}>
                                         <label for="is_admin" class="kt-label mb-0">{{ __('main.is_admin') }}</label>
                                     </div>
 
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_active" value="0">
                                         <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                            value="1" {{ old('is_active', '1') ? 'checked' : '' }}>
+                                            value="1" {{ $user->is_active == 1 ? 'checked' : '' }}>
                                         <label for="is_active" class="kt-label mb-0">{{ __('main.is_active') }}</label>
                                     </div>
 
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_verified" value="0">
                                         <input type="checkbox" name="is_verified" id="is_verified" class="kt-checkbox"
-                                            value="1" {{ old('is_verified') ? 'checked' : '' }}>
+                                            value="1" {{ $user->is_verified == 1 ? 'checked' : '' }}>
                                         <label for="is_verified"
                                             class="kt-label mb-0">{{ __('main.is_verified') }}</label>
                                     </div>
@@ -308,7 +271,7 @@
                                         <input type="hidden" name="force_password_change" value="0">
                                         <input type="checkbox" name="force_password_change" id="force_password_change"
                                             class="kt-checkbox" value="1"
-                                            {{ old('force_password_change') ? 'checked' : '' }}>
+                                            {{ $user->force_password_change == 1 ? 'checked' : '' }}>
                                         <label for="force_password_change"
                                             class="kt-label mb-0">{{ __('main.force_password_change') }}</label>
                                     </div>

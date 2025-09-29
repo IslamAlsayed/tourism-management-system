@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('code');
             $table->string('name');
-            $table->string('flag')->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

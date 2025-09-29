@@ -14,9 +14,7 @@ class CountryController extends Controller
 {
     public function index()
     {
-        $countries = Country::with('currency')->paginate(getPaginate());
-        $totalCountries = Country::count();
-        return view('pages.dashboard.countries.index', compact('countries', 'totalCountries'));
+        return view('pages.dashboard.countries.index');
     }
 
     public function create()
@@ -46,17 +44,20 @@ class CountryController extends Controller
 
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->route('countries.create')->with('success', __('main.messages.country_created'));
+                return redirect()->route('countries.create')->with('success', __('main.messages.type_created', ['type' => __('main.country')]));
             }
-            return redirect()->route('countries.index')->with('success', __('main.messages.country_created'));
+            return redirect()->route('countries.index')->with('success', __('main.messages.type_created', ['type' => __('main.country')]));
         }
 
-        return redirect()->route('countries.index')->with('error', __('main.messages.country_creation_failed'));
+        return redirect()->route('countries.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.country')]));
     }
 
     public function edit($id)
     {
-        $country = Country::findOrFail($id);
+        $country = Country::find($id);
+        if (!$country) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.country')]));
+        }
         $currencies = Currency::orderBy('code')->get();
         $regions = Region::orderBy('name')->get();
         return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'regions'));
@@ -64,26 +65,32 @@ class CountryController extends Controller
 
     public function update(UpdateCountriesRequest $request, $id)
     {
-        $country = Country::findOrFail($id);
+        $country = Country::find($id);
+        if (!$country) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.country')]));
+        }
         $validated = $request->validated();
 
         $updated = $country->update($validated);
         if ($updated) {
-            return redirect()->route('countries.index')->with('success', __('main.messages.country_updated'));
+            return redirect()->route('countries.index')->with('success', __('main.messages.type_updated', ['type' => __('main.country')]));
         }
 
-        return redirect()->route('countries.index')->with('error', __('main.messages.country_updated_failed'));
+        return redirect()->route('countries.index')->with('error', __('main.messages.type_updated_failed', ['type' => __('main.country')]));
     }
 
     public function destroy($id)
     {
-        $country = Country::findOrFail($id);
+        $country = Country::find($id);
+        if (!$country) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.country')]));
+        }
         $deleted = $country->delete();
         if ($deleted) {
-            return redirect()->route('countries.index')->with('success', __('main.messages.country_deleted'));
+            return redirect()->route('countries.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.country')]));
         }
 
-        return redirect()->route('countries.index')->with('error', __('main.messages.country_deletion_failed'));
+        return redirect()->route('countries.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.country')]));
     }
 
     /**

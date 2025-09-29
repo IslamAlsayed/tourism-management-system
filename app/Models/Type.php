@@ -10,9 +10,4 @@ class Type extends Model
         'name',
         'name_ar'
     ];
-
-    public function accommodations()
-    {
-        return $this->hasMany(Accommodation::class, 'type_id');
-    }
 }

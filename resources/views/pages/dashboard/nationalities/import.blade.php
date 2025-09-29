@@ -15,23 +15,25 @@
             </a>
         </div>
 
-        <table class="border min-w-half divide-y text-center divide-gray-200 mt-6">
-            <thead>
-                <tr>
-                    <th class="border px-2">name</th>
-                    <th class="border px-2">name_ar</th>
-                    <th class="border px-2">is_active</th>
-                    <th class="border px-2">country_id</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <tr>
-                    <td class="border px-2">Egyptian</td>
-                    <td class="border px-2">مصري</td>
-                    <td class="border px-2">1</td>
-                    <td class="border px-2">65</td>
-                </tr>
-            </tbody>
-        </table>
+        @if (env('DB_Mode') != 'production')
+            <table class="border min-w-half divide-y text-center divide-gray-200 mt-6">
+                <thead>
+                    <tr>
+                        <th class="border px-2">name</th>
+                        <th class="border px-2">name_ar</th>
+                        <th class="border px-2">is_active</th>
+                        <th class="border px-2">country_id</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td class="border px-2">Egyptian</td>
+                        <td class="border px-2">مصري</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">65</td>
+                    </tr>
+                </tbody>
+            </table>
+        @endif
     </x-import-form>
 @endsection

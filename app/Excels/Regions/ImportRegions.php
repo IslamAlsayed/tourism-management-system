@@ -13,7 +13,10 @@ class ImportRegions implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Region())->getFillable();
+        $allFillable = (new Region())->getFillable();
+        $relations = method_exists((new Region()), 'getRelationshipNames') ? (new Region())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;
@@ -42,7 +45,7 @@ class ImportRegions implements ToCollection
             if (count($batchData) >= $batchSize) {
                 // ImportDataToDBJob::dispatch(Region::class, $batchData);
                 foreach ($batchData as $item) {
-                    Region::create($item);
+                    Region::updateOrCreate(['name' => $item['name']], $item);
                 }
                 $this->rowCount += count($batchData);
                 $batchData = [];
@@ -53,7 +56,7 @@ class ImportRegions implements ToCollection
         if (count($batchData) > 0) {
             // ImportDataToDBJob::dispatch(Region::class, $batchData);
             foreach ($batchData as $item) {
-                Region::create($item);
+                Region::updateOrCreate(['name' => $item['name']], $item);
             }
             $this->rowCount += count($batchData);
         }

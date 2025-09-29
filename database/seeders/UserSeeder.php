@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'preferences' => json_encode(['theme' => 'dark']),
             'email_verified_at' => null,
             'is_admin' => true,
-            'avatar_url' => null,
+            'photo' => null,
             'is_active' => true,
             'is_verified' => true,
             'force_password_change' => false,

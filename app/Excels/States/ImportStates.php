@@ -13,7 +13,10 @@ class ImportStates implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new State())->getFillable();
+        $allFillable = (new State())->getFillable();
+        $relations = method_exists((new State()), 'getRelationshipNames') ? (new State())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;
@@ -42,9 +45,9 @@ class ImportStates implements ToCollection
             if (count($batchData) >= $batchSize) {
                 // ImportDataToDBJob::dispatch(State::class, $batchData);
                 foreach ($batchData as $item) {
-                    State::create($item);
+                    State::updateOrCreate(['name' => $item['name']], $item);
+                    $this->rowCount++;
                 }
-                $this->rowCount += count($batchData);
                 $batchData = [];
             }
         }
@@ -53,9 +56,9 @@ class ImportStates implements ToCollection
         if (count($batchData) > 0) {
             // ImportDataToDBJob::dispatch(State::class, $batchData);
             foreach ($batchData as $item) {
-                State::create($item);
+                State::updateOrCreate(['name' => $item['name']], $item);
+                $this->rowCount++;
             }
-            $this->rowCount += count($batchData);
         }
     }
 }

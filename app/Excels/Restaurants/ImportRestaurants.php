@@ -13,7 +13,10 @@ class ImportRestaurants implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Restaurant())->getFillable();
+        $allFillable = (new Restaurant())->getFillable();
+        $relations = method_exists((new Restaurant()), 'getRelationshipNames') ? (new Restaurant())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;
@@ -44,8 +47,8 @@ class ImportRestaurants implements ToCollection
                 // ImportDataToDBJob::dispatch(Restaurant::class, $batchData);
                 foreach ($batchData as $item) {
                     Restaurant::create($item);
+                    $this->rowCount++;
                 }
-                $this->rowCount += count($batchData);
                 $batchData = [];
             }
         }
@@ -55,8 +58,8 @@ class ImportRestaurants implements ToCollection
             // ImportDataToDBJob::dispatch(Restaurant::class, $batchData);
             foreach ($batchData as $item) {
                 Restaurant::create($item);
+                $this->rowCount++;
             }
-            $this->rowCount += count($batchData);
         }
     }
 }

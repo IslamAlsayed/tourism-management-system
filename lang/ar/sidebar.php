@@ -88,6 +88,8 @@ return [
     'add resort' => 'إضافة منتجع',
     'resort facilities' => 'مرافق المنتجع',
     'tourist camps' => 'المخيمات السياحية',
+    'guides types' => 'أنواع المرشدين',
+    'guides reviews' => 'مراجعات المرشدين',
     'Page under construction' => 'الصفحة قيد الإنشاء',
     'all camps' => 'جميع المخيمات',
     'add camp' => 'إضافة مخيم',
@@ -196,4 +198,9 @@ return [
     'rooms types' => 'أنواع الغرف',
     'campings' => 'المخيمات',
     'clients' => 'العملاء',
+    'update' => 'تحديث',
+    'updated' => 'تم التحديث',
+    'updating' => 'جارٍ التحديث',
+    'updating...' => 'جارٍ التحديث...',
+    'done' => 'تم ',
 ];

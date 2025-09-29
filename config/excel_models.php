@@ -112,4 +112,24 @@ return [
         'importer' => \App\Excels\Accommodations\RateDetails\ImportRateDetails::class,
         'exporter' => \App\Excels\Accommodations\RateDetails\ExportRateDetails::class,
     ],
+
+    // Tour Guides
+    'tour-guides' => [
+        'title' => 'tour-guides',
+        'model' => \App\Models\TourGuide::class,
+        'importer' => \App\Excels\TourGuides\ImportTourGuides::class,
+        'exporter' => \App\Excels\TourGuides\ExportTourGuides::class,
+    ],
+    'tour-guides-types' => [
+        'title' => 'tour-guides-types',
+        'model' => \App\Models\TourGuideType::class,
+        'importer' => \App\Excels\TourGuidesTypes\ImportTourGuidesTypes::class,
+        'exporter' => \App\Excels\TourGuidesTypes\ExportTourGuidesTypes::class,
+    ],
+    'tour-guides-reviews' => [
+        'title' => 'tour-guides-reviews',
+        'model' => \App\Models\TourGuideReview::class,
+        'importer' => \App\Excels\TourGuidesReviews\ImportTourGuidesReviews::class,
+        'exporter' => \App\Excels\TourGuidesReviews\ExportTourGuidesReviews::class,
+    ],
 ];

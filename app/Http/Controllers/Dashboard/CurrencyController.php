@@ -12,9 +12,7 @@ class CurrencyController extends Controller
 {
     public function index()
     {
-        $currencies = Currency::paginate(getPaginate());
-        $totalCurrencies = Currency::count();
-        return view('pages.dashboard.currencies.index', compact('currencies', 'totalCurrencies'));
+        return view('pages.dashboard.currencies.index');
     }
 
     public function create()
@@ -25,7 +23,10 @@ class CurrencyController extends Controller
 
     public function edit($id)
     {
-        $currency = Currency::findOrFail($id);
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.currency')]));
+        }
         $countries = Country::all();
         return view('pages.dashboard.currencies.edit', compact('currency', 'countries'));
     }
@@ -37,35 +38,41 @@ class CurrencyController extends Controller
 
         if ($currency) {
             if ($request->has('save_and_add')) {
-                return redirect()->route('currencies.create')->with('success', __('main.messages.currency_created'));
+                return redirect()->route('currencies.create')->with('success', __('main.messages.type_created', ['type' => __('main.currency')]));
             }
-            return redirect()->route('currencies.index')->with('success', __('main.messages.currency_created'));
+            return redirect()->route('currencies.index')->with('success', __('main.messages.type_created', ['type' => __('main.currency')]));
         }
 
-        return redirect()->route('currencies.index')->with('error', __('main.messages.currency_creation_failed'));
+        return redirect()->route('currencies.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.currency')]));
     }
 
     public function update(UpdateCurrencyRequest $request, $id)
     {
-        $currency = Currency::findOrFail($id);
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.currency')]));
+        }
         $validated = $request->validated();
         $updated = $currency->update($validated);
 
         if ($updated) {
-            return redirect()->route('currencies.index')->with('success', __('main.messages.currency_updated'));
+            return redirect()->route('currencies.index')->with('success', __('main.messages.type_updated', ['type' => __('main.currency')]));
         }
 
-        return redirect()->route('currencies.index')->with('error', __('main.messages.currency_updated_failed'));
+        return redirect()->route('currencies.index')->with('error', __('main.messages.type_updated_failed', ['type' => __('main.currency')]));
     }
 
     public function destroy($id)
     {
-        $currency = Currency::findOrFail($id);
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.currency')]));
+        }
         $deleted = $currency->delete();
         if ($deleted) {
-            return redirect()->route('currencies.index')->with('success', __('main.messages.currency_deleted'));
+            return redirect()->route('currencies.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.currency')]));
         }
 
-        return redirect()->route('currencies.index')->with('error', __('main.messages.currency_deletion_failed'));
+        return redirect()->route('currencies.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.currency')]));
     }
 }

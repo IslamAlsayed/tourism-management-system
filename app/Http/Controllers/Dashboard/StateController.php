@@ -14,9 +14,7 @@ class StateController extends Controller
 {
     public function index()
     {
-        $states = State::with('country')->paginate(getPaginate());
-        $totalStates = State::count();
-        return view('pages.dashboard.states.index', compact('states', 'totalStates'));
+        return view('pages.dashboard.states.index');
     }
 
     public function create()
@@ -32,15 +30,18 @@ class StateController extends Controller
         $state = State::create($validated);
 
         if ($state) {
-            return redirect()->route('states.index')->with('success', __('main.messages.state_created'));
+            return redirect()->route('states.index')->with('success', __('main.messages.type_created', ['type' => __('main.state')]));
         }
 
-        return redirect()->route('states.index')->with('error', __('main.messages.state_creation_failed'));
+        return redirect()->route('states.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.state')]));
     }
 
     public function edit($id)
     {
-        $state = State::findOrFail($id);
+        $state = State::find($id);
+        if (!$state) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.state')]));
+        }
         $countries = Country::orderBy('name')->get();
         $regions = Country::orderBy('name')->get();
         return view('pages.dashboard.states.edit', compact('state', 'countries', 'regions'));
@@ -48,14 +49,17 @@ class StateController extends Controller
 
     public function update(StateUpdateRequest $request, $id)
     {
-        $state = State::findOrFail($id);
+        $state = State::find($id);
+        if (!$state) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.state')]));
+        }
         $validated = $request->validated();
 
         $updated = $state->update($validated);
         if ($updated) {
-            return redirect()->route('states.index')->with('success', __('main.messages.state_updated'));
+            return redirect()->route('states.index')->with('success', __('main.messages.type_updated', ['type' => __('main.state')]));
         }
 
-        return redirect()->route('states.index')->with('error', __('main.messages.state_updated_failed'));
+        return redirect()->route('states.index')->with('error', __('main.messages.type_updated_failed', ['type' => __('main.state')]));
     }
 }

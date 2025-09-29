@@ -13,7 +13,10 @@ class ImportNationalities implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Nationality())->getFillable();
+        $allFillable = (new Nationality())->getFillable();
+        $relations = method_exists((new Nationality()), 'getRelationshipNames') ? (new Nationality())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;

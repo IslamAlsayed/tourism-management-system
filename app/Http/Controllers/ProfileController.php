@@ -52,7 +52,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('user.profile')->with('success', __('main.messages.profile_updated'));
+        return redirect()->route('user.profile')->with('success', __('main.messages.type_updated', ['type' => __('main.profile')]));
     }
 
     /**
@@ -88,7 +88,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         try {
-            $this->uploadPhoto($request, $user, 'avatar_url', 'profile-photos');
+            $this->uploadPhoto($request, $user, 'photo', 'profile-photos');
             return redirect()->route('user.profile')->with('success', __('main.messages.photo_uploaded_successfully'));
         } catch (\Exception $e) {
             return redirect()->route('user.profile')->with('error', __('main.messages.no_photo_uploaded'));

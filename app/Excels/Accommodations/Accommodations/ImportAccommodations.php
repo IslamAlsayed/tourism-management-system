@@ -15,7 +15,10 @@ class ImportAccommodations implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Accommodation())->getFillable();
+        $allFillable = (new Accommodation())->getFillable();
+        $relations = method_exists((new Accommodation()), 'getRelationshipNames') ? (new Accommodation())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;

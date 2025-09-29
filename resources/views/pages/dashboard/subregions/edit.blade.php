@@ -70,9 +70,7 @@
                             <div class="">
                                 <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
                                 <select name="region_id" id="region_id" class="kt-input h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.region')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"
                                             {{ $region->id == $subregion->region_id ? 'selected' : '' }}>

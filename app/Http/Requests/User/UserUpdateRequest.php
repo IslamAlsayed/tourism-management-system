@@ -40,7 +40,7 @@ class UserUpdateRequest extends FormRequest
             'preferences' => ['nullable', 'string', 'max:255'],
             'email_verified_at' => ['nullable', 'date'],
             'is_admin' => ['nullable', 'boolean'],
-            'avatar_url' => ['nullable', 'string', 'max:255'],
+            'photo' => ['required', 'image', 'max:2048', 'mimes:png,jpg,jpeg,gif'],
             'is_active' => ['nullable', 'boolean'],
             'is_verified' => ['nullable', 'boolean'],
             'force_password_change' => ['nullable', 'boolean'],

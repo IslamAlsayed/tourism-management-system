@@ -16,6 +16,14 @@
             <!-- Container -->
             <div class="grid gap-5 lg:gap-7.5">
                 <div class="kt-card kt-card-grid min-w-full">
+                    @component('includes.pagination-info', [
+                        'data' => $data,
+                        'title' => __('main.reviews'),
+                        'entityName' => __('main.review'),
+                        'showSearch' => true,
+                    ])
+                    @endcomponent
+
                     <livewire:accommodations.accommodations :accommodations="$accommodations" />
                 </div>
             </div>

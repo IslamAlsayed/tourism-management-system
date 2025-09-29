@@ -37,13 +37,19 @@ class RegionController extends Controller
 
     public function edit($id)
     {
-        $region = Region::findOrFail($id);
+        $region = Region::find($id);
+        if (!$region) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.region')]));
+        }
         return view('pages.dashboard.regions.edit', compact('region'));
     }
 
     public function update(RegionsUpdateRequest $request, $id)
     {
-        $region = Region::findOrFail($id);
+        $region = Region::find($id);
+        if (!$region) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.region')]));
+        }
         $validated = $request->validated();
 
         $updated = $region->update($validated);
@@ -56,7 +62,10 @@ class RegionController extends Controller
 
     public function destroy($id)
     {
-        $region = Region::findOrFail($id);
+        $region = Region::find($id);
+        if (!$region) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.region')]));
+        }
         $deleted = $region->delete();
         if ($deleted) {
             return redirect()->route('regions.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.region')]));

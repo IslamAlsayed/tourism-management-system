@@ -13,7 +13,10 @@ class ImportSubregions implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Subregion())->getFillable();
+        $allFillable = (new Subregion())->getFillable();
+        $relations = method_exists((new Subregion()), 'getRelationshipNames') ? (new Subregion())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;
@@ -42,7 +45,7 @@ class ImportSubregions implements ToCollection
             if (count($batchData) >= $batchSize) {
                 // ImportDataToDBJob::dispatch(Subregion::class, $batchData);
                 foreach ($batchData as $item) {
-                    Subregion::create($item);
+                    Subregion::updateOrCreate(['name' => $item['name']], $item);
                 }
                 $this->rowCount += count($batchData);
                 $batchData = [];
@@ -53,7 +56,7 @@ class ImportSubregions implements ToCollection
         if (count($batchData) > 0) {
             // ImportDataToDBJob::dispatch(Subregion::class, $batchData);
             foreach ($batchData as $item) {
-                Subregion::create($item);
+                Subregion::updateOrCreate(['name' => $item['name']], $item);
             }
             $this->rowCount += count($batchData);
         }

@@ -24,7 +24,7 @@ class CreateLanguageRequest extends FormRequest
         return [
             "name" => "required|unique:languages,name",
             "code" => "required|unique:languages,code",
-            "photo" => "required|unique:languages,flag",
+            "photo" => "required|unique:languages,photo",
         ];
     }
 }

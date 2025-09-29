@@ -32,6 +32,13 @@
                     <form method="POST" action="{{ route('countries.update', $country->id) }}"
                         enctype="multipart/form-data" class="space-y-6 p-4">
                         @csrf
+                        @method('PUT')
+
+                        <!-- Country Photo -->
+                        @include('components.input-image', [
+                            'columnName' => 'country',
+                            'photoUrl' => $country->photo,
+                        ])
 
                         <!-- Flag emoji upload -->
                         <div class="text-center mb-4">
@@ -126,9 +133,7 @@
                             <div class="mb-3">
                                 <label for="currency_id" class="kt-label mb-2">{{ __('main.official_currency') }}</label>
                                 <select name="currency_id" id="currency_id" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.currency')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
                                             {{ $country->currency_id == $currency->id ? 'selected' : '' }}>
@@ -167,9 +172,7 @@
                             <div class="">
                                 <label for="continent" class="kt-label mb-2">{{ __('main.continent') }}</label>
                                 <select name="continent" id="continent" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.continent')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach (config('helpers.continents') as $continent)
                                         <option value="{{ $continent }}"
                                             {{ $country->continent == $continent ? 'selected' : '' }}>
@@ -186,9 +189,7 @@
                             <div class="">
                                 <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
                                 <select name="region_id" id="region_id" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.region')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"
                                             {{ $country->region_id == $region->id ? 'selected' : '' }}>
@@ -227,9 +228,7 @@
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.main_timezone') }}</label>
                                 <select name="timezone" id="timezone" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.timezone')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
                                             {{ $country->timezone == $zone ? 'selected' : '' }}>

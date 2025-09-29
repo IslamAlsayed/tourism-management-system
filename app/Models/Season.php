@@ -14,4 +14,19 @@ class Season extends Model
         'special_type',
         'accommodation_id',
     ];
+
+    public function getRelationshipNames()
+    {
+        return ['accommodation'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return ['accommodation_id'];
+    }
+
+    public function accommodation()
+    {
+        return $this->belongsTo(Accommodation::class);
+    }
 }

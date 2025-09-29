@@ -27,7 +27,7 @@
                                 <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {{ __('main.name') }}</th>
                                 <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('main.flag') }}</th>
+                                    {{ __('main.photo') }}</th>
                                 <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     {{ __('main.active') }}</th>
                                 <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -45,7 +45,7 @@
                                     <td class="px-4 py-2 text-sm text-gray-700">{{ $language->id }}</td>
                                     <td>{{ $language->name ?? '--' }}</td>
                                     <td>
-                                        <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->flag) : asset('storage/' . $language->flag) }}"
+                                        <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->photo) : asset('storage/' . $language->photo) }}"
                                             alt="{{ $language->name }}" class="w-[30px]">
                                     <td>
                                         <span

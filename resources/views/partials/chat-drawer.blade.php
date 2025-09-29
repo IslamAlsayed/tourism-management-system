@@ -174,7 +174,7 @@
                     <div class="relative shrink-0">
                         <div class="kt-avatar size-9">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-2.png') }}">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-2.png') }}">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -bottom-2 -end-2">
@@ -228,7 +228,7 @@
                     <div class="relative shrink-0">
                         <div class="kt-avatar size-9">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-2.png') }}">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-2.png') }}">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -bottom-2 -end-2">
@@ -256,7 +256,7 @@
                     <div class="relative shrink-0">
                         <div class="kt-avatar size-9">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-2.png') }}">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-2.png') }}">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -bottom-2 -end-2">
@@ -286,7 +286,7 @@
             <div class="bg-accent/60 mb-2.5 flex grow gap-2 border-y border-border px-5 py-3.5" id="join_request">
                 <div class="kt-avatar size-9">
                     <div class="kt-avatar-image">
-                        <img alt="avatar" src="{{ asset('metronic/media/avatars/300-14.png') }}">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-14.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -bottom-2 -end-2">

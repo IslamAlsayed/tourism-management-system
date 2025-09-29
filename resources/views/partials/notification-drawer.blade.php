@@ -132,7 +132,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-4.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-4.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -186,7 +186,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-5.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-5.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -231,7 +231,7 @@
                     <div class="flex grow gap-2.5 px-5" id="notification_request_3">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-27.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-27.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -278,7 +278,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-10.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-10.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-offline size-2.5">
@@ -320,7 +320,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-11.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-11.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -353,7 +353,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-14.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-14.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-offline size-2.5">
@@ -414,7 +414,7 @@
                     <div class="flex grow gap-2.5 px-5" id="notification_request_13">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-25.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-25.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -492,7 +492,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-34.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-34.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -555,7 +555,7 @@
                     <div class="flex grow gap-2 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-29.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-29.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -623,7 +623,7 @@
                     <div class="flex grow gap-2.5 px-5" id="notification_request_3">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-30.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-30.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -669,7 +669,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-24.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-24.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -719,7 +719,7 @@
                     <div class="flex grow gap-2 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-15.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-15.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -808,7 +808,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-6.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-6.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -842,7 +842,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-12.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-12.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -938,7 +938,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-21.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-21.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -993,7 +993,7 @@
                     <div class="flex grow gap-2.5 px-5" id="notification_request_3">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-13.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-13.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -1058,7 +1058,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-1.p') }}ng">
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-1.p') }}ng">
                                 </img>
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -1129,7 +1129,7 @@
                     <div class="flex grow gap-2.5 px-5" id="notification_request_17">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-19.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-19.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -1184,7 +1184,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-17.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-17.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -1223,7 +1223,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-34.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-34.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -1256,7 +1256,7 @@
                     <div class="flex grow gap-2.5 px-5">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-9.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-9.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">
@@ -1297,7 +1297,7 @@
                     <div class="flex grow gap-2.5 px-5" id="notification_request_3">
                         <div class="kt-avatar size-8">
                             <div class="kt-avatar-image">
-                                <img alt="avatar" src="{{ asset('metronic/media/avatars/300-13.png') }}" />
+                                <img alt="photo" src="{{ asset('metronic/media/avatars/300-13.png') }}" />
                             </div>
                             <div class="kt-avatar-indicator -end-2 -bottom-2">
                                 <div class="kt-avatar-status kt-avatar-status-online size-2.5">

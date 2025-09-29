@@ -8,36 +8,38 @@
             </a>
         </div>
 
-        <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
-        <table class="border min-w-half divide-y text-center divide-gray-200">
-            <thead>
-                <tr>
-                    <th class="border px-2">name</th>
-                    <th class="border px-2">name_ar</th>
-                    <th class="border px-2">region_id</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <tr>
-                    <td class="border px-2">Egyptian</td>
-                    <td class="border px-2">مصري</td>
-                    <td class="border px-2">1</td>
-                </tr>
-            </tbody>
-        </table>
+        @if (env('DB_Mode') != 'production')
+            <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
+            <table class="border min-w-half divide-y text-center divide-gray-200">
+                <thead>
+                    <tr>
+                        <th class="border px-2">name</th>
+                        <th class="border px-2">name_ar</th>
+                        <th class="border px-2">region_id</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td class="border px-2">Egyptian</td>
+                        <td class="border px-2">مصري</td>
+                        <td class="border px-2">1</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
-        <table class="border min-w-half divide-y text-center divide-gray-200">
-            <thead>
-                <tr>
-                    <th class="border px-2">wiki_data_id</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <tr>
-                    <td class="border px-2">Q155</td>
-                </tr>
-            </tbody>
-        </table>
+            <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
+            <table class="border min-w-half divide-y text-center divide-gray-200">
+                <thead>
+                    <tr>
+                        <th class="border px-2">wiki_data_id</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td class="border px-2">Q155</td>
+                    </tr>
+                </tbody>
+            </table>
+        @endif
     </x-import-form>
 @endsection

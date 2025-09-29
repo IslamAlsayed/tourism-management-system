@@ -26,55 +26,69 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
+        }
         return view('pages.dashboard.users.show', compact('user'));
     }
 
     public function store(UserCreateRequest $request)
     {
         $validated = $request->validated();
+        $validated = $request->safe()->except('photo');
         $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
 
         $user = User::create($validated);
 
         if ($user) {
-            $this->uploadPhoto($request, $user, 'avatar_url', "profile-photos");
-            return redirect()->route('users.index')->with('success', __('main.messages.user_created'));
+            $this->uploadPhoto($request, $user, 'photo', "profile-photos");
+            return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
         }
 
-        return redirect()->route('users.index')->with('error', __('main.messages.user_creation_failed'));
+        return redirect()->route('users.index')->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
     }
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
+        }
         $countries = Country::all();
         return view('pages.dashboard.users.edit', compact('user', 'countries'));
     }
 
     public function update(UserUpdateRequest $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
+        }
         $validated = $request->validated();
+        $validated = $request->safe()->except('photo');
 
         $validated['name'] = ($validated['first_name'] ?? $user->first_name) . ' ' . ($validated['last_name'] ?? $user->last_name);
 
-        $this->uploadPhoto($request, $user, 'avatar_url', "profile-photos");
+        $this->uploadPhoto($request, $user, 'photo', "users");
 
         $user->update($validated);
 
-        return redirect()->route('users.index')->with('success', __('main.messages.user_updated'));
+        return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
     }
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
+        }
         $deleted = $user->delete();
         if ($deleted) {
-            $this->deletePhoto($user, 'avatar_url');
-            return redirect()->route('users.index')->with('success', __('main.messages.user_deleted'));
+            $this->deletePhoto($user, 'photo');
+            return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
         }
 
-        return redirect()->route('users.index')->with('error', __('main.messages.user_deletion_failed'));
+        return redirect()->route('users.index')->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
     }
 }

@@ -33,26 +33,8 @@
                         class="space-y-6 p-4">
                         @csrf
 
-                        <!-- Flag emoji upload -->
-                        <div class="text-center mb-4">
-                            <div class="relative inline-block">
-                                <div
-                                    class="w-32 h-32 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="flag-preview" src="{{ asset('metronic/media/avatars/blank.png') }}"
-                                        alt="" class="w-full h-full object-cover">
-                                </div>
-                                <label for="flag_emoji"
-                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark"
-                                    style="padding-inline: 12px">
-                                    <i class="fas fa-camera text-sm"></i>
-                                </label>
-                                <input type="file" id="flag_emoji" name="flag_emoji" class="hidden" accept="image/*">
-                            </div>
-                            <div class="text-sm text-secondary-foreground">{{ __('main.click_to_upload_flag') }}</div>
-                            @error('flag_emoji')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        <!-- Country Photo -->
+                        @include('components.input-image', ['columnName' => 'country'])
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!-- Country Name (Arabic) -->
@@ -126,9 +108,7 @@
                             <div class="mb-3">
                                 <label for="currency_id" class="kt-label mb-2">{{ __('main.official_currency') }}</label>
                                 <select name="currency_id" id="currency_id" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.currency')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
                                             {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
@@ -166,9 +146,7 @@
                             <div class="">
                                 <label for="continent" class="kt-label mb-2">{{ __('main.continent') }}</label>
                                 <select name="continent" id="continent" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.continent')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach (config('helpers.continents') as $continent)
                                         <option value="{{ $continent }}"
                                             {{ old('continent') == $continent ? 'selected' : '' }}>
@@ -185,9 +163,7 @@
                             <div class="">
                                 <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
                                 <select name="region_id" id="region_id" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.region')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"
                                             {{ old('region_id') == $region->id ? 'selected' : '' }}>
@@ -226,9 +202,7 @@
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.main_timezone') }}</label>
                                 <select name="timezone" id="timezone" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.timezone')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
                                             {{ old('timezone') == $zone ? 'selected' : '' }}>

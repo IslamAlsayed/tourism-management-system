@@ -13,7 +13,10 @@ class ImportUsers implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new User())->getFillable();
+        $allFillable = (new User())->getFillable();
+        $relations = method_exists((new User()), 'getRelationshipNames') ? (new User())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;

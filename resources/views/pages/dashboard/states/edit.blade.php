@@ -134,9 +134,7 @@
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
                                 <select name="timezone" id="timezone" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.timezone')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
                                             {{ $state->timezone == $zone ? 'selected' : '' }}>

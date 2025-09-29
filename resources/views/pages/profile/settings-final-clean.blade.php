@@ -9,7 +9,7 @@
         <div class="container-fluid py-5">
             <div class="text-center">
                 <img class="rounded-circle border border-3 border-success mb-3"
-                    src="{{ $user->avatar_url ? asset('storage/' . $user->avatar_url) : asset('metronic/media/avatars/300-2.png') }}"
+                    src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/300-2.png') }}"
                     style="width: 100px; height: 100px; object-fit: cover;">
                 <h2 class="text-white fw-bold mb-2">{{ $user->name }}</h2>
                 <div class="d-flex justify-content-center flex-wrap gap-3 text-white-50">

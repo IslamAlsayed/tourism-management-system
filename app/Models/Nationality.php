@@ -16,9 +16,18 @@ class Nationality extends Model
         'country_id',
     ];
 
+    public function getRelationshipNames()
+    {
+        return ['country'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return ['country_id'];
+    }
+
     public function country()
     {
         return $this->belongsTo(Country::class);
     }
 }
-

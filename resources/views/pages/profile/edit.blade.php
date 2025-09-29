@@ -44,7 +44,7 @@
                                     style="cursor: pointer">
                                     <div style="width: 150px; margin: auto;">
                                         <img id="avatar-preview"
-                                            src="{{ $user->avatar_url ? asset('storage/' . $user->avatar_url) : asset('metronic/media/avatars/blank.png') }}"
+                                            src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/blank.png') }}"
                                             alt="{{ $user->name }}" style="width: 100%;">
                                     </div>
                                     <input accept=".png, .jpg, .jpeg, .webp" name="photo" type="file"

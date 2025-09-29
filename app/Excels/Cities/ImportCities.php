@@ -14,7 +14,10 @@ class ImportCities implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new City())->getFillable();
+        $allFillable = (new City())->getFillable();
+        $relations = method_exists((new City()), 'getRelationshipNames') ? (new City())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;
@@ -50,8 +53,8 @@ class ImportCities implements ToCollection
                 // ImportDataToDBJob::dispatch(City::class, $batchData);
                 foreach ($batchData as $item) {
                     City::create($item);
+                    $this->rowCount++;
                 }
-                $this->rowCount += count($batchData);
                 $batchData = [];
             }
         }
@@ -61,8 +64,8 @@ class ImportCities implements ToCollection
             // ImportDataToDBJob::dispatch(City::class, $batchData);
             foreach ($batchData as $item) {
                 City::create($item);
+                $this->rowCount++;
             }
-            $this->rowCount += count($batchData);
         }
     }
 }

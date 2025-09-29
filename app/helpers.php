@@ -151,23 +151,6 @@ if (!function_exists('getPaginate')) {
     function getPaginate()
     {
         return session('paginate_count', config('app.paginate_count'));
-        // $sessionValue = session('paginate_count');
-        // $configValue = config('app.paginate_count');
-        // $allowedValues = config('app.paginate_array', [10, 25, 50, 100]);
-
-        // // Return session value if exists and is valid
-        // if ($sessionValue && in_array((int) $sessionValue, $allowedValues)) {
-        //     return (int) $sessionValue;
-        // }
-
-        // // Fallback to config value and set it in session
-        // $configInt = (int) $configValue;
-        // if (!in_array($configInt, $allowedValues)) {
-        //     $configInt = 50; // Safe fallback to middle value
-        // }
-
-        // session(['paginate_count' => $configInt]);
-        // return $configInt;
     }
 }
 
@@ -215,5 +198,19 @@ if (!function_exists('highlightSearch')) {
         }
 
         return $output;
+    }
+}
+
+if (!function_exists('db_connection')) {
+    function db_connection(?string $mode = null): string
+    {
+        $mode2 = $mode ?? env('DB_Mode', 'local');
+
+        return match ($mode2) {
+            'local' => 'mysql',
+            'testing' => 'mysql_testing',
+            'production' => 'mysql_production',
+            default => 'mysql',
+        };
     }
 }

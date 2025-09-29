@@ -12,9 +12,7 @@ class NationalityController extends Controller
 {
     public function index()
     {
-        $nationalities = Nationality::paginate(getPaginate());
-        $total = Nationality::count();
-        return view('pages.dashboard.nationalities.index', compact('nationalities', 'total'));
+        return view('pages.dashboard.nationalities.index');
     }
 
     public function create()
@@ -40,14 +38,20 @@ class NationalityController extends Controller
 
     public function edit($id)
     {
-        $nationality = Nationality::findOrFail($id);
+        $nationality = Nationality::find($id);
+        if (!$nationality) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.nationality')]));
+        }
         $countries = Country::orderBy('name')->get();
         return view('pages.dashboard.nationalities.edit', compact('nationality', 'countries'));
     }
 
     public function update(NationalitiesUpdateRequest $request, $id)
     {
-        $nationality = Nationality::findOrFail($id);
+        $nationality = Nationality::find($id);
+        if (!$nationality) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.nationality')]));
+        }
         $validated = $request->validated();
 
         $updated = $nationality->update($validated);
@@ -60,7 +64,10 @@ class NationalityController extends Controller
 
     public function destroy($id)
     {
-        $nationality = Nationality::findOrFail($id);
+        $nationality = Nationality::find($id);
+        if (!$nationality) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.nationality')]));
+        }
         $deleted = $nationality->delete();
         if ($deleted) {
             return redirect()->route('nationalities.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.nationality')]));

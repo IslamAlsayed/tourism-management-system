@@ -21,6 +21,19 @@ class City extends Model
         'country_id',
     ];
 
+    public function getRelationshipNames()
+    {
+        return ['state', 'country'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return [
+            'state_id',
+            'country_id',
+        ];
+    }
+
     public function state()
     {
         return $this->belongsTo(State::class);

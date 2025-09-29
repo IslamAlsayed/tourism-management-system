@@ -15,9 +15,4 @@ class Currency extends Model
         'symbol',
         'is_active',
     ];
-
-    public function countries()
-    {
-        return $this->hasMany(Country::class);
-    }
 }

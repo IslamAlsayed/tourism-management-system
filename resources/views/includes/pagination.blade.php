@@ -20,8 +20,8 @@
         {{-- Pagination info and links --}}
         <div class="flex items-center gap-4">
             <div class="text-sm text-gray-600">
-                {{ $data->firstItem() }} - {{ $data->lastItem() }} {{ __('main.of') }}
-                {{ $data->total() }}
+                {{ $data->firstItem() ?? 0 }} - {{ $data->lastItem() ?? 0 }} {{ __('main.of') }}
+                {{ $data->total() ?? 0 }}
             </div>
 
             <div class="flex items-center gap-1">

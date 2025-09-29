@@ -15,7 +15,10 @@ class ImportRoomsTypes implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new HotelRoomType())->getFillable();
+        $allFillable = (new HotelRoomType())->getFillable();
+        $relations = method_exists((new HotelRoomType()), 'getRelationshipNames') ? (new HotelRoomType())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;

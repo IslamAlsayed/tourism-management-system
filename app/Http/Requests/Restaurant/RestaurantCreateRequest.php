@@ -29,12 +29,12 @@ class RestaurantCreateRequest extends FormRequest
             'region_id' => ['nullable', 'string', 'max:50', 'exists:restaurants,id'],
             'subregion_id' => ['nullable', 'string', 'max:50', 'exists:restaurants,id'],
             'type' => ['nullable', 'string', 'max:255'], // modify as needed
-            'rating' => ['nullable', 'numeric', 'min:0', 'max:5'],
             'company_name_ar' => ['nullable', 'string', 'max:255'],
             'specialty' => ['nullable', 'string', 'max:255'],
             'phone_01' => ['nullable', 'string', 'max:20'],
             'phone_02' => ['nullable', 'string', 'max:20'],
             'fax' => ['nullable', 'string', 'max:255'],
+            'rating' => ['nullable', 'numeric', 'between:1,5'],
             'contact_person' => ['nullable', 'string', 'max:255'],
             'email_01' => ['nullable', 'email', 'max:255', 'exists:restaurants,email'],
             'email_02' => ['nullable', 'email', 'max:255', 'exists:restaurants,email'],
@@ -45,6 +45,14 @@ class RestaurantCreateRequest extends FormRequest
             'website' => ['nullable', 'url'],
             'notes' => ['nullable', 'string', 'max:500'],
             'is_active' => ['boolean'],
+            'wheelchair_accessible' => ['boolean'],
+            'free_wifi' => ['boolean'],
+            'parking' => ['boolean'],
+            'swimming_pool' => ['boolean'],
+            'gym' => ['boolean'],
+            'indoor' => ['boolean'],
+            'outdoor' => ['boolean'],
+            'spa' => ['boolean'],
         ];
     }
 }

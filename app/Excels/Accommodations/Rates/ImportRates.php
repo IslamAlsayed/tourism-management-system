@@ -16,7 +16,10 @@ class ImportRates implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Rate())->getFillable();
+        $allFillable = (new Rate())->getFillable();
+        $relations = method_exists((new Rate()), 'getRelationshipNames') ? (new Rate())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;

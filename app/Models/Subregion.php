@@ -17,13 +17,18 @@ class Subregion extends Model
         'region_id',
     ];
 
+    public function getRelationshipNames()
+    {
+        return ['region'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return ['region_id'];
+    }
+
     public function region()
     {
         return $this->belongsTo(Region::class);
-    }
-
-    public function countries()
-    {
-        return $this->hasMany(Country::class);
     }
 }

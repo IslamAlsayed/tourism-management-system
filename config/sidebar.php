@@ -74,7 +74,7 @@ return [
         [
             'title' => 'location management',
             'icon' => 'ki-filled ki-geolocation',
-            'status' => 'done all',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'countries',
@@ -204,6 +204,7 @@ return [
         [
             'title' => 'reports & analytics',
             'icon' => 'ki-filled ki-chart-simple',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'reports dashboard',
@@ -316,14 +317,23 @@ return [
         // ================= Tour Guides =================
         [
             'title' => 'tour guides',
-            'status' => 'updating...',
+            'status' => 'done',
             'icon' => 'ki-filled ki-coffee',
             'children' => [
                 [
                     'title' => 'tour guides',
-                    'status' => 'updating...',
                     'icon' => 'ki-filled ki-home-2',
-                    'route' => '#'
+                    'route' => 'tour-guides.index'
+                ],
+                [
+                    'title' => 'guides types',
+                    'icon' => 'ki-filled ki-home-2',
+                    'route' => 'tour-guides-types.index'
+                ],
+                [
+                    'title' => 'guides reviews',
+                    'icon' => 'ki-filled ki-home-2',
+                    'route' => 'tour-guides-reviews.index'
                 ],
             ],
         ],

@@ -12,7 +12,7 @@ class LanguageSeeder extends Seeder
         Language::truncate();
 
         foreach (config('languages.languages') as $key => $language) {
-            Language::insert(['code' => $key, 'name' => $language, 'flag' => $key . '.svg']);
+            Language::insert(['code' => $key, 'name' => $language, 'photo' => $key . '.svg']);
         }
     }
 }

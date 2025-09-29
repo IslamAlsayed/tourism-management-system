@@ -10,6 +10,8 @@ class Restaurant extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
+        'photo',
         'name',
         'name_ar',
         'country_id',
@@ -33,7 +35,25 @@ class Restaurant extends Model
         'website',
         'notes',
         'is_active',
+        'wheelchair_accessible',
+        'free_wifi',
+        'parking',
+        'swimming_pool',
+        'gym',
+        'indoor',
+        'outdoor',
+        'spa',
     ];
+
+    public function getRelationshipNames()
+    {
+        return ['country', 'city', 'region', 'subregion'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return ['country_id', 'city_id', 'region_id', 'subregion_id'];
+    }
 
     public function country()
     {
@@ -43,5 +63,15 @@ class Restaurant extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
     }
 }

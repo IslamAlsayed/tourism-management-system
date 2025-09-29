@@ -26,7 +26,7 @@ class Country extends Model
         'emojiU',
         'population',
         'flag_url',
-        'flag_emoji',
+        'photo',
         'continent',
         'area',
         'is_active',
@@ -34,9 +34,14 @@ class Country extends Model
         'region_id',
     ];
 
-    public function city()
+    public function getRelationshipNames()
     {
-        return $this->belongsTo(City::class);
+        return ['currency', 'region'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return ['currency_id', 'region_id',];
     }
 
     public function currency()
@@ -47,15 +52,5 @@ class Country extends Model
     public function region()
     {
         return $this->belongsTo(Region::class);
-    }
-
-    public function hotels()
-    {
-        return $this->hasMany(Hotel::class);
-    }
-
-    public function cities()
-    {
-        return $this->hasMany(City::class);
     }
 }

@@ -13,7 +13,10 @@ class ImportSupplements implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Supplement())->getFillable();
+        $allFillable = (new Supplement())->getFillable();
+        $relations = method_exists((new Supplement()), 'getRelationshipNames') ? (new Supplement())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;

@@ -133,9 +133,7 @@
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
                                 <select name="timezone" id="timezone" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.timezone')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
                                             {{ old('timezone') == $zone ? 'selected' : '' }}>
@@ -152,9 +150,7 @@
                             <div class="">
                                 <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
                                 <select name="country_id" id="country_id" class="kt-select h-[45px]">
-                                    <option value="">
-                                        {{ __('main.select_type', ['type' => __('main.country')]) }}
-                                    </option>
+                                    <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
                                             {{ old('country_id') == $country->id ? 'selected' : '' }}>

@@ -34,7 +34,13 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Restaurant Photo -->
+                        @include('components.input-image', [
+                            'columnName' => 'restaurant',
+                            'photoUrl' => $restaurant->photo,
+                        ])
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                             <!-- Name -->
                             <div class="">
                                 <label for="name" class="kt-label required mb-2">Name (English)</label>
@@ -119,7 +125,7 @@
                             <div class="">
                                 <label for="rating" class="kt-label required mb-2">Star Rating</label>
                                 <select name="rating" id="rating" class="kt-select h-[45px]">
-                                    <option value="">Select Rating</option>
+                                    <option value="">--</option>
                                     <option value="1" {{ $restaurant->rating == 1 ? 'selected' : '' }}>
                                         1 Star
                                     </option>
@@ -232,7 +238,7 @@
                                     placeholder="Enter any additional notes">{{ $restaurant->notes }}</textarea>
                             </div>
 
-                            <div class="flex items-center gap-3 mb-6">
+                            <div class="flex items-center gap-3 mb-4">
                                 <input type="hidden" name="is_active" value="0">
                                 <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
                                     value="1" {{ $restaurant->is_active ? 'checked' : '' }}>

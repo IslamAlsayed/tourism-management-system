@@ -15,7 +15,10 @@ class ImportSeasons implements ToCollection
 
     public function collection(Collection $rows)
     {
-        $fillable = (new Season())->getFillable();
+        $allFillable = (new Season())->getFillable();
+        $relations = method_exists((new Season()), 'getRelationshipNames') ? (new Season())->getRelationshipNames() : [];
+        $fillable = array_filter($allFillable, fn($c) => !in_array($c, $relations));
+
         $headers = $rows->first()->toArray();
 
         $batchSize = 1000;

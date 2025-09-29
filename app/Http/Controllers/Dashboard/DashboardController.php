@@ -149,7 +149,7 @@ class DashboardController extends Controller
 
     public function deleteAll(Request $request)
     {
-        $modelName = ucfirst($request->input('model'));
+        $modelName = ucwords(str_replace(' ', '', str_replace(['-', ''], ' ', $request->input('model'))));
         $modelClass = "App\\Models\\$modelName";
 
         if (!class_exists($modelClass)) {

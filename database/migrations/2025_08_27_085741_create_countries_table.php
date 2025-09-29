@@ -28,7 +28,7 @@ return new class extends Migration {
             $table->string('emojiU')->nullable();
             $table->bigInteger('population')->nullable();
             $table->string('flag_url')->nullable();
-            $table->string('flag_emoji', 8)->nullable();
+            $table->string('photo')->nullable();
             $table->string('continent')->nullable();
             $table->float('area')->nullable();
             $table->boolean('is_active')->nullable()->default(true);
