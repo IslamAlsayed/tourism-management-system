@@ -18,6 +18,7 @@ return [
     'paginate_count' => (int) env('PAGINATE_COUNT', 25),
     'excel_export_format' => env('EXCEL_EXPORT_FORMAT', 'xlsx'),
 
+    'db_mode' => env('DB_MODE', 'local'),
     'app_name' => env('APP_NAME', 'laravel'),
     'app_url' => env('APP_URL', 'http://localhost'),
     'app_timezone' => env('APP_TIMEZONE', 'Africa/Cairo'),

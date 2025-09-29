@@ -204,7 +204,7 @@ if (!function_exists('highlightSearch')) {
 if (!function_exists('db_connection')) {
     function db_connection(?string $mode = null): string
     {
-        $mode2 = $mode ?? env('DB_Mode', 'local');
+        $mode2 = $mode ?? env('DB_MODE', 'local');
 
         return match ($mode2) {
             'local' => 'mysql',

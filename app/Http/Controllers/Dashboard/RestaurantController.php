@@ -25,7 +25,7 @@ class RestaurantController extends Controller
     public function create()
     {
         $countries = Country::all();
-        $cities = City::all();
+        $cities = City::limit(15)->get();
         $regions = Region::all();
         $subregions = Subregion::all();
         $types = Type::all();
@@ -37,12 +37,11 @@ class RestaurantController extends Controller
     {
         $validated = $request->validated();
         $validated = $request->safe()->except('photo');
-        $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
 
         $restaurant = Restaurant::create($validated);
 
         if ($restaurant) {
-            $this->uploadPhoto($request, $restaurant, 'photo', "restaurant-photos");
+            $this->uploadPhoto($request, $restaurant, 'photo', "restaurants");
             return redirect()->route('restaurants.index')->with('success', __('main.messages.type_created', ['type' => __('main.restaurant')]));
         }
 
@@ -56,7 +55,7 @@ class RestaurantController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.restaurant')]));
         }
         $countries = Country::all();
-        $cities = City::all();
+        $cities = City::limit(15)->get();
         $regions = Region::all();
         $subregions = Subregion::all();
         $types = Type::all();

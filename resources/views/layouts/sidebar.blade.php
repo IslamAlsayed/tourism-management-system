@@ -63,14 +63,14 @@
                                 <span
                                     class="kt-menu-title text-sm font-medium text-foreground {{ $hasActiveChild ? 'text-primary font-semibold' : '' }}">
                                     {{ __('sidebar.' . $item['title']) }}
-                                    @if (isset($item['status']))
+                                    @if (isset($item['status']) && config('app.db_mode') != 'production')
                                         <span
                                             class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             {{ __('sidebar.' . $item['status']) }}
                                         </span>
                                     @endif
 
-                                    @isset($item['fixed'])
+                                    @if (isset($item['fixed']) && config('app.db_mode') != 'production')
                                         <span
                                             class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             @if (gettype($item['fixed']) == 'boolean')
@@ -79,7 +79,7 @@
                                                 {{ $item['fixed'] }}
                                             @endif
                                         </span>
-                                    @endisset
+                                    @endif
                                 </span>
                                 <span
                                     class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $hasActiveChild ? 'text-primary' : '' }}">
@@ -126,14 +126,14 @@
                                                 <span
                                                     class="kt-menu-title text-sm font-medium text-foreground {{ $childHasActiveChild ? 'text-primary font-semibold' : '' }}">
                                                     {{ __('sidebar.' . $child['title']) }}
-                                                    @if (isset($child['status']))
+                                                    @if (isset($child['status']) && config('app.db_mode') != 'production')
                                                         <span
                                                             class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif
 
-                                                    @isset($child['fixed'])
+                                                    @if (isset($child['fixed']) && config('app.db_mode') != 'production')
                                                         <span
                                                             class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             @if (gettype($child['fixed']) == 'boolean')
@@ -142,7 +142,7 @@
                                                                 {{ $child['fixed'] }}
                                                             @endif
                                                         </span>
-                                                    @endisset
+                                                    @endif
                                                 </span>
                                                 <span
                                                     class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $childHasActiveChild ? 'text-primary' : '' }}">
@@ -172,14 +172,14 @@
                                                                 class="kt-menu-title text-2sm font-normal {{ $subChildIsActive ? 'text-primary font-semibold' : '' }}">
                                                                 {{ __('sidebar.' . $subChild['title']) }}
 
-                                                                @if (isset($subChild['status']))
+                                                                @if (isset($subChild['status']) && config('app.db_mode') != 'production')
                                                                     <span
                                                                         class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                                         {{ __('sidebar.' . $subChild['status']) }}
                                                                     </span>
                                                                 @endif
 
-                                                                @isset($subChild['fixed'])
+                                                                @if (isset($subChild['fixed']) && config('app.db_mode') != 'production')
                                                                     <span
                                                                         class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                                         @if (gettype($subChild['fixed']) == 'boolean')
@@ -188,7 +188,7 @@
                                                                             {{ $subChild['fixed'] }}
                                                                         @endif
                                                                     </span>
-                                                                @endisset
+                                                                @endif
                                                             </span>
                                                         </a>
                                                     </div>
@@ -209,14 +209,14 @@
                                                     class="kt-menu-title text-2sm font-normal {{ $childIsActive ? 'text-primary font-semibold' : '' }}">
                                                     {{ __('sidebar.' . $child['title']) }}
 
-                                                    @if (isset($child['status']))
+                                                    @if (isset($child['status']) && config('app.db_mode') != 'production')
                                                         <span
                                                             class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif
 
-                                                    @isset($child['fixed'])
+                                                    @if (isset($child['fixed']) && config('app.db_mode') != 'production')
                                                         <span
                                                             class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             @if (gettype($child['fixed']) == 'boolean')
@@ -225,7 +225,7 @@
                                                                 {{ $child['fixed'] }}
                                                             @endif
                                                         </span>
-                                                    @endisset
+                                                    @endif
                                                 </span>
                                             </a>
                                         </div>
@@ -248,14 +248,14 @@
                                     class="kt-menu-title text-sm font-medium {{ $isActive ? 'text-primary font-semibold' : '' }}">
                                     {{ __('sidebar.' . $item['title']) }}
 
-                                    @if (isset($item['status']))
+                                    @if (isset($item['status']) && config('app.db_mode') != 'production')
                                         <span
                                             class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             {{ __('sidebar.' . $item['status']) }}
                                         </span>
                                     @endif
 
-                                    @isset($item['fixed'])
+                                    @if (isset($item['fixed']) && config('app.db_mode') != 'production')
                                         <span
                                             class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             @if (gettype($item['fixed']) == 'boolean')
@@ -264,7 +264,7 @@
                                                 {{ $item['fixed'] }}
                                             @endif
                                         </span>
-                                    @endisset
+                                    @endif
                                 </span>
                             </a>
                         </div>

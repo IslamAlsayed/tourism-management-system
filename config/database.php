@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => match (env('DB_Mode', 'local')) {
+    'default' => match (env('DB_MODE', 'local')) {
         'testing' => env('DB_TEST_CONNECTION', 'mysql_testing'),
         'production' => env('DB_PROD_CONNECTION', 'mysql_production'),
         default => env('DB_CONNECTION', 'mysql'),

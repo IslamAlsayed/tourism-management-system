@@ -115,7 +115,7 @@
                         </div>
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.operating_system') }}</div>
-                            <div class="font-semibold">{{ env('DB_Mode') }}</div>
+                            <div class="font-semibold">{{ config('app.db_mode') }}</div>
                         </div>
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.status') }}</div>

@@ -98,7 +98,7 @@
                             <!-- Type -->
                             <div class="">
                                 <label for="type" class="kt-label required mb-2">Type</label>
-                                <select name="type" id="type" class="kt-select h-[45px]" required>
+                                <select name="type" id="type" class="kt-select h-[45px]">
                                     <option value="">Select Type</option>
                                     @foreach ($types as $type)
                                         <option value="{{ $type->id }}">{{ $type->name }}</option>

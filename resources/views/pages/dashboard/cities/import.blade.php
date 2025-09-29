@@ -20,7 +20,7 @@
             </a>
         </div>
 
-        @if (env('DB_Mode') != 'production')
+        @if (config('app.db_modedb_mode') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
             <table class="border min-w-half divide-y text-center divide-gray-200">
                 <thead>
