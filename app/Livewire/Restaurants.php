@@ -55,25 +55,31 @@ class Restaurants extends Component
 
             $items1 = Country::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Country())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
             $items2 = City::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new City())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
             $items3 = Region::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Region())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
             $items4 = Subregion::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    foreach (['name'] as $column) {
+                    foreach ((new Subregion())->getFillable() as $column) {
                         $q->orWhere($column, 'like', '%' . $this->search . '%');
                     }
                 });

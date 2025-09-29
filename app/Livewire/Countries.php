@@ -14,8 +14,8 @@ use function Laravel\Prompts\search;
 class Countries extends Component
 {
     use WithPagination, CustomPagination, CustomColumns;
-    // public $search = 'EGP';
-    public $search = '';
+    public $search = 'EGY';
+    // public $search = '';
     public $totalCount = '';
 
     public function updatingSearch()
@@ -52,27 +52,33 @@ class Countries extends Component
         $data = Country::query()->when($this->search, function ($query) {
             $search = strtolower($this->search);
 
-            $items1 = Country::query()->when($this->search, function ($query) {
+            $items1 = Currency::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Currency())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
-            $items2 = Currency::query()->when($this->search, function ($query) {
+            $items2 = Region::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Region())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
             $query->where(function ($q) use ($search, $items1, $items2) {
-                $q->orWhereIn('country_id', $items1);
-                $q->orWhereIn('currency_id', $items2);
+                $q->orWhereIn('currency_id', $items1);
+                $q->orWhereIn('region_id', $items2);
 
                 foreach ($this->searchColumns as $column) {
                     $q->orWhere($column, 'like', '%' . $search . '%');
                 }
             });
         })->with($this->relations)->paginate(getPaginate());
+
+        // dd($data->toArray());
 
         return view('livewire.countries', [
             'data' => $data,
