@@ -15,6 +15,8 @@ use App\Traits\CustomPagination;
 class Restaurants extends Component
 {
     use WithPagination, CustomPagination, CustomColumns;
+
+    // public $search = 'asia';
     public $search = '';
     public $totalCount = '';
 
@@ -61,13 +63,13 @@ class Restaurants extends Component
                 });
             })->get('id');
 
-            $items2 = City::query()->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    foreach ((new City())->getFillable() as $column) {
-                        $q->orWhere($column, 'like', '%' . $this->search . '%');
-                    }
-                });
-            })->get('id');
+            // $items2 = City::query()->when($this->search, function ($query) {
+            //     $query->where(function ($q) {
+            //         foreach ((new City())->getFillable() as $column) {
+            //             $q->orWhere($column, 'like', '%' . $this->search . '%');
+            //         }
+            //     });
+            // })->get('id');
 
             $items3 = Region::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
@@ -85,9 +87,9 @@ class Restaurants extends Component
                 });
             })->get('id');
 
-            $query->where(function ($q) use ($search, $items1, $items2, $items3, $items4) {
+            $query->where(function ($q) use ($search, $items1, $items3, $items4) {
                 $q->orWhereIn('country_id', $items1);
-                $q->orWhereIn('city_id', $items2);
+                // $q->orWhereIn('city_id', $items2);
                 $q->orWhereIn('region_id', $items3);
                 $q->orWhereIn('subregion_id', $items4);
 
