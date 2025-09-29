@@ -45,7 +45,6 @@
                 <thead>
                     <tr>
                         <th class="border px-2">type</th>
-                        <th class="border px-2">cat</th>
                         <th class="border px-2">company_name_ar</th>
                         <th class="border px-2">specialty</th>
                         <th class="border px-2">phone_01</th>

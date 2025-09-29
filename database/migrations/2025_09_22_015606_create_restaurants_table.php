@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('city_id')->nullable();
             $table->string('type')->nullable();
             $table->tinyInteger('rating')->checkBetween([1, 5])->default(3)->nullable();
-            $table->string('cat')->nullable();
             $table->string('company_name_ar')->nullable();
             $table->string('specialty')->nullable();
             $table->string('phone_01')->nullable();
