@@ -51,6 +51,7 @@ return [
     'reset' => 'Reset',
     'view' => 'View',
     'add' => 'Add',
+    'application' => 'Application',
     'remove' => 'Remove',
     'show' => 'Show',
     'hide' => 'Hide',
@@ -472,6 +473,7 @@ return [
     'items_per_page' => 'items per page',
 
     // Settings
+    'setting' => 'Setting',
     'settings' => 'Settings',
     'system_settings' => 'System Settings',
     'general_settings' => 'General Settings',

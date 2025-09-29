@@ -573,27 +573,23 @@ return [
         // ================= Settings =================
         [
             'title' => 'settings',
-            'fixed' => '+4',
             'icon' => 'ki-filled ki-setting-2',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'general settings',
-                    'fixed' => false,
                     'route' => 'settings.general'
                 ],
                 [
                     'title' => 'security',
-                    'fixed' => false,
                     'route' => 'settings.security'
                 ],
                 [
                     'title' => 'notifications',
-                    'fixed' => false,
                     'route' => 'settings.notifications'
                 ],
                 [
                     'title' => 'backup',
-                    'fixed' => false,
                     'icon' => 'ki-filled ki-cloud-download',
                     'route' => 'settings.backup'
                 ],

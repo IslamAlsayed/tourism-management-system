@@ -145,14 +145,12 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     });
 
     // === SYSTEM SETTINGS ===
-    Route::prefix('settings')->name('settings.')->group(function () {
-        Route::get('/', [SettingsController::class, 'index'])->name('index');
-        Route::get('/general', [SettingsController::class, 'general'])->name('general');
-        Route::get('/security', [SettingsController::class, 'security'])->name('security');
-        Route::get('/notifications', [SettingsController::class, 'notifications'])->name('notifications');
-        Route::get('/backup', [SettingsController::class, 'backup'])->name('backup');
-        Route::post('/backup/create', [SettingsController::class, 'createBackup'])->name('backup.create');
-    });
+    Route::get('settings/general', [SettingsController::class, 'general'])->name('settings.general');
+    Route::get('settings/security', [SettingsController::class, 'security'])->name('settings.security');
+    Route::get('settings/notifications', [SettingsController::class, 'notifications'])->name('settings.notifications');
+    Route::get('settings/backup', [SettingsController::class, 'backup'])->name('settings.backup');
+    Route::post('settings/backup/create', [SettingsController::class, 'createBackup'])->name('settings.backup.create');
+    Route::resource('settings', SettingsController::class)->names('settings');
 
     // === ADMIN TOOLS ===
     Route::prefix('admin/sidebar')->name('sidebar.')->middleware('admin')->group(function () {

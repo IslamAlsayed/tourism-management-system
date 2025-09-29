@@ -23,8 +23,10 @@ class ViewServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             $activeUser = Auth::check() ? Auth::user() : null;
             $languages = \App\Models\Language::all();
+            $settings = \App\Models\Setting::first();
             $view->with('activeUser', $activeUser);
             $view->with('languages', $languages);
+            $view->with('settings', $settings);
         });
     }
 }

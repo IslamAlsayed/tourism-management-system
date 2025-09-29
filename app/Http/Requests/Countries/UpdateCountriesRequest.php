@@ -38,7 +38,7 @@ class UpdateCountriesRequest extends FormRequest
             'timezone' => ['nullable', 'string', 'max:255'],
             'languages' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
-            'flag' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'is_active' => ['boolean'],
             'is_independent' => ['boolean'],
             'is_developed' => ['boolean'],

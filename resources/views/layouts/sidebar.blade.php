@@ -7,12 +7,12 @@
         id="sidebar_header">
         <a class="dark:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
             <img class="default-logo h-[45px] w-auto max-w-none"
-                src="{{ asset('metronic/media/app/default-logo.svg') }}" />
+                src="{{ $settings->photo ? asset('storage/' . $settings->photo) : asset('storage/logos/default-logo.svg') }}" />
             <img class="small-logo h-[45px] w-auto max-w-none" src="{{ asset('metronic/media/app/mini-logo.svg') }}" />
         </a>
         <a class="light:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
             <img class="default-logo h-[45px] w-auto max-w-none"
-                src="{{ asset('metronic/media/app/default-logo-dark.svg') }}" />
+                src="{{ $settings->photo ? asset('storage/' . $settings->photo) : asset('storage/logos/default-logo.svg') }}" />
             <img class="small-logo h-[45px] w-auto max-w-none" src="{{ asset('metronic/media/app/mini-logo.svg') }}" />
         </a>
         <button

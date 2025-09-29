@@ -2,52 +2,53 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Setting;
+use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Settings\SettingsUpdateRequest;
 
 class SettingsController extends Controller
 {
+    use PhotoUploadTrait;
+
     public function index()
     {
-        return view('pages.dashboard.settings.index');
+        return view('pages.settings.index');
+    }
+
+    public function update(SettingsUpdateRequest $request, $id)
+    {
+        $setting = Setting::find($id);
+        if (!$setting) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.settings')]));
+        }
+        $validated = $request->validated();
+        $validated = $request->safe()->except('photo');
+
+        $this->uploadPhoto($request, $setting, 'photo', "logos");
+
+        $setting->update($validated);
+
+        return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.settings')]));
     }
 
     public function general()
     {
-        $settings = [
-            'app_name' => config('app.name'),
-            'app_url' => config('app.url'),
-            'app_timezone' => config('app.timezone'),
-            'app_locale' => config('app.locale'),
-        ];
-
-        return view('pages.dashboard.settings.general', compact('settings'));
+        $settings = Setting::first();
+        return view('pages.settings.general', compact('settings'));
     }
 
     public function security()
     {
-        $securitySettings = [
-            'password_min_length' => 8,
-            'require_password_confirmation' => true,
-            'enable_two_factor' => false,
-            'session_lifetime' => config('session.lifetime'),
-        ];
-
-        return view('pages.dashboard.settings.security', compact('securitySettings'));
+        $settings = Setting::first();
+        return view('pages.settings.security', compact('settings'));
     }
 
     public function notifications()
     {
-        $notificationSettings = [
-            'email_notifications' => true,
-            'sms_notifications' => false,
-            'push_notifications' => true,
-            'notification_channels' => ['email', 'database'],
-        ];
-
-        return view('pages.dashboard.settings.notifications', compact('notificationSettings'));
+        $settings = Setting::first();
+        return view('pages.settings.notifications', compact('settings'));
     }
 
     public function backup()
@@ -59,7 +60,8 @@ class SettingsController extends Controller
             'backup_frequency' => Cache::get('backup_frequency', 'weekly'),
         ];
 
-        return view('pages.dashboard.settings.backup', compact('backupInfo'));
+        $settings = Setting::first();
+        return view('pages.settings.backup', compact('settings', 'backupInfo'));
     }
 
     public function createBackup()
@@ -70,7 +72,7 @@ class SettingsController extends Controller
         // هنا يمكن إضافة منطق النسخ الاحتياطي الفعلي
         Cache::put('last_backup_date', now()->format('Y-m-d H:i:s'));
 
-        return back()->with('success', 'تم إنشاء النسخة الاحتياطية بنجاح');
+        return back()->with('success', 'تم إنشاء النسخة الاحتياطية بنجاح، ولكن تجربة وليس بشكل فعلي!');
     }
 
     private function getBackupSize()

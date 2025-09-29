@@ -32,47 +32,67 @@
                     <h3 class="kt-card-title">{{ __('main.app_info') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form class="space-y-6">
-                        <div class="grid lg:grid-cols-2 gap-6 p-4">
+                    <form method="POST" action="{{ route('settings.update', $settings->id) }}"
+                        enctype="multipart/form-data" class="space-y-6 p-4">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Setting Photo -->
+                        @include('components.input-image', [
+                            'columnName' => 'application',
+                            'photoUrl' => $settings->photo ? $settings->photo : 'logos/default-logo.svg',
+                        ])
+
+                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.name') }}</label>
-                                <input type="text" class="kt-input h-[45px]" value="{{ $settings['app_name'] }}" />
-                                <div class="text-xs text-secondary-foreground mt-1">{{ __('main.app_info') }}</div>
+                                <input type="text" name="app_name" class="kt-input h-[45px]"
+                                    value="{{ $settings->app_name }}" />
                             </div>
+
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.app_url') }}</label>
-                                <input type="url" class="kt-input h-[45px]" value="{{ $settings['app_url'] }}" />
-                                <div class="text-xs text-secondary-foreground mt-1">{{ __('main.app_info') }}</div>
+                                <input type="url" name="app_url" class="kt-input h-[45px]"
+                                    value="{{ $settings->app_url }}" />
+                            </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                <select name="app_timezone" class="kt-select h-[45px]">
+                                    @foreach (config('helpers.timezones') as $key => $item)
+                                        <option value="{{ $key }}"
+                                            {{ strtolower($settings->app_timezone) == $key ? 'selected' : '' }}>
+                                            {{ $item }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.language') }}</label>
+                                <select name="app_language" class="kt-select h-[45px]">
+                                    @foreach (config('languages.languages') as $key => $language)
+                                        <option value="{{ $key }}"
+                                            {{ strtolower($settings->app_language) == $key ? 'selected' : '' }}>
+                                            {{ $language }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.app_version') }}</label>
+                                <input type="text" name="app_version" class="kt-input h-[45px]"
+                                    value="{{ $settings->app_version }}" />
                             </div>
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6 p-4">
-                            <div>
-                                <label class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select class="kt-select h-[45px]">
-                                    <option value="UTC" {{ $settings['app_timezone'] == 'UTC' ? 'selected' : '' }}>UTC
-                                    </option>
-                                    <option value="Asia/Riyadh"
-                                        {{ $settings['app_timezone'] == 'Asia/Riyadh' ? 'selected' : '' }}>
-                                        {{ __('main.maps.asia/riyadh (+3)') }}
-                                    </option>
-                                    <option value="Asia/Dubai"
-                                        {{ $settings['app_timezone'] == 'Asia/Dubai' ? 'selected' : '' }}>
-                                        {{ __('main.maps.asia/dubai (+4)') }}
-                                    </option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="kt-label mb-2">{{ __('main.language') }}</label>
-                                <select class="kt-select h-[45px]">
-                                    <option value="en" {{ $settings['app_locale'] == 'en' ? 'selected' : '' }}>
-                                        {{ __('main.english') }}
-                                    </option>
-                                    <option value="ar" {{ $settings['app_locale'] == 'ar' ? 'selected' : '' }}>
-                                        {{ __('main.arabic') }}
-                                    </option>
-                                </select>
-                            </div>
+                        <!-- Submit Buttons -->
+                        <div class="flex items-center justify-start gap-4">
+                            <button type="submit" class="kt-btn kt-btn-primary">
+                                <i class="ki-filled ki-check text-sm me-2"></i>
+                                {{ __('main.save_type', ['type' => __('main.settings')]) }}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -87,19 +107,21 @@
                     <div class="grid lg:grid-cols-2 gap-6 p-4">
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.app_version') }}</div>
-                            <div class="font-semibold">{{ app()->version() }}</div>
+                            <div class="font-semibold">{{ $settings->app_version }}</div>
                         </div>
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.php_version') }}</div>
-                            <div class="font-semibold">{{ PHP_VERSION }}</div>
+                            <div class="font-semibold">{{ $settings->app_php_version }}</div>
                         </div>
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.operating_system') }}</div>
-                            <div class="font-semibold">{{ app()->environment() }}</div>
+                            <div class="font-semibold">{{ env('DB_Mode') }}</div>
                         </div>
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.status') }}</div>
-                            <div class="font-semibold text-success">{{ __('main.active') }}</div>
+                            <div class="font-semibold text-success">
+                                {{ $settings->app_status == 1 || $settings->app_status == true ? __('main.active') : __('main.inactive') }}
+                            </div>
                         </div>
                     </div>
                 </div>

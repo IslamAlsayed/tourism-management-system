@@ -1,7 +1,7 @@
 <div class="text-center mb-4">
     <div class="relative inline-block">
         <div
-            class="w-32 h-32 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden photo-preview">
+            class="{{ $columnName == 'Application' ? 'w-[220px] h-[70px] rounded-[9px]' : 'w-32 h-32 rounded-full' }} bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden photo-preview">
             <img id="{{ $columnName ?? 'photo' }}"
                 src="{{ isset($photoUrl) ? asset('storage/' . $photoUrl) : asset('metronic/media/avatars/blank.png') }}"
                 alt="" class="w-full h-full object-cover">
@@ -14,7 +14,7 @@
         <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
     </div>
     <div class="text-sm text-secondary-foreground">
-        {{ __('main.upload_type', ['type' => __('main.' . $columnName)]) . ' ' . __('main.photo') }}
+        {{ __('main.upload_type', ['type' => __('main.' . $columnName)]) . ' ' . __('main.' . $columnName == 'Application' ? 'logo' : 'photo') }}
     </div>
     @error('photo')
         <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

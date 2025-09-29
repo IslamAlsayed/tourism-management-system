@@ -51,6 +51,7 @@ return [
     'reset' => 'إعادة تعيين',
     'view' => 'عرض',
     'add' => 'إضافة',
+    'application' => 'التطبيق',
     'remove' => 'إزالة',
     'show' => 'إظهار',
     'hide' => 'إخفاء',
@@ -472,6 +473,7 @@ return [
     'items_per_page' => 'عناصر في الصفحة',
 
     // Settings
+    'setting' => 'الإعدادات',
     'settings' => 'الإعدادات',
     'system_settings' => 'إعدادات النظام',
     'general_settings' => 'الإعدادات العامة',
