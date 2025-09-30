@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class GuideLanguage extends Model
 {
     protected $fillable = [
+        'id',
         'name',
         'name_ar'
     ];

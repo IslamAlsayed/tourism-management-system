@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TourGuideLanguage extends Model
 {
     protected $fillable = [
+        'id',
         'tour_guide_id',
         'guide_language_id',
     ];

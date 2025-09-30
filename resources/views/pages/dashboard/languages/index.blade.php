@@ -3,86 +3,18 @@
 @section('table-content')
     <!-- Container -->
     @include('includes.table-breadcrumb', [
-        'title' => __('main.type_management_title', ['type' => __('main.languages')]),
-        'description' => __('main.types_management_description', ['types' => __('main.languages')]),
-        'import_url' => '#',
+        'title' => __('main.languages'),
+        'description' => __('main.manage_system_types', ['types' => __('main.languages')]),
+        'import_url' => route('import.data', ['model' => 'languages']),
         'page_add_url' => route('languages.create'),
         'page_add_title' => __('main.add_new_type', ['type' => __('main.language')]),
     ])
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="kt-card kt-card-grid min-w-full">
-        <div class="kt-card-content">
-            <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
-                <div class="kt-scrollable-x-auto">
-                    <table class="kt-table table-auto text-nowrap">
-                        <thead>
-                            <tr>
-                                <th class="w-[60px] px-4 py-3 text-center">
-                                    <input type="checkbox" id="selectAllCountries" class="kt-checkbox kt-checkbox-sm">
-                                </th>
-                                <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('main.id') }}</th>
-                                <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('main.name') }}</th>
-                                <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('main.photo') }}</th>
-                                <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('main.active') }}</th>
-                                <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('main.created_at') }}</th>
-                                <th class="px-4 py-3"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data as $key => $language)
-                                <tr>
-                                    <td class="text-center">
-                                        <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true"
-                                            type="checkbox" value="1" />
-                                    </td>
-                                    <td class="px-4 py-2 text-sm text-gray-700">{{ $language->id }}</td>
-                                    <td>{{ $language->name ?? '--' }}</td>
-                                    <td>
-                                        <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->photo) : asset('storage/' . $language->photo) }}"
-                                            alt="{{ $language->name }}" class="w-[30px]">
-                                    <td>
-                                        <span
-                                            class="text-{{ $language->code == getCurrentLocale() ? 'green' : 'red' }}-600 font-semibold">
-                                            {{ $language->code == getCurrentLocale() ? __('main.active') : __('main.inactive') }}
-                                        </span>
-                                    </td>
-                                    <td>{{ $language->created_at?->format('Y-m-d') ?? '--' }}</td>
-                                    <td class="px-4 py-2 text-end">
-                                        @if ($language->code != getCurrentLocale())
-                                            <a href="{{ route('languages.change', $language->code) }}"
-                                                class="kt-btn kt-btn-sm kt-btn-outline bg-green-500 text-white">
-                                                {{ __('main.active') }}
-                                            </a>
-                                        @endif
-                                        <a href="{{ route('languages.edit', $language->id) }}"
-                                            class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
-                                            {{ __('main.edit') }}
-                                        </a>
-                                        <a href="{{ route('languages.destroy', $language->id) }}"
-                                            class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form action="{{ route('languages.destroy', $language->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">{{ __('main.delete') }}</button>
-                                            </form>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                {{-- Enhanced Pagination Controls --}}
-                @include('includes.pagination', ['data' => $data])
-            </div>
+    <div class="grid gap-5 lg:gap-7.5">
+        <div class="kt-card kt-card-grid min-w-full">
+            <livewire:languages />
         </div>
     </div>
     <!-- End of Container -->

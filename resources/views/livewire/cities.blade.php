@@ -41,6 +41,8 @@
                                         'search' => $search,
                                     ])
                                 @endforeach
+                                <td>{{ $city->country->id }}</td>
+                                <td>{{ $city->state->id }}</td>
                                 <td class="px-4 py-2 text-end">
                                     <div>
                                         <a href="{{ route('cities.edit', $city->id) }}"

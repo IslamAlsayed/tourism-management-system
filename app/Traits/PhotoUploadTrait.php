@@ -25,7 +25,7 @@ trait PhotoUploadTrait
 
             // Store the new photo
             $filename = $request->file('photo')->hashName();
-            $path = $request->file('photo')->storeAs($folder . '/' . $model->id, $filename, 'public');
+            $path = $request->file('photo')->storeAs('uploads/' . $folder . '/' . $model->id, $filename, 'public');
 
             // Update the model with the new photo path
             $model->{$photoColumn} = $path;
@@ -42,8 +42,8 @@ trait PhotoUploadTrait
 
             // Delete the folder if it's empty
             $folderPath = dirname($model->{$photoColumn});
-            if (Storage::disk('public')->exists($folderPath) && count(Storage::disk('public')->files($folderPath)) == 0) {
-                Storage::disk('public')->deleteDirectory($folderPath);
+            if (Storage::disk('public')->exists('uploads/' . $folderPath) && count(Storage::disk('public')->files('uploads/' . $folderPath)) == 0) {
+                Storage::disk('public')->deleteDirectory('uploads/' . $folderPath);
             }
         }
     }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Country;
 use App\Models\Region;
 use Livewire\Component;
 use App\Models\Currency;
@@ -51,21 +52,25 @@ class TourGuides extends Component
         $data = TourGuide::query()->when($this->search, function ($query) {
             $search = strtolower($this->search);
 
-            $items1 = Currency::query()->when($this->search, function ($query) {
+            $items1 = Country::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Country())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
-            $items2 = Region::query()->when($this->search, function ($query) {
+            $items2 = Currency::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Currency())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
             $query->where(function ($q) use ($search, $items1, $items2) {
-                $q->orWhereIn('currency_id', $items1);
-                $q->orWhereIn('region_id', $items2);
+                $q->orWhereIn('country_id', $items1);
+                $q->orWhereIn('currency_id', $items2);
 
                 foreach ($this->searchColumns as $column) {
                     $q->orWhere($column, 'like', '%' . $search . '%');

@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class TourGuideType extends Model
 {
     protected $fillable = [
+        'id',
         'type',
         'price',
         'currency_id',
         'country_id',
-        'city_id',
         'state_id',
+        'city_id',
         'region_id',
         'subregion_id',
         'multi_states',
@@ -24,8 +25,8 @@ class TourGuideType extends Model
         return [
             'currency',
             'country',
-            'city',
             'state',
+            'city',
             'region',
             'subregion',
         ];
@@ -36,8 +37,8 @@ class TourGuideType extends Model
         return [
             'currency_id',
             'country_id',
-            'city_id',
             'state_id',
+            'city_id',
             'region_id',
             'subregion_id',
         ];
@@ -53,14 +54,14 @@ class TourGuideType extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function city()
-    {
-        return $this->belongsTo(City::class);
-    }
-
     public function state()
     {
         return $this->belongsTo(State::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 
     public function region()

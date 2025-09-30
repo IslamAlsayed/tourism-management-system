@@ -11,6 +11,7 @@ class Subregion extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'name',
         'name_ar',
         'wiki_data_id',

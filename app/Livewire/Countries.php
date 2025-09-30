@@ -9,13 +9,12 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
-use function Laravel\Prompts\search;
 
 class Countries extends Component
 {
     use WithPagination, CustomPagination, CustomColumns;
-    public $search = 'EGY';
-    // public $search = '';
+
+    public $search = '';
     public $totalCount = '';
 
     public function updatingSearch()
@@ -78,10 +77,9 @@ class Countries extends Component
             });
         })->with($this->relations)->paginate(getPaginate());
 
-        // dd($data->toArray());
-
         return view('livewire.countries', [
             'data' => $data,
+            'relations' => $this->relations,
             'totalCount' => $this->totalCount,
         ]);
     }

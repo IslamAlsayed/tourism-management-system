@@ -18,7 +18,8 @@ trait CustomColumns
         $model = new $modelClass();
         $this->relations = method_exists($model, 'getRelationshipNames') ? $model->getRelationshipNames() : [];
 
-        $this->fillable = array_merge($model->getFillable(), $this->relations);
+        $this->fillable = $model->getFillable();
+        array_splice($this->fillable, $defaultCount, 0, $this->relations);
 
         $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 

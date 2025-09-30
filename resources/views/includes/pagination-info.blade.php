@@ -3,7 +3,8 @@
     <div class="w-full flex justify-between items-start">
         <div>
             <p class="text-sm text-gray-600 p-2">
-                {{ __('main.showing') }} {{ $data->firstItem() ?? 0 }} - {{ $data->lastItem() ?? 0 }}
+                {{ __('main.showing') }} {{ $data->firstItem() ?? 0 }} -
+                <strong class="text-primary">{{ $data->lastItem() ?? 0 }}</strong>
                 {{ __('main.of') }} {{ $data->total() }} {{ $entityName ?? __('main.items') }}
                 @if ($data->hasPages())
                     <span class="text-blue-600">({{ __('main.page') }} {{ $data->currentPage() }} {{ __('main.of') }}
@@ -39,7 +40,7 @@
                     <div class="flex">
                         <label class="kt-input h-[45px]">
                             <i class="ki-filled ki-magnifier"></i>
-                            <input wire:model.live="search" type="text"
+                            <input wire:model.live="search" type="search"
                                 placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..."
                                 class="px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                         </label>

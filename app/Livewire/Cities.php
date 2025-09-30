@@ -53,13 +53,17 @@ class Cities extends Component
 
             $items1 = Country::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Country())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
             $items2 = State::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new State())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
@@ -82,6 +86,8 @@ class Cities extends Component
         //             }
         //         });
         //     })->paginate(getPaginate());
+
+        // dd($data->toArray());
 
         return view('livewire.cities', [
             'data' => $data,

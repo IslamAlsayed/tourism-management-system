@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TourGuideReview extends Model
 {
     protected $fillable = [
+        'id',
         'tour_guide_id',
         'rating',
         'review',

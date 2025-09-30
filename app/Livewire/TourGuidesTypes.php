@@ -50,52 +50,82 @@ class TourGuidesTypes extends Component
     public function render()
     {
         $this->totalCount = TourGuideType::count();
-        $data = $this->scopeSearch(TourGuideType::class);
+        // $data = $this->scopeSearch(TourGuideType::class);
 
         $data = TourGuideType::query()->when($this->search, function ($query) {
             $search = strtolower($this->search);
 
             $items1 = Currency::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Currency())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
             $items2 = Country::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Country())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
-            $items3 = City::query()->when($this->search, function ($query) {
+            $items3 = State::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new State())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
-            $items4 = State::query()->when($this->search, function ($query) {
+            $items4 = City::query()->where('id', '<=', City::count() / 3)->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new City())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
             $items5 = Region::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Region())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
             $items6 = Subregion::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Subregion())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
-            $query->where(function ($q) use ($search, $items1, $items2, $items3, $items4, $items5, $items6) {
+            $items7 = City::query()->where('id', '>=', (City::count() / 3))->where('id', '<=', City::count() - ((City::count() / 3) * 2))->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    foreach ((new City())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
+                });
+            })->get('id');
+
+            $items8 = City::query()->where('id', '>=', City::count() - ((City::count() / 3) * 2))->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    foreach ((new City())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
+                });
+            })->get('id');
+
+            $query->where(function ($q) use ($search, $items1, $items2, $items3, $items4, $items5, $items6, $items7, $items8) {
                 $q->orWhereIn('currency_id', $items1);
                 $q->orWhereIn('country_id', $items2);
-                $q->orWhereIn('city_id', $items3);
-                $q->orWhereIn('state_id', $items4);
+                $q->orWhereIn('state_id', $items3);
+                $q->orWhereIn('city_id', $items4);
+                $q->orWhereIn('city_id', $items7);
+                $q->orWhereIn('city_id', $items8);
                 $q->orWhereIn('region_id', $items5);
                 $q->orWhereIn('subregion_id', $items6);
 
@@ -104,7 +134,6 @@ class TourGuidesTypes extends Component
                 }
             });
         })->with($this->relations)->paginate(getPaginate());
-
 
         // $data = TourGuideType::query()
         //     ->when($this->search, function ($query) {

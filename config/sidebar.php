@@ -301,7 +301,7 @@ return [
             'status' => 'done',
             'children' => [
                 [
-                    'title' => 'restaurants',
+                    'title' => 'all restaurants',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'restaurants.index'
                 ],

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class RateDetail extends Model
 {
     protected $fillable = [
+        'id',
         'rate_id',
         'room_type_id',
         'price',

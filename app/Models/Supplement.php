@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Supplement extends Model
 {
     protected $fillable = [
+        'id',
         'name',
         'price',
         'accommodation_id',

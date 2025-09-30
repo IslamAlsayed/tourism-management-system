@@ -2,14 +2,13 @@
 
 namespace App\Livewire;
 
-use App\Models\State;
-use App\Models\Country;
+use App\Models\Language;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 
-class States extends Component
+class Languages extends Component
 {
     use WithPagination, CustomPagination, CustomColumns;
     public $search = '';
@@ -33,7 +32,7 @@ class States extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(State::class, 5);
+        $this->mountWithCustomColumns(Language::class, 5);
         $this->resetPage();
     }
 
@@ -44,30 +43,10 @@ class States extends Component
 
     public function render()
     {
-        $this->totalCount = State::count();
-        // $data = $this->scopeSearch(State::class);
+        $this->totalCount = Language::count();
+        $data = $this->scopeSearch(Language::class);
 
-        $data = State::query()->when($this->search, function ($query) {
-            $search = strtolower($this->search);
-            $items1 = Country::query()->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    foreach ((new Country())->getFillable() as $column) {
-                        $q->orWhere($column, 'like', '%' . $this->search . '%');
-                    }
-                });
-            })->get('id');
-
-            $query->where(function ($q) use ($search, $items1) {
-                $q->orWhereIn('country_id', $items1);
-
-                foreach ($this->searchColumns as $column) {
-                    $q->orWhere($column, 'like', '%' . $search . '%');
-                }
-            });
-
-        })->with($this->relations)->paginate(getPaginate());
-
-        // $data = State::query()
+        // $data = Language::query()
         //     ->when($this->search, function ($query) {
         //         $search = strtolower($this->search);
         //         $query->where(function ($q) use ($search) {
@@ -77,9 +56,7 @@ class States extends Component
         //         });
         //     })->paginate(getPaginate());
 
-        // dd($data->toArray());
-
-        return view('livewire.states', [
+        return view('livewire.languages', [
             'data' => $data,
             'totalCount' => $this->totalCount,
         ]);

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Season extends Model
 {
     protected $fillable = [
+        'id',
         'name',
         'season_from',
         'season_to',

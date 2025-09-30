@@ -10,6 +10,7 @@ class Nationality extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'name',
         'name_ar',
         'is_active',

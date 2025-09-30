@@ -2,13 +2,11 @@
     @component('includes.pagination-info', [
         'data' => $data,
         'columns' => $columns,
-        'title' => __('main.countries'),
-        'entityName' => __('main.country'),
+        'title' => __('main.languages'),
+        'entityName' => __('main.language'),
         'showSearch' => true,
     ])
-        @include('components.columns', [
-            'allColumns' => $allColumns ?? [],
-        ])
+        @include('components.columns', ['allColumns' => $allColumns ?? []])
     @endcomponent
 
     <div class="kt-card-content">
@@ -30,29 +28,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $country)
+                        @foreach ($data as $language)
                             <tr>
                                 <td class="text-center">
-                                    <input type="checkbox" name="selectedItems[]" value="{{ $country->id }}"
+                                    <input type="checkbox" name="selectedItems[]" value="{{ $language->id }}"
                                         class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
                                 </td>
                                 @foreach ($columns as $column)
                                     @include('components.static-columns', [
                                         'column' => $column,
-                                        'model' => $country,
+                                        'model' => $language,
                                         'search' => $search,
                                     ])
                                 @endforeach
                                 <td class="px-4 py-2 text-end">
                                     <div>
-                                        <a href="{{ route('countries.edit', $country->id) }}"
+                                        <a href="{{ route('languages.edit', $language->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
                                             {{ __('main.edit') }}
                                         </a>
 
-                                        <a href="{{ route('countries.destroy', $country->id) }}"
+                                        <a href="{{ route('languages.destroy', $language->id) }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form action="{{ route('countries.destroy', $country->id) }}"
+                                            <form action="{{ route('languages.destroy', $language->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')

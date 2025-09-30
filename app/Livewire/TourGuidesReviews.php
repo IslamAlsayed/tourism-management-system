@@ -52,7 +52,9 @@ class TourGuidesReviews extends Component
 
             $items1 = TourGuide::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new TourGuide())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 
