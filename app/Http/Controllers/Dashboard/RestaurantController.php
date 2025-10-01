@@ -42,6 +42,9 @@ class RestaurantController extends Controller
 
         if ($restaurant) {
             $this->uploadPhoto($request, $restaurant, 'photo', "restaurants");
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.restaurant')]));
+            }
             return redirect()->route('restaurants.index')->with('success', __('main.messages.type_created', ['type' => __('main.restaurant')]));
         }
 
@@ -74,9 +77,13 @@ class RestaurantController extends Controller
 
         $this->uploadPhoto($request, $restaurant, 'photo', "restaurants");
 
-        $restaurant->update($validated);
+        $updated = $restaurant->update($validated);
 
-        return redirect()->route('restaurants.index')->with('success', __('main.messages.type_updated', ['type' => __('main.restaurant')]));
+        if ($updated) {
+            return redirect()->route('restaurants.index')->with('success', __('main.messages.type_updated', ['type' => __('main.restaurant')]));
+        }
+
+        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.restaurant')]));
     }
 
     public function destroy($id)
@@ -87,9 +94,9 @@ class RestaurantController extends Controller
         }
         $deleted = $restaurant->delete();
         if ($deleted) {
-            return redirect()->route('restaurants.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.restaurant')]));
+            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.restaurant')]));
         }
 
-        return redirect()->route('restaurants.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.restaurant')]));
+        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.restaurant')]));
     }
 }

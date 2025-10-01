@@ -130,6 +130,8 @@ return [
     'tourist buses' => 'الحافلات السياحية',
     'transport vehicles' => 'مركبات النقل',
     'tourist transport companies' => 'شركات النقل السياحي',
+    'transport companies' => 'شركات النقل',
+    'transport departments' => 'فروع شركات النقل',
     '4x4 vehicles' => 'مركبات 4x4',
     'tourist sites' => 'المواقع السياحية',
     'sites' => 'المواقع',

@@ -49,8 +49,8 @@ class ImportCountries implements ToCollection
                 // ImportDataToDBJob::dispatch(Country::class, $batchData);
                 foreach ($batchData as $item) {
                     Country::create($item);
+                    $this->rowCount++;
                 }
-                $this->rowCount += count($batchData);
                 $batchData = [];
             }
         }
@@ -60,8 +60,8 @@ class ImportCountries implements ToCollection
             // ImportDataToDBJob::dispatch(Country::class, $batchData);
             foreach ($batchData as $item) {
                 Country::create($item);
+                $this->rowCount++;
             }
-            $this->rowCount += count($batchData);
         }
     }
 

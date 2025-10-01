@@ -37,6 +37,9 @@ class TourGuideTypeController extends Controller
         $validated = $request->validated();
         $tourGuideType = TourGuideType::create($validated);
         if ($tourGuideType) {
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.tour-guides-type')]));
+            }
             return redirect()->route('tour-guides-types.index')->with('success', __('main.messages.type_created', ['type' => __('main.tour-guides-type')]));
         }
         return redirect()->route('tour-guides-types.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.tour-guides-type')]));
@@ -65,8 +68,11 @@ class TourGuideTypeController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.tour-guide-type')]));
         }
         $validated = $request->validated();
-        $tourGuideType->update($validated);
-        return redirect()->route('tour-guides-types.index')->with('success', __('main.messages.type_updated', ['type' => __('main.tour-guides-type')]));
+        $updated = $tourGuideType->update($validated);
+        if ($updated) {
+            return redirect()->route('tour-guides-types.index')->with('success', __('main.messages.type_updated', ['type' => __('main.tour-guides-type')]));
+        }
+        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.tour-guides-type')]));
     }
 
     public function destroy($id)
@@ -77,8 +83,8 @@ class TourGuideTypeController extends Controller
         }
         $deleted = $tourGuideType->delete();
         if ($deleted) {
-            return redirect()->route('tour-guides-types.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.tour-guides-type')]));
+            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.tour-guides-type')]));
         }
-        return redirect()->route('tour-guides-types.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.tour-guides-type')]));
+        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.tour-guides-type')]));
     }
 }

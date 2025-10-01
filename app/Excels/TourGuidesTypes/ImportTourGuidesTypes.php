@@ -28,37 +28,54 @@ class ImportTourGuidesTypes implements ToCollection
 
             $data = [];
 
-            foreach ($fillable as $column) {
-                if (in_array($column, $headers)) {
-                    $excelKey = array_search($column, $headers);
+            $headerMap = [];
+            foreach ($headers as $index => $header) {
+                $headerMap[$header] = $index;
+            }
 
-                    if ($excelKey !== false && isset($row[$excelKey])) {
-                        $data[$column] = $row[$excelKey];
-                    } else {
-                        $data[$column] = null;
-                    }
+            foreach ($fillable as $column) {
+                if (isset($headerMap[$column])) {
+                    $excelKey = $headerMap[$column];
+                    $data[$column] = $row[$excelKey] ?? null;
                 }
             }
+
+            // foreach ($fillable as $column) {
+            //     if (in_array($column, $headers)) {
+            //         $excelKey = array_search($column, $headers);
+
+            //         if ($excelKey !== false && isset($row[$excelKey])) {
+            //             $data[$column] = $row[$excelKey];
+            //         } else {
+            //             $data[$column] = null;
+            //         }
+            //     }
+            // }
 
             $batchData[] = $data;
 
             // Send batch job when full
             if (count($batchData) >= $batchSize) {
-                // ImportDataToDBJob::dispatch(TourGuideType::class, $batchData);
-                foreach ($batchData as $item) {
-                    TourGuideType::updateOrCreate(['type' => $item['type']], $item);
-                    $this->rowCount++;
-                }
+                $this->insertBatchData($batchData);
                 $batchData = [];
             }
         }
 
         // Send remaining data
         if (count($batchData) > 0) {
-            // ImportDataToDBJob::dispatch(TourGuideType::class, $batchData);
-            foreach ($batchData as $item) {
+            $this->insertBatchData($batchData);
+        }
+    }
+
+    private function insertBatchData(array $batchData)
+    {
+        foreach ($batchData as $item) {
+            if (!empty($item['type'])) {
+                // ImportDataToDBJob::dispatch(TourGuideType::class, $batchData);
                 TourGuideType::updateOrCreate(['type' => $item['type']], $item);
                 $this->rowCount++;
+            } else {
+                throw new \Exception("Missing 'type' in row data.");
             }
         }
     }

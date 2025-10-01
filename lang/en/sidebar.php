@@ -130,6 +130,8 @@ return [
     'tourist buses' => 'Tourist Buses',
     'transport vehicles' => 'Transport Vehicles',
     'tourist transport companies' => 'Tourist Transport Companies',
+    'transport companies' => 'Transport Companies',
+    'transport departments' => 'Transport Departments',
     '4x4 vehicles' => '4x4 Vehicles',
     'tourist sites' => 'Tourist Sites',
     'sites' => 'Sites',

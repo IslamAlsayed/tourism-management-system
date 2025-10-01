@@ -27,7 +27,7 @@ class RegionController extends Controller
 
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->route('regions.create')->with('success', __('main.messages.type_created', ['type' => __('main.region')]));
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.region')]));
             }
             return redirect()->route('regions.index')->with('success', __('main.messages.type_created', ['type' => __('main.region')]));
         }
@@ -57,7 +57,7 @@ class RegionController extends Controller
             return redirect()->route('regions.index')->with('success', __('main.messages.type_updated', ['type' => __('main.region')]));
         }
 
-        return redirect()->route('regions.index')->with('error', __('main.messages.type_update_failed', ['type' => __('main.region')]));
+        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.region')]));
     }
 
     public function destroy($id)
@@ -68,9 +68,9 @@ class RegionController extends Controller
         }
         $deleted = $region->delete();
         if ($deleted) {
-            return redirect()->route('regions.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.region')]));
+            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.region')]));
         }
 
-        return redirect()->route('regions.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.region')]));
+        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.region')]));
     }
 }

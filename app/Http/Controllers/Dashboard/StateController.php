@@ -30,6 +30,9 @@ class StateController extends Controller
         $state = State::create($validated);
 
         if ($state) {
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.state')]));
+            }
             return redirect()->route('states.index')->with('success', __('main.messages.type_created', ['type' => __('main.state')]));
         }
 
@@ -60,6 +63,6 @@ class StateController extends Controller
             return redirect()->route('states.index')->with('success', __('main.messages.type_updated', ['type' => __('main.state')]));
         }
 
-        return redirect()->route('states.index')->with('error', __('main.messages.type_updated_failed', ['type' => __('main.state')]));
+        return redirect()->back()->with('error', __('main.messages.type_updated_failed', ['type' => __('main.state')]));
     }
 }

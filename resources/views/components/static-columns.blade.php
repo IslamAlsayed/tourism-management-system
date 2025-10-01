@@ -65,6 +65,10 @@
         <td>{!! highlightSearch($model->currency->code ?? '--', $search) !!}</td>
     @break
 
+    @case('company')
+        <td>{!! highlightSearch($model->company->name ?? '--', $search) !!}</td>
+    @break
+
     @case('country')
         <td>{!! highlightSearch($model->country->name ?? '--', $search) !!}</td>
     @break
@@ -92,6 +96,7 @@
     @case('rating')
         <td>
             <div>
+                {{$model->rating}}/5
                 <i class="fas fa-star" style="color: #ffdd00"></i>
                 {!! highlightSearch($model->rating ?? '--', $search) !!}
             </div>

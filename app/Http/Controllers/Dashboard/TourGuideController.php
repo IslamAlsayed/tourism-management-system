@@ -28,6 +28,9 @@ class TourGuideController extends Controller
         $validated = $request->validated();
         $tourGuide = TourGuide::create($validated);
         if ($tourGuide) {
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.tour-guide')]));
+            }
             return redirect()->route('tour-guides.index')->with('success', __('main.messages.type_created', ['type' => __('main.tour-guide')]));
         }
         return redirect()->route('tour-guides.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.tour-guide')]));
@@ -51,8 +54,11 @@ class TourGuideController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.tour-guide')]));
         }
         $validated = $request->validated();
-        $tourGuide->update($validated);
-        return redirect()->route('tour-guides.index')->with('success', __('main.messages.type_updated', ['type' => __('main.tour-guide')]));
+        $updated = $tourGuide->update($validated);
+        if ($updated) {
+            return redirect()->route('tour-guides.index')->with('success', __('main.messages.type_updated', ['type' => __('main.tour-guide')]));
+        }
+        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.tour-guide')]));
     }
 
     public function destroy($id)
@@ -63,8 +69,8 @@ class TourGuideController extends Controller
         }
         $deleted = $tourGuide->delete();
         if ($deleted) {
-            return redirect()->route('tour-guides.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.tour-guide')]));
+            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.tour-guide')]));
         }
-        return redirect()->route('tour-guides.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.tour-guide')]));
+        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.tour-guide')]));
     }
 }

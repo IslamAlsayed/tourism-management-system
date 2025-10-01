@@ -47,8 +47,8 @@ class ImportGuideLanguages implements ToCollection
                 // ImportDataToDBJob::dispatch(GuideLanguage::class, $batchData);
                 foreach ($batchData as $item) {
                     GuideLanguage::create($item);
+                    $this->rowCount++;
                 }
-                $this->rowCount += count($batchData);
                 $batchData = [];
             }
         }
@@ -58,8 +58,8 @@ class ImportGuideLanguages implements ToCollection
             // ImportDataToDBJob::dispatch(GuideLanguage::class, $batchData);
             foreach ($batchData as $item) {
                 GuideLanguage::create($item);
+                $this->rowCount++;
             }
-            $this->rowCount += count($batchData);
         }
     }
 }

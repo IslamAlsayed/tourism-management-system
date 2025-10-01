@@ -28,7 +28,7 @@ class SubregionController extends Controller
 
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->route('subregions.create')->with('success', __('main.messages.type_created', ['type' => __('main.subregion')]));
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.subregion')]));
             }
             return redirect()->route('subregions.index')->with('success', __('main.messages.type_created', ['type' => __('main.subregion')]));
         }
@@ -59,7 +59,7 @@ class SubregionController extends Controller
             return redirect()->route('subregions.index')->with('success', __('main.messages.type_updated', ['type' => __('main.subregion')]));
         }
 
-        return redirect()->route('subregions.index')->with('error', __('main.messages.type_update_failed', ['type' => __('main.subregion')]));
+        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.subregion')]));
     }
 
     public function destroy($id)
@@ -70,9 +70,9 @@ class SubregionController extends Controller
         }
         $deleted = $subregions->delete();
         if ($deleted) {
-            return redirect()->route('subregions.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.subregion')]));
+            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.subregion')]));
         }
 
-        return redirect()->route('subregions.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.subregion')]));
+        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.subregion')]));
     }
 }

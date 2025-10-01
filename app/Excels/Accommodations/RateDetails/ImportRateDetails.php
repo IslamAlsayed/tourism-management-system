@@ -30,7 +30,6 @@ class ImportRateDetails implements ToCollection
             $rate = Rate::where('accommodation_id', $accommodationId)->first();
 
             if (!$rate) {
-                \Log::warning("No rate found for accommodation_id: $accommodationId");
                 continue;
             }
 

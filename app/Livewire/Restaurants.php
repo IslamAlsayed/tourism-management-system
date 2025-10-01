@@ -16,7 +16,6 @@ class Restaurants extends Component
 {
     use WithPagination, CustomPagination, CustomColumns;
 
-    // public $search = 'asia';
     public $search = '';
     public $totalCount = '';
 

@@ -44,7 +44,7 @@ class CountryController extends Controller
 
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->route('countries.create')->with('success', __('main.messages.type_created', ['type' => __('main.country')]));
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.country')]));
             }
             return redirect()->route('countries.index')->with('success', __('main.messages.type_created', ['type' => __('main.country')]));
         }
@@ -76,7 +76,7 @@ class CountryController extends Controller
             return redirect()->route('countries.index')->with('success', __('main.messages.type_updated', ['type' => __('main.country')]));
         }
 
-        return redirect()->route('countries.index')->with('error', __('main.messages.type_updated_failed', ['type' => __('main.country')]));
+        return redirect()->back()->with('error', __('main.messages.type_updated_failed', ['type' => __('main.country')]));
     }
 
     public function destroy($id)
@@ -87,10 +87,10 @@ class CountryController extends Controller
         }
         $deleted = $country->delete();
         if ($deleted) {
-            return redirect()->route('countries.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.country')]));
+            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.country')]));
         }
 
-        return redirect()->route('countries.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.country')]));
+        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.country')]));
     }
 
     /**

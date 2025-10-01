@@ -46,8 +46,8 @@ class ImportRegions implements ToCollection
                 // ImportDataToDBJob::dispatch(Region::class, $batchData);
                 foreach ($batchData as $item) {
                     Region::updateOrCreate(['name' => $item['name']], $item);
+                    $this->rowCount++;
                 }
-                $this->rowCount += count($batchData);
                 $batchData = [];
             }
         }
@@ -57,8 +57,8 @@ class ImportRegions implements ToCollection
             // ImportDataToDBJob::dispatch(Region::class, $batchData);
             foreach ($batchData as $item) {
                 Region::updateOrCreate(['name' => $item['name']], $item);
+                $this->rowCount++;
             }
-            $this->rowCount += count($batchData);
         }
     }
 }

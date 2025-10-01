@@ -43,10 +43,10 @@ class UserController extends Controller
 
         if ($user) {
             $this->uploadPhoto($request, $user, 'photo', "profile-photos");
-            return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+            return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
         }
 
-        return redirect()->route('users.index')->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
+        return redirect()->back()->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
     }
 
     public function edit($id)
@@ -72,9 +72,13 @@ class UserController extends Controller
 
         $this->uploadPhoto($request, $user, 'photo', "users");
 
-        $user->update($validated);
+        $updated = $user->update($validated);
 
-        return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+        if ($updated) {
+            return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+        }
+
+        return redirect()->back()->with('error', __('main.messages.type_creation_failed', ['type' => __('main.user')]));
     }
 
     public function destroy($id)
@@ -86,9 +90,9 @@ class UserController extends Controller
         $deleted = $user->delete();
         if ($deleted) {
             $this->deletePhoto($user, 'photo');
-            return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+            return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
         }
 
-        return redirect()->route('users.index')->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
+        return redirect()->back()->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
     }
 }

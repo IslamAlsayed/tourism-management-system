@@ -46,8 +46,8 @@ class ImportNationalities implements ToCollection
                 // ImportDataToDBJob::dispatch(Nationality::class, $batchData);
                 foreach ($batchData as $item) {
                     Nationality::create($item);
+                    $this->rowCount++;
                 }
-                $this->rowCount += count($batchData);
                 $batchData = [];
             }
         }
@@ -57,8 +57,8 @@ class ImportNationalities implements ToCollection
             // ImportDataToDBJob::dispatch(Nationality::class, $batchData);
             foreach ($batchData as $item) {
                 Nationality::create($item);
+                $this->rowCount++;
             }
-            $this->rowCount += count($batchData);
         }
     }
 }

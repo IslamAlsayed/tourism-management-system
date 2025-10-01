@@ -28,9 +28,13 @@ class SettingsController extends Controller
 
         $this->uploadPhoto($request, $setting, 'photo', "logos");
 
-        $setting->update($validated);
+        $updated = $setting->update($validated);
 
-        return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.settings')]));
+        if ($updated) {
+            return redirect()->back()->with('success', __('main.messages.type_updated', ['type' => __('main.settings')]));
+        }
+
+        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.settings')]));
     }
 
     public function general()

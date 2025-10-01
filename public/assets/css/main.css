@@ -21,7 +21,7 @@
 }
 
 #columnsModal {
-    width: max(400px, 20%);
+    width: 600px;
     position: absolute;
     top: 50px;
     left: auto;
@@ -32,4 +32,64 @@
     border-radius: 15px;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-wrap: nowrap;
+
+    & input {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media (max-width: 1280px) {
+    #columnsModal {
+        width: 400px;
+    }
+}
+
+@media (max-width: 992px) {
+    #columnsModal {
+        width: 320px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    #columnsModal {
+        width: 200px;
+        padding: 15px;
+        border-radius: 7px;
+
+        &>div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        & input {
+            margin-inline-end: 5px;
+        }
+    }
+}
+
+@media (max-width: 425px) {
+    #columnsModal {
+        width: 270px;
+        padding: 10px;
+        border-radius: 3px;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%);
+
+        &>div {
+            gap: 3px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        & input {
+            width: 12px;
+            height: 12px;
+            border-radius: 1px;
+            margin-inline-end: 5px;
+        }
+    }
 }

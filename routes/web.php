@@ -19,7 +19,10 @@ use App\Http\Controllers\Dashboard\RestaurantController;
 use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\TourGuideTypeController;
+use App\Http\Controllers\Dashboard\TransportationController;
 use App\Http\Controllers\Dashboard\TourGuideReviewController;
+use App\Http\Controllers\Dashboard\Transportation\CompanyController;
+use App\Http\Controllers\Dashboard\Transportation\DepartmentController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
 
@@ -110,6 +113,10 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('tour-guides', TourGuideController::class)->names('tour-guides');
     Route::resource('tour-guides-types', TourGuideTypeController::class)->names('tour-guides-types');
     Route::resource('tour-guides-reviews', TourGuideReviewController::class)->names('tour-guides-reviews');
+
+    // === TRANSPORTATION MANAGEMENT ===
+    Route::resource('transportation/companies', CompanyController::class)->names('transportation-companies');
+    Route::resource('transportation/departments', DepartmentController::class)->names('transportation-departments');
 
     // === ACCOMMODATIONS MANAGEMENT ===
     Route::resource('accommodations', AccommodationController::class)->names('accommodations');

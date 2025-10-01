@@ -341,14 +341,20 @@ return [
         // ================= Transportation =================
         [
             'title' => 'transportation',
-            'fixed' => '+7',
+            'fixed' => '+6',
             'icon' => 'ki-filled ki-delivery',
             'children' => [
                 [
-                    'title' => 'tourist transport companies',
-                    'fixed' => false,
+                    'title' => 'transport companies',
                     'icon' => 'ki-filled ki-bus',
-                    'route' => '#'
+                    'status' => 'done',
+                    'route' => 'transportation-companies.index'
+                ],
+                [
+                    'title' => 'transport departments',
+                    'icon' => 'ki-filled ki-bus',
+                    'status' => 'done',
+                    'route' => 'transportation-departments.index'
                 ],
                 [
                     'title' => 'car rental',

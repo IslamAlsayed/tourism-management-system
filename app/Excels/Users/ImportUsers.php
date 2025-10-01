@@ -46,8 +46,8 @@ class ImportUsers implements ToCollection
                 // ImportDataToDBJob::dispatch(User::class, $batchData);
                 foreach ($batchData as $item) {
                     User::create($item);
+                    $this->rowCount++;
                 }
-                $this->rowCount += count($batchData);
                 $batchData = [];
             }
         }
@@ -57,8 +57,8 @@ class ImportUsers implements ToCollection
             // ImportDataToDBJob::dispatch(User::class, $batchData);
             foreach ($batchData as $item) {
                 User::create($item);
+                $this->rowCount++;
             }
-            $this->rowCount += count($batchData);
         }
     }
 }

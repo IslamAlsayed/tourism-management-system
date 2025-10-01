@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configuration file for Excel import/export models.
  *
@@ -131,5 +132,25 @@ return [
         'model' => \App\Models\TourGuideReview::class,
         'importer' => \App\Excels\TourGuidesReviews\ImportTourGuidesReviews::class,
         'exporter' => \App\Excels\TourGuidesReviews\ExportTourGuidesReviews::class,
+    ],
+
+    // Transportation
+    'transportation-companies' => [
+        'title' => 'transportation-companies',
+        'model' => \App\Models\TransportationCompany::class,
+        'importer' => \App\Excels\TransportationCompanies\ImportTransportationCompanies::class,
+        'exporter' => \App\Excels\TransportationCompanies\ExportTransportationCompanies::class,
+    ],
+    'transportation-departments' => [
+        'title' => 'transportation-departments',
+        'model' => \App\Models\TransportationCompanyDepartment::class,
+        'importer' => \App\Excels\TransportationCompaniesDepartments\ImportTransportationCompaniesDepartments::class,
+        'exporter' => \App\Excels\TransportationCompaniesDepartments\ExportTransportationCompaniesDepartments::class,
+    ],
+    'bus-types' => [
+        'title' => 'bus-types',
+        'model' => \App\Models\BusType::class,
+        'importer' => \App\Excels\BusTypes\ImportBusTypes::class,
+        'exporter' => \App\Excels\BusTypes\ExportBusTypes::class,
     ],
 ];

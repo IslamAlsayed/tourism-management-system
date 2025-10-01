@@ -31,7 +31,7 @@ class CityController extends Controller
 
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->route('cities.create')->with('success', __('main.messages.type_created', ['type' => __('main.city')]));
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.city')]));
             }
             return redirect()->route('cities.index')->with('success', __('main.messages.type_created', ['type' => __('main.city')]));
         }
@@ -63,7 +63,7 @@ class CityController extends Controller
             return redirect()->route('cities.index')->with('success', __('main.messages.type_updated', ['type' => __('main.city')]));
         }
 
-        return redirect()->route('cities.index')->with('error', __('main.messages.type_update_failed', ['type' => __('main.city')]));
+        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.city')]));
     }
 
     public function destroy($id)
@@ -74,7 +74,7 @@ class CityController extends Controller
         }
         $deleted = $city->delete();
         if ($deleted) {
-            return redirect()->route('cities.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.city')]));
+            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.city')]));
         }
 
         return redirect()->route('cities.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.city')]));

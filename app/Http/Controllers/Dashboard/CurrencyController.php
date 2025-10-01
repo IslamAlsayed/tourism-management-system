@@ -38,7 +38,7 @@ class CurrencyController extends Controller
 
         if ($currency) {
             if ($request->has('save_and_add')) {
-                return redirect()->route('currencies.create')->with('success', __('main.messages.type_created', ['type' => __('main.currency')]));
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.currency')]));
             }
             return redirect()->route('currencies.index')->with('success', __('main.messages.type_created', ['type' => __('main.currency')]));
         }
@@ -59,7 +59,7 @@ class CurrencyController extends Controller
             return redirect()->route('currencies.index')->with('success', __('main.messages.type_updated', ['type' => __('main.currency')]));
         }
 
-        return redirect()->route('currencies.index')->with('error', __('main.messages.type_updated_failed', ['type' => __('main.currency')]));
+        return redirect()->back()->with('error', __('main.messages.type_updated_failed', ['type' => __('main.currency')]));
     }
 
     public function destroy($id)
@@ -70,9 +70,9 @@ class CurrencyController extends Controller
         }
         $deleted = $currency->delete();
         if ($deleted) {
-            return redirect()->route('currencies.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.currency')]));
+            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.currency')]));
         }
 
-        return redirect()->route('currencies.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.currency')]));
+        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.currency')]));
     }
 }

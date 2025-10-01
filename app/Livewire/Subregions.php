@@ -52,7 +52,9 @@ class Subregions extends Component
 
             $items1 = Region::query()->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->orWhere('name', 'like', '%' . $this->search . '%');
+                    foreach ((new Region())->getFillable() as $column) {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 });
             })->get('id');
 

@@ -46,8 +46,8 @@ class ImportCurrencies implements ToCollection
                 // ImportDataToDBJob::dispatch(Currency::class, $batchData);
                 foreach ($batchData as $item) {
                     Currency::create($item);
+                    $this->rowCount++;
                 }
-                $this->rowCount += count($batchData);
                 $batchData = [];
             }
         }
@@ -57,8 +57,8 @@ class ImportCurrencies implements ToCollection
             // ImportDataToDBJob::dispatch(Currency::class, $batchData);
             foreach ($batchData as $item) {
                 Currency::create($item);
+                $this->rowCount++;
             }
-            $this->rowCount += count($batchData);
         }
     }
 }
