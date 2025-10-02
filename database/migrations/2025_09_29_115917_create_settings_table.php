@@ -41,6 +41,7 @@ return new class extends Migration {
             $table->boolean('app_notifications_data_update')->default(false);
             $table->boolean('app_notifications_system_report')->default(false);
             $table->boolean('app_notifications_security_update')->default(false);
+            $table->integer('app_paginate_count')->default(25);
             $table->timestamps();
         });
     }

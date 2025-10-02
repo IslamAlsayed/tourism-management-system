@@ -1,10 +1,28 @@
 <?php
 
+use App\Models\User;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
+
 if (!function_exists('getActiveUser')) {
+    /**
+     * Get the currently authenticated user or a user by ID.
+     * Checks authentication first.
+     *
+     * @param int|null $id
+     * @return \App\Models\User|null
+     */
     function getActiveUser($id = null)
     {
-        $user = Auth::check() ? Auth::user() : null;
-        return $id ? $user->find($id) : $user;
+        if (!Auth::check()) {
+            return null;
+        }
+
+        if ($id != null) {
+            return User::find($id) ?? null;
+        }
+
+        return Auth::user();
     }
 }
 
@@ -150,7 +168,8 @@ if (!function_exists('generateUniqueFilename')) {
 if (!function_exists('getPaginate')) {
     function getPaginate()
     {
-        return session('paginate_count', config('app.paginate_count'));
+        $settings = Setting::first();
+        return session('paginate_count', $settings->app_paginate_count ?? config('app.paginate_count'));
     }
 }
 

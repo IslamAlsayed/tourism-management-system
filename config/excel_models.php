@@ -147,10 +147,16 @@ return [
         'importer' => \App\Excels\TransportationCompaniesDepartments\ImportTransportationCompaniesDepartments::class,
         'exporter' => \App\Excels\TransportationCompaniesDepartments\ExportTransportationCompaniesDepartments::class,
     ],
-    'bus-types' => [
-        'title' => 'bus-types',
-        'model' => \App\Models\BusType::class,
-        'importer' => \App\Excels\BusTypes\ImportBusTypes::class,
-        'exporter' => \App\Excels\BusTypes\ExportBusTypes::class,
+    'transportation-bus-types' => [
+        'title' => 'transportation-bus-types',
+        'model' => \App\Models\TransportationBusType::class,
+        'importer' => \App\Excels\TransportationBusTypes\ImportTransportationBusTypes::class,
+        'exporter' => \App\Excels\TransportationBusTypes\ExportTransportationBusTypes::class,
+    ],
+    'transportation-company-bus-types' => [
+        'title' => 'transportation-company-bus-types',
+        'model' => \App\Models\TransportationCompanyBusType::class,
+        'importer' => \App\Excels\TransportationCompanyBusTypes\ImportTransportationCompanyBusTypes::class,
+        'exporter' => \App\Excels\TransportationCompanyBusTypes\ExportTransportationCompanyBusTypes::class,
     ],
 ];

@@ -10,12 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('bus_types', function (Blueprint $table) {
+        Schema::create('transportation_bus_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('seats')->nullable();
-            $table->string('type')->nullable();
-            $table->foreignId('transportation_company_id')->nullable()->constrained('transportation_companies')->onDelete('SET NULL');
+            $table->string('name');
+            $table->string('name_ar')->nullable();
+            $table->string('category')->nullable(); // Bus, Van, Car ..etc
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('bus_types');
+        Schema::dropIfExists('transportation_bus_types');
     }
 };

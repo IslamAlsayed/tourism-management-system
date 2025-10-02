@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TransportationBusType;
 use Illuminate\Database\Seeder;
 use App\Models\TransportationCompany;
 use Illuminate\Support\Facades\Schema;
@@ -12,6 +13,7 @@ class TransportationCompanySeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
+        TransportationBusType::truncate();
         TransportationCompany::truncate();
         TransportationCompanyDepartment::truncate();
         Schema::enableForeignKeyConstraints();

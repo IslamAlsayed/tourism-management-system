@@ -341,17 +341,17 @@ return [
         // ================= Transportation =================
         [
             'title' => 'transportation',
-            'fixed' => '+6',
+            'fixed' => '+3',
             'icon' => 'ki-filled ki-delivery',
             'children' => [
                 [
-                    'title' => 'transport companies',
+                    'title' => 'companies',
                     'icon' => 'ki-filled ki-bus',
                     'status' => 'done',
                     'route' => 'transportation-companies.index'
                 ],
                 [
-                    'title' => 'transport departments',
+                    'title' => 'departments',
                     'icon' => 'ki-filled ki-bus',
                     'status' => 'done',
                     'route' => 'transportation-departments.index'
@@ -370,26 +370,20 @@ return [
                 ],
                 [
                     'title' => 'vehicles',
-                    'fixed' => '+4',
+                    'fixed' => '+1',
                     'icon' => 'ki-filled ki-car',
                     'children' => [
                         [
-                            'title' => 'tourist buses',
-                            'fixed' => false,
+                            'title' => 'bus types',
                             'icon' => 'ki-filled ki-bus',
-                            'route' => '#'
+                            'status' => 'done',
+                            'route' => 'transportation-bus-types.index'
                         ],
                         [
-                            'title' => 'transport vehicles',
-                            'fixed' => false,
-                            'icon' => 'ki-filled ki-delivery',
-                            'route' => '#'
-                        ],
-                        [
-                            'title' => 'tourist transport companies',
-                            'fixed' => false,
-                            'icon' => 'ki-filled ki-category',
-                            'route' => '#'
+                            'title' => 'company bus types',
+                            'icon' => 'ki-filled ki-bus',
+                            'status' => 'done',
+                            'route' => 'transportation-company-bus-types.index'
                         ],
                         [
                             'title' => '4x4 vehicles',

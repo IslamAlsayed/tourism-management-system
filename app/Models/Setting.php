@@ -29,5 +29,6 @@ class Setting extends Model
         'app_notifications_data_update',
         'app_notifications_system_report',
         'app_notifications_security_update',
+        'app_paginate_count',
     ];
 }
