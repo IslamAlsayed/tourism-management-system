@@ -23,6 +23,7 @@ trait CustomColumns
 
         $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 
+        // Sort columns
         $this->allColumns = array_values(array_diff($this->fillable, $excluded));
 
         $this->searchColumns = array_filter($this->allColumns, fn($c) => !in_array($c, $this->relations));
@@ -34,6 +35,7 @@ trait CustomColumns
         // $savedColumns = auth()->user()->getTableColumnsFor($modelClass);
 
         $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, $defaultCount);
+
         $this->pendingColumns = $this->columns;
     }
 
@@ -42,6 +44,7 @@ trait CustomColumns
         $model = new $this->modelClass();
         $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 
+        // Sort columns
         $cleanPending = array_diff($this->pendingColumns, $excluded);
         $this->columns = array_values(array_intersect($this->allColumns, $cleanPending));
 

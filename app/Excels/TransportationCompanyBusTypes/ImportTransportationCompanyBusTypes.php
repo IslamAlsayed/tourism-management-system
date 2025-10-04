@@ -44,7 +44,7 @@ class ImportTransportationCompanyBusTypes implements ToCollection
             $company = TransportationCompany::firstOrCreate(['name' => $companyName], ['name_ar' => $companyNameAr]);
             $busType = TransportationBusType::firstOrCreate(['name' => $busTypeName], ['name_ar' => $busTypeName]);
 
-            $c = TransportationCompanyBusType::create([
+            TransportationCompanyBusType::create([
                 'company_id' => $company->id,
                 'bus_type_id' => $busType->id,
                 'min_seats' => $minSeats,

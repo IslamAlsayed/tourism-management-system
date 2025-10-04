@@ -39,14 +39,17 @@ class UserController extends Controller
         $validated = $request->safe()->except('photo');
         $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
 
-        $user = User::create($validated);
+        $created = User::create($validated);
 
-        if ($user) {
-            $this->uploadPhoto($request, $user, 'photo', "profile-photos");
-            return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+        if ($created) {
+            $this->uploadPhoto($request, $created, 'photo', "users");
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+            }
+            return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
+        return redirect()->route('users.index')->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
     }
 
     public function edit($id)
@@ -75,7 +78,7 @@ class UserController extends Controller
         $updated = $user->update($validated);
 
         if ($updated) {
-            return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+            return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
         }
 
         return redirect()->back()->with('error', __('main.messages.type_creation_failed', ['type' => __('main.user')]));

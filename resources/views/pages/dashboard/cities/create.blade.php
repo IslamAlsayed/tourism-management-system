@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('cities.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_cities') }}
+                    {{ __('main.back_to_types', ['type' => __('main.cities')]) }}
                 </a>
             </div>
         </div>
@@ -74,7 +74,8 @@
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">
-                                            {{ $country->name_ar }} - {{ $country->name }}</option>
+                                            {{ $country->name }} {{ $country->name_ar ? ' - ' . $country->name_ar : '' }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('country_id')
@@ -89,7 +90,8 @@
                                     <option value="">--</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}">
-                                            {{ $state->name_ar }} - {{ $state->name }}</option>
+                                            {{ $state->name }} {{ $state->name_ar ? ' - ' . $state->name_ar : '' }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('state_id')

@@ -29,9 +29,6 @@ class ExportTourGuides implements FromArray, WithHeadings, WithCustomCsvSettings
                 $data->birth_year,
                 $data->gender,
                 $data->national_guide_id,
-                $data->country_id,
-                $data->currency_id,
-                $data->guide_type,
                 $data->tourism_ministry_code,
                 $data->fd_day_fees,
                 $data->hd_day_fees,
@@ -39,6 +36,9 @@ class ExportTourGuides implements FromArray, WithHeadings, WithCustomCsvSettings
                 $data->extra_fees_2,
                 $data->status,
                 $data->notes,
+                $data->country_id,
+                $data->currency_id,
+                $data->guide_type_id,
             ];
         }
         return $list;
@@ -56,9 +56,6 @@ class ExportTourGuides implements FromArray, WithHeadings, WithCustomCsvSettings
             'birth_year',
             'gender',
             'national_guide_id',
-            'country_id',
-            'currency_id',
-            'guide_type',
             'tourism_ministry_code',
             'fd_day_fees',
             'hd_day_fees',
@@ -66,6 +63,9 @@ class ExportTourGuides implements FromArray, WithHeadings, WithCustomCsvSettings
             'extra_fees_2',
             'status',
             'notes',
+            'country_id',
+            'currency_id',
+            'guide_type_id',
         ];
     }
 

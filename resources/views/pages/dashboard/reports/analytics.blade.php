@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('reports.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_reports') }}
+                    {{ __('main.back_to_types', ['type' => __('main.reports')]) }}
                 </a>
                 <button class="kt-btn kt-btn-primary">
                     {{ __('main.export_analytics') }}
@@ -102,7 +102,7 @@
                     <div class="kt-card-body">
                         <div class="p-4 space-y-3">
                             @foreach ($analytics['distribution']['cities_by_country'] as $country)
-                            <div class="flex items-center justify-between">
+                                <div class="flex items-center justify-between">
                                     <span class="text-sm">{{ $country->name }}</span>
                                     <div class="flex items-center gap-2">
                                         <div class="w-16 h-2 bg-gray-200 rounded">

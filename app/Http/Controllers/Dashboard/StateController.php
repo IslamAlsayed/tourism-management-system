@@ -20,8 +20,7 @@ class StateController extends Controller
     public function create()
     {
         $countries = Country::orderBy('name')->get();
-        $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.states.create', compact('countries', 'regions'));
+        return view('pages.dashboard.states.create', compact('countries'));
     }
 
     public function store(StateCreateRequest $request)
@@ -46,8 +45,7 @@ class StateController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.state')]));
         }
         $countries = Country::orderBy('name')->get();
-        $regions = Country::orderBy('name')->get();
-        return view('pages.dashboard.states.edit', compact('state', 'countries', 'regions'));
+        return view('pages.dashboard.states.edit', compact('state', 'countries'));
     }
 
     public function update(StateUpdateRequest $request, $id)

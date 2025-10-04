@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.tour-guide')]) }}
+                    {{ __('main.back_to_types', ['type' => __('main.tour-guides')]) }}
                 </a>
             </div>
         </div>
@@ -189,6 +189,41 @@
                                 @enderror
                             </div>
 
+                            <!-- Languages -->
+                            <div class="">
+                                <label for="guideLanguages" class="kt-label mb-2">{{ __('main.language') }}</label>
+                                <select name="guideLanguages[]" id="guideLanguages" class="kt-select h-[45px]"
+                                    special-multiple>
+                                    <option value="">--</option>
+                                    @foreach ($guideLanguages as $language)
+                                        <option value="{{ $language->id }}"
+                                            {{ in_array($language->id, $tourGuide->guideLanguages->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                            {{ $language->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('guideLanguages')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Guide Type -->
+                            <div class="">
+                                <label for="guide_type_id" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
+                                <select name="guide_type_id" id="guide_type_id" class="kt-input h-[45px]">
+                                    <option value="">--</option>
+                                    @foreach ($guideTypes as $type)
+                                        <option value="{{ $type->id }}"
+                                            {{ $tourGuide->guide_type_id == $type->id ? 'selected' : '' }}>
+                                            {{ $type->type }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('guide_type_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Guide Type -->
                             <div class="">
                                 <label for="guide_type" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
@@ -343,6 +378,19 @@
                                     {{ __('main.type_selection', ['type' => __('main.currency')]) }}</div>
                                 <div class="text-sm text-secondary-foreground">
                                     {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.currency'), 'type2' => __('main.tour-guide')]) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="bg-warning-light rounded-full p-2">
+                                <i class="ki-filled ki-flag text-warning"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">
+                                    {{ __('main.type_selection', ['type' => __('main.guide_type')]) }}</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.guide_type'), 'type2' => __('main.tour-guide')]) }}
                                 </div>
                             </div>
                         </div>

@@ -23,20 +23,26 @@ class State extends Model
         'timezone',
         'parent_id',
         'country_id',
+        'region_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['country'];
+        return ['country', 'region'];
     }
 
     public function getExcludedColumns()
     {
-        return ['country_id'];
+        return ['country_id', 'region_id'];
     }
 
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
     }
 }

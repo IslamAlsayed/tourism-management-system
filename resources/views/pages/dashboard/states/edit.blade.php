@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('states.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_states') }}
+                    {{ __('main.back_to_types', ['type' => __('main.states')]) }}
                 </a>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <!-- State Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.state')]) }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.state_information') }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('states.update', $state->id) }}" enctype="multipart/form-data"
@@ -38,8 +38,8 @@
                             <!-- State Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
-                                    class="kt-label required mb-2">{{ __('main.type_name_arabic', ['type' => __('main.state')]) }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
+                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.state')]) }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ $state->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -49,8 +49,8 @@
                             <!-- State Name (English) -->
                             <div class="">
                                 <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.type_name_english', ['type' => __('main.state')]) }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.state')]) }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $state->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -61,7 +61,7 @@
                             <div class="">
                                 <label for="fips_code" class="kt-label mb-2">{{ __('main.fips_code') }}</label>
                                 <input type="text" name="fips_code" id="fips_code" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.fips_code_example') }}" value="{{ $state->fips_code }}">
+                                    value="{{ $state->fips_code }}">
                                 @error('fips_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -69,9 +69,8 @@
 
                             <!-- State Code (ISO 2) -->
                             <div class="">
-                                <label for="iso2" class="kt-label required mb-2">{{ __('main.code_iso2') }}</label>
-                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.iso2_example') }}" max="2" required
+                                <label for="iso2" class="kt-label mb-2">{{ __('main.code_iso2') }}</label>
+                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" max="2"
                                     value="{{ $state->iso2 }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -112,8 +111,7 @@
                             <div class="">
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
                                 <input type="number" step="any" name="latitude" id="latitude"
-                                    class="kt-input h-[45px]" placeholder="{{ __('main.latitude_example') }}"
-                                    value="{{ $state->latitude }}">
+                                    class="kt-input h-[45px]" value="{{ $state->latitude }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -123,8 +121,7 @@
                             <div class="">
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
                                 <input type="number" step="any" name="longitude" id="longitude"
-                                    class="kt-input h-[45px]" placeholder="{{ __('main.longitude_example') }}"
-                                    value="{{ $state->longitude }}">
+                                    class="kt-input h-[45px]" value="{{ $state->longitude }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -146,54 +143,65 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-2 gap-4 mb-4">
-                            <!-- Description -->
+                            <!-- Country -->
                             <div class="">
-                                <label for="description"
-                                    class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.state')]) }}</label>
-                                <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ $state->description }}</textarea>
-                                @error('description')
+                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]">
+                                    <option value="">--</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ $state->country_id == $country->id ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
+                        <!-- Description -->
+                        <div class="">
+                            <label for="description"
+                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.state')]) }}</label>
+                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ $state->description }}</textarea>
+                            @error('description')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <!-- State Settings -->
                         <div class="space-y-4 mb-4">
-                            <h4 class="font-semibold mb-1">{{ __('main.type_settings', ['type' => __('main.state')]) }}
-                            </h4>
+                            <h4 class="font-semibold mb-1">{{ __('main.state_settings') }}</h4>
 
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
                                     <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                        value="1" {{ $state->is_active == '1' ? 'checked' : '' }}>
+                                        value="1" {{ $state->is_active == 1 ? 'checked' : '' }}>
                                     <label for="is_active"
                                         class="kt-label mb-0">{{ __('main.activate_type', ['type' => __('main.state')]) }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_independent" value="0">
                                     <input type="checkbox" name="is_independent" id="is_independent" class="kt-checkbox"
-                                        value="1" {{ $state->is_independent == '1' ? 'checked' : '' }}>
+                                        value="1" {{ $state->is_independent == 1 ? 'checked' : '' }}>
                                     <label for="is_independent"
                                         class="kt-label mb-0">{{ __('main.independent_type', ['type' => __('main.state')]) }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_developed" value="0">
                                     <input type="checkbox" name="is_developed" id="is_developed" class="kt-checkbox"
-                                        value="1" {{ $state->is_developed == '1' ? 'checked' : '' }}>
+                                        value="1" {{ $state->is_developed == 1 ? 'checked' : '' }}>
                                     <label for="is_developed"
                                         class="kt-label mb-0">{{ __('main.developed_type', ['type' => __('main.state')]) }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_landlocked" value="0">
                                     <input type="checkbox" name="is_landlocked" id="is_landlocked" class="kt-checkbox"
-                                        value="1" {{ $state->is_landlocked == '1' ? 'checked' : '' }}>
+                                        value="1" {{ $state->is_landlocked == 1 ? 'checked' : '' }}>
                                     <label for="is_landlocked"
                                         class="kt-label mb-0">{{ __('main.landlocked_type', ['type' => __('main.state')]) }}</label>
                                 </div>

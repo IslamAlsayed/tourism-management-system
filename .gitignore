@@ -21,3 +21,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Project Documentation (Local Only)
+GIT_STRATEGY.md
+PROJECT_CONFIG.md
+COMMIT_CONVENTIONS.md

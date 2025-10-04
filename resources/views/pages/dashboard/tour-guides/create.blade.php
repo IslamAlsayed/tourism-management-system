@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.tour-guide')]) }}
+                    {{ __('main.back_to_types', ['type' => __('main.tour-guides')]) }}
                 </a>
             </div>
         </div>
@@ -167,11 +167,36 @@
                                 @enderror
                             </div>
 
+                            <!-- Languages -->
+                            <div class="">
+                                <label for="guideLanguages" class="kt-label mb-2">{{ __('main.language') }}</label>
+                                <select name="guideLanguages[]" id="guideLanguages" class="kt-select h-[45px]"
+                                    special-multiple>
+                                    <option value="">--</option>
+                                    @foreach ($guideLanguages as $language)
+                                        <option value="{{ $language->id }}"
+                                            {{ in_array($language->id, old('guideLanguages', [])) ? 'selected' : '' }}>
+                                            {{ $language->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('guideLanguages')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Guide Type -->
                             <div class="">
                                 <label for="guide_type" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
-                                <input type="number" name="guide_type" id="guide_type" class="kt-input h-[45px]"
-                                    value="{{ old('guide_type') }}">
+                                <select name="guide_type" id="guide_type" class="kt-input h-[45px]">
+                                    <option value="">--</option>
+                                    @foreach ($guideTypes as $type)
+                                        <option value="{{ $type->id }}"
+                                            {{ old('guide_type') == $type->id ? 'selected' : '' }}>
+                                            {{ $type->type }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('guide_type')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -191,7 +216,7 @@
                             <!-- hd Day Fees -->
                             <div class="">
                                 <label for="fd_day_fees" class="kt-label mb-2">{{ __('main.fd_day_fees') }}</label>
-                                <input type="text" name="fd_day_fees" id="fd_day_fees" class="kt-input h-[45px]"
+                                <input type="number" name="fd_day_fees" id="fd_day_fees" class="kt-input h-[45px]"
                                     value="{{ old('fd_day_fees') }}">
                                 @error('fd_day_fees')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -201,7 +226,7 @@
                             <!-- hd Day Fees -->
                             <div class="">
                                 <label for="hd_day_fees" class="kt-label mb-2">{{ __('main.hd_day_fees') }}</label>
-                                <input type="text" name="hd_day_fees" id="hd_day_fees" class="kt-input h-[45px]"
+                                <input type="number" name="hd_day_fees" id="hd_day_fees" class="kt-input h-[45px]"
                                     value="{{ old('hd_day_fees') }}">
                                 @error('hd_day_fees')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -211,7 +236,7 @@
                             <!-- Extra Fees 1 -->
                             <div class="">
                                 <label for="extra_fees_1" class="kt-label mb-2">{{ __('main.extra_fees_1') }}</label>
-                                <input type="text" name="extra_fees_1" id="extra_fees_1" class="kt-input h-[45px]"
+                                <input type="number" name="extra_fees_1" id="extra_fees_1" class="kt-input h-[45px]"
                                     value="{{ old('extra_fees_1') }}">
                                 @error('extra_fees_1')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -221,7 +246,7 @@
                             <!-- Extra Fees 2 -->
                             <div class="">
                                 <label for="extra_fees_2" class="kt-label mb-2">{{ __('main.extra_fees_2') }}</label>
-                                <input type="text" name="extra_fees_2" id="extra_fees_2" class="kt-input h-[45px]"
+                                <input type="number" name="extra_fees_2" id="extra_fees_2" class="kt-input h-[45px]"
                                     value="{{ old('extra_fees_2') }}">
                                 @error('extra_fees_2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -326,6 +351,19 @@
                                     {{ __('main.type_selection', ['type' => __('main.currency')]) }}</div>
                                 <div class="text-sm text-secondary-foreground">
                                     {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.currency'), 'type2' => __('main.tour-guide')]) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="bg-warning-light rounded-full p-2">
+                                <i class="ki-filled ki-flag text-warning"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">
+                                    {{ __('main.type_selection', ['type' => __('main.guide_type')]) }}</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.guide_type'), 'type2' => __('main.tour-guide')]) }}
                                 </div>
                             </div>
                         </div>

@@ -40,6 +40,9 @@ class ExportCountries implements FromArray, WithHeadings, WithCustomCsvSettings
                 $data->continent,
                 $data->area,
                 $data->is_active,
+                $data->is_independent,
+                $data->is_developed,
+                $data->is_landlocked,
                 $data->wikipedia_link,
                 $data->currency_id,
             ];
@@ -70,6 +73,9 @@ class ExportCountries implements FromArray, WithHeadings, WithCustomCsvSettings
             'continent',
             'area',
             'is_active',
+            'is_independent',
+            'is_developed',
+            'is_landlocked',
             'wikipedia_link',
             'currency_id',
         ];

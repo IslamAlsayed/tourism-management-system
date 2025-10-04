@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class TourGuide extends Model
 {
+    use HasSearch;
+
     protected $fillable = [
         'id',
         'name',
@@ -17,9 +20,6 @@ class TourGuide extends Model
         'birth_year',
         'gender',
         'national_guide_id',
-        'country_id',
-        'currency_id',
-        'guide_type',
         'tourism_ministry_code',
         'fd_day_fees',
         'hd_day_fees',
@@ -27,16 +27,19 @@ class TourGuide extends Model
         'extra_fees_2',
         'status',
         'notes',
+        'country_id',
+        'currency_id',
+        'guide_type_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['country', 'currency'];
+        return ['country', 'currency', 'guide_type'];
     }
 
     public function getExcludedColumns()
     {
-        return ['country_id', 'currency_id'];
+        return ['country_id', 'currency_id', 'guide_type_id'];
     }
 
     public function country()
@@ -47,5 +50,10 @@ class TourGuide extends Model
     public function currency()
     {
         return $this->belongsTo(Currency::class);
+    }
+
+    public function guide_type()
+    {
+        return $this->belongsTo(TourGuideType::class, 'guide_type_id');
     }
 }

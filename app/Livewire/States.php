@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\State;
+use App\Models\Region;
 use App\Models\Country;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -45,39 +46,7 @@ class States extends Component
     public function render()
     {
         $this->totalCount = State::count();
-        // $data = $this->scopeSearch(State::class);
-
-        $data = State::query()->when($this->search, function ($query) {
-            $search = strtolower($this->search);
-            $items1 = Country::query()->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    foreach ((new Country())->getFillable() as $column) {
-                        $q->orWhere($column, 'like', '%' . $this->search . '%');
-                    }
-                });
-            })->get('id');
-
-            $query->where(function ($q) use ($search, $items1) {
-                $q->orWhereIn('country_id', $items1);
-
-                foreach ($this->searchColumns as $column) {
-                    $q->orWhere($column, 'like', '%' . $search . '%');
-                }
-            });
-
-        })->with($this->relations)->paginate(getPaginate());
-
-        // $data = State::query()
-        //     ->when($this->search, function ($query) {
-        //         $search = strtolower($this->search);
-        //         $query->where(function ($q) use ($search) {
-        //             foreach ($this->searchColumns as $column) {
-        //                 $q->orWhere($column, 'like', '%' . $search . '%');
-        //             }
-        //         });
-        //     })->paginate(getPaginate());
-
-        // dd($data->toArray());
+        $data = State::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
 
         return view('livewire.states', [
             'data' => $data,

@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('users.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_users') }}
+                    {{ __('main.back_to_types', ['type' => __('main.users')]) }}
                 </a>
             </div>
         </div>
@@ -174,7 +174,7 @@
                                     <!-- Bio -->
                                     <div class="">
                                         <label for="bio" class="kt-label mb-2">{{ __('main.bio') }}</label>
-                                        <textarea name="bio" id="bio" rows="3" class="kt-input h-[45px]">{{ old('bio') }}</textarea>
+                                        <textarea name="bio" id="bio" rows="3" class="kt-input h-[45px]">{{ $user->bio }}</textarea>
                                         @error('bio')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -289,7 +289,7 @@
                                 <div class="mb-4">
                                     <label for="preferences" class="kt-label mb-2">{{ __('main.preferences') }}</label>
                                     <textarea name="preferences" id="preferences" rows="3" class="kt-input h-[45px]"
-                                        placeholder="{{ __('main.preferences_placeholder') }}">{{ old('preferences') }}</textarea>
+                                        placeholder="{{ __('main.preferences_placeholder') }}">{{ $user->preferences }}</textarea>
                                     @error('preferences')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
@@ -299,7 +299,7 @@
                                 <div class="mb-4">
                                     <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
                                     <textarea name="notes" id="notes" rows="4" class="kt-input h-[45px]"
-                                        placeholder="{{ __('main.notes_placeholder') }}">{{ old('notes') }}</textarea>
+                                        placeholder="{{ __('main.notes_placeholder') }}">{{ $user->notes }}</textarea>
                                     @error('notes')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror

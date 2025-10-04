@@ -45,37 +45,7 @@ class Subregions extends Component
     public function render()
     {
         $this->totalCount = Subregion::count();
-        // $data = $this->scopeSearch(Subregion::class);
-
-        $data = Subregion::query()->when($this->search, function ($query) {
-            $search = strtolower($this->search);
-
-            $items1 = Region::query()->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    foreach ((new Region())->getFillable() as $column) {
-                        $q->orWhere($column, 'like', '%' . $this->search . '%');
-                    }
-                });
-            })->get('id');
-
-            $query->where(function ($q) use ($search, $items1) {
-                $q->orWhereIn('region_id', $items1);
-
-                foreach ($this->searchColumns as $column) {
-                    $q->orWhere($column, 'like', '%' . $search . '%');
-                }
-            });
-        })->with($this->relations)->paginate(getPaginate());
-
-        // $data = Subregion::query()
-        //     ->when($this->search, function ($query) {
-        //         $search = strtolower($this->search);
-        //         $query->where(function ($q) use ($search) {
-        //             foreach ($this->searchColumns as $column) {
-        //                 $q->orWhere($column, 'like', '%' . $search . '%');
-        //             }
-        //         });
-        //     })->paginate(getPaginate());
+        $data = Subregion::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
 
         return view('livewire.subregions', [
             'data' => $data,

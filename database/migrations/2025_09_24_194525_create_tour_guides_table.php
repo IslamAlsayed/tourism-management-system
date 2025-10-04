@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('national_guide_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
-            $table->string('guide_type')->nullable();
+            $table->unsignedBigInteger('guide_type_id')->nullable();
             $table->string('tourism_ministry_code')->nullable();
             $table->decimal('fd_day_fees', 10, 2)->nullable(); // Full day
             $table->decimal('hd_day_fees', 10, 2)->nullable(); // Half day

@@ -23,7 +23,7 @@ class StateCreateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            // 'name_ar' => ['nullable', 'string', 'max:255'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
             'iso2' => ['required', 'string', 'unique:countries,iso2'],
             'iso3' => ['required', 'string', 'unique:countries,iso3'],
             'fips_code' => ['nullable', 'string', 'max:2'],

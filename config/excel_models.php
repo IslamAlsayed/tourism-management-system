@@ -159,4 +159,10 @@ return [
         'importer' => \App\Excels\TransportationCompanyBusTypes\ImportTransportationCompanyBusTypes::class,
         'exporter' => \App\Excels\TransportationCompanyBusTypes\ExportTransportationCompanyBusTypes::class,
     ],
+    'transportation-vehicles' => [
+        'title' => 'transportation-vehicles',
+        'model' => \App\Models\TransportationCarRoute::class,
+        'importer' => \App\Excels\TransportationVehicles\ImportTransportationVehicles::class,
+        'exporter' => \App\Excels\TransportationVehicles\ExportTransportationVehicles::class,
+    ],
 ];

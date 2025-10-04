@@ -1,0 +1,169 @@
+@extends('layouts.master')
+
+@section('title', __('main.add_new_type', ['type' => __('main.transportation_vehicles')]))
+
+@section('content')
+    <div class="kt-container-fixed">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+            <div class="flex flex-col justify-center gap-2">
+                <h1 class="text-xl font-medium leading-none text-mono">
+                    {{ __('main.add_type', ['type' => __('main.transportation_vehicles')]) }}
+                </h1>
+                <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
+                    {{ __('main.add_type_description', ['type' => __('main.transportation_vehicles')]) }}
+                </div>
+            </div>
+            <div class="flex items-center gap-2.5">
+                <a href="{{ route('transportation-vehicles.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_types', ['type' => __('main.transportation_vehicles')]) }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-container-fixed">
+        <div class="grid gap-5 lg:gap-7.5">
+            <!-- transportation_vehicles Form -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">
+                        {{ __('main.type_information', ['type' => __('main.transportation_vehicles')]) }}</h3>
+                </div>
+                <div class="kt-card-body">
+                    <form method="POST" action="{{ route('transportation-vehicles.store') }}" class="space-y-6 p-4">
+                        @csrf
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
+                            <!-- Route -->
+                            <div class="">
+                                <label for="route" class="kt-label mb-2">{{ __('main.route') }}</label>
+                                <textarea name="route" id="route" class="kt-input h-[45px]"></textarea>
+                                @error('route')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Route ar -->
+                            <div class="">
+                                <label for="route_ar" class="kt-label mb-2">{{ __('main.route_ar') }}</label>
+                                <textarea name="route_ar" id="route_ar" class="kt-input h-[45px]"></textarea>
+                                @error('route_ar')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Duration -->
+                            <div class="">
+                                <label for="duration" class="kt-label mb-2">{{ __('main.duration') }}
+                                    ({{ __('main.hours') }})</label>
+                                <input type="number" name="duration" id="duration" class="kt-input h-[45px]">
+                                @error('duration')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Distance -->
+                            <div class="">
+                                <label for="distance" class="kt-label mb-2">{{ __('main.distance') }}
+                                    ({{ __('main.kilometers') }})</label>
+                                <input type="number" name="distance" id="distance" class="kt-input h-[45px]">
+                                @error('distance')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Car route -->
+                            <div class="">
+                                <label for="car_route_id" class="kt-label required mb-2">Car Route</label>
+                                <select name="car_route_id" id="car_route_id" class="kt-input h-[45px]" required>
+                                    <option value="">--</option>
+                                    @foreach ($carRoutes as $carRoute)
+                                        <option value="{{ $carRoute->id }}">{{ $carRoute->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Seats -->
+                            <div class="">
+                                <label for="seats" class="kt-label mb-2">{{ __('main.seats') }}</label>
+                                <input type="number" name="seats" id="seats" class="kt-input h-[45px]">
+                                @error('seats')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Currencies -->
+                            <div class="">
+                                <label for="currency_id" class="kt-label required mb-2">Currency</label>
+                                <select name="currency_id" id="currency_id" class="kt-input h-[45px]" required>
+                                    <option value="">--</option>
+                                    @foreach ($currencies as $currency)
+                                        <option value="{{ $currency->id }}">{{ $currency->code }}
+                                            {{ $currency->name ? ' - ' . $currency->name : '' }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="">
+                                <label for="price" class="kt-label mb-2">{{ __('main.price') }}</label>
+                                <input type="number" step="0.1" name="price" id="price"
+                                    class="kt-input h-[45px]">
+                                @error('price')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="flex items-center gap-4">
+                            <button type="submit" class="kt-btn kt-btn-primary">
+                                <i class="ki-filled ki-check text-sm me-2"></i>
+                                {{ __('main.save_type', ['type' => __('main.transportation_vehicles')]) }}
+                            </button>
+                            <button type="submit" name="save_and_add" value="1"
+                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
+                                <i class="ki-filled ki-plus text-sm me-2"></i>
+                                {{ __('main.save_and_add_another') }}
+                            </button>
+                            <a href="{{ route('transportation-vehicles.index') }}" class="kt-btn kt-btn-outline">
+                                {{ __('main.cancel') }}
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Info -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.important_information') }}</h3>
+                </div>
+                <div class="kt-card-body p-2">
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-primary-light rounded-full p-2">
+                                <i class="ki-filled ki-information text-primary"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">{{ __('main.ensure_data_accuracy') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.geographic_coordinates') }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="bg-success-light rounded-full p-2">
+                                <i class="ki-filled ki-geolocation text-success"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="text-sm text-secondary-foreground">{{ __('main.use_map_services') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

@@ -1,10 +1,10 @@
 @switch($column)
     @case('id')
-        <td>{!! highlightSearch($model->id, $search) !!}</td>
+        <td title="{{ $model->id }}">{!! highlightSearch($model->id, $search) !!}</td>
     @break
 
     @case('user')
-        <td>
+        <td title="{{ $model->name }}">
             <div class="flex items-center gap-2.5">
                 <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
                     alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
@@ -21,7 +21,7 @@
     @break
 
     @case('photo')
-        <td>
+        <td title="{{ $model->name }}">
             <div class="flex items-center gap-2.5">
                 <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
                     alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
@@ -30,81 +30,108 @@
     @break
 
     @case('name')
-        <td>{!! highlightSearch($model->name ?? '--', $search) !!}</td>
+        <td title="{{ $model->name }}">{!! highlightSearch(limitedText($model->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('email')
-        <td>{!! highlightSearch($model->email ?? '--', $search) !!}</td>
+        <td title="{{ $model->email }}">{!! highlightSearch(limitedText($model->email ?? '--', 30), $search) !!}</td>
     @break
 
     @case('phone')
-        <td>{!! highlightSearch($model->phone ?? '--', $search) !!}</td>
+        <td title="{{ $model->phone }}">{!! highlightSearch(limitedText($model->phone ?? '--', 30), $search) !!}</td>
     @break
 
     @case('mobile')
-        <td>{!! highlightSearch($model->mobile ?? '--', $search) !!}</td>
+        <td title="{{ $model->mobile }}">{!! highlightSearch(limitedText($model->mobile ?? '--', 30), $search) !!}</td>
     @break
 
     @case('position')
-        <td>{!! highlightSearch($model->position ?? '--', $search) !!}</td>
+        <td title="{{ $model->position }}">{!! highlightSearch(limitedText($model->position ?? '--', 30), $search) !!}</td>
     @break
 
     @case('created_at')
-        <td>{!! highlightSearch($model->created_at?->format('Y-m-d') ?? '--', $search) !!}</td>
+        <td title="{{ $model->created_at?->format('Y-m-d') ?? '--' }}">{!! highlightSearch(limitedText($model->created_at?->format('Y-m-d') ?? '--', 30), $search) !!}</td>
     @break
 
     @case('code')
-        <td>{!! highlightSearch($model->code ?? '--', $search) !!}</td>
+        <td title="{{ $model->code }}">{!! highlightSearch(limitedText($model->code ?? '--', 30), $search) !!}</td>
     @break
 
     @case('symbol')
-        <td>{!! highlightSearch($model->symbol ?? '--', $search) !!}</td>
+        <td title="{{ $model->symbol }}">{!! highlightSearch(limitedText($model->symbol ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('route')
+        <td title="{{ optional($model->car_route)->route }}">{!! highlightSearch(limitedText(optional($model->car_route)->route ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('route_ar')
+        <td title="{{ optional($model->car_route)->route_ar }}">{!! highlightSearch(limitedText(optional($model->car_route)->route_ar ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('duration')
+        <td title="{{ optional($model->car_route)->duration }}">{!! highlightSearch(limitedText(optional($model->car_route)->duration ?? '--', 30), $search) !!} {{ __('main.h') }}</td>
+    @break
+
+    @case('distance')
+        <td title="{{ optional($model->car_route)->distance }}">{!! highlightSearch(limitedText(optional($model->car_route)->distance ?? '--', 30), $search) !!} {{ __('main.km') }}</td>
+    @break
+
+    @case('seats')
+        <td title="{{ optional($model)->seats }}">{!! highlightSearch(limitedText(optional($model)->seats ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('price')
+        <td title="{{ optional($model)->price }}">{!! highlightSearch(limitedText(optional($model)->price ?? '--', 30), $search) !!} {{ __('main.km') }}</td>
+    @break
+
+    @case('bus_type')
+        <td title="{{ optional($model->bus_type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->bus_type)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('currency')
-        <td>{!! highlightSearch($model->currency->code ?? '--', $search) !!}</td>
+        <td title="{{ optional($model->currency)->code ?? '--' }}">{!! highlightSearch(limitedText(optional($model->currency)->code ?? '--', 30), $search) !!}</td>
     @break
 
     @case('company')
-        <td>{!! highlightSearch($model->company->name ?? '--', $search) !!}</td>
+        <td title="{{ optional($model->company)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->company)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('country')
-        <td>{!! highlightSearch($model->country->name ?? '--', $search) !!}</td>
+        <td title="{{ optional($model->country)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->country)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('state')
-        <td>{!! highlightSearch($model->state->name ?? '--', $search) !!}</td>
+        <td title="{{ optional($model->state)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->state)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('city')
-        <td>{!! highlightSearch($model->city->name ?? '--', $search) !!}</td>
+        <td title="{{ optional($model->city)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->city)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('region')
-        <td>{!! highlightSearch($model->region->name ?? '--', $search) !!}</td>
+        <td title="{{ optional($model->region)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->region)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('subregion')
-        <td>{!! highlightSearch($model->subregion->name ?? '--', $search) !!}</td>
+        <td title="{{ optional($model->subregion)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->subregion)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('tour_guide')
-        <td>{!! highlightSearch($model->tour_guide->name ?? '--', $search) !!}</td>
+        <td title="{{ optional($model->tour_guide)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->tour_guide)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('rating')
-        <td>
+        <td title="{{ $model->rating }}">
             <div>
-                {{$model->rating}}/5
+                {!! highlightSearch($model->rating ?? '--', $search) !!}/5
                 <i class="fas fa-star" style="color: #ffdd00"></i>
-                {!! highlightSearch($model->rating ?? '--', $search) !!}
             </div>
         </td>
     @break
 
     @case('status')
-        <td>
+        <td title="{{ $model->is_active == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->is_active == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -114,7 +141,7 @@
     @break
 
     @case('is_active')
-        <td>
+        <td title="{{ $model->is_active == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->is_active == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -124,7 +151,7 @@
     @break
 
     @case('wheelchair_accessible')
-        <td>
+        <td title="{{ $model->wheelchair_accessible == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->wheelchair_accessible == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->wheelchair_accessible == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -134,7 +161,7 @@
     @break
 
     @case('free_wifi')
-        <td>
+        <td title="{{ $model->free_wifi == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->free_wifi == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->free_wifi == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -144,7 +171,7 @@
     @break
 
     @case('parking')
-        <td>
+        <td title="{{ $model->parking == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->parking == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->parking == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -154,7 +181,7 @@
     @break
 
     @case('swimming_pool')
-        <td>
+        <td title="{{ $model->swimming_pool == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->swimming_pool == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->swimming_pool == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -164,7 +191,7 @@
     @break
 
     @case('gym')
-        <td>
+        <td title="{{ $model->gym == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->gym == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->gym == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -174,7 +201,7 @@
     @break
 
     @case('indoor')
-        <td>
+        <td title="{{ $model->indoor == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->indoor == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->indoor == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -184,7 +211,7 @@
     @break
 
     @case('outdoor')
-        <td>
+        <td title="{{ $model->outdoor == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->outdoor == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->outdoor == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -194,7 +221,7 @@
     @break
 
     @case('spa')
-        <td>
+        <td title="{{ $model->spa == 1 ? __('main.active') : __('main.inactive') }}">
             <span class="text-{{ $model->spa == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->spa == 1
                     ? highlightSearch(__('main.active'), $search)
@@ -204,7 +231,7 @@
     @break
 
     @case('code')
-        <td>
+        <td title="{{ $model->code }}">
             <span class="text-{{ $model->code == getCurrentLocale() ? 'green' : 'red' }}-600 font-semibold">
                 {{ $model->code == getCurrentLocale() ? __('main.active') : __('main.inactive') }}
             </span>
@@ -212,5 +239,5 @@
     @break
 
     @default
-        <td>{{ $model->$column ?? '--' }}</td>
+        <td title="{{ $model->$column }}">{{ limitedText($model->$column ?? '--', 30) }}</td>
 @endswitch

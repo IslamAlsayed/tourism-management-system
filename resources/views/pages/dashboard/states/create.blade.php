@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('states.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_countries') }}
+                    {{ __('main.back_to_types', ['type' => __('main.states')]) }}
                 </a>
             </div>
         </div>
@@ -164,17 +164,14 @@
                             </div>
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-4 mb-4">
-                            <!-- Description -->
-                            <div class="">
-                                <label for="description"
-                                    class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.state')]) }}</label>
-                                <textarea name="description" id="description" rows="4" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.state_description_placeholder') }}">{{ old('description') }}</textarea>
-                                @error('description')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <!-- Description -->
+                        <div class="">
+                            <label for="description"
+                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.state')]) }}</label>
+                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ old('description') }}</textarea>
+                            @error('description')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- State Settings -->

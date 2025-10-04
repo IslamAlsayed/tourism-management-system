@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\TourGuide;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
@@ -45,38 +44,7 @@ class TourGuidesReviews extends Component
     public function render()
     {
         $this->totalCount = TourGuideReview::count();
-        // $data = $this->scopeSearch(TourGuideReview::class);
-
-        $data = TourGuideReview::query()->when($this->search, function ($query) {
-            $search = strtolower($this->search);
-
-            $items1 = TourGuide::query()->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    foreach ((new TourGuide())->getFillable() as $column) {
-                        $q->orWhere($column, 'like', '%' . $this->search . '%');
-                    }
-                });
-            })->get('id');
-
-            $query->where(function ($q) use ($search, $items1) {
-                $q->orWhereIn('tour_guide_id', $items1);
-
-                foreach ($this->searchColumns as $column) {
-                    $q->orWhere($column, 'like', '%' . $search . '%');
-                }
-            });
-        })->with($this->relations)->orderBy('rating', 'desc')->paginate(getPaginate());
-
-        // $data = TourGuideReview::query()
-        //     ->when($this->search, function ($query) {
-        //         $search = strtolower($this->search);
-        //         $query->where(function ($q) use ($search) {
-        //             foreach ($this->searchColumns as $column) {
-        //                 $q->orWhere($column, 'like', '%' . $search . '%');
-        //             }
-        //         });
-        //     })->with('tour_guide')
-        //     ->paginate(getPaginate());
+        $data = TourGuideReview::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
 
         return view('livewire.tour-guides-reviews', [
             'data' => $data,

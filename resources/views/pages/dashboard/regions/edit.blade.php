@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('regions.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_regions') }}
+                    {{ __('main.back_to_types', ['type' => __('main.regions')]) }}
                 </a>
             </div>
         </div>
@@ -70,7 +70,7 @@
                         <div class="mb-4">
                             <label for="description"
                                 class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.region')]) }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]"></textarea>
+                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ $region->description }}</textarea>
                             @error('description')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror

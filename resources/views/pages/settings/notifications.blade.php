@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('settings.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_settings') }}
+                    {{ __('main.back_to_types', ['type' => __('main.settings')]) }}
                 </a>
                 <button class="kt-btn kt-btn-primary">
                     {{ __('main.save_changes') }}

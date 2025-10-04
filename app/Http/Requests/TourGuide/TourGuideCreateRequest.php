@@ -31,9 +31,9 @@ class TourGuideCreateRequest extends FormRequest
             'birth_year' => ['nullable', 'integer', 'min:1900', 'max:' . (date('Y'))],
             'gender' => ['required', 'string', 'max:10'],
             'national_guide_id' => ['nullable', 'string'],
-            'country_id' => ['required', 'string', 'max:50', 'exists:restaurants,id'],
-            'currency_id' => ['required', 'string', 'max:50', 'exists:restaurants,id'],
-            'guide_type' => ['nullable', 'string', 'max:255'], // modify as needed
+            'country_id' => ['required', 'string', 'max:50', 'exists:countries,id'],
+            'currency_id' => ['required', 'string', 'max:50', 'exists:currencies,id'],
+            'guide_type_id' => ['required', 'string', 'max:50', 'exists:tour_guide_types,id'],
             'tourism_ministry_code' => ['nullable', 'string', 'max:100'],
             'fd_day_fees' => ['nullable', 'numeric', 'min:0'],
             'hd_day_fees' => ['nullable', 'numeric', 'min:0'],

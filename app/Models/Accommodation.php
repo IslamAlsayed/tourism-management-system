@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class Accommodation extends Model
 {
+    use HasSearch;
+
     protected $fillable = [
         'id',
         'type_id',

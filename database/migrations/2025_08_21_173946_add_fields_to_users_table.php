@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('position')->nullable();
             $table->string('preferred_language')->nullable();
             $table->string('timezone')->nullable();
-            $table->json('preferences')->nullable();
+            $table->string('preferences')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->string('photo')->nullable();
             $table->boolean('is_active')->nullable()->default(true);

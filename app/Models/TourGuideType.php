@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class TourGuideType extends Model
 {
+    use HasSearch;
+
     protected $fillable = [
         'id',
         'type',

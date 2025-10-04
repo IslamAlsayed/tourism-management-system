@@ -10,7 +10,7 @@
 
         @if (config('app.db_modedb_mode') != 'production')
             <table class="border min-w-half divide-y text-center divide-gray-200 mt-6">
-                <thead>
+                <thead style="background-color: #ffea00;">
                     <tr>
                         <th class="border px-2">name</th>
                         <th class="border px-2">code</th>

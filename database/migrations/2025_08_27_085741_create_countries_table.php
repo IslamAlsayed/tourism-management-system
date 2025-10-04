@@ -32,6 +32,10 @@ return new class extends Migration {
             $table->string('continent')->nullable();
             $table->float('area')->nullable();
             $table->boolean('is_active')->nullable()->default(true);
+            $table->boolean('is_independent')->nullable()->default(true);
+            $table->boolean('is_developed')->nullable()->default(true);
+            $table->boolean('is_landlocked')->nullable()->default(true);
+            $table->foreignId('language_id')->nullable()->constrained('languages')->nullOnDelete();
             $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
             $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
             $table->timestamps();

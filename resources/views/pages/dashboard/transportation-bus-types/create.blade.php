@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('transportation-bus-types.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_transportation_companies') }}
+                    {{ __('main.back_to_types', ['type' => __('main.transportation_bus_types')]) }}
                 </a>
             </div>
         </div>

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Country;
 use App\Models\Currency;
+use App\Models\GuideLanguage;
 use App\Models\TourGuide;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TourGuide\TourGuideCreateRequest;
 use App\Http\Requests\TourGuide\TourGuideUpdateRequest;
+use App\Models\TourGuideType;
 
 class TourGuideController extends Controller
 {
@@ -20,7 +22,9 @@ class TourGuideController extends Controller
     {
         $countries = Country::all();
         $currencies = Currency::all();
-        return view('pages.dashboard.tour-guides.create', compact('currencies', 'countries'));
+        $guideLanguages = GuideLanguage::all();
+        $guideTypes = TourGuideType::all();
+        return view('pages.dashboard.tour-guides.create', compact('currencies', 'countries', 'guideLanguages', 'guideTypes'));
     }
 
     public function store(TourGuideCreateRequest $request)
@@ -44,7 +48,9 @@ class TourGuideController extends Controller
         }
         $countries = Country::all();
         $currencies = Currency::all();
-        return view('pages.dashboard.tour-guides.edit', compact('tourGuide', 'countries', 'currencies'));
+        $guideLanguages = GuideLanguage::all();
+        $guideTypes = TourGuideType::all();
+        return view('pages.dashboard.tour-guides.edit', compact('tourGuide', 'countries', 'currencies', 'guideLanguages', 'guideTypes'));
     }
 
     public function update(TourGuideUpdateRequest $request, $id)

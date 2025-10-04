@@ -22,10 +22,10 @@ class UpdateCountriesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name_ar' => ['required', 'string', 'max:255'],
-            'name' => ['required', 'string', 'max:255'],
-            'iso2' => ['required', 'string', 'max:2', 'unique:countries,iso2,' . $this->route('country')],
-            'iso3' => ['required', 'string', 'max:3', 'unique:countries,iso3,' . $this->route('country')],
+            'name_ar' => ['nullable', 'string', 'max:255'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'iso2' => ['nullable', 'string', 'max:2'],
+            'iso3' => ['nullable', 'string', 'max:3'],
             'phone_code' => ['nullable', 'string'],
             'capital' => ['nullable', 'string', 'max:255'],
             'currency_id' => ['nullable', 'exists:currencies,id'],

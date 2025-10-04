@@ -3,7 +3,7 @@
         <div
             class="{{ $columnName == 'Application' ? 'w-[220px] h-[70px] rounded-[9px]' : 'w-32 h-32 rounded-full' }} bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden photo-preview">
             <img id="{{ $columnName ?? 'photo' }}"
-                src="{{ isset($photoUrl) ? asset('storage/' . $photoUrl) : asset('metronic/media/avatars/blank.png') }}"
+                src="{{ isset($photoUrl) && $photoUrl ? $photoUrl : asset('metronic/media/avatars/blank.png') }}"
                 alt="" class="w-full h-full object-cover">
         </div>
         <label for="photo"

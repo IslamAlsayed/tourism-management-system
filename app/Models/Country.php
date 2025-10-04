@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Country extends Model
 {
-    use HasFactory;
+    use HasSearch;
 
     protected $fillable = [
         'id',
@@ -31,19 +32,30 @@ class Country extends Model
         'continent',
         'area',
         'is_active',
+        'is_independent',
+        'is_developed',
+        'is_landlocked',
+        // 'language_id',
         'currency_id',
         'region_id',
     ];
 
     public function getRelationshipNames()
     {
+        // return ['language', 'currency', 'region'];
         return ['currency', 'region'];
     }
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'region_id',];
+        // return ['language_id', 'currency_id', 'region_id'];
+        return ['currency_id', 'region_id'];
     }
+
+    // public function language()
+    // {
+    //     return $this->belongsTo(Language::class);
+    // }
 
     public function currency()
     {

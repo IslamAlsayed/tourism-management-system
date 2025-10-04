@@ -2,11 +2,12 @@
 
 namespace App\Excels\TourGuides;
 
-use App\Models\GuideLanguage;
 use App\Models\TourGuide;
+use App\Models\GuideLanguage;
 use App\Jobs\ImportDataToDBJob;
 use App\Models\TourGuideLanguage;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class ImportTourGuides implements ToCollection
@@ -18,11 +19,15 @@ class ImportTourGuides implements ToCollection
         if ($rows->isEmpty())
             return;
 
+        // 1. guide_languages
+        // 2. tour_guides
+        // 3. tour_guide_languages
+        // 4. tour_guide_reviews
+
         $allFillable = (new TourGuide())->getFillable();
         $relations = method_exists((new TourGuide()), 'getRelationshipNames') ? (new TourGuide())->getRelationshipNames() : [];
         $fillableTourGuide = array_filter($allFillable, fn($c) => !in_array($c, $relations));
 
-        $fillableTourGuide = (new TourGuideLanguage())->getFillable();
         $allFillable = (new TourGuideLanguage())->getFillable();
         $relations = method_exists((new TourGuideLanguage()), 'getRelationshipNames') ? (new TourGuideLanguage())->getRelationshipNames() : [];
         $fillableTourGuideLang = array_filter($allFillable, fn($c) => !in_array($c, $relations));
@@ -48,7 +53,6 @@ class ImportTourGuides implements ToCollection
                 }
             }
 
-            // ✅ 2. استخراج اللغات لو العمود موجود
             if (in_array('guide_language', $headers)) {
                 $excelKey = array_search('guide_language', $headers);
                 if (isset($rowArray[$excelKey])) {
@@ -58,11 +62,7 @@ class ImportTourGuides implements ToCollection
                         $lang = ucfirst(trim($lang));
 
                         if (!empty($lang)) {
-                            $guideLang = GuideLanguage::updateOrCreate(
-                                ['name' => $lang],
-                                ['name' => $lang]
-                            );
-
+                            $guideLang = GuideLanguage::updateOrCreate(['name' => $lang], ['name' => $lang]);
                             if ($guideLang) {
                                 $guideLanguageIds[] = $guideLang->id;
                             }
@@ -71,11 +71,9 @@ class ImportTourGuides implements ToCollection
                 }
             }
 
-            // ✅ 3. إنشاء TourGuide فقط لو فيه بيانات
             if (!empty($dataTourGuide)) {
                 $tourGuide = TourGuide::updateOrCreate(['name' => $dataTourGuide['name']], $dataTourGuide);
 
-                // ✅ 4. ربط اللغات لو فيه لغات
                 if (!empty($guideLanguageIds)) {
                     foreach ($guideLanguageIds as $langId) {
                         $batchTourGuideLangs[] = [
@@ -88,15 +86,19 @@ class ImportTourGuides implements ToCollection
                 $this->rowCount++;
             }
 
-            // ✅ 5. حفظ كل batch
             if (count($batchTourGuideLangs) >= $batchSize) {
+                // foreach ($batchTourGuideLangs as $batchTourGuideLang) {
+                //     TourGuideLanguage::create($batchTourGuideLang);
+                // }
                 TourGuideLanguage::insert($batchTourGuideLangs);
                 $batchTourGuideLangs = [];
             }
         }
 
-        // ✅ 6. حفظ أي بيانات متبقية
         if (count($batchTourGuideLangs) > 0) {
+            // foreach ($batchTourGuideLangs as $batchTourGuideLang) {
+            //     TourGuideLanguage::create($batchTourGuideLang);
+            // }
             TourGuideLanguage::insert($batchTourGuideLangs);
         }
     }

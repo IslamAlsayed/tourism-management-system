@@ -341,7 +341,7 @@ return [
         // ================= Transportation =================
         [
             'title' => 'transportation',
-            'fixed' => '+3',
+            'fixed' => '+2',
             'icon' => 'ki-filled ki-delivery',
             'children' => [
                 [
@@ -370,8 +370,8 @@ return [
                 ],
                 [
                     'title' => 'vehicles',
-                    'fixed' => '+1',
                     'icon' => 'ki-filled ki-car',
+                    'status' => 'done',
                     'children' => [
                         [
                             'title' => 'bus types',
@@ -387,9 +387,8 @@ return [
                         ],
                         [
                             'title' => '4x4 vehicles',
-                            'fixed' => false,
                             'icon' => 'ki-filled ki-car',
-                            'route' => '#'
+                            'route' => 'transportation-vehicles.index'
                         ],
                     ],
                 ],

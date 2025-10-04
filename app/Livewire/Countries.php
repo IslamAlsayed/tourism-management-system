@@ -47,35 +47,7 @@ class Countries extends Component
     public function render()
     {
         $this->totalCount = Country::count();
-
-        $data = Country::query()->when($this->search, function ($query) {
-            $search = strtolower($this->search);
-
-            $items1 = Currency::query()->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    foreach ((new Currency())->getFillable() as $column) {
-                        $q->orWhere($column, 'like', '%' . $this->search . '%');
-                    }
-                });
-            })->get('id');
-
-            $items2 = Region::query()->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    foreach ((new Region())->getFillable() as $column) {
-                        $q->orWhere($column, 'like', '%' . $this->search . '%');
-                    }
-                });
-            })->get('id');
-
-            $query->where(function ($q) use ($search, $items1, $items2) {
-                $q->orWhereIn('currency_id', $items1);
-                $q->orWhereIn('region_id', $items2);
-
-                foreach ($this->searchColumns as $column) {
-                    $q->orWhere($column, 'like', '%' . $search . '%');
-                }
-            });
-        })->with($this->relations)->paginate(getPaginate());
+        $data = Country::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
 
         return view('livewire.countries', [
             'data' => $data,

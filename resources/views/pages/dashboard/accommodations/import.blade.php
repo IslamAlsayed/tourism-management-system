@@ -20,7 +20,7 @@
                 <div data-hotels-target="hotels" class="target-trigger mt-4" style="display: none">
                     <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
                     <table class="border min-w-half divide-y text-center divide-gray-200">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">name</th>
                                 <th class="border px-2">name_ar</th>
@@ -44,7 +44,7 @@
 
                     <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
                     <table class="border min-w-half divide-y text-center divide-gray-200">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">description</th>
                                 <th class="border px-2">created_by</th>
@@ -79,7 +79,7 @@
 
                 <div data-room_types-target="room_types" class="target-trigger mt-4" style="display: none">
                     <table class="border min-w-half divide-y text-center divide-gray-200">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">name</th>
                                 <th class="border px-2">name_ar</th>
@@ -100,7 +100,7 @@
 
                 <div data-types-target="types" class="target-trigger mt-4" style="display: none">
                     <table class="border min-w-half divide-y text-center divide-gray-200 mt-6">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">name</th>
                                 <th class="border px-2">name_ar</th>
@@ -118,7 +118,7 @@
                 <div data-accommodations-target="accommodations" class="target-trigger mt-4" style="display: none">
                     <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
                     <table class="border min-w-half divide-y text-center divide-gray-200">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">name</th>
                                 <th class="border px-2">name_ar</th>
@@ -144,7 +144,7 @@
 
                     <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
                     <table class="border min-w-half divide-y text-center divide-gray-200 mb-4">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">trade_name</th>
                                 <th class="border px-2">classification</th>
@@ -177,7 +177,7 @@
                     </table>
 
                     <table class="border min-w-half divide-y text-center divide-gray-200 mb-4">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">contact_mobile</th>
                                 <th class="border px-2">contact_email</th>
@@ -211,7 +211,7 @@
                 <div data-seasons-target="seasons" class="target-trigger mt-4" style="display: none">
                     <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
                     <table class="border min-w-half divide-y text-center divide-gray-200">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">season_name</th>
                                 <th class="border px-2">season_from</th>
@@ -232,7 +232,7 @@
 
                     <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
                     <table class="border min-w-half divide-y text-center divide-gray-200 mb-4">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">is_special</th>
                                 <th class="border px-2">special_type</th>
@@ -249,7 +249,7 @@
 
                 <div data-supplements-target="supplements" class="target-trigger mt-4" style="display: none">
                     <table class="border min-w-half divide-y text-center divide-gray-200">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">name</th>
                                 <th class="border px-2">price</th>
@@ -268,7 +268,7 @@
 
                 <div data-rates-target="rates" class="target-trigger mt-4" style="display: none">
                     <table class="border min-w-half divide-y text-center divide-gray-200">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">price</th>
                                 <th class="border px-2">currency_id</th>
@@ -291,7 +291,7 @@
 
                 <div data-rate_details-target="rate_details" class="target-trigger mt-4" style="display: none">
                     <table class="border min-w-half divide-y text-center divide-gray-200">
-                        <thead>
+                        <thead style="background-color: #ffea00;">
                             <tr>
                                 <th class="border px-2">rate_id</th>
                                 <th class="border px-2">room_type_id</th>

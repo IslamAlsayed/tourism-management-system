@@ -49,27 +49,7 @@ class Companies extends Component
     public function render()
     {
         $this->totalCount = TransportationCompany::count();
-        // $data = $this->scopeSearch(Subregion::class);
-
-        $data = TransportationCompany::query()->when($this->search, function ($query) {
-            $search = strtolower($this->search);
-
-            $query->where(function ($q) use ($search) {
-                foreach ($this->searchColumns as $column) {
-                    $q->orWhere($column, 'like', '%' . $search . '%');
-                }
-            });
-        })->with($this->relations)->paginate(getPaginate());
-
-        // $data = Subregion::query()
-        //     ->when($this->search, function ($query) {
-        //         $search = strtolower($this->search);
-        //         $query->where(function ($q) use ($search) {
-        //             foreach ($this->searchColumns as $column) {
-        //                 $q->orWhere($column, 'like', '%' . $search . '%');
-        //             }
-        //         });
-        //     })->paginate(getPaginate());
+        $data = TransportationCompany::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
 
         return view('livewire.transportation.companies', [
             'data' => $data,

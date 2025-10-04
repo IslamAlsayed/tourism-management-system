@@ -11,7 +11,7 @@
         @if (config('app.db_mode') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
             <table class="border min-w-half divide-y text-center divide-gray-200">
-                <thead>
+                <thead style="background-color: #ffea00;">
                     <tr>
                         <th class="border px-2">name</th>
                         <th class="border px-2">name_ar</th>
@@ -20,8 +20,8 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">Egyptian</td>
-                        <td class="border px-2">مصري</td>
+                        <td class="border px-2">Middle east</td>
+                        <td class="border px-2">الشرق الاوسط</td>
                         <td class="border px-2">1</td>
                     </tr>
                 </tbody>
@@ -29,7 +29,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
             <table class="border min-w-half divide-y text-center divide-gray-200">
-                <thead>
+                <thead style="background-color: #ffea00;">
                     <tr>
                         <th class="border px-2">wiki_data_id</th>
                     </tr>

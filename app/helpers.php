@@ -180,13 +180,72 @@ if (!function_exists('highlightSearch')) {
             return $html;
         }
 
+        $search = trim($search);
+
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true); // لتفادي الأخطاء مع HTML غير مكتمل
+
+        // إضافة wrapper لأن DOMDocument لازم يكون فيه عنصر root
+        $dom->loadHTML(
+            '<?xml encoding="UTF-8"><div id="wrapper">' . $html . '</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $xpath = new DOMXPath($dom);
+        $textNodes = $xpath->query('//text()');
+
+        foreach ($textNodes as $node) {
+            $value = $node->nodeValue;
+
+            // هنا استخدم الـ search العادي
+            if (stripos($value, $search) !== false) {
+                // وهنا استخدم نسخة escaped للـ regex
+                $escapedSearch = preg_quote($search, '/');
+
+                $highlighted = preg_replace(
+                    "/($escapedSearch)/i",
+                    '<span class="highlight">$1</span>',
+                    $value
+                );
+
+                // استبدال النص القديم بالـ HTML الجديد
+                $newNode = $dom->createDocumentFragment();
+                $newNode->appendXML($highlighted);
+                $node->parentNode->replaceChild($newNode, $node);
+            }
+        }
+
+        // استخرج فقط ما بداخل الـ wrapper
+        $wrapper = $dom->getElementById('wrapper');
+        $output = '';
+        foreach ($wrapper->childNodes as $child) {
+            $output .= $dom->saveHTML($child);
+        }
+
+        return $output;
+    }
+}
+
+
+if (!function_exists('highlightSearch2')) {
+    function highlightSearch2(string $html, ?string $search = null): string
+    {
+        if (!$search) {
+            return $html;
+        }
+
+        $search = trim($search);
+
         $search = preg_quote($search, '/');
 
         $dom = new DOMDocument();
         libxml_use_internal_errors(true); // لتفادي الأخطاء مع HTML غير مكتمل
 
         // إضافة wrapper لأن DOMDocument لازم يكون فيه عنصر root
-        $dom->loadHTML('<div id="wrapper">' . $html . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $dom->loadHTML(
+            '<?xml encoding="UTF-8"><div id="wrapper">' . $html . '</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
 
         $xpath = new DOMXPath($dom);
         $textNodes = $xpath->query('//text()');
@@ -217,6 +276,13 @@ if (!function_exists('highlightSearch')) {
         }
 
         return $output;
+    }
+}
+
+if (!function_exists('limitedText')) {
+    function limitedText($text, $limit, $end = '...'): string
+    {
+        return \Illuminate\Support\Str::limit($text, $limit, $end);
     }
 }
 

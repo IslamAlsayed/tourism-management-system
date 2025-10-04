@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('app_url')->default('http://localhost');
             $table->string('app_timezone')->default('Africa/Cairo');
             $table->string('app_language')->default('en');
-            $table->string('app_version')->default('12.28.1');
+            $table->string('app_version')->default(env('APP_VERSION', '4.1.0'));
             $table->string('app_php_version')->default('8.2.28');
             $table->string('photo')->nullable();
             $table->boolean('app_status')->default(true);

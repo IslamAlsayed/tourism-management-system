@@ -37,7 +37,7 @@
         @if (config('app.db_mode') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200">
-                <thead>
+                <thead style="background-color: #ffea00;">
                     <tr>
                         <th class="border px-2">department</th>
                         <th class="border px-2">country_id</th>
@@ -61,7 +61,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200">
-                <thead>
+                <thead style="background-color: #ffea00;">
                     <tr>
                         <th class="border px-2">contact_person</th>
                         <th class="border px-2">mobile</th>
