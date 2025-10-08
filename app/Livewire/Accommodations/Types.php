@@ -36,7 +36,7 @@ class Types extends Component
     {
         $this->type = $type;
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Accommodation::class, 5);
+        $this->mountWithCustomColumns(Accommodation::class);
         $this->resetPage();
     }
 

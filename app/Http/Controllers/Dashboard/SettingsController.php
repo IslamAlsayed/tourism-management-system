@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Setting;
+use Illuminate\Http\Request;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
@@ -24,9 +25,11 @@ class SettingsController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.settings')]));
         }
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
+        $validated = $request->safe()->except(['app_light_photo', 'app_dark_photo', 'app_mini_photo']);
 
-        $this->uploadPhoto($request, $setting, 'photo', "logos");
+        $this->uploadPhoto($request, $setting, 'app_light_photo', "logos");
+        $this->uploadPhoto($request, $setting, 'app_dark_photo', "logos");
+        $this->uploadPhoto($request, $setting, 'app_mini_photo', "logos");
 
         $updated = $setting->update($validated);
 

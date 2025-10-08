@@ -33,7 +33,7 @@ class BusTypes extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(TransportationBusType::class, 5);
+        $this->mountWithCustomColumns(TransportationBusType::class);
         $this->resetPage();
     }
 

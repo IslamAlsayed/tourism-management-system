@@ -47,21 +47,24 @@
                             <!-- Seats -->
                             <div class="">
                                 <label for="seats" class="kt-label required mb-2">Seats</label>
-                                <input type="number" name="seats" id="seats" class="kt-input h-[45px]"
-                                    placeholder="Enter number of seats" required>
+                                <input type="number" name="seats" id="seats" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Type -->
                             <div class="">
                                 <label for="type" class="kt-label required mb-2">Type</label>
-                                <input type="text" name="type" id="type" class="kt-input h-[45px]"
-                                    placeholder="Enter bus type" required>
+                                <input type="text" name="type" id="type" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Transportation company -->
                             <div class="">
-                                <label for="company_id" class="kt-label required mb-2">Transportation Company</label>
-                                <select name="company_id" id="company_id" class="kt-input h-[45px]" required>
+                                <label for="company_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Transportation Company
+                                    <a href="{{ route('transportation-companies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="company_id" id="company_id" class="kt-input h-[45px]" required special-search>
                                     <option value="">--</option>
                                     @foreach ($transportationCompanies as $company)
                                         <option value="{{ $company->id }}">{{ $company->name }}</option>

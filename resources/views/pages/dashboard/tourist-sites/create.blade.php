@@ -33,10 +33,13 @@
                         <!-- Site Photo -->
                         <div class="text-center">
                             <div class="relative inline-block">
-                                <div class="w-24 h-24 mx-auto mb-4 overflow-hidden border-4 border-white rounded-full shadow-lg bg-secondary-light">
-                                    <img id="site-preview" src="{{ asset('metronic/media/avatars/300-6.png') }}" alt="Tourist Site Image" class="object-cover w-full h-full">
+                                <div
+                                    class="w-24 h-24 mx-auto mb-4 overflow-hidden border-4 border-white rounded-full shadow-lg bg-secondary-light">
+                                    <img id="site-preview" src="{{ asset('metronic/media/avatars/300-6.png') }}"
+                                        alt="Tourist Site Image" class="object-cover w-full h-full">
                                 </div>
-                                <label for="photo" class="absolute bottom-0 right-0 p-2 text-white rounded-full cursor-pointer bg-primary hover:bg-primary-dark">
+                                <label for="photo"
+                                    class="absolute bottom-0 right-0 p-2 text-white rounded-full cursor-pointer bg-primary hover:bg-primary-dark">
                                     <i class="text-sm ki-filled ki-camera"></i>
                                 </label>
                                 <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
@@ -48,13 +51,13 @@
                             <!-- Site Name -->
                             <div class="mb-4">
                                 <label for="name" class="mb-2 kt-label required">Site Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input" placeholder="Enter site name" required>
+                                <input type="text" name="name" id="name" class="kt-input" required>
                             </div>
 
                             <!-- Site Name Arabic -->
                             <div class="mb-4">
                                 <label for="name_ar" class="mb-2 kt-label required">Site Name (Arabic)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input" placeholder="أدخل اسم الموقع" required>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input" required>
                             </div>
                         </div>
 
@@ -63,7 +66,7 @@
                             <div class="mb-4">
                                 <label for="type" class="mb-2 kt-label required">Site Type</label>
                                 <select name="type" id="type" class="kt-select" required>
-                                    <option value="">Select Site Type</option>
+                                    <option value="">--</option>
                                     <option value="Historical Site">Historical Site</option>
                                     <option value="Natural Wonder">Natural Wonder</option>
                                     <option value="Museum">Museum</option>
@@ -81,7 +84,7 @@
                             <div class="mb-4">
                                 <label for="category" class="mb-2 kt-label">Category</label>
                                 <select name="category" id="category" class="kt-select">
-                                    <option value="">Select Category</option>
+                                    <option value="">--</option>
                                     <option value="Cultural">Cultural</option>
                                     <option value="Adventure">Adventure</option>
                                     <option value="Family">Family</option>
@@ -99,7 +102,7 @@
                             <div class="mb-4">
                                 <label for="country" class="mb-2 kt-label required">Country</label>
                                 <select name="country" id="country" class="kt-select" required>
-                                    <option value="">Select Country</option>
+                                    <option value="">--</option>
                                     <option value="Saudi Arabia">Saudi Arabia</option>
                                     <option value="UAE">United Arab Emirates</option>
                                     <option value="Qatar">Qatar</option>
@@ -112,7 +115,7 @@
                             <!-- City -->
                             <div class="mb-4">
                                 <label for="city" class="mb-2 kt-label required">City</label>
-                                <input type="text" name="city" id="city" class="kt-input" placeholder="Enter city name" required>
+                                <input type="text" name="city" id="city" class="kt-input" required>
                             </div>
                         </div>
 
@@ -120,13 +123,13 @@
                             <!-- Address -->
                             <div class="mb-4">
                                 <label for="address" class="mb-2 kt-label">Address</label>
-                                <textarea name="address" id="address" rows="3" class="kt-input" placeholder="Enter full address"></textarea>
+                                <textarea name="address" id="address" rows="3" class="kt-input"></textarea>
                             </div>
 
                             <!-- Description -->
                             <div class="mb-4">
                                 <label for="description" class="mb-2 kt-label">Description</label>
-                                <textarea name="description" id="description" rows="3" class="kt-input" placeholder="Enter site description"></textarea>
+                                <textarea name="description" id="description" rows="3" class="kt-input"></textarea>
                             </div>
                         </div>
 
@@ -134,19 +137,19 @@
                             <!-- Phone -->
                             <div class="mb-4">
                                 <label for="phone" class="mb-2 kt-label">Phone</label>
-                                <input type="tel" name="phone" id="phone" class="kt-input" placeholder="+966 11 123 4567">
+                                <input type="tel" name="phone" id="phone" class="kt-input">
                             </div>
 
                             <!-- Email -->
                             <div class="mb-4">
                                 <label for="email" class="mb-2 kt-label">Email</label>
-                                <input type="email" name="email" id="email" class="kt-input" placeholder="info@site.com">
+                                <input type="email" name="email" id="email" class="kt-input">
                             </div>
 
                             <!-- Website -->
                             <div class="mb-4">
                                 <label for="website" class="mb-2 kt-label">Website</label>
-                                <input type="url" name="website" id="website" class="kt-input" placeholder="www.site.com">
+                                <input type="url" name="website" id="website" class="kt-input">
                             </div>
                         </div>
 
@@ -154,13 +157,13 @@
                             <!-- Entrance Fee -->
                             <div class="mb-4">
                                 <label for="entrance_fee" class="mb-2 kt-label">Entrance Fee</label>
-                                <input type="text" name="entrance_fee" id="entrance_fee" class="kt-input" placeholder="e.g., 50 SAR, Free">
+                                <input type="text" name="entrance_fee" id="entrance_fee" class="kt-input">
                             </div>
 
                             <!-- Opening Hours -->
                             <div class="mb-4">
                                 <label for="opening_hours" class="mb-2 kt-label">Opening Hours</label>
-                                <input type="text" name="opening_hours" id="opening_hours" class="kt-input" placeholder="e.g., 8:00 AM - 6:00 PM, 24/7">
+                                <input type="text" name="opening_hours" id="opening_hours" class="kt-input">
                             </div>
                         </div>
 
@@ -168,13 +171,13 @@
                             <!-- Best Time to Visit -->
                             <div class="mb-4">
                                 <label for="best_time" class="mb-2 kt-label">Best Time to Visit</label>
-                                <input type="text" name="best_time" id="best_time" class="kt-input" placeholder="e.g., Early morning, Evening">
+                                <input type="text" name="best_time" id="best_time" class="kt-input">
                             </div>
 
                             <!-- Duration -->
                             <div class="mb-4">
                                 <label for="duration" class="mb-2 kt-label">Recommended Duration</label>
-                                <input type="text" name="duration" id="duration" class="kt-input" placeholder="e.g., 2-3 hours, Full day">
+                                <input type="text" name="duration" id="duration" class="kt-input">
                             </div>
                         </div>
 
@@ -182,7 +185,7 @@
                             <!-- Coordinates -->
                             <div class="mb-4">
                                 <label for="coordinates" class="mb-2 kt-label">GPS Coordinates</label>
-                                <input type="text" name="coordinates" id="coordinates" class="kt-input" placeholder="e.g., 24.7136° N, 46.6753° E">
+                                <input type="text" name="coordinates" id="coordinates" class="kt-input">
                             </div>
 
                             <!-- Status -->
@@ -202,35 +205,43 @@
                             <label class="mb-2 kt-label">Facilities</label>
                             <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="parking" class="kt-checkbox" value="parking">
+                                    <input type="checkbox" name="facilities[]" id="parking" class="kt-checkbox"
+                                        value="parking">
                                     <label for="parking" class="mb-0 kt-label">Parking</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="restrooms" class="kt-checkbox" value="restrooms">
+                                    <input type="checkbox" name="facilities[]" id="restrooms" class="kt-checkbox"
+                                        value="restrooms">
                                     <label for="restrooms" class="mb-0 kt-label">Restrooms</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="restaurants" class="kt-checkbox" value="restaurants">
+                                    <input type="checkbox" name="facilities[]" id="restaurants" class="kt-checkbox"
+                                        value="restaurants">
                                     <label for="restaurants" class="mb-0 kt-label">Restaurants</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="gift_shop" class="kt-checkbox" value="gift_shop">
+                                    <input type="checkbox" name="facilities[]" id="gift_shop" class="kt-checkbox"
+                                        value="gift_shop">
                                     <label for="gift_shop" class="mb-0 kt-label">Gift Shop</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="wifi" class="kt-checkbox" value="wifi">
+                                    <input type="checkbox" name="facilities[]" id="wifi" class="kt-checkbox"
+                                        value="wifi">
                                     <label for="wifi" class="mb-0 kt-label">Free WiFi</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="guided_tours" class="kt-checkbox" value="guided_tours">
+                                    <input type="checkbox" name="facilities[]" id="guided_tours" class="kt-checkbox"
+                                        value="guided_tours">
                                     <label for="guided_tours" class="mb-0 kt-label">Guided Tours</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="audio_guide" class="kt-checkbox" value="audio_guide">
+                                    <input type="checkbox" name="facilities[]" id="audio_guide" class="kt-checkbox"
+                                        value="audio_guide">
                                     <label for="audio_guide" class="mb-0 kt-label">Audio Guide</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="wheelchair" class="kt-checkbox" value="wheelchair">
+                                    <input type="checkbox" name="facilities[]" id="wheelchair" class="kt-checkbox"
+                                        value="wheelchair">
                                     <label for="wheelchair" class="mb-0 kt-label">Wheelchair Accessible</label>
                                 </div>
                             </div>
@@ -241,35 +252,43 @@
                             <label class="mb-2 kt-label">Available Activities</label>
                             <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="photography" class="kt-checkbox" value="photography">
+                                    <input type="checkbox" name="activities[]" id="photography" class="kt-checkbox"
+                                        value="photography">
                                     <label for="photography" class="mb-0 kt-label">Photography</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="hiking" class="kt-checkbox" value="hiking">
+                                    <input type="checkbox" name="activities[]" id="hiking" class="kt-checkbox"
+                                        value="hiking">
                                     <label for="hiking" class="mb-0 kt-label">Hiking</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="swimming" class="kt-checkbox" value="swimming">
+                                    <input type="checkbox" name="activities[]" id="swimming" class="kt-checkbox"
+                                        value="swimming">
                                     <label for="swimming" class="mb-0 kt-label">Swimming</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="camping" class="kt-checkbox" value="camping">
+                                    <input type="checkbox" name="activities[]" id="camping" class="kt-checkbox"
+                                        value="camping">
                                     <label for="camping" class="mb-0 kt-label">Camping</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="shopping" class="kt-checkbox" value="shopping">
+                                    <input type="checkbox" name="activities[]" id="shopping" class="kt-checkbox"
+                                        value="shopping">
                                     <label for="shopping" class="mb-0 kt-label">Shopping</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="dining" class="kt-checkbox" value="dining">
+                                    <input type="checkbox" name="activities[]" id="dining" class="kt-checkbox"
+                                        value="dining">
                                     <label for="dining" class="mb-0 kt-label">Dining</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="entertainment" class="kt-checkbox" value="entertainment">
+                                    <input type="checkbox" name="activities[]" id="entertainment" class="kt-checkbox"
+                                        value="entertainment">
                                     <label for="entertainment" class="mb-0 kt-label">Entertainment</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="education" class="kt-checkbox" value="education">
+                                    <input type="checkbox" name="activities[]" id="education" class="kt-checkbox"
+                                        value="education">
                                     <label for="education" class="mb-0 kt-label">Educational Tours</label>
                                 </div>
                             </div>
@@ -278,7 +297,7 @@
                         <!-- Notes -->
                         <div class="mb-4">
                             <label for="notes" class="mb-2 kt-label">Additional Notes</label>
-                            <textarea name="notes" id="notes" rows="4" class="kt-input" placeholder="Enter any additional notes about the tourist site"></textarea>
+                            <textarea name="notes" id="notes" rows="4" class="kt-input"></textarea>
                         </div>
 
                         <!-- Submit Buttons -->
@@ -287,7 +306,8 @@
                                 <i class="text-sm ki-filled ki-check me-2"></i>
                                 Create Tourist Site
                             </button>
-                            <button type="submit" name="save_and_add" value="1" class="kt-btn kt-btn-outline kt-btn-outline-primary">
+                            <button type="submit" name="save_and_add" value="1"
+                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
                                 <i class="text-sm ki-filled ki-plus me-2"></i>
                                 Save and Add Another
                             </button>
@@ -312,7 +332,8 @@
                             </div>
                             <div>
                                 <div class="font-semibold">Detailed Information</div>
-                                <div class="text-sm text-secondary-foreground">Provide comprehensive information to help tourists plan their visit</div>
+                                <div class="text-sm text-secondary-foreground">Provide comprehensive information to help
+                                    tourists plan their visit</div>
                             </div>
                         </div>
 
@@ -322,7 +343,8 @@
                             </div>
                             <div>
                                 <div class="font-semibold">High-Quality Photos</div>
-                                <div class="text-sm text-secondary-foreground">Upload attractive photos that showcase the site's beauty</div>
+                                <div class="text-sm text-secondary-foreground">Upload attractive photos that showcase the
+                                    site's beauty</div>
                             </div>
                         </div>
 
@@ -332,7 +354,8 @@
                             </div>
                             <div>
                                 <div class="font-semibold">Visitor Experience</div>
-                                <div class="text-sm text-secondary-foreground">Focus on creating memorable experiences for visitors</div>
+                                <div class="text-sm text-secondary-foreground">Focus on creating memorable experiences for
+                                    visitors</div>
                             </div>
                         </div>
                     </div>
@@ -341,19 +364,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-<script>
-    // Photo preview
-    document.getElementById('photo').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('site-preview').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-</script>
-@endpush

@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.add_type', ['type' => __('main.country')]))
+@section('title', __('main.edit_type', ['type' => __('main.country')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.add_type', ['type' => __('main.country')]) }}
+                    {{ __('main.edit_type', ['type' => __('main.country')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.add_type_description', ['type' => __('main.country')]) }}
+                    {{ __('main.edit_type_description', ['type' => __('main.country')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -36,8 +36,9 @@
 
                         <!-- Country Photo -->
                         @include('components.input-image', [
-                            'columnName' => 'country',
-                            'photoUrl' => asset('metronic/media/flags/' . $country->photo . '.svg'),
+                            'column' => 'country',
+                            'columnName' => 'flag',
+                            'photoUrl' => $country->photo ? asset('storage/' . $country->photo) : null,
                         ])
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
@@ -104,7 +105,7 @@
                             <!-- Currency -->
                             <div class="">
                                 <label for="currency_id" class="kt-label mb-2">{{ __('main.currency') }}</label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]">
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -121,7 +122,7 @@
                             <!-- Region -->
                             <div class="">
                                 <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]">
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"
@@ -138,7 +139,7 @@
                             <!-- Language -->
                             <div class="">
                                 <label for="language_id" class="kt-label mb-2">{{ __('main.language') }}</label>
-                                <select name="language_id" id="language_id" class="kt-select h-[45px]">
+                                <select name="language_id" id="language_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($languages as $language)
                                         <option value="{{ $language->id }}"
@@ -195,30 +196,19 @@
 
                             <!-- Timezone -->
                             <div class="">
-                                <label for="timezone" class="kt-label mb-2">{{ __('main.main_timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]">
+                                <label for="timezone" class="kt-label mb-2">{{ __('main.timezone_field') }}</label>
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
-                                            {{ old('timezone') == $zone ? 'selected' : '' }}>
-                                            {{ __('main.maps.' . $zone) }}
+                                            {{ old('timezone') == $zone ? 'selected' : '' }}>{{ $zone }}
                                         </option>
                                     @endforeach
                                 </select>
                                 @error('timezone')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="">
-                            <label for="description"
-                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.country')]) }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ $country->description }}</textarea>
-                            @error('description')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         <!-- Country Settings -->
@@ -315,45 +305,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Flag preview
-        document.getElementById('flag').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('flag-preview');
-                    const -arget.result;
-                    preview.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Auto-generate ISO codes
-        document.getElementById('name').addEventListener('blur', function() {
-            const name = this.value.toUpperCase();
-            const iso2Field = document.getElementById('iso2');
-            const iso3Field = document.getElementById('iso3');
-
-            if (name && !iso2Field.value) {
-                // Auto-generate basic codes (you can improve this logic)
-                iso2Field.value = name.substring(0, 2);
-            }
-
-            if (name && !iso3Field.value) {
-                iso3Field.value = name.substring(0, 3);
-            }
-        });
-
-        // Phone code formatting
-        document.getElementById('phone_code').addEventListener('input', function() {
-            let value = this.value.replace(/[^\d]/g, '');
-            if (value && !value.startsWith('+')) {
-                this.value = '+' + value;
-            }
-        });
-    </script>
-@endpush

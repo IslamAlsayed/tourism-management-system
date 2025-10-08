@@ -25,6 +25,7 @@ return [
     'app_language' => env('APP_LANGUAGE', 'en'),
     'app_version' => env('APP_VERSION', '4.1.0'),
     'app_php_version' => env('APP_PHP_VERSION', '8.2.28'),
+    'app_columns_length' => env('APP_COLUMNS_LENGTH', 5),
     'app_status' => env('APP_STATUS', true),
     'app_password_length' => env('APP_PASSWORD_LENGTH', 8),
     'app_session_lifetime' => env('SESSION_LIFETIME', 120),

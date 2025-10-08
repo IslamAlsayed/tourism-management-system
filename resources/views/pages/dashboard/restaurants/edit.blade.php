@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     Edit Restaurant
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- Accommodation Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -36,30 +36,45 @@
 
                         <!-- Restaurant Photo -->
                         @include('components.input-image', [
-                            'columnName' => 'restaurant',
-                            'photoUrl' => $restaurant->photo,
+                            'column' => 'restaurant',
+                            'columnName' => 'photo',
+                            'photoUrl' => asset($restaurant->photo) ? asset('storage/' . $restaurant->photo) : '',
                         ])
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                             <!-- Name -->
                             <div class="">
                                 <label for="name" class="kt-label required mb-2">Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    placeholder="Enter accommodation name" required value="{{ $restaurant->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ $restaurant->name }}">
                             </div>
 
                             <!-- Name Arabic -->
                             <div class="">
                                 <label for="name_ar" class="kt-label required mb-2">Name (Arabic)</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    placeholder="أدخل اسم الإقامة" value="{{ $restaurant->name_ar }}">
+                                    value="{{ $restaurant->name_ar }}">
+                            </div>
+
+                            <!-- Type -->
+                            <div class="">
+                                <label for="type" class="kt-label required mb-2">Type</label>
+                                <select name="type_id" id="type_id" class="kt-select h-[45px]" special-search
+                                    special-search required>
+                                    <option value="">--</option>
+                                    @foreach ($types as $id => $name)
+                                        <option value="{{ $id }}"
+                                            {{ $id == $restaurant->type_id ? 'selected' : '' }}>{{ $name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <!-- Country -->
                             <div class="">
                                 <label for="country_id" class="kt-label required mb-2">Country</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]">
-                                    <option value="">Select Country</option>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search>
+                                    <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
                                             {{ $country->id == $restaurant->country_id ? 'selected' : '' }}>
@@ -71,9 +86,9 @@
                             <!-- City -->
                             <div class="">
                                 <label for="city_id" class="kt-label required mb-2">City</label>
-                                <select name="city_id" id="city_id" class="kt-select h-[45px]"
+                                <select name="city_id" id="city_id" class="kt-select h-[45px]" special-search
                                     value="{{ $restaurant->name }}">
-                                    <option value="">Select City</option>
+                                    <option value="">--</option>
                                     @foreach ($cities as $city)
                                         <option value="{{ $city->id }}"
                                             {{ $city->id == $restaurant->city_id ? 'selected' : '' }}>{{ $city->name }}
@@ -85,8 +100,8 @@
                             <!-- Region -->
                             <div class="">
                                 <label for="region_id" class="kt-label required mb-2">Region</label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]">
-                                    <option value="">Select Region</option>
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
+                                    <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"
                                             {{ $region->id == $restaurant->region_id ? 'selected' : '' }}>
@@ -98,8 +113,8 @@
                             <!-- Subregion -->
                             <div class="">
                                 <label for="subregion_id" class="kt-label required mb-2">Subregion</label>
-                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]">
-                                    <option value="">Select Subregion</option>
+                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search>
+                                    <option value="">--</option>
                                     @foreach ($subregions as $subregion)
                                         <option value="{{ $subregion->id }}"
                                             {{ $subregion->id == $restaurant->subregion_id ? 'selected' : '' }}>
@@ -108,39 +123,17 @@
                                 </select>
                             </div>
 
-                            <!-- Type -->
-                            <div class="">
-                                <label for="type" class="kt-label required mb-2">Type</label>
-                                <select name="type" id="type" class="kt-select h-[45px]">
-                                    <option value="">Select Type</option>
-                                    @foreach ($types as $type)
-                                        <option value="{{ $type->id }}"
-                                            {{ $type->id == $restaurant->type ? 'selected' : '' }}>{{ $type->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
                             <!-- Rating -->
                             <div class="">
-                                <label for="rating" class="kt-label required mb-2">Star Rating</label>
-                                <select name="rating" id="rating" class="kt-select h-[45px]">
+                                <label for="rating" class="kt-label required mb-2">Rating</label>
+                                <select name="rating" id="rating" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
-                                    <option value="1" {{ $restaurant->rating == 1 ? 'selected' : '' }}>
-                                        1 Star
-                                    </option>
-                                    <option value="2" {{ $restaurant->rating == 2 ? 'selected' : '' }}>
-                                        2 Stars
-                                    </option>
-                                    <option value="3" {{ $restaurant->rating == 3 ? 'selected' : '' }}>
-                                        3 Stars
-                                    </option>
-                                    <option value="4" {{ $restaurant->rating == 4 ? 'selected' : '' }}>
-                                        4 Stars
-                                    </option>
-                                    <option value="5" {{ $restaurant->rating == 5 ? 'selected' : '' }}>
-                                        5 Stars
-                                    </option>
+                                    @foreach (range(1, 5) as $item)
+                                        <option value="{{ $item }}"
+                                            {{ $restaurant->rating == $item ? 'selected' : '' }}>
+                                            {{ $item }} Star{{ $item > 1 ? 's' : '' }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -148,15 +141,14 @@
                             <div class="">
                                 <label for="specialty" class="kt-label required mb-2">Specialty</label>
                                 <input type="text" name="specialty" id="specialty" class="kt-input h-[45px]"
-                                    placeholder="Enter company name in Arabic" value="{{ $restaurant->specialty }}">
+                                    value="{{ $restaurant->specialty }}">
                             </div>
 
                             <!-- Company Name (Arabic) -->
                             <div class="">
                                 <label for="company_name_ar" class="kt-label required mb-2">Company Name
                                     (Arabic)</label>
-                                <input type="text" name="company_name_ar" id="company_name_ar"
-                                    class="kt-input h-[45px]" placeholder="Enter company name in Arabic"
+                                <input type="text" name="company_name_ar" id="company_name_ar" class="kt-input h-[45px]"
                                     value="{{ $restaurant->company_name_ar }}">
                             </div>
 
@@ -164,78 +156,76 @@
                             <div class="">
                                 <label for="phone_01" class="kt-label required mb-2">Phone 01</label>
                                 <input type="text" name="phone_01" id="phone_01" class="kt-input h-[45px]"
-                                    placeholder="Enter phone number" value="{{ $restaurant->phone_01 }}">
+                                    value="{{ $restaurant->phone_01 }}">
                             </div>
 
                             <!-- phone_02 -->
                             <div class="">
                                 <label for="phone_02" class="kt-label required mb-2">Phone 02</label>
                                 <input type="text" name="phone_02" id="phone_02" class="kt-input h-[45px]"
-                                    placeholder="Enter phone number" value="{{ $restaurant->phone_02 }}">
+                                    value="{{ $restaurant->phone_02 }}">
                             </div>
 
                             <!-- fax -->
                             <div class="">
                                 <label for="fax" class="kt-label required mb-2">Fax</label>
                                 <input type="text" name="fax" id="fax" class="kt-input h-[45px]"
-                                    placeholder="Enter fax number" value="{{ $restaurant->fax }}">
+                                    value="{{ $restaurant->fax }}">
                             </div>
 
                             <!-- email_01 -->
                             <div class="">
                                 <label for="email_01" class="kt-label required mb-2">Email 1</label>
                                 <input type="text" name="email_01" id="email_01" class="kt-input h-[45px]"
-                                    placeholder="Enter email_01 number" value="{{ $restaurant->email_01 }}">
+                                    value="{{ $restaurant->email_01 }}">
                             </div>
 
                             <!-- email_02 -->
                             <div class="">
                                 <label for="email_02" class="kt-label required mb-2">Email 2</label>
                                 <input type="text" name="email_02" id="email_02" class="kt-input h-[45px]"
-                                    placeholder="Enter email_02 number" value="{{ $restaurant->email_02 }}">
+                                    value="{{ $restaurant->email_02 }}">
                             </div>
 
                             <!-- Contact Person -->
                             <div class="">
                                 <label for="contact_person" class="kt-label required mb-2">Contact Person</label>
                                 <input type="text" name="contact_person" id="contact_person"
-                                    class="kt-input h-[45px]" placeholder="Enter contact person name"
-                                    value="{{ $restaurant->contact_person }}">
+                                    class="kt-input h-[45px]" value="{{ $restaurant->contact_person }}">
                             </div>
 
                             <!-- Box -->
                             <div class="">
                                 <label for="box" class="kt-label required mb-2">Box</label>
                                 <input type="text" name="box" id="box" class="kt-input h-[45px]"
-                                    placeholder="Enter box number" value="{{ $restaurant->box }}">
+                                    value="{{ $restaurant->box }}">
                             </div>
 
                             <!-- Postal Code -->
                             <div class="">
                                 <label for="postal_code" class="kt-label required mb-2">Postal Code</label>
                                 <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]"
-                                    placeholder="Enter postal code" value="{{ $restaurant->postal_code }}">
+                                    value="{{ $restaurant->postal_code }}">
                             </div>
 
                             <!-- Mobile -->
                             <div class="">
                                 <label for="mobile" class="kt-label required mb-2">Mobile</label>
                                 <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
-                                    placeholder="Enter mobile number" value="{{ $restaurant->mobile }}">
+                                    value="{{ $restaurant->mobile }}">
                             </div>
 
                             <!-- Website -->
                             <div class="">
                                 <label for="website" class="kt-label required mb-2">Website</label>
                                 <input type="text" name="website" id="website" class="kt-input h-[45px]"
-                                    placeholder="Enter website URL" value="{{ $restaurant->website }}">
+                                    value="{{ $restaurant->website }}">
                             </div>
 
                             <!-- Note -->
                             <div class="">
                                 <label for="notes" class="kt-label mb-2">Notes</label>
-                                <textarea name="notes" id="notes" rows="3" class="kt-input h-[45px]"
-                                    placeholder="Enter any additional notes">{{ $restaurant->notes }}</textarea>
+                                <textarea name="notes" id="notes" rows="3" class="kt-input h-[45px]" s">{{ $restaurant->notes }}</textarea>
                             </div>
 
                             <div class="flex items-center gap-3 mb-4">
@@ -331,19 +321,21 @@
                             </div>
                             <div>
                                 <div class="font-semibold">Complete Information</div>
-                                <div class="text-sm text-secondary-foreground">Provide detailed information to help guests
-                                    make informed decisions</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    Provide detailed information to help guests make informed decisions
+                                </div>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-camera text-warning"></i>
+                            <div class="bg-success-light rounded-full p-2">
+                                <i class="ki-filled ki-information text-success"></i>
                             </div>
                             <div>
                                 <div class="font-semibold">High Quality Photos</div>
-                                <div class="text-sm text-secondary-foreground">Upload clear, high-resolution photos of your
-                                    restaurant</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    Upload clear, high-resolution photos of your restaurant
+                                </div>
                             </div>
                         </div>
 
@@ -353,8 +345,9 @@
                             </div>
                             <div>
                                 <div class="font-semibold">Accurate Rating</div>
-                                <div class="text-sm text-secondary-foreground">Select the appropriate star rating based on
-                                    your facilities and services</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    Select the appropriate star rating based on your facilities and services
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -363,19 +356,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Photo preview
-        document.getElementById('photo').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('restaurant-preview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
-@endpush

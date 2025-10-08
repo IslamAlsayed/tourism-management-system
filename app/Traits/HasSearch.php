@@ -11,8 +11,8 @@ trait HasSearch
         if (empty($search)) {
             return $query;
         }
-        
-        $search = trim($search);
+
+        $search = strtolower(trim($search));
 
         $model = $this;
 

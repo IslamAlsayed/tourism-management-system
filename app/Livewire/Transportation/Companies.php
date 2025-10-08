@@ -37,7 +37,7 @@ class Companies extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(TransportationCompany::class, 5);
+        $this->mountWithCustomColumns(TransportationCompany::class);
         $this->resetPage();
     }
 

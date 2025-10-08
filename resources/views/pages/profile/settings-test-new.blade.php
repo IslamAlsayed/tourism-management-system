@@ -789,13 +789,11 @@
                                                         <div class="col-lg-6 mb-3 mb-lg-0">
                                                             <input type="text" name="fname"
                                                                 class="form-control form-control-lg form-control-solid"
-                                                                placeholder="First name"
                                                                 value="{{ explode(' ', $user->name)[0] ?? '' }}" />
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <input type="text" name="lname"
                                                                 class="form-control form-control-lg form-control-solid"
-                                                                placeholder="Last name"
                                                                 value="{{ explode(' ', $user->name)[1] ?? '' }}" />
                                                         </div>
                                                     </div>
@@ -807,9 +805,8 @@
                                                 <label
                                                     class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
                                                 <div class="col-lg-8">
-                                                    <input type="email" name="email"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        placeholder="Email Address" value="{{ $user->email }}" />
+                                                    <input type="email" name="email" value="{{ $user->email }}"
+                                                        class="form-control form-control-lg form-control-solid" />
                                                 </div>
                                             </div>
 
@@ -817,8 +814,8 @@
                                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">Phone</label>
                                                 <div class="col-lg-8">
                                                     <input type="tel" name="phone"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        placeholder="Phone Number" value="{{ $user->phone ?? '' }}" />
+                                                        value="{{ $user->phone ?? '' }}"
+                                                        class="form-control form-control-lg form-control-solid" />
                                                 </div>
                                             </div>
 
@@ -827,8 +824,8 @@
                                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">Department</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" name="department"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        placeholder="Department" value="{{ $user->department ?? '' }}" />
+                                                        value="{{ $user->department ?? '' }}"
+                                                        class="form-control form-control-lg form-control-solid" />
                                                 </div>
                                             </div>
 
@@ -836,8 +833,8 @@
                                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">Position</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" name="position"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        placeholder="Position" value="{{ $user->position ?? '' }}" />
+                                                        value="{{ $user->position ?? '' }}"
+                                                        class="form-control form-control-lg form-control-solid" />
                                                 </div>
                                             </div>
 
@@ -845,8 +842,7 @@
                                             <div class="row mb-6">
                                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">Bio</label>
                                                 <div class="col-lg-8">
-                                                    <textarea name="bio" class="form-control form-control-lg form-control-solid" rows="4"
-                                                        placeholder="Tell us about yourself...">{{ $user->bio ?? '' }}</textarea>
+                                                    <textarea name="bio" class="form-control form-control-lg form-control-solid" rows="4">{{ $user->bio ?? '' }}</textarea>
                                                 </div>
                                             </div>
 
@@ -898,8 +894,7 @@
                                                     Password</label>
                                                 <div class="col-lg-8">
                                                     <input type="password" name="current_password"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        placeholder="Enter current password" />
+                                                        class="form-control form-control-lg form-control-solid" />
                                                 </div>
                                             </div>
 
@@ -908,8 +903,7 @@
                                                     Password</label>
                                                 <div class="col-lg-8">
                                                     <input type="password" name="new_password"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        placeholder="Enter new password" />
+                                                        class="form-control form-control-lg form-control-solid" />
                                                     <div class="form-text">Password must be at least 8 characters long
                                                     </div>
                                                 </div>
@@ -920,8 +914,7 @@
                                                     Password</label>
                                                 <div class="col-lg-8">
                                                     <input type="password" name="confirm_password"
-                                                        class="form-control form-control-lg form-control-solid"
-                                                        placeholder="Confirm new password" />
+                                                        class="form-control form-control-lg form-control-solid" />
                                                 </div>
                                             </div>
 

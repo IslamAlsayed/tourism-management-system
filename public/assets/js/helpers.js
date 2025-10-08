@@ -1,19 +1,19 @@
 // ======= Helpers =======
-window.closeAllDropdown = function () {
-    document
-        .querySelectorAll(".multi-select-tag .dropdown")
-        .forEach((dropdown) => dropdown.classList.add("hidden"));
-};
+// window.closeAllDropdown = function () {
+//     document
+//         .querySelectorAll(".multi-select-tag .dropdown")
+//         .forEach((dropdown) => dropdown.classList.add("hidden"));
+// };
 
-window.loadData = function (container = null) {
-    let containerHotels =
-        container || document.getElementById("containerHotels");
-    let loader = document.createElement("div");
-    loader.className = "loader";
-    if (containerHotels) {
-        containerHotels.appendChild(loader);
-    }
-};
+// window.loadData = function (container = null) {
+//     let containerHotels =
+//         container || document.getElementById("containerHotels");
+//     let loader = document.createElement("div");
+//     loader.className = "loader";
+//     if (containerHotels) {
+//         containerHotels.appendChild(loader);
+//     }
+// };
 
 let toggleTriggers = document.querySelectorAll(".toggle-trigger");
 if (toggleTriggers.length > 0) {
@@ -43,4 +43,21 @@ function toggleDisplayTarget(targetId, elementId, isChecked, type = "radio") {
         target.style.display = isChecked ? "block" : "none";
         target.style.visibility = isChecked ? "visible" : "hidden";
     }
+}
+
+document.addEventListener("livewire:navigated", initToggles);
+document.addEventListener("livewire:load", initToggles);
+document.addEventListener("livewire:update", initToggles);
+
+function initToggles() {
+    const customToggleInputs = document.querySelectorAll("[toggle-input]");
+    customToggleInputs.forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+            toggle?.classList.toggle("loading");
+            toggle?.classList.toggle("active");
+            toggle
+                ?.querySelector(".handle")
+                ?.parentElement?.classList.toggle("active");
+        });
+    });
 }

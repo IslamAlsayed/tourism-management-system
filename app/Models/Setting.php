@@ -17,6 +17,7 @@ class Setting extends Model
         'app_language',
         'app_version',
         'app_php_version',
+        'app_columns_length',
         'photo',
         'app_status',
         'app_password_length',

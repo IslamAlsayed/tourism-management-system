@@ -77,6 +77,46 @@ return [
             'status' => 'done',
             'children' => [
                 [
+                    'title' => 'regions',
+                    'icon' => 'ki-filled ki-home-2',
+                    'children' => [
+                        [
+                            'title' => 'all regions',
+                            'route' => 'regions.index',
+                        ],
+                        [
+                            'title' => 'create region',
+                            'icon' => 'ki-filled ki-people',
+                            'route' => 'regions.create',
+                        ],
+                        [
+                            'title' => 'import regions',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'regions'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'subregions',
+                    'icon' => 'ki-filled ki-home-2',
+                    'children' => [
+                        [
+                            'title' => 'all subregions',
+                            'route' => 'subregions.index',
+                        ],
+                        [
+                            'title' => 'create subregion',
+                            'icon' => 'ki-filled ki-people',
+                            'route' => 'subregions.create',
+                        ],
+                        [
+                            'title' => 'import subregions',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'subregions'],
+                        ],
+                    ],
+                ],
+                [
                     'title' => 'countries',
                     'icon' => 'ki-filled ki-flag',
                     'children' => [
@@ -137,46 +177,7 @@ return [
                         ],
                     ],
                 ],
-                [
-                    'title' => 'regions',
-                    'icon' => 'ki-filled ki-home-2',
-                    'children' => [
-                        [
-                            'title' => 'all regions',
-                            'route' => 'regions.index',
-                        ],
-                        [
-                            'title' => 'create region',
-                            'icon' => 'ki-filled ki-people',
-                            'route' => 'regions.create',
-                        ],
-                        [
-                            'title' => 'import regions',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'regions'],
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'subregions',
-                    'icon' => 'ki-filled ki-home-2',
-                    'children' => [
-                        [
-                            'title' => 'all subregions',
-                            'route' => 'subregions.index',
-                        ],
-                        [
-                            'title' => 'create subregion',
-                            'icon' => 'ki-filled ki-people',
-                            'route' => 'subregions.create',
-                        ],
-                        [
-                            'title' => 'import subregions',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'subregions'],
-                        ],
-                    ],
-                ],
+
                 [
                     'title' => 'nationalities',
                     'icon' => 'ki-filled ki-home-2',
@@ -196,35 +197,6 @@ return [
                             'parameters' => ['model' => 'nationalities'],
                         ],
                     ],
-                ],
-            ],
-        ],
-
-        // ================= Reports =================
-        [
-            'title' => 'reports & analytics',
-            'icon' => 'ki-filled ki-chart-simple',
-            'status' => 'done',
-            'children' => [
-                [
-                    'title' => 'reports dashboard',
-                    'icon' => 'ki-filled ki-element-11',
-                    'route' => 'reports.index'
-                ],
-                [
-                    'title' => 'user reports',
-                    'icon' => 'ki-filled ki-people',
-                    'route' => 'reports.users'
-                ],
-                [
-                    'title' => 'location reports',
-                    'icon' => 'ki-filled ki-geolocation',
-                    'route' => 'reports.locations'
-                ],
-                [
-                    'title' => 'detailed analytics',
-                    'icon' => 'ki-filled ki-chart-line-up',
-                    'route' => 'reports.analytics'
                 ],
             ],
         ],
@@ -294,16 +266,47 @@ return [
             ],
         ],
 
+        // ================= Type =================
+        [
+            'title' => 'accommodations types',
+            'icon' => 'ki-filled ki-coffee',
+            'status' => 'done',
+            'children' => [
+                [
+                    'title' => 'all types',
+                    'icon' => 'ki-filled ki-home-2',
+                    'route' => 'types.index'
+                ],
+                [
+                    'title' => 'create type',
+                    'icon' => 'ki-filled ki-home-2',
+                    'route' => 'types.create'
+                ],
+                [
+                    'title' => 'import types',
+                    'icon' => 'ki-filled ki-home-2',
+                    'route' => 'import.data',
+                    'parameters' => ['model' => 'types'],
+                ],
+            ],
+        ],
+
         // ================= Food & Beverage =================
         [
             'title' => 'food & beverage',
             'icon' => 'ki-filled ki-coffee',
-            'status' => 'done',
+            'fixed' => '+1',
             'children' => [
                 [
                     'title' => 'all restaurants',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'restaurants.index'
+                ],
+                [
+                    'title' => 'create restaurant',
+                    'icon' => 'ki-filled ki-home-2',
+                    'status' => 'editing...',
+                    'route' => 'restaurants.create'
                 ],
                 [
                     'title' => 'import restaurants',
@@ -323,17 +326,68 @@ return [
                 [
                     'title' => 'tour guides',
                     'icon' => 'ki-filled ki-home-2',
-                    'route' => 'tour-guides.index'
+                    'children' => [
+                        [
+                            'title' => 'all guides',
+                            'icon' => 'ki-filled ki-home-2',
+                            'route' => 'tour-guides.index'
+                        ],
+                        [
+                            'title' => 'create guide',
+                            'icon' => 'ki-filled ki-home-2',
+                            'route' => 'tour-guides.create'
+                        ],
+                        [
+                            'title' => 'import guides',
+                            'icon' => 'ki-filled ki-home-2',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'tour-guides'],
+                        ],
+                    ],
                 ],
                 [
                     'title' => 'guides types',
                     'icon' => 'ki-filled ki-home-2',
-                    'route' => 'tour-guides-types.index'
+                    'children' => [
+                        [
+                            'title' => 'all guides types',
+                            'icon' => 'ki-filled ki-home-2',
+                            'route' => 'tour-guides-types.index'
+                        ],
+                        [
+                            'title' => 'create guide type',
+                            'icon' => 'ki-filled ki-home-2',
+                            'route' => 'tour-guides-types.create'
+                        ],
+                        [
+                            'title' => 'import guides types',
+                            'icon' => 'ki-filled ki-home-2',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'tour-guides-types'],
+                        ],
+                    ],
                 ],
                 [
                     'title' => 'guides reviews',
                     'icon' => 'ki-filled ki-home-2',
-                    'route' => 'tour-guides-reviews.index'
+                    'children' => [
+                        [
+                            'title' => 'all guides reviews',
+                            'icon' => 'ki-filled ki-home-2',
+                            'route' => 'tour-guides-reviews.index'
+                        ],
+                        [
+                            'title' => 'create guide review',
+                            'icon' => 'ki-filled ki-home-2',
+                            'route' => 'tour-guides-reviews.create'
+                        ],
+                        [
+                            'title' => 'import guides reviews',
+                            'icon' => 'ki-filled ki-home-2',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'tour-guides-reviews'],
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -376,13 +430,11 @@ return [
                         [
                             'title' => 'bus types',
                             'icon' => 'ki-filled ki-bus',
-                            'status' => 'done',
                             'route' => 'transportation-bus-types.index'
                         ],
                         [
                             'title' => 'company bus types',
                             'icon' => 'ki-filled ki-bus',
-                            'status' => 'done',
                             'route' => 'transportation-company-bus-types.index'
                         ],
                         [
@@ -522,6 +574,35 @@ return [
                     'fixed' => false,
                     'icon' => 'ki-filled ki-ship',
                     'route' => '#'
+                ],
+            ],
+        ],
+
+        // ================= Reports =================
+        [
+            'title' => 'reports & analytics',
+            'icon' => 'ki-filled ki-chart-simple',
+            'status' => 'done',
+            'children' => [
+                [
+                    'title' => 'reports dashboard',
+                    'icon' => 'ki-filled ki-element-11',
+                    'route' => 'reports.index'
+                ],
+                [
+                    'title' => 'user reports',
+                    'icon' => 'ki-filled ki-people',
+                    'route' => 'reports.users'
+                ],
+                [
+                    'title' => 'location reports',
+                    'icon' => 'ki-filled ki-geolocation',
+                    'route' => 'reports.locations'
+                ],
+                [
+                    'title' => 'detailed analytics',
+                    'icon' => 'ki-filled ki-chart-line-up',
+                    'route' => 'reports.analytics'
                 ],
             ],
         ],

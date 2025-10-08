@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\State;
 use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
@@ -14,6 +15,23 @@ class CountryController extends Controller
 {
     public function index()
     {
+        // $countries = Country::all();
+        // foreach ($countries as $country) {
+        //     $timezones = json_decode($country->timezones, true);
+        //     $country->timezones = $timezones;
+        // }
+
+        // [
+//     {
+//         "tzName": "Eastern European Time",
+//         "zoneName": "Europe/Mariehamn",
+//         "gmtOffset": 7200,
+//         "abbreviation": "EET",
+//         "gmtOffsetName": "UTC+02:00"
+//     }
+// ]
+
+
         return view('pages.dashboard.countries.index');
     }
 

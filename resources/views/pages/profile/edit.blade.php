@@ -80,8 +80,7 @@
                                     <label class="kt-form-label text-mono">
                                         {{ __('main.name') }}
                                     </label>
-                                    <input class="kt-input h-[45px]" name="name"
-                                        placeholder="{{ __('main.your_name') }}" type="text"
+                                    <input class="kt-input h-[45px]" name="name" type="text"
                                         value="{{ old('name', $user->name) }}" required />
                                     @error('name')
                                         <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -91,8 +90,7 @@
                                     <label class="kt-form-label text-mono">
                                         {{ __('main.email') }}
                                     </label>
-                                    <input class="kt-input h-[45px]" name="email"
-                                        placeholder="{{ __('main.your_email') }}" type="email"
+                                    <input class="kt-input h-[45px]" name="email" type="email"
                                         value="{{ old('email', $user->email) }}" required />
                                     @error('email')
                                         <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -104,8 +102,8 @@
                                 <label class="kt-form-label text-mono">
                                     {{ __('main.phone') }}
                                 </label>
-                                <input class="kt-input h-[45px]" name="phone" placeholder="{{ __('main.your_phone') }}"
-                                    type="text" value="{{ old('phone', $user->phone) }}" />
+                                <input class="kt-input h-[45px]" name="phone" type="text"
+                                    value="{{ old('phone', $user->phone) }}" />
                                 @error('phone')
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
@@ -115,7 +113,7 @@
                                 <label class="kt-form-label text-mono">
                                     {{ __('main.bio') }}
                                 </label>
-                                <textarea class="kt-textarea" name="bio" placeholder="{{ __('main.tell_about_yourself') }}" rows="4">{{ old('bio', $user->bio) }}</textarea>
+                                <textarea class="kt-textarea" name="bio" rows="4">{{ old('bio', $user->bio) }}</textarea>
                                 @error('bio')
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
@@ -150,8 +148,7 @@
                                         {{ __('main.password') }}
                                     </label>
                                     <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                        <input name="password" placeholder="{{ __('main.enter_current_password') }}"
-                                            type="password" required>
+                                        <input name="password" type="password" required>
                                         <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                             data-kt-toggle-password-trigger="true" type="button">
                                             <span class="kt-toggle-password-active:hidden">

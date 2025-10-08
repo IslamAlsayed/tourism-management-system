@@ -25,12 +25,13 @@ class RestaurantController extends Controller
     public function create()
     {
         $countries = Country::all();
-        $cities = City::limit(15)->get();
+        // $cities = City::limit(15)->get();
         $regions = Region::all();
         $subregions = Subregion::all();
-        $types = Type::all();
+        $types = Type::all()->pluck('name', 'id');
 
-        return view('pages.dashboard.restaurants.create', compact('countries', 'cities', 'regions', 'subregions', 'types'));
+        // return view('pages.dashboard.restaurants.create', compact('types', 'countries', 'cities', 'regions', 'subregions'));
+        return view('pages.dashboard.restaurants.create', compact('types', 'countries', 'regions', 'subregions'));
     }
 
     public function store(RestaurantCreateRequest $request)
@@ -61,9 +62,9 @@ class RestaurantController extends Controller
         $cities = City::limit(15)->get();
         $regions = Region::all();
         $subregions = Subregion::all();
-        $types = Type::all();
+        $types = Type::all()->pluck('name', 'id');
 
-        return view('pages.dashboard.restaurants.edit', compact('restaurant', 'countries', 'cities', 'regions', 'subregions', 'types'));
+        return view('pages.dashboard.restaurants.edit', compact('restaurant', 'types', 'countries', 'cities', 'regions', 'subregions'));
     }
 
     public function update(RestaurantUpdateRequest $request, $id)
@@ -99,4 +100,17 @@ class RestaurantController extends Controller
 
         return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.restaurant')]));
     }
+
+    // public function getCities($countryId)
+    // {
+    //     if (!$countryId)
+    //         return response()->json([]);
+
+    //     $cities = City::where('country_id', $countryId)->select('id', 'name')->orderBy('name')->get();
+
+    //     if ($cities->isEmpty())
+    //         return response()->json([]);
+
+    //     return response()->json($cities);
+    // }
 }

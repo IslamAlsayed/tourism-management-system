@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Country extends Model
 {
@@ -12,6 +11,7 @@ class Country extends Model
 
     protected $fillable = [
         'id',
+        'photo',
         'name',
         'name_ar',
         'iso2',
@@ -27,8 +27,6 @@ class Country extends Model
         'emoji',
         'emojiU',
         'population',
-        'flag_url',
-        'photo',
         'continent',
         'area',
         'is_active',
@@ -56,6 +54,11 @@ class Country extends Model
     // {
     //     return $this->belongsTo(Language::class);
     // }
+
+    public function cities()
+    {
+        return $this->hasMany(City::class);
+    }
 
     public function currency()
     {

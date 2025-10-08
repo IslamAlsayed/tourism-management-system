@@ -33,10 +33,13 @@
                         <!-- Vehicle Photo -->
                         <div class="text-center">
                             <div class="relative inline-block">
-                                <div class="w-24 h-24 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="vehicle-preview" src="{{ asset('metronic/media/avatars/300-5.png') }}" alt="Vehicle Image" class="w-full h-full object-cover">
+                                <div
+                                    class="w-24 h-24 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
+                                    <img id="vehicle-preview" src="{{ asset('metronic/media/avatars/300-5.png') }}"
+                                        alt="Vehicle Image" class="w-full h-full object-cover">
                                 </div>
-                                <label for="photo" class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark">
+                                <label for="photo"
+                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark">
                                     <i class="ki-filled ki-camera text-sm"></i>
                                 </label>
                                 <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
@@ -48,13 +51,13 @@
                             <!-- Vehicle Name -->
                             <div class="mb-4">
                                 <label for="name" class="kt-label required mb-2">Vehicle Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input" placeholder="Enter vehicle name" required>
+                                <input type="text" name="name" id="name" class="kt-input" required>
                             </div>
 
                             <!-- Vehicle Name Arabic -->
                             <div class="mb-4">
                                 <label for="name_ar" class="kt-label required mb-2">Vehicle Name (Arabic)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input" placeholder="أدخل اسم المركبة" required>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input" required>
                             </div>
                         </div>
 
@@ -63,7 +66,7 @@
                             <div class="mb-4">
                                 <label for="type" class="kt-label required mb-2">Vehicle Type</label>
                                 <select name="type" id="type" class="kt-select" required>
-                                    <option value="">Select Vehicle Type</option>
+                                    <option value="">--</option>
                                     <option value="Tourist Bus">Tourist Bus</option>
                                     <option value="Transport Vehicle">Transport Vehicle</option>
                                     <option value="4x4 Vehicle">4x4 Vehicle</option>
@@ -79,7 +82,7 @@
                             <div class="mb-4">
                                 <label for="company" class="kt-label required mb-2">Company</label>
                                 <select name="company" id="company" class="kt-select" required>
-                                    <option value="">Select Company</option>
+                                    <option value="">--</option>
                                     <option value="SAPTCO">SAPTCO</option>
                                     <option value="Desert Safari Tours">Desert Safari Tours</option>
                                     <option value="City Transport">City Transport</option>
@@ -94,13 +97,13 @@
                             <!-- Make -->
                             <div class="mb-4">
                                 <label for="make" class="kt-label required mb-2">Make</label>
-                                <input type="text" name="make" id="make" class="kt-input" placeholder="e.g., Mercedes, Toyota" required>
+                                <input type="text" name="make" id="make" class="kt-input" required>
                             </div>
 
                             <!-- Model -->
                             <div class="mb-4">
                                 <label for="model" class="kt-label required mb-2">Model</label>
-                                <input type="text" name="model" id="model" class="kt-input" placeholder="e.g., Tourismo, Land Cruiser" required>
+                                <input type="text" name="model" id="model" class="kt-input" required>
                             </div>
                         </div>
 
@@ -108,13 +111,15 @@
                             <!-- Year -->
                             <div class="mb-4">
                                 <label for="year" class="kt-label required mb-2">Year</label>
-                                <input type="number" name="year" id="year" class="kt-input" placeholder="e.g., 2023" required min="1990" max="2025">
+                                <input type="number" name="year" id="year" class="kt-input" required min="1990"
+                                    max="2025">
                             </div>
 
                             <!-- Capacity -->
                             <div class="mb-4">
                                 <label for="capacity" class="kt-label required mb-2">Seating Capacity</label>
-                                <input type="number" name="capacity" id="capacity" class="kt-input" placeholder="Enter seating capacity" required min="1" max="100">
+                                <input type="number" name="capacity" id="capacity" class="kt-input" required
+                                    min="1" max="100">
                             </div>
                         </div>
 
@@ -122,13 +127,13 @@
                             <!-- Plate Number -->
                             <div class="mb-4">
                                 <label for="plate_number" class="kt-label required mb-2">Plate Number</label>
-                                <input type="text" name="plate_number" id="plate_number" class="kt-input" placeholder="e.g., ABC-1234" required>
+                                <input type="text" name="plate_number" id="plate_number" class="kt-input" required>
                             </div>
 
                             <!-- VIN -->
                             <div class="mb-4">
                                 <label for="vin" class="kt-label mb-2">VIN Number</label>
-                                <input type="text" name="vin" id="vin" class="kt-input" placeholder="Enter VIN number">
+                                <input type="text" name="vin" id="vin" class="kt-input">
                             </div>
                         </div>
 
@@ -136,14 +141,14 @@
                             <!-- Color -->
                             <div class="mb-4">
                                 <label for="color" class="kt-label mb-2">Color</label>
-                                <input type="text" name="color" id="color" class="kt-input" placeholder="e.g., White, Black, Silver">
+                                <input type="text" name="color" id="color" class="kt-input">
                             </div>
 
                             <!-- Fuel Type -->
                             <div class="mb-4">
                                 <label for="fuel_type" class="kt-label mb-2">Fuel Type</label>
                                 <select name="fuel_type" id="fuel_type" class="kt-select">
-                                    <option value="">Select Fuel Type</option>
+                                    <option value="">--</option>
                                     <option value="Gasoline">Gasoline</option>
                                     <option value="Diesel">Diesel</option>
                                     <option value="Hybrid">Hybrid</option>
@@ -157,13 +162,13 @@
                             <!-- Driver -->
                             <div class="mb-4">
                                 <label for="driver" class="kt-label mb-2">Assigned Driver</label>
-                                <input type="text" name="driver" id="driver" class="kt-input" placeholder="Enter driver name">
+                                <input type="text" name="driver" id="driver" class="kt-input">
                             </div>
 
                             <!-- Location -->
                             <div class="mb-4">
                                 <label for="location" class="kt-label required mb-2">Current Location</label>
-                                <input type="text" name="location" id="location" class="kt-input" placeholder="Enter current location" required>
+                                <input type="text" name="location" id="location" class="kt-input" required>
                             </div>
                         </div>
 
@@ -206,35 +211,43 @@
                             <label class="kt-label mb-2">Vehicle Features</label>
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="air_conditioning" class="kt-checkbox" value="air_conditioning">
+                                    <input type="checkbox" name="features[]" id="air_conditioning" class="kt-checkbox"
+                                        value="air_conditioning">
                                     <label for="air_conditioning" class="kt-label mb-0">Air Conditioning</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="wifi" class="kt-checkbox" value="wifi">
+                                    <input type="checkbox" name="features[]" id="wifi" class="kt-checkbox"
+                                        value="wifi">
                                     <label for="wifi" class="kt-label mb-0">WiFi</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="entertainment" class="kt-checkbox" value="entertainment">
+                                    <input type="checkbox" name="features[]" id="entertainment" class="kt-checkbox"
+                                        value="entertainment">
                                     <label for="entertainment" class="kt-label mb-0">Entertainment System</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="usb_ports" class="kt-checkbox" value="usb_ports">
+                                    <input type="checkbox" name="features[]" id="usb_ports" class="kt-checkbox"
+                                        value="usb_ports">
                                     <label for="usb_ports" class="kt-label mb-0">USB Ports</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="gps" class="kt-checkbox" value="gps">
+                                    <input type="checkbox" name="features[]" id="gps" class="kt-checkbox"
+                                        value="gps">
                                     <label for="gps" class="kt-label mb-0">GPS Navigation</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="camera" class="kt-checkbox" value="camera">
+                                    <input type="checkbox" name="features[]" id="camera" class="kt-checkbox"
+                                        value="camera">
                                     <label for="camera" class="kt-label mb-0">Backup Camera</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="safety" class="kt-checkbox" value="safety">
+                                    <input type="checkbox" name="features[]" id="safety" class="kt-checkbox"
+                                        value="safety">
                                     <label for="safety" class="kt-label mb-0">Safety Equipment</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="wheelchair" class="kt-checkbox" value="wheelchair">
+                                    <input type="checkbox" name="features[]" id="wheelchair" class="kt-checkbox"
+                                        value="wheelchair">
                                     <label for="wheelchair" class="kt-label mb-0">Wheelchair Accessible</label>
                                 </div>
                             </div>
@@ -243,7 +256,7 @@
                         <!-- Notes -->
                         <div class="mb-4">
                             <label for="notes" class="kt-label mb-2">Notes</label>
-                            <textarea name="notes" id="notes" rows="4" class="kt-input" placeholder="Enter any additional notes about the vehicle"></textarea>
+                            <textarea name="notes" id="notes" rows="4" class="kt-input"></textarea>
                         </div>
 
                         <!-- Submit Buttons -->
@@ -252,7 +265,8 @@
                                 <i class="ki-filled ki-check text-sm me-2"></i>
                                 Create Vehicle
                             </button>
-                            <button type="submit" name="save_and_add" value="1" class="kt-btn kt-btn-outline kt-btn-outline-primary">
+                            <button type="submit" name="save_and_add" value="1"
+                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
                                 <i class="ki-filled ki-plus text-sm me-2"></i>
                                 Save and Add Another
                             </button>
@@ -277,7 +291,8 @@
                             </div>
                             <div>
                                 <div class="font-semibold">Complete Documentation</div>
-                                <div class="text-sm text-secondary-foreground">Keep all vehicle documents, insurance, and maintenance records up to date</div>
+                                <div class="text-sm text-secondary-foreground">Keep all vehicle documents, insurance, and
+                                    maintenance records up to date</div>
                             </div>
                         </div>
 
@@ -287,7 +302,8 @@
                             </div>
                             <div>
                                 <div class="font-semibold">Regular Maintenance</div>
-                                <div class="text-sm text-secondary-foreground">Schedule regular maintenance to ensure vehicle safety and reliability</div>
+                                <div class="text-sm text-secondary-foreground">Schedule regular maintenance to ensure
+                                    vehicle safety and reliability</div>
                             </div>
                         </div>
 
@@ -297,7 +313,8 @@
                             </div>
                             <div>
                                 <div class="font-semibold">Driver Assignment</div>
-                                <div class="text-sm text-secondary-foreground">Assign qualified drivers and track their performance</div>
+                                <div class="text-sm text-secondary-foreground">Assign qualified drivers and track their
+                                    performance</div>
                             </div>
                         </div>
                     </div>
@@ -306,31 +323,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-<script>
-    // Photo preview
-    document.getElementById('photo').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('vehicle-preview').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Auto-uppercase plate number
-    document.getElementById('plate_number').addEventListener('input', function(e) {
-        this.value = this.value.toUpperCase();
-    });
-
-    // Auto-uppercase VIN
-    document.getElementById('vin').addEventListener('input', function(e) {
-        this.value = this.value.toUpperCase();
-    });
-</script>
-@endpush
-
-

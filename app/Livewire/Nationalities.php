@@ -33,7 +33,7 @@ class Nationalities extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Nationality::class, 5);
+        $this->mountWithCustomColumns(Nationality::class);
         $this->resetPage();
     }
 

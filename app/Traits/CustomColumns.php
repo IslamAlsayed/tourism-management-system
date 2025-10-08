@@ -12,14 +12,14 @@ trait CustomColumns
     public array $columns = [];
     public array $pendingColumns = [];
 
-    public function mountWithCustomColumns(string $modelClass, int $defaultCount = 4): void
+    public function mountWithCustomColumns(string $modelClass): void
     {
         $this->modelClass = $modelClass;
         $model = new $modelClass();
         $this->relations = method_exists($model, 'getRelationshipNames') ? $model->getRelationshipNames() : [];
 
         $this->fillable = $model->getFillable();
-        array_splice($this->fillable, $defaultCount, 0, $this->relations);
+        array_splice($this->fillable, getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)), 0, $this->relations);
 
         $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 
@@ -34,7 +34,7 @@ trait CustomColumns
         // تقدر تعدل لو عايز تخزن لكل مستخدم في DB
         // $savedColumns = auth()->user()->getTableColumnsFor($modelClass);
 
-        $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, $defaultCount);
+        $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)));
 
         $this->pendingColumns = $this->columns;
     }
@@ -44,17 +44,42 @@ trait CustomColumns
         $model = new $this->modelClass();
         $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 
-        // Sort columns
+        // تأكد من استبعاد الأعمدة غير المسموح بها
         $cleanPending = array_diff($this->pendingColumns, $excluded);
+
+        // رتب الأعمدة بنفس ترتيبها الأصلي
         $this->columns = array_values(array_intersect($this->allColumns, $cleanPending));
 
-        // حفظ في session
+        // حفظ التغييرات في الجلسة
         session(["user_table_columns_{$this->modelClass}" => $this->columns]);
 
         // حفظ في DB (لو حابب)
         // auth()->user()->saveTableColumnsFor($this->modelClass, $this->columns);
+    }
 
-        $this->resetPage();
+    public function toggleAll(): void
+    {
+        $model = new $this->modelClass();
+        $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
+
+        // نجيب الأعمدة المسموح بيها فعليًا
+        $cleanAll = array_values(array_diff($this->allColumns, $excluded));
+
+        // نشيل "all" من pending قبل المقارنة
+        $current = array_diff($this->pendingColumns, ['all']);
+
+        // لو فعلاً كل الأعمدة متحددة حاليًا → اعمل UnAll
+        if (count($current) === count($cleanAll)) {
+            $fillable = array_values(array_diff($model->getFillable(), $excluded));
+            // رجّع أول 5 فقط
+            $this->pendingColumns = array_slice($fillable, 0, getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)));
+        }
+        // غير كده → اعمل All
+        else {
+            $this->pendingColumns = array_merge(['all'], $cleanAll);
+        }
+
+        $this->applyColumns();
     }
 
     public function scopeSearch(string $modelClass, string $search = null)

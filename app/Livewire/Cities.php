@@ -34,7 +34,7 @@ class Cities extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(City::class, 5);
+        $this->mountWithCustomColumns(City::class);
         $this->resetPage();
     }
 

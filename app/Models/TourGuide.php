@@ -11,6 +11,7 @@ class TourGuide extends Model
 
     protected $fillable = [
         'id',
+        'photo',
         'name',
         'name_ar',
         'email',
@@ -50,6 +51,11 @@ class TourGuide extends Model
     public function currency()
     {
         return $this->belongsTo(Currency::class);
+    }
+
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class, 'tour_guide_languages', 'tour_guide_id', 'guide_language_id');
     }
 
     public function guide_type()

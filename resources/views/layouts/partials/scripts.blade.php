@@ -3,16 +3,19 @@
 <script src="{{ asset('metronic/vendors/ktui/ktui.min.js') }}" data-navigate-once></script>
 <script src="{{ asset('metronic/vendors/apexcharts/apexcharts.min.js') }}" data-navigate-once></script>
 <script src="{{ asset('metronic/js/layouts/demo1.js') }}" data-navigate-once></script>
+<script src="{{ asset('assets/js/all.min.js') }}"></script>
 
 <!-- Scripts -->
 {{-- <script src="{{ asset('metronic/js/scripts.bundle.js') }}"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- End of Scripts -->
 
-{{-- Multi Select JS --}}
-<script src="{{ asset('assets/js/multiSelect.js') }}"></script>
-<script src="{{ asset('assets/js/multiCheckbox.js') }}"></script>
-<script src="{{ asset('assets/js/multiDelete.js') }}"></script>
+{{-- Multiples JS --}}
+<script src="{{ asset('assets/js/Multiples/SpecialSelect.js') }}"></script>
+<script src="{{ asset('assets/js/Multiples/SpecialCheckbox.js') }}"></script>
+<script src="{{ asset('assets/js/Multiples/SpecialSearch.js') }}"></script>
+<script src="{{ asset('assets/js/Multiples/SpecialDelete.js') }}"></script>
+<script src="{{ asset('assets/js/FilterByForeignId.js') }}"></script>
 <script src="{{ asset('assets/js/helpers.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 

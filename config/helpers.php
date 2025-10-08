@@ -20,4 +20,25 @@ return [
         'europe/london' => 'europe/london (+0)',
         'america/new york' => 'america/new york (-5)',
     ],
+
+    'positions' => [
+        'manager' => 'manager',
+        'developer' => 'developer',
+        'designer' => 'designer',
+        'hr' => 'hr',
+        'sales' => 'sales',
+        'marketing' => 'marketing',
+        'support' => 'support',
+        'other' => 'other',
+    ],
+
+    'departments' => [
+        'it' => 'it',
+        'hr' => 'hr',
+        'sales' => 'sales',
+        'marketing' => 'marketing',
+        'support' => 'support',
+        'finance' => 'finance',
+        'other' => 'other',
+    ],
 ];

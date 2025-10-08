@@ -66,16 +66,6 @@
                             </div>
                         </div>
 
-                        <!-- Description -->
-                        <div class="mb-4">
-                            <label for="description"
-                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.region')]) }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ $region->description }}</textarea>
-                            @error('description')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                         <!-- Submit Buttons -->
                         <div class="flex items-center gap-4">
                             <button type="submit" class="kt-btn kt-btn-primary">

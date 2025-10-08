@@ -39,7 +39,7 @@
                             <!-- Tour Guide -->
                             <div class="">
                                 <label for="tour_guide_id" class="kt-label mb-2">{{ __('main.tour_guide') }}</label>
-                                <select name="tour_guide_id" id="tour_guide_id" class="kt-select h-[45px]">
+                                <select name="tour_guide_id" id="tour_guide_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($tourGuides as $tourGuide)
                                         <option value="{{ $tourGuide->id }}"

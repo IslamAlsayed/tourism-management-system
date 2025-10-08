@@ -36,7 +36,8 @@
 
                         <!-- Languages Photo -->
                         @include('components.input-image', [
-                            'columnName' => 'languages',
+                            'column' => 'languages',
+                            'columnName' => 'photo',
                             'photoUrl' => $languages->photo,
                         ])
 
@@ -44,8 +45,8 @@
                             <!-- Language Code -->
                             <div class="">
                                 <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>
-                                <input type="text" name="code" id="code" class="kt-input h-[45px]"
-                                    placeholder="ar, en and fr" min="2" required value="{{ $language->code }}">
+                                <input type="text" name="code" id="code" class="kt-input h-[45px]" min="2"
+                                    required value="{{ $language->code }}">
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -54,19 +55,9 @@
                             <!-- Language Name -->
                             <div class="">
                                 <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    placeholder="arabic, english and french" required value="{{ $language->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ $language->name }}">
                                 @error('name')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Language Flag -->
-                            <div class="">
-                                <label for="photo" class="kt-label required mb-2">{{ __('main.flag') }}</label>
-                                <input type="file" name="photo" id="photo" class="kt-input h-[45px]"
-                                    accept=".png, .jpg, .jpeg">
-                                @error('flag')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

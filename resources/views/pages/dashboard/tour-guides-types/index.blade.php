@@ -3,11 +3,11 @@
 @section('table-content')
     <!-- Container -->
     @include('includes.table-breadcrumb', [
-        'title' => __('main.tour-guides'),
-        'description' => __('main.manage_system_types', ['types' => __('main.tour-guides')]),
+        'title' => __('main.tour-guides-types'),
+        'description' => __('main.manage_system_types', ['types' => __('main.tour-guides-types')]),
         'import_url' => route('import.data', ['model' => 'tour-guides-types']),
         'page_add_url' => route('tour-guides-types.create'),
-        'page_add_title' => __('main.add_new_type', ['type' => __('main.tour-guide')]),
+        'page_add_title' => __('main.add_new_type', ['type' => __('main.tour-guide-type')]),
     ])
     <!-- End of Container -->
 

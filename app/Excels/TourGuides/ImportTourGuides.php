@@ -19,11 +19,6 @@ class ImportTourGuides implements ToCollection
         if ($rows->isEmpty())
             return;
 
-        // 1. guide_languages
-        // 2. tour_guides
-        // 3. tour_guide_languages
-        // 4. tour_guide_reviews
-
         $allFillable = (new TourGuide())->getFillable();
         $relations = method_exists((new TourGuide()), 'getRelationshipNames') ? (new TourGuide())->getRelationshipNames() : [];
         $fillableTourGuide = array_filter($allFillable, fn($c) => !in_array($c, $relations));

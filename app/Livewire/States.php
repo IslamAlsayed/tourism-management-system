@@ -34,7 +34,7 @@ class States extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(State::class, 5);
+        $this->mountWithCustomColumns(State::class);
         $this->resetPage();
     }
 

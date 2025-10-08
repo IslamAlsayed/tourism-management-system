@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     Create New Restaurant
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- Accommodation Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -34,28 +34,51 @@
                         @csrf
 
                         <!-- Restaurant Photo -->
-                        @include('components.input-image', ['columnName' => 'restaurant'])
+                        @include('components.input-image', [
+                            'column' => 'restaurant',
+                            'columnName' => 'photo',
+                        ])
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                             <!-- Name -->
                             <div class="">
                                 <label for="name" class="kt-label required mb-2">Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    placeholder="Enter accommodation name" required>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Name Arabic -->
                             <div class="">
                                 <label for="name_ar" class="kt-label required mb-2">Name (Arabic)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    placeholder="أدخل اسم الإقامة" required>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required>
+                            </div>
+
+                            <!-- Type -->
+                            <div class="">
+                                <label for="type" class="kt-label required mb-2 flex items-center justify-between">
+                                    Type
+                                    <a href="{{ route('types.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="type_id" id="type_id" class="kt-select h-[45px]" special-search required>
+                                    <option value="">--</option>
+                                    @foreach ($types as $key => $type)
+                                        <option value="{{ $key }}">{{ $type }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <!-- Country -->
                             <div class="">
-                                <label for="country_id" class="kt-label required mb-2">Country</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" required>
-                                    <option value="">Select Country</option>
+                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Country
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
+                                    required>
+                                    <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">{{ $country->name }}</option>
                                     @endforeach
@@ -64,20 +87,29 @@
 
                             <!-- City -->
                             <div class="">
-                                <label for="city_id" class="kt-label required mb-2">City</label>
-                                <select name="city_id" id="city_id" class="kt-select h-[45px]" required>
-                                    <option value="">Select City</option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                    @endforeach
+                                <label for="city_id" class="kt-label required mb-2">
+                                    City
+                                    <i id="city_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                    <span class="text-red-600 text-sm span-info" id="city_id-info">
+                                        (You must select country first)
+                                    </span>
+                                </label>
+                                <select name="city_id" id="city_id" class="kt-select h-[45px]" special-search required>
+                                    <option value="">--</option>
+                                    {{-- Cities will be loaded dynamically based on selected country --}}
                                 </select>
                             </div>
 
                             <!-- Region -->
                             <div class="">
-                                <label for="region_id" class="kt-label required mb-2">Region</label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]" required>
-                                    <option value="">Select Region</option>
+                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Region
+                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search required>
+                                    <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}">{{ $region->name }}</option>
                                     @endforeach
@@ -86,44 +118,55 @@
 
                             <!-- Subregion -->
                             <div class="">
-                                <label for="subregion_id" class="kt-label required mb-2">Subregion</label>
-                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" required>
-                                    <option value="">Select Subregion</option>
-                                    @foreach ($subregions as $subregion)
-                                        <option value="{{ $subregion->id }}">{{ $subregion->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Type -->
-                            <div class="">
-                                <label for="type" class="kt-label required mb-2">Type</label>
-                                <select name="type" id="type" class="kt-select h-[45px]">
-                                    <option value="">Select Type</option>
-                                    @foreach ($types as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                    @endforeach
+                                <label for="subregion_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        Subregion
+                                        <i id="subregion_id-loader"
+                                            class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        <span class="text-red-600 text-sm span-info" id="subregion_id-info">
+                                            (You must select region first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search
+                                    required>
+                                    <option value="">--</option>
+                                    {{-- Subregions will be loaded dynamically based on selected region --}}
                                 </select>
                             </div>
 
                             <!-- Rating -->
                             <div class="">
-                                <label for="rating" class="kt-label required mb-2">Star Rating</label>
-                                <select name="rating" id="rating" class="kt-select h-[45px]" required>
-                                    <option value="">Select Rating</option>
-                                    <option value="1">1 Star</option>
-                                    <option value="2">2 Stars</option>
-                                    <option value="3">3 Stars</option>
-                                    <option value="4">4 Stars</option>
-                                    <option value="5">5 Stars</option>
+                                <label for="rating" class="kt-label required mb-2">Rating</label>
+                                <select name="rating" id="rating" class="kt-select h-[45px]" special-search required>
+                                    <option value="">--</option>
+                                    @foreach (range(1, 5) as $item)
+                                        <option value="{{ $item }}">
+                                            {{ $item }} Star{{ $item > 1 ? 's' : '' }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <!-- Specialty -->
                             <div class="">
-                                <label for="specialty" class="kt-label required mb-2">Specialty</label>
-                                <input type="text" name="specialty" id="specialty" class="kt-input h-[45px]"
-                                    placeholder="Enter company name in Arabic" required>
+                                <label for="specialty_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Specialty
+                                    {{-- <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm"> --}}
+                                    <a href="#" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="specialty_id" id="specialty_id" class="kt-select h-[45px]" special-search
+                                    required>
+                                    <option value="">--</option>
+                                    @foreach ($specialties ?? [] as $specialty)
+                                        <option value="{{ $specialty->id }}">{{ $specialty->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <!-- Company Name (Arabic) -->
@@ -131,84 +174,75 @@
                                 <label for="company_name_ar" class="kt-label required mb-2">Company Name
                                     (Arabic)</label>
                                 <input type="text" name="company_name_ar" id="company_name_ar"
-                                    class="kt-input h-[45px]" placeholder="Enter company name in Arabic" required>
+                                    class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- phone_01 -->
                             <div class="">
                                 <label for="phone_01" class="kt-label required mb-2">Phone 01</label>
-                                <input type="text" name="phone_01" id="phone_01" class="kt-input h-[45px]"
-                                    placeholder="Enter phone number" required>
+                                <input type="text" name="phone_01" id="phone_01" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- phone_02 -->
                             <div class="">
                                 <label for="phone_02" class="kt-label required mb-2">Phone 02</label>
-                                <input type="text" name="phone_02" id="phone_02" class="kt-input h-[45px]"
-                                    placeholder="Enter phone number" required>
+                                <input type="text" name="phone_02" id="phone_02" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- fax -->
                             <div class="">
                                 <label for="fax" class="kt-label required mb-2">Fax</label>
-                                <input type="text" name="fax" id="fax" class="kt-input h-[45px]"
-                                    placeholder="Enter fax number" required>
+                                <input type="text" name="fax" id="fax" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- email_01 -->
                             <div class="">
                                 <label for="email_01" class="kt-label required mb-2">Email 1</label>
-                                <input type="text" name="email_01" id="email_01" class="kt-input h-[45px]"
-                                    placeholder="Enter email_01 number" required>
+                                <input type="text" name="email_01" id="email_01" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- email_02 -->
                             <div class="">
                                 <label for="email_02" class="kt-label required mb-2">Email 2</label>
-                                <input type="text" name="email_02" id="email_02" class="kt-input h-[45px]"
-                                    placeholder="Enter email_02 number" required>
+                                <input type="text" name="email_02" id="email_02" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Contact Person -->
                             <div class="">
                                 <label for="contact_person" class="kt-label required mb-2">Contact Person</label>
                                 <input type="text" name="contact_person" id="contact_person"
-                                    class="kt-input h-[45px]" placeholder="Enter contact person name" required>
+                                    class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Box -->
                             <div class="">
                                 <label for="box" class="kt-label required mb-2">Box</label>
-                                <input type="text" name="box" id="box" class="kt-input h-[45px]"
-                                    placeholder="Enter box number" required>
+                                <input type="text" name="box" id="box" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Postal Code -->
                             <div class="">
                                 <label for="postal_code" class="kt-label required mb-2">Postal Code</label>
                                 <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]"
-                                    placeholder="Enter postal code" required>
+                                    required>
                             </div>
 
                             <!-- Mobile -->
                             <div class="">
                                 <label for="mobile" class="kt-label required mb-2">Mobile</label>
-                                <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
-                                    placeholder="Enter mobile number" required>
+                                <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Website -->
                             <div class="">
                                 <label for="website" class="kt-label required mb-2">Website</label>
-                                <input type="text" name="website" id="website" class="kt-input h-[45px]"
-                                    placeholder="Enter website URL" required>
+                                <input type="text" name="website" id="website" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Note -->
                             <div class="">
                                 <label for="note" class="kt-label mb-2">Note</label>
-                                <textarea name="note" id="note" rows="3" class="kt-input h-[45px]"
-                                    placeholder="Enter any additional notes"></textarea>
+                                <textarea name="note" id="note" rows="3" class="kt-input h-[45px]"></textarea>
                             </div>
 
                             <div class="flex items-center gap-3 mb-4">
@@ -219,6 +253,7 @@
                                     <label for="is_active" class="kt-label mb-0">{{ __('main.is_active') }}</label>
                                 </div>
                             </div>
+
                         </div>
 
                         <!-- Facilities -->
@@ -310,20 +345,21 @@
                             </div>
                             <div>
                                 <div class="font-semibold">Complete Information</div>
-                                <div class="text-sm text-secondary-foreground">Provide detailed information to help guests
-                                    make informed decisions</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    Provide detailed information to help guests make informed decisions
+                                </div>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                {{-- <i class="ki-filled ki-camera text-warning"></i> --}}
+                            <div class="bg-success-light rounded-full p-2">
                                 <i class="ki-filled ki-information text-success"></i>
                             </div>
                             <div>
                                 <div class="font-semibold">High Quality Photos</div>
-                                <div class="text-sm text-secondary-foreground">Upload clear, high-resolution photos of your
-                                    restaurant</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    Upload clear, high-resolution photos of your restaurant
+                                </div>
                             </div>
                         </div>
 
@@ -333,8 +369,9 @@
                             </div>
                             <div>
                                 <div class="font-semibold">Accurate Rating</div>
-                                <div class="text-sm text-secondary-foreground">Select the appropriate star rating based on
-                                    your facilities and services</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    Select the appropriate star rating based on your facilities and services
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -346,16 +383,9 @@
 
 @push('scripts')
     <script>
-        // Photo preview
-        document.getElementById('photo').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('restaurant-preview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+        document.addEventListener("DOMContentLoaded", () => {
+            FilterByForeignId('country_id', 'city', 'city_id');
+            FilterByForeignId('region_id', 'subregion', 'subregion_id');
         });
     </script>
 @endpush

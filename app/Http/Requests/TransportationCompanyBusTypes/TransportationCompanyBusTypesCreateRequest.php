@@ -22,7 +22,6 @@ class TransportationCompanyBusTypesCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
             'min_seats' => ['nullable', 'integer', 'min:0'],
             'max_seats' => ['nullable', 'integer', 'min:0', 'gte:min_seats'],
             'seats' => ['nullable', 'integer', 'max:255'],

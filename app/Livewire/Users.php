@@ -33,7 +33,7 @@ class Users extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(User::class, 5);
+        $this->mountWithCustomColumns(User::class);
         $this->resetPage();
     }
 

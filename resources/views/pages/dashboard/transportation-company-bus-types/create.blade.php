@@ -64,7 +64,13 @@
 
                             <!-- Transportation company -->
                             <div class="">
-                                <label for="company_id" class="kt-label required mb-2">Transportation Company</label>
+                                <label for="company_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Transportation Company
+                                    <a href="{{ route('transportation-companies.create') }}"
+                                        class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
                                 <select name="company_id" id="company_id" class="kt-input h-[45px]" required>
                                     <option value="">--</option>
                                     @foreach ($transportationCompanies as $company)
@@ -75,8 +81,15 @@
 
                             <!-- Transportation bus type -->
                             <div class="">
-                                <label for="bus_type_id" class="kt-label required mb-2">Transportation Bus Type</label>
-                                <select name="bus_type_id" id="bus_type_id" class="kt-input h-[45px]" required>
+                                <label for="bus_type_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Transportation Bus Type
+                                    <a href="{{ route('transportation-bus-types.create') }}"
+                                        class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="bus_type_id" id="bus_type_id" class="kt-input h-[45px]" required
+                                    special-search>
                                     <option value="">--</option>
                                     @foreach ($transportationBusTypes as $busType)
                                         <option value="{{ $busType->id }}">{{ $busType->name }}</option>

@@ -44,8 +44,7 @@
                                 <label class="kt-form-label font-normal text-mono">{{ __('main.email') }}</label>
 
                                 <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                    <input type="email" name="email" placeholder="{{ __('main.email') }}"
-                                        value="{{ $user->email }}" disabled required>
+                                    <input type="email" name="email" value="{{ $user->email }}" disabled required>
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="hidden kt-toggle-password-active:block">
@@ -63,8 +62,7 @@
                                 <label class="kt-form-label font-normal text-mono">{{ __('main.old_password') }}</label>
 
                                 <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                    <input type="password" name="password" required
-                                        placeholder="{{ __('main.old_password') }}">
+                                    <input type="password" name="password" required>
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="kt-toggle-password-active:hidden">
@@ -85,8 +83,7 @@
                                 <label class="kt-form-label font-normal text-mono">{{ __('main.new_password') }}</label>
 
                                 <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                    <input type="password" name="confirmation_password" required
-                                        placeholder="{{ __('main.new_password') }}">
+                                    <input type="password" name="confirmation_password" required>
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="kt-toggle-password-active:hidden">

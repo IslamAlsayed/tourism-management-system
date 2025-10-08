@@ -74,7 +74,8 @@
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" required>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
+                                    required>
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
@@ -89,8 +90,13 @@
 
                             <!-- State -->
                             <div class="">
-                                <label for="state_id" class="kt-label mb-2">{{ __('main.state') }}</label>
-                                <select name="state_id" id="state_id" class="kt-select h-[45px]">
+                                <label for="state_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.state') }}
+                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}"
@@ -126,7 +132,7 @@
                             <!-- Timezone -->
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]">
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
                                     <option value="">{{ __('main.select_timezone') }}</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
@@ -149,16 +155,6 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="mb-4">
-                            <label for="description"
-                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.city')]) }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ $city->description }}</textarea>
-                            @error('description')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         <!-- Submit Buttons -->

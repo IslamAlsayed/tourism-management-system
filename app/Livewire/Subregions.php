@@ -33,7 +33,7 @@ class Subregions extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Subregion::class, 5);
+        $this->mountWithCustomColumns(Subregion::class);
         $this->resetPage();
     }
 

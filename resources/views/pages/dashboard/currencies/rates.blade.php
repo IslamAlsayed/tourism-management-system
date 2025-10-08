@@ -268,7 +268,7 @@
 
                         <div>
                             <label class="kt-label">تكرار التحديث</label>
-                            <select class="kt-select h-[45px]">
+                            <select class="kt-select h-[45px]" special-search>
                                 <option value="15min">كل 15 دقيقة</option>
                                 <option value="30min">كل 30 دقيقة</option>
                                 <option value="1hour" selected>كل ساعة</option>
@@ -278,7 +278,7 @@
 
                         <div>
                             <label class="kt-label">مصدر البيانات</label>
-                            <select class="kt-select h-[45px]">
+                            <select class="kt-select h-[45px]" special-search>
                                 <option value="fixer">Fixer.io</option>
                                 <option value="exchangerate" selected>ExchangeRate-API</option>
                                 <option value="currencylayer">CurrencyLayer</option>

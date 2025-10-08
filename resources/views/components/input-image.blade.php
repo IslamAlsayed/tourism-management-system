@@ -1,20 +1,19 @@
 <div class="text-center mb-4">
     <div class="relative inline-block">
         <div
-            class="{{ $columnName == 'Application' ? 'w-[220px] h-[70px] rounded-[9px]' : 'w-32 h-32 rounded-full' }} bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden photo-preview">
-            <img id="{{ $columnName ?? 'photo' }}"
+            class="w-32 h-32 rounded-[9px] bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden photo-preview">
+            <img id="{{ $column ?? 'photo' }}"
                 src="{{ isset($photoUrl) && $photoUrl ? $photoUrl : asset('metronic/media/avatars/blank.png') }}"
                 alt="" class="w-full h-full object-cover">
         </div>
-        <label for="photo"
-            class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark"
-            style="padding-inline: 12px">
+        <label for="photo" style="padding-inline: 12px"
+            class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark">
             <i class="fas fa-camera text-sm"></i>
         </label>
         <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
     </div>
     <div class="text-sm text-secondary-foreground">
-        {{ __('main.upload_type', ['type' => __('main.' . $columnName)]) . ' ' . __('main.' . $columnName == 'Application' ? 'logo' : 'photo') }}
+        {{ __('main.upload_type', ['type' => __('main.' . $column)]) . ' ' . __('main.' . $columnName ?? 'photo') }}
     </div>
     @error('photo')
         <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

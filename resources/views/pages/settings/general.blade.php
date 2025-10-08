@@ -38,9 +38,19 @@
                         @method('PUT')
 
                         <!-- Setting Photo -->
-                        @include('components.input-image', [
-                            'columnName' => 'application',
-                            'photoUrl' => $settings->photo ? $settings->photo : 'logos/default-logo.svg',
+                        @include('components.settings-image', [
+                            'column' => 'application',
+                            'photoUrl' => [
+                                $settings->app_light_photo
+                                    ? asset('storage/' . $settings->app_light_photo)
+                                    : asset('storage/logos/default-logo.svg'),
+                                $settings->app_dark_photo
+                                    ? asset('storage/' . $settings->app_dark_photo)
+                                    : asset('storage/logos/default-logo.svg'),
+                                $settings->app_mini_photo
+                                    ? asset('storage/' . $settings->app_mini_photo)
+                                    : asset('storage/logos/mini-logo.svg'),
+                            ],
                         ])
 
                         <div class="grid lg:grid-cols-2 gap-6 mb-4">
@@ -84,6 +94,12 @@
                                 <label class="kt-label mb-2">{{ __('main.app_version') }}</label>
                                 <input type="text" name="app_version" class="kt-input h-[45px]"
                                     value="{{ $settings->app_version }}" />
+                            </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.app_columns_length') }}</label>
+                                <input type="number" name="app_columns_length" class="kt-input h-[45px]"
+                                    value="{{ $settings->app_columns_length }}" />
                             </div>
                         </div>
 

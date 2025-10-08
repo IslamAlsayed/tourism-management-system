@@ -56,8 +56,13 @@
 
                             <!-- Currency -->
                             <div class="">
-                                <label for="currency_id" class="kt-label mb-2">{{ __('main.currency') }}</label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]">
+                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.currency') }}
+                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -73,41 +78,21 @@
 
                             <!-- Country -->
                             <div class="">
-                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]">
+                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.country') }}
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
-                                            {{ old('country_id') == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }} {{ $country->name_ar ? ' - ' . $country->name_ar : '' }}
+                                            {{ old('country_id') == $country->id ? 'selected' : '' }}>{{ $country->name }}
                                         </option>
                                     @endforeach
                                 </select>
                                 @error('country_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- State -->
-                            <div class="">
-                                <label for="multi_states" class="kt-label mb-2">
-                                    <input type="hidden" name="multi_states" value="0">
-                                    <input type="checkbox" name="multi_states" id="multi_states" class="kt-checkbox"
-                                        style="width: 17px; height: 17px;"
-                                        onchange="document.getElementById('state_id').disabled = this.checked;"
-                                        value="1" {{ old('multi_states', '1') ? 'checked' : '' }}>
-                                    {{ __('main.all_types', ['types' => __('main.states')]) }}
-                                </label>
-                                <select name="state_id" id="state_id" class="kt-select h-[45px]" disabled special-multiple>
-                                    <option value="">--</option>
-                                    @foreach ($states as $state)
-                                        <option value="{{ $state->id }}"
-                                            {{ old('state_id') == $state->id ? 'selected' : '' }}>
-                                            {{ $state->name }} {{ $state->name_ar ? ' - ' . $state->name_ar : '' }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('state_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -122,12 +107,12 @@
                                         value="1" {{ old('multi_cities', '1') ? 'checked' : '' }}>
                                     {{ __('main.all_types', ['types' => __('main.cities')]) }}
                                 </label>
-                                <select name="city_id" id="city_id" class="kt-select h-[45px]" disabled special-multiple>
+                                <select name="city_id" id="city_id" class="kt-select h-[45px]" disabled special-search>
                                     <option value="">--</option>
                                     @foreach ($cities as $city)
                                         <option value="{{ $city->id }}"
                                             {{ old('city_id') == $city->id ? 'selected' : '' }}>
-                                            {{ $city->name }} {{ $city->name_ar ? ' - ' . $city->name_ar : '' }}
+                                            {{ $city->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -136,15 +121,43 @@
                                 @enderror
                             </div>
 
+                            <!-- State -->
+                            <div class="">
+                                <label for="multi_states" class="kt-label mb-2">
+                                    <input type="hidden" name="multi_states" value="0">
+                                    <input type="checkbox" name="multi_states" id="multi_states" class="kt-checkbox"
+                                        style="width: 17px; height: 17px;"
+                                        onchange="document.getElementById('state_id').disabled = this.checked;"
+                                        value="1" {{ old('multi_states', '1') ? 'checked' : '' }}>
+                                    {{ __('main.all_types', ['types' => __('main.states')]) }}
+                                </label>
+                                <select name="state_id" id="state_id" class="kt-select h-[45px]" disabled special-search>
+                                    <option value="">--</option>
+                                    @foreach ($states as $state)
+                                        <option value="{{ $state->id }}"
+                                            {{ old('state_id') == $state->id ? 'selected' : '' }}>{{ $state->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('state_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Region -->
                             <div class="">
-                                <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]">
+                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.region') }}
+                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"
                                             {{ old('region_id') == $region->id ? 'selected' : '' }}>
-                                            {{ $region->name }} {{ $region->name_ar ? ' - ' . $region->name_ar : '' }}
+                                            {{ $region->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -155,14 +168,19 @@
 
                             <!-- Subregion -->
                             <div class="">
-                                <label for="subregion_id" class="kt-label mb-2">{{ __('main.subregion') }}</label>
-                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]">
+                                <label for="subregion_id"
+                                    class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.subregion') }}
+                                    <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($subregions as $subregion)
                                         <option value="{{ $subregion->id }}"
                                             {{ old('subregion_id') == $subregion->id ? 'selected' : '' }}>
                                             {{ $subregion->name }}
-                                            {{ $subregion->name_ar ? ' - ' . $subregion->name_ar : '' }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -255,20 +273,28 @@
 
 @push('scripts')
     <script>
-        // Image preview
-        document.getElementById('image')?.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('image-preview');
-                    const placeholder = document.getElementById('image-placeholder');
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     FilterByForeignId("country_id", "city", "city_id");
+        //     FilterByForeignId("city_id", "state", "state_id");
+        //     // FilterByForeignId('region_id', 'subregion', 'subregion_id');
+        // });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            FilterByForeignId("country_id", "city", "city_id");
+
+            // ✅ انتظر لما SpecialSearch تبني عنصر city_id
+            const observer = new MutationObserver(() => {
+                const cityWrapper = document.querySelector(`[data-for="city_id"]`);
+                if (cityWrapper) {
+                    FilterByForeignId("city_id", "state", "state_id");
+                    observer.disconnect(); // وقف المراقبة بعد ما تشتغل مرة واحدة
+                }
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
         });
     </script>
 @endpush

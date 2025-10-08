@@ -20,8 +20,9 @@ class VehicleController extends Controller
     public function create()
     {
         $carRoutesPrice = TransportationCarRoutePrice::all();
+        $carRoutes = TransportationCarRoute::all();
         $currencies = Currency::all();
-        return view('pages.dashboard.transportation-vehicles.create', compact('carRoutesPrice', 'currencies'));
+        return view('pages.dashboard.transportation-vehicles.create', compact('carRoutesPrice', 'carRoutes','currencies'));
     }
 
     public function store(transportationCarRoutesCreateRequest $request)
@@ -43,8 +44,6 @@ class VehicleController extends Controller
     public function edit($id)
     {
         $transportationCarRoute = TransportationCarRoute::with('details')->find($id);
-        // dd($transportationCarRoute->toArray());
-
         $carRoutes = TransportationCarRoute::all();
         $currencies = Currency::all();
 

@@ -36,8 +36,9 @@
 
                         <!-- Profile Photo -->
                         @include('components.input-image', [
-                            'columnName' => 'profile',
-                            'photoUrl' => $user->photo,
+                            'column' => 'user',
+                            'columnName' => 'photo',
+                            'photoUrl' => $user->photo ? asset('storage/' . $user->photo) : '',
                         ])
 
                         <div class="grid lg:grid-cols-3 gap-6 mb-4">
@@ -118,27 +119,7 @@
                                 <h3 class="kt-card-title">{{ __('main.employment_information') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
-                                <div class="grid lg:grid-cols-3 gap-6 mb-4">
-                                    <!-- User Code -->
-                                    <div class="">
-                                        <label for="user_code" class="kt-label mb-2">{{ __('main.user_code') }}</label>
-                                        <input type="text" name="user_code" id="user_code" class="kt-input h-[45px]"
-                                            value="{{ $user->user_code }}">
-                                        @error('user_code')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <!-- Employee ID -->
-                                    <div class="">
-                                        <label for="employee_id" class="kt-label mb-2">{{ __('main.employee_id') }}</label>
-                                        <input type="text" name="employee_id" id="employee_id" class="kt-input h-[45px]"
-                                            value="{{ $user->employee_id }}">
-                                        @error('employee_id')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
+                                <div class="grid lg:grid-cols-3 gap-6">
                                     <!-- Hire Date -->
                                     <div class="">
                                         <label for="hire_date" class="kt-label mb-2">{{ __('main.hire_date') }}</label>
@@ -148,14 +129,19 @@
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div>
 
-                                <div class="grid lg:grid-cols-3 gap-6">
                                     <!-- Department -->
                                     <div class="">
                                         <label for="department" class="kt-label mb-2">{{ __('main.department') }}</label>
-                                        <input type="text" name="department" id="department"
-                                            class="kt-input h-[45px]" value="{{ $user->department }}">
+                                        <select name="department" id="department" class="kt-input h-[45px]" special-search>
+                                            <option value="">{{ __('main.select_department') }}</option>
+                                            @foreach (config('helpers.departments') as $key => $value)
+                                                <option value="{{ $key }}"
+                                                    {{ $user->department == $key ? 'selected' : '' }}>
+                                                    {{ ucfirst($value) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                         @error('department')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -164,18 +150,15 @@
                                     <!-- Position -->
                                     <div class="">
                                         <label for="position" class="kt-label mb-2">{{ __('main.position') }}</label>
-                                        <input type="text" name="position" id="position" class="kt-input h-[45px]"
-                                            value="{{ $user->position }}">
+                                        <select name="position" id="position" class="kt-input h-[45px]" special-search>
+                                            <option value="">{{ __('main.select_position') }}</option>
+                                            @foreach (config('helpers.positions') as $key => $value)
+                                                <option value="{{ $key }}"
+                                                    {{ $user->position == $key ? 'selected' : '' }}>{{ ucfirst($value) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                         @error('position')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <!-- Bio -->
-                                    <div class="">
-                                        <label for="bio" class="kt-label mb-2">{{ __('main.bio') }}</label>
-                                        <textarea name="bio" id="bio" rows="3" class="kt-input h-[45px]">{{ $user->bio }}</textarea>
-                                        @error('bio')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -195,7 +178,7 @@
                                         <label for="preferred_language"
                                             class="kt-label mb-2">{{ __('main.preferred_language') }}</label>
                                         <select name="preferred_language" id="preferred_language"
-                                            class="kt-select h-[45px]">
+                                            class="kt-select h-[45px]" special-search>
                                             <option value="">--</option>
                                             <option value="en"
                                                 {{ $user->preferred_language == 'en' ? 'selected' : '' }}>
@@ -213,27 +196,13 @@
                                     <div class="">
                                         <label for="timezone"
                                             class="kt-label mb-2">{{ __('main.timezone_field') }}</label>
-                                        <select name="timezone" id="timezone" class="kt-select h-[45px]">
+                                        <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
                                             <option value="">--</option>
-                                            <option value="UTC" {{ $user->timezone == 'UTC' ? 'selected' : '' }}>
-                                                UTC
-                                            </option>
-                                            <option value="Asia/Riyadh"
-                                                {{ $user->timezone == 'Asia/Riyadh' ? 'selected' : '' }}>
-                                                Asia/Riyadh
-                                            </option>
-                                            <option value="Asia/Dubai"
-                                                {{ $user->timezone == 'Asia/Dubai' ? 'selected' : '' }}>
-                                                Asia/Dubai
-                                            </option>
-                                            <option value="Europe/London"
-                                                {{ $user->timezone == 'Europe/London' ? 'selected' : '' }}>
-                                                Europe/London
-                                            </option>
-                                            <option value="America/New_York"
-                                                {{ $user->timezone == 'America/New_York' ? 'selected' : '' }}>
-                                                America/New_York
-                                            </option>
+                                            @foreach (config('helpers.timezones') as $zone)
+                                                <option value="{{ $zone }}"
+                                                    {{ $user->timezone == $zone ? 'selected' : '' }}>{{ $zone }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         @error('timezone')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -288,8 +257,7 @@
                                 <!-- Preferences -->
                                 <div class="mb-4">
                                     <label for="preferences" class="kt-label mb-2">{{ __('main.preferences') }}</label>
-                                    <textarea name="preferences" id="preferences" rows="3" class="kt-input h-[45px]"
-                                        placeholder="{{ __('main.preferences_placeholder') }}">{{ $user->preferences }}</textarea>
+                                    <textarea name="preferences" id="preferences" rows="3" class="kt-input h-[45px]">{{ $user->preferences }}</textarea>
                                     @error('preferences')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
@@ -298,8 +266,7 @@
                                 <!-- Notes -->
                                 <div class="mb-4">
                                     <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
-                                    <textarea name="notes" id="notes" rows="4" class="kt-input h-[45px]"
-                                        placeholder="{{ __('main.notes_placeholder') }}">{{ $user->notes }}</textarea>
+                                    <textarea name="notes" id="notes" rows="4" class="kt-input h-[45px]">{{ $user->notes }}</textarea>
                                     @error('notes')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
@@ -369,19 +336,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Photo preview
-        document.getElementById('photo').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('profile-preview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
-@endpush

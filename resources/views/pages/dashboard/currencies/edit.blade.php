@@ -37,8 +37,7 @@
                             <!-- Currency Name -->
                             <div class="">
                                 <label for="name" class="kt-label required mb-2">{{ __('main.currency_name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.currency_name_english_example') }}" required
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
                                     value="{{ $currency->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -49,9 +48,8 @@
                             <div class="">
                                 <label for="code"
                                     class="kt-label required mb-2">{{ __('main.currency_code_iso') }}</label>
-                                <input type="text" name="code" id="code" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.currency_code_example') }}" maxlength="3" required
-                                    value="{{ $currency->code }}" />
+                                <input type="text" name="code" id="code" class="kt-input h-[45px]" maxlength="3"
+                                    required value="{{ $currency->code }}" />
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -61,9 +59,8 @@
                             <div class="">
                                 <label for="symbol"
                                     class="kt-label required mb-2">{{ __('main.currency_symbol') }}</label>
-                                <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.currency_symbol_example') }}" max="5" required
-                                    value="{{ $currency->symbol }}">
+                                <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]" max="5"
+                                    required value="{{ $currency->symbol }}">
                                 @error('symbol')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -155,52 +152,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Live preview update
-        function updatePreview() {
-            const symbol = document.getElementById('symbol').value || '$';
-            const code = document.getElementById('code').value || 'USD';
-            const position = document.getElementById('symbol_position').value;
-            const separator = document.getElementById('thousand_separator').value || ',';
-
-            // Update previews
-            document.getElementById('symbol-preview').textContent = symbol;
-            document.getElementById('code-preview').textContent = code;
-
-            // Format sample amount
-            let amount = '1234.56';
-            if (separator) {
-                amount = '1' + separator + '234.56';
-            }
-
-            const formattedAmount = position === 'before' ? symbol + ' ' + amount : amount + ' ' + symbol;
-            document.getElementById('amount-preview').textContent = formattedAmount;
-        }
-
-        // edit event listeners
-        ['symbol', 'code', 'symbol_position', 'thousand_separator'].forEach(id => {
-            document.getElementById(id).editEventListener('input', updatePreview);
-            document.getElementById(id).editEventListener('change', updatePreview);
-        });
-
-        // Auto-uppercase code
-        document.getElementById('code').editEventListener('input', function() {
-            this.value = this.value.toUpperCase();
-        });
-
-        // Crypto currency toggle
-        document.getElementById('is_crypto').editEventListener('change', function() {
-            const typeField = document.getElementById('type');
-            if (this.checked) {
-                typeField.value = 'crypto';
-            } else {
-                typeField.value = 'fiat';
-            }
-        });
-
-        // Initialize preview
-        updatePreview();
-    </script>
-@endpush

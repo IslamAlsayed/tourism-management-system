@@ -32,7 +32,7 @@ class Hotels extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Hotel::class, 5);
+        $this->mountWithCustomColumns(Hotel::class);
         $this->resetPage();
     }
 

@@ -32,7 +32,7 @@ class TourGuidesTypes extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(TourGuideType::class, 5);
+        $this->mountWithCustomColumns(TourGuideType::class);
         $this->resetPage();
     }
 

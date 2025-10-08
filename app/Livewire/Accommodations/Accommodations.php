@@ -33,7 +33,7 @@ class Accommodations extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Accommodation::class, 5);
+        $this->mountWithCustomColumns(Accommodation::class);
         $this->resetPage();
     }
 

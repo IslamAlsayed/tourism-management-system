@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Dashboard\CityController;
+use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\ExcelController;
 use App\Http\Controllers\Dashboard\StateController;
@@ -46,6 +47,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::delete('delete-all-selected-items', [DashboardController::class, 'deleteAll'])->name('deleteAll');
+    Route::get('/api/{reference}/{constrainId}/{constrainValue}', [DashboardController::class, 'getReferences']);
 
     // Legacy multi-step form routes (keeping for reference)
     Route::prefix('quote/v1')->group(function () {
@@ -124,6 +126,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('transportation/vehicles', VehicleController::class)->names('transportation-vehicles');
 
     // === ACCOMMODATIONS MANAGEMENT ===
+    Route::resource('types', TypeController::class)->names('types');
     Route::resource('accommodations', AccommodationController::class)->names('accommodations');
     Route::get('accommodations/{type}/type', [AccommodationController::class, 'getResultType'])->name('accommodations.type');
 

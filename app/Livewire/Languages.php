@@ -32,7 +32,7 @@ class Languages extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Language::class, 5);
+        $this->mountWithCustomColumns(Language::class);
         $this->resetPage();
     }
 

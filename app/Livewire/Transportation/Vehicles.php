@@ -36,7 +36,7 @@ class Vehicles extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(TransportationCarRoutePrice::class, 5);
+        $this->mountWithCustomColumns(TransportationCarRoutePrice::class);
         $this->resetPage();
     }
 

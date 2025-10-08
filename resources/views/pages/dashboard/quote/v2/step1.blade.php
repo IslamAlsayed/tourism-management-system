@@ -76,8 +76,7 @@
 
                         <div style="display: none; visibility: hidden;" data-filetype-target="Other">
                             <label for="other" class="kt-label mb-2">Other</label>
-                            <input type="text" id="other" name="other" class="kt-input h-[45px]"
-                                placeholder="Enter other">
+                            <input type="text" id="other" name="other" class="kt-input h-[45px]">
                             @error('other')
                                 <div class="text-red-600 text-sm">{{ $message }}</div>
                             @enderror

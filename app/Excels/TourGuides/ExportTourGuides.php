@@ -38,6 +38,7 @@ class ExportTourGuides implements FromArray, WithHeadings, WithCustomCsvSettings
                 $data->notes,
                 $data->country_id,
                 $data->currency_id,
+                $data->guide_languages->ids,
                 $data->guide_type_id,
             ];
         }
@@ -65,6 +66,7 @@ class ExportTourGuides implements FromArray, WithHeadings, WithCustomCsvSettings
             'notes',
             'country_id',
             'currency_id',
+            'guide_languages_ids',
             'guide_type_id',
         ];
     }

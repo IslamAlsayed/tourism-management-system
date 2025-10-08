@@ -70,12 +70,11 @@
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" required>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
+                                    required>
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}">
-                                            {{ $country->name }} {{ $country->name_ar ? ' - ' . $country->name_ar : '' }}
-                                        </option>
+                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('country_id')
@@ -85,14 +84,21 @@
 
                             <!-- State -->
                             <div class="">
-                                <label for="state_id" class="kt-label mb-2">{{ __('main.state') }}</label>
-                                <select name="state_id" id="state_id" class="kt-select h-[45px]">
+                                <label for="state_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        {{ __('main.state') }}
+                                        <i id="state_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        <span class="text-red-600 text-sm span-info" id="state_id-info">
+                                            (You must select country first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search required>
                                     <option value="">--</option>
-                                    @foreach ($states as $state)
-                                        <option value="{{ $state->id }}">
-                                            {{ $state->name }} {{ $state->name_ar ? ' - ' . $state->name_ar : '' }}
-                                        </option>
-                                    @endforeach
+                                    {{-- States will be loaded dynamically based on selected country --}}
                                 </select>
                                 @error('state_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -122,7 +128,8 @@
                             <!-- Timezone -->
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]">
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search
+                                    special-search>
                                     <option value="">{{ __('main.select_timezone') }}</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
@@ -145,29 +152,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Description -->
-                        <div class="mb-4">
-                            <label for="description"
-                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.city')]) }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]"></textarea>
-                            @error('description')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Status -->
-                        {{-- <div class="mb-4">
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_active" value="0">
-                                <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                    value="1" checked>
-                                <label for="is_active" class="kt-label mb-0">{{ __('main.activate_city') }}</label>
-                            </div>
-                            <div class="text-sm text-secondary-foreground mt-1">
-                                {{ __('main.active_cities_will_appear') }}
-                            </div>
-                        </div> --}}
 
                         <!-- Submit Buttons -->
                         <div class="flex items-center gap-4">
@@ -232,3 +216,11 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            FilterByForeignId('country_id', 'state', 'state_id');
+        });
+    </script>
+@endpush

@@ -22,18 +22,30 @@
 <meta content="Sign in page using Tailwind CSS" property="og:description" />
 <meta content="{{ asset('metronic/media/app/og-image.png') }}" property="og:image" />
 
-<link href="{{ asset('metronic/media/app/apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="180x180" />
-<link href="{{ asset('metronic/media/app/favicon-32x32.png') }}" rel="icon" sizes="32x32" type="image/png" />
-<link href="{{ asset('metronic/media/app/favicon-16x16.png') }}" rel="icon" sizes="16x16" type="image/png" />
-<link href="{{ asset('metronic/media/app/favicon.ico') }}" rel="shortcut icon" />
+<link
+    href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
+    rel="apple-touch-icon" sizes="180x180" />
+<link
+    href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
+    rel="icon" sizes="32x32" type="image/png" />
+<link
+    href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
+    rel="icon" sizes="16x16" type="image/png" />
+{{-- <link href="{{ asset('metronic/media/app/favicon.ico') }}" rel="shortcut icon" /> --}}
+<link
+    href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
+    rel="shortcut icon" />
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet" />
+{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet" /> --}}
+<link href="{{ asset('assets/css/all.min.css') }}" rel="stylesheet" />
 
 <link href="{{ asset('metronic/vendors/apexcharts/apexcharts.css') }}" rel="stylesheet" />
 <link href="{{ asset('metronic/vendors/keenicons/styles.bundle.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/custom-input.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/checkbox-input.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/toggle-input.css') }}" rel="stylesheet" />
 
 {{-- Multi Select CSS --}}
 <link href="{{ asset('assets/css/multi-select.css') }}" rel="stylesheet">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\User;
 use App\Models\Country;
+use Illuminate\Http\Request;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserCreateRequest;
@@ -24,17 +25,19 @@ class UserController extends Controller
         return view('pages.dashboard.users.create', compact('countries'));
     }
 
-    public function show($id)
-    {
-        $user = User::find($id);
-        if (!$user) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
-        }
-        return view('pages.dashboard.users.show', compact('user'));
-    }
+    // public function show($id)
+    // {
+    //     $user = User::find($id);
+    //     if (!$user) {
+    //         return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
+    //     }
+    //     return view('pages.dashboard.users.show', compact('user'));
+    // }
 
     public function store(UserCreateRequest $request)
+    // public function store(Request $request)
     {
+        // dD($request->all());
         $validated = $request->validated();
         $validated = $request->safe()->except('photo');
         $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];

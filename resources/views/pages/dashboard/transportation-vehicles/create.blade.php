@@ -74,11 +74,14 @@
 
                             <!-- Car route -->
                             <div class="">
-                                <label for="car_route_id" class="kt-label required mb-2">Car Route</label>
-                                <select name="car_route_id" id="car_route_id" class="kt-input h-[45px]" required>
+                                <label for="car_route_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Car Route
+                                </label>
+                                <select name="car_route_id" id="car_route_id" class="kt-input h-[45px]" required
+                                    special-search>
                                     <option value="">--</option>
                                     @foreach ($carRoutes as $carRoute)
-                                        <option value="{{ $carRoute->id }}">{{ $carRoute->name }}</option>
+                                        <option value="{{ $carRoute->id }}">{{ $carRoute->route }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -94,8 +97,14 @@
 
                             <!-- Currencies -->
                             <div class="">
-                                <label for="currency_id" class="kt-label required mb-2">Currency</label>
-                                <select name="currency_id" id="currency_id" class="kt-input h-[45px]" required>
+                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Currency
+                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="currency_id" id="currency_id" class="kt-input h-[45px]" required
+                                    special-search>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}">{{ $currency->code }}

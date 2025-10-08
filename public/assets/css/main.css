@@ -1,3 +1,35 @@
+.loading {
+    opacity: 0.7;
+    user-select: none;
+    pointer-events: none;
+}
+
+.i-loader,
+.span-info {
+    opacity: 0 !important;
+    /* visibility: hidden !important; */
+    display: none !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+.i-loader.show,
+.span-info.show {
+    opacity: 1 !important;
+    /* visibility: visible !important; */
+    display: inline-block !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+.i-loader.show {
+    animation: spinLoader 0.5s infinite linear !important;
+}
+
+@keyframes spinLoader {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
 .highlight {
     background-color: yellow;
 }
@@ -14,6 +46,9 @@
 
 #parentColumnsModal {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 #parentColumnsModal i {

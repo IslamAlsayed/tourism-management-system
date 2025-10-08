@@ -414,14 +414,12 @@
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold">First Name *</label>
                                         <input type="text" class="form-control form-control-modern"
-                                            value="{{ explode(' ', $user->name)[0] ?? '' }}"
-                                            placeholder="Enter first name">
+                                            value="{{ explode(' ', $user->name)[0] ?? '' }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold">Last Name *</label>
                                         <input type="text" class="form-control form-control-modern"
-                                            value="{{ explode(' ', $user->name)[1] ?? '' }}"
-                                            placeholder="Enter last name">
+                                            value="{{ explode(' ', $user->name)[1] ?? '' }}">
                                     </div>
                                 </div>
 
@@ -430,12 +428,12 @@
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold">Email Address *</label>
                                         <input type="email" class="form-control form-control-modern"
-                                            value="{{ $user->email }}" placeholder="Enter email address">
+                                            value="{{ $user->email }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold">Phone Number</label>
                                         <input type="tel" class="form-control form-control-modern"
-                                            value="{{ $user->phone ?? '' }}" placeholder="Enter phone number">
+                                            value="{{ $user->phone ?? '' }}">
                                     </div>
                                 </div>
 
@@ -444,12 +442,12 @@
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold">Department</label>
                                         <input type="text" class="form-control form-control-modern"
-                                            value="{{ $user->department ?? '' }}" placeholder="Enter department">
+                                            value="{{ $user->department ?? '' }}">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold">Position</label>
                                         <input type="text" class="form-control form-control-modern"
-                                            value="{{ $user->position ?? '' }}" placeholder="Enter position">
+                                            value="{{ $user->position ?? '' }}">
                                     </div>
                                 </div>
 
@@ -457,7 +455,7 @@
                                 <div class="row mb-6">
                                     <div class="col-12">
                                         <label class="form-label fw-bold">Bio</label>
-                                        <textarea class="form-control form-control-modern" rows="4" placeholder="Tell us about yourself...">{{ $user->bio ?? '' }}</textarea>
+                                        <textarea class="form-control form-control-modern" rows="4">{{ $user->bio ?? '' }}</textarea>
                                     </div>
                                 </div>
 
@@ -507,18 +505,15 @@
                             </div>
                             <div class="col-lg-4">
                                 <label class="form-label fw-semibold fs-6">Current Password</label>
-                                <input type="password" class="form-control form-control-lg form-control-solid"
-                                    placeholder="Current password" />
+                                <input type="password" class="form-control form-control-lg form-control-solid" />
                             </div>
                             <div class="col-lg-4">
                                 <label class="form-label fw-semibold fs-6">New Password</label>
-                                <input type="password" class="form-control form-control-lg form-control-solid"
-                                    placeholder="New password" />
+                                <input type="password" class="form-control form-control-lg form-control-solid" />
                             </div>
                             <div class="col-lg-4">
                                 <label class="form-label fw-semibold fs-6">Confirm Password</label>
-                                <input type="password" class="form-control form-control-lg form-control-solid"
-                                    placeholder="Confirm password" />
+                                <input type="password" class="form-control form-control-lg form-control-solid" />
                             </div>
                         </div>
 

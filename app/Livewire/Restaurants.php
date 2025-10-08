@@ -2,11 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\City;
-use App\Models\Region;
-use App\Models\Country;
 use Livewire\Component;
-use App\Models\Subregion;
 use App\Models\Restaurant;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
@@ -37,7 +33,7 @@ class Restaurants extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Restaurant::class, 5);
+        $this->mountWithCustomColumns(Restaurant::class);
         $this->resetPage();
     }
 

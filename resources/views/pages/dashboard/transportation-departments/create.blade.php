@@ -48,68 +48,65 @@
                             <div class="">
                                 <label for="contact_person" class="kt-label required mb-2">Contact Person</label>
                                 <input type="text" name="contact_person" id="contact_person" class="kt-input h-[45px]"
-                                    placeholder="Enter contact person name" required>
+                                    name" required>
                             </div>
 
                             <!-- Mobile -->
                             <div class="">
                                 <label for="mobile" class="kt-label required mb-2">Mobile</label>
-                                <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
-                                    placeholder="Enter mobile number" required>
+                                <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- phone_01 -->
                             <div class="">
                                 <label for="phone_01" class="kt-label required mb-2">Phone 01</label>
-                                <input type="text" name="phone_01" id="phone_01" class="kt-input h-[45px]"
-                                    placeholder="Enter phone number" required>
+                                <input type="text" name="phone_01" id="phone_01" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- phone_02 -->
                             <div class="">
                                 <label for="phone_02" class="kt-label required mb-2">Phone 02</label>
-                                <input type="text" name="phone_02" id="phone_02" class="kt-input h-[45px]"
-                                    placeholder="Enter phone number" required>
+                                <input type="text" name="phone_02" id="phone_02" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- email_01 -->
                             <div class="">
                                 <label for="email_01" class="kt-label required mb-2">Email 1</label>
-                                <input type="text" name="email_01" id="email_01" class="kt-input h-[45px]"
-                                    placeholder="Enter email_01 number" required>
+                                <input type="text" name="email_01" id="email_01" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- email_02 -->
                             <div class="">
                                 <label for="email_02" class="kt-label required mb-2">Email 2</label>
-                                <input type="text" name="email_02" id="email_02" class="kt-input h-[45px]"
-                                    placeholder="Enter email_02 number" required>
+                                <input type="text" name="email_02" id="email_02" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- fax -->
                             <div class="">
                                 <label for="fax" class="kt-label required mb-2">Fax</label>
-                                <input type="text" name="fax" id="fax" class="kt-input h-[45px]"
-                                    placeholder="Enter fax number" required>
+                                <input type="text" name="fax" id="fax" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- address -->
                             <div class="">
                                 <label for="address" class="kt-label required mb-2">Address</label>
-                                <input type="text" name="address" id="address" class="kt-input h-[45px]"
-                                    placeholder="Enter address" required>
+                                <input type="text" name="address" id="address" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Website -->
                             <div class="">
                                 <label for="website" class="kt-label required mb-2">Website</label>
-                                <input type="text" name="website" id="website" class="kt-input h-[45px]"
-                                    placeholder="Enter website URL" required>
+                                <input type="text" name="website" id="website" class="kt-input h-[45px]" required>
                             </div>
 
                             <!-- Transportation company -->
                             <div class="">
-                                <label for="company_id" class="kt-label required mb-2">Transportation Company</label>
+                                <label for="company_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Transportation Company
+                                    <a href="{{ route('transportation-companies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
                                 <select name="company_id" id="company_id" class="kt-input h-[45px]" required>
                                     <option value="">--</option>
                                     @foreach ($transportationCompanies as $company)
@@ -120,55 +117,81 @@
 
                             <!-- Countries -->
                             <div class="">
-                                <label for="country_id" class="kt-label required mb-2">Countries</label>
+                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Countries
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
                                 <select name="country_id" id="country_id" class="kt-input h-[45px]" required>
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}">{{ $country_id->name }}</option>
+                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <!-- States -->
                             <div class="">
-                                <label for="state_id" class="kt-label required mb-2">States</label>
+                                <label for="state_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    States
+                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
                                 <select name="state_id" id="state_id" class="kt-input h-[45px]" required>
                                     <option value="">--</option>
                                     @foreach ($states as $state)
-                                        <option value="{{ $state->id }}">{{ $state_id->name }}</option>
+                                        <option value="{{ $state->id }}">{{ $state->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <!-- Cities -->
                             <div class="">
-                                <label for="city_id" class="kt-label required mb-2">Cities</label>
+                                <label for="city_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Cities
+                                    <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
                                 <select name="city_id" id="city_id" class="kt-input h-[45px]" required>
                                     <option value="">--</option>
                                     @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city_id->name }}</option>
+                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <!-- Regions -->
                             <div class="">
-                                <label for="region_id" class="kt-label required mb-2">Regions</label>
+                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    Regions
+                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
                                 <select name="region_id" id="region_id" class="kt-input h-[45px]" required>
                                     <option value="">--</option>
                                     @foreach ($regions as $region)
-                                        <option value="{{ $region->id }}">{{ $region_id->name }}</option>
+                                        <option value="{{ $region->id }}">{{ $region->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <!-- Subregions -->
                             <div class="">
-                                <label for="subregion_id" class="kt-label required mb-2">Subregions</label>
+                                <label for="subregion_id"
+                                    class="kt-label required mb-2 flex items-center justify-between">
+                                    Subregions
+                                    <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
                                 <select name="subregion_id" id="subregion_id" class="kt-input h-[45px]" required>
                                     <option value="">--</option>
                                     @foreach ($subregions as $subregion)
-                                        <option value="{{ $subregion->id }}">{{ $subregion_id->name }}</option>
+                                        <option value="{{ $subregion->id }}">{{ $subregion->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

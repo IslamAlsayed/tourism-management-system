@@ -22,16 +22,18 @@
                     <tr>
                         <th class="border px-2">name</th>
                         <th class="border px-2">name_ar</th>
-                        <th class="border px-2">region_id</th>
-                        <th class="border px-2">subregion_id</th>
+                        <th class="border px-2">type_id</th>
                         <th class="border px-2">country_id</th>
                         <th class="border px-2">city_id</th>
+                        <th class="border px-2">region_id</th>
+                        <th class="border px-2">subregion_id</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">Fakhreddin</td>
                         <td class="border px-2">فخر الدين السياحية</td>
+                        <td class="border px-2">1</td>
                         <td class="border px-2">1</td>
                         <td class="border px-2">1</td>
                         <td class="border px-2">1</td>
@@ -44,7 +46,7 @@
             <table class="border min-w-full divide-y text-center divide-gray-200">
                 <thead style="background-color: #ffea00;">
                     <tr>
-                        <th class="border px-2">type</th>
+                        <th class="border px-2">rating</th>
                         <th class="border px-2">company_name_ar</th>
                         <th class="border px-2">specialty</th>
                         <th class="border px-2">phone_01</th>
@@ -63,8 +65,7 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">null</td>
-                        <td class="border px-2">null</td>
+                        <td class="border px-2">3</td>
                         <td class="border px-2">null</td>
                         <td class="border px-2">null</td>
                         <td class="border px-2">null</td>

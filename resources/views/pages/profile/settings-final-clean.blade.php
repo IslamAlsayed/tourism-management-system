@@ -180,7 +180,7 @@
                                             class="col-lg-3 col-form-label fw-semibold">{{ __('main.full_name') }}</label>
                                         <div class="col-lg-9">
                                             <input type="text" name="name" class="form-control form-control-lg"
-                                                placeholder="{{ __('main.full_name') }}" value="{{ $user->name }}" />
+                                                value="{{ $user->name }}" />
                                         </div>
                                     </div>
 
@@ -188,7 +188,6 @@
                                         <label class="col-lg-3 col-form-label fw-semibold">{{ __('main.email') }}</label>
                                         <div class="col-lg-9">
                                             <input type="email" name="email" class="form-control form-control-lg"
-                                                placeholder="{{ __('main.email_address') }}"
                                                 value="{{ $user->email }}" />
                                         </div>
                                     </div>
@@ -197,7 +196,6 @@
                                         <label class="col-lg-3 col-form-label fw-semibold">{{ __('main.phone') }}</label>
                                         <div class="col-lg-9">
                                             <input type="tel" name="phone" class="form-control form-control-lg"
-                                                placeholder="{{ __('main.phone_number') }}"
                                                 value="{{ $user->phone ?? '' }}" />
                                         </div>
                                     </div>
@@ -226,8 +224,7 @@
                                             class="col-lg-3 col-form-label fw-semibold">{{ __('main.current_password') }}</label>
                                         <div class="col-lg-9">
                                             <input type="password" name="current_password"
-                                                class="form-control form-control-lg"
-                                                placeholder="{{ __('main.enter_current_password') }}" />
+                                                class="form-control form-control-lg" />
                                         </div>
                                     </div>
 
@@ -236,8 +233,7 @@
                                             class="col-lg-3 col-form-label fw-semibold">{{ __('main.new_password') }}</label>
                                         <div class="col-lg-9">
                                             <input type="password" name="new_password"
-                                                class="form-control form-control-lg"
-                                                placeholder="{{ __('main.enter_new_password') }}" />
+                                                class="form-control form-control-lg" />
                                         </div>
                                     </div>
 

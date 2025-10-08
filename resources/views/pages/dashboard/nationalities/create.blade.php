@@ -55,8 +55,13 @@
 
                             <!-- Country id -->
                             <div class="">
-                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
-                                <select name="country_id" id="country_id" class="kt-input h-[45px]">
+                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.country') }}
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-input h-[45px]" special-search>>
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -76,16 +81,6 @@
                                     {{ old('is_active') ? 'checked' : '' }}>
                                 <label for="is_active" class="kt-label mb-0">{{ __('main.is_active') }}</label>
                             </div>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="mb-4">
-                            <label for="description"
-                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.nationality')]) }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]"></textarea>
-                            @error('description')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         <!-- Submit Buttons -->

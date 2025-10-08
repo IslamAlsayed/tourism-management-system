@@ -37,8 +37,7 @@
                             <div class="mb-3">
                                 <label for="name"
                                     class="kt-label required mb-2">{{ __('main.currency_name_english') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.currency_name_english_example') }}" required
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
                                     value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -49,9 +48,8 @@
                             <div class="mb-3">
                                 <label for="code"
                                     class="kt-label required mb-2">{{ __('main.currency_code_iso') }}</label>
-                                <input type="text" name="code" id="code" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.currency_code_example') }}" maxlength="3" required
-                                    value="{{ old('code') }}" />
+                                <input type="text" name="code" id="code" class="kt-input h-[45px]" maxlength="3"
+                                    required value="{{ old('code') }}" />
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -61,32 +59,12 @@
                             <div class="mb-3">
                                 <label for="symbol"
                                     class="kt-label required mb-2">{{ __('main.currency_symbol') }}</label>
-                                <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.currency_symbol_example') }}" max="5" required
-                                    value="{{ old('symbol') }}">
+                                <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]" max="5"
+                                    required value="{{ old('symbol') }}">
                                 @error('symbol')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <!-- Country using this currency -->
-                            {{-- <div class="mb-3">
-                                <label for="country_id"
-                                    class="kt-label mb-2">{{ __('main.countries_using_currency') }}</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]">
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}">
-                                            {{ $country->name_ar }} - {{ $country->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div class="text-xs text-secondary-foreground mt-1">
-                                    {{ __('main.multiple_countries_hint') }}
-                                </div>
-                                @error('country_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div> --}}
 
                             <!-- Currency Settings -->
                             <div class="space-y-4">
@@ -176,52 +154,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Live preview update
-        function updatePreview() {
-            const symbol = document.getElementById('symbol').value || '$';
-            const code = document.getElementById('code').value || 'USD';
-            const position = document.getElementById('symbol_position').value;
-            const separator = document.getElementById('thousand_separator').value || ',';
-
-            // Update previews
-            document.getElementById('symbol-preview').textContent = symbol;
-            document.getElementById('code-preview').textContent = code;
-
-            // Format sample amount
-            let amount = '1234.56';
-            if (separator) {
-                amount = '1' + separator + '234.56';
-            }
-
-            const formattedAmount = position === 'before' ? symbol + ' ' + amount : amount + ' ' + symbol;
-            document.getElementById('amount-preview').textContent = formattedAmount;
-        }
-
-        // Add event listeners
-        ['symbol', 'code', 'symbol_position', 'thousand_separator'].forEach(id => {
-            document.getElementById(id).addEventListener('input', updatePreview);
-            document.getElementById(id).addEventListener('change', updatePreview);
-        });
-
-        // Auto-uppercase code
-        document.getElementById('code').addEventListener('input', function() {
-            this.value = this.value.toUpperCase();
-        });
-
-        // Crypto currency toggle
-        document.getElementById('is_crypto').addEventListener('change', function() {
-            const typeField = document.getElementById('type');
-            if (this.checked) {
-                typeField.value = 'crypto';
-            } else {
-                typeField.value = 'fiat';
-            }
-        });
-
-        // Initialize preview
-        updatePreview();
-    </script>
-@endpush

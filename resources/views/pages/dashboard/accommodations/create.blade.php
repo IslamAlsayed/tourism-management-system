@@ -51,15 +51,13 @@
                             <!-- Name -->
                             <div class="mb-4">
                                 <label for="name" class="kt-label required mb-2">Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input"
-                                    placeholder="Enter accommodation name" required>
+                                <input type="text" name="name" id="name" class="kt-input" required>
                             </div>
 
                             <!-- Name Arabic -->
                             <div class="mb-4">
                                 <label for="name_ar" class="kt-label required mb-2">Name (Arabic)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input"
-                                    placeholder="أدخل اسم الإقامة" required>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input" required>
                             </div>
                         </div>
 
@@ -67,25 +65,19 @@
                             <!-- Type -->
                             <div class="mb-4">
                                 <label for="type" class="kt-label required mb-2">Accommodation Type</label>
-                                <select name="type" id="type" class="kt-select" required>
-                                    <option value="">Select Type</option>
+                                <select name="type" id="type" class="kt-select" special-search required>
+                                    <option value="">--</option>
                                     @foreach ($types as $type)
                                         <option value="{{ $type->id }}">{{ $type->name }}</option>
                                     @endforeach
-                                    {{-- <option value="Hotel">Hotel</option>
-                                    <option value="Resort">Resort</option>
-                                    <option value="Camp">Tourist Camp</option>
-                                    <option value="Hostel">Hostel</option>
-                                    <option value="Lodge">Lodge</option>
-                                    <option value="Apartment">Hotel Apartment</option> --}}
                                 </select>
                             </div>
 
                             <!-- Rating -->
                             <div class="mb-4">
                                 <label for="rating" class="kt-label required mb-2">Star Rating</label>
-                                <select name="rating" id="rating" class="kt-select" required>
-                                    <option value="">Select Rating</option>
+                                <select name="rating" id="rating" class="kt-select" special-search required>
+                                    <option value="">--</option>
                                     <option value="1">1 Star</option>
                                     <option value="2">2 Stars</option>
                                     <option value="3">3 Stars</option>
@@ -99,8 +91,8 @@
                             <!-- Country -->
                             <div class="mb-4">
                                 <label for="country" class="kt-label required mb-2">Country</label>
-                                <select name="country" id="country" class="kt-select" required>
-                                    <option value="">Select Country</option>
+                                <select name="country" id="country" class="kt-select" special-search required>
+                                    <option value="">--</option>
                                     <option value="Saudi Arabia">Saudi Arabia</option>
                                     <option value="UAE">United Arab Emirates</option>
                                     <option value="Qatar">Qatar</option>
@@ -113,8 +105,7 @@
                             <!-- City -->
                             <div class="mb-4">
                                 <label for="city" class="kt-label required mb-2">City</label>
-                                <input type="text" name="city" id="city" class="kt-input"
-                                    placeholder="Enter city name" required>
+                                <input type="text" name="city" id="city" class="kt-input" required>
                             </div>
                         </div>
 
@@ -122,14 +113,13 @@
                             <!-- Address -->
                             <div class="mb-4">
                                 <label for="address" class="kt-label mb-2">Address</label>
-                                <textarea name="address" id="address" rows="3" class="kt-input" placeholder="Enter full address"></textarea>
+                                <textarea name="address" id="address" rows="3" class="kt-input"></textarea>
                             </div>
 
                             <!-- Description -->
                             <div class="mb-4">
                                 <label for="description" class="kt-label mb-2">Description</label>
-                                <textarea name="description" id="description" rows="3" class="kt-input"
-                                    placeholder="Enter accommodation description"></textarea>
+                                <textarea name="description" id="description" rows="3" class="kt-input"></textarea>
                             </div>
                         </div>
 
@@ -137,22 +127,19 @@
                             <!-- Phone -->
                             <div class="mb-4">
                                 <label for="phone" class="kt-label mb-2">Phone</label>
-                                <input type="tel" name="phone" id="phone" class="kt-input"
-                                    placeholder="+966 11 123 4567">
+                                <input type="tel" name="phone" id="phone" class="kt-input">
                             </div>
 
                             <!-- Email -->
                             <div class="mb-4">
                                 <label for="email" class="kt-label mb-2">Email</label>
-                                <input type="email" name="email" id="email" class="kt-input"
-                                    placeholder="info@accommodation.com">
+                                <input type="email" name="email" id="email" class="kt-input">
                             </div>
 
                             <!-- Website -->
                             <div class="mb-4">
                                 <label for="website" class="kt-label mb-2">Website</label>
-                                <input type="url" name="website" id="website" class="kt-input"
-                                    placeholder="www.accommodation.com">
+                                <input type="url" name="website" id="website" class="kt-input">
                             </div>
                         </div>
 
@@ -160,8 +147,7 @@
                             <!-- Number of Rooms -->
                             <div class="mb-4">
                                 <label for="rooms" class="kt-label required mb-2">Number of Rooms</label>
-                                <input type="number" name="rooms" id="rooms" class="kt-input"
-                                    placeholder="Enter number of rooms" required>
+                                <input type="number" name="rooms" id="rooms" class="kt-input" rooms" required>
                             </div>
 
                             <!-- Check-in Time -->
@@ -183,7 +169,7 @@
                             <!-- Status -->
                             <div class="mb-4">
                                 <label for="status" class="kt-label required mb-2">Status</label>
-                                <select name="status" id="status" class="kt-select" required>
+                                <select name="status" id="status" class="kt-select" special-search required>
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                     <option value="maintenance">Under Maintenance</option>
@@ -302,19 +288,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Photo preview
-        document.getElementById('photo').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('accommodation-preview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
-@endpush

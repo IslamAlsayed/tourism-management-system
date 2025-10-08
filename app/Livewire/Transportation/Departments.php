@@ -38,7 +38,7 @@ class Departments extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(TransportationCompanyDepartment::class, 5);
+        $this->mountWithCustomColumns(TransportationCompanyDepartment::class);
         $this->resetPage();
     }
 

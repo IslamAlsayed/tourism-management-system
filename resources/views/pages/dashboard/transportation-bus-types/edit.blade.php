@@ -49,14 +49,14 @@
                             <div class="">
                                 <label for="seats" class="kt-label mb-2">Seats</label>
                                 <input type="number" name="seats" id="seats" class="kt-input h-[45px]"
-                                    placeholder="Enter number of seats" value="{{ $transportationBusType->seats }}">
+                                    value="{{ $transportationBusType->seats }}">
                             </div>
 
                             <!-- Type -->
                             <div class="">
                                 <label for="type" class="kt-label mb-2">Type</label>
                                 <input type="text" name="type" id="type" class="kt-input h-[45px]"
-                                    placeholder="Enter bus type" value="{{ $transportationBusType->type }}">
+                                    value="{{ $transportationBusType->type }}">
                             </div>
 
                             <!-- Transportation company -->

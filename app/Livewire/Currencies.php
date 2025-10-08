@@ -32,7 +32,7 @@ class Currencies extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Currency::class, 5);
+        $this->mountWithCustomColumns(Currency::class);
         $this->resetPage();
     }
 

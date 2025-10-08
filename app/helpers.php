@@ -26,6 +26,13 @@ if (!function_exists('getActiveUser')) {
     }
 }
 
+if (!function_exists('getActiveSettings')) {
+    function getActiveSettings()
+    {
+        return Setting::first() ?? [];
+    }
+}
+
 if (!function_exists('getLocalizedText')) {
     /**
      * Get localized text based on current locale

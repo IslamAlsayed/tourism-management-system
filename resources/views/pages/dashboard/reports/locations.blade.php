@@ -109,10 +109,10 @@
                                         <td>{{ number_format($country->cities_count) }}</td>
                                         <td>
                                             <div class="flex items-center gap-2">
+                                                <span>{{ $locationStats['total_cities'] > 0 ? (number_format(($country->cities_count / $locationStats['total_cities']) * 100, 1) <= 9 ? '0' . number_format(($country->cities_count / $locationStats['total_cities']) * 100, 1) : number_format(($country->cities_count / $locationStats['total_cities']) * 100, 1)) : 0 }}%</span>
                                                 <div class="progress-bar bg-primary"
-                                                    style="width: {{ $locationStats['total_cities'] > 0 ? ($country->cities_count / $locationStats['total_cities']) * 100 : 0 }}%">
+                                                    style="height: 5px;  width: {{ $locationStats['total_cities'] > 0 ? ($country->cities_count / $locationStats['total_cities']) * 100 : 0 }}%">
                                                 </div>
-                                                <span>{{ $locationStats['total_cities'] > 0 ? number_format(($country->cities_count / $locationStats['total_cities']) * 100, 1) : 0 }}%</span>
                                             </div>
                                         </td>
                                     </tr>

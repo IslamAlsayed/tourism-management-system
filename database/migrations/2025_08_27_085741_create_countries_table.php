@@ -24,10 +24,7 @@ return new class extends Migration {
             $table->json('timezone')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
-            $table->string('emoji', 8)->nullable();
-            $table->string('emojiU')->nullable();
             $table->bigInteger('population')->nullable();
-            $table->string('flag_url')->nullable();
             $table->string('photo')->nullable();
             $table->string('continent')->nullable();
             $table->float('area')->nullable();

@@ -2,24 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
 {
-    use HasFactory;
+    use HasSearch;
 
     protected $fillable = [
         'id',
         'photo',
         'name',
         'name_ar',
-        'country_id',
-        'city_id',
-        'region_id',
-        'subregion_id',
-        'type',
-        'rating',
         'company_name_ar',
         'specialty',
         'phone_01',
@@ -43,16 +37,27 @@ class Restaurant extends Model
         'indoor',
         'outdoor',
         'spa',
+        'type_id',
+        'country_id',
+        'city_id',
+        'region_id',
+        'subregion_id',
+        'rating',
     ];
 
     public function getRelationshipNames()
     {
-        return ['country', 'city', 'region', 'subregion'];
+        return ['type', 'country', 'city', 'region', 'subregion'];
     }
 
     public function getExcludedColumns()
     {
-        return ['country_id', 'city_id', 'region_id', 'subregion_id'];
+        return ['type_id', 'country_id', 'city_id', 'region_id', 'subregion_id'];
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
     }
 
     public function country()

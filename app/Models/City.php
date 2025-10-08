@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class City extends Model
 {
-    use HasFactory;
+    use HasSearch;
 
     protected $fillable = [
         'id',
@@ -29,10 +29,7 @@ class City extends Model
 
     public function getExcludedColumns()
     {
-        return [
-            'state_id',
-            'country_id',
-        ];
+        return ['state_id', 'country_id'];
     }
 
     public function state()

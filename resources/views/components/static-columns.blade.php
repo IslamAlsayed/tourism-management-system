@@ -20,12 +20,18 @@
         </td>
     @break
 
-    @case('photo')
+    {{-- @case('photo')
         <td title="{{ $model->name }}">
             <div class="flex items-center gap-2.5">
                 <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
                     alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
             </div>
+        </td>
+    @break --}}
+    @case('photo')
+        <td title="{{ $model->name }}">
+            <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
+                alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
         </td>
     @break
 
@@ -119,6 +125,14 @@
 
     @case('tour_guide')
         <td title="{{ optional($model->tour_guide)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->tour_guide)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('guide_type')
+        <td title="{{ optional($model->guide_type)->type ?? '--' }}">{!! highlightSearch(limitedText(optional($model->guide_type)->type ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('type')
+        <td title="{{ optional($model->type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->type)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('rating')

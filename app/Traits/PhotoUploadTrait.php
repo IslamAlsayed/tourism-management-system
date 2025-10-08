@@ -17,15 +17,15 @@ trait PhotoUploadTrait
      */
     public function uploadPhoto($request, $model, $photoColumn = 'photo', $folder = 'other')
     {
-        if ($request->hasFile('photo')) {
+        if ($request->hasFile($photoColumn)) {
             // Delete the old photo if exists
             if ($model->{$photoColumn}) {
                 Storage::disk('public')->delete($model->{$photoColumn});
             }
 
             // Store the new photo
-            $filename = $request->file('photo')->hashName();
-            $path = $request->file('photo')->storeAs('uploads/' . $folder . '/' . $model->id, $filename, 'public');
+            $filename = $request->file($photoColumn)->hashName();
+            $path = $request->file($photoColumn)->storeAs('uploads/' . $folder . '/' . $model->id, $filename, 'public');
 
             // Update the model with the new photo path
             $model->{$photoColumn} = $path;

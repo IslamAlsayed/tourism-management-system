@@ -7,13 +7,15 @@
         id="sidebar_header">
         <a class="dark:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
             <img class="default-logo h-[45px] w-auto max-w-none"
-                src="{{ $settings->photo ? asset('storage/' . $settings->photo) : asset('storage/logos/default-logo.svg') }}" />
-            <img class="small-logo h-[45px] w-auto max-w-none" src="{{ asset('metronic/media/app/mini-logo.svg') }}" />
+                src="{{ $settings->app_light_photo ? asset('storage/' . $settings->app_light_photo) : asset('storage/logos/default-logo.svg') }}" />
+            <img class="small-logo h-[45px] w-auto max-w-none"
+                src="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('storage/logos/mini-logo.svg') }}" />
         </a>
         <a class="light:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
             <img class="default-logo h-[45px] w-auto max-w-none"
-                src="{{ $settings->photo ? asset('storage/' . $settings->photo) : asset('storage/logos/default-logo.svg') }}" />
-            <img class="small-logo h-[45px] w-auto max-w-none" src="{{ asset('metronic/media/app/mini-logo.svg') }}" />
+                src="{{ $settings->app_dark_photo ? asset('storage/' . $settings->app_dark_photo) : asset('storage/logos/default-logo.svg') }}" />
+            <img class="small-logo h-[45px] w-auto max-w-none"
+                src="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('storage/logos/mini-logo.svg') }}" />
         </a>
         <button
             class="kt-btn kt-btn-outline kt-btn-icon size-[30px] absolute start-full top-2/4 -translate-x-2/4 -translate-y-2/4 rtl:translate-x-2/4"

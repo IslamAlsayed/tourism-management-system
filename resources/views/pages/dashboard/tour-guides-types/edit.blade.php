@@ -58,7 +58,7 @@
                             <!-- Currency -->
                             <div class="">
                                 <label for="currency_id" class="kt-label mb-2">{{ __('main.currency') }}</label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]">
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -75,12 +75,12 @@
                             <!-- Country -->
                             <div class="">
                                 <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]">
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
                                             {{ $tourGuideType->country_id == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }} {{ $country->name_ar ? ' - ' . $country->name_ar : '' }}
+                                            {{ $country->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -99,13 +99,13 @@
                                         value="1" {{ $tourGuideType->multi_states == 1 ? 'checked' : '' }}>
                                     {{ __('main.all_types', ['types' => __('main.states')]) }}
                                 </label>
-                                <select name="state_id" id="state_id" class="kt-select h-[45px]"
+                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search
                                     {{ $tourGuideType->multi_states == 1 ? 'disabled' : '' }}>
                                     <option value="">--</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}"
                                             {{ $tourGuideType->state_id == $state->id ? 'selected' : '' }}>
-                                            {{ $state->name }} {{ $state->name_ar ? ' - ' . $state->name_ar : '' }}
+                                            {{ $state->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -124,13 +124,13 @@
                                         value="1" {{ $tourGuideType->multi_cities == 1 ? 'checked' : '' }}>
                                     {{ __('main.all_types', ['types' => __('main.cities')]) }}
                                 </label>
-                                <select name="city_id" id="city_id" class="kt-select h-[45px]"
+                                <select name="city_id" id="city_id" class="kt-select h-[45px]" special-search
                                     {{ $tourGuideType->multi_cities == 1 ? 'disabled' : '' }}>
                                     <option value="">--</option>
                                     @foreach ($cities as $city)
                                         <option value="{{ $city->id }}"
                                             {{ $tourGuideType->city_id == $city->id ? 'selected' : '' }}>
-                                            {{ $city->name }} {{ $city->name_ar ? ' - ' . $city->name_ar : '' }}
+                                            {{ $city->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -142,12 +142,12 @@
                             <!-- Region -->
                             <div class="">
                                 <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]">
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"
                                             {{ $tourGuideType->region_id == $region->id ? 'selected' : '' }}>
-                                            {{ $region->name }} {{ $region->name_ar ? ' - ' . $region->name_ar : '' }}
+                                            {{ $region->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -159,13 +159,12 @@
                             <!-- Subregion -->
                             <div class="">
                                 <label for="subregion_id" class="kt-label mb-2">{{ __('main.subregion') }}</label>
-                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]">
+                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($subregions as $subregion)
                                         <option value="{{ $subregion->id }}"
                                             {{ $tourGuideType->subregion_id == $subregion->id ? 'selected' : '' }}>
                                             {{ $subregion->name }}
-                                            {{ $subregion->name_ar ? ' - ' . $subregion->name_ar : '' }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -250,23 +249,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Image preview
-        document.getElementById('image')?.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('image-preview');
-                    const placeholder = document.getElementById('image-placeholder');
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
-@endpush

@@ -35,7 +35,7 @@ class Countries extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Country::class, 5);
+        $this->mountWithCustomColumns(Country::class);
         $this->resetPage();
     }
 

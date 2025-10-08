@@ -34,15 +34,14 @@
                         @csrf
 
                         <!-- Country Photo -->
-                        @include('components.input-image', ['columnName' => 'country'])
+                        @include('components.input-image', ['column' => 'country', 'columnName' => 'flag'])
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Country Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
                                     class="kt-label required mb-2">{{ __('main.country_name_arabic') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.enter_country_name_arabic') }}" required
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
                                     value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -53,8 +52,7 @@
                             <div class="">
                                 <label for="name"
                                     class="kt-label required mb-2">{{ __('main.country_name_english') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.enter_country_name_english') }}" required
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
                                     value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -65,7 +63,7 @@
                             <div class="">
                                 <label for="phone_code" class="kt-label mb-2">{{ __('main.phone_code') }}</label>
                                 <input type="text" name="phone_code" id="phone_code" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.phone_code_example') }}" value="{{ old('phone_code') }}">
+                                    value="{{ old('phone_code') }}">
                                 @error('phone_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -75,9 +73,8 @@
                             <div class="">
                                 <label for="iso2"
                                     class="kt-label required mb-2">{{ __('main.country_code_iso2') }}</label>
-                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.iso2_example') }}" max="2" required
-                                    value="{{ old('iso2') }}">
+                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" max="2"
+                                    required value="{{ old('iso2') }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -86,8 +83,7 @@
                             <!-- Country Code (ISO 3) -->
                             <div class="">
                                 <label for="iso3" class="kt-label mb-2">{{ __('main.country_code_iso3') }}</label>
-                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.iso3_example') }}" max="3"
+                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" max="3"
                                     value="{{ old('iso3') }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -98,7 +94,7 @@
                             <div class="">
                                 <label for="capital" class="kt-label mb-2">{{ __('main.capital') }}</label>
                                 <input type="text" name="capital" id="capital" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.capital_example') }}" value="{{ old('capital') }}">
+                                    value="{{ old('capital') }}">
                                 @error('capital')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -106,8 +102,13 @@
 
                             <!-- Currency -->
                             <div class="">
-                                <label for="currency_id" class="kt-label mb-2">{{ __('main.currency') }}</label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]">
+                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.currency') }}
+                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -123,8 +124,13 @@
 
                             <!-- Region -->
                             <div class="">
-                                <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]">
+                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.region') }}
+                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"
@@ -140,8 +146,13 @@
 
                             <!-- Language -->
                             <div class="">
-                                <label for="language_id" class="kt-label mb-2">{{ __('main.language') }}</label>
-                                <select name="language_id" id="language_id" class="kt-select h-[45px]">
+                                <label for="language_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.language') }}
+                                    <a href="{{ route('languages.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="language_id" id="language_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($languages as $language)
                                         <option value="{{ $language->id }}"
@@ -160,7 +171,7 @@
                             <div class="">
                                 <label for="population" class="kt-label mb-2">{{ __('main.population') }}</label>
                                 <input type="number" name="population" id="population" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.population_example') }}" value="{{ old('population') }}">
+                                    value="{{ old('population') }}">
                                 @error('population')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -170,8 +181,7 @@
                             <div class="">
                                 <label for="area" class="kt-label mb-2">{{ __('main.area') }}</label>
                                 <input type="number" step="any" name="area" id="area"
-                                    class="kt-input h-[45px]" placeholder="{{ __('main.area_example') }}"
-                                    value="{{ old('area') }}">
+                                    class="kt-input h-[45px]" value="{{ old('area') }}">
                                 @error('area')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -181,8 +191,7 @@
                             <div class="">
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
                                 <input type="number" step="any" name="latitude" id="latitude"
-                                    class="kt-input h-[45px]" placeholder="{{ __('main.latitude_example') }}"
-                                    value="{{ old('latitude') }}">
+                                    class="kt-input h-[45px]" value="{{ old('latitude') }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -192,8 +201,7 @@
                             <div class="">
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
                                 <input type="number" step="any" name="longitude" id="longitude"
-                                    class="kt-input h-[45px]" placeholder="{{ __('main.longitude_example') }}"
-                                    value="{{ old('longitude') }}">
+                                    class="kt-input h-[45px]" value="{{ old('longitude') }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -202,7 +210,7 @@
                             <!-- Timezone -->
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.main_timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]">
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
@@ -215,16 +223,6 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="mb-4">
-                            <label for="description"
-                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.country')]) }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ old('description') }}</textarea>
-                            @error('description')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         <!-- Country Settings -->
@@ -323,47 +321,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Flag preview
-        document.getElementById('flag').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('flag-preview');
-                    const placeholder = document.getElementById('flag-placeholder');
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Auto-generate ISO codes
-        document.getElementById('name').addEventListener('blur', function() {
-            const name = this.value.toUpperCase();
-            const iso2Field = document.getElementById('iso2');
-            const iso3Field = document.getElementById('iso3');
-
-            if (name && !iso2Field.value) {
-                // Auto-generate basic codes (you can improve this logic)
-                iso2Field.value = name.substring(0, 2);
-            }
-
-            if (name && !iso3Field.value) {
-                iso3Field.value = name.substring(0, 3);
-            }
-        });
-
-        // Phone code formatting
-        document.getElementById('phone_code').addEventListener('input', function() {
-            let value = this.value.replace(/[^\d]/g, '');
-            if (value && !value.startsWith('+')) {
-                this.value = '+' + value;
-            }
-        });
-    </script>
-@endpush

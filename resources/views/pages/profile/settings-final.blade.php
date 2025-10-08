@@ -178,7 +178,7 @@
                                         <label class="col-lg-3 col-form-label fw-semibold">Full Name</label>
                                         <div class="col-lg-9">
                                             <input type="text" name="name" class="form-control form-control-lg"
-                                                placeholder="Full Name" value="{{ $user->name }}" />
+                                                value="{{ $user->name }}" />
                                         </div>
                                     </div>
 
@@ -186,7 +186,7 @@
                                         <label class="col-lg-3 col-form-label fw-semibold">Email</label>
                                         <div class="col-lg-9">
                                             <input type="email" name="email" class="form-control form-control-lg"
-                                                placeholder="Email Address" value="{{ $user->email }}" />
+                                                value="{{ $user->email }}" />
                                         </div>
                                     </div>
 
@@ -194,7 +194,7 @@
                                         <label class="col-lg-3 col-form-label fw-semibold">Phone</label>
                                         <div class="col-lg-9">
                                             <input type="tel" name="phone" class="form-control form-control-lg"
-                                                placeholder="Phone Number" value="{{ $user->phone ?? '' }}" />
+                                                value="{{ $user->phone ?? '' }}" />
                                         </div>
                                     </div>
 
@@ -220,8 +220,7 @@
                                         <label class="col-lg-3 col-form-label fw-semibold">Current Password</label>
                                         <div class="col-lg-9">
                                             <input type="password" name="current_password"
-                                                class="form-control form-control-lg"
-                                                placeholder="Enter current password" />
+                                                class="form-control form-control-lg" />
                                         </div>
                                     </div>
 
@@ -229,7 +228,7 @@
                                         <label class="col-lg-3 col-form-label fw-semibold">New Password</label>
                                         <div class="col-lg-9">
                                             <input type="password" name="new_password"
-                                                class="form-control form-control-lg" placeholder="Enter new password" />
+                                                class="form-control form-control-lg" />
                                         </div>
                                     </div>
 

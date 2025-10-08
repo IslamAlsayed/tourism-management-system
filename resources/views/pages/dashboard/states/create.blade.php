@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.add_type', ['type' => __('main.state')]) }}
@@ -22,11 +22,11 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-5 lg:gap-6">
             <!-- State Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.state_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.state')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('states.store') }}" enctype="multipart/form-data"
@@ -37,8 +37,8 @@
                             <!-- State Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
-                                    class="kt-label required mb-2">{{ __('main.type_name_arabic', ['type' => __('main.state')]) }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
+                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.state')]) }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -60,7 +60,7 @@
                             <div class="">
                                 <label for="fips_code" class="kt-label mb-2">{{ __('main.fips_code') }}</label>
                                 <input type="text" name="fips_code" id="fips_code" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.fips_code_example') }}" value="{{ old('fips_code') }}">
+                                    value="{{ old('fips_code') }}">
                                 @error('fips_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -69,9 +69,8 @@
                             <!-- State Code (ISO 2) -->
                             <div class="">
                                 <label for="iso2" class="kt-label required mb-2">{{ __('main.code_iso2') }}</label>
-                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]"
-                                    placeholder="{{ __('main.iso2_example') }}" max="2" required
-                                    value="{{ old('iso2') }}">
+                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" required
+                                    max="2" value="{{ old('iso2') }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -79,9 +78,9 @@
 
                             <!-- State Code (ISO 3) -->
                             <div class="">
-                                <label for="iso3" class="kt-label mb-2">{{ __('main.code_iso3') }}</label>
-                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" max="3"
-                                    value="{{ old('iso3') }}">
+                                <label for="iso3" class="kt-label required mb-2">{{ __('main.code_iso3') }}</label>
+                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" required
+                                    max="3" value="{{ old('iso3') }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -111,8 +110,7 @@
                             <div class="">
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
                                 <input type="number" step="any" name="latitude" id="latitude"
-                                    class="kt-input h-[45px]" placeholder="{{ __('main.latitude_example') }}"
-                                    value="{{ old('latitude') }}">
+                                    class="kt-input h-[45px]" value="{{ old('latitude') }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -122,8 +120,7 @@
                             <div class="">
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
                                 <input type="number" step="any" name="longitude" id="longitude"
-                                    class="kt-input h-[45px]" placeholder="{{ __('main.longitude_example') }}"
-                                    value="{{ old('longitude') }}">
+                                    class="kt-input h-[45px]" value="{{ old('longitude') }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -132,7 +129,7 @@
                             <!-- Timezone -->
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]">
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
@@ -148,8 +145,14 @@
 
                             <!-- Country -->
                             <div class="">
-                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]">
+                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.country') }}
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
+                                    required>
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
@@ -164,19 +167,10 @@
                             </div>
                         </div>
 
-                        <!-- Description -->
-                        <div class="">
-                            <label for="description"
-                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.state')]) }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ old('description') }}</textarea>
-                            @error('description')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                         <!-- State Settings -->
                         <div class="space-y-4 mb-4">
-                            <h4 class="font-semibold mb-1">{{ __('main.state_settings') }}</h4>
+                            <h4 class="font-semibold mb-1">{{ __('main.type_settings', ['type' => __('main.state')]) }}
+                            </h4>
 
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div class="flex items-center gap-3">
@@ -211,7 +205,7 @@
                         </div>
 
                         <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4 pt-4">
+                        <div class="flex items-center gap-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
                                 {{ __('main.save_type', ['type' => __('main.state')]) }}
@@ -272,47 +266,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Flag preview
-        document.getElementById('flag').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('flag-preview');
-                    const placeholder = document.getElementById('flag-placeholder');
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Auto-generate ISO codes
-        document.getElementById('name').addEventListener('blur', function() {
-            const name = this.value.toUpperCase();
-            const iso2Field = document.getElementById('iso2');
-            const iso3Field = document.getElementById('iso3');
-
-            if (name && !iso2Field.value) {
-                // Auto-generate basic codes (you can improve this logic)
-                iso2Field.value = name.substring(0, 2);
-            }
-
-            if (name && !iso3Field.value) {
-                iso3Field.value = name.substring(0, 3);
-            }
-        });
-
-        // Phone code formatting
-        document.getElementById('phone_code').addEventListener('input', function() {
-            let value = this.value.replace(/[^\d]/g, '');
-            if (value && !value.startsWith('+')) {
-                this.value = '+' + value;
-            }
-        });
-    </script>
-@endpush

@@ -166,4 +166,25 @@ class DashboardController extends Controller
 
         return redirect()->back()->with('success', 'Selected items deleted successfully. ' . count($ids) . ' items removed.');
     }
+
+    public function getReferences($reference, $constrainId, $constrainValue)
+    {
+        $modelName = ucwords($reference);
+        $modelClass = "App\\Models\\$modelName";
+
+        if (!class_exists($modelClass)) {
+            return redirect()->back()->with('error', 'Invalid model specified.');
+        }
+
+        if (!$reference || !$constrainId || !$constrainValue) {
+            return response()->json([]);
+        }
+
+        $references = $modelClass::where($constrainId, $constrainValue)->select('id', 'name')->orderBy('name')->get();
+
+        if ($references->isEmpty())
+            return response()->json([]);
+
+        return response()->json($references);
+    }
 }

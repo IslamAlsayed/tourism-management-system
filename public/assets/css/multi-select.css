@@ -1,13 +1,16 @@
-.multi-select-tag {
+.multi-select-tag,
+.search-select-tag {
     all: revert !important;
     font-family: inherit !important
 }
 
-.multi-select-tag .wrapper {
+.multi-select-tag .wrapper,
+.search-select-tag .wrapper {
     position: relative
 }
 
-.multi-select-tag .tag-container {
+.multi-select-tag .tag-container,
+.search-select-tag .tag-container {
     display: flex;
     padding: .5rem;
     flex-wrap: wrap;
@@ -19,18 +22,24 @@
     background-color: #fff
 }
 
-.multi-select-tag .tag-input {
+.multi-select-tag .tag-input,
+.search-select-tag .tag-input {
+    border: none;
+}
+
+.multi-select-tag .tag-input,
+.search-select-tag .tag-input {
     padding: .25rem;
     flex-grow: 1;
     outline: 2px solid transparent;
     outline-offset: 2px;
-    border: none;
     background-color: #fff;
     margin: 0;
     line-height: 1.25rem
 }
 
-.multi-select-tag .dropdown {
+.multi-select-tag .dropdown,
+.search-select-tag .dropdown {
     overflow: auto;
     position: absolute;
     z-index: 10;
@@ -44,21 +53,25 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -2px rgba(0, 0, 0, .05)
 }
 
-.multi-select-tag .li {
+.multi-select-tag .li,
+.search-select-tag .li {
     padding: .5rem;
     cursor: pointer;
     list-style-type: none
 }
 
-.multi-select-tag .li:hover {
+.multi-select-tag .li:hover,
+.search-select-tag .li:hover {
     background-color: #e5e7eb
 }
 
-.multi-select-tag .li-arrow {
+.multi-select-tag .li-arrow,
+.search-select-tag .li-arrow {
     background-color: #d1d5db
 }
 
-.multi-select-tag .tag-item {
+.multi-select-tag .tag-item,
+.search-select-tag .tag-item {
     display: flex;
     padding-top: .25rem;
     padding-bottom: .25rem;
@@ -70,12 +83,14 @@
     background-color: #dbeafe
 }
 
-.multi-select-tag .cross {
+.multi-select-tag .cross,
+.search-select-tag .cross {
     margin-left: .25rem;
     cursor: pointer
 }
 
-.multi-select-tag .hidden {
+.multi-select-tag .hidden,
+.search-select-tag .hidden {
     display: none
 }
 

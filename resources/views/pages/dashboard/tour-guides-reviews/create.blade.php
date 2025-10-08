@@ -37,8 +37,13 @@
                         <div class="grid grid-cols-2 gap-6 mb-4">
                             <!-- Tour Guide -->
                             <div class="">
-                                <label for="tour_guide_id" class="kt-label mb-2">{{ __('main.tour_guide') }}</label>
-                                <select name="tour_guide_id" id="tour_guide_id" class="kt-select h-[45px]">
+                                <label for="tour_guide_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.tour_guide') }}
+                                    <a href="{{ route('tour-guides.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="tour_guide_id" id="tour_guide_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($tourGuides as $tourGuide)
                                         <option value="{{ $tourGuide->id }}"

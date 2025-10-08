@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('mobile_02')->nullable();
             $table->string('home_city')->nullable();
             $table->year('birth_year')->nullable();
+            $table->string('photo')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->unsignedBigInteger('national_guide_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
@@ -29,7 +30,7 @@ return new class extends Migration {
             $table->decimal('hd_day_fees', 10, 2)->nullable(); // Half day
             $table->decimal('extra_fees_1', 10, 2)->nullable();
             $table->decimal('extra_fees_2', 10, 2)->nullable();
-            $table->string('status')->nullable(); // بدل guide_sts
+            $table->string('status')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });

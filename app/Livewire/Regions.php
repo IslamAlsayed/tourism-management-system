@@ -32,7 +32,7 @@ class Regions extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(Region::class, 5);
+        $this->mountWithCustomColumns(Region::class);
         $this->resetPage();
     }
 
@@ -45,16 +45,6 @@ class Regions extends Component
     {
         $this->totalCount = Region::count();
         $data = $this->scopeSearch(Region::class);
-
-        // $data = Region::query()
-        //     ->when($this->search, function ($query) {
-        //         $search = strtolower($this->search);
-        //         $query->where(function ($q) use ($search) {
-        //             foreach ($this->searchColumns as $column) {
-        //                 $q->orWhere($column, 'like', '%' . $search . '%');
-        //             }
-        //         });
-        //     })->paginate(getPaginate());
 
         return view('livewire.regions', [
             'data' => $data,

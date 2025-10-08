@@ -64,8 +64,13 @@
 
                             <!-- Region id -->
                             <div class="">
-                                <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
-                                <select name="region_id" id="region_id" class="kt-input h-[45px]">
+                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.region') }}
+                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="region_id" id="region_id" class="kt-input h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}">{{ $region->name }}</option>
@@ -75,16 +80,6 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="">
-                            <label for="description"
-                                class="kt-label mb-2">{{ __('main.type_description', ['type' => __('main.subregion')]) }}</label>
-                            <textarea name="description" id="description" rows="4" class="kt-input h-[45px]">{{ $subregion->description }}</textarea>
-                            @error('description')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         <!-- Submit Buttons -->

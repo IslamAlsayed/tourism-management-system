@@ -34,14 +34,17 @@
                         @csrf
 
                         <!-- Tour guide Photo -->
-                        @include('components.input-image', ['columnName' => 'tour-guide'])
+                        @include('components.input-image', [
+                            'column' => 'tour-guide',
+                            'columnName' => 'photo',
+                        ])
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
-                                    class="kt-label required mb-2">{{ __('main.type_name_arabic', ['type' => __('main.tour-guide')]) }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
+                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.tour-guide')]) }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -61,8 +64,8 @@
 
                             <!-- Email -->
                             <div class="">
-                                <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
-                                <input type="email" name="email" id="email" class="kt-input h-[45px]"
+                                <label for="email" class="kt-label required mb-2">{{ __('main.email') }}</label>
+                                <input type="email" name="email" id="email" class="kt-input h-[45px]" required
                                     value="{{ old('email') }}">
                                 @error('email')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -79,12 +82,12 @@
                                 @enderror
                             </div>
 
-                            <!-- Mobile 01 -->
+                            <!-- Mobile 02 -->
                             <div class="">
-                                <label for="mobile_01" class="kt-label required mb-2">{{ __('main.mobile_01') }}</label>
-                                <input type="text" name="mobile_01" id="mobile_01" class="kt-input h-[45px]"
-                                    max="2" required value="{{ old('mobile_01') }}">
-                                @error('mobile_01')
+                                <label for="mobile_02" class="kt-label mb-2">{{ __('main.mobile_02') }}</label>
+                                <input type="text" name="mobile_02" id="mobile_02" class="kt-input h-[45px]"
+                                    max="2" value="{{ old('mobile_02') }}">
+                                @error('mobile_02')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -111,8 +114,8 @@
 
                             <!-- Gender -->
                             <div class="">
-                                <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
-                                <select name="gender" id="gender" class="kt-select h-[45px]">
+                                <label for="gender" class="kt-label required mb-2">{{ __('main.gender') }}</label>
+                                <select name="gender" id="gender" class="kt-select h-[45px]" special-search required>
                                     <option value="">--</option>
                                     <option value="male">male</option>
                                     <option value="female">female</option>
@@ -135,13 +138,18 @@
 
                             <!-- Country -->
                             <div class="">
-                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]">
+                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.country') }}
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
+                                    required>
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
-                                            {{ old('country_id') == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }} {{ $country->name_ar ? ' - ' . $country->name_ar : '' }}
+                                            {{ old('country_id') == $country->id ? 'selected' : '' }}>{{ $country->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -152,8 +160,14 @@
 
                             <!-- Currency -->
                             <div class="">
-                                <label for="currency_id" class="kt-label mb-2">{{ __('main.currency') }}</label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]">
+                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.currency') }}
+                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search
+                                    required>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -167,37 +181,37 @@
                                 @enderror
                             </div>
 
-                            <!-- Languages -->
+                            <!-- Guide languages -->
                             <div class="">
-                                <label for="guideLanguages" class="kt-label mb-2">{{ __('main.language') }}</label>
-                                <select name="guideLanguages[]" id="guideLanguages" class="kt-select h-[45px]"
-                                    special-multiple>
+                                <label for="guide_languages_ids"
+                                    class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.language') }}
+                                </label>
+                                <select name="guide_languages_ids[]" id="guide_languages_ids" class="kt-select h-[45px]"
+                                    special-multiple required>
                                     <option value="">--</option>
-                                    @foreach ($guideLanguages as $language)
-                                        <option value="{{ $language->id }}"
-                                            {{ in_array($language->id, old('guideLanguages', [])) ? 'selected' : '' }}>
-                                            {{ $language->name }}
-                                        </option>
+                                    @foreach ($guide_languages_ids as $key => $language)
+                                        <option value="{{ $key }}">{{ $language }}</option>
                                     @endforeach
                                 </select>
-                                @error('guideLanguages')
+                                @error('guide_languages_ids')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Guide Type -->
                             <div class="">
-                                <label for="guide_type" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
-                                <select name="guide_type" id="guide_type" class="kt-input h-[45px]">
+                                <label for="guide_type_id" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
+                                <select name="guide_type_id" id="guide_type_id" class="kt-input h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($guideTypes as $type)
                                         <option value="{{ $type->id }}"
-                                            {{ old('guide_type') == $type->id ? 'selected' : '' }}>
+                                            {{ old('guide_type_id') == $type->id ? 'selected' : '' }}>
                                             {{ $type->type }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('guide_type')
+                                @error('guide_type_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -373,23 +387,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        // Image preview
-        document.getElementById('image')?.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('image-preview');
-                    const placeholder = document.getElementById('image-placeholder');
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
-@endpush

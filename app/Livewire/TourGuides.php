@@ -35,7 +35,7 @@ class TourGuides extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(TourGuide::class, 5);
+        $this->mountWithCustomColumns(TourGuide::class);
         $this->resetPage();
     }
 
