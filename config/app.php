@@ -23,7 +23,7 @@ return [
     'app_url' => env('APP_URL', 'http://localhost'),
     'app_timezone' => env('APP_TIMEZONE', 'Africa/Cairo'),
     'app_language' => env('APP_LANGUAGE', 'en'),
-    'app_version' => env('APP_VERSION', '4.1.0'),
+    'app_version' => env('APP_VERSION', '4.5.0'),
     'app_php_version' => env('APP_PHP_VERSION', '8.2.28'),
     'app_columns_length' => env('APP_COLUMNS_LENGTH', 5),
     'app_status' => env('APP_STATUS', true),
