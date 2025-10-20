@@ -157,9 +157,9 @@
     <!-- Container -->
     <div class="kt-container-fixed">
         <!-- begin: grid -->
-        <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 lg:gap-7.5">
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
             <div class="col-span-1">
-                <div class="grid gap-5 lg:gap-7.5">
+                <div class="grid gap-4 lg:gap-6">
                     <div class="kt-card">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
@@ -414,7 +414,7 @@
             </div>
 
             <div class="col-span-2">
-                <div class="flex flex-col gap-5 lg:gap-7.5">
+                <div class="flex flex-col gap-4 lg:gap-6">
                     <div class="kt-card">
                         <div class="kt-card-content px-10 py-7.5 lg:pe-12.5">
                             <div class="flex flex-wrap md:flex-nowrap items-center gap-6 md:gap-10">

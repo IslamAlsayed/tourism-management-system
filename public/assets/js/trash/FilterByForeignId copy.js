@@ -1,4 +1,4 @@
-// function FilterByForeignId_2(constrainId, reference, referenceId) {
+// function filterByForeignId_2(constrainId, reference, referenceId) {
 //     const constrainSelect = document.querySelector(
 //         `[data-for="${constrainId}"]`
 //     );
@@ -92,7 +92,7 @@
 //     });
 // }
 
-function FilterByForeignId(constrainId, reference, referenceId) {
+function filterByForeignId(constrainId, reference, referenceId) {
     const constrainSelect = document.querySelector(
         `[data-for="${constrainId}"]`
     );
@@ -100,7 +100,7 @@ function FilterByForeignId(constrainId, reference, referenceId) {
     referenceSelect.parentElement.classList.add("loading");
     document.getElementById(`${referenceId}-info`)?.classList.add("show");
 
-    // console.log("FilterByForeignId1:", { constrainId, reference, referenceId });
+    // console.log("filterByForeignId1:", { constrainId, reference, referenceId });
 
     if (!constrainSelect || !referenceSelect) return;
 
@@ -129,7 +129,7 @@ function FilterByForeignId(constrainId, reference, referenceId) {
 
     let handleSelection = async (e) => {
         if (e.target.tagName === "LI" && constrainSelect.contains(e.target)) {
-            console.log("FilterByForeignId2:", {
+            console.log("filterByForeignId2:", {
                 constrainId,
                 reference,
                 referenceId,

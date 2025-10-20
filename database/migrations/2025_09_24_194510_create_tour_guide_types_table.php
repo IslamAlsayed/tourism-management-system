@@ -15,16 +15,15 @@ return new class extends Migration {
             $table->string('type')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
-            $table->unsignedBigInteger('city_id')->nullable();
-            $table->unsignedBigInteger('state_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
-            $table->string('multi_states')->nullable();
-            $table->string('multi_cities')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->json('state_id')->nullable();
+            $table->json('city_id')->nullable();
+            $table->boolean('all_states')->nullable()->default(false);
+            $table->boolean('all_cities')->nullable()->default(false);
             $table->timestamps();
         });
-
     }
 
     /**

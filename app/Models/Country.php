@@ -24,8 +24,6 @@ class Country extends Model
         'timezone',
         'latitude',
         'longitude',
-        'emoji',
-        'emojiU',
         'population',
         'continent',
         'area',
@@ -33,31 +31,26 @@ class Country extends Model
         'is_independent',
         'is_developed',
         'is_landlocked',
-        // 'language_id',
+        'language_id',
         'currency_id',
         'region_id',
+        'subregion_id',
+        'state_id',
+        'city_id',
     ];
 
     public function getRelationshipNames()
     {
-        // return ['language', 'currency', 'region'];
-        return ['currency', 'region'];
+        return ['language', 'currency', 'region', 'subregion', 'state', 'city'];
     }
 
     public function getExcludedColumns()
     {
-        // return ['language_id', 'currency_id', 'region_id'];
-        return ['currency_id', 'region_id'];
+        return ['language_id', 'currency_id', 'region_id', 'subregion_id', 'state_id', 'city_id'];
     }
-
-    // public function language()
-    // {
-    //     return $this->belongsTo(Language::class);
-    // }
-
-    public function cities()
+    public function language()
     {
-        return $this->hasMany(City::class);
+        return $this->belongsTo(Language::class);
     }
 
     public function currency()
@@ -68,5 +61,20 @@ class Country extends Model
     public function region()
     {
         return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function cities()
+    {
+        return $this->hasMany(City::class);
     }
 }

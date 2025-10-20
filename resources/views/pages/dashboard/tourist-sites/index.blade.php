@@ -11,19 +11,17 @@
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="grid gap-5 lg:gap-7.5">
+    <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
             <div class="kt-card-header">
                 <h3 class="kt-card-title">All Tourist Sites</h3>
                 <div class="kt-menu" data-kt-menu="true">
-                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                        data-kt-menu-item-placement="bottom-start" data-kt-menu-item-toggle="dropdown"
-                        data-kt-menu-item-trigger="click">
+                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-start"
+                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
                         <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
                             <i class="ki-filled ki-dots-vertical text-lg"></i>
                         </button>
-                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                            data-kt-menu-dismiss="true">
+                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]" data-kt-menu-dismiss="true">
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="#">
                                     <span class="kt-menu-icon">
@@ -72,10 +70,11 @@
                                         'rating' => 5,
                                         'status' => 'active',
                                         'visitors_per_month' => '25,000',
-                                        'description' => 'Ancient Nabatean city with rock-cut tombs and archaeological wonders',
+                                        'description' =>
+                                            'Ancient Nabatean city with rock-cut tombs and archaeological wonders',
                                         'opening_hours' => '8:00 AM - 6:00 PM',
                                         'phone' => '+966 14 884 4444',
-                                        'website' => 'www.experiencealula.com'
+                                        'website' => 'www.experiencealula.com',
                                     ],
                                     [
                                         'id' => 2,
@@ -87,10 +86,11 @@
                                         'rating' => 4,
                                         'status' => 'active',
                                         'visitors_per_month' => '500,000',
-                                        'description' => 'Largest shopping mall in Jeddah with international brands and entertainment',
+                                        'description' =>
+                                            'Largest shopping mall in Jeddah with international brands and entertainment',
                                         'opening_hours' => '10:00 AM - 12:00 AM',
                                         'phone' => '+966 12 657 2222',
-                                        'website' => 'www.redseamall.com'
+                                        'website' => 'www.redseamall.com',
                                     ],
                                     [
                                         'id' => 3,
@@ -102,10 +102,11 @@
                                         'rating' => 5,
                                         'status' => 'active',
                                         'visitors_per_month' => '15,000',
-                                        'description' => 'Dramatic cliff formation offering breathtaking views of the desert',
+                                        'description' =>
+                                            'Dramatic cliff formation offering breathtaking views of the desert',
                                         'opening_hours' => '6:00 AM - 6:00 PM',
                                         'phone' => '+966 11 123 4567',
-                                        'website' => 'www.edgeoftheworld.com'
+                                        'website' => 'www.edgeoftheworld.com',
                                     ],
                                     [
                                         'id' => 4,
@@ -120,7 +121,7 @@
                                         'description' => 'World\'s tallest fountain, a symbol of Jeddah\'s waterfront',
                                         'opening_hours' => '24/7',
                                         'phone' => '+966 12 657 2222',
-                                        'website' => 'www.jeddah.gov.sa'
+                                        'website' => 'www.jeddah.gov.sa',
                                     ],
                                     [
                                         'id' => 5,
@@ -132,10 +133,11 @@
                                         'rating' => 4,
                                         'status' => 'active',
                                         'visitors_per_month' => '30,000',
-                                        'description' => 'Historic fortress and museum showcasing Saudi Arabia\'s founding',
+                                        'description' =>
+                                            'Historic fortress and museum showcasing Saudi Arabia\'s founding',
                                         'opening_hours' => '8:00 AM - 9:00 PM',
                                         'phone' => '+966 11 123 4567',
-                                        'website' => 'www.riyadh.gov.sa'
+                                        'website' => 'www.riyadh.gov.sa',
                                     ],
                                     [
                                         'id' => 6,
@@ -150,58 +152,70 @@
                                         'description' => 'UNESCO World Heritage site with traditional architecture',
                                         'opening_hours' => '24/7',
                                         'phone' => '+966 12 657 2222',
-                                        'website' => 'www.jeddah.gov.sa'
-                                    ]
+                                        'website' => 'www.jeddah.gov.sa',
+                                    ],
                                 ];
                             @endphp
-                            @foreach($touristSites as $site)
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="symbol symbol-45px me-5">
-                                            <img src="{{ asset('metronic/media/avatars/300-6.png') }}" alt="{{ $site['name'] }}">
+                            @foreach ($touristSites as $site)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-45px me-5">
+                                                <img src="{{ asset('metronic/media/avatars/300-6.png') }}"
+                                                    alt="{{ $site['name'] }}">
+                                            </div>
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <a href="#"
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{ $site['name'] }}</a>
+                                                <span
+                                                    class="text-muted fw-semibold text-muted d-block fs-7">{{ $site['name_ar'] }}</span>
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-start flex-column">
-                                            <a href="#" class="text-dark fw-bold text-hover-primary fs-6">{{ $site['name'] }}</a>
-                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ $site['name_ar'] }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="kt-badge kt-badge-light-{{ $site['type'] == 'Historical Site' ? 'primary' : ($site['type'] == 'Shopping Center' ? 'success' : ($site['type'] == 'Natural Wonder' ? 'info' : ($site['type'] == 'Landmark' ? 'warning' : ($site['type'] == 'Museum' ? 'danger' : 'secondary')))) }}">
+                                            {{ $site['type'] }}
+                                        </span>
+                                    </td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $site['location'] }}</td>
+                                    <td>
+                                        <span
+                                            class="kt-badge kt-badge-light-{{ $site['entrance_fee'] == 'Free' ? 'success' : 'primary' }}">
+                                            {{ $site['entrance_fee'] }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <i
+                                                    class="ki-filled ki-star text-{{ $i <= $site['rating'] ? 'warning' : 'muted' }} fs-7"></i>
+                                            @endfor
+                                            <span
+                                                class="text-muted fw-semibold text-muted ms-1">{{ $site['rating'] }}/5</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-{{ $site['type'] == 'Historical Site' ? 'primary' : ($site['type'] == 'Shopping Center' ? 'success' : ($site['type'] == 'Natural Wonder' ? 'info' : ($site['type'] == 'Landmark' ? 'warning' : ($site['type'] == 'Museum' ? 'danger' : 'secondary')))) }}">
-                                        {{ $site['type'] }}
-                                    </span>
-                                </td>
-                                <td class="text-muted fw-semibold text-muted">{{ $site['location'] }}</td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-{{ $site['entrance_fee'] == 'Free' ? 'success' : 'primary' }}">
-                                        {{ $site['entrance_fee'] }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <i class="ki-filled ki-star text-{{ $i <= $site['rating'] ? 'warning' : 'muted' }} fs-7"></i>
-                                        @endfor
-                                        <span class="text-muted fw-semibold text-muted ms-1">{{ $site['rating'] }}/5</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-success">Active</span>
-                                </td>
-                                <td class="text-muted fw-semibold text-muted">{{ $site['visitors_per_month'] }}</td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="View">
-                                        <i class="ki-filled ki-eye fs-3"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="Edit">
-                                        <i class="ki-filled ki-pencil fs-3"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" title="Delete">
-                                        <i class="ki-filled ki-trash fs-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <span class="kt-badge kt-badge-light-success">Active</span>
+                                    </td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $site['visitors_per_month'] }}</td>
+                                    <td class="text-end">
+                                        <a href="#"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            title="View">
+                                            <i class="ki-filled ki-eye fs-3"></i>
+                                        </a>
+                                        <a href="#"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            title="Edit">
+                                            <i class="ki-filled ki-pencil fs-3"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                            title="Delete">
+                                            <i class="ki-filled ki-trash fs-3"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -211,5 +225,3 @@
     </div>
     <!-- End of Container -->
 @endsection
-
-

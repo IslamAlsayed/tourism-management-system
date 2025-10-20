@@ -12,7 +12,7 @@
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="grid gap-5 lg:gap-7.5">
+    <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
             <livewire:quote.quotation-table :quotations="$quotations" />
         </div>

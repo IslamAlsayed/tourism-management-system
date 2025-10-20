@@ -12,26 +12,26 @@ class TourGuideLanguage extends Model
     protected $fillable = [
         'id',
         'tour_guide_id',
-        'guide_language_id',
+        'language_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['tour_guide', 'guide_language'];
+        return ['tour_guide', 'language'];
     }
 
     public function getExcludedColumns()
     {
-        return ['tour_guide_id', 'guide_language_id'];
+        return ['tour_guide_id', 'language_id'];
     }
 
-    public function tourGuide()
+    public function tour_guide()
     {
         return $this->belongsTo(TourGuide::class);
     }
 
     public function language()
     {
-        return $this->belongsTo(Language::class, 'guide_language_id');
+        return $this->belongsTo(Language::class, 'language_id');
     }
 }

@@ -2,32 +2,22 @@
 
 namespace App\Livewire;
 
-use App\Models\Country;
-use App\Models\Region;
+use App\Models\Language;
 use Livewire\Component;
-use App\Models\Currency;
 use App\Models\TourGuide;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 
 class TourGuides extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -39,19 +29,16 @@ class TourGuides extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'tourGuide');
     }
 
     public function render()
     {
-        $this->totalCount = TourGuide::count();
-        $data = TourGuide::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
         return view('livewire.tour-guides', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+            'data' => TourGuide::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => TourGuide::count(),
         ]);
     }
 }

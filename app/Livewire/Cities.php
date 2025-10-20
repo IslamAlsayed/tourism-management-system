@@ -3,30 +3,20 @@
 namespace App\Livewire;
 
 use App\Models\City;
-use App\Models\State;
-use App\Models\Country;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 
 class Cities extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -38,19 +28,16 @@ class Cities extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'city');
     }
 
     public function render()
     {
-        $this->totalCount = City::count();
-        $data = City::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
         return view('livewire.cities', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+            'data' => City::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => City::count(),
         ]);
     }
 }

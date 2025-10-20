@@ -29,7 +29,7 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $transportationCompanyBusType)
-                            <tr>
+                            <tr wire:key="{{ $transportationCompanyBusType->id }}" class="hover:bg-gray-100">
                                 <td class="text-center">
                                     <input type="checkbox" name="selectedItems[]"
                                         value="{{ $transportationCompanyBusType->id }}"
@@ -49,16 +49,9 @@
                                             {{ __('main.edit') }}
                                         </a>
 
-                                        <a href="{{ route('transportation-company-bus-types.destroy', $transportationCompanyBusType->id) }}"
-                                            class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form
-                                                action="{{ route('transportation-company-bus-types.destroy', $transportationCompanyBusType->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">{{ __('main.delete') }}</button>
-                                            </form>
-                                        </a>
+                                        @include('components.elements.delete-button', [
+                                            'id' => $transportationCompanyBusType->id,
+                                        ])
                                     </div>
                                 </td>
                             </tr>

@@ -7,25 +7,16 @@ use App\Models\Restaurant;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 
 class Restaurants extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
-
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -37,19 +28,16 @@ class Restaurants extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'restaurant');
     }
 
     public function render()
     {
-        $this->totalCount = Restaurant::count();
-        $data = Restaurant::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
         return view('livewire.restaurants', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+            'data' => Restaurant::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => Restaurant::count(),
         ]);
     }
 }

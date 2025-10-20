@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- Personal Information -->
             <div class="kt-card">
                 <div class="kt-card-header">

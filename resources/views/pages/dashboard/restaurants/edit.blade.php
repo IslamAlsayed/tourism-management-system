@@ -36,9 +36,10 @@
 
                         <!-- Restaurant Photo -->
                         @include('components.input-image', [
+                            'modelKey' => $restaurant->name ?? 'R',
                             'column' => 'restaurant',
                             'columnName' => 'photo',
-                            'photoUrl' => asset($restaurant->photo) ? asset('storage/' . $restaurant->photo) : '',
+                            'photoUrl' => $restaurant->photo ? asset('storage/' . $restaurant->photo) : '',
                         ])
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -59,8 +60,8 @@
                             <!-- Type -->
                             <div class="">
                                 <label for="type" class="kt-label required mb-2">Type</label>
-                                <select name="type_id" id="type_id" class="kt-select h-[45px]" special-search
-                                    special-search required>
+                                <select name="type_id" id="type_id" class="kt-select h-[45px]" special-search required
+                                    value={{ $restaurant->type_id }}>
                                     <option value="">--</option>
                                     @foreach ($types as $id => $name)
                                         <option value="{{ $id }}"
@@ -73,7 +74,8 @@
                             <!-- Country -->
                             <div class="">
                                 <label for="country_id" class="kt-label required mb-2">Country</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
+                                    value={{ $restaurant->country_id }}>
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
@@ -87,7 +89,7 @@
                             <div class="">
                                 <label for="city_id" class="kt-label required mb-2">City</label>
                                 <select name="city_id" id="city_id" class="kt-select h-[45px]" special-search
-                                    value="{{ $restaurant->name }}">
+                                    value="{{ $restaurant->city_id }}">
                                     <option value="">--</option>
                                     @foreach ($cities as $city)
                                         <option value="{{ $city->id }}"
@@ -100,7 +102,8 @@
                             <!-- Region -->
                             <div class="">
                                 <label for="region_id" class="kt-label required mb-2">Region</label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search
+                                    value="{{ $restaurant->region_id }}">
                                     <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"
@@ -113,7 +116,8 @@
                             <!-- Subregion -->
                             <div class="">
                                 <label for="subregion_id" class="kt-label required mb-2">Subregion</label>
-                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search>
+                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search
+                                    value="{{ $restaurant->subregion_id }}">
                                     <option value="">--</option>
                                     @foreach ($subregions as $subregion)
                                         <option value="{{ $subregion->id }}"
@@ -126,7 +130,8 @@
                             <!-- Rating -->
                             <div class="">
                                 <label for="rating" class="kt-label required mb-2">Rating</label>
-                                <select name="rating" id="rating" class="kt-select h-[45px]" special-search>
+                                <select name="rating" id="rating" class="kt-select h-[45px]" special-search
+                                    value="{{ $restaurant->rating }}">
                                     <option value="">--</option>
                                     @foreach (range(1, 5) as $item)
                                         <option value="{{ $item }}"
@@ -148,8 +153,8 @@
                             <div class="">
                                 <label for="company_name_ar" class="kt-label required mb-2">Company Name
                                     (Arabic)</label>
-                                <input type="text" name="company_name_ar" id="company_name_ar" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->company_name_ar }}">
+                                <input type="text" name="company_name_ar" id="company_name_ar"
+                                    class="kt-input h-[45px]" value="{{ $restaurant->company_name_ar }}">
                             </div>
 
                             <!-- phone_01 -->
@@ -356,3 +361,12 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            filterByForeignId('country_id', 'city', 'city_id', 'edit');
+            filterByForeignId('region_id', 'subregion', 'subregion_id', 'edit');
+        });
+    </script>
+@endpush

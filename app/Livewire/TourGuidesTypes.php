@@ -7,24 +7,16 @@ use Livewire\WithPagination;
 use App\Models\TourGuideType;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 
 class TourGuidesTypes extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -36,19 +28,21 @@ class TourGuidesTypes extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'tourGuideType');
     }
 
     public function render()
     {
-        $this->totalCount = TourGuideType::count();
         $data = TourGuideType::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
+        foreach ($data as $tourGuideType) {
+            $tourGuideType['states'] = $tourGuideType->states();
+            $tourGuideType['cities'] = $tourGuideType->cities();
+        }
         return view('livewire.tour-guides-types', [
             'data' => $data,
-            'totalCount' => $this->totalCount,
+            'totalCount' => TourGuideType::count(),
         ]);
     }
 }

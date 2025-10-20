@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.add_type', ['type' => __('main.city')]) }}
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- City Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -128,8 +128,7 @@
                             <!-- Timezone -->
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search
-                                    special-search>
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
                                     <option value="">{{ __('main.select_timezone') }}</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
@@ -220,7 +219,7 @@
 @push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            FilterByForeignId('country_id', 'state', 'state_id');
+            filterByForeignId('country_id', 'state', 'state_id');
         });
     </script>
 @endpush

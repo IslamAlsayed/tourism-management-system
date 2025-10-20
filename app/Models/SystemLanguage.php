@@ -5,13 +5,14 @@ namespace App\Models;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
-class GuideLanguage extends Model
+class SystemLanguage extends Model
 {
     use HasSearch;
 
     protected $fillable = [
         'id',
+        'code',
         'name',
-        'name_ar'
+        'photo'
     ];
 }

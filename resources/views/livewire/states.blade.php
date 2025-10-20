@@ -29,7 +29,7 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $state)
-                            <tr>
+                            <tr wire:key="{{ $state->id }}" class="hover:bg-gray-100">
                                 <td class="text-center">
                                     <input type="checkbox" name="selectedItems[]" value="{{ $state->id }}"
                                         class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
@@ -47,15 +47,13 @@
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
                                             {{ __('main.edit') }}
                                         </a>
-
-                                        <a href="{{ route('states.destroy', $state->id) }}"
+                                        @include('components.elements.delete-button', ['id' => $state->id])
+                                        {{-- <button wire:key="state-{{ $state->id }}-destroy"
+                                            wire:click="destroy({{ $state->id }})" wire:loading.attr="disabled"
+                                            wire:target="destroy"
                                             class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form action="{{ route('states.destroy', $state->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">{{ __('main.delete') }}</button>
-                                            </form>
-                                        </a>
+                                            {{ __('main.delete') }}
+                                        </button> --}}
                                     </div>
                                 </td>
                             </tr>

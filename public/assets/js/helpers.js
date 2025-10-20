@@ -1,20 +1,3 @@
-// ======= Helpers =======
-// window.closeAllDropdown = function () {
-//     document
-//         .querySelectorAll(".multi-select-tag .dropdown")
-//         .forEach((dropdown) => dropdown.classList.add("hidden"));
-// };
-
-// window.loadData = function (container = null) {
-//     let containerHotels =
-//         container || document.getElementById("containerHotels");
-//     let loader = document.createElement("div");
-//     loader.className = "loader";
-//     if (containerHotels) {
-//         containerHotels.appendChild(loader);
-//     }
-// };
-
 let toggleTriggers = document.querySelectorAll(".toggle-trigger");
 if (toggleTriggers.length > 0) {
     toggleTriggers.forEach((trigger) => {
@@ -25,6 +8,20 @@ if (toggleTriggers.length > 0) {
             toggleDisplayTarget(targetId, elementId, event.target.checked);
         });
     });
+}
+
+function removeAlert(deration = 3000) {
+    const customAlerts = document.getElementById("custom-alerts");
+    if (customAlerts) {
+        let alerts = customAlerts.querySelectorAll(".kt-alert");
+
+        alerts.forEach((alert) => {
+            if (!alert.dataset.handled) {
+                alert.dataset.handled = "true";
+                setTimeout(() => alert.remove(), deration);
+            }
+        });
+    }
 }
 
 function toggleDisplayTarget(targetId, elementId, isChecked, type = "radio") {

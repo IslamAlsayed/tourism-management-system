@@ -2,34 +2,21 @@
 
 namespace App\Livewire\Transportation;
 
-use App\Models\City;
-use App\Models\State;
-use App\Models\Region;
-use App\Models\Country;
 use Livewire\Component;
-use App\Models\Subregion;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 use App\Models\TransportationCompany;
 
 class Companies extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -41,19 +28,16 @@ class Companies extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'transportationCompany');
     }
 
     public function render()
     {
-        $this->totalCount = TransportationCompany::count();
-        $data = TransportationCompany::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
         return view('livewire.transportation.companies', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+            'data' => TransportationCompany::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => TransportationCompany::count(),
         ]);
     }
 }

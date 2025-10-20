@@ -2,44 +2,36 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\City;
 use App\Models\State;
 use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
+use App\Models\Language;
+use App\Models\Subregion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Countries\CreateCountriesRequest;
 use App\Http\Requests\Countries\UpdateCountriesRequest;
+use App\Models\Restaurant;
 
 class CountryController extends Controller
 {
     public function index()
     {
-        // $countries = Country::all();
-        // foreach ($countries as $country) {
-        //     $timezones = json_decode($country->timezones, true);
-        //     $country->timezones = $timezones;
-        // }
-
-        // [
-//     {
-//         "tzName": "Eastern European Time",
-//         "zoneName": "Europe/Mariehamn",
-//         "gmtOffset": 7200,
-//         "abbreviation": "EET",
-//         "gmtOffsetName": "UTC+02:00"
-//     }
-// ]
-
-
         return view('pages.dashboard.countries.index');
     }
 
     public function create()
     {
         $currencies = Currency::orderBy('code')->get();
+        $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.countries.create', compact('currencies', 'regions'));
+        // $subregions = Subregion::orderBy('name')->get();
+        // $countries = Country::orderBy('name')->get();
+        // $states = State::orderBy('name')->limit(15)->get();
+        // $cities = City::orderBy('name')->limit(15)->get();
+        return view('pages.dashboard.countries.create', get_defined_vars());
     }
 
     public function store(CreateCountriesRequest $request)
@@ -72,13 +64,82 @@ class CountryController extends Controller
 
     public function edit($id)
     {
+        // Restaurant::with('country.state.city.region.subregions')->chunk(1000, function ($restaurants) {
+        //     foreach ($restaurants as $key => $restaurant) {
+        //         $country = $restaurant->country;
+        //         if (!$country) {
+        //             echo ++$key . "❌ No country found for restaurant: {$restaurant->name}<br/>";
+        //             continue;
+        //         }
+
+        //         $state = $country->state;
+        //         if (!$state) {
+        //             echo ++$key . "❌ No state found for country: {$country->name}<br/>";
+        //             continue;
+        //         }
+
+        //         $city = $state->city;
+        //         if (!$city) {
+        //             echo ++$key . "❌ No city found for state: {$state->name}<br/>";
+        //             continue;
+        //         }
+
+        //         $region = $country->region;
+        //         if (!$region) {
+        //             echo ++$key . "❌ No region found for country: {$country->name}<br/>";
+        //             continue;
+        //         }
+
+        //         $subregion = $region->subregions()->first();
+        //         if (!$subregion) {
+        //             echo ++$key . "❌ No subregion found for region: {$region->name} (Country: {$country->name})<br/>";
+        //             continue;
+        //         }
+
+        //         $updated = false;
+
+        //         if (!$restaurant->region_id || $restaurant->region_id != $region->id) {
+        //             $restaurant->region_id = $region->id;
+        //             $updated = true;
+        //         }
+
+        //         if (!$restaurant->subregion_id || $restaurant->subregion_id != $subregion->id) {
+        //             $restaurant->subregion_id = $subregion->id;
+        //             $updated = true;
+        //         }
+
+        //         if (!$restaurant->country_id || $restaurant->country_id != $country->id) {
+        //             $restaurant->country_id = $country->id;
+        //             $updated = true;
+        //         }
+
+        //         if (!$restaurant->state_id || $restaurant->state_id != $state->id) {
+        //             $restaurant->state_id = $state->id;
+        //             $updated = true;
+        //         }
+
+        //         if (!$restaurant->city_id || $restaurant->city_id != $city->id) {
+        //             $restaurant->city_id = $city->id;
+        //             $updated = true;
+        //         }
+
+        //         if ($updated) {
+        //             $restaurant->save();
+        //             echo ++$key . "✅ Updated restaurant {$restaurant->id} with region_id: $restaurant->region_id, subregion_id: $restaurant->subregion_id, country_id: $restaurant->country_id, state_id: $restaurant->state_id<br/>";
+        //         } else {
+        //             echo ++$key . "✅ restaurant already up-to-date: {$restaurant->id}<br/>";
+        //         }
+        //     }
+        // });
+
         $country = Country::find($id);
         if (!$country) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.country')]));
         }
         $currencies = Currency::orderBy('code')->get();
+        $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'regions'));
+        return view('pages.dashboard.countries.edit', get_defined_vars());
     }
 
     public function update(UpdateCountriesRequest $request, $id)

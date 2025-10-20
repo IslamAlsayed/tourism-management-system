@@ -9,7 +9,7 @@
                         <h1 class="text-xl font-semibold mb-6">{{ $title }}</h1>
                         <p class="mb-6">{{ $description }}</p>
 
-                        <form action="{{ route("$models.import.post") }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route("$model.import.post") }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-6">
                                 <label for="file" class="block text-gray-700 text-sm font-bold mb-2">

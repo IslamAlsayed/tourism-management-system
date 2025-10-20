@@ -634,16 +634,16 @@
         <!-- Container -->
         <div class="kt-container-fixed">
             <!-- begin: grid -->
-            <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 lg:gap-7.5">
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
 
                 <!-- Tab Content -->
                 <div class="tab-content col-span-1 xl:col-span-3" id="profileTabsContent">
 
                     <!-- Overview Tab -->
                     <div class="tab-pane fade show active" id="overview" role="tabpanel">
-                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 lg:gap-7.5">
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
                             <div class="col-span-1">
-                                <div class="grid gap-5 lg:gap-7.5">
+                                <div class="grid gap-4 lg:gap-6">
                                     <div class="kt-card">
                                         <div class="kt-card-header">
                                             <h3 class="kt-card-title">Profile Summary</h3>
@@ -708,7 +708,7 @@
                             </div>
 
                             <div class="col-span-1 xl:col-span-2">
-                                <div class="grid gap-5 lg:gap-7.5">
+                                <div class="grid gap-4 lg:gap-6">
                                     <div class="kt-card">
                                         <div class="kt-card-header">
                                             <h3 class="kt-card-title">Recent Activity</h3>
@@ -749,7 +749,7 @@
 
                     <!-- Personal Info Tab -->
                     <div class="tab-pane fade" id="personal" role="tabpanel">
-                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 lg:gap-7.5">
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
                             <div class="col-span-1 xl:col-span-2">
                                 <div class="kt-card">
                                     <div class="kt-card-header">
@@ -880,7 +880,7 @@
 
                     <!-- Security Tab -->
                     <div class="tab-pane fade" id="security" role="tabpanel">
-                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 lg:gap-7.5">
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
                             <div class="col-span-1 xl:col-span-2">
                                 <!-- Change Password Card -->
                                 <div class="kt-card mb-5 lg:mb-7.5">
@@ -1086,7 +1086,7 @@
 
                     <!-- Notifications Tab -->
                     <div class="tab-pane fade" id="notifications" role="tabpanel">
-                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 lg:gap-7.5">
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
                             <div class="col-span-1 xl:col-span-2">
                                 <!-- Email Notifications Card -->
                                 <div class="kt-card mb-5 lg:mb-7.5">

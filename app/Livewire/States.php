@@ -3,30 +3,20 @@
 namespace App\Livewire;
 
 use App\Models\State;
-use App\Models\Region;
-use App\Models\Country;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
+use App\Traits\HandlesCrudSafely;
 use App\Traits\CustomPagination;
 
 class States extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -38,19 +28,16 @@ class States extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'state');
     }
 
     public function render()
     {
-        $this->totalCount = State::count();
-        $data = State::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
         return view('livewire.states', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+            'data' => State::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => State::count(),
         ]);
     }
 }

@@ -7,25 +7,16 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 
 class Users extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
-
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -37,19 +28,16 @@ class Users extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'user');
     }
 
     public function render()
     {
-        $this->totalCount = User::count();
-        $data = $this->scopeSearch(User::class);
-
         return view('livewire.users', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+            'data' => User::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => User::count(),
         ]);
     }
 }

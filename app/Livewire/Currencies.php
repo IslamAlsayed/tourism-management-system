@@ -7,24 +7,16 @@ use App\Models\Currency;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 
 class Currencies extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -36,29 +28,16 @@ class Currencies extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'currency');
     }
 
     public function render()
     {
-        $this->totalCount = Currency::count();
-        $data = $this->scopeSearch(Currency::class);
-
-        // $data = Currency::query()
-        //     ->when($this->search, function ($query) {
-        //         $search = strtolower($this->search);
-        //         $query->where(function ($q) use ($search) {
-        //             foreach ($this->searchColumns as $column) {
-        //                 $q->orWhere($column, 'like', '%' . $search . '%');
-        //             }
-        //         });
-        //     })->paginate(getPaginate());
-
         return view('livewire.currencies', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+            'data' => Currency::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => Currency::count(),
         ]);
     }
 }

@@ -23,15 +23,19 @@ class TourGuideTypeCreateRequest extends FormRequest
     {
         return [
             'type' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'string', 'max:20'],
-            'currency_id' => ['required', 'string', 'max:50', 'exists:currencies,id'],
-            'region_id' => ['required', 'string', 'max:50', 'exists:regions,id'],
-            'subregion_id' => ['required', 'string', 'max:50', 'exists:subregions,id'],
-            'country_id' => ['required', 'string', 'max:50', 'exists:countries,id'],
-            'state_id' => ['nullable', 'string', 'max:50', 'exists:states,id'],
-            'multi_states' => ['nullable', 'string', 'max:255'],
-            'city_id' => ['nullable', 'string', 'max:50', 'exists:cities,id'],
-            'multi_cities' => ['nullable', 'string', 'max:255'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'currency_id' => ['required', 'exists:currencies,id'],
+            'region_id' => ['required', 'exists:regions,id'],
+            'subregion_id' => ['required', 'exists:subregions,id'],
+            'country_id' => ['required', 'exists:countries,id'],
+
+            'all_states' => ['nullable', 'in:0,1'],
+            'state_id' => ['nullable', 'array'],
+            'state_id.*' => ['integer', 'exists:states,id'],
+
+            'all_cities' => ['nullable', 'in:0,1'],
+            'city_id' => ['nullable', 'array'],
+            'city_id.*' => ['integer', 'exists:cities,id'],
         ];
     }
 }

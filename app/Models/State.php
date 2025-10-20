@@ -21,19 +21,30 @@ class State extends Model
         'latitude',
         'longitude',
         'timezone',
-        'parent_id',
-        'country_id',
         'region_id',
+        'subregion_id',
+        'country_id',
+        'city_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['country', 'region'];
+        return ['region', 'subregion', 'country', 'city'];
     }
 
     public function getExcludedColumns()
     {
-        return ['country_id', 'region_id'];
+        return ['region_id', 'subregion_id', 'country_id', 'city_id'];
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
     }
 
     public function country()
@@ -41,8 +52,8 @@ class State extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function region()
+    public function city()
     {
-        return $this->belongsTo(Region::class);
+        return $this->belongsTo(City::class);
     }
 }

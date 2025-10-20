@@ -2,31 +2,21 @@
 
 namespace App\Livewire\Transportation;
 
-use App\Models\TransportationBusType;
 use Livewire\Component;
-use App\Models\TransportationCompanyBusType;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
-use App\Models\TransportationCompany;
+use App\Traits\HandlesCrudSafely;
+use App\Models\TransportationCompanyBusType;
 
 class CompanyBusTypes extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -38,19 +28,16 @@ class CompanyBusTypes extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'transportationCompanyBusType');
     }
 
     public function render()
     {
-        $this->totalCount = TransportationCompanyBusType::count();
-        $data = TransportationCompanyBusType::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
-        return view('livewire.transportation.bus-types', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+        return view('livewire.transportation.company-bus-types', [
+            'data' => TransportationCompanyBusType::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => TransportationCompanyBusType::count(),
         ]);
     }
 }

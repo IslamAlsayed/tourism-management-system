@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.edit_type', ['type' => __('main.subregion')]) }}
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- Subregion Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -69,7 +69,7 @@
                             <!-- Region id -->
                             <div class="">
                                 <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
-                                <select name="region_id" id="region_id" class="kt-input h-[45px]">
+                                <select name="region_id" id="region_id" class="kt-input h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($regions as $region)
                                         <option value="{{ $region->id }}"

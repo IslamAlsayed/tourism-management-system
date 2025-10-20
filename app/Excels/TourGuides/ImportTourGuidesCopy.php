@@ -3,7 +3,7 @@
 namespace App\Excels\TourGuides;
 
 use App\Models\TourGuide;
-use App\Models\GuideLanguage;
+use App\Models\Language;
 use App\Jobs\ImportDataToDBJob;
 use App\Models\TourGuideLanguage;
 use Illuminate\Support\Collection;
@@ -39,7 +39,7 @@ class ImportTourGuidesCopy implements ToCollection
 
             $rowArray = $row->toArray();
             $dataTourGuide = [];
-            $guideLanguageIds = [];
+            $languageIds = [];
 
             // ✅ 1. تجهيز بيانات TourGuide
             foreach ($fillableTourGuide as $column) {
@@ -52,8 +52,8 @@ class ImportTourGuidesCopy implements ToCollection
             Log::info('Prepared TourGuide Data: ' . json_encode($dataTourGuide));
 
             // ✅ 2. استخراج اللغات لو العمود موجود
-            // if (in_array('guide_language', $headers)) {
-            //     $excelKey = array_search('guide_language', $headers);
+            // if (in_array('language', $headers)) {
+            //     $excelKey = array_search('language', $headers);
             //     if (isset($rowArray[$excelKey])) {
             //         $langs = explode('،', $rowArray[$excelKey]);
 
@@ -61,15 +61,15 @@ class ImportTourGuidesCopy implements ToCollection
             //             $lang = ucfirst(trim($lang));
 
             //             if (!empty($lang)) {
-            //                 $guideLang = GuideLanguage::updateOrCreate(
+            //                 $guideLang = Language::updateOrCreate(
             //                     ['name' => $lang],
             //                     ['name' => $lang]
             //                 );
 
-            //                 Log::info('Created/Found GuideLanguage: ' . $guideLang->name);
+            //                 Log::info('Created/Found Language: ' . $guideLang->name);
 
             //                 if ($guideLang) {
-            //                     $guideLanguageIds[] = $guideLang->id;
+            //                     $languageIds[] = $guideLang->id;
             //                 }
             //             }
             //         }
@@ -81,14 +81,14 @@ class ImportTourGuidesCopy implements ToCollection
             //     $tourGuide = TourGuide::updateOrCreate(['name' => $dataTourGuide['name']], $dataTourGuide);
 
             //     // ✅ 4. ربط اللغات لو فيه لغات
-            //     if (!empty($guideLanguageIds)) {
-            //         foreach ($guideLanguageIds as $langId) {
+            //     if (!empty($languageIds)) {
+            //         foreach ($LanguageIds as $langId) {
             //             $batchTourGuideLangs[] = [
             //                 'tour_guide_id' => $tourGuide->id,
-            //                 'guide_language_id' => $langId,
+            //                 'language_id' => $langId,
             //             ];
 
-            //             Log::info('Created/Found GuideLanguage: ' . $langId);
+            //             Log::info('Created/Found Language: ' . $langId);
             //         }
             //     }
 

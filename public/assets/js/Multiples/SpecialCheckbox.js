@@ -1,5 +1,5 @@
 // ======= Multi Checkbox =======
-window.SpecialCheckbox = function (checkboxesSelector, onChangeCallback) {
+window.specialCheckbox = function (checkboxesSelector, onChangeCallback) {
     const checkboxes = document.querySelectorAll(checkboxesSelector);
     if (!checkboxes.length) return;
 

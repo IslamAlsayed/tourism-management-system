@@ -22,8 +22,8 @@ class CreateCountriesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name_ar' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
             'iso2' => ['required', 'string', 'unique:countries,iso2'],
             'iso3' => ['required', 'string', 'unique:countries,iso3'],
             'phone_code' => ['nullable', 'string'],
@@ -31,8 +31,10 @@ class CreateCountriesRequest extends FormRequest
             'currency_id' => ['nullable', 'exists:currencies,id'],
             'population' => ['nullable', 'integer'],
             'area' => ['nullable', 'numeric'],
-            'continent' => ['nullable', 'string', 'max:255'],
-            'region' => ['nullable', 'string', 'max:255'],
+            'region_id' => ['required', 'string', 'exists:regions,id'],
+            'subregion_id' => ['required', 'string', 'exists:subregions,id'],
+            'state_id' => ['required', 'string', 'exists:states,id'],
+            'city_id' => ['required', 'string', 'exists:cities,id'],
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
             'timezone' => ['nullable', 'string', 'max:255'],

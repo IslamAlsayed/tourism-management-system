@@ -15,7 +15,7 @@
 ])
 
 @php
-    $formRoute = $route ?? route('import.data.post', ['model' => $models]);
+    $formRoute = $route ?? route('import.data.post', ['models' => $models]);
     $backRoute = $cancelRoute ?? route("$models.index");
 @endphp
 
@@ -135,9 +135,9 @@
 
                         @if ($showExport)
                             <div class="mt-4">
-                                <a href="{{ route('export.data', ['model' => $models]) }}"
+                                <a href="{{ route('export.data', ['models' => $models]) }}"
                                     @if ($customExportId) id="{{ $customExportId }}" @endif
-                                    data-model="{{ $models }}" class="kt-btn kt-btn-outline">
+                                    data-model="{{ $model }}" class="kt-btn kt-btn-outline">
                                     {{ __('main.export') }}
                                 </a>
                             </div>

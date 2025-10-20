@@ -23,9 +23,11 @@ class CreateCitiesRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'name_ar' => ['required', 'string', 'max:255'],
-            'state_id' => ['required', 'exists:states,id'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
+            'region_id' => ['required', 'exists:regions,id'],
+            'subregion_id' => ['required', 'exists:subregions,id'],
             'country_id' => ['required', 'exists:countries,id'],
+            'state_id' => ['required', 'exists:states,id'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
             'timezone' => ['required', 'string', 'max:255'],

@@ -2,33 +2,22 @@
 
 namespace App\Livewire\Transportation;
 
-use App\Models\Currency;
-use App\Models\TransportationBusType;
-use App\Models\TransportationCarRoutePrice;
 use Livewire\Component;
-use App\Models\TransportationCarRoute;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
-use App\Models\TransportationCompany;
+use App\Traits\HandlesCrudSafely;
+use App\Models\TransportationCarRoute;
+use App\Models\TransportationCarRoutePrice;
 
 class Vehicles extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -36,13 +25,13 @@ class Vehicles extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(TransportationCarRoutePrice::class);
+        $this->mountWithCustomColumns(TransportationCarRoute::class);
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'transportationCarRoute');
     }
 
     public function render()

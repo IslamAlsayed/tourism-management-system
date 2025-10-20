@@ -7,24 +7,16 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 
 class Regions extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -36,19 +28,16 @@ class Regions extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'region');
     }
 
     public function render()
     {
-        $this->totalCount = Region::count();
-        $data = $this->scopeSearch(Region::class);
-
         return view('livewire.regions', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+            'data' => Region::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => Region::count(),
         ]);
     }
 }

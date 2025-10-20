@@ -5,14 +5,14 @@
     @include('includes.table-breadcrumb', [
         'title' => __('main.tour-guides-types'),
         'description' => __('main.manage_system_types', ['types' => __('main.tour-guides-types')]),
-        'import_url' => route('import.data', ['model' => 'tour-guides-types']),
+        'import_url' => route('import.data', ['models' => 'tour-guides-types']),
         'page_add_url' => route('tour-guides-types.create'),
-        'page_add_title' => __('main.add_new_type', ['type' => __('main.tour-guide-type')]),
+        'page_add_title' => __('main.add_new_type', ['type' => __('main.tour-guides-type')]),
     ])
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="grid gap-5 lg:gap-7.5">
+    <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
             <livewire:tour-guides-types />
         </div>

@@ -15,4 +15,9 @@ class Region extends Model
         'name_ar',
         'wiki_data_id'
     ];
+
+    public function subregions()
+    {
+        return $this->hasMany(Subregion::class);
+    }
 }

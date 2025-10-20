@@ -18,27 +18,39 @@ class City extends Model
         'timezone',
         'wiki_data_id',
         'population',
-        'state_id',
+        'region_id',
+        'subregion_id',
         'country_id',
+        'state_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['state', 'country'];
+        return ['region', 'subregion', 'country', 'state'];
     }
 
     public function getExcludedColumns()
     {
-        return ['state_id', 'country_id'];
+        return ['region_id', 'subregion_id', 'country_id', 'state_id'];
     }
 
-    public function state()
+    public function region()
     {
-        return $this->belongsTo(State::class);
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
     }
 
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
     }
 }

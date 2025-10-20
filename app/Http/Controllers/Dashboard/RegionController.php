@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Region;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Regions\RegionsCreateRequest;
 use App\Http\Requests\Regions\RegionsUpdateRequest;

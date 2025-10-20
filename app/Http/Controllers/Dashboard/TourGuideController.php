@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\City;
+use App\Models\State;
+use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
+use App\Models\Subregion;
 use App\Models\TourGuide;
-use App\Models\GuideLanguage;
+use App\Models\Language;
 use App\Models\TourGuideType;
 use App\Traits\PhotoUploadTrait;
 use App\Models\TourGuideLanguage;
@@ -25,11 +29,16 @@ class TourGuideController extends Controller
 
     public function create()
     {
-        $countries = Country::all();
         $currencies = Currency::all();
-        $guide_languages_ids = GuideLanguage::all()->pluck('name', 'id');
+        $languages_ids = Language::get(['id', 'name', 'name_ar']);
         $guideTypes = TourGuideType::all();
-        return view('pages.dashboard.tour-guides.create', compact('currencies', 'countries', 'guide_languages_ids', 'guideTypes'));
+        $regions = Region::all();
+        $subregions = Subregion::all();
+        $countries = Country::all();
+        $states = State::all();
+        $cities = City::all();
+
+        return view('pages.dashboard.tour-guides.create', get_defined_vars());
     }
 
     public function store(TourGuideCreateRequest $request)
@@ -39,7 +48,7 @@ class TourGuideController extends Controller
             $validated = $request->validated();
             $validated = $request->safe()->except('photo');
             $tourGuide = TourGuide::create($validated);
-            $tourGuide->languages()->sync($request->guide_languages_ids);
+            $tourGuide->languages()->sync($request->languages_ids);
             $this->uploadPhoto($request, $tourGuide, 'photo', "tour_guides");
             DB::commit();
             $message = __('main.messages.type_created', ['type' => __('main.tour-guide')]);
@@ -63,7 +72,7 @@ class TourGuideController extends Controller
         dd($request->all());
         $validated = $request->validated();
         $tourGuide = TourGuide::create($validated);
-        $tourGuideLanguage = TourGuideLanguage::insert(array_map(fn($languageId) => ['tour_guide_id' => $tourGuide->id, 'guide_language_id' => $languageId], $request->guide_languages_ids));
+        $tourGuideLanguage = TourGuideLanguage::insert(array_map(fn($languageId) => ['tour_guide_id' => $tourGuide->id, 'language_id' => $languageId], $request->languages_ids));
 
         if ($tourGuide && $tourGuideLanguage) {
             if ($request->has('save_and_add')) {
@@ -80,11 +89,34 @@ class TourGuideController extends Controller
         if (!$tourGuide) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.tour-guide')]));
         }
-        $countries = Country::all();
         $currencies = Currency::all();
-        $guideLanguages = GuideLanguage::all();
+        $languages_ids = Language::all()->pluck('name', 'id');
+
+        // $tour_guide_languages = TourGuideLanguage::with('language', function ($query) use ($tourGuide) {
+        //     $query->where('tour_guide_id', $tourGuide->id);
+        // })->get();
+
+        $tour_guide_languages = TourGuideLanguage::with('language')->where('tour_guide_id', $tourGuide->id)->get();
+        // dd($tour_guide_languages);
+
+        foreach ($tour_guide_languages as $key => $language) {
+            $languages[] = $language->language->id;
+        }
+
+        // dd($languages);
+
+        // $tour_guide_languages = TourGuideLanguage::where('tour_guide_id', $tourGuide->id)->pluck('guide_language_id', 'id');
         $guideTypes = TourGuideType::all();
-        return view('pages.dashboard.tour-guides.edit', compact('tourGuide', 'countries', 'currencies', 'guideLanguages', 'guideTypes'));
+
+        // dd($tourGuide->toArray(), $tour_guide_languages->toArray(), languages_ids);
+
+        $regions = Region::all();
+        $subregions = Subregion::all();
+        $countries = Country::all();
+        $states = State::all();
+        $cities = City::all();
+
+        return view('pages.dashboard.tour-guides.edit', get_defined_vars());
     }
 
     public function update(TourGuideUpdateRequest $request, $id)
@@ -101,8 +133,8 @@ class TourGuideController extends Controller
             $validated = $request->safe()->except('photo');
 
             $tourGuide->update($validated);
-            if ($request->has('guide_languages_ids')) {
-                $tourGuide->languages()->sync($request->guide_languages_ids);
+            if ($request->has('languages_ids')) {
+                $tourGuide->languages()->sync($request->languages_ids);
             }
             $this->uploadPhoto($request, $tourGuide, 'photo', "tour_guides");
             DB::commit();

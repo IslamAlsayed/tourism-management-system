@@ -3,31 +3,20 @@
 namespace App\Livewire;
 
 use App\Models\Country;
-use App\Models\Currency;
-use App\Models\Region;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 
 class Countries extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
-
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -39,20 +28,16 @@ class Countries extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'country');
     }
 
     public function render()
     {
-        $this->totalCount = Country::count();
-        $data = Country::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
         return view('livewire.countries', [
-            'data' => $data,
-            'relations' => $this->relations,
-            'totalCount' => $this->totalCount,
+            'data' => Country::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => Country::count(),
         ]);
     }
 }

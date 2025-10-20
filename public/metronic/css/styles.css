@@ -2687,6 +2687,18 @@
     border-radius: 0.25rem;
   }
 
+  .rounded-\[3px\] {
+    border-radius: 3px;
+  }
+
+  .rounded-\[5px\] {
+    border-radius: 5px;
+  }
+
+  .rounded-\[7px\] {
+    border-radius: 7px;
+  }
+
   .rounded-\[9px\] {
     border-radius: 9px;
   }
@@ -3148,6 +3160,10 @@
 
   .bg-orange-100 {
     background-color: var(--color-orange-100);
+  }
+
+  .bg-success {
+    background-color: var(--color-green-600);
   }
 
   .bg-danger {
@@ -4188,6 +4204,10 @@
 
   .opacity-25 {
     opacity: 25%;
+  }
+
+  .opacity-35 {
+    opacity: 35%;
   }
 
   .opacity-75 {

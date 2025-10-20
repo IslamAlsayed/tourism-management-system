@@ -5,14 +5,14 @@
     @include('includes.table-breadcrumb', [
         'title' => __('main.tour-guides'),
         'description' => __('main.manage_system_types', ['types' => __('main.tour-guides')]),
-        'import_url' => route('import.data', ['model' => 'tour-guides']),
+        'import_url' => route('import.data', ['models' => 'tour-guides']),
         'page_add_url' => route('tour-guides.create'),
         'page_add_title' => __('main.add_new_type', ['type' => __('main.tour-guide')]),
     ])
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="grid gap-5 lg:gap-7.5">
+    <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
             <livewire:tour-guides />
         </div>

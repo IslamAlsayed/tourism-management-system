@@ -11,19 +11,17 @@
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="grid gap-5 lg:gap-7.5">
+    <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
             <div class="kt-card-header">
                 <h3 class="kt-card-title">All Restaurants</h3>
                 <div class="kt-menu" data-kt-menu="true">
-                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                        data-kt-menu-item-placement="bottom-start" data-kt-menu-item-toggle="dropdown"
-                        data-kt-menu-item-trigger="click">
+                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-start"
+                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
                         <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
                             <i class="ki-filled ki-dots-vertical text-lg"></i>
                         </button>
-                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                            data-kt-menu-dismiss="true">
+                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]" data-kt-menu-dismiss="true">
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="#">
                                     <span class="kt-menu-icon">
@@ -74,7 +72,7 @@
                                         'status' => 'active',
                                         'phone' => '+966 11 123 4567',
                                         'email' => 'info@albaik.com',
-                                        'website' => 'www.albaik.com'
+                                        'website' => 'www.albaik.com',
                                     ],
                                     [
                                         'id' => 2,
@@ -88,7 +86,7 @@
                                         'status' => 'active',
                                         'phone' => '+966 11 234 5678',
                                         'email' => 'contact@najdvillage.com',
-                                        'website' => 'www.najdvillage.com'
+                                        'website' => 'www.najdvillage.com',
                                     ],
                                     [
                                         'id' => 3,
@@ -102,7 +100,7 @@
                                         'status' => 'active',
                                         'phone' => '+966 12 345 6789',
                                         'email' => 'info@spazio.com',
-                                        'website' => 'www.spazio.com'
+                                        'website' => 'www.spazio.com',
                                     ],
                                     [
                                         'id' => 4,
@@ -116,7 +114,7 @@
                                         'status' => 'active',
                                         'phone' => '+966 13 456 7890',
                                         'email' => 'orders@shawarmahouse.com',
-                                        'website' => 'www.shawarmahouse.com'
+                                        'website' => 'www.shawarmahouse.com',
                                     ],
                                     [
                                         'id' => 5,
@@ -130,7 +128,7 @@
                                         'status' => 'active',
                                         'phone' => '+966 11 567 8901',
                                         'email' => 'reservations@sushimaster.com',
-                                        'website' => 'www.sushimaster.com'
+                                        'website' => 'www.sushimaster.com',
                                     ],
                                     [
                                         'id' => 6,
@@ -144,58 +142,70 @@
                                         'status' => 'active',
                                         'phone' => '+966 12 678 9012',
                                         'email' => 'info@cafecentral.com',
-                                        'website' => 'www.cafecentral.com'
-                                    ]
+                                        'website' => 'www.cafecentral.com',
+                                    ],
                                 ];
                             @endphp
-                            @foreach($restaurants as $restaurant)
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="symbol symbol-45px me-5">
-                                            <img src="{{ asset('metronic/media/avatars/300-2.png') }}" alt="{{ $restaurant['name'] }}">
+                            @foreach ($restaurants as $restaurant)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-45px me-5">
+                                                <img src="{{ asset('metronic/media/avatars/300-2.png') }}"
+                                                    alt="{{ $restaurant['name'] }}">
+                                            </div>
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <a href="#"
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{ $restaurant['name'] }}</a>
+                                                <span
+                                                    class="text-muted fw-semibold text-muted d-block fs-7">{{ $restaurant['name_ar'] }}</span>
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-start flex-column">
-                                            <a href="#" class="text-dark fw-bold text-hover-primary fs-6">{{ $restaurant['name'] }}</a>
-                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ $restaurant['name_ar'] }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="kt-badge kt-badge-light-{{ $restaurant['type'] == 'Fine Dining' ? 'primary' : ($restaurant['type'] == 'Traditional' ? 'success' : ($restaurant['type'] == 'Fast Food' ? 'warning' : ($restaurant['type'] == 'Casual' ? 'info' : 'secondary'))) }}">
+                                            {{ $restaurant['type'] }}
+                                        </span>
+                                    </td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $restaurant['location'] }}</td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $restaurant['cuisine'] }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <i
+                                                    class="ki-filled ki-star text-{{ $i <= $restaurant['rating'] ? 'warning' : 'muted' }} fs-7"></i>
+                                            @endfor
+                                            <span
+                                                class="text-muted fw-semibold text-muted ms-1">{{ $restaurant['rating'] }}/5</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-{{ $restaurant['type'] == 'Fine Dining' ? 'primary' : ($restaurant['type'] == 'Traditional' ? 'success' : ($restaurant['type'] == 'Fast Food' ? 'warning' : ($restaurant['type'] == 'Casual' ? 'info' : 'secondary'))) }}">
-                                        {{ $restaurant['type'] }}
-                                    </span>
-                                </td>
-                                <td class="text-muted fw-semibold text-muted">{{ $restaurant['location'] }}</td>
-                                <td class="text-muted fw-semibold text-muted">{{ $restaurant['cuisine'] }}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <i class="ki-filled ki-star text-{{ $i <= $restaurant['rating'] ? 'warning' : 'muted' }} fs-7"></i>
-                                        @endfor
-                                        <span class="text-muted fw-semibold text-muted ms-1">{{ $restaurant['rating'] }}/5</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-{{ $restaurant['price_range'] == '$' ? 'success' : ($restaurant['price_range'] == '$$' ? 'warning' : 'danger') }}">
-                                        {{ $restaurant['price_range'] }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-success">Active</span>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="View">
-                                        <i class="ki-filled ki-eye fs-3"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="Edit">
-                                        <i class="ki-filled ki-pencil fs-3"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" title="Delete">
-                                        <i class="ki-filled ki-trash fs-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="kt-badge kt-badge-light-{{ $restaurant['price_range'] == '$' ? 'success' : ($restaurant['price_range'] == '$$' ? 'warning' : 'danger') }}">
+                                            {{ $restaurant['price_range'] }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="kt-badge kt-badge-light-success">Active</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="#"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            title="View">
+                                            <i class="ki-filled ki-eye fs-3"></i>
+                                        </a>
+                                        <a href="#"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            title="Edit">
+                                            <i class="ki-filled ki-pencil fs-3"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                            title="Delete">
+                                            <i class="ki-filled ki-trash fs-3"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -205,5 +215,3 @@
     </div>
     <!-- End of Container -->
 @endsection
-
-

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Languages;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateLanguageRequest extends FormRequest
+class LanguageCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class CreateLanguageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|unique:languages,name",
-            "code" => "required|unique:languages,code",
-            'photo' => ['required', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg', 'unique:languages,photo'],
+            'name' => ['required', 'string', 'max:255'],
+            'name_ar' => ['required', 'string', 'max:255'],
+            'code' => ['required', 'string', 'unique:languages,code'],
         ];
     }
 }

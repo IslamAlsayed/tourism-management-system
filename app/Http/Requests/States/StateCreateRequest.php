@@ -24,6 +24,10 @@ class StateCreateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
+            'region_id' => ['required', 'string', 'exists:regions,id'],
+            'subregion_id' => ['required', 'string', 'exists:subregions,id'],
+            'country_id' => ['required', 'string', 'exists:countries,id'],
+            'city_id' => ['required', 'string', 'exists:cities,id'],
             'iso2' => ['required', 'string', 'min:2', 'max:2', 'unique:countries,iso2'],
             'iso3' => ['required', 'string', 'min:3', 'max:3', 'unique:countries,iso3'],
             'fips_code' => ['nullable', 'string', 'max:2'],
@@ -33,7 +37,6 @@ class StateCreateRequest extends FormRequest
             'longitude' => ['nullable', 'numeric'],
             'timezone' => ['nullable', 'string', 'max:255'],
             'parent_id' => ['nullable', 'integer', 'exists:states,id'],
-            'country_id' => ['required', 'integer', 'exists:countries,id'],
         ];
     }
 }

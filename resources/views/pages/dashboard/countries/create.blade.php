@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.add_type', ['type' => __('main.country')]) }}
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- Country Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -39,9 +39,8 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Country Name (Arabic) -->
                             <div class="">
-                                <label for="name_ar"
-                                    class="kt-label required mb-2">{{ __('main.country_name_arabic') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.country_name_arabic') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -102,7 +101,7 @@
 
                             <!-- Currency -->
                             <div class="">
-                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
+                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.currency') }}
                                     <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
@@ -122,28 +121,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Region -->
-                            <div class="">
-                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.region') }}
-                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
-                                    <option value="">--</option>
-                                    @foreach ($regions as $region)
-                                        <option value="{{ $region->id }}"
-                                            {{ old('region_id') == $region->id ? 'selected' : '' }}>
-                                            {{ $region->name }} {{ $region->name_ar ? '- ' . $region->name_ar : '' }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('region_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <!-- Language -->
                             <div class="">
                                 <label for="language_id" class="kt-label required mb-2 flex items-center justify-between">
@@ -152,7 +129,8 @@
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
-                                <select name="language_id" id="language_id" class="kt-select h-[45px]" special-search>
+                                <select name="language_id" id="language_id" class="kt-select h-[45px]" special-search
+                                    required>
                                     <option value="">--</option>
                                     @foreach ($languages as $language)
                                         <option value="{{ $language->id }}"
@@ -173,6 +151,113 @@
                                 <input type="number" name="population" id="population" class="kt-input h-[45px]"
                                     value="{{ old('population') }}">
                                 @error('population')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Region -->
+                            <div class="">
+                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.region') }}
+                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
+                                    <option value="">--</option>
+                                    @foreach ($regions as $region)
+                                        <option value="{{ $region->id }}"
+                                            {{ old('region_id') == $region->id ? 'selected' : '' }}>
+                                            {{ $region->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('region_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Subregion -->
+                            <div class="loading">
+                                <label for="subregion_id"
+                                    class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        {{ __('main.subregion') }}
+                                        <i id="subregion_id-loader"
+                                            class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        <span class="text-red-600 text-sm span-info show" id="subregion_id-info">
+                                            (You must select region first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search>
+                                    <option value="">--</option>
+                                    {{-- @foreach ($subregions as $subregion)
+                                        <option value="{{ $subregion->id }}"
+                                            {{ old('subregion_id') == $subregion->id ? 'selected' : '' }}>
+                                            {{ $subregion->name }}
+                                        </option>
+                                    @endforeach --}}
+                                </select>
+                                @error('subregion_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- State --}}
+                            <div class="loading">
+                                <label for="state_ids" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        {{ __('main.states', ['types' => __('main.states')]) }}
+                                        <span class="text-red-600 text-sm span-info show" id="state_id-info">
+                                            (You must select country first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search>
+                                    <option value="">--</option>
+                                    {{-- @foreach ($states as $state)
+                                        <option value="{{ $state->id }}"
+                                            {{ old('state_id') == $state->id ? 'selected' : '' }}>
+                                            {{ $state->name }}
+                                        </option>
+                                    @endforeach --}}
+                                </select>
+                                @error('state_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- City -->
+                            <div class="loading">
+                                <label for="city_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div class="flex items-center justify-between gap-1">
+                                        {{ __('main.cities', ['types' => __('main.cities')]) }}
+                                        <span class="text-red-600 text-sm span-info show" id="city_id-info">
+                                            (You must select state first)
+                                        </span>
+                                    </div>
+
+                                    <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="city_id" id="city_id" class="kt-select h-[45px]" special-search>
+                                    <option value="">--</option>
+                                    {{-- @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}"
+                                            {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach --}}
+                                </select>
+                                @error('city_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -238,6 +323,7 @@
                                 </div>
 
                                 <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_independent" value="0">
                                     <input type="checkbox" name="is_independent" id="is_independent" class="kt-checkbox"
                                         value="1" {{ old('is_independent', '1') ? 'checked' : '' }}>
                                     <label for="is_independent"
@@ -245,12 +331,14 @@
                                 </div>
 
                                 <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_developed" value="0">
                                     <input type="checkbox" name="is_developed" id="is_developed" class="kt-checkbox"
                                         value="1" {{ old('is_developed') ? 'checked' : '' }}>
                                     <label for="is_developed" class="kt-label">{{ __('main.developed_country') }}</label>
                                 </div>
 
                                 <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_landlocked" value="0">
                                     <input type="checkbox" name="is_landlocked" id="is_landlocked" class="kt-checkbox"
                                         value="1" {{ old('is_landlocked') ? 'checked' : '' }}>
                                     <label for="is_landlocked"
@@ -321,3 +409,13 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            filterByForeignId("region_id", "subregion", "subregion_id");
+            filterByForeignId("subregion_id", "state", "state_id");
+            filterByForeignId("state_id", "city", "city_id");
+        });
+    </script>
+@endpush

@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.edit_type', ['type' => __('main.city')]) }}
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- City Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -37,9 +37,9 @@
                             <!-- City Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
-                                    class="kt-label required mb-2">{{ __('main.type_name_arabic', ['type' => __('main.city')]) }}</label>
+                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.city')]) }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ $city->name_ar }}" required>
+                                    value="{{ $city->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -48,9 +48,9 @@
                             <!-- City Name (English) -->
                             <div class="">
                                 <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.type_name_english', ['type' => __('main.city')]) }}</label>
+                                    class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.city')]) }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ $city->name }}" required>
+                                    value="{{ $city->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -68,19 +68,20 @@
 
                             <!-- Country -->
                             <div class="">
-                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                <label for="country_id" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.country') }}
                                     <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
                                 <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
-                                    required>
+                                    data-current-value="{{ $city->country_id }}">
+                                    {{-- value={{ $city->country_id }}> --}}
                                     <option value="">--</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"
                                             {{ $country->id === $city->country_id ? 'selected' : '' }}>
-                                            {{ $country->name_ar }} - {{ $country->name }}</option>
+                                            {{ $country->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('country_id')
@@ -90,18 +91,20 @@
 
                             <!-- State -->
                             <div class="">
-                                <label for="state_id" class="kt-label required mb-2 flex items-center justify-between">
+                                <label for="state_id" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.state') }}
                                     <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
-                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search>
+                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $city->state_id }}">
+                                    {{-- value={{ $city->state_id }}> --}}
                                     <option value="">--</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}"
-                                            {{ $state->id === $city->state_id ? 'selected' : '' }}>
-                                            {{ $state->name_ar }} - {{ $state->name }}</option>
+                                            {{ $state->id === $city->state_id ? 'selected' : '' }}>{{ $state->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('state_id')
@@ -132,8 +135,9 @@
                             <!-- Timezone -->
                             <div class="">
                                 <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
-                                    <option value="">{{ __('main.select_timezone') }}</option>
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search
+                                    value={{ $city->timezone }}>
+                                    <option value="">--</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"
                                             {{ $city->timezone == $zone ? 'selected' : '' }}>
@@ -215,3 +219,11 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            filterByForeignId('country_id', 'state', 'state_id', 'edit');
+        });
+    </script>
+@endpush

@@ -14,6 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
+            $table->unsignedBigInteger('region_id')->nullable();
+            $table->unsignedBigInteger('subregion_id')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('iso2')->nullable();
             $table->string('iso3')->nullable();
             $table->string('fips_code')->nullable();
@@ -22,8 +26,6 @@ return new class extends Migration {
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
             $table->string('timezone')->nullable();
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();
             $table->timestamps();
         });
     }

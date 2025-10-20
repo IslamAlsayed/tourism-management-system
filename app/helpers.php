@@ -165,7 +165,7 @@ if (!function_exists('hasActiveChild')) {
 
 
 if (!function_exists('generateUniqueFilename')) {
-    function generateUniqueFilename($prefix = 'export')
+    function generateUniqueFilename($prefix = 'data')
     {
         // return $prefix . '_' . substr(md5(uniqid(mt_rand(), true)), 0, 6);
         return $prefix . '_' . date('Y_m_d_H_i_s');

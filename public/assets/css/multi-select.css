@@ -1,6 +1,6 @@
 .multi-select-tag,
 .search-select-tag {
-    all: revert !important;
+    /* all: revert !important; */
     font-family: inherit !important
 }
 

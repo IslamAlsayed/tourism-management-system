@@ -11,19 +11,17 @@
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="grid gap-5 lg:gap-7.5">
+    <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
             <div class="kt-card-header">
                 <h3 class="kt-card-title">All Vehicles</h3>
                 <div class="kt-menu" data-kt-menu="true">
-                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                        data-kt-menu-item-placement="bottom-start" data-kt-menu-item-toggle="dropdown"
-                        data-kt-menu-item-trigger="click">
+                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-start"
+                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
                         <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
                             <i class="ki-filled ki-dots-vertical text-lg"></i>
                         </button>
-                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                            data-kt-menu-dismiss="true">
+                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]" data-kt-menu-dismiss="true">
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="#">
                                     <span class="kt-menu-icon">
@@ -73,7 +71,7 @@
                                         'status' => 'active',
                                         'location' => 'Riyadh, Saudi Arabia',
                                         'plate_number' => 'ABC-1234',
-                                        'driver' => 'Ahmed Al-Rashid'
+                                        'driver' => 'Ahmed Al-Rashid',
                                     ],
                                     [
                                         'id' => 2,
@@ -86,7 +84,7 @@
                                         'status' => 'active',
                                         'location' => 'Jeddah, Saudi Arabia',
                                         'plate_number' => 'DEF-5678',
-                                        'driver' => 'Mohammed Al-Sheikh'
+                                        'driver' => 'Mohammed Al-Sheikh',
                                     ],
                                     [
                                         'id' => 3,
@@ -99,7 +97,7 @@
                                         'status' => 'active',
                                         'location' => 'Dammam, Saudi Arabia',
                                         'plate_number' => 'GHI-9012',
-                                        'driver' => 'Khalid Al-Mansouri'
+                                        'driver' => 'Khalid Al-Mansouri',
                                     ],
                                     [
                                         'id' => 4,
@@ -112,7 +110,7 @@
                                         'status' => 'active',
                                         'location' => 'Riyadh, Saudi Arabia',
                                         'plate_number' => 'JKL-3456',
-                                        'driver' => 'Omar Al-Zahrani'
+                                        'driver' => 'Omar Al-Zahrani',
                                     ],
                                     [
                                         'id' => 5,
@@ -125,7 +123,7 @@
                                         'status' => 'maintenance',
                                         'location' => 'Al Ula, Saudi Arabia',
                                         'plate_number' => 'MNO-7890',
-                                        'driver' => 'Saeed Al-Ghamdi'
+                                        'driver' => 'Saeed Al-Ghamdi',
                                     ],
                                     [
                                         'id' => 6,
@@ -138,49 +136,59 @@
                                         'status' => 'active',
                                         'location' => 'Jeddah, Saudi Arabia',
                                         'plate_number' => 'PQR-1234',
-                                        'driver' => 'Abdullah Al-Harbi'
-                                    ]
+                                        'driver' => 'Abdullah Al-Harbi',
+                                    ],
                                 ];
                             @endphp
-                            @foreach($vehicles as $vehicle)
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="symbol symbol-45px me-5">
-                                            <img src="{{ asset('metronic/media/avatars/300-5.png') }}" alt="{{ $vehicle['name'] }}">
+                            @foreach ($vehicles as $vehicle)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-45px me-5">
+                                                <img src="{{ asset('metronic/media/avatars/300-5.png') }}"
+                                                    alt="{{ $vehicle['name'] }}">
+                                            </div>
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <a href="#"
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{ $vehicle['name'] }}</a>
+                                                <span
+                                                    class="text-muted fw-semibold text-muted d-block fs-7">{{ $vehicle['name_ar'] }}</span>
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-start flex-column">
-                                            <a href="#" class="text-dark fw-bold text-hover-primary fs-6">{{ $vehicle['name'] }}</a>
-                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ $vehicle['name_ar'] }}</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-{{ $vehicle['type'] == 'Tourist Bus' ? 'primary' : ($vehicle['type'] == '4x4 Vehicle' ? 'success' : 'info') }}">
-                                        {{ $vehicle['type'] }}
-                                    </span>
-                                </td>
-                                <td class="text-muted fw-semibold text-muted">{{ $vehicle['company'] }}</td>
-                                <td class="text-muted fw-semibold text-muted">{{ $vehicle['capacity'] }} seats</td>
-                                <td class="text-muted fw-semibold text-muted">{{ $vehicle['year'] }}</td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-{{ $vehicle['status'] == 'active' ? 'success' : 'warning' }}">
-                                        {{ ucfirst($vehicle['status']) }}
-                                    </span>
-                                </td>
-                                <td class="text-muted fw-semibold text-muted">{{ $vehicle['location'] }}</td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="View">
-                                        <i class="ki-filled ki-eye fs-3"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="Edit">
-                                        <i class="ki-filled ki-pencil fs-3"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" title="Delete">
-                                        <i class="ki-filled ki-trash fs-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="kt-badge kt-badge-light-{{ $vehicle['type'] == 'Tourist Bus' ? 'primary' : ($vehicle['type'] == '4x4 Vehicle' ? 'success' : 'info') }}">
+                                            {{ $vehicle['type'] }}
+                                        </span>
+                                    </td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $vehicle['company'] }}</td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $vehicle['capacity'] }} seats</td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $vehicle['year'] }}</td>
+                                    <td>
+                                        <span
+                                            class="kt-badge kt-badge-light-{{ $vehicle['status'] == 'active' ? 'success' : 'warning' }}">
+                                            {{ ucfirst($vehicle['status']) }}
+                                        </span>
+                                    </td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $vehicle['location'] }}</td>
+                                    <td class="text-end">
+                                        <a href="#"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            title="View">
+                                            <i class="ki-filled ki-eye fs-3"></i>
+                                        </a>
+                                        <a href="#"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            title="Edit">
+                                            <i class="ki-filled ki-pencil fs-3"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                            title="Delete">
+                                            <i class="ki-filled ki-trash fs-3"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -190,5 +198,3 @@
     </div>
     <!-- End of Container -->
 @endsection
-
-

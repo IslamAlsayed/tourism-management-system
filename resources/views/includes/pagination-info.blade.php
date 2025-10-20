@@ -1,4 +1,15 @@
-{{-- Enhanced pagination information component --}}
+@if ($this->message)
+    <div class="custom-alerts" id="custom-alerts">
+        @foreach ($this->message as $key => $message)
+            @php $id = 'alert_' . uniqid(); @endphp
+
+            <div id="{{ $id }}" class="kt-alert kt-alert-{{ $key }} mb-5" role="alert">
+                {{ $message }}
+            </div>
+        @endforeach
+    </div>
+@endif
+
 <div class="flex-wrap gap-2 p-2">
     <div class="w-full flex justify-between items-start">
         <div>
@@ -14,6 +25,8 @@
         </div>
 
         <div class="flex gap-2">
+            <span id="selectedCount" style="align-self: anchor-center;"></span>
+
             <div class="flex flex-wrap gap-2 lg:gap-5">
                 <button type="button" id="deleteAllBtn" data-route="{{ route('deleteAll') }}"
                     data-model="{{ lcfirst($entityName) }}"

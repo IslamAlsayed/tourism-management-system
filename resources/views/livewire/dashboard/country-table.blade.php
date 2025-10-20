@@ -31,7 +31,7 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $country)
-                            <tr>
+                            <tr wire:key="{{ $country->id }}" class="hover:bg-gray-100">
                                 <td>
                                     <input type="checkbox" class="kt-checkbox kt-checkbox-sm country-checkbox"
                                         value="{{ $country->id }}">
@@ -60,15 +60,9 @@
                                             {{ __('main.edit') }}
                                         </a>
 
-                                        <a href="{{ route('countries.destroy', $country->id) }}"
-                                            class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form action="{{ route('countries.destroy', $country->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">{{ __('main.delete') }}</button>
-                                            </form>
-                                        </a>
+                                        @include('components.elements.delete-button', [
+                                            'id' => $country->id,
+                                        ])
                                     </div>
                                 </td>
                             </tr>

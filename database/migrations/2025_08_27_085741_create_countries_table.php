@@ -14,6 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
+            $table->unsignedBigInteger('language_id')->nullable();
+            $table->unsignedBigInteger('currency_id')->nullable();
+            $table->unsignedBigInteger('region_id')->nullable();
+            $table->unsignedBigInteger('subregion_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('iso2', 2)->nullable();
             $table->string('iso3', 3)->nullable();
             $table->integer('numeric_code')->nullable();
@@ -32,9 +38,6 @@ return new class extends Migration {
             $table->boolean('is_independent')->nullable()->default(true);
             $table->boolean('is_developed')->nullable()->default(true);
             $table->boolean('is_landlocked')->nullable()->default(true);
-            $table->foreignId('language_id')->nullable()->constrained('languages')->nullOnDelete();
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
-            $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
             $table->timestamps();
         });
     }

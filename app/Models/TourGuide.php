@@ -28,19 +28,42 @@ class TourGuide extends Model
         'extra_fees_2',
         'status',
         'notes',
-        'country_id',
-        'currency_id',
         'guide_type_id',
+        'region_id',
+        'subregion_id',
+        'country_id',
+        'state_id',
+        'city_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['country', 'currency', 'guide_type'];
+        return ['guide_type', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
     {
-        return ['country_id', 'currency_id', 'guide_type_id'];
+        return ['guide_type_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+    }
+
+    public function guideType()
+    {
+        return $this->belongsTo(TourGuideType::class, 'guide_type_id');
+    }
+
+    public function tourGuideLanguages()
+    {
+        return $this->belongsToMany(TourGuideLanguage::class, 'tour_guide_languages', 'tour_guide_id', 'language_id');
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
     }
 
     public function country()
@@ -48,18 +71,13 @@ class TourGuide extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function currency()
+    public function state()
     {
-        return $this->belongsTo(Currency::class);
+        return $this->belongsTo(State::class);
     }
 
-    public function languages()
+    public function city()
     {
-        return $this->belongsToMany(Language::class, 'tour_guide_languages', 'tour_guide_id', 'guide_language_id');
-    }
-
-    public function guide_type()
-    {
-        return $this->belongsTo(TourGuideType::class, 'guide_type_id');
+        return $this->belongsTo(City::class);
     }
 }

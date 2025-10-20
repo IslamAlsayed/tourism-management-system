@@ -11,7 +11,7 @@
     <x-import-form :title="$title" :description="$description" :models="$models">
 
         <div class="mt-4">
-            <a href="{{ route('export.data', ['model' => $models]) }}" class="kt-btn kt-btn-outline">
+            <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}
             </a>
         </div>
@@ -49,7 +49,7 @@
     ]">
 
         <div class="mt-4">
-            <a href="{{ route('export.data', ['model' => $models]) }}" class="kt-btn kt-btn-outline">
+            <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}
             </a>
         </div>

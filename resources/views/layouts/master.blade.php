@@ -3,12 +3,15 @@
     lang="{{ app()->getLocale() }}">
 
 <head>
+    @livewireStyles
     @include('layouts.partials.head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
 </head>
 
-<body class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased">
+{{-- <body class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased"> --}}
+
+<body
+    class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased kt-sidebar-collapse">
     @include('partials.theme-toggle')
 
     <!-- Page -->
@@ -23,17 +26,26 @@
             <!-- Content -->
             <main class="grow" id="content" role="content">
                 <div class="kt-container-fixed">
-                    @if (session('success'))
-                        <div class="kt-alert kt-alert-success mb-5" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+                    <div class="custom-alerts" id="custom-alerts">
+                        @if (Cache::has('import_message'))
+                            <div class="kt-alert kt-alert-success mb-5" role="alert">
+                                {{ Cache::get('import_message') }}
+                            </div>
+                            @php Cache::forget('import_message'); @endphp
+                        @endif
 
-                    @if (session('error'))
-                        <div class="kt-alert kt-alert-danger mb-5" role="alert">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+                        @if (session('success'))
+                            <div class="kt-alert kt-alert-success mb-5" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="kt-alert kt-alert-danger mb-5" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                    </div>
 
                     @if ($errors->any())
                         <div class="kt-alert kt-alert-danger mb-4" role="alert">
@@ -58,8 +70,8 @@
     <!-- End of Page -->
 
     <!-- Scripts -->
-    @include('layouts.partials.scripts')
     @livewireScripts
+    @include('layouts.partials.scripts')
 </body>
 
 </html>

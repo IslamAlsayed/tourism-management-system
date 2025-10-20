@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.edit_type', ['type' => __('main.tour-guide-review')]) }}
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- Tour Guides Reviews Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -39,7 +39,8 @@
                             <!-- Tour Guide -->
                             <div class="">
                                 <label for="tour_guide_id" class="kt-label mb-2">{{ __('main.tour_guide') }}</label>
-                                <select name="tour_guide_id" id="tour_guide_id" class="kt-select h-[45px]" special-search>
+                                <select name="tour_guide_id" id="tour_guide_id" class="kt-select h-[45px]" special-search
+                                    value="{{ $tourGuideReview->currency_id }}">
                                     <option value="">--</option>
                                     @foreach ($tourGuides as $tourGuide)
                                         <option value="{{ $tourGuide->id }}"

@@ -12,7 +12,7 @@
 ])
 
 @php
-    $formRoute = $route ?? route('import.data.post', ['model' => $models]);
+    $formRoute = $route ?? route('import.data.post', ['models' => $models]);
     $backRoute = $cancelRoute ?? route("$models.index");
 @endphp
 

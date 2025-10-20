@@ -384,8 +384,8 @@
 @push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            FilterByForeignId('country_id', 'city', 'city_id');
-            FilterByForeignId('region_id', 'subregion', 'subregion_id');
+            filterByForeignId('country_id', 'city', 'city_id');
+            filterByForeignId('region_id', 'subregion', 'subregion_id');
         });
     </script>
 @endpush

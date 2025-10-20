@@ -2,30 +2,21 @@
 
 namespace App\Livewire;
 
-use App\Models\Country;
 use Livewire\Component;
 use App\Models\Nationality;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 
 class Nationalities extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
+    public $message = '';
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPaginate()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -37,19 +28,16 @@ class Nationalities extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function destroy($id)
     {
-        $this->resetPage();
+        $this->safeDestroy($id, 'nationality');
     }
 
     public function render()
     {
-        $this->totalCount = Nationality::count();
-        $data = Nationality::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
         return view('livewire.nationalities', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
+            'data' => Nationality::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'totalCount' => Nationality::count(),
         ]);
     }
 }

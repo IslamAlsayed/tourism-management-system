@@ -35,7 +35,7 @@
 
     <!-- Main Content -->
     <div class="container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-semibold leading-none text-gray-900">Account Settings</h1>
                 <div class="flex items-center gap-2 text-sm font-medium text-gray-600">
@@ -45,7 +45,7 @@
         </div>
 
         <!-- Content Area -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 lg:gap-7.5">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-6">
             <!-- Sidebar Navigation -->
             <div class="col-span-1">
                 <div class="card card-bordered">
@@ -98,7 +98,7 @@
                 <div class="tab-content">
                     <!-- Overview Tab -->
                     <div class="tab-pane fade show active" id="overview" role="tabpanel">
-                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 lg:gap-7.5">
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
                             <div class="col-span-1 xl:col-span-2">
                                 <div class="card card-bordered">
                                     <div class="card-header">

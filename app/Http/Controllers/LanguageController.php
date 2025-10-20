@@ -3,19 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
-use App\Traits\PhotoUploadTrait;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
-use App\Http\Requests\CreateLanguageRequest;
+use App\Http\Requests\Languages\LanguageCreateRequest;
+use App\Http\Requests\Languages\LanguageUpdateRequest;
 
 class LanguageController extends Controller
 {
-    use PhotoUploadTrait;
-
     public function index()
     {
-        $data = Language::paginate(getPaginate());
-        return view('pages.dashboard.languages.index', compact('data'));
+        return view('pages.dashboard.languages.index');
     }
 
     public function create()
@@ -23,20 +18,19 @@ class LanguageController extends Controller
         return view('pages.dashboard.languages.create');
     }
 
-    public function store(CreateLanguageRequest $request)
+    public function store(LanguageCreateRequest $request)
     {
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
+        $created = Language::create($validated);
 
-        $language = Language::create($validated);
-
-        if ($language) {
-            $this->loadActiveLanguages();
-            $this->uploadPhoto($request, $language, 'photo', "languages");
+        if ($created) {
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.language')]));
+            }
             return redirect()->route('languages.index')->with('success', __('main.messages.type_created', ['type' => __('main.language')]));
         }
 
-        return redirect()->route('nationalities.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.language')]));
+        return redirect()->route('languages.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.language')]));
     }
 
     public function edit($id)
@@ -48,16 +42,20 @@ class LanguageController extends Controller
         return view('pages.dashboard.languages.edit', compact('language'));
     }
 
-    public function locale($locale = 'en')
+    public function update(LanguageUpdateRequest $request, $id)
     {
-        if (in_array($locale, array_keys(config('languages.languages')))) {
-            $this->loadActiveLanguages();
-            session()->put('locale', $locale);
-            App::setLocale($locale);
-            return redirect()->back()->withSuccess(__('main.messages.change_language_successfully'));
+        $language = Language::find($id);
+        if (!$language) {
+            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.language')]));
+        }
+        $validated = $request->validated();
+
+        $updated = $language->update($validated);
+        if ($updated) {
+            return redirect()->route('languages.index')->with('success', __('main.messages.type_updated', ['type' => __('main.language')]));
         }
 
-        return redirect()->back()->withError(__('main.messages.change_language_not_successfully'));
+        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.language')]));
     }
 
     public function destroy($id)
@@ -66,26 +64,11 @@ class LanguageController extends Controller
         if (!$language) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.language')]));
         }
-        if ($language->code == app()->getLocale()) {
-            $this->locale(array_rand(config('languages.languages')));
-        }
         $deleted = $language->delete();
         if ($deleted) {
-            $this->deletePhoto($language, 'flag');
-            return redirect()->route('nationalities.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.language')]));
+            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.language')]));
         }
 
-        return redirect()->route('nationalities.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.language')]));
-    }
-
-    public function loadActiveLanguages()
-    {
-        $languages = Language::pluck('name', 'code')->toArray();
-        Config::set('languages.languages', $languages);
-    }
-
-    public static function isActiveLocale($locale): bool
-    {
-        return array_key_exists($locale, config('languages.languages'));
+        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.language')]));
     }
 }

@@ -29,10 +29,11 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $transportationDepartment)
-                            <tr>
+                            <tr wire:key="{{ $transportationDepartment->id }}" class="hover:bg-gray-100">
                                 <td class="text-center">
-                                    <input type="checkbox" name="selectedItems[]" value="{{ $transportationDepartment->id }}"
-                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
+                                    <input type="checkbox" name="selectedItems[]"
+                                        value="{{ $transportationDepartment->id }}" class="kt-checkbox kt-checkbox-sm"
+                                        data-kt-datatable-row-check="true" />
                                 </td>
                                 @foreach ($columns as $column)
                                     @include('components.static-columns', [
@@ -48,15 +49,9 @@
                                             {{ __('main.edit') }}
                                         </a>
 
-                                        <a href="{{ route('transportation-departments.destroy', $transportationDepartment->id) }}"
-                                            class="kt-btn kt-btn-sm kt-btn-outline bg-danger text-white">
-                                            <form action="{{ route('transportation-departments.destroy', $transportationDepartment->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">{{ __('main.delete') }}</button>
-                                            </form>
-                                        </a>
+                                        @include('components.elements.delete-button', [
+                                            'id' => $transportationDepartment->id,
+                                        ])
                                     </div>
                                 </td>
                             </tr>

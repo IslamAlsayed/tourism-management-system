@@ -51,15 +51,17 @@
                 </button>
                 <div class="kt-dropdown-menu w-[180px]" data-kt-dropdown-menu="true">
                     <ul class="kt-dropdown-menu-sub">
-                        @foreach ($languages as $key => $language)
-                            <li class="{{ getCurrentLocale() === $language->code ? 'active' : '' }}">
+                        @foreach ($system_languages as $key => $language)
+                            <li class="{{ getCurrentLocale() == $language->code ? 'active' : '' }}">
                                 <a class="kt-dropdown-menu-link"
-                                    href="{{ route('languages.change', $language->code) }}">
+                                    href="{{ route('system-languages.change', $language->code) }}">
                                     <span class="flex items-center gap-2">
                                         <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->code . '.svg') : asset('storage/' . $language->flag) }}"
-                                            alt="{{ $language->name }}" class="inline-block rounded-full size-4">
+                                            {{-- alt="{{ getCurrentLocale() == 'ar' ? $language->name : $language->name_ar ?? '' }}" --}} alt="{{ $language->name ?? '' }}"
+                                            class="inline-block rounded-full size-4">
                                         <span class="kt-menu-title">
-                                            {{ $language->name }}
+                                            {{-- {{ getCurrentLocale() == 'ar' ? $language->name : $language->name_ar ?? '' }} --}}
+                                            {{ $language->name ?? '' }}
                                         </span>
                                     </span>
                                     @if (getCurrentLocale() === $language->code)

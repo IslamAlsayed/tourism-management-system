@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.edit_type', ['type' => __('main.tour-guide')]) }}
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- Tour Guide Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -34,27 +34,11 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Tour guide upload -->
-                        <div class="text-center mb-4">
-                            <div class="relative inline-block">
-                                <div
-                                    class="w-32 h-32 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="image-preview"
-                                        src="{{ $tourGuide->image ? asset($tourGuide->image) : asset('metronic/media/avatars/blank.png') }}"
-                                        alt="" class="w-full h-full object-cover">
-                                </div>
-                                <label for="image"
-                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark"
-                                    style="padding-inline: 12px">
-                                    <i class="fas fa-camera text-sm"></i>
-                                </label>
-                                <input type="file" id="image" name="image" class="hidden" accept="image/*">
-                            </div>
-                            <div class="text-sm text-secondary-foreground">{{ __('main.click_to_upload_image') }}</div>
-                            @error('image')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        <!-- Tour guide Photo -->
+                        @include('components.input-image', [
+                            'column' => 'tour-guide',
+                            'columnName' => 'photo',
+                        ])
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Name (Arabic) -->
@@ -71,8 +55,8 @@
                             <!-- Name (English) -->
                             <div class="">
                                 <label for="name"
-                                    class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.tour-guide')]) }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    class="kt-label required mb-2">{{ __('main.type_name_english', ['type' => __('main.tour-guide')]) }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
                                     value="{{ $tourGuide->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -81,8 +65,8 @@
 
                             <!-- Email -->
                             <div class="">
-                                <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
-                                <input type="email" name="email" id="email" class="kt-input h-[45px]"
+                                <label for="email" class="kt-label required mb-2">{{ __('main.email') }}</label>
+                                <input type="email" name="email" id="email" class="kt-input h-[45px]" required
                                     value="{{ $tourGuide->email }}">
                                 @error('email')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -91,20 +75,20 @@
 
                             <!-- Mobile 01 -->
                             <div class="">
-                                <label for="mobile_01" class="kt-label mb-2">{{ __('main.mobile_01') }}</label>
+                                <label for="mobile_01" class="kt-label required mb-2">{{ __('main.mobile_01') }}</label>
                                 <input type="text" name="mobile_01" id="mobile_01" class="kt-input h-[45px]"
-                                    max="2" value="{{ $tourGuide->mobile_01 }}">
+                                    max="2" required value="{{ $tourGuide->mobile_01 }}">
                                 @error('mobile_01')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Mobile 01 -->
+                            <!-- Mobile 02 -->
                             <div class="">
-                                <label for="mobile_01" class="kt-label mb-2">{{ __('main.mobile_01') }}</label>
-                                <input type="text" name="mobile_01" id="mobile_01" class="kt-input h-[45px]"
-                                    max="2" value="{{ $tourGuide->mobile_01 }}">
-                                @error('mobile_01')
+                                <label for="mobile_02" class="kt-label mb-2">{{ __('main.mobile_02') }}</label>
+                                <input type="text" name="mobile_02" id="mobile_02" class="kt-input h-[45px]"
+                                    max="2" value="{{ $tourGuide->mobile_02 }}">
+                                @error('mobile_02')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -131,8 +115,8 @@
 
                             <!-- Gender -->
                             <div class="">
-                                <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
-                                <select name="gender" id="gender" class="kt-select h-[45px]" special-search>
+                                <label for="gender" class="kt-label required mb-2">{{ __('main.gender') }}</label>
+                                <select name="gender" id="gender" class="kt-select h-[45px]" special-search required>
                                     <option value="">--</option>
                                     <option value="male" {{ $tourGuide->gender == 'male' ? 'selected' : '' }}>male
                                     </option>
@@ -155,26 +139,16 @@
                                 @enderror
                             </div>
 
-                            <!-- Country -->
-                            <div class="">
-                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search>
-                                    <option value="">--</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ $tourGuide->country_id == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('country_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <!-- Currency -->
                             <div class="">
-                                <label for="currency_id" class="kt-label mb-2">{{ __('main.currency') }}</label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
+                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.currency') }}
+                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search
+                                    required>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -190,18 +164,23 @@
 
                             <!-- Guide languages -->
                             <div class="">
-                                <label for="guide_languages_ids"
-                                    class="kt-label required mb-2">{{ __('main.language') }}</label>
-                                <select name="guide_languages_ids[]" id="guide_languages_ids" class="kt-select h-[45px]"
+                                <label for="languages_ids"
+                                    class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.language') }}
+                                    <a href="{{ route('languages.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="languages_ids[]" id="languages_ids" class="kt-select h-[45px]"
                                     special-multiple required>
                                     <option value="">--</option>
-                                    @foreach ($guide_languages_ids as $key => $language)
+                                    @foreach ($languages_ids as $key => $language)
                                         <option value="{{ $key }}"
-                                            {{ in_array($key, $tourGuide->languages->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                            {{ in_array($key, $tourGuide->languages_ids ?? []) ? 'selected' : '' }}>
                                             {{ $language }}</option>
                                     @endforeach
                                 </select>
-                                @error('guide_languages_ids')
+                                @error('languages_ids')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -209,7 +188,8 @@
                             <!-- Guide Type -->
                             <div class="">
                                 <label for="guide_type_id" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
-                                <select name="guide_type_id" id="guide_type_id" class="kt-input h-[45px]">
+                                <select name="guide_type_id" id="guide_type_id" class="kt-input h-[45px]" special-search
+                                    data-current-value="{{ $tourGuide->guide_type_id ?? 1 }}" required>
                                     <option value="">--</option>
                                     @foreach ($guideTypes as $type)
                                         <option value="{{ $type->id }}"
@@ -223,12 +203,153 @@
                                 @enderror
                             </div>
 
-                            <!-- Guide Type -->
+                            <!-- Region -->
                             <div class="">
-                                <label for="guide_type" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
-                                <input type="number" name="guide_type" id="guide_type" class="kt-input h-[45px]"
-                                    value="{{ $tourGuide->guide_type }}">
-                                @error('guide_type')
+                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.region') }}
+                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $tourGuide->region_id ?? 1 }}" required>
+                                    <option value="">--</option>
+                                    @foreach ($regions as $region)
+                                        <option value="{{ $region->id }}"
+                                            {{ $tourGuide->region_id == $region->id ? 'selected' : '' }}>
+                                            {{ $region->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('region_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Subregion -->
+                            <div class="loading">
+                                <label for="subregion_id"
+                                    class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        Subregion
+                                        <i id="subregion_id-loader"
+                                            class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        <span class="text-red-600 text-sm span-info show" id="subregion_id-info">
+                                            (You must select region first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $tourGuide->subregion_id ?? 1 }}" required>
+                                    <option value="">--</option>
+                                    {{-- Subregions will be loaded dynamically based on selected Region --}}
+                                    {{-- @foreach ($subregions as $subregion)
+                                        <option value="{{ $subregion->id }}"
+                                            {{ $tourGuide->subregion_id == $subregion->id ? 'selected' : '' }}>
+                                            {{ $subregion->name }}
+                                        </option>
+                                    @endforeach --}}
+                                </select>
+                                @error('subregion_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Country -->
+                            {{-- <div class="">
+                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    {{ __('main.country') }}
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.edit') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $tourGuide->country_id ?? 1 }}" required>
+                                    <option value="">--</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ $tourGuide->country_id == $country->id ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div> --}}
+
+                            <!-- Country -->
+                            <div class="loading">
+                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        Country
+                                        <i id="country_id-loader"
+                                            class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        <span class="text-red-600 text-sm span-info show" id="country_id-info">
+                                            (You must select region first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $tourGuide->country_id ?? 1 }}" required>
+                                    <option value="">--</option>
+                                    {{-- countries will be loaded dynamically based on selected Subregion --}}
+                                </select>
+                                @error('country_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- States -->
+                            <div class="loading">
+                                <label for="state_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        State
+                                        <i id="state_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        <span class="text-red-600 text-sm span-info show" id="state_id-info">
+                                            (You must select region first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $tourGuide->state_id ?? 1 }}" required>
+                                    <option value="">--</option>
+                                    {{-- States will be loaded dynamically based on selected Country --}}
+                                </select>
+                                @error('state_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- City -->
+                            <div class="loading">
+                                <label for="city_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        City
+                                        <i id="city_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        <span class="text-red-600 text-sm span-info show" id="city_id-info">
+                                            (You must select state first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="city_id" id="city_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $tourGuide->city_id ?? 1 }}" required>
+                                    <option value="">--</option>
+                                    {{-- Cities will be loaded dynamically based on selected State --}}
+                                </select>
+                                @error('city_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -247,7 +368,7 @@
                             <!-- hd Day Fees -->
                             <div class="">
                                 <label for="fd_day_fees" class="kt-label mb-2">{{ __('main.fd_day_fees') }}</label>
-                                <input type="text" name="fd_day_fees" id="fd_day_fees" class="kt-input h-[45px]"
+                                <input type="number" name="fd_day_fees" id="fd_day_fees" class="kt-input h-[45px]"
                                     value="{{ $tourGuide->fd_day_fees }}">
                                 @error('fd_day_fees')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -257,7 +378,7 @@
                             <!-- hd Day Fees -->
                             <div class="">
                                 <label for="hd_day_fees" class="kt-label mb-2">{{ __('main.hd_day_fees') }}</label>
-                                <input type="text" name="hd_day_fees" id="hd_day_fees" class="kt-input h-[45px]"
+                                <input type="number" name="hd_day_fees" id="hd_day_fees" class="kt-input h-[45px]"
                                     value="{{ $tourGuide->hd_day_fees }}">
                                 @error('hd_day_fees')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -267,7 +388,7 @@
                             <!-- Extra Fees 1 -->
                             <div class="">
                                 <label for="extra_fees_1" class="kt-label mb-2">{{ __('main.extra_fees_1') }}</label>
-                                <input type="text" name="extra_fees_1" id="extra_fees_1" class="kt-input h-[45px]"
+                                <input type="number" name="extra_fees_1" id="extra_fees_1" class="kt-input h-[45px]"
                                     value="{{ $tourGuide->extra_fees_1 }}">
                                 @error('extra_fees_1')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -277,7 +398,7 @@
                             <!-- Extra Fees 2 -->
                             <div class="">
                                 <label for="extra_fees_2" class="kt-label mb-2">{{ __('main.extra_fees_2') }}</label>
-                                <input type="text" name="extra_fees_2" id="extra_fees_2" class="kt-input h-[45px]"
+                                <input type="number" name="extra_fees_2" id="extra_fees_2" class="kt-input h-[45px]"
                                     value="{{ $tourGuide->extra_fees_2 }}">
                                 @error('extra_fees_2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -305,7 +426,7 @@
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="status" value="0">
                                     <input type="checkbox" name="status" id="status" class="kt-checkbox"
-                                        value="1" {{ $tourGuide->status == 1 ? 'checked' : '' }}>
+                                        value="1" {{ $tourGuide->status == '1' ? 'checked' : '' }}>
                                     <label for="status" class="kt-label mb-0">{{ __('main.status') }}</label>
                                 </div>
                             </div>
@@ -315,7 +436,12 @@
                         <div class="flex items-center gap-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.update_type', ['type' => __('main.tour-guide')]) }}
+                                {{ __('main.save_type', ['type' => __('main.tour-guide')]) }}
+                            </button>
+                            <button type="submit" name="save_and_edit" value="1"
+                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
+                                <i class="ki-filled ki-plus text-sm me-2"></i>
+                                {{ __('main.save_and_edit_another') }}
                             </button>
                             <a href="{{ route('tour-guides.index') }}" class="kt-btn kt-btn-outline">
                                 {{ __('main.cancel') }}

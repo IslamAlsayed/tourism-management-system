@@ -14,6 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
+            $table->unsignedBigInteger('currency_id')->nullable();
+            $table->unsignedBigInteger('guide_type_id')->nullable();
+            $table->unsignedBigInteger('region_id')->nullable();
+            $table->unsignedBigInteger('subregion_id')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('email')->nullable();
             $table->string('mobile_01')->nullable();
             $table->string('mobile_02')->nullable();
@@ -22,9 +29,6 @@ return new class extends Migration {
             $table->string('photo')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->unsignedBigInteger('national_guide_id')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
-            $table->unsignedBigInteger('currency_id')->nullable();
-            $table->unsignedBigInteger('guide_type_id')->nullable();
             $table->string('tourism_ministry_code')->nullable();
             $table->decimal('fd_day_fees', 10, 2)->nullable(); // Full day
             $table->decimal('hd_day_fees', 10, 2)->nullable(); // Half day

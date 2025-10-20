@@ -24,11 +24,11 @@ class TransportationDepartmentsCreateRequest extends FormRequest
         return [
             'department' => ['required', 'string', 'max:255'],
             'company_id' => ['required', 'string', 'exists:companies,id'],
+            'region_id' => ['required', 'string', 'exists:regions,id'],
+            'subregion_id' => ['required', 'string', 'exists:subregions,id'],
             'country_id' => ['required', 'string', 'exists:countries,id'],
             'state_id' => ['required', 'string', 'exists:states,id'],
             'city_id' => ['required', 'string', 'exists:cities,id'],
-            'region_id' => ['required', 'string', 'exists:regions,id'],
-            'subregion_id' => ['required', 'string', 'exists:subregions,id'],
             'contact_person' => ['nullable', 'string', 'max:255'],
             'phone_01' => ['nullable', 'string', 'max:20'],
             'phone_02' => ['nullable', 'string', 'max:20'],

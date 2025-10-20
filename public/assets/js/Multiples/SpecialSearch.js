@@ -1,5 +1,20 @@
+// document.addEventListener("DOMContentLoaded", () => {
+//     // detect all selects
+//     const specialSearches = document.querySelectorAll("[special-search]");
+//     specialSearches.forEach((select) => specialSearch(select));
+//     // close dropdowns on outside click
+//     document.addEventListener("click", function (e) {
+//         if (
+//             !e.target.closest(".multi-select-tag") &&
+//             !e.target.closest(".search-select-tag")
+//         ) {
+//             closeAllDropdowns();
+//         }
+//     });
+// });
+
 // ======= SINGLE SELECT WITH SEARCH =======
-window.SpecialSearch = function (selectElement) {
+window.specialSearch = function (selectElement) {
     if (!selectElement) return;
 
     const isRequired = selectElement.hasAttribute("required");
@@ -23,6 +38,11 @@ window.SpecialSearch = function (selectElement) {
 
     const searchInput = wrapper.querySelector(".tag-input");
     const dropdown = wrapper.querySelector(".dropdown");
+
+    if (selectElement.value) {
+        searchInput.dataset.id = selectElement.value;
+        searchInput.value = selectElement.selectedOptions[0].textContent.trim();
+    }
 
     let selectedValue = "";
     let selectedLabel = "";
@@ -107,9 +127,16 @@ window.SpecialSearch = function (selectElement) {
         const label = e.target.textContent;
         selectedValue = value;
         selectedLabel = label;
-        searchInput.value = label;
+        searchInput.dataset.id = value;
+        searchInput.value = label.trim();
         searchInput.setAttribute("readonly", true);
         dropdown.classList.add("hidden");
         updateHiddenInput();
+
+        // ✅ إطلاق حدث "updatedSelect" على select الأصلي بعد اختيار قيمة
+        const event = new CustomEvent("updatedSelect", {
+            detail: { value, label },
+        });
+        selectElement.dispatchEvent(event);
     });
 };

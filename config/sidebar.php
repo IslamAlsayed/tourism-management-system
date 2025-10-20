@@ -40,7 +40,7 @@ return [
                     'title' => 'import users',
                     'icon' => 'ki-filled ki-plus',
                     'route' => 'import.data',
-                    'parameters' => ['model' => 'users'],
+                    'parameters' => ['models' => 'users'],
                 ]
             ],
         ],
@@ -65,7 +65,7 @@ return [
                     'title' => 'import currencies',
                     'icon' => 'ki-filled ki-plus',
                     'route' => 'import.data',
-                    'parameters' => ['model' => 'currencies'],
+                    'parameters' => ['models' => 'currencies'],
                 ],
             ],
         ],
@@ -92,7 +92,7 @@ return [
                         [
                             'title' => 'import regions',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'regions'],
+                            'parameters' => ['models' => 'regions'],
                         ],
                     ],
                 ],
@@ -112,7 +112,7 @@ return [
                         [
                             'title' => 'import subregions',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'subregions'],
+                            'parameters' => ['models' => 'subregions'],
                         ],
                     ],
                 ],
@@ -132,7 +132,7 @@ return [
                         [
                             'title' => 'import countries',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'countries'],
+                            'parameters' => ['models' => 'countries'],
                         ],
                     ],
                 ],
@@ -152,7 +152,7 @@ return [
                         [
                             'title' => 'import states',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'states'],
+                            'parameters' => ['models' => 'states'],
                         ],
                     ],
                 ],
@@ -173,7 +173,7 @@ return [
                             'title' => 'import cities',
                             'icon' => 'ki-filled ki-people',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'cities'],
+                            'parameters' => ['models' => 'cities'],
                         ],
                     ],
                 ],
@@ -194,7 +194,7 @@ return [
                         [
                             'title' => 'import nationalities',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'nationalities'],
+                            'parameters' => ['models' => 'nationalities'],
                         ],
                     ],
                 ],
@@ -212,7 +212,7 @@ return [
                     'icon' => 'ki-filled ki-chart-line-up',
                     'status' => 'updating...',
                     'route' => 'import.data',
-                    'parameters' => ['model' => 'accommodations'],
+                    'parameters' => ['models' => 'accommodations'],
                 ],
                 [
                     'title' => 'hotels',
@@ -286,7 +286,7 @@ return [
                     'title' => 'import types',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'import.data',
-                    'parameters' => ['model' => 'types'],
+                    'parameters' => ['models' => 'types'],
                 ],
             ],
         ],
@@ -312,7 +312,7 @@ return [
                     'title' => 'import restaurants',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'import.data',
-                    'parameters' => ['model' => 'restaurants'],
+                    'parameters' => ['models' => 'restaurants'],
                 ],
             ],
         ],
@@ -341,7 +341,7 @@ return [
                             'title' => 'import guides',
                             'icon' => 'ki-filled ki-home-2',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'tour-guides'],
+                            'parameters' => ['models' => 'tour-guides'],
                         ],
                     ],
                 ],
@@ -363,7 +363,7 @@ return [
                             'title' => 'import guides types',
                             'icon' => 'ki-filled ki-home-2',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'tour-guides-types'],
+                            'parameters' => ['models' => 'tour-guides-types'],
                         ],
                     ],
                 ],
@@ -385,7 +385,7 @@ return [
                             'title' => 'import guides reviews',
                             'icon' => 'ki-filled ki-home-2',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'tour-guides-reviews'],
+                            'parameters' => ['models' => 'tour-guides-reviews'],
                         ],
                     ],
                 ],
@@ -609,19 +609,38 @@ return [
 
         // ================= Languages =================
         [
-            'title' => 'languages management',
+            'title' => 'languages',
             'icon' => 'fas fa-globe',
             'status' => 'done',
             'children' => [
                 [
-                    'title' => 'view_languages',
+                    'title' => 'all languages',
                     'icon' => 'ki-filled ki-global',
                     'route' => 'languages.index'
                 ],
                 [
-                    'title' => 'create_language',
+                    'title' => 'create language',
                     'icon' => 'ki-filled ki-plus',
                     'route' => 'languages.create'
+                ]
+            ],
+        ],
+
+        // ================= System Languages =================
+        [
+            'title' => 'system languages',
+            'icon' => 'fas fa-globe',
+            'status' => 'done',
+            'children' => [
+                [
+                    'title' => 'all languages',
+                    'icon' => 'ki-filled ki-global',
+                    'route' => 'system-languages.index'
+                ],
+                [
+                    'title' => 'create language',
+                    'icon' => 'ki-filled ki-plus',
+                    'route' => 'system-languages.create'
                 ]
             ],
         ],

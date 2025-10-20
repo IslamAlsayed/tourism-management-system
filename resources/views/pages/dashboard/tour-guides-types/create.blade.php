@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.add_type', ['type' => __('main.tour-guide-type')]) }}
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- Tour Guides Types Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -34,7 +34,7 @@
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
-                            <!-- Type -->
+                            {{-- Type --}}
                             <div class="">
                                 <label for="type" class="kt-label required mb-2">{{ __('main.type') }}</label>
                                 <input type="text" name="type" id="type" class="kt-input h-[45px]" required
@@ -44,7 +44,7 @@
                                 @enderror
                             </div>
 
-                            <!-- Price -->
+                            {{-- Price --}}
                             <div class="">
                                 <label for="price" class="kt-label required mb-2">{{ __('main.price') }}</label>
                                 <input type="text" name="price" min="1" id="price" class="kt-input h-[45px]"
@@ -54,10 +54,13 @@
                                 @enderror
                             </div>
 
-                            <!-- Currency -->
+                            {{-- Currency --}}
                             <div class="">
                                 <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.currency') }}
+                                    <div>
+                                        {{ __('main.currency') }}
+                                        <strong class="dataLength text-primary">({{ $currencies->count() ?: 0 }})</strong>
+                                    </div>
                                     <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
@@ -76,78 +79,14 @@
                                 @enderror
                             </div>
 
-                            <!-- Country -->
-                            <div class="">
-                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.country') }}
-                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search>
-                                    <option value="">--</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ old('country_id') == $country->id ? 'selected' : '' }}>{{ $country->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('country_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- City -->
-                            <div class="">
-                                <label for="multi_cities" class="kt-label mb-2">
-                                    <input type="hidden" name="multi_cities" value="0">
-                                    <input type="checkbox" name="multi_cities" id="multi_cities" class="kt-checkbox"
-                                        style="width: 17px; height: 17px;"
-                                        onchange="document.getElementById('city_id').disabled = this.checked;"
-                                        value="1" {{ old('multi_cities', '1') ? 'checked' : '' }}>
-                                    {{ __('main.all_types', ['types' => __('main.cities')]) }}
-                                </label>
-                                <select name="city_id" id="city_id" class="kt-select h-[45px]" disabled special-search>
-                                    <option value="">--</option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}"
-                                            {{ old('city_id') == $city->id ? 'selected' : '' }}>
-                                            {{ $city->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('city_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- State -->
-                            <div class="">
-                                <label for="multi_states" class="kt-label mb-2">
-                                    <input type="hidden" name="multi_states" value="0">
-                                    <input type="checkbox" name="multi_states" id="multi_states" class="kt-checkbox"
-                                        style="width: 17px; height: 17px;"
-                                        onchange="document.getElementById('state_id').disabled = this.checked;"
-                                        value="1" {{ old('multi_states', '1') ? 'checked' : '' }}>
-                                    {{ __('main.all_types', ['types' => __('main.states')]) }}
-                                </label>
-                                <select name="state_id" id="state_id" class="kt-select h-[45px]" disabled special-search>
-                                    <option value="">--</option>
-                                    @foreach ($states as $state)
-                                        <option value="{{ $state->id }}"
-                                            {{ old('state_id') == $state->id ? 'selected' : '' }}>{{ $state->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('state_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Region -->
+                            {{-- Region --}}
                             <div class="">
                                 <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.region') }}
+                                    <div>
+                                        {{ __('main.region') }}
+                                        <strong class="dataLength text-primary">({{ $regions->count() ?: 0 }})</strong>
+                                    </div>
+
                                     <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
@@ -166,25 +105,114 @@
                                 @enderror
                             </div>
 
-                            <!-- Subregion -->
-                            <div class="">
-                                <label for="subregion_id"
-                                    class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.subregion') }}
+                            {{-- Subregion --}}
+                            <div class="loading">
+                                <label for="subregion_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        {{ __('main.subregion') }}
+                                        <strong class="dataLength text-primary"></strong>
+                                        <i id="subregion_id-loader"
+                                            class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        <span class="text-red-600 text-sm span-info show" id="subregion_id-info">
+                                            (You must select region first)
+                                        </span>
+                                    </div>
                                     <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
                                 <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
-                                    @foreach ($subregions as $subregion)
-                                        <option value="{{ $subregion->id }}"
-                                            {{ old('subregion_id') == $subregion->id ? 'selected' : '' }}>
-                                            {{ $subregion->name }}
-                                        </option>
-                                    @endforeach
+                                    {{-- Subregions will be loaded dynamically based on selected region --}}
                                 </select>
                                 @error('subregion_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Country --}}
+                            <div class="loading">
+                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        {{ __('main.country') }}
+                                        <strong class="dataLength text-primary"></strong>
+                                        <i id="country_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        <span class="text-red-600 text-sm span-info show" id="country_id-info">
+                                            (You must select subregion first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search>
+                                    <option value="">--</option>
+                                    {{-- Countries will be loaded dynamically based on selected subregion --}}
+                                </select>
+                                @error('country_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- State --}}
+                            <div class="loading">
+                                <label for="all_states" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex items-center gap-2">
+                                            <input type="hidden" name="all_states" value="0">
+                                            <input type="checkbox" name="all_states" id="all_states" class="kt-checkbox"
+                                                style="width: 17px; height: 17px;" value="1"
+                                                {{ old('all_states') ? 'checked' : '' }}>
+                                            {{ __('main.all_types', ['types' => __('main.states')]) }}
+                                            <strong class="dataLength text-primary"></strong>
+                                            <i id="state_id-loader"
+                                                class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        </div>
+                                        <span class="text-red-600 text-sm span-info show" id="state_id-info">
+                                            (You must select country first)
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="state_id[]" id="state_id" class="kt-select h-[45px]" special-multiple>
+                                    <option value="">--</option>
+                                    {{-- States will be loaded dynamically based on selected country --}}
+                                </select>
+                                @error('state_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- City --}}
+                            <div class="loading">
+                                <label for="all_cities" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div class="flex items-center justify-between gap-1">
+                                        <div class="flex items-center justify-between gap-1">
+                                            <input type="hidden" name="all_cities" value="0">
+                                            <input type="checkbox" name="all_cities" id="all_cities" class="kt-checkbox"
+                                                style="width: 17px; height: 17px;" value="1"
+                                                {{ old('all_cities') ? 'checked' : '' }}>
+                                            {{ __('main.all_types', ['types' => __('main.cities')]) }}
+                                            <strong class="dataLength text-primary"></strong>
+                                            <i id="city_id-loader"
+                                                class="i-loader fas fa-refresh fa-spin text-primary"></i>
+                                        </div>
+                                        <span class="text-red-600 text-sm span-info show" id="city_id-info">
+                                            (You must select state first)
+                                        </span>
+                                    </div>
+
+                                    <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="city_id[]" id="city_id" class="kt-select h-[45px]" special-multiple>
+                                    <option value="">--</option>
+                                    {{-- Cities will be loaded dynamically based on selected state --}}
+                                </select>
+                                @error('city_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -273,28 +301,149 @@
 
 @push('scripts')
     <script>
-        // document.addEventListener("DOMContentLoaded", () => {
-        //     FilterByForeignId("country_id", "city", "city_id");
-        //     FilterByForeignId("city_id", "state", "state_id");
-        //     // FilterByForeignId('region_id', 'subregion', 'subregion_id');
-        // });
-
         document.addEventListener("DOMContentLoaded", () => {
-            FilterByForeignId("country_id", "city", "city_id");
+            filterByForeignId("region_id", "subregion", "subregion_id");
+            filterByForeignId("subregion_id", "country", "country_id");
+        });
+    </script>
+@endpush
 
-            // ✅ انتظر لما SpecialSearch تبني عنصر city_id
-            const observer = new MutationObserver(() => {
-                const cityWrapper = document.querySelector(`[data-for="city_id"]`);
-                if (cityWrapper) {
-                    FilterByForeignId("city_id", "state", "state_id");
-                    observer.disconnect(); // وقف المراقبة بعد ما تشتغل مرة واحدة
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const getSelect = (id) => document.getElementById(id);
+            const getInput = (key) => document.querySelector(`[data-for='${key}'] .tag-input`);
+
+            const countrySelect = getSelect("country_id");
+            const stateSelect = getSelect("state_id");
+            const citySelect = getSelect("city_id");
+            const allStates = getSelect("all_states");
+            const allCities = getSelect("all_cities");
+
+            // لو أي حاجة مش موجودة، متكملش
+            if (!countrySelect || !stateSelect || !citySelect) return;
+
+            // ✅ دالة تحميل البيانات
+            const loadData = async (fromId, model, toId, value, append = false) => {
+                const ref = filterByForeignId(fromId, model, toId);
+                if (ref && typeof ref.loadReferenceData === "function") {
+                    await ref.loadReferenceData(value, append);
+                }
+            };
+
+            const getSelectedIds = (name) => {
+                return [...document.querySelectorAll(`input[name='${name}']`)]
+                    .map(input => input.value)
+                    .filter(v => v !== "");
+            };
+
+            // ✅ منع التكرار (عشان الـ MutationObserver مش مستخدم دلوقتي)
+            let isLoading = false;
+
+            // ✅ عند اختيار الدولة
+            countrySelect?.addEventListener("updatedSelect", async () => {
+                if (isLoading) return;
+                isLoading = true;
+
+                const countryId = getInput("country_id")?.dataset.id;
+                if (!countryId) {
+                    stateSelect.innerHTML = '<option value="">--</option>';
+                    citySelect.innerHTML = '<option value="">--</option>';
+                    isLoading = false;
+                    return;
+                }
+
+                // لو allStates متعلم عليها → هنعرض كل المدن بناءً على الدولة
+                if (allStates?.checked) {
+                    stateSelect.disabled = true;
+                    getSelect("state_id").nextElementSibling?.classList.add('loading');
+                    await loadData("country_id", "city", "city_id", countryId);
+                } else {
+                    stateSelect.disabled = false;
+                    getSelect("state_id").nextElementSibling?.classList.remove('loading');
+                    await loadData("country_id", "state", "state_id", countryId);
+                }
+
+                isLoading = false;
+            });
+
+            stateSelect?.addEventListener("updatedSelect", async () => {
+                if (isLoading) return;
+                isLoading = true;
+                await handleStateChange("updatedSelect");
+                isLoading = false;
+            });
+
+            stateSelect?.addEventListener("multiSelectUpdated", async () => {
+                if (isLoading) return;
+                isLoading = true;
+                await handleStateChange("multiSelectUpdated");
+                isLoading = false;
+            });
+
+            allStates?.addEventListener("change", async () => {
+                if (isLoading) return;
+                isLoading = true;
+                await handleStateChange("allStatesChange");
+                isLoading = false;
+            });
+
+            allCities?.addEventListener("change", async () => {
+                if (allCities.checked) {
+                    citySelect.disabled = true;
+                    getSelect("city_id")?.nextElementSibling.classList.add('loading');
+                } else {
+                    citySelect.disabled = false;
+                    getSelect("city_id")?.nextElementSibling.classList.remove('loading');
+                    const stateId = getInput("state_id")?.dataset.id;
+                    if (stateId) await loadData("state_id", "city", "city_id", stateIds);
                 }
             });
 
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
+            async function handleStateChange(triggerType) {
+                const stateIds = getSelectedIds("state_id[]");
+                const countryId = getInput("country_id")?.dataset.id;
+
+                await resetDependentTags("state_id", getInput("city_id"));
+
+                // ✅ حالة "كل الولايات"
+                if (allStates?.checked) {
+                    stateSelect.disabled = true;
+                    getSelect("state_id").nextElementSibling?.classList.add('loading');
+                    await loadData("country_id", "city", "city_id", countryId);
+                    return;
+                }
+
+                // ✅ الحالة العادية
+                stateSelect.disabled = false;
+                getSelect("state_id").nextElementSibling?.classList.remove('loading');
+
+                if (!stateIds.length) {
+                    citySelect.disabled = false;
+                    citySelect.innerHTML = '<option value="">--</option>';
+                    getSelect("city_id")?.parentElement.classList.add('loading');
+                    document.getElementById(`city_id-info`)?.classList.add("show");
+                    const label = document
+                        .getElementById("city_id")
+                        ?.parentElement.querySelector(".dataLength");
+                    if (label) label.innerText = '';
+                    return;
+                }
+
+                // ✅ لو allCities متعلم عليها → نجيب كل المدن في الدولة
+                if (allCities?.checked) {
+                    citySelect.disabled = true;
+                    citySelect.innerHTML = '<option value="">--</option>';
+                    getSelect("city_id")?.nextElementSibling.classList.add('loading');
+                    return;
+                }
+
+                // ✅ تحميل المدن بناءً على الولاية
+                citySelect.disabled = false;
+                getSelect("city_id")?.nextElementSibling.classList.remove('loading');
+                await loadData("state_id", "city", "city_id", stateIds);
+            }
+
         });
     </script>
 @endpush

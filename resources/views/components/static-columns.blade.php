@@ -132,7 +132,96 @@
     @break
 
     @case('type')
-        <td title="{{ optional($model->type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->type)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ is_string($model->type) ? $model->type : optional($model->type)->name ?? '--' }}">
+            {!! highlightSearch(
+                limitedText(is_string($model->type) ? $model->type : optional($model->type)->name ?? '--', 30),
+                $search,
+            ) !!}
+        </td>
+    @break
+
+    @case('state_id')
+        <td>
+            @if (!empty($model->states()))
+                @foreach ($model->states() as $key => $state)
+                    @if ($key <= 2)
+                        @if ($state)
+                            <div
+                                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                                {{ $state['name'] ?? '--' }}
+                            </div>
+                        @endif
+                    @else
+                        <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                            ...
+                        </div>
+                    @endif
+                @endforeach
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('city_id')
+        <td>
+            @if (!empty($model->cities()))
+                @foreach ($model->cities() as $key => $city)
+                    @if ($key <= 2)
+                        @if ($city)
+                            <div
+                                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                                {{ $city['name'] ?? '--' }}
+                            </div>
+                        @endif
+                    @else
+                        <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                            ...
+                        </div>
+                    @endif
+                @endforeach
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('all_states')
+        <td title="{{ $model->all_states == 1 ? 'all' : '--' }}">
+            @if ($model->all_states == 1)
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    {!! highlightSearch(limitedText($model->all_states == 1 ? 'all' : '--', 30), $search) !!}
+                </div>
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('all_cities')
+        <td title="{{ $model->all_cities == 1 ? 'all' : '--' }}">
+            @if ($model->all_cities == 1)
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    {!! highlightSearch(limitedText($model->all_cities == 1 ? 'all' : '--', 30), $search) !!}
+                </div>
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
     @break
 
     @case('rating')
@@ -253,5 +342,5 @@
     @break
 
     @default
-        <td title="{{ $model->$column }}">{{ limitedText($model->$column ?? '--', 30) }}</td>
+        <td title="_{{ $model->$column }}">{{ limitedText($model->$column ?? '--', 30) }}</td>
 @endswitch

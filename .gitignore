@@ -26,3 +26,12 @@ Thumbs.db
 GIT_STRATEGY.md
 PROJECT_CONFIG.md
 COMMIT_CONVENTIONS.md
+/public/assets/js/filterByForeignId2.js
+/public/assets/js/filterByForeignId copy.js
+/public/assets/js/filterByForeignId copy2.js
+/app/Excels
+/storage/app/private/uploads
+/app/Jobs/ImportDataToDBJob.php
+/app/Jobs/ImportUpdateDataToDBJob.php
+/Source-mertonic
+/MD

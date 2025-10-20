@@ -22,11 +22,11 @@ class TransportationCompanyDepartment extends Model
         'address',
         'website',
         'company_id',
+        'region_id',
+        'subregion_id',
         'country_id',
         'state_id',
         'city_id',
-        'region_id',
-        'subregion_id',
     ];
 
     public function getRelationshipNames()

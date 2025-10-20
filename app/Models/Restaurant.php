@@ -37,37 +37,28 @@ class Restaurant extends Model
         'indoor',
         'outdoor',
         'spa',
+        'rating',
         'type_id',
-        'country_id',
-        'city_id',
         'region_id',
         'subregion_id',
-        'rating',
+        'country_id',
+        'state_id',
+        'city_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['type', 'country', 'city', 'region', 'subregion'];
+        return ['type', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
     {
-        return ['type_id', 'country_id', 'city_id', 'region_id', 'subregion_id'];
+        return ['type_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
     public function type()
     {
         return $this->belongsTo(Type::class);
-    }
-
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
-
-    public function city()
-    {
-        return $this->belongsTo(City::class);
     }
 
     public function region()
@@ -78,5 +69,20 @@ class Restaurant extends Model
     public function subregion()
     {
         return $this->belongsTo(Subregion::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }

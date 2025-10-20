@@ -10,7 +10,7 @@
 
     <!-- Container -->
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.dashboard') }}
@@ -30,11 +30,11 @@
 
     <!-- Container -->
     <div class="kt-container-fixed">
-        <div class="grid gap-5 lg:gap-7.5">
+        <div class="grid gap-4 lg:gap-6">
             <!-- begin: grid -->
             <div class="grid lg:grid-cols-3 gap-y-5 lg:gap-7.5 items-stretch">
                 <div class="lg:col-span-1">
-                    <div class="grid grid-cols-2 gap-5 lg:gap-7.5 h-full items-stretch">
+                    <div class="grid grid-cols-2 gap-4 lg:gap-6 h-full items-stretch">
                         <style>
                             .channel-stats-bg {
                                 background-image: url('{{ asset('metronic/media/images/2600x1600/bg-3.png') }}');
@@ -163,7 +163,7 @@
             <!-- end: grid -->
 
             <!-- begin: grid -->
-            <div class="grid lg:grid-cols-3 gap-5 lg:gap-7.5 items-stretch">
+            <div class="grid lg:grid-cols-3 gap-4 lg:gap-6 items-stretch">
                 <div class="lg:col-span-1">
                     <div class="kt-card h-full">
                         <div class="kt-card-header">

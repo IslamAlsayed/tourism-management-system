@@ -11,19 +11,17 @@
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="grid gap-5 lg:gap-7.5">
+    <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
             <div class="kt-card-header">
                 <h3 class="kt-card-title">All Air Transport Services</h3>
                 <div class="kt-menu" data-kt-menu="true">
-                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                        data-kt-menu-item-placement="bottom-start" data-kt-menu-item-toggle="dropdown"
-                        data-kt-menu-item-trigger="click">
+                    <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-start"
+                        data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
                         <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
                             <i class="ki-filled ki-dots-vertical text-lg"></i>
                         </button>
-                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                            data-kt-menu-dismiss="true">
+                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]" data-kt-menu-dismiss="true">
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="#">
                                     <span class="kt-menu-icon">
@@ -74,7 +72,7 @@
                                         'rating' => 4,
                                         'phone' => '+966 11 454 3333',
                                         'email' => 'info@kkaia.com',
-                                        'website' => 'www.kkaia.com'
+                                        'website' => 'www.kkaia.com',
                                     ],
                                     [
                                         'id' => 2,
@@ -88,7 +86,7 @@
                                         'rating' => 4,
                                         'phone' => '+966 12 685 2000',
                                         'email' => 'info@kaia.com',
-                                        'website' => 'www.kaia.com'
+                                        'website' => 'www.kaia.com',
                                     ],
                                     [
                                         'id' => 3,
@@ -102,7 +100,7 @@
                                         'rating' => 4,
                                         'phone' => '+966 11 454 3333',
                                         'email' => 'info@saudia.com',
-                                        'website' => 'www.saudia.com'
+                                        'website' => 'www.saudia.com',
                                     ],
                                     [
                                         'id' => 4,
@@ -116,7 +114,7 @@
                                         'rating' => 4,
                                         'phone' => '+966 11 454 3333',
                                         'email' => 'info@flynas.com',
-                                        'website' => 'www.flynas.com'
+                                        'website' => 'www.flynas.com',
                                     ],
                                     [
                                         'id' => 5,
@@ -130,7 +128,7 @@
                                         'rating' => 4,
                                         'phone' => '+966 13 883 3333',
                                         'email' => 'info@kfia.com',
-                                        'website' => 'www.kfia.com'
+                                        'website' => 'www.kfia.com',
                                     ],
                                     [
                                         'id' => 6,
@@ -144,56 +142,67 @@
                                         'rating' => 4,
                                         'phone' => '+966 14 842 4444',
                                         'email' => 'info@pmia.com',
-                                        'website' => 'www.pmia.com'
-                                    ]
+                                        'website' => 'www.pmia.com',
+                                    ],
                                 ];
                             @endphp
-                            @foreach($airTransport as $service)
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="symbol symbol-45px me-5">
-                                            <img src="{{ asset('metronic/media/avatars/300-4.png') }}" alt="{{ $service['name'] }}">
+                            @foreach ($airTransport as $service)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-45px me-5">
+                                                <img src="{{ asset('metronic/media/avatars/300-4.png') }}"
+                                                    alt="{{ $service['name'] }}">
+                                            </div>
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <a href="#"
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{ $service['name'] }}</a>
+                                                <span
+                                                    class="text-muted fw-semibold text-muted d-block fs-7">{{ $service['name_ar'] }}</span>
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-start flex-column">
-                                            <a href="#" class="text-dark fw-bold text-hover-primary fs-6">{{ $service['name'] }}</a>
-                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ $service['name_ar'] }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="kt-badge kt-badge-light-{{ $service['type'] == 'International Airport' ? 'primary' : ($service['type'] == 'Airline' ? 'success' : 'info') }}">
+                                            {{ $service['type'] }}
+                                        </span>
+                                    </td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $service['location'] }}</td>
+                                    <td>
+                                        <span class="kt-badge kt-badge-light-primary">{{ $service['code'] }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="kt-badge kt-badge-light-success">Active</span>
+                                    </td>
+                                    <td class="text-muted fw-semibold text-muted">{{ $service['capacity'] }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <i
+                                                    class="ki-filled ki-star text-{{ $i <= $service['rating'] ? 'warning' : 'muted' }} fs-7"></i>
+                                            @endfor
+                                            <span
+                                                class="text-muted fw-semibold text-muted ms-1">{{ $service['rating'] }}/5</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-{{ $service['type'] == 'International Airport' ? 'primary' : ($service['type'] == 'Airline' ? 'success' : 'info') }}">
-                                        {{ $service['type'] }}
-                                    </span>
-                                </td>
-                                <td class="text-muted fw-semibold text-muted">{{ $service['location'] }}</td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-primary">{{ $service['code'] }}</span>
-                                </td>
-                                <td>
-                                    <span class="kt-badge kt-badge-light-success">Active</span>
-                                </td>
-                                <td class="text-muted fw-semibold text-muted">{{ $service['capacity'] }}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <i class="ki-filled ki-star text-{{ $i <= $service['rating'] ? 'warning' : 'muted' }} fs-7"></i>
-                                        @endfor
-                                        <span class="text-muted fw-semibold text-muted ms-1">{{ $service['rating'] }}/5</span>
-                                    </div>
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="View">
-                                        <i class="ki-filled ki-eye fs-3"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="Edit">
-                                        <i class="ki-filled ki-pencil fs-3"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" title="Delete">
-                                        <i class="ki-filled ki-trash fs-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="#"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            title="View">
+                                            <i class="ki-filled ki-eye fs-3"></i>
+                                        </a>
+                                        <a href="#"
+                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            title="Edit">
+                                            <i class="ki-filled ki-pencil fs-3"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                            title="Delete">
+                                            <i class="ki-filled ki-trash fs-3"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -203,5 +212,3 @@
     </div>
     <!-- End of Container -->
 @endsection
-
-

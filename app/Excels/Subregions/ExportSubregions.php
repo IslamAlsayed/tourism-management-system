@@ -23,6 +23,7 @@ class ExportSubregions implements FromArray, WithHeadings, WithCustomCsvSettings
                 $data->name,
                 $data->name_ar,
                 $data->wiki_data_id,
+                $data->region_id,
             ];
         }
         return $list;
@@ -34,6 +35,7 @@ class ExportSubregions implements FromArray, WithHeadings, WithCustomCsvSettings
             'name',
             'name_ar',
             'wiki_data_id',
+            'region_id',
         ];
     }
 

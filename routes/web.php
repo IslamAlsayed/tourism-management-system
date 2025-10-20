@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\SystemLanguageController;
 use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -47,7 +48,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::delete('delete-all-selected-items', [DashboardController::class, 'deleteAll'])->name('deleteAll');
-    Route::get('/api/{reference}/{constrainId}/{constrainValue}', [DashboardController::class, 'getReferences']);
 
     // Legacy multi-step form routes (keeping for reference)
     Route::prefix('quote/v1')->group(function () {
@@ -82,7 +82,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/main-form', [DashboardController::class, 'mainForm'])->name('dashboard.mainForm');
 
     // === LANGUAGES ===
-    Route::get('languages/{locale}/locale', [LanguageController::class, 'locale'])->name('languages.change');
+    Route::get('languages/{locale}/locale', [SystemLanguageController::class, 'locale'])->name('system-languages.change');
+    Route::resource('system-languages', SystemLanguageController::class)->names('system-languages');
     Route::resource('languages', LanguageController::class)->names('languages');
 
     // === USER MANAGEMENT ===
@@ -99,7 +100,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === CITIES MANAGEMENT ===
     Route::resource('cities', CityController::class)->names('cities');
-    Route::get('cities/by-country/{countryId}', [CityController::class, 'getByCountry'])->name('cities.by-country');
 
     // === REGIONS MANAGEMENT ===
     Route::resource('regions', RegionController::class)->names('regions');
@@ -130,6 +130,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('accommodations', AccommodationController::class)->names('accommodations');
     Route::get('accommodations/{type}/type', [AccommodationController::class, 'getResultType'])->name('accommodations.type');
 
+    // === PROFILE MANAGEMENT ===
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
@@ -177,9 +178,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::get('/export', [SidebarManagerController::class, 'exportConfig'])->name('export');
     });
 
-    Route::get('import/{model}/data', [ExcelController::class, 'getToImport'])->name('import.data');
-    Route::post('import/{model}/data/{type?}', [ExcelController::class, 'postToImport'])->name('import.data.post');
-    Route::get('export/{model}/data/{type?}', [ExcelController::class, 'getToExport'])->name('export.data');
+    Route::get('import/{models}/data', [ExcelController::class, 'import'])->name('import.data');
+    Route::post('import/{models}/data/{type?}', [ExcelController::class, 'importData'])->name('import.data.post');
+    Route::get('export/{models}/data/{type?}', [ExcelController::class, 'exportData'])->name('export.data');
 });
 
 require __DIR__ . '/auth.php';

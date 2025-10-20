@@ -25,7 +25,11 @@ class NationalitiesUpdateRequest extends FormRequest
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
-            'country_id' => ['nullable', 'string', 'exists:countries,id'],
+            'region_id' => ['required', 'string', 'exists:regions,id'],
+            'subregion_id' => ['required', 'string', 'exists:subregions,id'],
+            'country_id' => ['required', 'string', 'exists:countries,id'],
+            'state_id' => ['required', 'string', 'exists:states,id'],
+            'city_id' => ['required', 'string', 'exists:cities,id'],
         ];
     }
 }

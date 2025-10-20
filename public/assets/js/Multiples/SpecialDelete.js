@@ -1,31 +1,41 @@
 // ======= Multi Delete =======
-window.SpecialDelete = function (selectAllId, rowCheckboxSelector) {
+window.specialDelete = function (selectAllId, rowCheckboxSelector) {
     const selectAll = document.getElementById(selectAllId);
     const checkboxes = document.querySelectorAll(rowCheckboxSelector);
     const deleteAllBtn = document.getElementById("deleteAllBtn");
 
-    if (!selectAll || checkboxes.length === 0 || !deleteAllBtn) return;
+    // مسح الأحداث القديمة
+    if (selectAll) selectAll.replaceWith(selectAll.cloneNode(true));
+    document
+        .querySelectorAll(rowCheckboxSelector)
+        .forEach((cb) => cb.replaceWith(cb.cloneNode(true)));
+
+    // ثم إعادة الربط
+    const newSelectAll = document.getElementById(selectAllId);
+    const newCheckboxes = document.querySelectorAll(rowCheckboxSelector);
+
+    if (!newSelectAll || newCheckboxes.length === 0 || !deleteAllBtn) return;
 
     deleteAllBtn?.classList.add("hidden");
 
     // ✅ تحديد الكل
-    if (selectAll) {
-        selectAll.addEventListener("change", () => {
-            checkboxes.forEach((cb) => (cb.checked = selectAll.checked));
+    if (newSelectAll) {
+        newSelectAll.addEventListener("change", () => {
+            newCheckboxes.forEach((cb) => (cb.checked = newSelectAll.checked));
             updateDeleteButtonVisibility(rowCheckboxSelector);
         });
     }
 
     // ✅ عند تحديد/إلغاء تحديد فردي
-    checkboxes.forEach((checkbox) => {
+    newCheckboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
             if (!checkbox.checked) {
-                selectAll.checked = false;
+                newSelectAll.checked = false;
             } else {
-                const allChecked = Array.from(checkboxes).every(
+                const allChecked = Array.from(newCheckboxes).every(
                     (cb) => cb.checked
                 );
-                selectAll.checked = allChecked;
+                newSelectAll.checked = allChecked;
             }
 
             updateDeleteButtonVisibility(rowCheckboxSelector);
@@ -94,15 +104,42 @@ window.SpecialDelete = function (selectAllId, rowCheckboxSelector) {
             deleteForm.submit();
         });
     }
-
-    function updateDeleteButtonVisibility(rowCheckboxSelector) {
-        const selected = document.querySelectorAll(
-            `${rowCheckboxSelector}:checked`
-        );
-        if (selected.length != 0) {
-            deleteAllBtn?.classList.remove("hidden");
-        } else {
-            deleteAllBtn?.classList.add("hidden");
-        }
-    }
 };
+
+function updateDeleteButtonVisibility(rowCheckboxSelector) {
+    const selected = document.querySelectorAll(
+        `${rowCheckboxSelector}:checked`
+    );
+    if (selected.length != 0) {
+        deleteAllBtn?.classList.remove("hidden");
+        document.getElementById("selectedCount").innerHTML =
+            `<strong class="text-primary">${selected.length}</strong> items selected` ||
+            "";
+    } else {
+        deleteAllBtn?.classList.add("hidden");
+        document.getElementById("selectedCount").innerHTML = "";
+    }
+}
+
+function resetDeleteSelection() {
+    const selectAllItems = document.getElementById("selectAllItems");
+    const anyChecked = document.querySelector(
+        "input[name='selectedItems[]']:checked"
+    );
+    if (anyChecked && selectAllItems) {
+        selectAllItems.click();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // detect all selects
+    specialDelete("selectAllItems", "input[name='selectedItems[]']");
+
+    // document.addEventListener("updatedPaginate", () => {
+    //     console.log("updatedPaginate");
+    //     setTimeout(() => {
+    //         resetDeleteSelection();
+    //         SpecialDelete("selectAllItems", "input[name='selectedItems[]']");
+    //     }, 200);
+    // });
+});

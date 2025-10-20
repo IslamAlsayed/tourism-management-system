@@ -3,7 +3,7 @@
 namespace App\Excels\TourGuides;
 
 use App\Models\TourGuide;
-use App\Models\GuideLanguage;
+use App\Models\Language;
 use App\Jobs\ImportDataToDBJob;
 use App\Models\TourGuideLanguage;
 use Illuminate\Support\Collection;
@@ -38,7 +38,7 @@ class ImportTourGuides implements ToCollection
 
             $rowArray = $row->toArray();
             $dataTourGuide = [];
-            $guideLanguageIds = [];
+            $languageIds = [];
 
             // ✅ 1. تجهيز بيانات TourGuide
             foreach ($fillableTourGuide as $column) {
@@ -48,8 +48,8 @@ class ImportTourGuides implements ToCollection
                 }
             }
 
-            if (in_array('guide_language', $headers)) {
-                $excelKey = array_search('guide_language', $headers);
+            if (in_array('language', $headers)) {
+                $excelKey = array_search('language', $headers);
                 if (isset($rowArray[$excelKey])) {
                     $langs = explode('،', $rowArray[$excelKey]);
 
@@ -57,9 +57,9 @@ class ImportTourGuides implements ToCollection
                         $lang = ucfirst(trim($lang));
 
                         if (!empty($lang)) {
-                            $guideLang = GuideLanguage::updateOrCreate(['name' => $lang], ['name' => $lang]);
+                            $guideLang = Language::updateOrCreate(['name' => $lang], ['name' => $lang]);
                             if ($guideLang) {
-                                $guideLanguageIds[] = $guideLang->id;
+                                $languageIds[] = $guideLang->id;
                             }
                         }
                     }
@@ -69,11 +69,11 @@ class ImportTourGuides implements ToCollection
             if (!empty($dataTourGuide)) {
                 $tourGuide = TourGuide::updateOrCreate(['name' => $dataTourGuide['name']], $dataTourGuide);
 
-                if (!empty($guideLanguageIds)) {
-                    foreach ($guideLanguageIds as $langId) {
+                if (!empty($languageIds)) {
+                    foreach ($languageIds as $langId) {
                         $batchTourGuideLangs[] = [
                             'tour_guide_id' => $tourGuide->id,
-                            'guide_language_id' => $langId,
+                            'language_id' => $langId,
                         ];
                     }
                 }

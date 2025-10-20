@@ -36,6 +36,7 @@
 
                         <!-- Profile Photo -->
                         @include('components.input-image', [
+                            'modelKey' => $user->name ?? 'U',
                             'column' => 'user',
                             'columnName' => 'photo',
                             'photoUrl' => $user->photo ? asset('storage/' . $user->photo) : '',
@@ -133,7 +134,8 @@
                                     <!-- Department -->
                                     <div class="">
                                         <label for="department" class="kt-label mb-2">{{ __('main.department') }}</label>
-                                        <select name="department" id="department" class="kt-input h-[45px]" special-search>
+                                        <select name="department" id="department" class="kt-input h-[45px]" special-search
+                                            value="{{ $user->department }}">
                                             <option value="">{{ __('main.select_department') }}</option>
                                             @foreach (config('helpers.departments') as $key => $value)
                                                 <option value="{{ $key }}"
@@ -150,7 +152,8 @@
                                     <!-- Position -->
                                     <div class="">
                                         <label for="position" class="kt-label mb-2">{{ __('main.position') }}</label>
-                                        <select name="position" id="position" class="kt-input h-[45px]" special-search>
+                                        <select name="position" id="position" class="kt-input h-[45px]" special-search
+                                            value="{{ $user->position }}">
                                             <option value="">{{ __('main.select_position') }}</option>
                                             @foreach (config('helpers.positions') as $key => $value)
                                                 <option value="{{ $key }}"
@@ -178,7 +181,8 @@
                                         <label for="preferred_language"
                                             class="kt-label mb-2">{{ __('main.preferred_language') }}</label>
                                         <select name="preferred_language" id="preferred_language"
-                                            class="kt-select h-[45px]" special-search>
+                                            class="kt-select h-[45px]" special-search
+                                            value="{{ $user->preferred_language }}">
                                             <option value="">--</option>
                                             <option value="en"
                                                 {{ $user->preferred_language == 'en' ? 'selected' : '' }}>
@@ -196,7 +200,8 @@
                                     <div class="">
                                         <label for="timezone"
                                             class="kt-label mb-2">{{ __('main.timezone_field') }}</label>
-                                        <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
+                                        <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search
+                                            value="{{ $user->timezone }}">
                                             <option value="">--</option>
                                             @foreach (config('helpers.timezones') as $zone)
                                                 <option value="{{ $zone }}"

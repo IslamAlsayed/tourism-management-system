@@ -9,7 +9,7 @@
                         <h1 class="text-xl font-semibold mb-6">{{ $title }}</h1>
                         <p class="mb-6">{{ $description }}</p>
 
-                        <form action="{{ route('import.data.post', ['model' => $models]) }}" method="POST"
+                        <form action="{{ route('import.data.post', ['models' => $models]) }}" method="POST"
                             enctype="multipart/form-data" class="w-half">
                             @csrf
 
@@ -50,7 +50,7 @@
                         </form>
 
                         <div class="mt-4">
-                            <a href="{{ route('export.data', ['model' => $models]) }}" class="kt-btn kt-btn-outline">
+                            <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                                 {{ __('main.export') }}
                             </a>
                         </div>

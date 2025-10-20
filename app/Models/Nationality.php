@@ -14,21 +14,44 @@ class Nationality extends Model
         'name',
         'name_ar',
         'is_active',
+        'region_id',
+        'subregion_id',
         'country_id',
+        'state_id',
+        'city_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['country'];
+        return ['region', 'subregion', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
     {
-        return ['country_id'];
+        return ['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+    }
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
     }
 
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }

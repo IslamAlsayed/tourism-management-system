@@ -3,7 +3,7 @@
 @section('content')
     <x-import-form :title="$title" :description="$description" :models="$models">
         <div class="mt-4">
-            <a href="{{ route('export.data', ['model' => $models]) }}" class="kt-btn kt-btn-outline">
+            <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}
             </a>
         </div>
@@ -41,8 +41,8 @@
             <table class="border min-w-half divide-y text-center divide-gray-200">
                 <thead style="background-color: #ffea00;">
                     <tr>
-                        <th class="border px-2">multi_states</th>
-                        <th class="border px-2">multi_cities</th>
+                        <th class="border px-2">all_states</th>
+                        <th class="border px-2">all_cities</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
