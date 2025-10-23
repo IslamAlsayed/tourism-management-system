@@ -33,10 +33,6 @@ class TourGuideController extends Controller
         $languages_ids = Language::get(['id', 'name', 'name_ar']);
         $guideTypes = TourGuideType::all();
         $regions = Region::all();
-        $subregions = Subregion::all();
-        $countries = Country::all();
-        $states = State::all();
-        $cities = City::all();
 
         return view('pages.dashboard.tour-guides.create', get_defined_vars());
     }
@@ -67,22 +63,6 @@ class TourGuideController extends Controller
         }
     }
 
-    public function store2(TourGuideCreateRequest $request)
-    {
-        dd($request->all());
-        $validated = $request->validated();
-        $tourGuide = TourGuide::create($validated);
-        $tourGuideLanguage = TourGuideLanguage::insert(array_map(fn($languageId) => ['tour_guide_id' => $tourGuide->id, 'language_id' => $languageId], $request->languages_ids));
-
-        if ($tourGuide && $tourGuideLanguage) {
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.tour-guide')]));
-            }
-            return redirect()->route('tour-guides.index')->with('success', __('main.messages.type_created', ['type' => __('main.tour-guide')]));
-        }
-        return redirect()->route('tour-guides.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.tour-guide')]));
-    }
-
     public function edit($id)
     {
         $tourGuide = TourGuide::find($id);
@@ -111,10 +91,6 @@ class TourGuideController extends Controller
         // dd($tourGuide->toArray(), $tour_guide_languages->toArray(), languages_ids);
 
         $regions = Region::all();
-        $subregions = Subregion::all();
-        $countries = Country::all();
-        $states = State::all();
-        $cities = City::all();
 
         return view('pages.dashboard.tour-guides.edit', get_defined_vars());
     }

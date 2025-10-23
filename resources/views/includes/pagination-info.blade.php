@@ -1,4 +1,4 @@
-@if ($this->message)
+{{-- @if ($this->message)
     <div class="custom-alerts" id="custom-alerts">
         @foreach ($this->message as $key => $message)
             @php $id = 'alert_' . uniqid(); @endphp
@@ -8,7 +8,9 @@
             </div>
         @endforeach
     </div>
-@endif
+@endif --}}
+
+@include('components.elements.display-alert')
 
 <div class="flex-wrap gap-2 p-2">
     <div class="w-full flex justify-between items-start">

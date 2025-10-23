@@ -19,7 +19,7 @@ trait HandlesCrudSafely
                 'line' => $e->getLine(),
             ]);
 
-            $this->message = ['danger' => __('main.messages.general_error') ?? 'Something went wrong, please try again later.'];
+            session()->flash('danger', __('main.messages.general_error') ?? 'Something went wrong, please try again later.');
         }
     }
 
@@ -39,15 +39,15 @@ trait HandlesCrudSafely
             $model = $modelClass::find($id);
 
             if (!$model) {
-                $this->message = ['danger' => __('main.messages.not_found_this_type', ['type' => __('main.' . $type)])];
+                session()->flash('danger', __('main.messages.not_found_this_type', ['type' => __('main.' . $type)]));
                 return;
             }
 
             if ($model->delete()) {
                 // $this->resetPage();
-                $this->message = ['success' => __('main.messages.type_deleted', ['type' => __('main.' . $type)])];
+                session()->flash('success', __('main.messages.type_deleted', ['type' => __('main.' . $type)]));
             } else {
-                $this->message = ['danger' => __('main.messages.type_deletion_failed', ['type' => __('main.' . $type)])];
+                session()->flash('danger', __('main.messages.type_deletion_failed', ['type' => __('main.' . $type)]));
             }
         });
     }

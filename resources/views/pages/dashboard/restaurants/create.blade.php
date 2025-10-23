@@ -23,7 +23,7 @@
 
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
-            <!-- Accommodation Form -->
+            {{-- Accommodation Form --}}
             <div class="kt-card">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">Basic Information</h3>
@@ -33,26 +33,26 @@
                         enctype="multipart/form-data">
                         @csrf
 
-                        <!-- Restaurant Photo -->
+                        {{-- Restaurant Photo --}}
                         @include('components.input-image', [
                             'column' => 'restaurant',
                             'columnName' => 'photo',
                         ])
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                            <!-- Name -->
+                            {{-- Name --}}
                             <div class="">
                                 <label for="name" class="kt-label required mb-2">Name (English)</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- Name Arabic -->
+                            {{-- Name Arabic --}}
                             <div class="">
                                 <label for="name_ar" class="kt-label required mb-2">Name (Arabic)</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- Type -->
+                            {{-- Type --}}
                             <div class="">
                                 <label for="type" class="kt-label required mb-2 flex items-center justify-between">
                                     Type
@@ -68,77 +68,10 @@
                                 </select>
                             </div>
 
-                            <!-- Country -->
-                            <div class="">
-                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    Country
-                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
-                                    required>
-                                    <option value="">--</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            {{-- Regions [region, subregion, country, state, city] --}}
+                            @include('components.create-regions')
 
-                            <!-- City -->
-                            <div class="">
-                                <label for="city_id" class="kt-label required mb-2">
-                                    City
-                                    <i id="city_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
-                                    <span class="text-red-600 text-sm span-info" id="city_id-info">
-                                        (You must select country first)
-                                    </span>
-                                </label>
-                                <select name="city_id" id="city_id" class="kt-select h-[45px]" special-search required>
-                                    <option value="">--</option>
-                                    {{-- Cities will be loaded dynamically based on selected country --}}
-                                </select>
-                            </div>
-
-                            <!-- Region -->
-                            <div class="">
-                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    Region
-                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search required>
-                                    <option value="">--</option>
-                                    @foreach ($regions as $region)
-                                        <option value="{{ $region->id }}">{{ $region->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Subregion -->
-                            <div class="">
-                                <label for="subregion_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    <div>
-                                        Subregion
-                                        <i id="subregion_id-loader"
-                                            class="i-loader fas fa-refresh fa-spin text-primary"></i>
-                                        <span class="text-red-600 text-sm span-info" id="subregion_id-info">
-                                            (You must select region first)
-                                        </span>
-                                    </div>
-                                    <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search
-                                    required>
-                                    <option value="">--</option>
-                                    {{-- Subregions will be loaded dynamically based on selected region --}}
-                                </select>
-                            </div>
-
-                            <!-- Rating -->
+                            {{-- Rating --}}
                             <div class="">
                                 <label for="rating" class="kt-label required mb-2">Rating</label>
                                 <select name="rating" id="rating" class="kt-select h-[45px]" special-search required>
@@ -151,7 +84,7 @@
                                 </select>
                             </div>
 
-                            <!-- Specialty -->
+                            {{-- Specialty --}}
                             <div class="">
                                 <label for="specialty_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Specialty
@@ -169,94 +102,93 @@
                                 </select>
                             </div>
 
-                            <!-- Company Name (Arabic) -->
+                            {{-- Company Name (Arabic) --}}
                             <div class="">
                                 <label for="company_name_ar" class="kt-label required mb-2">Company Name
                                     (Arabic)</label>
-                                <input type="text" name="company_name_ar" id="company_name_ar"
-                                    class="kt-input h-[45px]" required>
+                                <input type="text" name="company_name_ar" id="company_name_ar" class="kt-input h-[45px]"
+                                    required>
                             </div>
 
-                            <!-- phone_01 -->
+                            {{-- phone_01 --}}
                             <div class="">
                                 <label for="phone_01" class="kt-label required mb-2">Phone 01</label>
                                 <input type="text" name="phone_01" id="phone_01" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- phone_02 -->
+                            {{-- phone_02 --}}
                             <div class="">
                                 <label for="phone_02" class="kt-label required mb-2">Phone 02</label>
                                 <input type="text" name="phone_02" id="phone_02" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- fax -->
+                            {{-- fax --}}
                             <div class="">
                                 <label for="fax" class="kt-label required mb-2">Fax</label>
                                 <input type="text" name="fax" id="fax" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- email_01 -->
+                            {{-- email_01 --}}
                             <div class="">
                                 <label for="email_01" class="kt-label required mb-2">Email 1</label>
                                 <input type="text" name="email_01" id="email_01" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- email_02 -->
+                            {{-- email_02 --}}
                             <div class="">
                                 <label for="email_02" class="kt-label required mb-2">Email 2</label>
                                 <input type="text" name="email_02" id="email_02" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- Contact Person -->
+                            {{-- Contact Person --}}
                             <div class="">
                                 <label for="contact_person" class="kt-label required mb-2">Contact Person</label>
                                 <input type="text" name="contact_person" id="contact_person"
                                     class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- Box -->
+                            {{-- Box --}}
                             <div class="">
                                 <label for="box" class="kt-label required mb-2">Box</label>
                                 <input type="text" name="box" id="box" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- Postal Code -->
+                            {{-- Postal Code --}}
                             <div class="">
                                 <label for="postal_code" class="kt-label required mb-2">Postal Code</label>
                                 <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]"
                                     required>
                             </div>
 
-                            <!-- Mobile -->
+                            {{-- Mobile --}}
                             <div class="">
                                 <label for="mobile" class="kt-label required mb-2">Mobile</label>
                                 <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- Website -->
+                            {{-- Website --}}
                             <div class="">
                                 <label for="website" class="kt-label required mb-2">Website</label>
                                 <input type="text" name="website" id="website" class="kt-input h-[45px]" required>
                             </div>
 
-                            <!-- Note -->
+                            {{-- Note --}}
                             <div class="">
                                 <label for="note" class="kt-label mb-2">Note</label>
                                 <textarea name="note" id="note" rows="3" class="kt-input h-[45px]"></textarea>
                             </div>
-
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_active" value="0">
-                                    <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                        value="1">
-                                    <label for="is_active" class="kt-label mb-0">{{ __('main.is_active') }}</label>
-                                </div>
-                            </div>
-
                         </div>
 
-                        <!-- Facilities -->
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_active" value="0">
+                                <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
+                                    value="1">
+                                <label for="is_active" class="kt-label mb-0">{{ __('main.is_active') }}</label>
+                            </div>
+                        </div>
+
+                        {{-- Facilities --}}
                         <div class="mb-4">
                             <label class="kt-label mb-2">Facilities</label>
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -313,7 +245,7 @@
                             </div>
                         </div>
 
-                        <!-- Submit Buttons -->
+                        {{-- Submit Buttons --}}
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
@@ -332,7 +264,7 @@
                 </div>
             </div>
 
-            <!-- Tips -->
+            {{-- Tips --}}
             <div class="kt-card">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">Restaurant Tips</h3>

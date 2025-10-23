@@ -3469,6 +3469,14 @@
     padding: calc(var(--spacing) * 5) !important;
   }
 
+  .p-6 {
+    padding: calc(var(--spacing) * 6);
+  }
+
+  .p-6\! {
+    padding: calc(var(--spacing) * 6) !important;
+  }
+
   .p-7 {
     padding: calc(var(--spacing) * 7);
   }

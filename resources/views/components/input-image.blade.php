@@ -8,8 +8,12 @@
                 </div>
             @elseif(isset($modelKey) && $modelKey)
                 <div class="w-[120px] h-[120px] image-character">
-                    <span
-                        class="pb-2">{{ $modelKey[1] ? lcfirst($modelKey[0]) . lcfirst($modelKey[1]) : lcfirst($modelKey[0]) }}</span>
+                    <span class="pb-2">
+                        {{ env('CHARACTER_LENGTH', 1) == 2
+                            ? ($modelKey[1]
+                                ? lcfirst($modelKey[0]) . lcfirst($modelKey[1])
+                                : lcfirst($modelKey[0]))
+                            : lcfirst($modelKey[0]) }}</span>
                 </div>
             @else
                 <div

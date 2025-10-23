@@ -112,44 +112,13 @@ function filterByForeignId(
         } catch (error) {
             console.error("Error loading data:", error);
         } finally {
-            // refSelect.parentElement?.classList.remove("loading");
-            // document
-            //     .getElementById(`${referenceId}-loader`)
-            //     ?.classList.remove("show");
-            // document
-            //     .getElementById(`${referenceId}-info`)
-            //     ?.classList.remove("show");
-
-            let attempts = 0;
-            const maxAttempts = 3;
-
-            const removalInterval = setInterval(() => {
-                attempts++;
-                if (
-                    refSelect.parentElement &&
-                    refSelect.parentElement.classList.contains("loading")
-                ) {
-                    refSelect.parentElement.classList.remove("loading");
-                    allRemoved = false;
-                }
-                const loaderElement = document.getElementById(
-                    `${referenceId}-loader`
-                );
-                if (loaderElement && loaderElement.classList.contains("show")) {
-                    loaderElement.classList.remove("show");
-                    allRemoved = false;
-                }
-                const infoElement = document.getElementById(
-                    `${referenceId}-info`
-                );
-                if (infoElement && infoElement.classList.contains("show")) {
-                    infoElement.classList.remove("show");
-                    allRemoved = false;
-                }
-                if (attempts >= maxAttempts || allRemoved) {
-                    clearInterval(removalInterval);
-                }
-            }, 1000);
+            refSelect.parentElement?.classList.remove("loading");
+            document
+                .getElementById(`${referenceId}-loader`)
+                ?.classList.remove("show");
+            document
+                .getElementById(`${referenceId}-info`)
+                ?.classList.remove("show");
         }
     }
 
@@ -211,11 +180,13 @@ function filterByForeignId(
 
                 // 1️⃣ حمّل الولايات التابعة أولاً
                 // 2️⃣ فعّل الـ tags من hidden inputs بعد تحميل الـ options
+                console.log("test1");
                 await setTagsFromHiddenInputs("state_id");
                 const stateIds = getHiddenInputValues("state_id").map(
                     (x) => x.id
                 );
                 if (stateIds.length > 0) {
+                    console.log("test2");
                     await loadData("state_id", "city", "city_id", stateIds);
                     await setTagsFromHiddenInputs("city_id");
                 }
@@ -227,6 +198,7 @@ function filterByForeignId(
                     "city_id"
                 ).loadReferenceData(stateVal, cityVal);
 
+                console.log("test3");
                 await setTagsFromHiddenInputs("city_id");
             }
         }
@@ -278,11 +250,6 @@ function clearDependents(fromId) {
                         .forEach((t) => t.remove());
                 }
             }
-
-            const label = document
-                .querySelector(`#${hierarchy[i]}`)
-                .parentElement.querySelector(".dataLength");
-            if (label) label.innerText = "";
 
             document
                 .getElementById(`${hierarchy[i]}-info`)
@@ -361,6 +328,8 @@ async function setTagsFromHiddenInputs(selectId) {
 }
 
 const getSelect = (id) => document.getElementById(id);
+const getInput = (key) =>
+    document.querySelector(`[data-for='${key}'] .tag-input`);
 
 const countrySelect = getSelect("country_id");
 const stateSelect = getSelect("state_id");
@@ -369,17 +338,17 @@ const allStates = getSelect("all_states");
 const allCities = getSelect("all_cities");
 
 stateSelect?.addEventListener("updatedSelect", async () => {
-    // console.log("test1");
+    console.log("test1");
 });
 stateSelect?.addEventListener("multiSelectUpdated", async (e) => {
-    // console.log("test2:", e.detail);
+    console.log("test2:", e.detail);
     await handleStateChange("multiSelectUpdated");
 });
 allStates?.addEventListener("change", async () => {
-    // console.log("test3");
+    console.log("test3");
 });
 allCities?.addEventListener("change", async () => {
-    // console.log("test4");
+    console.log("test4");
 });
 
 const loadData = async (fromId, model, toId, value) => {

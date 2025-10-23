@@ -38,8 +38,13 @@ class TourGuideUpdateRequest extends FormRequest
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
-            'state_id' => ['nullable', 'string', 'exists:states,id'],
-            'city_id' => ['nullable', 'string', 'exists:cities,id'],
+
+            'state_id' => ['nullable'],
+            'state_id.*' => ['integer', 'exists:states,id'],
+
+            'city_id' => ['nullable'],
+            'city_id.*' => ['integer', 'exists:cities,id'],
+
             'tourism_ministry_code' => ['nullable', 'string', 'max:100'],
             'fd_day_fees' => ['nullable', 'numeric', 'min:0'],
             'hd_day_fees' => ['nullable', 'numeric', 'min:0'],

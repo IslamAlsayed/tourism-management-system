@@ -25,10 +25,13 @@ class RestaurantUpdateRequest extends FormRequest
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
             'type_id' => ['nullable', 'string', 'max:50', 'exists:types,id'],
-            'country_id' => ['nullable', 'string', 'max:50', 'exists:restaurants,id'],
-            'city_id' => ['nullable', 'string', 'max:50', 'exists:restaurants,id'],
-            'region_id' => ['nullable', 'string', 'max:50', 'exists:restaurants,id'],
-            'subregion_id' => ['nullable', 'string', 'max:50', 'exists:restaurants,id'],
+
+            'region_id' => ['nullable', 'string', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'string', 'exists:countries,id'],
+            'state_id' => ['nullable', 'string', 'exists:states,id'],
+            'city_id' => ['nullable', 'string', 'exists:cities,id'],
+
             'company_name_ar' => ['nullable', 'string', 'max:255'],
             'specialty' => ['nullable', 'string', 'max:255'],
             'phone_01' => ['nullable', 'string', 'max:20'],

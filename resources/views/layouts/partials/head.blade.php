@@ -52,5 +52,8 @@
 
 <link href="{{ asset('metronic/css/styles.css') }}" rel="stylesheet" />
 
+{{-- Text editor --}}
+<link rel="stylesheet" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+
 @yield('styles')
 @stack('styles')

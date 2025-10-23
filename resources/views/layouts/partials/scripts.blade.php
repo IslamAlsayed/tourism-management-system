@@ -10,6 +10,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- End of Scripts -->
 
+{{-- Text editor --}}
+<script src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
 {{-- Multiples JS --}}
 <script src="{{ asset('assets/js/multiples/specialSelect3.js') }}"></script>
 <script src="{{ asset('assets/js/multiples/specialCheckbox.js') }}"></script>

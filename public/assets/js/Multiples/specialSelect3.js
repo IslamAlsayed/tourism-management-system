@@ -1,10 +1,14 @@
-// ======= Multi Select =======
+// ========================================
+// MULTI SELECT
+// ========================================
 window.specialSelect = function (selectElement) {
     if (!selectElement) return;
 
+    // ========================================
+    // INITIALIZATION
+    // ========================================
     const isRequired = selectElement.hasAttribute("required");
     selectElement.removeAttribute("required");
-
     selectElement.style.display = "none";
     selectElement.setAttribute("multiple", "multiple");
 
@@ -22,20 +26,22 @@ window.specialSelect = function (selectElement) {
         </div>
     `;
 
+    // ========================================
+    // DOM ELEMENTS
+    // ========================================
     const tagContainer = wrapper.querySelector(".tag-container");
     const tagInput = wrapper.querySelector(".tag-input");
     const dropdown = wrapper.querySelector(".dropdown");
 
-    // ==========================
-    // 1️⃣ جهّز selectedList
-    // ==========================
+    // ========================================
+    // STATE MANAGEMENT
+    // ========================================
     let selectedList = [];
 
-    // ==========================
-    // 2️⃣ تحديث hidden inputs
-    // ==========================
+    // ========================================
+    // HELPER FUNCTIONS
+    // ========================================
     const updateHiddenInputs = () => {
-        // احذف الموجود بس اللي داخل الـ parent مش أي input جاي من السيرفر
         selectElement.parentNode
             .querySelectorAll(
                 `input[type="hidden"][name="${selectElement.name}[]"]`
@@ -59,9 +65,6 @@ window.specialSelect = function (selectElement) {
         });
     };
 
-    // ==========================
-    // 3️⃣ تحديث الـ select نفسه
-    // ==========================
     const updateSelectedOptions = () => {
         for (let i = 0; i < selectElement.options.length; i++) {
             const option = selectElement.options[i];
@@ -69,9 +72,6 @@ window.specialSelect = function (selectElement) {
         }
     };
 
-    // ==========================
-    // 4️⃣ عرض الخيارات في القائمة
-    // ==========================
     const renderOptions = () => {
         dropdown.innerHTML = "";
         for (let i = 0; i < selectElement.length; i++) {
@@ -87,9 +87,28 @@ window.specialSelect = function (selectElement) {
         }
     };
 
-    // ==========================
-    // 5️⃣ أحداث الاختيار والإزالة
-    // ==========================
+    function removeTag(selectedList, selectElement) {
+        let tags = document.querySelectorAll(".cross");
+        tags.forEach((tag) => {
+            tag.addEventListener("click", () => {
+                tag.parentElement.remove();
+                selectedList = selectedList.filter(
+                    (i) => i.id !== tag.dataset.id
+                );
+                updateHiddenInputs();
+                renderOptions();
+
+                const event = new CustomEvent("multiSelectUpdated", {
+                    detail: { nameSelect: selectElement.name },
+                });
+                selectElement.dispatchEvent(event);
+            });
+        });
+    }
+
+    // ========================================
+    // EVENT HANDLERS
+    // ========================================
     dropdown.addEventListener("click", (e) => {
         if (e.target.tagName !== "LI") return;
 
@@ -126,29 +145,14 @@ window.specialSelect = function (selectElement) {
                 hidden.value = tag.dataset.id;
                 parentSelect.appendChild(hidden);
             });
-            console.log("parentSelect", parentSelect);
 
             removeTag(selectedList, selectElement);
-
-            // tag.querySelector(".cross").addEventListener("click", () => {
-            //     tag.remove();
-            //     selectedList = selectedList.filter((i) => i.id !== value);
-            //     updateHiddenInputs();
-            //     renderOptions();
-
-            //     const event = new CustomEvent("multiSelectUpdated", {
-            //         detail: { nameSelect: selectElement.name },
-            //     });
-            //     selectElement.dispatchEvent(event);
-            // });
 
             tagContainer.insertBefore(tag, tagInput);
             updateHiddenInputs();
             updateSelectedOptions();
             renderOptions();
 
-            // const selectedIds = selectedList.map((i) => i.id);
-            // 🔥 أرسل الحدث "updatedSelect" بعد الاختيار
             const event = new CustomEvent("updatedSelect", {
                 detail: {
                     nameSelect: selectElement.name,
@@ -190,35 +194,11 @@ window.specialSelect = function (selectElement) {
         }
     });
 
-    // ==========================
-    // 6️⃣ التهيئة الأولية
-    // ==========================
-    renderOptions(); // ← يرسم القائمة
-    updateSelectedOptions(); // ← يضبط الـ selected options
-    updateHiddenInputs(); // ← يضمن أن الـ inputs متزامنة
-
+    // ========================================
+    // INITIALIZATION
+    // ========================================
+    renderOptions();
+    updateSelectedOptions();
+    updateHiddenInputs();
     removeTag(selectedList, selectElement);
-
-    // ==========================
-    // 7️⃣ إزالة تاج من القائمة
-    // ==========================
-    function removeTag(selectedList, selectElement) {
-        let tags = document.querySelectorAll(".cross");
-        tags.forEach((tag) => {
-            tag.addEventListener("click", () => {
-                tag.parentElement.remove();
-                selectedList = selectedList.filter(
-                    (i) => i.id !== tag.dataset.id
-                );
-                updateHiddenInputs();
-                renderOptions();
-
-                const event = new CustomEvent("multiSelectUpdated", {
-                    detail: { nameSelect: selectElement.name },
-                });
-                selectElement.dispatchEvent(event);
-            });
-        });
-        // console.log("remove");
-    }
 };

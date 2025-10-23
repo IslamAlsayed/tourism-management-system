@@ -46,12 +46,12 @@ class TourGuide extends Model
         return ['guide_type_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
-    public function guideType()
+    public function guide_type()
     {
         return $this->belongsTo(TourGuideType::class, 'guide_type_id');
     }
 
-    public function tourGuideLanguages()
+    public function tour_guide_languages()
     {
         return $this->belongsToMany(TourGuideLanguage::class, 'tour_guide_languages', 'tour_guide_id', 'language_id');
     }

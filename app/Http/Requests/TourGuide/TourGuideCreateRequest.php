@@ -38,8 +38,13 @@ class TourGuideCreateRequest extends FormRequest
             'region_id' => ['required', 'string', 'exists:regions,id'],
             'subregion_id' => ['required', 'string', 'exists:subregions,id'],
             'country_id' => ['required', 'string', 'exists:countries,id'],
-            'state_id' => ['required', 'string', 'exists:states,id'],
-            'city_id' => ['required', 'string', 'exists:cities,id'],
+
+            'state_id' => ['required'],
+            'state_id.*' => ['integer', 'exists:states,id'],
+
+            'city_id' => ['required'],
+            'city_id.*' => ['integer', 'exists:cities,id'],
+
             'tourism_ministry_code' => ['nullable', 'string', 'max:100'],
             'fd_day_fees' => ['nullable', 'numeric', 'min:0'],
             'hd_day_fees' => ['nullable', 'numeric', 'min:0'],

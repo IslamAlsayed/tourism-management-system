@@ -203,156 +203,8 @@
                                 @enderror
                             </div>
 
-                            <!-- Region -->
-                            <div class="">
-                                <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.region') }}
-                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $tourGuide->region_id ?? 1 }}" required>
-                                    <option value="">--</option>
-                                    @foreach ($regions as $region)
-                                        <option value="{{ $region->id }}"
-                                            {{ $tourGuide->region_id == $region->id ? 'selected' : '' }}>
-                                            {{ $region->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('region_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Subregion -->
-                            <div class="loading">
-                                <label for="subregion_id"
-                                    class="kt-label required mb-2 flex items-center justify-between">
-                                    <div>
-                                        Subregion
-                                        <i id="subregion_id-loader"
-                                            class="i-loader fas fa-refresh fa-spin text-primary"></i>
-                                        <span class="text-red-600 text-sm span-info show" id="subregion_id-info">
-                                            (You must select region first)
-                                        </span>
-                                    </div>
-                                    <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $tourGuide->subregion_id ?? 1 }}" required>
-                                    <option value="">--</option>
-                                    {{-- Subregions will be loaded dynamically based on selected Region --}}
-                                    {{-- @foreach ($subregions as $subregion)
-                                        <option value="{{ $subregion->id }}"
-                                            {{ $tourGuide->subregion_id == $subregion->id ? 'selected' : '' }}>
-                                            {{ $subregion->name }}
-                                        </option>
-                                    @endforeach --}}
-                                </select>
-                                @error('subregion_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Country -->
-                            {{-- <div class="">
-                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.country') }}
-                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.edit') }}
-                                    </a>
-                                </label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $tourGuide->country_id ?? 1 }}" required>
-                                    <option value="">--</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ $tourGuide->country_id == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('country_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div> --}}
-
-                            <!-- Country -->
-                            <div class="loading">
-                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    <div>
-                                        Country
-                                        <i id="country_id-loader"
-                                            class="i-loader fas fa-refresh fa-spin text-primary"></i>
-                                        <span class="text-red-600 text-sm span-info show" id="country_id-info">
-                                            (You must select region first)
-                                        </span>
-                                    </div>
-                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $tourGuide->country_id ?? 1 }}" required>
-                                    <option value="">--</option>
-                                    {{-- countries will be loaded dynamically based on selected Subregion --}}
-                                </select>
-                                @error('country_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- States -->
-                            <div class="loading">
-                                <label for="state_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    <div>
-                                        State
-                                        <i id="state_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
-                                        <span class="text-red-600 text-sm span-info show" id="state_id-info">
-                                            (You must select region first)
-                                        </span>
-                                    </div>
-                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $tourGuide->state_id ?? 1 }}" required>
-                                    <option value="">--</option>
-                                    {{-- States will be loaded dynamically based on selected Country --}}
-                                </select>
-                                @error('state_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- City -->
-                            <div class="loading">
-                                <label for="city_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    <div>
-                                        City
-                                        <i id="city_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
-                                        <span class="text-red-600 text-sm span-info show" id="city_id-info">
-                                            (You must select state first)
-                                        </span>
-                                    </div>
-                                    <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="city_id" id="city_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $tourGuide->city_id ?? 1 }}" required>
-                                    <option value="">--</option>
-                                    {{-- Cities will be loaded dynamically based on selected State --}}
-                                </select>
-                                @error('city_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Regions [region, subregion, country, state, city] --}}
+                            @include('components.edit-regions', ['record' => $tourGuide])
 
                             <!-- Tourism Ministry Code -->
                             <div class="">
@@ -404,9 +256,7 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid grid-cols-2 gap-6 mb-4">
                             <!-- Notes -->
                             <div class="">
                                 <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
