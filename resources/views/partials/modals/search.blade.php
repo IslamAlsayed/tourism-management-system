@@ -1,9 +1,9 @@
 <div class="kt-modal" data-kt-modal="true" id="search_modal">
-    <div class="kt-modal-content max-w-[600px] top-[15%]">
+    <div class="kt-modal-content max-w-[600px]">
         <div class="kt-modal-header py-4 px-5">
             <i class="ki-filled ki-magnifier text-muted-foreground text-xl">
             </i>
-            <input class="kt-input kt-input-ghost" name="query" placeholder="Tap to start search" type="text"
+            <input class="kt-input h-[45px] kt-input-ghost" name="query" placeholder="Tap to start search" type="text"
                 value="" />
             <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-dim shrink-0" data-kt-modal-dismiss="true">
                 <i class="ki-filled ki-cross">

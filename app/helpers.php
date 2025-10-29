@@ -1,0 +1,308 @@
+<?php
+
+use App\Models\User;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
+
+if (!function_exists('getActiveUser')) {
+    /**
+     * Get the currently authenticated user or a user by ID.
+     * Checks authentication first.
+     *
+     * @param int|null $id
+     * @return \App\Models\User|null
+     */
+    function getActiveUser($id = null)
+    {
+        if (!Auth::check()) {
+            return null;
+        }
+
+        if ($id != null) {
+            return User::find($id) ?? null;
+        }
+
+        return Auth::user();
+    }
+}
+
+if (!function_exists('getActiveSettings')) {
+    function getActiveSettings()
+    {
+        return Setting::first() ?? [];
+    }
+}
+
+if (!function_exists('getLocalizedText')) {
+    /**
+     * Get localized text based on current locale
+     *
+     * @param array|string $text
+     * @param string|null $locale
+     * @return string
+     */
+    function getLocalizedText($text, $locale = null)
+    {
+        if (is_string($text)) {
+            return $text;
+        }
+
+        if (!is_array($text)) {
+            return '';
+        }
+
+        $locale = $locale ?? getCurrentLocale();
+
+        // Try to get text for current locale
+        if (isset($text[$locale])) {
+            return $text[$locale];
+        }
+
+        // Fallback to English
+        if (isset($text['en'])) {
+            return $text['en'];
+        }
+
+        // Fallback to Arabic
+        if (isset($text['ar'])) {
+            return $text['ar'];
+        }
+
+        // Return first available value
+        return array_values($text)[0] ?? '';
+    }
+}
+
+if (!function_exists('getCurrentLocale')) {
+    /**
+     * Get current locale with fallback
+     *
+     * @return string
+     */
+    function getCurrentLocale()
+    {
+        // Check session first
+        if (session()->has('locale')) {
+            return session('locale');
+        }
+
+        // Fallback to app locale
+        return app()->getLocale() ?? config('app.locale', 'en');
+    }
+}
+
+if (!function_exists('isRtlLocale')) {
+    /**
+     * Check if current locale is RTL
+     *
+     * @param string|null $locale
+     * @return bool
+     */
+    function isRtlLocale($locale = null)
+    {
+        $locale = $locale ?? getCurrentLocale();
+        $rtlLocales = ['ar', 'he', 'fa', 'ur'];
+
+        return in_array($locale, $rtlLocales);
+    }
+}
+
+if (!function_exists('isActive')) {
+    function isActive($route, $parameters, $currentRoute, $currentParameters = [])
+    {
+        if (!isset($route) || $route !== $currentRoute) {
+            return false;
+        }
+
+        foreach ($parameters as $key => $value) {
+            if (($currentParameters[$key] ?? null) != $value) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+}
+
+if (!function_exists('isActiveRoute')) {
+    function isActiveRoute($routeName, $currentRoute)
+    {
+        return isset($routeName) && $routeName === $currentRoute;
+    }
+}
+
+if (!function_exists('hasActiveChild')) {
+    function hasActiveChild(array $children, $currentRoute, array $currentParameters = []): bool
+    {
+        foreach ($children as $child) {
+            if (isset($child['route'])) {
+                if ($child['route'] === $currentRoute) {
+                    if (isset($child['parameters'])) {
+                        $allMatch = true;
+                        foreach ($child['parameters'] as $key => $value) {
+                            if (($currentParameters[$key] ?? null) != $value) {
+                                $allMatch = false;
+                                break;
+                            }
+                        }
+                        if ($allMatch) {
+                            return true;
+                        }
+                    } else {
+                        return true;
+                    }
+                }
+            }
+
+            if (isset($child['children']) && hasActiveChild($child['children'], $currentRoute, $currentParameters)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+
+if (!function_exists('generateUniqueFilename')) {
+    function generateUniqueFilename($prefix = 'data')
+    {
+        // return $prefix . '_' . substr(md5(uniqid(mt_rand(), true)), 0, 6);
+        return $prefix . '_' . date('Y_m_d_H_i_s');
+    }
+}
+
+if (!function_exists('getPaginate')) {
+    function getPaginate()
+    {
+        $settings = Setting::first();
+        return session('paginate_count', $settings->app_paginate_count ?? config('app.paginate_count'));
+    }
+}
+
+if (!function_exists('highlightSearch')) {
+    function highlightSearch(string $html, ?string $search = null): string
+    {
+        if (!$search) {
+            return $html;
+        }
+
+        $search = trim($search);
+
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true); // لتفادي الأخطاء مع HTML غير مكتمل
+
+        // إضافة wrapper لأن DOMDocument لازم يكون فيه عنصر root
+        $dom->loadHTML(
+            '<?xml encoding="UTF-8"><div id="wrapper">' . $html . '</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $xpath = new DOMXPath($dom);
+        $textNodes = $xpath->query('//text()');
+
+        foreach ($textNodes as $node) {
+            $value = $node->nodeValue;
+
+            // هنا استخدم الـ search العادي
+            if (stripos($value, $search) !== false) {
+                // وهنا استخدم نسخة escaped للـ regex
+                $escapedSearch = preg_quote($search, '/');
+
+                $highlighted = preg_replace(
+                    "/($escapedSearch)/i",
+                    '<span class="highlight">$1</span>',
+                    $value
+                );
+
+                // استبدال النص القديم بالـ HTML الجديد
+                $newNode = $dom->createDocumentFragment();
+                $newNode->appendXML($highlighted);
+                $node->parentNode->replaceChild($newNode, $node);
+            }
+        }
+
+        // استخرج فقط ما بداخل الـ wrapper
+        $wrapper = $dom->getElementById('wrapper');
+        $output = '';
+        foreach ($wrapper->childNodes as $child) {
+            $output .= $dom->saveHTML($child);
+        }
+
+        return $output;
+    }
+}
+
+
+if (!function_exists('highlightSearch2')) {
+    function highlightSearch2(string $html, ?string $search = null): string
+    {
+        if (!$search) {
+            return $html;
+        }
+
+        $search = trim($search);
+
+        $search = preg_quote($search, '/');
+
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true); // لتفادي الأخطاء مع HTML غير مكتمل
+
+        // إضافة wrapper لأن DOMDocument لازم يكون فيه عنصر root
+        $dom->loadHTML(
+            '<?xml encoding="UTF-8"><div id="wrapper">' . $html . '</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+
+        $xpath = new DOMXPath($dom);
+        $textNodes = $xpath->query('//text()');
+
+        foreach ($textNodes as $node) {
+            $value = $node->nodeValue;
+
+            // لو النص يحتوي الكلمة، ظللها
+            if (stripos($value, $search) !== false) {
+                $highlighted = preg_replace(
+                    "/($search)/i",
+                    '<span class="highlight">$1</span>',
+                    $value
+                );
+
+                // استبدال النص القديم بالـ HTML الجديد
+                $newNode = $dom->createDocumentFragment();
+                $newNode->appendXML($highlighted);
+                $node->parentNode->replaceChild($newNode, $node);
+            }
+        }
+
+        // استخرج فقط ما بداخل الـ wrapper
+        $wrapper = $dom->getElementById('wrapper');
+        $output = '';
+        foreach ($wrapper->childNodes as $child) {
+            $output .= $dom->saveHTML($child);
+        }
+
+        return $output;
+    }
+}
+
+if (!function_exists('limitedText')) {
+    function limitedText($text, $limit, $end = '...'): string
+    {
+        return \Illuminate\Support\Str::limit($text, $limit, $end);
+    }
+}
+
+if (!function_exists('db_connection')) {
+    function db_connection(?string $mode = null): string
+    {
+        $mode2 = $mode ?? env('DB_MODE', 'local');
+
+        return match ($mode2) {
+            'local' => 'mysql',
+            'testing' => 'mysql_testing',
+            'production' => 'mysql_production',
+            default => 'mysql',
+        };
+    }
+}

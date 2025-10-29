@@ -6,7 +6,7 @@
         <!-- Mobile Logo -->
         <div class="-ms-1 flex items-center gap-2.5 lg:hidden">
             <a class="shrink-0" href="#">
-                <img class="max-h-[25px] w-full" src="assets/media/app/mini-logo.svg" />
+                <img class="max-h-[25px] w-full" src="{{ asset('metronic/media/app/mini-logo.svg') }}" />
             </a>
             <div class="flex items-center">
                 <button class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-drawer-toggle="#sidebar">
@@ -20,13 +20,31 @@
             </div>
         </div>
         <!-- End of Mobile Logo -->
-        @include('partials.mega-menu')
+        {{-- @include('partials.mega-menu') --}}
+        <div></div>
         <!-- Topbar -->
         <div class="flex items-center gap-2.5">
+            @if (config('app.db_mode') == 'production')
+                <span class="inline-block bg-danger text-white text-red-600 font-medium px-3 py-0.5 rounded-[9px] ms-2">
+                    production
+                </span>
+            @elseif (config('app.db_mode') == 'testing')
+                <span
+                    class="inline-block bg-yellow-500 text-white text-red-600 font-medium px-3 py-0.5 rounded-[9px] ms-2">
+                    testing
+                </span>
+            @else
+                <span
+                    class="inline-block bg-yellow-500 text-white text-primary font-medium px-3 py-0.5 rounded-[9px] ms-2">
+                    local
+                </span>
+            @endif
+
             @include('partials.topbar-search-modal')
             @include('partials.topbar-notification-dropdown')
             @include('partials.topbar-chat')
             @include('partials.topbar-apps')
+
             @include('partials.topbar-user-dropdown')
         </div>
         <!-- End of Topbar -->
@@ -34,3 +52,5 @@
     <!-- End of Container -->
 </header>
 <!-- End of Header -->
+
+@include('partials.modals.search')

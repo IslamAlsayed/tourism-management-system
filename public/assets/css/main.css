@@ -1,0 +1,149 @@
+@media (width >=80rem) {
+    .kt-container-fixed {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
+.loading {
+    opacity: 0.7 !important;
+    user-select: none !important;
+    pointer-events: none !important;
+}
+
+.i-loader,
+.span-info {
+    opacity: 0 !important;
+    /* visibility: hidden !important; */
+    display: none !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+.i-loader.show,
+.span-info.show {
+    opacity: 1 !important;
+    /* visibility: visible !important; */
+    display: inline-block !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+.i-loader.show {
+    animation: spinLoader 0.5s infinite linear !important;
+}
+
+@keyframes spinLoader {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+.image-character {
+    /* width: 90px; */
+    /* height: 90px; */
+    color: white;
+    display: flex;
+    font-size: 40px;
+    border-radius: 100%;
+    align-items: center;
+    background-color: #0b55a8;
+    justify-content: center;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.customSelect:focus {
+    outline: none;
+}
+
+.customSelect {
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid var(--main-color-70);
+}
+
+#parentColumnsModal {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#parentColumnsModal i {
+    pointer-events: none;
+}
+
+#columnsModal {
+    width: 600px;
+    position: absolute;
+    top: 50px;
+    left: auto;
+    right: auto;
+    z-index: 1000;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-wrap: nowrap;
+
+    & input {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media (max-width: 1280px) {
+    #columnsModal {
+        width: 400px;
+    }
+}
+
+@media (max-width: 992px) {
+    #columnsModal {
+        width: 320px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    #columnsModal {
+        width: 200px;
+        padding: 15px;
+        border-radius: 7px;
+
+        &>div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        & input {
+            margin-inline-end: 5px;
+        }
+    }
+}
+
+@media (max-width: 425px) {
+    #columnsModal {
+        width: 270px;
+        padding: 10px;
+        border-radius: 3px;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%);
+
+        &>div {
+            gap: 3px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        & input {
+            width: 12px;
+            height: 12px;
+            border-radius: 1px;
+            margin-inline-end: 5px;
+        }
+    }
+}

@@ -1,0 +1,51 @@
+[toggle-input]:active {
+    transform: translateX(2px) scale(0.95);
+}
+
+.custom-toggle-input,
+.custom-sm-toggle-input {
+    width: 40px;
+    height: 20px;
+    border-radius: 25px;
+    background-color: #ccc;
+    position: relative;
+    cursor: pointer;
+}
+
+.custom-sm-toggle-input {
+    width: 30px;
+    height: 15px;
+}
+
+.custom-toggle-input .handle,
+.custom-sm-toggle-input .handle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    user-select: none;
+    pointer-events: none;
+    transition: left 0.25s;
+    transform: translateY(-50%);
+}
+
+.custom-sm-toggle-input .handle {
+    width: 11px;
+    height: 11px;
+}
+
+.custom-toggle-input.active,
+.custom-sm-toggle-input.active {
+    background-color: #155DFC;
+}
+
+.custom-toggle-input.active .handle {
+    left: 22px;
+}
+
+.custom-sm-toggle-input.active .handle {
+    left: 17px;
+}

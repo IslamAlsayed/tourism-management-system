@@ -1,1951 +1,279 @@
 <!-- Sidebar -->
-<div class="kt-sidebar fixed bottom-0 top-0 z-20 hidden shrink-0 flex-col items-stretch border-e border-e-border bg-background [--kt-drawer-enable:true] lg:flex lg:[--kt-drawer-enable:false]"
+{{-- <div class="kt-sidebar bg-background border-e border-e-border fixed z-20 hidden lg:flex flex-col items-stretch shrink-0 [--kt-drawer-enable:true] lg:[--kt-drawer-enable:false]" --}}
+
+<div class="kt-sidebar bg-background border-e border-e-border fixed top-0 bottom-0 z-20 hidden lg:flex flex-col items-stretch shrink-0 [--kt-drawer-enable:true] lg:[--kt-drawer-enable:false]"
     data-kt-drawer="true" data-kt-drawer-class="kt-drawer kt-drawer-start top-0 bottom-0" id="sidebar">
-    <div class="kt-sidebar-header relative hidden shrink-0 items-center justify-between px-3 lg:flex lg:px-6"
+    <!-- Sidebar Header -->
+    <div class="kt-sidebar-header hidden lg:flex text-center justify-center relative px-3 lg:px-4 shrink-0 py-2"
         id="sidebar_header">
-        <a class="dark:hidden" href="#">
-            <img class="default-logo min-h-[22px] max-w-none" src="assets/media/app/default-logo.svg" />
-            <img class="small-logo min-h-[22px] max-w-none" src="assets/media/app/mini-logo.svg" />
+        <a class="dark:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
+            <img class="default-logo h-[45px] w-auto max-w-none"
+                src="{{ $settings->app_light_photo ? asset('storage/' . $settings->app_light_photo) : asset('storage/logos/default-logo.svg') }}" />
+            <img class="small-logo h-[45px] w-auto max-w-none"
+                src="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('storage/logos/mini-logo.svg') }}" />
         </a>
-        <a class="hidden dark:block" href="#">
-            <img class="default-logo min-h-[22px] max-w-none" src="assets/media/app/default-logo-dark.svg" />
-            <img class="small-logo min-h-[22px] max-w-none" src="assets/media/app/mini-logo.svg" />
+        <a class="light:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
+            <img class="default-logo h-[45px] w-auto max-w-none"
+                src="{{ $settings->app_dark_photo ? asset('storage/' . $settings->app_dark_photo) : asset('storage/logos/default-logo.svg') }}" />
+            <img class="small-logo h-[45px] w-auto max-w-none"
+                src="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('storage/logos/mini-logo.svg') }}" />
         </a>
         <button
-            class="kt-btn kt-btn-outline kt-btn-icon absolute start-full top-2/4 size-[30px] -translate-x-2/4 -translate-y-2/4 rtl:translate-x-2/4"
+            class="kt-btn kt-btn-outline kt-btn-icon size-[30px] absolute start-full top-2/4 -translate-x-2/4 -translate-y-2/4 rtl:translate-x-2/4"
             data-kt-toggle="body" data-kt-toggle-class="kt-sidebar-collapse" id="sidebar_toggle">
             <i
-                class="ki-filled ki-black-left-line kt-toggle-active:rotate-180 rtl:translate rtl:kt-toggle-active:rotate-0 transition-all duration-300 rtl:rotate-180">
+                class="ki-filled ki-black-left-line kt-toggle-active:rotate-180 transition-all duration-300 rtl:translate rtl:rotate-180 rtl:kt-toggle-active:rotate-0">
             </i>
         </button>
     </div>
-    <div class="kt-sidebar-content flex shrink-0 grow py-5 pe-2" id="sidebar_content">
-        <div class="kt-scrollable-y-hover flex shrink-0 grow pe-1 ps-2 lg:pe-3 lg:ps-5" data-kt-scrollable="true"
+
+    <!-- Sidebar Content -->
+    <div class="kt-sidebar-content flex grow shrink-0 py-5 pe-2" id="sidebar_content">
+        <div class="kt-scrollable-y-hover grow shrink-0 flex ps-2 lg:ps-5 pe-1 lg:pe-3" data-kt-scrollable="true"
             data-kt-scrollable-dependencies="#sidebar_header" data-kt-scrollable-height="auto"
             data-kt-scrollable-offset="0px" data-kt-scrollable-wrappers="#sidebar_content" id="sidebar_scrollable">
-            <!-- Sidebar Menu -->
-            <div class="kt-menu flex grow flex-col gap-1" data-kt-menu="true" data-kt-menu-accordion-expand-all="false"
-                id="sidebar_menu">
-                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
-                    <div class="kt-menu-link flex grow cursor-pointer items-center gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-element-11 text-lg">
-                            </i>
-                        </span>
-                        <span
-                            class="kt-menu-title kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
-                            Dashboards
-                        </span>
-                        <span class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                            <span class="kt-menu-item-show:hidden inline-flex">
-                                <i class="ki-filled ki-plus text-[11px]">
-                                </i>
-                            </span>
-                            <span class="kt-menu-item-show:inline-flex hidden">
-                                <i class="ki-filled ki-minus text-[11px]">
-                                </i>
-                            </span>
-                        </span>
-                    </div>
-                    <div
-                        class="kt-menu-accordion relative gap-1 ps-[10px] before:absolute before:bottom-0 before:start-[20px] before:top-0 before:border-s before:border-border">
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Light Sidebar
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Dark Sidebar
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="kt-menu-item pt-2.25 pb-px">
-                    <span
-                        class="kt-menu-heading pe-[10px] ps-[10px] text-xs font-medium uppercase text-muted-foreground">
-                        User
-                    </span>
-                </div>
-                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
-                    <div class="kt-menu-link flex grow cursor-pointer items-center gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-profile-circle text-lg">
-                            </i>
-                        </span>
-                        <span
-                            class="kt-menu-title kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
-                            Public Profile
-                        </span>
-                        <span class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                            <span class="kt-menu-item-show:hidden inline-flex">
-                                <i class="ki-filled ki-plus text-[11px]">
-                                </i>
-                            </span>
-                            <span class="kt-menu-item-show:inline-flex hidden">
-                                <i class="ki-filled ki-minus text-[11px]">
-                                </i>
-                            </span>
-                        </span>
-                    </div>
-                    <div
-                        class="kt-menu-accordion relative gap-1 ps-[10px] before:absolute before:bottom-0 before:start-[20px] before:top-0 before:border-s before:border-border">
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    Profiles
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
+
+            <!-- Dynamic Sidebar Menu -->
+            <div class="kt-menu flex flex-col grow gap-1" data-kt-menu="true" id="sidebar_menu">
+                @php
+                    $menuItems = config('sidebar.menu');
+                    $currentRoute = Route::currentRouteName();
+                    $currentParameters = request()->route()->parameters();
+                @endphp
+
+                @foreach ($menuItems as $item)
+                    @php
+                        $hasChildren = isset($item['children']);
+                        $isActive = isset($item['route'])
+                            ? isActive($item['route'], $item['parameters'] ?? [], $currentRoute, $currentParameters)
+                            : false;
+                        $hasActiveChild = $hasChildren
+                            ? hasActiveChild($item['children'], $currentRoute, $currentParameters)
+                            : false;
+                    @endphp
+
+                    @if ($hasChildren)
+                        <!-- Menu with Children -->
+                        <div class="kt-menu-item {{ $hasActiveChild ? 'show' : '' }}"
+                            data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                             <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Default
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Creator
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Company
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            NFT
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Blogger
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            CRM
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item flex-col-reverse" data-kt-menu-item-toggle="accordion"
-                                    data-kt-menu-item-trigger="click">
-                                    <div class="kt-menu-link grow cursor-pointer gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                        tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span class="kt-menu-title text-2sm font-normal text-secondary-foreground">
-                                            <span class="kt-menu-item-show:!flex hidden">
-                                                Show less
-                                            </span>
-                                            <span class="kt-menu-item-show:hidden flex">
-                                                Show 4 more
-                                            </span>
-                                        </span>
-                                        <span
-                                            class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                            <span class="kt-menu-item-show:hidden inline-flex">
-                                                <i class="ki-filled ki-plus text-[11px]">
-                                                </i>
-                                            </span>
-                                            <span class="kt-menu-item-show:inline-flex hidden">
-                                                <i class="ki-filled ki-minus text-[11px]">
-                                                </i>
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="kt-menu-accordion gap-1">
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Gamer
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Feeds
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Plain
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Modal
-                                                </span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
+                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $hasActiveChild ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg">
+                                <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
+                                    <i
+                                        class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} text-lg {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
+                                </span>
+
                                 <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
+                                    class="kt-menu-title text-sm font-medium text-foreground {{ $hasActiveChild ? 'text-primary font-semibold' : '' }}">
+                                    {{ __('sidebar.' . $item['title']) }}
+                                    @if (isset($item['status']) && config('app.db_mode') != 'production')
+                                        <span
+                                            class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            {{ __('sidebar.' . $item['status']) }}
+                                        </span>
+                                    @endif
+
+                                    @if (isset($item['fixed']) && config('app.db_mode') != 'production')
+                                        <span
+                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            @if (gettype($item['fixed']) == 'boolean')
+                                                <i class="fas fa-xmark"></i>
+                                            @else
+                                                {{ $item['fixed'] }}
+                                            @endif
+                                        </span>
+                                    @endif
                                 </span>
                                 <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    Projects
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
+                                    class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $hasActiveChild ? 'text-primary' : '' }}">
+                                    <span class="inline-flex kt-menu-item-show:hidden">
+                                        <i class="ki-filled ki-plus text-[11px]"></i>
                                     </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
+                                    <span class="hidden kt-menu-item-show:inline-flex">
+                                        <i class="ki-filled ki-minus text-[11px]"></i>
                                     </span>
                                 </span>
                             </div>
+
+                            <!-- Children -->
                             <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            3 Columns
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            2 Columns
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Works
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Teams
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Network
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Activity
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item flex-col-reverse" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span class="kt-menu-title text-2sm font-normal text-secondary-foreground">
-                                    <span class="kt-menu-item-show:!flex hidden">
-                                        Show less
-                                    </span>
-                                    <span class="kt-menu-item-show:hidden flex">
-                                        Show 3 more
-                                    </span>
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="kt-menu-accordion gap-1">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Campaigns - Card
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Campaigns - List
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Empty
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
-                    <div class="kt-menu-link flex grow cursor-pointer items-center gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-setting-2 text-lg">
-                            </i>
-                        </span>
-                        <span
-                            class="kt-menu-title kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
-                            My Account
-                        </span>
-                        <span
-                            class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                            <span class="kt-menu-item-show:hidden inline-flex">
-                                <i class="ki-filled ki-plus text-[11px]">
-                                </i>
-                            </span>
-                            <span class="kt-menu-item-show:inline-flex hidden">
-                                <i class="ki-filled ki-minus text-[11px]">
-                                </i>
-                            </span>
-                        </span>
-                    </div>
-                    <div
-                        class="kt-menu-accordion relative gap-1 ps-[10px] before:absolute before:bottom-0 before:start-[20px] before:top-0 before:border-s before:border-border">
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    Account Home
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Get Started
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            User Profile
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Company Profile
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Settings - With Sidebar
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Settings - Enterprise
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Settings - Plain
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Settings - Modal
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    Billing
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Billing - Basic
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Billing - Enterprise
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Plans
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Billing History
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    Security
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Get Started
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Security Overview
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Allowed IP Addresses
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Privacy Settings
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Device Management
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Backup & Recovery
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Current Sessions
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Security Log
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    Members & Roles
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Teams Starter
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Teams
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Team Info
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Members Starter
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Team Members
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Import Members
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Roles
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Permissions - Toggler
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Permissions - Check
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Integrations
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Notifications
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    API Keys
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item flex-col-reverse" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span class="kt-menu-title text-2sm font-normal text-secondary-foreground">
-                                    <span class="kt-menu-item-show:!flex hidden">
-                                        Show less
-                                    </span>
-                                    <span class="kt-menu-item-show:hidden flex">
-                                        Show 3 more
-                                    </span>
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="kt-menu-accordion gap-1">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Appearance
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Invite a Friend
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Activity
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
-                    <div class="kt-menu-link flex grow cursor-pointer items-center gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-users text-lg">
-                            </i>
-                        </span>
-                        <span
-                            class="kt-menu-title kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
-                            Network
-                        </span>
-                        <span
-                            class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                            <span class="kt-menu-item-show:hidden inline-flex">
-                                <i class="ki-filled ki-plus text-[11px]">
-                                </i>
-                            </span>
-                            <span class="kt-menu-item-show:inline-flex hidden">
-                                <i class="ki-filled ki-minus text-[11px]">
-                                </i>
-                            </span>
-                        </span>
-                    </div>
-                    <div
-                        class="kt-menu-accordion relative gap-1 ps-[10px] before:absolute before:bottom-0 before:start-[20px] before:top-0 before:border-s before:border-border">
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Get Started
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    User Cards
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Mini Cards
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Team Crew
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Author
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            NFT
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Social
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    User Table
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Team Crew
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            App Roster
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Market Authors
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            SaaS Users
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Store Clients
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Visitors
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item">
-                            <div class="kt-menu-label grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span class="kt-menu-title text-2sm font-normal text-foreground">
-                                    Cooperations
-                                </span>
-                                <span class="kt-menu-badge me-[-10px]">
-                                    <span class="kt-badge kt-badge-sm text-accent-foreground/60">
-                                        Soon
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item">
-                            <div class="kt-menu-label grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span class="kt-menu-title text-2sm font-normal text-foreground">
-                                    Leads
-                                </span>
-                                <span class="kt-menu-badge me-[-10px]">
-                                    <span class="kt-badge kt-badge-sm text-accent-foreground/60">
-                                        Soon
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item">
-                            <div class="kt-menu-label grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span class="kt-menu-title text-2sm font-normal text-foreground">
-                                    Donators
-                                </span>
-                                <span class="kt-menu-badge me-[-10px]">
-                                    <span class="kt-badge kt-badge-sm text-accent-foreground/60">
-                                        Soon
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
-                    <div class="kt-menu-link flex grow cursor-pointer items-center gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-security-user text-lg">
-                            </i>
-                        </span>
-                        <span
-                            class="kt-menu-title kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
-                            Authentication
-                        </span>
-                        <span
-                            class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                            <span class="kt-menu-item-show:hidden inline-flex">
-                                <i class="ki-filled ki-plus text-[11px]">
-                                </i>
-                            </span>
-                            <span class="kt-menu-item-show:inline-flex hidden">
-                                <i class="ki-filled ki-minus text-[11px]">
-                                </i>
-                            </span>
-                        </span>
-                    </div>
-                    <div
-                        class="kt-menu-accordion relative gap-1 ps-[10px] before:absolute before:bottom-0 before:start-[20px] before:top-0 before:border-s before:border-border">
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    Classic
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Sign In
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Sign Up
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            2FA
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Check Email
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                                    data-kt-menu-item-trigger="click">
-                                    <div class="kt-menu-link grow cursor-pointer gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                        tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                            Reset Password
-                                        </span>
-                                        <span
-                                            class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                            <span class="kt-menu-item-show:hidden inline-flex">
-                                                <i class="ki-filled ki-plus text-[11px]">
-                                                </i>
-                                            </span>
-                                            <span class="kt-menu-item-show:inline-flex hidden">
-                                                <i class="ki-filled ki-minus text-[11px]">
-                                                </i>
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div
-                                        class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
+                                class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border {{ $hasActiveChild ? 'show' : '' }}">
+                                @foreach ($item['children'] as $child)
+                                    @php
+                                        $childHasChildren = isset($child['children']);
+                                        $childIsActive = isActive(
+                                            $child['route'] ?? null,
+                                            $child['parameters'] ?? [],
+                                            $currentRoute,
+                                            $currentParameters,
+                                        );
+                                        $childHasActiveChild = $childHasChildren
+                                            ? hasActiveChild($child['children'], $currentRoute, $currentParameters)
+                                            : false;
+                                    @endphp
+
+                                    @if ($childHasChildren)
+                                        <!-- Nested submenu -->
+                                        <div class="kt-menu-item {{ $childHasActiveChild ? 'kt-menu-item-show show' : '' }}"
+                                            data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                            <div
+                                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $childHasActiveChild ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg">
+                                                @if (isset($child['icon']))
+                                                    <span
+                                                        class="kt-menu-icon items-start text-muted-foreground w-[20px]">
+                                                        <i
+                                                            class="{{ $child['icon'] }} {{ $childHasActiveChild ? 'text-primary' : '' }}"></i>
+                                                    </span>
+                                                @endif
+
                                                 <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
+                                                    class="kt-menu-title text-sm font-medium text-foreground {{ $childHasActiveChild ? 'text-primary font-semibold' : '' }}">
+                                                    {{ __('sidebar.' . $child['title']) }}
+                                                    @if (isset($child['status']) && config('app.db_mode') != 'production')
+                                                        <span
+                                                            class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            {{ __('sidebar.' . $child['status']) }}
+                                                        </span>
+                                                    @endif
+
+                                                    @if (isset($child['fixed']) && config('app.db_mode') != 'production')
+                                                        <span
+                                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            @if (gettype($child['fixed']) == 'boolean')
+                                                                <i class="fas fa-xmark"></i>
+                                                            @else
+                                                                {{ $child['fixed'] }}
+                                                            @endif
+                                                        </span>
+                                                    @endif
                                                 </span>
                                                 <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Enter Email
+                                                    class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $childHasActiveChild ? 'text-primary' : '' }}">
+                                                    <span class="inline-flex kt-menu-item-show:hidden">
+                                                        <i class="ki-filled ki-plus text-[11px]"></i>
+                                                    </span>
+                                                    <span class="hidden kt-menu-item-show:inline-flex">
+                                                        <i class="ki-filled ki-minus text-[11px]"></i>
+                                                    </span>
+                                                </span>
+                                            </div>
+
+                                            <!-- SubChildren -->
+                                            <div
+                                                class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border">
+                                                @foreach ($child['children'] as $subChild)
+                                                    @php $subChildIsActive = isActive($subChild['route'] ?? null, $subChild['parameters'] ?? [], $currentRoute, $currentParameters); @endphp
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
+                                                            href="{{ isset($subChild['route']) && $subChild['route'] !== '#' ? route($subChild['route'], isset($subChild['parameters']) ? $subChild['parameters'] : []) : 'javascript:void(0)' }}"
+                                                            {{ ($subChild['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
+                                                            <span
+                                                                class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $subChildIsActive ? 'before:bg-primary' : '' }}">
+                                                            </span>
+
+                                                            <span
+                                                                class="kt-menu-title text-2sm font-normal {{ $subChildIsActive ? 'text-primary font-semibold' : '' }}">
+                                                                {{ __('sidebar.' . $subChild['title']) }}
+
+                                                                @if (isset($subChild['status']) && config('app.db_mode') != 'production')
+                                                                    <span
+                                                                        class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                                        {{ __('sidebar.' . $subChild['status']) }}
+                                                                    </span>
+                                                                @endif
+
+                                                                @if (isset($subChild['fixed']) && config('app.db_mode') != 'production')
+                                                                    <span
+                                                                        class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                                        @if (gettype($subChild['fixed']) == 'boolean')
+                                                                            <i class="fas fa-xmark"></i>
+                                                                        @else
+                                                                            {{ $subChild['fixed'] }}
+                                                                        @endif
+                                                                    </span>
+                                                                @endif
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @else
+                                        <!-- Simple child -->
+                                        <div class="kt-menu-item">
+                                            <a class="kt-menu-link border border-transparent items-center grow {{ $childIsActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
+                                                href="{{ isset($child['route']) && $child['route'] !== '#' ? route($child['route'], isset($child['parameters']) ? $child['parameters'] : []) : 'javascript:void(0)' }}"
+                                                {{ ($child['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
+                                                <span
+                                                    class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $childIsActive ? 'before:bg-primary' : '' }}">
+                                                </span>
+
+                                                <span
+                                                    class="kt-menu-title text-2sm font-normal {{ $childIsActive ? 'text-primary font-semibold' : '' }}">
+                                                    {{ __('sidebar.' . $child['title']) }}
+
+                                                    @if (isset($child['status']) && config('app.db_mode') != 'production')
+                                                        <span
+                                                            class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            {{ __('sidebar.' . $child['status']) }}
+                                                        </span>
+                                                    @endif
+
+                                                    @if (isset($child['fixed']) && config('app.db_mode') != 'production')
+                                                        <span
+                                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            @if (gettype($child['fixed']) == 'boolean')
+                                                                <i class="fas fa-xmark"></i>
+                                                            @else
+                                                                {{ $child['fixed'] }}
+                                                            @endif
+                                                        </span>
+                                                    @endif
                                                 </span>
                                             </a>
                                         </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Check Email
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Change Password
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Password is Changed
-                                                </span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    Branded
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Sign In
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Sign Up
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            2FA
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Check Email
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                                    data-kt-menu-item-trigger="click">
-                                    <div class="kt-menu-link grow cursor-pointer gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                        tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                            Reset Password
-                                        </span>
-                                        <span
-                                            class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                            <span class="kt-menu-item-show:hidden inline-flex">
-                                                <i class="ki-filled ki-plus text-[11px]">
-                                                </i>
-                                            </span>
-                                            <span class="kt-menu-item-show:inline-flex hidden">
-                                                <i class="ki-filled ki-minus text-[11px]">
-                                                </i>
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div
-                                        class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Enter Email
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Check Email
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Change Password
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="kt-menu-item">
-                                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                                href="#" tabindex="0">
-                                                <span
-                                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                                </span>
-                                                <span
-                                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                                    Password is Changed
-                                                </span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    @else
+                        <!-- Simple Menu Item -->
                         <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
+                            <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $isActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg"
+                                href="{{ isset($item['route']) && $item['route'] !== '#' ? route($item['route'], isset($item['parameters']) ? $item['parameters'] : []) : 'javascript:void(0)' }}"
+                                {{ ($item['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
+                                <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
+                                    <i
+                                        class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} {{ $isActive ? 'text-primary' : '' }}"></i>
                                 </span>
+
                                 <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Welcome Message
+                                    class="kt-menu-title text-sm font-medium {{ $isActive ? 'text-primary font-semibold' : '' }}">
+                                    {{ __('sidebar.' . $item['title']) }}
+
+                                    @if (isset($item['status']) && config('app.db_mode') != 'production')
+                                        <span
+                                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            {{ __('sidebar.' . $item['status']) }}
+                                        </span>
+                                    @endif
+
+                                    @if (isset($item['fixed']) && config('app.db_mode') != 'production')
+                                        <span
+                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            @if (gettype($item['fixed']) == 'boolean')
+                                                <i class="fas fa-xmark"></i>
+                                            @else
+                                                {{ $item['fixed'] }}
+                                            @endif
+                                        </span>
+                                    @endif
                                 </span>
                             </a>
                         </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Account Deactivated
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Error 404
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Error 500
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="kt-menu-item pt-2.25 pb-px">
-                    <span
-                        class="kt-menu-heading pe-[10px] ps-[10px] text-xs font-medium uppercase text-muted-foreground">
-                        Apps
-                    </span>
-                </div>
-                <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
-                    <div class="kt-menu-link flex grow cursor-pointer items-center gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-users text-lg">
-                            </i>
-                        </span>
-                        <span
-                            class="kt-menu-title kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary text-sm font-medium text-foreground">
-                            Store - Client
-                        </span>
-                        <span
-                            class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                            <span class="kt-menu-item-show:hidden inline-flex">
-                                <i class="ki-filled ki-plus text-[11px]">
-                                </i>
-                            </span>
-                            <span class="kt-menu-item-show:inline-flex hidden">
-                                <i class="ki-filled ki-minus text-[11px]">
-                                </i>
-                            </span>
-                        </span>
-                    </div>
-                    <div
-                        class="kt-menu-accordion relative gap-1 ps-[10px] before:absolute before:bottom-0 before:start-[20px] before:top-0 before:border-s before:border-border">
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Home
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Search Results - Grid
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Search Results - List
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Product Details
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Shopping Cart
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Wishlist
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item" data-kt-menu-item-toggle="accordion"
-                            data-kt-menu-item-trigger="click">
-                            <div class="kt-menu-link grow cursor-pointer gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px]"
-                                tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-medium kt-menu-link-hover:!text-primary me-1 font-normal text-foreground">
-                                    Checkout
-                                </span>
-                                <span
-                                    class="kt-menu-arrow me-[-10px] ms-1 w-[20px] shrink-0 justify-end text-muted-foreground">
-                                    <span class="kt-menu-item-show:hidden inline-flex">
-                                        <i class="ki-filled ki-plus text-[11px]">
-                                        </i>
-                                    </span>
-                                    <span class="kt-menu-item-show:inline-flex hidden">
-                                        <i class="ki-filled ki-minus text-[11px]">
-                                        </i>
-                                    </span>
-                                </span>
-                            </div>
-                            <div
-                                class="kt-menu-accordion relative gap-1 ps-[22px] before:absolute before:bottom-0 before:start-[32px] before:top-0 before:border-s before:border-border">
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Order Summary
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Shipping Info
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Payment Method
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="kt-menu-item">
-                                    <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[5px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                        href="#" tabindex="0">
-                                        <span
-                                            class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                        </span>
-                                        <span
-                                            class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                            Order Placed
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    My Orders
-                                </span>
-                            </a>
-                        </div>
-                        <div class="kt-menu-item">
-                            <a class="kt-menu-link kt-menu-item-active:bg-accent/60 dark:menu-item-active:border-border kt-menu-item-active:rounded-lg hover:bg-accent/60 grow items-center gap-[14px] border border-transparent py-[8px] pe-[10px] ps-[10px] hover:rounded-lg"
-                                href="#" tabindex="0">
-                                <span
-                                    class="kt-menu-bullet kt-menu-item-active:before:bg-primary kt-menu-item-hover:before:bg-primary relative -start-[3px] flex w-[6px] before:absolute before:top-0 before:size-[6px] before:-translate-y-1/2 before:rounded-full rtl:start-0 rtl:before:translate-x-1/2">
-                                </span>
-                                <span
-                                    class="kt-menu-title text-2sm kt-menu-item-active:text-primary kt-menu-item-active:font-semibold kt-menu-link-hover:!text-primary font-normal text-foreground">
-                                    Order Receipt
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="kt-menu-item">
-                    <div class="kt-menu-label gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        href="" tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-setting text-lg">
-                            </i>
-                        </span>
-                        <span class="kt-menu-title text-sm font-medium text-foreground">
-                            Store - Admin
-                        </span>
-                        <span class="kt-menu-badge me-[-10px]">
-                            <span class="kt-badge kt-badge-sm text-accent-foreground/60">
-                                Soon
-                            </span>
-                        </span>
-                    </div>
-                </div>
-                <div class="kt-menu-item">
-                    <div class="kt-menu-label gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        href="" tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-python text-lg">
-                            </i>
-                        </span>
-                        <span class="kt-menu-title text-sm font-medium text-foreground">
-                            Store - Services
-                        </span>
-                        <span class="kt-menu-badge me-[-10px]">
-                            <span class="kt-badge kt-badge-sm text-accent-foreground/60">
-                                Soon
-                            </span>
-                        </span>
-                    </div>
-                </div>
-                <div class="kt-menu-item">
-                    <div class="kt-menu-label gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        href="" tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-artificial-intelligence text-lg">
-                            </i>
-                        </span>
-                        <span class="kt-menu-title text-sm font-medium text-foreground">
-                            AI Promt
-                        </span>
-                        <span class="kt-menu-badge me-[-10px]">
-                            <span class="kt-badge kt-badge-sm text-accent-foreground/60">
-                                Soon
-                            </span>
-                        </span>
-                    </div>
-                </div>
-                <div class="kt-menu-item">
-                    <div class="kt-menu-label gap-[10px] border border-transparent py-[6px] pe-[10px] ps-[10px]"
-                        href="" tabindex="0">
-                        <span class="kt-menu-icon w-[20px] items-start text-muted-foreground">
-                            <i class="ki-filled ki-cheque text-lg">
-                            </i>
-                        </span>
-                        <span class="kt-menu-title text-sm font-medium text-foreground">
-                            Invoice Generator
-                        </span>
-                        <span class="kt-menu-badge me-[-10px]">
-                            <span class="kt-badge kt-badge-sm text-accent-foreground/60">
-                                Soon
-                            </span>
-                        </span>
-                    </div>
-                </div>
+                    @endif
+                @endforeach
             </div>
-            <!-- End of Sidebar Menu -->
         </div>
     </div>
 </div>
-<!-- End of Sidebar -->

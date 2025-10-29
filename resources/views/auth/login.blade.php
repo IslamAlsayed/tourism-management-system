@@ -16,7 +16,7 @@
 
 @push('scripts')
     <!-- Google tag (gtag.js) -->
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-52YZ3XGZJ6"></script>
+    {{-- <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-52YZ3XGZJ6"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -26,7 +26,7 @@
         gtag('js', new Date());
 
         gtag('config', 'G-52YZ3XGZJ6');
-    </script>
+    </script> --}}
 
     <!-- Theme Mode -->
     {{-- <script>
@@ -52,8 +52,8 @@
             }
 
             document.documentElement.classList.add(themeMode);
-        }
-    </script> --}}
+        } --}}
+    </script>
     <!-- End of Theme Mode -->
 @endpush
 
@@ -61,7 +61,7 @@
     <!--begin::Authentication - Sign-in -->
     <div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg" style="height: 100svh">
         <div class="kt-card max-w-[370px] w-full">
-            <form action="{{ route('login') }}" class="kt-card-content flex flex-col gap-5 p-10" id="kt_sign_in_form"
+            <form action="{{ route('login') }}" class="kt-card-content flex flex-col gap-5 p-6" id="kt_sign_in_form"
                 method="post">
                 @csrf
                 <div class="text-center mb-2.5">
@@ -104,7 +104,8 @@
                     <label class="kt-form-label font-normal text-mono">
                         Email
                     </label>
-                    <input class="kt-input" placeholder="email@email.com" type="email" name="email" />
+                    <input class="kt-input h-[45px]" placeholder="email@email.com" type="email" name="email"
+                        value="admin@example.com" />
                 </div>
                 <div class="flex flex-col gap-1">
                     <div class="flex items-center justify-between gap-1">
@@ -115,8 +116,8 @@
                             Forgot Password?
                         </a>
                     </div>
-                    <div class="kt-input" data-kt-toggle-password="true">
-                        <input name="password" placeholder="Enter Password" type="password" />
+                    <div class="kt-input h-[45px]" data-kt-toggle-password="true">
+                        <input name="password" placeholder="Enter Password" type="password" value="12345678" />
                         <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                             data-kt-toggle-password-trigger="true" type="button">
                             <span class="kt-toggle-password-active:hidden">

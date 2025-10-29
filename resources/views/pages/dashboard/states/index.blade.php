@@ -1,0 +1,21 @@
+@extends('pages.dashboard.layouts.index')
+
+@section('table-content')
+    <!-- Container -->
+    @include('includes.table-breadcrumb', [
+        'title' => __('main.states'),
+        'description' => __('main.manage_system_types', ['types' => __('main.states')]),
+        'import_url' => route('import.data', ['models' => 'states']),
+        'page_add_url' => route('states.create'),
+        'page_add_title' => __('main.add_new_type', ['type' => __('main.state')]),
+    ])
+    <!-- End of Container -->
+
+    <!-- Container -->
+    <div class="grid gap-4 lg:gap-6">
+        <div class="kt-card kt-card-grid min-w-full">
+            <livewire:states />
+        </div>
+    </div>
+    <!-- End of Container -->
+@endsection

@@ -14,6 +14,23 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'paginate_array' => [5, 10, 25, 50, 100, 500],
+    'paginate_count' => (int) env('PAGINATE_COUNT', 25),
+    'excel_export_format' => env('EXCEL_EXPORT_FORMAT', 'xlsx'),
+
+    'db_mode' => env('DB_MODE', 'local'),
+    'app_name' => env('APP_NAME', 'laravel'),
+    'app_url' => env('APP_URL', 'http://localhost'),
+    'app_timezone' => env('APP_TIMEZONE', 'Africa/Cairo'),
+    'app_language' => env('APP_LANGUAGE', 'en'),
+    'app_version' => env('APP_VERSION', '4.5.0'),
+    'app_php_version' => env('APP_PHP_VERSION', '8.2.28'),
+    'app_columns_length' => env('APP_COLUMNS_LENGTH', 5),
+    'app_status' => env('APP_STATUS', true),
+    'app_password_length' => env('APP_PASSWORD_LENGTH', 8),
+    'app_session_lifetime' => env('SESSION_LIFETIME', 120),
+    'app_password_confirmation' => env('APP_PASSWORD_CONFIRMATION', true),
+    'app_backup_frequency' => env('APP_BACKUP_FREQUENCY', 'weekly'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +82,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'Africa/Cairo'),
 
     /*
     |--------------------------------------------------------------------------

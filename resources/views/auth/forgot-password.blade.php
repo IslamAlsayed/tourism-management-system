@@ -76,7 +76,7 @@
                     <label class="kt-form-label font-normal text-mono">
                         Email
                     </label>
-                    <input class="kt-input" placeholder="email@email.com" type="text" name="email" value="" />
+                    <input class="kt-input h-[45px]" type="text" name="email" value="" />
                 </div>
                 <button class="kt-btn kt-btn-primary flex justify-center grow">
                     Continue

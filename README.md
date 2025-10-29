@@ -1,63 +1,78 @@
-# Metronic Tailwind HTML Laravel Integration
+# MixJo2025 - Tourism Management System
 
-This project integrates Metronic Tailwind HTML themes into a Laravel application, providing 10 complete demo layouts showcasing different UI patterns and design approaches.
+A comprehensive tourism and travel management system built with Laravel, featuring advanced import/export capabilities, multilingual support, and modern dashboard interface powered by Metronic design system.
 
 ## Project Overview
 
-**Goal**: Convert Metronic Tailwind HTML demo layouts (Demo1 through Demo10) into standard Laravel Blade views, providing a comprehensive showcase of Metronic's design system within Laravel's MVC architecture.
+**MixJo2025** is a full-featured tourism management platform designed to handle complex travel operations including accommodations, restaurants, countries, cities, currencies, and user management. The system provides robust data import/export functionality, multi-language support (English/Arabic), and an intuitive admin dashboard.
 
 ## Tech Stack
 
-- **Laravel**: 12.x (Latest)
+- **Laravel**: 11.x (Latest)
 - **PHP**: 8.2+
+- **MySQL**: 8.0+
+- **Livewire**: 3.x for dynamic components
 - **Tailwind CSS**: 3.x
+- **Alpine.js**: 3.x for client-side interactions
+- **Metronic**: Design system and UI components
+- **Laravel Excel**: For import/export functionality
 - **Vite**: 5.x for asset building
 - **Node.js**: Latest LTS version
 
 ## Project Structure
 
 ```
-app/Http/Controllers/
-├── Demo1Controller.php
-├── Demo2Controller.php
-├── ...
-└── Demo10Controller.php
+app/
+├── Excels/                         # Import/Export Classes
+│   ├── Users/
+│   ├── Countries/
+│   ├── Cities/
+│   ├── Currencies/
+│   ├── Accommodations/
+│   └── Restaurants/
+├── Http/Controllers/Dashboard/     # Dashboard Controllers  
+│   ├── UserController.php
+│   ├── CountryController.php
+│   ├── AccommodationController.php
+│   └── ...
+├── Livewire/                      # Dynamic Components
+│   ├── Users/
+│   ├── Restaurants/
+│   ├── Accommodations/
+│   └── ...
+├── Models/                        # Eloquent Models
+├── Traits/                        # Reusable Traits
+│   └── CustomPagination.php
+└── Jobs/                          # Background Jobs
 
 resources/views/
 ├── layouts/
-│   ├── partials/
-│   │   ├── head.blade.php
-│   │   └── scripts.blade.php
-│   ├── demo1/
-│   │   ├── base.blade.php
-│   │   └── partials/
-│   ├── demo2/
-│   │   ├── base.blade.php
-│   │   └── partials/
-│   └── ... (demo3-demo10)
-├── pages/
-│   ├── demo1/
-│   │   └── index.blade.php
-│   ├── demo2/
-│   │   └── index.blade.php
-│   └── ... (demo3-demo10)
-└── components/
-    ├── demo1/
-    ├── demo2/
-    ├── ... (demo3-demo10)
-    └── shared/
+│   ├── master.blade.php
+│   ├── sidebar.blade.php
+│   └── partials/
+├── pages/dashboard/               # Dashboard Pages
+│   ├── users/
+│   ├── countries/
+│   ├── accommodations/
+│   └── ...
+├── components/                    # Shared Components
+│   ├── import-form.blade.php
+│   ├── advanced-import-form.blade.php
+│   └── import-examples.blade.php
+└── livewire/                     # Livewire Components
 
-public/assets/
-├── css/
-│   └── styles.css
-├── js/
-│   ├── core.bundle.js
-│   └── layouts/
-│       ├── demo1.js
-│       ├── demo2.js
-│       └── ... (demo3-demo10.js)
-├── media/
-└── vendors/
+lang/                             # Multilingual Support
+├── en/
+│   ├── main.php
+│   └── sidebar.php
+└── ar/
+    ├── main.php
+    └── sidebar.php
+
+config/
+├── app.php                       # App Configuration
+├── excel_models.php              # Excel Models Config
+└── sidebar.php                   # Sidebar Configuration
 ```
 
 ## Demo Layouts
@@ -77,38 +92,40 @@ This integration includes 10 complete demo layouts, each showcasing different UI
 
 ## Features
 
-### ✅ Core Implementation
+### Core Tourism Management Features
+- **User Management**: Complete CRUD operations with role-based permissions
+- **Accommodation Management**: Hotels, resorts, and lodging facilities management
+- **Restaurant Management**: Food service provider management and categorization
+- **Country & City Management**: Geographic location management for destinations
+- **Currency Management**: Multi-currency support for international operations
+- **Transportation Management**: Vehicle and transport service management
 
-1. **Laravel MVC Architecture**
-   - Dedicated controllers for each demo (Demo1Controller - Demo10Controller)
-   - Clean routing structure with named routes
-   - Blade template inheritance and components
+### Advanced Import/Export System
+- **Shared Import Components**: Reusable import forms across all modules
+- **Excel Integration**: Seamless data import/export with Laravel Excel
+- **Advanced Import Form**: Feature-rich import interface with validation
+- **Import Examples**: User-friendly sample data templates
+- **Real-time Validation**: Instant feedback during import operations
 
-2. **Asset Management**
-   - Metronic CSS and JavaScript assets properly integrated
-   - Laravel asset helpers for proper path resolution
-   - Vite integration for development workflow
+### Dynamic User Interface
+- **Livewire Components**: Real-time, interactive table management
+- **Custom Pagination**: Advanced pagination with session persistence
+- **Multilingual Support**: Full Arabic/English localization
+- **Responsive Design**: Mobile-first approach with Metronic theme
+- **Dynamic Sidebar**: Configurable navigation with drag-and-drop support
 
-3. **Template System**
-   - Blade layouts for each demo with proper inheritance
-   - Reusable partials for headers, sidebars, and footers
-   - Component-based architecture for UI elements
-
-4. **Responsive Design**
-   - Mobile-first responsive layouts
-   - Touch-friendly navigation
-   - Adaptive components across all screen sizes
-
-### 🎨 Design System
-
-- **Metronic Tailwind CSS** - Complete design system integration
-- **Theme Support** - Light and dark mode switching
+### System Administration
+- **Role-based Access Control**: Comprehensive permission management
+- **Excel Model Configuration**: Flexible import/export model mapping
+- **Language Management**: Easy translation key management
+- **Session Management**: Persistent user preferences and pagination states
 - **Custom Components** - Metronic-specific UI components
 - **Icon System** - Comprehensive icon library integration
 
 ## Getting Started
 
 ### Prerequisites
+
 - PHP 8.2 or higher
 - Composer
 - Node.js (LTS version)
@@ -117,34 +134,60 @@ This integration includes 10 complete demo layouts, each showcasing different UI
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
-git clone https://github.com/keenthemes/metronic-tailwind-html-integration.git
-cd metronic-tailwind-html-integration/metronic-tailwind-laravel
+git clone <repository-url>
+cd MixJo2025
 ```
 
 2. **Install PHP dependencies**
+
 ```bash
 composer install
 ```
 
 3. **Install Node.js dependencies**
+
 ```bash
 npm install
 ```
 
-4. **Copy Metronic assets**
+4. **Database setup**
+
 ```bash
-# Copy assets from metronic-tailwind-html/dist/assets to public/assets/
-cp -r ../metronic-tailwind-html/dist/assets public/
+# Create database
+mysql -u root -p -e "CREATE DATABASE mixjo2025"
+
+# Run migrations and seeders
+php artisan migrate
+php artisan db:seed
 ```
 
 5. **Environment setup**
+
 ```bash
 cp .env.example .env
 php artisan key:generate
+
+# Configure database settings in .env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mixjo2025
+DB_USERNAME=root
+DB_PASSWORD=your_password
 ```
 
-6. **Start development servers**
+6. **Storage and permissions**
+
+```bash
+php artisan storage:link
+chmod -R 775 storage
+chmod -R 775 bootstrap/cache
+```
+
+7. **Start development servers**
+
 ```bash
 # Terminal 1: Laravel server
 php artisan serve
@@ -154,67 +197,126 @@ npm run dev
 ```
 
 ### Available Routes
-- **Demo 1**: `/demo1` - Sidebar Layout
-- **Demo 2**: `/demo2` - Header Layout
-- **Demo 3**: `/demo3` - Minimal Layout
-- **Demo 4**: `/demo4` - Creative Layout
-- **Demo 5**: `/demo5` - Modern Layout
-- **Demo 6**: `/demo6` - Professional Layout
-- **Demo 7**: `/demo7` - Corporate Layout
-- **Demo 8**: `/demo8` - Executive Layout
-- **Demo 9**: `/demo9` - Premium Layout
-- **Demo 10**: `/demo10` - Ultimate Layout
 
-## Production Deployment
+#### Dashboard Routes
+- **Dashboard**: `/dashboard` - Main dashboard overview
+- **Users**: `/dashboard/users` - User management (create, edit, list, import/export)
+- **Countries**: `/dashboard/countries` - Country management with cities
+- **Accommodations**: `/dashboard/accommodations` - Hotel and lodging management
+- **Restaurants**: `/dashboard/restaurants` - Restaurant management
+- **Currencies**: `/dashboard/currencies` - Currency management
+- **Transportation**: `/dashboard/transportation` - Transport service management
 
-### Build for Production
-```bash
-# Build optimized assets
-npm run build
+#### Import/Export Routes
+- **User Import**: `/dashboard/users/import` - Excel user import
+- **Country Import**: `/dashboard/countries/import` - Country data import
+- **Accommodation Import**: `/dashboard/accommodations/import` - Lodging import
+- **Restaurant Import**: `/dashboard/restaurants/import` - Restaurant data import
 
-# Optimize Laravel
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+#### Authentication Routes
+- **Login**: `/login` - User authentication
+- **Register**: `/register` - User registration
+- **Password Reset**: `/password/reset` - Password recovery
 
-# Optimize Composer autoloader
-composer install --optimize-autoloader --no-dev
+## Usage
+
+### Import/Export Operations
+
+1. **Using Shared Import Components**
+```php
+// Include the shared import form in any view
+<x-import-form 
+    :route="route('dashboard.users.import')" 
+    title="Import Users"
+    requirements="Name, Email, Phone required columns" />
 ```
 
-## Customization
+2. **Advanced Import with Examples**
+```php
+// Advanced import form with sample downloads
+<x-advanced-import-form 
+    :route="route('dashboard.users.import')"
+    :examples-route="route('dashboard.users.import-examples')"
+    model="User" />
+```
 
-### Adding Your Own Content
-1. **Controllers**: Modify demo controllers to return your actual data
-2. **Views**: Customize Blade templates with your content
-3. **Components**: Create new Blade components for your specific needs
-4. **Styling**: Add custom CSS in `resources/css/app.css`
+### Livewire Components
 
-### Extending Layouts
-- Each demo layout is independent and can be customized separately
-- Shared partials allow for consistent elements across demos
-- Component system enables reusable UI elements
+```php
+// Using custom pagination trait
+class UserTable extends Component
+{
+    use CustomPagination;
+    
+    public function mount()
+    {
+        $this->mountWithCustomPagination();
+    }
+}
+```
+
+### Multilingual Support
+
+```php
+// Add new translation keys
+// lang/en/main.php
+'accommodation_type' => 'Accommodation Type',
+'booking_status' => 'Booking Status',
+
+// lang/ar/main.php  
+'accommodation_type' => 'نوع الإقامة',
+'booking_status' => 'حالة الحجز',
+```
 
 ## Architecture
 
 ### Design Principles
-- **MVC Pattern**: Clean separation using Laravel's MVC architecture
-- **Component-Based**: Reusable Blade components for UI elements
-- **Asset Integration**: Proper integration of Metronic assets with Laravel
-- **Responsive Design**: Mobile-first approach across all layouts
 
-### File Organization
-- **Controllers**: One controller per demo layout
-- **Views**: Organized by demo with shared layouts and partials
-- **Assets**: Metronic assets properly integrated in `public/assets/`
-- **Components**: Reusable UI components for consistent functionality
+- **Tourism-Focused**: Built specifically for tourism and hospitality management
+- **Shared Components**: Reusable import/export system across all modules
+- **Multilingual**: Full Arabic/English support for MENA region
+- **Real-time Interface**: Livewire components for dynamic user experience
+- **Data Integrity**: Comprehensive validation and error handling
 
-## Documentation
+### System Architecture
 
-For detailed integration steps and customization guides, refer to the complete documentation in the main repository.
+- **Import System**: Centralized Excel import with shared components
+- **Pagination System**: Custom trait handling session persistence  
+- **Multilingual System**: Dynamic language switching with route prefixes
+- **Permission System**: Role-based access control throughout the application
+- **Responsive Design**: Mobile-first approach optimized for tablets and phones
+
+### Development Standards
+
+- **PSR Compliance**: Following PHP-FIG standards
+- **Laravel Best Practices**: Utilizing Eloquent, Artisan commands, and proper MVC
+- **Component Reusability**: Shared Blade components and Livewire traits
+- **Database Design**: Normalized structure with proper relationships
+- **Security**: CSRF protection, validation, and sanitization throughout
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Create a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Support
+
+For support and questions:
+- Create an issue in the repository
+- Check existing documentation
+- Review code examples in the codebase
 
 ## Support
 
 For questions and support:
+
 - Review the integration documentation
 - Check the demo implementations for examples
 - Refer to Laravel documentation for framework-specific questions

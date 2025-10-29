@@ -1,22 +1,24 @@
 <!-- User -->
 <div class="shrink-0" data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px" data-kt-dropdown-offset-rtl="-20px, 10px"
     data-kt-dropdown-placement="bottom-end" data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
-    <div class="shrink-0 cursor-pointer" data-kt-dropdown-toggle="true">
-        <img alt="" class="size-9 shrink-0 rounded-full border-2 border-green-500"
-            src="{{ asset('metronic/media/avatars/300-2.png') }}" />
+    <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
+        <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
+            class="border-2 border-green-500 rounded-full size-9 shrink-0"
+            src="{{ $activeUser && $activeUser->photo ? asset('storage/' . $activeUser->photo) : asset('metronic/media/avatars/blank.png') }}" />
     </div>
-    <div class="kt-dropdown-menu w-[250px]" data-kt-dropdown-menu="true">
+    <div class="kt-dropdown-menu w-[300px]" data-kt-dropdown-menu="true">
         <div class="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
             <div class="flex items-center gap-2">
-                <img alt="" class="size-9 shrink-0 rounded-full border-2 border-green-500"
-                    src="{{ asset('metronic/media/avatars/300-2.png') }}" />
+                <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
+                    class="border-2 border-green-500 rounded-full size-9 shrink-0"
+                    src="{{ $activeUser && $activeUser->photo ? asset('storage/' . $activeUser->photo) : asset('metronic/media/avatars/blank.png') }}" />
                 <div class="flex flex-col gap-1.5">
                     <span class="text-sm font-semibold leading-none text-foreground">
-                        Cody Fisher
+                        {{ $activeUser?->name ?? __('main.unknown_user') }}
                     </span>
-                    <a class="hover:text-primary text-xs font-medium leading-none text-secondary-foreground"
+                    <a class="text-xs font-medium leading-none hover:text-primary text-secondary-foreground"
                         href="#">
-                        c.fisher@gmail.com
+                        {{ $activeUser?->email ?? __('main.unknown_email') }}
                     </a>
                 </div>
             </div>
@@ -26,184 +28,48 @@
         </div>
         <ul class="kt-dropdown-menu-sub">
             <li>
-                <div class="kt-dropdown-menu-separator">
-                </div>
+                <div class="kt-dropdown-menu-separator"></div>
             </li>
             <li>
-                <a class="kt-dropdown-menu-link" href="#">
-                    <i class="ki-filled ki-badge">
-                    </i>
-                    Public Profile
-                </a>
-            </li>
-            <li>
-                <a class="kt-dropdown-menu-link" href="#">
+                <a class="kt-dropdown-menu-link" href="{{ route('user.profile') }}">
                     <i class="ki-filled ki-profile-circle">
                     </i>
-                    My Profile
+                    {{ __('main.my_profile') }}
                 </a>
             </li>
             <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-trigger="hover">
-                <button class="kt-dropdown-menu-toggle" data-kt-dropdown-toggle="true">
-                    <i class="ki-filled ki-setting-2">
-                    </i>
-                    My Account
-                    <span class="kt-dropdown-menu-indicator">
-                        <i class="ki-filled ki-right text-xs">
-                        </i>
-                    </span>
-                </button>
-                <div class="kt-dropdown-menu w-[220px]" data-kt-dropdown-menu="true">
-                    <ul class="kt-dropdown-menu-sub">
-                        <li>
-                            <a class="kt-dropdown-menu-link" href="#">
-                                <i class="ki-filled ki-coffee">
-                                </i>
-                                Get Started
-                            </a>
-                        </li>
-                        <li>
-                            <a class="kt-dropdown-menu-link" href="#">
-                                <i class="ki-filled ki-some-files">
-                                </i>
-                                My Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a class="kt-dropdown-menu-link" href="#">
-                                <span class="flex items-center gap-2">
-                                    <i class="ki-filled ki-icon">
-                                    </i>
-                                    Billing
-                                </span>
-                                <span class="ms-auto inline-flex items-center" data-kt-tooltip="true"
-                                    data-kt-tooltip-placement="top">
-                                    <i class="ki-filled ki-information-2 text-base text-muted-foreground">
-                                    </i>
-                                    <span class="kt-tooltip" data-kt-tooltip-content="true">
-                                        Payment and subscription info
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="kt-dropdown-menu-link" href="#">
-                                <i class="ki-filled ki-medal-star">
-                                </i>
-                                Security
-                            </a>
-                        </li>
-                        <li>
-                            <a class="kt-dropdown-menu-link" href="#">
-                                <i class="ki-filled ki-setting">
-                                </i>
-                                Members & Roles
-                            </a>
-                        </li>
-                        <li>
-                            <a class="kt-dropdown-menu-link" href="#">
-                                <i class="ki-filled ki-switch">
-                                </i>
-                                Integrations
-                            </a>
-                        </li>
-                        <li>
-                            <div class="kt-dropdown-menu-separator">
-                            </div>
-                        </li>
-                        <li>
-                            <a class="kt-dropdown-menu-link" href="#">
-                                <span class="flex items-center gap-2">
-                                    <i class="ki-filled ki-shield-tick">
-                                    </i>
-                                    Notifications
-                                </span>
-                                <input checked="" class="kt-switch ms-auto" name="check" type="checkbox"
-                                    value="1" />
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <a class="kt-dropdown-menu-link" href="https://devs.keenthemes.com">
-                    <i class="ki-filled ki-message-programming">
-                    </i>
-                    Dev Forum
-                </a>
-            </li>
-            <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-trigger="hover">
-                <button class="kt-dropdown-menu-toggle py-1" data-kt-dropdown-toggle="true">
+                <button class="py-1 kt-dropdown-menu-toggle" data-kt-dropdown-toggle="true">
                     <span class="flex items-center gap-2">
-                        <i class="ki-filled ki-icon">
-                        </i>
-                        Language
+                        <i class="ki-filled ki-global"></i>
+                        {{ __('main.language') }}
                     </span>
                     <span class="kt-badge kt-badge-stroke ms-auto shrink-0">
-                        English
+                        {{ config('languages.languages.' . getCurrentLocale()) }}
                         <img alt="" class="inline-block size-3.5 rounded-full"
-                            src="{{ asset('metronic/media/flags/united-states.svg') }}" />
+                            src="{{ asset('metronic/media/flags/languages/' . getCurrentLocale() . '.svg') }}" />
                     </span>
                 </button>
                 <div class="kt-dropdown-menu w-[180px]" data-kt-dropdown-menu="true">
                     <ul class="kt-dropdown-menu-sub">
-                        <li class="active">
-                            <a class="kt-dropdown-menu-link" href="?dir=ltr">
-                                <span class="flex items-center gap-2">
-                                    <img alt="" class="inline-block size-4 rounded-full"
-                                        src="{{ asset('metronic/media/flags/united-states.svg') }}" />
-                                    <span class="kt-menu-title">
-                                        English
+                        @foreach ($system_languages as $key => $language)
+                            <li class="{{ getCurrentLocale() == $language->code ? 'active' : '' }}">
+                                <a class="kt-dropdown-menu-link"
+                                    href="{{ route('system-languages.change', $language->code) }}">
+                                    <span class="flex items-center gap-2">
+                                        <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->code . '.svg') : asset('storage/' . $language->flag) }}"
+                                            {{-- alt="{{ getCurrentLocale() == 'ar' ? $language->name : $language->name_ar ?? '' }}" --}} alt="{{ $language->name ?? '' }}"
+                                            class="inline-block rounded-full size-4">
+                                        <span class="kt-menu-title">
+                                            {{-- {{ getCurrentLocale() == 'ar' ? $language->name : $language->name_ar ?? '' }} --}}
+                                            {{ $language->name ?? '' }}
+                                        </span>
                                     </span>
-                                </span>
-                                <i class="ki-solid ki-check-circle ms-auto text-base text-green-500">
-                                </i>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="kt-dropdown-menu-link" href="?dir=rtl">
-                                <span class="flex items-center gap-2">
-                                    <img alt="" class="inline-block size-4 rounded-full"
-                                        src="{{ asset('metronic/media/flags/saudi-arabia.svg') }}" />
-                                    <span class="kt-menu-title">
-                                        Arabic(Saudi)
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="kt-dropdown-menu-link" href="?dir=ltr">
-                                <span class="flex items-center gap-2">
-                                    <img alt="" class="inline-block size-4 rounded-full"
-                                        src="{{ asset('metronic/media/flags/spain.svg') }}" />
-                                    <span class="kt-menu-title">
-                                        Spanish
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="kt-dropdown-menu-link" href="?dir=ltr">
-                                <span class="flex items-center gap-2">
-                                    <img alt="" class="inline-block size-4 rounded-full"
-                                        src="{{ asset('metronic/media/flags/germany.svg') }}" />
-                                    <span class="kt-menu-title">
-                                        German
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="kt-dropdown-menu-link" href="?dir=ltr">
-                                <span class="flex items-center gap-2">
-                                    <img alt="" class="inline-block size-4 rounded-full"
-                                        src="{{ asset('metronic/media/flags/japan.svg') }}" />
-                                    <span class="kt-menu-title">
-                                        Japanese
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
+                                    @if (getCurrentLocale() === $language->code)
+                                        <i class="text-base text-green-500 ki-solid ki-check-circle ms-auto"></i>
+                                    @endif
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </li>
@@ -215,19 +81,19 @@
         <div class="mb-2.5 flex flex-col gap-3.5 px-2.5 pt-1.5">
             <div class="flex items-center justify-between gap-2">
                 <span class="flex items-center gap-2">
-                    <i class="ki-filled ki-moon text-base text-muted-foreground">
+                    <i class="text-base ki-filled ki-moon text-muted-foreground">
                     </i>
-                    <span class="text-2sm font-medium">
-                        Dark Mode
+                    <span class="font-medium text-2sm">
+                        {{ __('main.dark_mode') }}
                     </span>
                 </span>
                 <input class="kt-switch" data-kt-theme-switch-state="dark" data-kt-theme-switch-toggle="true"
                     name="check" type="checkbox" value="1" />
             </div>
-            <a class="kt-btn kt-btn-outline justify-center w-full" href="{{ route('logout') }}">
-                <form action="{{ route('logout') }}" method="POST">
+            <a class="justify-center w-full kt-btn kt-btn-outline" href="{{ route('logout') }}">
+                <form action="{{ route('logout') }}" method="POST" class="w-full">
                     @csrf
-                    <button type="submit" class="w-full text-left">Log out</button>
+                    <button type="submit" class="w-full text-center">{{ __('main.logout') }}</button>
                 </form>
             </a>
         </div>
