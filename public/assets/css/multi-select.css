@@ -57,6 +57,7 @@
 .search-select-tag .li {
     padding: .5rem;
     cursor: pointer;
+    user-select: none;
     list-style-type: none
 }
 
@@ -80,6 +81,7 @@
     align-items: center;
     border-radius: .25rem;
     color: #1e40af;
+    user-select: none;
     background-color: #dbeafe
 }
 

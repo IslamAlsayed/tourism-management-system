@@ -17,22 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// document.addEventListener("updatedPaginate", () => {
-//     setTimeout(() => {
-//         resetDeleteSelection();
-//         SpecialDelete("selectAllItems", "input[name='selectedItems[]']");
-//     }, 200);
-// });
+document.addEventListener("updatedPaginate", () => {
+    setTimeout(() => {
+        resetDeleteSelection();
+        specialDelete("selectAllItems", "input[name='selectedItems[]']");
+    }, 200);
+});
 
 function closeAllDropdowns() {
     document
         .querySelectorAll(".dropdown")
         .forEach((dd) => dd.classList.add("hidden"));
 }
-
-// remove alerts after 3 seconds
-document.addEventListener("DOMContentLoaded", () => {
-    const observer = new MutationObserver(() => removeAlert());
-    observer.observe(document.body, { childList: true, subtree: true });
-});
-removeAlert();

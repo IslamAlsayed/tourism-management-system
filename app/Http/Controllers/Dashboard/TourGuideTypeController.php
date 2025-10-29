@@ -29,6 +29,13 @@ class TourGuideTypeController extends Controller
     {
         $data = $request->validated();
 
+        if ($request['state_id']) {
+            $data['state_id'] = array_unique($data['state_id']);
+        }
+        if ($request['city_id']) {
+            $data['city_id'] = array_unique($data['city_id']);
+        }
+
         // ✅ اجلب قيم IDs الحالية (لو المستخدم اختار يدويًا)
         $stateIds = $data['state_id'] ?? [];
         $cityIds = $data['city_id'] ?? [];

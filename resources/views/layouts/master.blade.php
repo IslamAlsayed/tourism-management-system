@@ -9,9 +9,7 @@
 </head>
 
 
-{{--
-
-<body class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased kt-sidebar-collapse"> --}}
+{{-- <body class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased kt-sidebar-collapse"> --}}
 
 <body class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased">
     @include('partials.theme-toggle')

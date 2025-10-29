@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\City;
-use App\Models\State;
 use App\Models\Region;
-use App\Models\Country;
 use App\Models\Currency;
-use App\Models\Subregion;
 use App\Models\TourGuide;
 use App\Models\Language;
 use App\Models\TourGuideType;
@@ -70,11 +66,13 @@ class TourGuideController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.tour-guide')]));
         }
         $currencies = Currency::all();
-        $languages_ids = Language::all()->pluck('name', 'id');
+        $languages_ids = Language::get(['id', 'name', 'name_ar']);
+        $guideTypes = TourGuideType::all();
+        $regions = Region::all();
 
-        // $tour_guide_languages = TourGuideLanguage::with('language', function ($query) use ($tourGuide) {
-        //     $query->where('tour_guide_id', $tourGuide->id);
-        // })->get();
+        $tour_guide_languages = TourGuideLanguage::with('language', function ($query) use ($tourGuide) {
+            $query->where('tour_guide_id', $tourGuide->id);
+        })->get();
 
         $tour_guide_languages = TourGuideLanguage::with('language')->where('tour_guide_id', $tourGuide->id)->get();
         // dd($tour_guide_languages);
@@ -89,8 +87,6 @@ class TourGuideController extends Controller
         $guideTypes = TourGuideType::all();
 
         // dd($tourGuide->toArray(), $tour_guide_languages->toArray(), languages_ids);
-
-        $regions = Region::all();
 
         return view('pages.dashboard.tour-guides.edit', get_defined_vars());
     }

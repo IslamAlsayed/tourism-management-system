@@ -14,12 +14,8 @@ trait HandlesCrudSafely
         try {
             return $callback();
         } catch (\Throwable $e) {
-            Log::error('Livewire SafeRun Error: ' . $e->getMessage(), [
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-            ]);
-
-            session()->flash('danger', __('main.messages.general_error') ?? 'Something went wrong, please try again later.');
+            Log::error('Livewire SafeRun Error: ' . $e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getLine()]);
+            session()->flash('danger', __('main.messages.general_error') . ' | ' . $e->getMessage() ?? 'Something went wrong, please try again later.');
         }
     }
 
@@ -31,23 +27,19 @@ trait HandlesCrudSafely
         $this->safeRun(function () use ($id, $type) {
             $modelName = ucfirst($type);
             $modelClass = "App\\Models\\$modelName";
-
             if (!class_exists($modelClass)) {
                 throw new \Exception("Model class $modelClass does not exist");
             }
-
             $model = $modelClass::find($id);
-
+            $parts = preg_split('/(?=[A-Z])/', $type, -1, PREG_SPLIT_NO_EMPTY);
+            $type = strtolower(implode('-', $parts));
             if (!$model) {
                 session()->flash('danger', __('main.messages.not_found_this_type', ['type' => __('main.' . $type)]));
-                return;
-            }
-
-            if ($model->delete()) {
+            } elseif ($model->delete()) {
                 // $this->resetPage();
-                session()->flash('success', __('main.messages.type_deleted', ['type' => __('main.' . $type)]));
+                session()->flash('success', __('main.messages.type_deleted', ['type' => __('main.' . $type)]) . ', id: ' . $id);
             } else {
-                session()->flash('danger', __('main.messages.type_deletion_failed', ['type' => __('main.' . $type)]));
+                session()->flash('success', __('main.messages.type_deletion_failed', ['type' => __('main.' . $type)]));
             }
         });
     }

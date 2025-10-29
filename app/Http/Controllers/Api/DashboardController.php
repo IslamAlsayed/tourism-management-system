@@ -11,14 +11,13 @@ class DashboardController extends Controller
     {
         $request['model'] = 'city';
         // $request['model'] = 'state';
-        $request['foreignKey'] = 'state_id';
-        // $request['foreignKey'] = 'country_id';
-        // $request['foreignKeyValue'] = [1, 97, 100, 103, 102, 101, 104, 106, 105, 108];
-        // $request['foreignKeyValue'] = [4];
-        // $request['foreignKeyValue'] = [5];
-        $request['foreignKeyValue'] = [103, 104, 97, 100];
-        // $request['foreignKeyValue'] = ["188", "189", "184", "186", "185", "190", "191"];
-        $request['foreignKeyValue'] = [103, 104, 103, 101, 97];
+        // $request['model'] = 'country';
+
+        // $request['foreignKey'] = 'state_id';
+        $request['foreignKey'] = 'country_id';
+        // $request['foreignKey'] = 'subregion_id';
+
+        $request['foreignKeyValue'] = [111];
 
         $validated = $request->validate([
             'model' => 'required|string',
@@ -46,7 +45,7 @@ class DashboardController extends Controller
 
         $references = $query->get();
 
-        return response()->json(['count' => $references->count(), 'data' => $references, 'keys' => [$validated['model'], $validated['foreignKey'], $validated['foreignKeyValue']]]);
+        return response()->json(['count' => $references->count(), 'keys' => $validated, 'data' => $references]);
     }
 
     public function getReferences(Request $request)

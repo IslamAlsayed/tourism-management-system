@@ -1043,6 +1043,7 @@ return [
         'restaurant_update_failed' => 'فشل تحديث المطعم',
         'restaurant_deleted' => 'تم حذف المطعم',
         'restaurant_deletion_failed' => 'فشل حذف المطعم',
+        'general_error' => 'حدث خطأ عام. يرجى المحاولة مرة أخرى.',
     ],
 
     // maps

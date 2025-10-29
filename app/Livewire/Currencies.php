@@ -14,7 +14,7 @@ class Currencies extends Component
     use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
-    public $message = '';
+    public $message = [];
 
     public function updatingSearch()
     {

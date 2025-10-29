@@ -11,11 +11,13 @@ use App\Models\Supplier;
 use App\Models\HotelRate;
 use App\Models\HotelPolicy;
 use App\Models\HotelSeason;
+use Illuminate\Support\Str;
 use App\Models\OtherService;
+use Illuminate\Http\Request;
 use App\Models\HotelRoomType;
 use App\Models\HotelSupplement;
+use Sabberworm\CSS\Property\Import;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\TransportationCompany;
 
 class DashboardController extends Controller
@@ -149,9 +151,9 @@ class DashboardController extends Controller
 
     public function deleteAll(Request $request)
     {
-        $modelName = ucwords(str_replace(' ', '', str_replace(['-', ''], ' ', $request->input('model'))));
+        $model = implode('', array_map([Str::class, 'studly'], array_map([Str::class, 'singular'], explode(' ', $request->input('model')))));
+        $modelName = ucfirst(str_replace(' ', '', str_replace(['-', ''], ' ', $model)));
         $modelClass = "App\\Models\\$modelName";
-
         if (!class_exists($modelClass)) {
             return redirect()->back()->with('error', 'Invalid model specified.');
         }

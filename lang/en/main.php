@@ -1043,6 +1043,7 @@ return [
         'restaurant_update_failed' => 'Restaurant Update Failed',
         'restaurant_deleted' => 'Restaurant Deleted',
         'restaurant_deletion_failed' => 'Restaurant Deletion Failed',
+        'general_error' => 'An error occurred. Please try again.',
     ],
 
     // maps

@@ -10,20 +10,6 @@ if (toggleTriggers.length > 0) {
     });
 }
 
-function removeAlert(deration = 3000) {
-    const customAlerts = document.getElementById("custom-alerts");
-    if (customAlerts) {
-        let alerts = customAlerts.querySelectorAll(".kt-alert");
-
-        alerts.forEach((alert) => {
-            if (!alert.dataset.handled) {
-                alert.dataset.handled = "true";
-                setTimeout(() => alert.remove(), deration);
-            }
-        });
-    }
-}
-
 function toggleDisplayTarget(targetId, elementId, isChecked, type = "radio") {
     if (type === "radio") {
         // Hide all targets with the same data-toggle-target
@@ -58,3 +44,34 @@ function initToggles() {
         });
     });
 }
+
+window.removeAlert = function (duration = 3000) {
+    const customAlerts = document.querySelectorAll(".custom-alerts");
+
+    customAlerts.forEach((container) => {
+        const alerts = container.querySelectorAll(".kt-alert");
+
+        alerts.forEach((alert) => {
+            if (!alert.dataset.handled) {
+                alert.dataset.handled = "true";
+                setTimeout(() => alert.remove(), duration);
+            }
+        });
+    });
+};
+
+// مراقبة DOM وتفعيل removeAlert عند التغييرات
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".custom-alerts").forEach((container) => {
+        const observer = new MutationObserver(() => removeAlert());
+        observer.observe(container, { childList: true, subtree: false });
+    });
+    removeAlert();
+});
+
+// تشغيل removeAlert بعد كل تحديث Livewire
+document.addEventListener("livewire:load", () => {
+    window.livewire.hook("message.processed", () => {
+        removeAlert();
+    });
+});
