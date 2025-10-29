@@ -19,7 +19,7 @@ function toggleDisplayTarget(targetId, elementId, isChecked, type = "radio") {
     }
 
     let target = document.querySelector(
-        `[data-${targetId}-target="${elementId}"]`
+        `[data-${targetId}-target="${elementId}"]`,
     );
 
     if (target) {
@@ -75,3 +75,20 @@ document.addEventListener("livewire:load", () => {
         removeAlert();
     });
 });
+
+window.removeDisabledOptions = function () {
+    console.log("Removing disabled options...");
+    // handle disabled options
+    let lists = [
+        document.querySelectorAll("select option"),
+        document.querySelectorAll("ul li"),
+    ];
+    lists.forEach((l) => {
+        l.forEach((e) => {
+            if (e.textContent == "--") {
+                e.classList.add("disabled-option");
+            }
+        });
+        l.parentElement;
+    });
+};

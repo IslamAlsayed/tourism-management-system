@@ -123,13 +123,15 @@
                             <!-- Address -->
                             <div class="mb-4">
                                 <label for="address" class="mb-2 kt-label">Address</label>
-                                <textarea name="address" id="address" rows="3" class="kt-input"></textarea>
+                                <input id="address" type="hidden" name="address">
+                                <trix-editor input="address"></trix-editor>
                             </div>
 
                             <!-- Description -->
                             <div class="mb-4">
                                 <label for="description" class="mb-2 kt-label">Description</label>
-                                <textarea name="description" id="description" rows="3" class="kt-input"></textarea>
+                                <input id="description" type="hidden" name="description">
+                                <trix-editor input="description"></trix-editor>
                             </div>
                         </div>
 
@@ -297,7 +299,8 @@
                         <!-- Notes -->
                         <div class="mb-4">
                             <label for="notes" class="mb-2 kt-label">Additional Notes</label>
-                            <textarea name="notes" id="notes" rows="4" class="kt-input"></textarea>
+                            <input id="notes" type="hidden" name="notes">
+                            <trix-editor input="notes"></trix-editor>
                         </div>
 
                         <!-- Submit Buttons -->

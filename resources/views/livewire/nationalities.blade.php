@@ -12,51 +12,13 @@
     <div class="kt-card-content">
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
             <div class="kt-scrollable-x-auto">
-                <table class="kt-table table-auto text-nowrap">
-                    <thead>
-                        <tr>
-                            <th class="w-[60px] px-4 py-3 text-center">
-                                <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
-                            </th>
-                            @foreach ($columns as $column)
-                                <th
-                                    class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('main.' . $column) }}
-                                </th>
-                            @endforeach
-                            <th class="px-4 py-3"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $nationality)
-                            <tr wire:key="{{ $nationality->id }}" class="hover:bg-gray-100">
-                                <td class="text-center">
-                                    <input type="checkbox" name="selectedItems[]" value="{{ $nationality->id }}"
-                                        class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
-                                </td>
-                                @foreach ($columns as $column)
-                                    @include('components.static-columns', [
-                                        'column' => $column,
-                                        'model' => $nationality,
-                                        'search' => $search,
-                                    ])
-                                @endforeach
-                                <td class="px-4 py-2 text-end">
-                                    <div>
-                                        <a href="{{ route('nationalities.edit', $nationality->id) }}"
-                                            class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
-                                            {{ __('main.edit') }}
-                                        </a>
-
-                                        @include('components.elements.delete-button', [
-                                            'id' => $nationality->id,
-                                        ])
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @component('components.data-table', [
+                    'data' => $data,
+                    'columns' => $columns,
+                    'search' => $search,
+                    'models' => 'nationalities',
+                ])
+                @endcomponent
             </div>
 
             {{-- Enhanced Pagination Controls --}}

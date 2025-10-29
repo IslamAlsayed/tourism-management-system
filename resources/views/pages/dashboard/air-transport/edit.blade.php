@@ -113,13 +113,17 @@
                             <!-- Address -->
                             <div class="mb-4">
                                 <label for="address" class="kt-label mb-2">Address</label>
-                                <textarea name="address" id="address" rows="3" class="kt-input">King Khalid International Airport, Riyadh 13413, Saudi Arabia</textarea>
+                                <input id="address" type="hidden" name="address"
+                                    value="King Khalid International Airport, Riyadh 13413, Saudi Arabia">
+                                <trix-editor input="address"></trix-editor>
                             </div>
 
                             <!-- Description -->
                             <div class="mb-4">
                                 <label for="description" class="kt-label mb-2">Description</label>
-                                <textarea name="description" id="description" rows="3" class="kt-input">Major international airport serving Riyadh and central Saudi Arabia, with modern facilities and excellent connectivity.</textarea>
+                                <input id="description" type="hidden" name="description"
+                                    value="Major international airport serving Riyadh and central Saudi Arabia, with modern facilities and excellent connectivity.">
+                                <trix-editor input="description"></trix-editor>
                             </div>
                         </div>
 

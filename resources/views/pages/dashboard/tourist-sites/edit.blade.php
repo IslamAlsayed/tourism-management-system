@@ -126,13 +126,17 @@
                             <!-- Address -->
                             <div class="mb-4">
                                 <label for="address" class="kt-label mb-2">Address</label>
-                                <textarea name="address" id="address" rows="3" class="kt-input">Al-Ula Heritage Site, Al-Ula 43512, Saudi Arabia</textarea>
+                                <input id="address" type="hidden" name="address"
+                                    value="Al-Ula Heritage Site, Al-Ula 43512, Saudi Arabia">
+                                <trix-editor input="address"></trix-editor>
                             </div>
 
                             <!-- Description -->
                             <div class="mb-4">
                                 <label for="description" class="kt-label mb-2">Description</label>
-                                <textarea name="description" id="description" rows="3" class="kt-input">Ancient Nabatean city with rock-cut tombs and archaeological wonders dating back thousands of years.</textarea>
+                                <input id="description" type="hidden" name="description"
+                                    value="Ancient Nabatean city with rock-cut tombs and archaeological wonders dating back thousands of years.">
+                                <trix-editor input="description"></trix-editor>
                             </div>
                         </div>
 
@@ -308,7 +312,9 @@
                         <!-- Notes -->
                         <div class="mb-4">
                             <label for="notes" class="kt-label mb-2">Additional Notes</label>
-                            <textarea name="notes" id="notes" rows="4" class="kt-input">UNESCO World Heritage site with ongoing archaeological discoveries. Best visited during cooler months.</textarea>
+                            <input id="notes" type="hidden" name="notes"
+                                value="UNESCO World Heritage site with ongoing archaeological discoveries. Best visited during cooler months.">
+                            <trix-editor input="notes"></trix-editor>
                         </div>
 
                         <!-- Submit Buttons -->

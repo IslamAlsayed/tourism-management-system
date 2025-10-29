@@ -35,7 +35,7 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="grid grid-cols-2 gap-6 mb-4">
+                        <div class="grid grid-cols-3 gap-6 mb-4">
                             <!-- Tour Guide -->
                             <div class="">
                                 <label for="tour_guide_id" class="kt-label mb-2">{{ __('main.tour_guide') }}</label>
@@ -53,15 +53,16 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
 
-                            <!-- Review -->
-                            <div class="">
-                                <label for="review" class="kt-label mb-2">{{ __('main.review') }}</label>
-                                <textarea name="review" id="review" class="kt-textarea h-[45px]">{{ $tourGuideReview->review }}</textarea>
-                                @error('review')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <!-- Review -->
+                        <div class="mb-4">
+                            <label for="review" class="kt-label mb-2">{{ __('main.review') }}</label>
+                            <input id="review" type="hidden" name="review" value="{{ $tourGuideReview->review }}">
+                            <trix-editor input="review"></trix-editor>
+                            @error('review')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="space-y-6 mb-4">

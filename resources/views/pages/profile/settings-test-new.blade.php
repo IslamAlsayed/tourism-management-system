@@ -842,7 +842,9 @@
                                             <div class="row mb-6">
                                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">Bio</label>
                                                 <div class="col-lg-8">
-                                                    <textarea name="bio" class="form-control form-control-lg form-control-solid" rows="4">{{ $user->bio ?? '' }}</textarea>
+                                                    <input id="bio" type="hidden" name="bio"
+                                                        value="{{ $user->bio }}">
+                                                    <trix-editor input="bio"></trix-editor>
                                                 </div>
                                             </div>
 

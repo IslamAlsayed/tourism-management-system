@@ -156,105 +156,13 @@
                                 @enderror
                             </div>
 
-                            <!-- Region -->
-                            <div class="">
-                                <label for="region_id" class="kt-label mb-2 flex items-center justify-between">
-                                    {{ __('main.region') }}
-                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
-                                    <option value="">--</option>
-                                    @foreach ($regions as $region)
-                                        <option value="{{ $region->id }}"
-                                            {{ $country->region_id == $region->id ? 'selected' : '' }}>{{ $region->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('region_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Subregion -->
-                            <div class="{{ $country->subregion_id ? '' : 'loading' }}">
-                                <label for="subregion_id" class="kt-label mb-2 flex items-center justify-between">
-                                    <div>
-                                        {{ __('main.subregion') }}
-                                        <i id="subregion_id-loader"
-                                            class="i-loader fas fa-refresh fa-spin text-primary {{ $country->subregion_id ? '' : 'show' }}"></i>
-                                        <span
-                                            class="text-red-600 text-sm span-info {{ $country->subregion_id ? '' : 'show' }}"
-                                            id="subregion_id-info">
-                                            (You must select region first)
-                                        </span>
-                                    </div>
-                                    <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $country->subregion_id }}">
-                                    <option value="">--</option>
-                                    {{-- subregions will be loaded dynamically based on selected region --}}
-                                </select>
-                                @error('subregion_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- State --}}
-                            <div class="{{ $country->state_id ? '' : 'loading' }}">
-                                <label for="state_id" class="kt-label mb-2 flex items-center justify-between">
-                                    <div>
-                                        {{ __('main.state') }}
-                                        <i id="state_id-loader"
-                                            class="i-loader fas fa-refresh fa-spin text-primary {{ $country->state_id ? '' : 'show' }}"></i>
-                                        <span
-                                            class="text-red-600 text-sm span-info {{ $country->state_id ? '' : 'show' }}"
-                                            id="state_id-info">
-                                            (You must select subregion first)
-                                        </span>
-                                    </div>
-                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $country->state_id }}">
-                                    <option value="">--</option>
-                                    {{-- states will be loaded dynamically based on selected subregion --}}
-                                </select>
-                                @error('state_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- City -->
-                            <div class="{{ $country->city_id ? '' : 'loading' }}">
-                                <label for="city_id" class="kt-label mb-2 flex items-center justify-between">
-                                    <div class="flex items-center justify-between gap-1">
-                                        {{ __('main.cities', ['types' => __('main.cities')]) }}
-                                        <span class="text-red-600 text-sm span-info {{ $country->city_id ? '' : 'show' }}"
-                                            id="city_id-info">
-                                            (You must select state first)
-                                        </span>
-                                    </div>
-
-                                    <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="city_id" id="city_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $country->city_id }}">
-                                    <option value="">--</option>
-                                    {{-- cities will be loaded dynamically based on selected state --}}
-                                </select>
-                                @error('city_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Regions [region, subregion, state, city] --}}
+                            @include('components.edit-regions', [
+                                'record' => $country,
+                                'options' => ['allStates' => true, 'allCities' => true],
+                                'exclude' => ['country'],
+                                'replaces' => ['country_id', 'subregion_id'],
+                            ])
 
                             <!-- Area (km²) -->
                             <div class="">
@@ -311,32 +219,47 @@
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
-                                    <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                        value="1" {{ $country->is_active == '1' ? 'checked' : '' }}>
-                                    <label for="is_active" class="kt-label">{{ __('main.activate_country') }}</label>
+                                    @component('components.elements.checkbox-button', [
+                                        'name' => 'is_active',
+                                        'id' => 'is_active',
+                                        'value' => $country->is_active,
+                                        'label' => __('main.activate_country'),
+                                    ])
+                                        {{ $country->is_active == '1' ? 'checked' : '' }}
+                                    @endcomponent
                                 </div>
-
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_independent" value="0">
-                                    <input type="checkbox" name="is_independent" id="is_independent" class="kt-checkbox"
-                                        value="1" {{ $country->is_independent == '1' ? 'checked' : '' }}>
-                                    <label for="is_independent"
-                                        class="kt-label">{{ __('main.independent_country') }}</label>
+                                    @component('components.elements.checkbox-button', [
+                                        'name' => 'is_independent',
+                                        'id' => 'is_independent',
+                                        'value' => $country->is_independent,
+                                        'label' => __('main.independent_country'),
+                                    ])
+                                        {{ $country->is_independent == '1' ? 'checked' : '' }}
+                                    @endcomponent
                                 </div>
-
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_developed" value="0">
-                                    <input type="checkbox" name="is_developed" id="is_developed" class="kt-checkbox"
-                                        value="1" {{ $country->is_developed == '1' ? 'checked' : '' }}>
-                                    <label for="is_developed" class="kt-label">{{ __('main.developed_country') }}</label>
+                                    @component('components.elements.checkbox-button', [
+                                        'name' => 'is_developed',
+                                        'id' => 'is_developed',
+                                        'value' => $country->is_developed,
+                                        'label' => __('main.developed_country'),
+                                    ])
+                                        {{ $country->is_developed == '1' ? 'checked' : '' }}
+                                    @endcomponent
                                 </div>
-
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_landlocked" value="0">
-                                    <input type="checkbox" name="is_landlocked" id="is_landlocked" class="kt-checkbox"
-                                        value="1" {{ $country->is_landlocked == '1' ? 'checked' : '' }}>
-                                    <label for="is_landlocked"
-                                        class="kt-label">{{ __('main.landlocked_country') }}</label>
+                                    @component('components.elements.checkbox-button', [
+                                        'name' => 'is_landlocked',
+                                        'id' => 'is_landlocked',
+                                        'value' => $country->is_landlocked,
+                                        'label' => __('main.landlocked_country'),
+                                    ])
+                                        {{ $country->is_landlocked == '1' ? 'checked' : '' }}
+                                    @endcomponent
                                 </div>
                             </div>
                         </div>

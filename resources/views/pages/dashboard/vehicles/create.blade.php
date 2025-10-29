@@ -256,7 +256,8 @@
                         <!-- Notes -->
                         <div class="mb-4">
                             <label for="notes" class="kt-label mb-2">Notes</label>
-                            <textarea name="notes" id="notes" rows="4" class="kt-input"></textarea>
+                            <input id="notes" type="hidden" name="notes" value="{{ old('notes') }}">
+                            <trix-editor input="notes"></trix-editor>
                         </div>
 
                         <!-- Submit Buttons -->

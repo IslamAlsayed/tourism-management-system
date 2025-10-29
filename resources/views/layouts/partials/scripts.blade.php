@@ -14,11 +14,12 @@
 <script src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
 
 {{-- Multiples JS --}}
-<script src="{{ asset('assets/js/multiples/specialSelect3.js') }}"></script>
+<script src="{{ asset('assets/js/multiSelectUtils.js') }}"></script>
+<script src="{{ asset('assets/js/multiples/specialSelect.js') }}"></script>
 <script src="{{ asset('assets/js/multiples/specialCheckbox.js') }}"></script>
 <script src="{{ asset('assets/js/multiples/specialSearch.js') }}"></script>
 <script src="{{ asset('assets/js/multiples/specialDelete.js') }}"></script>
-<script src="{{ asset('assets/js/filterByForeignId3.js') }}"></script>
+<script src="{{ asset('assets/js/filterByForeignId.js') }}"></script>
 <script src="{{ asset('assets/js/helpers.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 

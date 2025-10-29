@@ -37,7 +37,7 @@
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
             <!-- User Info Card -->
             <div class="col-span-1 xl:col-span-3">
-                <div class="kt-card min-w-full">
+                <div class="kt-card min-w-full mb-6">
                     <div class="kt-card-body p-5 flex flex-col items-center">
                         <div class="relative mb-5">
                             <div class="size-32 rounded-full overflow-hidden">
@@ -112,7 +112,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="kt-card-body p-6">
+                    <div class="kt-card-body p-2">
                         @if ($user->bio)
                             <p class="text-secondary-foreground" style="padding: 10px">
                                 {{ $user->bio }}
@@ -134,7 +134,7 @@
                             {{ __('main.recent_activity') }}
                         </h3>
                     </div>
-                    <div class="kt-card-body p-6">
+                    <div class="kt-card-body p-2">
                         <div class="relative">
                             <!-- Timeline -->
                             <div class="absolute top-0 bottom-0 left-4 border-l-2 border-dashed border-muted"></div>

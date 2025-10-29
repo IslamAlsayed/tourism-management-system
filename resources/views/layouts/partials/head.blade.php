@@ -2,6 +2,10 @@
 <base href="../../">
 <meta charset="utf-8" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<script>
+    window.APP_LANG = "{{ app()->getLocale() }}";
+    window.APP_DEBUG = {{ config('app.debug') ? 'true' : 'false' }};
+</script>
 <meta content="follow, index" name="robots" />
 <link href="{{ url(request()->path()) }}" rel="canonical" />
 <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />

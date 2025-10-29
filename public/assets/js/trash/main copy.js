@@ -7,7 +7,7 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 let allHotels = document.getElementById("all-hotels");
 let specialMultiples = document.querySelectorAll("[special-multiple]");
 let specialCheckboxes = document.querySelectorAll(
-    "[special-multiple-checkbox]"
+    "[special-multiple-checkbox]",
 );
 
 function confirmMultiSelect(multiSelect) {
@@ -105,7 +105,7 @@ function fetchHotels() {
                     newSelect.setAttribute("data-type", "hotels");
                     newSelect.setAttribute(
                         "special-multiple",
-                        "special-multiple"
+                        "special-multiple",
                     );
 
                     const cities = countryData.hotels_by_city;
@@ -162,7 +162,7 @@ function fetchHotels() {
             if (document.querySelector(".loader")) {
                 setTimeout(
                     () => document.querySelector(".loader").remove(),
-                    1000
+                    1000,
                 );
             }
         })

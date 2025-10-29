@@ -33,11 +33,12 @@
                     <form method="POST" action="{{ route('transportation-vehicles.store') }}" class="space-y-6 p-4">
                         @csrf
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 items-end mb-4">
                             <!-- Route -->
                             <div class="">
                                 <label for="route" class="kt-label mb-2">{{ __('main.route') }}</label>
-                                <textarea name="route" id="route" class="kt-input h-[45px]"></textarea>
+                                <input id="route" type="hidden" name="route">
+                                <trix-editor input="route"></trix-editor>
                                 @error('route')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -46,12 +47,15 @@
                             <!-- Route ar -->
                             <div class="">
                                 <label for="route_ar" class="kt-label mb-2">{{ __('main.route_ar') }}</label>
-                                <textarea name="route_ar" id="route_ar" class="kt-input h-[45px]"></textarea>
+                                <input id="route_ar" type="hidden" name="route_ar">
+                                <trix-editor input="route_ar"></trix-editor>
                                 @error('route_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
 
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
                             <!-- Duration -->
                             <div class="">
                                 <label for="duration" class="kt-label mb-2">{{ __('main.duration') }}

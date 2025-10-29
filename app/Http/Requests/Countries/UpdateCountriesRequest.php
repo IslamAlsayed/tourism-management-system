@@ -33,8 +33,14 @@ class UpdateCountriesRequest extends FormRequest
             'area' => ['nullable', 'numeric'],
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
-            'state_id' => ['nullable', 'string', 'exists:states,id'],
-            'city_id' => ['nullable', 'string', 'exists:cities,id'],
+
+            'all_states' => ['nullable', 'in:0,1'],
+            'state_id' => ['nullable', 'array'],
+            'state_id.*' => ['integer', 'exists:states,id'],
+
+            'all_cities' => ['nullable', 'in:0,1'],
+            'city_id' => ['nullable', 'array'],
+            'city_id.*' => ['integer', 'exists:cities,id'],
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
             'timezone' => ['nullable', 'string', 'max:255'],
