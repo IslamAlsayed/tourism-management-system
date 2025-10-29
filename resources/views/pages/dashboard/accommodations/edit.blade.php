@@ -119,13 +119,17 @@
                             <!-- Address -->
                             <div class="mb-4">
                                 <label for="address" class="kt-label mb-2">Address</label>
-                                <textarea name="address" id="address" rows="3" class="kt-input">King Fahd Road, Riyadh 12345, Saudi Arabia</textarea>
+                                <input id="address" type="hidden" name="address"
+                                    value="King Fahd Road, Riyadh 12345, Saudi Arabia">
+                                <trix-editor input="address"></trix-editor>
                             </div>
 
                             <!-- Description -->
                             <div class="mb-4">
                                 <label for="description" class="kt-label mb-2">Description</label>
-                                <textarea name="description" id="description" rows="3" class="kt-input">Luxury 5-star hotel in the heart of Riyadh with world-class amenities and exceptional service.</textarea>
+                                <input id="description" type="hidden" name="description"
+                                    value="Luxury 5-star hotel in the heart of Riyadh with world-class amenities and exceptional service.">
+                                <trix-editor input="description"></trix-editor>
                             </div>
                         </div>
 

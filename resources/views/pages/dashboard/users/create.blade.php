@@ -298,7 +298,9 @@
                                     <div class="mb-4">
                                         <label for="preferences"
                                             class="kt-label mb-2">{{ __('main.preferences') }}</label>
-                                        <textarea name="preferences" id="preferences" rows="3" class="kt-input h-[45px]">{{ old('preferences') }}</textarea>
+                                        <input id="preferences" type="hidden" name="preferences"
+                                            value="{{ old('preferences') }}">
+                                        <trix-editor input="preferences"></trix-editor>
                                         @error('preferences')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -307,7 +309,9 @@
                                     <!-- Notes -->
                                     <div class="mb-4">
                                         <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
-                                        <textarea name="notes" id="notes" rows="4" class="kt-input h-[45px]">{{ old('notes') }}</textarea>
+                                        <input id="notes" type="hidden" name="notes"
+                                            value="{{ old('notes') }}">
+                                        <trix-editor input="notes"></trix-editor>
                                         @error('notes')
                                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                         @enderror

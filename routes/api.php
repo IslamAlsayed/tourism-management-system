@@ -10,5 +10,6 @@ use App\Http\Controllers\Api\DashboardController;
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/get-references-test', [DashboardController::class, 'getReferencesForTest'])->name('api.get-references-test');
+    Route::post('/regions', [DashboardController::class, 'getReferences'])->name('api.get-references');
     Route::post('/get-references', [DashboardController::class, 'getReferences'])->name('api.get-references');
 });

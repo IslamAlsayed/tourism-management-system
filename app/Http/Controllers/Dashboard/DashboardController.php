@@ -16,7 +16,6 @@ use App\Models\OtherService;
 use Illuminate\Http\Request;
 use App\Models\HotelRoomType;
 use App\Models\HotelSupplement;
-use Sabberworm\CSS\Property\Import;
 use App\Http\Controllers\Controller;
 use App\Models\TransportationCompany;
 
@@ -157,15 +156,11 @@ class DashboardController extends Controller
         if (!class_exists($modelClass)) {
             return redirect()->back()->with('error', 'Invalid model specified.');
         }
-
         $ids = $request->input('selectedItems');
-
         if (!$ids || !is_array($ids)) {
             return redirect()->back()->with('error', 'No items selected.');
         }
-
         $modelClass::whereIn('id', $ids)->delete();
-
         return redirect()->back()->with('success', 'Selected items deleted successfully. ' . count($ids) . ' items removed.');
     }
 }

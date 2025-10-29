@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
-            $table->json('state_id')->nullable();
-            $table->json('city_id')->nullable();
+            $table->text('state_id')->nullable();
+            $table->text('city_id')->nullable();
             $table->boolean('all_states')->nullable()->default(false);
             $table->boolean('all_cities')->nullable()->default(false);
             $table->timestamps();

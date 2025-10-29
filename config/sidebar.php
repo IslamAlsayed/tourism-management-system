@@ -295,7 +295,7 @@ return [
         [
             'title' => 'food & beverage',
             'icon' => 'ki-filled ki-coffee',
-            'fixed' => '+1',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'all restaurants',
@@ -305,7 +305,6 @@ return [
                 [
                     'title' => 'create restaurant',
                     'icon' => 'ki-filled ki-home-2',
-                    'status' => 'editing...',
                     'route' => 'restaurants.create'
                 ],
                 [

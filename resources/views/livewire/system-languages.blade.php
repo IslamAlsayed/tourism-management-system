@@ -13,23 +13,30 @@
         @if ($view == 'grid')
             <div class="kt-cards p-4" wire:key="{{ $view ? $view : '' }}-view">
                 <div class="inline-flex text-nowrap items-center gap-2 text-center mb-2 cursor-pointer">
-                    <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
-                    <label for="selectAllItems"
-                        class="cursor-pointer">{{ __('main.select_type', ['type' => __('main.all')]) }}</label>
+                    @include('components.elements.all-checkbox-button', [
+                        'name' => 'selectAllItems',
+                        'id' => 'selectAllItems',
+                        'label' => __('main.select_type', ['type' => __('main.all')]),
+                    ])
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
                     @foreach ($data as $language)
-                        <div class="kt-card text-center p-4 rounded-lg shadow-sm {{ getCurrentLocale() == $language->code ? 'bg-gray-100' : 'hover:bg-gray-100' }}"
+                        <div class="kt-card text-center p-4 rounded-lg shadow-sm {{ getCurrentLocale() == $language->code ? 'bg-gray-100 border-2 border-green-500' : 'hover:bg-gray-100' }}"
                             wire:key="{{ $language->id }}">
                             <span class="text-start">
-                                <input type="checkbox" name="selectedItems[]" value="{{ $language->id }}"
-                                    class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'selectedItems[]',
+                                    'id' => 'selectedItems' . $language->id,
+                                    'value' => $language->id,
+                                ])
                             </span>
                             <div class="kt-card-title">{!! highlightSearch($language->code ?? '--', $search) !!}</div>
                             <div class="kt-card-body pb-2">
                                 <p>{!! highlightSearch($language->name ?? '--', $search) !!}</p>
-                                <p>{!! highlightSearch($language->name_ar ?? '--', $search) !!}</p>
+                                @if ($language->name_ar)
+                                    <p>{!! highlightSearch($language->name_ar ?? '--', $search) !!}</p>
+                                @endif
                             </div>
                             <div class="kt-card-footer flex justify-center p-0 pt-2">
                                 <div class="flex justify-center gap-2">
@@ -39,12 +46,10 @@
                                             {{ __('main.active') }}
                                         </a>
                                     @endif
-
-                                    <a href="{{ route('languages.edit', $language->id) }}"
-                                        class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
-                                        {{ __('main.edit') }}
-                                    </a>
-
+                                    @include('components.elements.edit-button', [
+                                        'models' => 'languages',
+                                        'id' => $language->id,
+                                    ])
                                     @include('components.elements.delete-button', [
                                         'id' => $language->id,
                                     ])
@@ -62,7 +67,10 @@
                         <thead>
                             <tr>
                                 <th class="w-[60px] px-4 py-3 text-center">
-                                    <input type="checkbox" id="selectAllItems" class="kt-checkbox kt-checkbox-sm">
+                                    @include('components.elements.all-checkbox-button', [
+                                        'name' => 'selectAllItems',
+                                        'id' => 'selectAllItems',
+                                    ])
                                 </th>
                                 @foreach ($columns as $column)
                                     <th
@@ -78,8 +86,11 @@
                                 <tr wire:key="{{ $language->id }}"
                                     class="{{ getCurrentLocale() == $language->code ? 'bg-gray-100' : 'hover:bg-gray-100' }}">
                                     <td class="text-center">
-                                        <input type="checkbox" name="selectedItems[]" value="{{ $language->id }}"
-                                            class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" />
+                                        @include('components.elements.checkbox-button', [
+                                            'name' => 'selectedItems[]',
+                                            'id' => 'selectedItems' . $language->id,
+                                            'value' => $language->id,
+                                        ])
                                     </td>
                                     @foreach ($columns as $column)
                                         @include('components.static-columns', [
@@ -89,19 +100,21 @@
                                         ])
                                     @endforeach
                                     <td class="px-4 py-2 text-end">
-                                        <div>
+                                        <div class="flex items-center justify-end gap-2">
                                             @if (getCurrentLocale() != $language->code)
                                                 <a href="{{ route('system-languages.change', $language->code) }}"
                                                     class="kt-btn kt-btn-sm kt-btn-outline bg-success text-white">
                                                     {{ __('main.active') }}
                                                 </a>
+                                            @else
+                                                <span style="padding-inline: 17px">
+                                                    <i class="fas fa-circle-check text-green-600"></i>
+                                                </span>
                                             @endif
-
-                                            <a href="{{ route('system-languages.edit', $language->id) }}"
-                                                class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white">
-                                                {{ __('main.edit') }}
-                                            </a>
-
+                                            @include('components.elements.edit-button', [
+                                                'models' => 'system-languages',
+                                                'id' => $language->id,
+                                            ])
                                             @include('components.elements.delete-button', [
                                                 'id' => $language->id,
                                             ])

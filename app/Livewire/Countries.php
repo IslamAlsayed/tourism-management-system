@@ -35,8 +35,13 @@ class Countries extends Component
 
     public function render()
     {
+        $data = Country::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        foreach ($data as $country) {
+            $country['states'] = $country->states();
+            $country['cities'] = $country->cities();
+        }
         return view('livewire.countries', [
-            'data' => Country::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'data' => $data,
             'totalCount' => Country::count(),
         ]);
     }

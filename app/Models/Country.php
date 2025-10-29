@@ -41,13 +41,14 @@ class Country extends Model
 
     public function getRelationshipNames()
     {
-        return ['language', 'currency', 'region', 'subregion', 'state', 'city'];
+        return ['language', 'currency', 'region', 'subregion'];
     }
 
     public function getExcludedColumns()
     {
-        return ['language_id', 'currency_id', 'region_id', 'subregion_id', 'state_id', 'city_id'];
+        return ['language_id', 'currency_id', 'region_id', 'subregion_id'];
     }
+
     public function language()
     {
         return $this->belongsTo(Language::class);
@@ -68,13 +69,51 @@ class Country extends Model
         return $this->belongsTo(Subregion::class);
     }
 
-    public function state()
+    public function states()
     {
-        return $this->belongsTo(State::class);
+        if (!$this->state_id)
+            return [];
+        return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
     }
 
     public function cities()
     {
-        return $this->hasMany(City::class);
+        if (!$this->city_id)
+            return [];
+        return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
+    }
+
+    public function getStateListAttribute()
+    {
+        if (!$this->state_id)
+            return [];
+        return State::whereIn('id', explode(',', $this->state_id))->get(['id', 'name'])->toArray();
+    }
+
+    public function getCityListAttribute()
+    {
+        if (!$this->city_id)
+            return [];
+        return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
+    }
+
+    public function getStateIdAttribute($value)
+    {
+        return $value ?: "";
+    }
+
+    public function setStateIdAttribute($value)
+    {
+        $this->attributes['state_id'] = is_array($value) ? implode(',', $value) : $value;
+    }
+
+    public function getCityIdAttribute($value)
+    {
+        return $value ?: "";
+    }
+
+    public function setCityIdAttribute($value)
+    {
+        $this->attributes['city_id'] = is_array($value) ? implode(',', $value) : $value;
     }
 }

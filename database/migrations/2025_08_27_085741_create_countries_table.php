@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
-            $table->unsignedBigInteger('state_id')->nullable();
-            $table->unsignedBigInteger('city_id')->nullable();
+            $table->text('state_id')->nullable();
+            $table->text('city_id')->nullable();
             $table->string('iso2', 2)->nullable();
             $table->string('iso3', 3)->nullable();
             $table->integer('numeric_code')->nullable();

@@ -171,12 +171,13 @@
                                 <label for="website" class="kt-label required mb-2">Website</label>
                                 <input type="text" name="website" id="website" class="kt-input h-[45px]" required>
                             </div>
+                        </div>
 
-                            {{-- Note --}}
-                            <div class="">
-                                <label for="note" class="kt-label mb-2">Note</label>
-                                <textarea name="note" id="note" rows="3" class="kt-input h-[45px]"></textarea>
-                            </div>
+                        {{-- Note --}}
+                        <div class="">
+                            <label for="note" class="kt-label mb-2">Note</label>
+                            <input id="note" type="hidden" name="note">
+                            <trix-editor input="note"></trix-editor>
                         </div>
 
                         <div class="flex items-center gap-3 mb-4">

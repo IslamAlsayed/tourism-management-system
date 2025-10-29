@@ -27,111 +27,86 @@ class CountryController extends Controller
         $currencies = Currency::orderBy('code')->get();
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
-        // $subregions = Subregion::orderBy('name')->get();
-        // $countries = Country::orderBy('name')->get();
-        // $states = State::orderBy('name')->limit(15)->get();
-        // $cities = City::orderBy('name')->limit(15)->get();
-        return view('pages.dashboard.countries.create', get_defined_vars());
+        return view('pages.dashboard.countries.create', compact('currencies', 'languages', 'regions'));
     }
 
     public function store(CreateCountriesRequest $request)
     {
-        $validated = $request->validated();
+        $data = $request->validated();
 
-        // Handle flag upload
-        if ($request->hasFile('flag')) {
-            $flagPath = $request->file('flag')->store('countries/flags', 'public');
-            $validated['flag'] = $flagPath;
+        if ($request['state_id']) {
+            $data['state_id'] = array_unique($data['state_id']);
+        }
+        if ($request['city_id']) {
+            $data['city_id'] = array_unique($data['city_id']);
         }
 
-        // Handle checkboxes
-        $validated['is_active'] = $request->has('is_active');
-        $validated['is_independent'] = $request->has('is_independent');
-        $validated['is_developed'] = $request->has('is_developed');
-        $validated['is_landlocked'] = $request->has('is_landlocked');
+        // ✅ اجلب قيم IDs الحالية (لو المستخدم اختار يدويًا)
+        $stateIds = $data['state_id'] ?? [];
+        $cityIds = $data['city_id'] ?? [];
 
-        $created = Country::create($validated);
+        // ✅ في حالة all_states = 1 → اجلب كل states حسب الدولة المختارة
+        if (!empty($data['all_states']) && $data['all_states'] == 1) {
+            $stateIds = State::where('country_id', $data['country_id'])->pluck('id')->toArray();
+        }
 
-        if ($created) {
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.country')]));
+        // ✅ في حالة all_cities = 1 → اجلب كل المدن بناءً على الدولة أو الـ states
+        if (!empty($data['all_cities']) && $data['all_cities'] == 1) {
+            // لو اختار "كل المدن" لكن كمان فعّل "كل المحافظات" → نجيب حسب الدولة فقط
+            if (!empty($data['all_states']) && $data['all_states'] == 1) {
+                $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
+            } else {
+                // لو اختار بعض المحافظات فقط
+                $cityIds = City::whereIn('state_id', $stateIds)->pluck('id')->toArray();
             }
-            return redirect()->route('countries.index')->with('success', __('main.messages.type_created', ['type' => __('main.country')]));
+        }
+
+        // ✅ خزنها كـ string (comma-separated)
+        $data['state_id'] = !empty($stateIds) ? implode(',', $stateIds) : null;
+        $data['city_id'] = !empty($cityIds) ? implode(',', $cityIds) : null;
+
+        // ✅ احذف المتغيرات اللي مالهاش لزوم من الـ request
+        unset($data['_token'], $data['save_and_add']);
+
+        $zone = $request->input('timezone');
+        $zone = trim(preg_replace('/\s*\(.*\)$/', '', $zone));
+        $tz = new \DateTimeZone($zone);
+        $now = new \DateTime("now", $tz);
+
+        $offset = $tz->getOffset($now);
+        $hours = floor($offset / 3600);
+        $minutes = abs(($offset % 3600) / 60);
+        $sign = $offset >= 0 ? '+' : '-';
+        $gmtOffsetName = sprintf('UTC%s%02d:%02d', $sign, abs($hours), $minutes);
+
+        $timezoneData = [
+            "tzName" => $zone, // أو ممكن تجيب اسم ودّي من مصدر خارجي
+            "zoneName" => $zone,
+            "gmtOffset" => $offset,
+            "abbreviation" => $now->format('T'),
+            "gmtOffsetName" => $gmtOffsetName,
+        ];
+
+        $data['timezone'] = json_encode([$timezoneData]);
+
+        // 🧩 احفظ في قاعدة البيانات
+        $country = Country::create($data);
+
+        // ✅ إعادة التوجيه
+        if ($country) {
+            $message = __('main.messages.type_created', ['type' => __('main.country')]);
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->with('success', $message);
+            }
+            return redirect()->route('countries.index')->with('success', $message);
         }
 
         return redirect()->route('countries.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.country')]));
     }
 
+
     public function edit($id)
     {
-        // Restaurant::with('country.state.city.region.subregions')->chunk(1000, function ($restaurants) {
-        //     foreach ($restaurants as $key => $restaurant) {
-        //         $country = $restaurant->country;
-        //         if (!$country) {
-        //             echo ++$key . "❌ No country found for restaurant: {$restaurant->name}<br/>";
-        //             continue;
-        //         }
-
-        //         $state = $country->state;
-        //         if (!$state) {
-        //             echo ++$key . "❌ No state found for country: {$country->name}<br/>";
-        //             continue;
-        //         }
-
-        //         $city = $state->city;
-        //         if (!$city) {
-        //             echo ++$key . "❌ No city found for state: {$state->name}<br/>";
-        //             continue;
-        //         }
-
-        //         $region = $country->region;
-        //         if (!$region) {
-        //             echo ++$key . "❌ No region found for country: {$country->name}<br/>";
-        //             continue;
-        //         }
-
-        //         $subregion = $region->subregions()->first();
-        //         if (!$subregion) {
-        //             echo ++$key . "❌ No subregion found for region: {$region->name} (Country: {$country->name})<br/>";
-        //             continue;
-        //         }
-
-        //         $updated = false;
-
-        //         if (!$restaurant->region_id || $restaurant->region_id != $region->id) {
-        //             $restaurant->region_id = $region->id;
-        //             $updated = true;
-        //         }
-
-        //         if (!$restaurant->subregion_id || $restaurant->subregion_id != $subregion->id) {
-        //             $restaurant->subregion_id = $subregion->id;
-        //             $updated = true;
-        //         }
-
-        //         if (!$restaurant->country_id || $restaurant->country_id != $country->id) {
-        //             $restaurant->country_id = $country->id;
-        //             $updated = true;
-        //         }
-
-        //         if (!$restaurant->state_id || $restaurant->state_id != $state->id) {
-        //             $restaurant->state_id = $state->id;
-        //             $updated = true;
-        //         }
-
-        //         if (!$restaurant->city_id || $restaurant->city_id != $city->id) {
-        //             $restaurant->city_id = $city->id;
-        //             $updated = true;
-        //         }
-
-        //         if ($updated) {
-        //             $restaurant->save();
-        //             echo ++$key . "✅ Updated restaurant {$restaurant->id} with region_id: $restaurant->region_id, subregion_id: $restaurant->subregion_id, country_id: $restaurant->country_id, state_id: $restaurant->state_id<br/>";
-        //         } else {
-        //             echo ++$key . "✅ restaurant already up-to-date: {$restaurant->id}<br/>";
-        //         }
-        //     }
-        // });
-
         $country = Country::find($id);
         if (!$country) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.country')]));
@@ -139,7 +114,7 @@ class CountryController extends Controller
         $currencies = Currency::orderBy('code')->get();
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.countries.edit', get_defined_vars());
+        return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'languages', 'regions'));
     }
 
     public function update(UpdateCountriesRequest $request, $id)

@@ -178,13 +178,9 @@
                         {{-- Note --}}
                         <div class="mb-4">
                             <label for="notes" class="kt-label mb-2">Notes</label>
-                            {{-- <textarea name="notes" id="notes" rows="3" class="kt-input h-[45px]">{{ $restaurant->notes }}</textarea> --}}
-                            {{-- <x-forms.trix-editor name="notes" :value="$restaurant->notes ?? null" /> --}}
-
                             <input id="notes" type="hidden" name="notes" value="{{ $restaurant->notes ?? '' }}">
                             <trix-editor input="notes"></trix-editor>
                         </div>
-
 
                         <div class="flex items-center gap-3 mb-4">
                             <input type="hidden" name="is_active" value="0">

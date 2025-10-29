@@ -455,7 +455,9 @@
                                 <div class="row mb-6">
                                     <div class="col-12">
                                         <label class="form-label fw-bold">Bio</label>
-                                        <textarea class="form-control form-control-modern" rows="4">{{ $user->bio ?? '' }}</textarea>
+                                        <input id="bio" type="hidden" name="bio"
+                                            value="{{ $user->bio }}">
+                                        <trix-editor input="bio"></trix-editor>
                                     </div>
                                 </div>
 

@@ -132,10 +132,10 @@
                     </div>
                 </div>
                 <label class="kt-label">
-                    <input class="kt-checkbox kt-checkbox-sm" name="check" type="checkbox" value="1" />
-                    <span class="kt-checkbox-label">
-                        Remember me
-                    </span>
+                    <div class="custom-input">
+                        <input type="checkbox" name="remember" class="mb-0" id="remember-me" value="1">
+                        <label for="remember-me">Remember me</label>
+                    </div>
                 </label>
                 <button class="kt-btn kt-btn-primary flex justify-center grow" type="submit">
                     Sign In
