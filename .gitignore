@@ -33,7 +33,8 @@ COMMIT_CONVENTIONS.md
 /storage/app/private/uploads
 /app/Jobs/ImportDataToDBJob.php
 /app/Jobs/ImportUpdateDataToDBJob.php
-/Source-mertonic
+/Source-metronic
 /MD
 /public/assets/js/FilterByForeignId2.js
 /public/assets/js/FilterByForeignId3.js.backup
+/artisan.php

@@ -86,12 +86,16 @@
         <label for="all_states" class="kt-label required mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
-                    <input type="hidden" name="all_states" value="0">
-                    <div class="custom-input">
-                        <input type="checkbox" name="all_states" id="all_states" value="1"
-                            {{ $record->all_states == 1 ? 'checked' : '' }}>
-                        <label for="all_states">{{ __('main.all_types', ['types' => __('main.states')]) }}</label>
-                    </div>
+                    @if (isset($multiple) && $multiple)
+                        <input type="hidden" name="all_states" value="0">
+                        <div class="custom-input">
+                            <input type="checkbox" name="all_states" id="all_states" value="1"
+                                {{ old('all_states') ? 'checked' : '' }}>
+                            <label for="all_states">{{ __('main.all_types', ['types' => __('main.states')]) }}</label>
+                        </div>
+                    @else
+                        {{ __('main.states') }}
+                    @endif
                     <strong class="dataLength text-primary"></strong>
                     <i id="state_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
                 </div>
@@ -102,15 +106,19 @@
             <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
 
-        <select name="state_id[]" id="state_id" class="kt-select h-[45px]" special-multiple
+        <select name="{{ isset($multiple) && $multiple ? 'state_id[]' : 'state_id' }}" id="state_id"
+            class="kt-select h-[45px]" @if (isset($multiple) && $multiple) special-multiple @else special-search @endif
             data-current-value="{{ $record->state_id }}" value="{{ $record->state_id }}">
             <option value="">--</option>
         </select>
 
-        @if (!empty($record->state_list))
-            @foreach ($record->state_list as $item)
-                <input type="hidden" name="state_id[]" data-name="{{ $item['name'] }}" value="{{ $item['id'] }}">
-            @endforeach
+        @if (!isset($multiple) || !$multiple)
+            @if (!empty($record->state_list))
+                @foreach ($record->state_list as $item)
+                    <input type="hidden" name="state_id[]" data-name="{{ $item['name'] }}"
+                        value="{{ $item['id'] }}">
+                @endforeach
+            @endif
         @endif
 
         @error('state_id')
@@ -124,12 +132,16 @@
         <label for="all_cities" class="kt-label required mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
-                    <input type="hidden" name="all_cities" value="0">
-                    <div class="custom-input">
-                        <input type="checkbox" name="all_cities" id="all_cities" value="1"
-                            {{ $record->all_cities == 1 ? 'checked' : '' }}>
-                        <label for="all_cities">{{ __('main.all_types', ['types' => __('main.cities')]) }}</label>
-                    </div>
+                    @if (isset($multiple) && $multiple)
+                        <input type="hidden" name="all_cities" value="0">
+                        <div class="custom-input">
+                            <input type="checkbox" name="all_cities" id="all_cities" value="1"
+                                {{ old('all_cities') ? 'checked' : '' }}>
+                            <label for="all_cities">{{ __('main.all_types', ['types' => __('main.cities')]) }}</label>
+                        </div>
+                    @else
+                        {{ __('main.city') }}
+                    @endif
                     <strong class="dataLength text-primary"></strong>
                     <i id="city_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
                 </div>
@@ -140,16 +152,19 @@
             <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
 
-        <select name="city_id[]" id="city_id" class="kt-select h-[45px]" special-multiple
+        <select name="{{ isset($multiple) && $multiple ? 'city_id[]' : 'city_id' }}" id="city_id"
+            class="kt-select h-[45px]" @if (isset($multiple) && $multiple) special-multiple @else special-search @endif
             data-current-value="{{ $record->city_id }}" value="{{ $record->city_id }}">
             <option value="">--</option>
         </select>
 
-        @if (!empty($record->city_list))
-            @foreach ($record->city_list as $item)
-                <input type="hidden" name="city_id[]" data-name="{{ $item['name'] }}"
-                    value="{{ $item['id'] }}">
-            @endforeach
+        @if (!isset($multiple) || !$multiple)
+            @if (!empty($record->city_list))
+                @foreach ($record->city_list as $item)
+                    <input type="hidden" name="city_id[]" data-name="{{ $item['name'] }}"
+                        value="{{ $item['id'] }}">
+                @endforeach
+            @endif
         @endif
 
         @error('city_id')
