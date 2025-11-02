@@ -9,9 +9,8 @@
     {{-- FontAwesome Icons --}}
     <link rel="stylesheet" href="{{ asset('vendor/toasts/css/all.min.css') }}">
     {{-- Toasts Styles --}}
-    <link rel="stylesheet" href="{{ asset('vendor/toasts/css/toasts.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/toasts/css/toasts.css') }}">{{-- Toasts Scripts --}}
     <script type="module" src="{{ asset('vendor/toasts/js/toasts.js') }}"></script>
-
 </head>
 
 {{-- kt-sidebar-collapse --}}

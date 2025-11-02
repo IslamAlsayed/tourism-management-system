@@ -17,7 +17,9 @@
 
                         @if (isToastArray($type, 'emoji'))
                             <div class="toast-icon emoji fas" style="font-size: 20px">{!! isToastArray($type, 'emoji') !!}</div>
-                        @else
+                        @endif
+
+                        @if (!isToastArray($type, 'emoji'))
                             <i class="toast-icon fas fa-{{ isToastArray($type, 'icon') ?: getIcon($type) }}"></i>
                         @endif
 
@@ -90,14 +92,16 @@
                                     @endforeach
                                 </div>
                             @elseif ($toast->type == 'confirm')
-                                <div class="toast-actions">
-                                    @foreach ($toast->actions as $action)
-                                        <a href="{{ $action['url'] }}"
-                                            class="toast-action {{ isEmoji($action['label']) ? 'emoji' : 'text' }}">
-                                            {{ $action['label'] }}
-                                        </a>
-                                    @endforeach
-                                </div>
+                                @if ($toast->actions)
+                                    <div class="toast-actions">
+                                        @foreach ($toast->actions as $action)
+                                            <a href="{{ $action['url'] }}"
+                                                class="toast-action {{ isEmoji($action['label']) ? 'emoji' : 'text' }}">
+                                                {{ $action['label'] }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                @endif
 
                                 <div class="toast-actions">
                                     <a href="{{ $toast->link }}"

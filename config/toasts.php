@@ -4,6 +4,7 @@ return [
 
     // Movement settings
     'move' => env('TOASTS_MOVE', 'enable'), // enable | disable
+    // 'move' => env('TOASTS_MOVE', 'disable'), // enable | disable
     'enter_time' => env('TOASTS_ENTER_TIME', '0.5s'),
     'exit_time' => env('TOASTS_EXIT_TIME', '0.5s'),
     'visible_time' => env('TOASTS_VISIBLE_TIME', '3s'),
