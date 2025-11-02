@@ -46,10 +46,7 @@ function filterByForeignId(
 
             if (oldValue == newValue) {
                 if (window.APP_DEBUG)
-                    console.log("✅ Ignored duplicate completed request", {
-                        oldValue,
-                        newValue,
-                    });
+                    console.log("✅ Ignored duplicate completed request");
                 return;
             } else {
                 if (window.APP_DEBUG)
@@ -486,7 +483,7 @@ function filterByForeignId(
             }
 
             // ✅ State → City
-            if (stateVal) {
+            if (document.getElementById("state_id") && stateVal) {
                 await filterByForeignId(
                     "state_id",
                     "city",
@@ -515,7 +512,7 @@ function filterByForeignId(
     if (constrainId == "state_id" && referenceSelect()) {
         referenceSelect().addEventListener("updatedSelect", async (e) => {
             // ✅ تأكد إن الـ event جاي من state_id فقط
-            if (e.target.id !== "state_id") return;
+            if (e.target.id != "state_id") return;
 
             const stateId = e.detail?.value;
             if (stateId) {

@@ -251,14 +251,14 @@
                             </div>
                         </div>
 
-                        {{-- Submit Buttons --}}
+                        <!-- Submit Buttons -->
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                Update Restaurant
+                                {{ __('main.update_type', ['type' => __('main.restaurant')]) }}
                             </button>
                             <a href="{{ route('restaurants.index') }}" class="kt-btn kt-btn-outline">
-                                Cancel
+                                {{ __('main.cancel') }}
                             </a>
                         </div>
                     </form>

@@ -76,25 +76,11 @@ class Country extends Model
         return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
     }
 
-    public function cities()
-    {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
-    }
-
     public function getStateListAttribute()
     {
         if (!$this->state_id)
             return [];
         return State::whereIn('id', explode(',', $this->state_id))->get(['id', 'name'])->toArray();
-    }
-
-    public function getCityListAttribute()
-    {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
     }
 
     public function getStateIdAttribute($value)
@@ -105,6 +91,20 @@ class Country extends Model
     public function setStateIdAttribute($value)
     {
         $this->attributes['state_id'] = is_array($value) ? implode(',', $value) : $value;
+    }
+
+    public function cities()
+    {
+        if (!$this->city_id)
+            return [];
+        return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
+    }
+
+    public function getCityListAttribute()
+    {
+        if (!$this->city_id)
+            return [];
+        return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
     }
 
     public function getCityIdAttribute($value)

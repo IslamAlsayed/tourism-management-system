@@ -35,8 +35,12 @@ class Cities extends Component
 
     public function render()
     {
+        $data = City::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        foreach ($data as $city) {
+            $city['states'] = $city->states();
+        }
         return view('livewire.cities', [
-            'data' => City::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'data' => $data,
             'totalCount' => City::count(),
         ]);
     }

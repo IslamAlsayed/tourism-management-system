@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.countries')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.countries')]) }}
                 </a>
             </div>
         </div>
@@ -160,6 +160,7 @@
                             @include('components.regions.edit', [
                                 'levels' => ['region', 'subregion', 'state', 'city'],
                                 'record' => $country,
+                                'multiple' => true,
                             ])
 
                             <!-- Area (km²) -->
@@ -266,12 +267,7 @@
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.save_type', ['type' => __('main.country')]) }}
-                            </button>
-                            <button type="submit" name="save_and_edit" value="1"
-                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                                <i class="ki-filled ki-plus text-sm me-2"></i>
-                                {{ __('main.save_and_edit_another') }}
+                                {{ __('main.update_type', ['type' => __('main.country')]) }}
                             </button>
                             <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
                                 {{ __('main.cancel') }}

@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         $request['model'] = 'city';
         $request['foreignKey'] = 'state_id';
-        $request['foreignKeyValue'] = [1];
+        $request['foreignKeyValue'] = [2];
 
         $validated = $request->validate([
             'model' => 'required|string',

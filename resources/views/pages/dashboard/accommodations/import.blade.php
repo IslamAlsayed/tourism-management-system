@@ -14,7 +14,7 @@
             'room_types',
         ]" :disabledOptions="['rate_nationalities', 'room_types']" :additionalInputs="[['name' => 'importType', 'id' => 'importType', 'value' => '']]" customExportId="exportData">
 
-        @if (config('app.db_mode') != 'production')
+        @if (env('DB_MODE') != 'production')
             {{-- Target columns tables --}}
             <div>
                 <div data-hotels-target="hotels" class="target-trigger mt-4" style="display: none">

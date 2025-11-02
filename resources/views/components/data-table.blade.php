@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($data as $item)
+        @forelse ($data as $item)
             <tr wire:key="{{ $item->id }}" class="hover:bg-gray-100">
                 <td class="text-center">
                     @include('components.elements.all-checkbox-button', [
@@ -46,6 +46,15 @@
                     </div>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="{{ count($columns) + 2 }}" class="px-4 py-3 text-center text-gray-500">
+                    <div class="w-[90px] h-[90px] mx-auto my-4">
+                        <img src="{{ asset('assets/images/other/no-data.svg') }}" alt="no data">
+                    </div>
+                    <p>{{ __('main.messages.no_records_found') }}</p>
+                </td>
+            </tr>
+        @endforelse
     </tbody>
 </table>

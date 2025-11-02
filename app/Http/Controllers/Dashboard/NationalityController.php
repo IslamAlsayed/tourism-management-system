@@ -7,6 +7,7 @@ use App\Models\Nationality;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Nationalities\NationalitiesCreateRequest;
 use App\Http\Requests\Nationalities\NationalitiesUpdateRequest;
+use App\Models\Region;
 
 class NationalityController extends Controller
 {
@@ -17,8 +18,8 @@ class NationalityController extends Controller
 
     public function create()
     {
-        $countries = Country::orderBy('name')->get();
-        return view('pages.dashboard.nationalities.create', compact('countries'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.nationalities.create', get_defined_vars());
     }
 
     public function store(NationalitiesCreateRequest $request)
@@ -42,8 +43,8 @@ class NationalityController extends Controller
         if (!$nationality) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.nationality')]));
         }
-        $countries = Country::orderBy('name')->get();
-        return view('pages.dashboard.nationalities.edit', compact('nationality', 'countries'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.nationalities.edit', get_defined_vars());
     }
 
     public function update(NationalitiesUpdateRequest $request, $id)

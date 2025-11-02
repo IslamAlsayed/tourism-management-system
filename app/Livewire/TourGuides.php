@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\Language;
 use Livewire\Component;
 use App\Models\TourGuide;
 use Livewire\WithPagination;
@@ -36,8 +35,13 @@ class TourGuides extends Component
 
     public function render()
     {
+        $data = TourGuide::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        foreach ($data as $tourGuides) {
+            $tourGuides['states'] = $tourGuides->states();
+            $tourGuides['cities'] = $tourGuides->cities();
+        }
         return view('livewire.tour-guides', [
-            'data' => TourGuide::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'data' => $data,
             'totalCount' => TourGuide::count(),
         ]);
     }

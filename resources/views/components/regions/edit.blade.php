@@ -3,14 +3,13 @@
 {{-- Variables passed: $record (model instance), $regions (list of regions), $levels (array of levels to include), $exclude (array of levels to exclude), $replaces (array of two strings for foreign key replacement) --}}
 
 @if (isset($levels) && in_array('region', $levels))
-    <div class="{{ count($regions) <= 0 ? 'loading' : '' }}">
+    <div class="{{ isset($regions) && count($regions) <= 0 ? 'loading' : '' }}">
         <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
             <div>
                 {{ __('main.region') }}
-                @if (count($regions))
-                    <strong class="dataLength text-primary">({{ count($regions) ?: 0 }})</strong>
-                @endif
-                @if (count($regions) <= 0)
+                <strong
+                    class="dataLength text-primary">({{ isset($regions) && count($regions) ? count($regions) : 0 }})</strong>
+                @if (isset($regions) && count($regions) <= 0)
                     <span id="region_id-info" class="text-red-600 text-sm span-info show">
                         (Not regions found)
                     </span>
@@ -21,11 +20,13 @@
         <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search
             data-current-value="{{ $record->region_id }}" value="{{ $record->region_id }}">
             <option value="">--</option>
-            @foreach ($regions as $region)
-                <option value="{{ $region->id }}" {{ $record->region_id == $region->id ? 'selected' : '' }}>
-                    {{ app()->getLocale() == 'ar' ? ($region->name_ar ?: $region->name) : $region->name }}
-                </option>
-            @endforeach
+            @if (isset($regions))
+                @foreach ($regions as $region)
+                    <option value="{{ $region->id }}" {{ $record->region_id == $region->id ? 'selected' : '' }}>
+                        {{ app()->getLocale() == 'ar' ? ($region->name_ar ?: $region->name) : $region->name }}
+                    </option>
+                @endforeach
+            @endif
         </select>
         @error('region_id')
             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -112,7 +113,7 @@
             <option value="">--</option>
         </select>
 
-        @if (!isset($multiple) || !$multiple)
+        @if (isset($multiple) && $multiple)
             @if (!empty($record->state_list))
                 @foreach ($record->state_list as $item)
                     <input type="hidden" name="state_id[]" data-name="{{ $item['name'] }}"
@@ -158,7 +159,7 @@
             <option value="">--</option>
         </select>
 
-        @if (!isset($multiple) || !$multiple)
+        @if (isset($multiple) && $multiple)
             @if (!empty($record->city_list))
                 @foreach ($record->city_list as $item)
                     <input type="hidden" name="city_id[]" data-name="{{ $item['name'] }}"

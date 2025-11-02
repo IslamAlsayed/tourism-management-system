@@ -959,6 +959,7 @@ return [
 
     // messages
     'messages' => [
+        'no_records_found' => 'No records found.',
         'no_backup' => 'No backup files found.',
         'Updated Successfully' => 'Updated Successfully',
         'Failed to update language status. Please try again.' => 'Failed to update language status. Please try again.',

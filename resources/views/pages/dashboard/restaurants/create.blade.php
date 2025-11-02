@@ -250,19 +250,19 @@
                             </div>
                         </div>
 
-                        {{-- Submit Buttons --}}
+                        <!-- Submit Buttons -->
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                Create Restaurant
+                                {{ __('main.save_type', ['type' => __('main.restaurant')]) }}
                             </button>
                             <button type="submit" name="save_and_add" value="1"
                                 class="kt-btn kt-btn-outline kt-btn-outline-primary">
                                 <i class="ki-filled ki-plus text-sm me-2"></i>
-                                Save and Add Another
+                                {{ __('main.save_and_add_another') }}
                             </button>
                             <a href="{{ route('restaurants.index') }}" class="kt-btn kt-btn-outline">
-                                Cancel
+                                {{ __('main.cancel') }}
                             </a>
                         </div>
                     </form>

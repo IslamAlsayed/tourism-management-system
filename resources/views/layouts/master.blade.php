@@ -6,12 +6,22 @@
     @livewireStyles
     @include('layouts.partials.head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- FontAwesome Icons --}}
+    <link rel="stylesheet" href="{{ asset('vendor/toasts/css/all.min.css') }}">
+    {{-- Toasts Styles --}}
+    <link rel="stylesheet" href="{{ asset('vendor/toasts/css/toasts.css') }}">
+    <script type="module" src="{{ asset('vendor/toasts/js/toasts.js') }}"></script>
+
 </head>
 
+{{-- kt-sidebar-collapse --}}
 
-{{-- <body class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased kt-sidebar-collapse"> --}}
+<body
+    class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased kt-sidebar-collapse">
+    @if (view()->exists('vendor/toasts/toasts'))
+        @include('vendor.toasts.toasts')
+    @endif
 
-<body class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased">
     @include('partials.theme-toggle')
 
     <!-- Page -->
@@ -25,8 +35,6 @@
 
             <!-- Content -->
             <main class="grow" id="content" role="content">
-                @include('components.elements.display-alert')
-
                 @yield('content')
             </main>
             <!-- End of Content -->
@@ -41,6 +49,7 @@
     <!-- Scripts -->
     @livewireScripts
     @include('layouts.partials.scripts')
+    {{-- Toasts Scripts --}}
 </body>
 
 </html>

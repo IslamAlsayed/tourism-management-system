@@ -16,11 +16,7 @@ return [
     |
     */
 
-    'default' => match (env('DB_MODE', 'local')) {
-        'testing' => env('DB_TEST_CONNECTION', 'mysql_testing'),
-        'production' => env('DB_PROD_CONNECTION', 'mysql_production'),
-        default => env('DB_CONNECTION', 'mysql'),
-    },
+    'default' => env('DB_CONNECTION', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
@@ -64,24 +60,6 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
-        ],
-
-        'mysql_testing' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_TEST_DATABASE'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
-        ],
-
-        'mysql_production' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_PROD_DATABASE'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
         ],
 
         'mariadb' => [

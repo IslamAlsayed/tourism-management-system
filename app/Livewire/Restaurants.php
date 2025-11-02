@@ -35,8 +35,13 @@ class Restaurants extends Component
 
     public function render()
     {
+        $data = Restaurant::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        foreach ($data as $restaurant) {
+            $restaurant['states'] = $restaurant->states();
+            $restaurant['cities'] = $restaurant->cities();
+        }
         return view('livewire.restaurants', [
-            'data' => Restaurant::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'data' => $data,
             'totalCount' => Restaurant::count(),
         ]);
     }

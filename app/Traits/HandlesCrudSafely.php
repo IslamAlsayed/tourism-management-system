@@ -15,16 +15,17 @@ trait HandlesCrudSafely
             return $callback();
         } catch (\Throwable $e) {
             Log::error('Livewire SafeRun Error: ' . $e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getLine()]);
-            session()->flash('danger', __('main.messages.general_error') . ' | ' . $e->getMessage() ?? 'Something went wrong, please try again later.');
+            // session()->flash('danger', __('main.messages.general_error') . ' | ' . $e->getMessage() ?? 'Something went wrong, please try again later.');
+            $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Something went wrong, please try again later.', 'title' => 'Error', 'emoji' => '❌']);
         }
     }
 
     /**
      * Generic delete method — delete any model dynamically and handle all errors.
      */
-    public function safeDestroy($id, $type)
+    public function safeDestroy($id, $type, $showToast = true)
     {
-        $this->safeRun(function () use ($id, $type) {
+        return $this->safeRun(function () use ($id, $type, $showToast) {
             $modelName = ucfirst($type);
             $modelClass = "App\\Models\\$modelName";
             if (!class_exists($modelClass)) {
@@ -33,13 +34,15 @@ trait HandlesCrudSafely
             $model = $modelClass::find($id);
             $parts = preg_split('/(?=[A-Z])/', $type, -1, PREG_SPLIT_NO_EMPTY);
             $type = strtolower(implode('-', $parts));
+
             if (!$model) {
-                session()->flash('danger', __('main.messages.not_found_this_type', ['type' => __('main.' . $type)]));
+                $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Tour guide not found.', 'title' => 'Error', 'emoji' => '❌']);
             } elseif ($model->delete()) {
-                // $this->resetPage();
-                session()->flash('success', __('main.messages.type_deleted', ['type' => __('main.' . $type)]) . ', id: ' . $id);
+                if ($showToast) {
+                    $this->dispatch('show-toast', ['type' => 'success', 'message' => 'Tour guide deleted successfully!', 'title' => 'Deleted', 'emoji' => '🎯']);
+                }
             } else {
-                session()->flash('success', __('main.messages.type_deletion_failed', ['type' => __('main.' . $type)]));
+                $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Tour guide not found.', 'title' => 'Error', 'emoji' => '❌']);
             }
         });
     }

@@ -20,6 +20,7 @@
                         'data' => $data,
                         'title' => __('main.reviews'),
                         'entityName' => __('main.review'),
+                        'searchValue' => $search,
                         'showSearch' => true,
                     ])
                     @endcomponent

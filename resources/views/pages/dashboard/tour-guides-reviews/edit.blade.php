@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('tour-guides-reviews.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.tour-guide-reviews')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.tour-guide-reviews')]) }}
                 </a>
             </div>
         </div>

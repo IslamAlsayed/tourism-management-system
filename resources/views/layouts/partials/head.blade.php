@@ -40,7 +40,7 @@
     href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
     rel="shortcut icon" />
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+{{-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" /> --}}
 
 {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet" /> --}}
 <link href="{{ asset('assets/css/all.min.css') }}" rel="stylesheet" />
@@ -57,7 +57,7 @@
 <link href="{{ asset('metronic/css/styles.css') }}" rel="stylesheet" />
 
 {{-- Text editor --}}
-<link rel="stylesheet" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+{{-- <link href="https://unpkg.com/trix@2.0.0/dist/trix.css" rel="stylesheet"> --}}
 
 @yield('styles')
 @stack('styles')

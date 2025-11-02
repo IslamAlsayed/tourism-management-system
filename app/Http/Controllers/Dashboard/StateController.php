@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Region;
 use App\Models\State;
-use App\Models\Country;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\States\StateCreateRequest;
 use App\Http\Requests\States\StateUpdateRequest;
-use App\Http\Requests\States\UpdateStatesRequest;
 
 class StateController extends Controller
 {
@@ -19,8 +17,8 @@ class StateController extends Controller
 
     public function create()
     {
-        $countries = Country::orderBy('name')->get();
-        return view('pages.dashboard.states.create', compact('countries'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.states.create', get_defined_vars());
     }
 
     public function store(StateCreateRequest $request)
@@ -44,8 +42,8 @@ class StateController extends Controller
         if (!$state) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.state')]));
         }
-        $countries = Country::orderBy('name')->get();
-        return view('pages.dashboard.states.edit', compact('state', 'countries'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.states.edit', get_defined_vars());
     }
 
     public function update(StateUpdateRequest $request, $id)

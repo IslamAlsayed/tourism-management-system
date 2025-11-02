@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.countries')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.countries')]) }}
                 </a>
             </div>
         </div>
@@ -353,13 +353,13 @@
             // ========================================
             // DOM ELEMENTS
             // ========================================
-            // const stateSelect = getSelect("state_id");
+            const subregionSelect = getSelect("subregion_id");
             const stateSelect = getSelect("state_id");
             const citySelect = getSelect("city_id");
             const allStates = getSelect("all_states");
             const allCities = getSelect("all_cities");
 
-            if (!stateSelect || !stateSelect || !citySelect) return;
+            if (!subregionSelect || !stateSelect || !citySelect) return;
 
             // STATE MANAGEMENT
             let isLoading = false;
@@ -369,14 +369,14 @@
             // ========================================
             async function handleStateChange(triggerType) {
                 const stateIds = getSelectedIds("state_id[]");
-                const stateId = getInput("state_id")?.dataset.id;
+                const subregionId = getInput("subregion_id")?.dataset.id;
 
                 await resetDependentTags("state_id", getInput("city_id"));
 
                 if (allStates && allStates?.checked) {
                     stateSelect.disabled = true;
                     getSelect("state_id").nextElementSibling?.classList.add('loading');
-                    await loadData("state_id", "city", "city_id", stateId);
+                    await loadData("subregion_id", "city", "city_id", subregionId);
                     return;
                 }
 
@@ -409,15 +409,15 @@
             // ========================================
             // EVENT HANDLERS
             // ========================================
-            if (!stateSelect.dataset.bound) {
-                stateSelect.dataset.bound = "true";
-                stateSelect?.addEventListener("updatedSelect", async () => {
+            if (!subregionSelect.dataset.bound) {
+                subregionSelect.dataset.bound = "true";
+                subregionSelect?.addEventListener("updatedSelect", async () => {
                     if (isLoading) return;
                     isLoading = true;
 
-                    const stateId = getInput("state_id")?.dataset.id;
+                    const subregionId = getInput("subregion_id")?.dataset.id;
 
-                    if (!stateId) {
+                    if (!subregionId) {
                         stateSelect.innerHTML = '<option value="">--</option>';
                         citySelect.innerHTML = '<option value="">--</option>';
                         getSelect("state_id").nextElementSibling?.classList.add('loading');
@@ -429,11 +429,11 @@
                     if (allStates && allStates?.checked) {
                         stateSelect.disabled = true;
                         getSelect("state_id").nextElementSibling?.classList.add('loading');
-                        await loadData("state_id", "city", "city_id", stateId);
+                        await loadData("subregion_id", "city", "city_id", subregionId);
                     } else {
                         stateSelect.disabled = false;
                         getSelect("state_id").nextElementSibling?.classList.remove('loading');
-                        await loadData("state_id", "state", "state_id", stateId);
+                        await loadData("subregion_id", "state", "state_id", subregionId);
                     }
 
                     isLoading = false;

@@ -38,3 +38,7 @@ COMMIT_CONVENTIONS.md
 /public/assets/js/FilterByForeignId2.js
 /public/assets/js/FilterByForeignId3.js.backup
 /artisan.php
+/.gitattributes
+/.gitignore
+/resources/views/components/trash
+/resources/views/components/elements/display-alert.blade.php

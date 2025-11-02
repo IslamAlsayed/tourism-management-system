@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.system_languages'),
         'entityName' => __('main.language'),
+        'searchValue' => $search,
         'showSearch' => true,
     ])
         @include('components.columns', ['allColumns' => $allColumns ?? []])
@@ -62,7 +63,7 @@
         @else
             <div wire:key="{{ $view ? $view : '' }}-view" data-kt-datatable="true" data-kt-datatable-state-save="false"
                 id="team_crew_table">
-                <div class="kt-scrollable-x-auto">
+                <div class="kt-scrollable-x-auto" wire:target="search" wire:loading.class="loading">
                     <table class="kt-table table-auto text-nowrap">
                         <thead>
                             <tr>
@@ -128,7 +129,9 @@
             </div>
         @endif
 
-        {{-- Enhanced Pagination Controls --}}
-        @include('includes.pagination', ['data' => $data])
+        @if (isset($data) && !empty($data) && $data->count() > 0)
+            {{-- Enhanced Pagination Controls --}}
+            @include('includes.pagination', ['data' => $data])
+        @endif
     </div>
 </div>

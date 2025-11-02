@@ -8,15 +8,17 @@ use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Language;
-use App\Models\Subregion;
 use Illuminate\Http\Request;
+use App\Traits\PhotoUploadTrait;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Countries\CreateCountriesRequest;
-use App\Http\Requests\Countries\UpdateCountriesRequest;
-use App\Models\Restaurant;
+use App\Http\Requests\Country\CountryCreateRequest;
+use App\Http\Requests\Country\CountryUpdateRequest;
 
 class CountryController extends Controller
 {
+    use PhotoUploadTrait;
+
     public function index()
     {
         return view('pages.dashboard.countries.index');
@@ -27,83 +29,85 @@ class CountryController extends Controller
         $currencies = Currency::orderBy('code')->get();
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.countries.create', compact('currencies', 'languages', 'regions'));
+        return view('pages.dashboard.countries.create', get_defined_vars());
     }
 
-    public function store(CreateCountriesRequest $request)
+    public function store(CountryCreateRequest $request)
     {
-        $data = $request->validated();
+        DB::beginTransaction();
+        try {
+            $data = $request->validated();
 
-        if ($request['state_id']) {
-            $data['state_id'] = array_unique($data['state_id']);
-        }
-        if ($request['city_id']) {
-            $data['city_id'] = array_unique($data['city_id']);
-        }
-
-        // ✅ اجلب قيم IDs الحالية (لو المستخدم اختار يدويًا)
-        $stateIds = $data['state_id'] ?? [];
-        $cityIds = $data['city_id'] ?? [];
-
-        // ✅ في حالة all_states = 1 → اجلب كل states حسب الدولة المختارة
-        if (!empty($data['all_states']) && $data['all_states'] == 1) {
-            $stateIds = State::where('country_id', $data['country_id'])->pluck('id')->toArray();
-        }
-
-        // ✅ في حالة all_cities = 1 → اجلب كل المدن بناءً على الدولة أو الـ states
-        if (!empty($data['all_cities']) && $data['all_cities'] == 1) {
-            // لو اختار "كل المدن" لكن كمان فعّل "كل المحافظات" → نجيب حسب الدولة فقط
-            if (!empty($data['all_states']) && $data['all_states'] == 1) {
-                $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
-            } else {
-                // لو اختار بعض المحافظات فقط
-                $cityIds = City::whereIn('state_id', $stateIds)->pluck('id')->toArray();
+            if ($request['state_id']) {
+                $data['state_id'] = array_unique($data['state_id']);
             }
-        }
+            if ($request['city_id']) {
+                $data['city_id'] = array_unique($data['city_id']);
+            }
 
-        // ✅ خزنها كـ string (comma-separated)
-        $data['state_id'] = !empty($stateIds) ? implode(',', $stateIds) : null;
-        $data['city_id'] = !empty($cityIds) ? implode(',', $cityIds) : null;
+            // ✅ اجلب قيم IDs الحالية (لو المستخدم اختار يدويًا)
+            $stateIds = $data['state_id'] ?? [];
+            $cityIds = $data['city_id'] ?? [];
 
-        // ✅ احذف المتغيرات اللي مالهاش لزوم من الـ request
-        unset($data['_token'], $data['save_and_add']);
+            // ✅ في حالة all_states = 1 → اجلب كل states حسب الدولة المختارة
+            if (!empty($data['all_states']) && $data['all_states'] == 1) {
+                $stateIds = State::where('country_id', $data['country_id'])->pluck('id')->toArray();
+            }
 
-        $zone = $request->input('timezone');
-        $zone = trim(preg_replace('/\s*\(.*\)$/', '', $zone));
-        $tz = new \DateTimeZone($zone);
-        $now = new \DateTime("now", $tz);
+            // ✅ في حالة all_cities = 1 → اجلب كل المدن بناءً على الدولة أو الـ states
+            if (!empty($data['all_cities']) && $data['all_cities'] == 1) {
+                // لو اختار "كل المدن" لكن كمان فعّل "كل المحافظات" → نجيب حسب الدولة فقط
+                if (!empty($data['all_states']) && $data['all_states'] == 1) {
+                    $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
+                } else {
+                    // لو اختار بعض المحافظات فقط
+                    $cityIds = City::whereIn('state_id', $stateIds)->pluck('id')->toArray();
+                }
+            }
 
-        $offset = $tz->getOffset($now);
-        $hours = floor($offset / 3600);
-        $minutes = abs(($offset % 3600) / 60);
-        $sign = $offset >= 0 ? '+' : '-';
-        $gmtOffsetName = sprintf('UTC%s%02d:%02d', $sign, abs($hours), $minutes);
+            // ✅ خزنها كـ string (comma-separated)
+            $data['state_id'] = !empty($stateIds) ? implode(',', $stateIds) : null;
+            $data['city_id'] = !empty($cityIds) ? implode(',', $cityIds) : null;
 
-        $timezoneData = [
-            "tzName" => $zone, // أو ممكن تجيب اسم ودّي من مصدر خارجي
-            "zoneName" => $zone,
-            "gmtOffset" => $offset,
-            "abbreviation" => $now->format('T'),
-            "gmtOffsetName" => $gmtOffsetName,
-        ];
+            // ✅ احذف المتغيرات اللي مالهاش لزوم من الـ request
+            unset($data['_token'], $data['save_and_add']);
 
-        $data['timezone'] = json_encode([$timezoneData]);
+            $zone = $request->input('timezone');
+            $zone = trim(preg_replace('/\s*\(.*\)$/', '', $zone));
+            $tz = new \DateTimeZone($zone);
+            $now = new \DateTime("now", $tz);
 
-        // 🧩 احفظ في قاعدة البيانات
-        $country = Country::create($data);
+            $offset = $tz->getOffset($now);
+            $hours = floor($offset / 3600);
+            $minutes = abs(($offset % 3600) / 60);
+            $sign = $offset >= 0 ? '+' : '-';
+            $gmtOffsetName = sprintf('UTC%s%02d:%02d', $sign, abs($hours), $minutes);
 
-        // ✅ إعادة التوجيه
-        if ($country) {
+            $timezoneData = [
+                "tzName" => $zone,
+                "zoneName" => $zone,
+                "gmtOffset" => $offset,
+                "abbreviation" => $now->format('T'),
+                "gmtOffsetName" => $gmtOffsetName,
+            ];
+
+            $data['timezone'] = json_encode([$timezoneData]);
+
+            $data = $request->safe()->except('photo');
+            $country = Country::create($data);
+            $this->uploadPhoto($request, $country, 'photo', "countries");
+            DB::commit();
             $message = __('main.messages.type_created', ['type' => __('main.country')]);
             if ($request->has('save_and_add')) {
                 return redirect()->back()->with('success', $message);
             }
             return redirect()->route('countries.index')->with('success', $message);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            report($e);
+            return redirect()->route('countries.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.country')]));
         }
-
-        return redirect()->route('countries.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.country')]));
     }
-
 
     public function edit($id)
     {
@@ -114,23 +118,35 @@ class CountryController extends Controller
         $currencies = Currency::orderBy('code')->get();
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'languages', 'regions'));
+        return view('pages.dashboard.countries.edit', get_defined_vars());
     }
 
-    public function update(UpdateCountriesRequest $request, $id)
+    public function update(CountryUpdateRequest $request, $id)
     {
         $country = Country::find($id);
         if (!$country) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.country')]));
         }
-        $validated = $request->validated();
+        DB::beginTransaction();
+        try {
+            $data = $request->validated();
+            if ($request['state_id']) {
+                $data['state_id'] = array_unique($data['state_id']);
+            }
+            if ($request['city_id']) {
+                $data['city_id'] = array_unique($data['city_id']);
+            }
+            $data = $request->safe()->except('photo');
 
-        $updated = $country->update($validated);
-        if ($updated) {
+            $country->update($data);
+            $this->uploadPhoto($request, $country, 'photo', "countries");
+            DB::commit();
             return redirect()->route('countries.index')->with('success', __('main.messages.type_updated', ['type' => __('main.country')]));
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            report($e);
+            return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.country')]));
         }
-
-        return redirect()->back()->with('error', __('main.messages.type_updated_failed', ['type' => __('main.country')]));
     }
 
     public function destroy($id)
