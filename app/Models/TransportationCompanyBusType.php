@@ -18,11 +18,17 @@ class TransportationCompanyBusType extends Model
         'bus_type_id',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['company', 'bus_type'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return ['company_id', 'bus_type_id'];

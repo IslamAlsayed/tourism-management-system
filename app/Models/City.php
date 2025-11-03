@@ -24,11 +24,17 @@ class City extends Model
         'state_id',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['region', 'subregion', 'country'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return ['region_id', 'subregion_id', 'country_id'];

@@ -51,11 +51,17 @@ class Restaurant extends Model
         'city_id',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['type', 'region', 'subregion', 'country'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return ['type_id', 'region_id', 'subregion_id', 'country_id'];

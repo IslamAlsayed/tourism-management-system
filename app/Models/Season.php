@@ -19,11 +19,17 @@ class Season extends Model
         'accommodation_id',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['accommodation'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return ['accommodation_id'];

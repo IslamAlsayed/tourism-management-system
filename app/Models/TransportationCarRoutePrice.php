@@ -16,11 +16,17 @@ class TransportationCarRoutePrice extends Model
         'price',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['car_route', 'currency'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return ['car_route_id', 'currency_id'];

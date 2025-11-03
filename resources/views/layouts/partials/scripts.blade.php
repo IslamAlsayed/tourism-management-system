@@ -6,12 +6,13 @@
 <script src="{{ asset('assets/js/all.min.js') }}"></script>
 
 <!-- Scripts -->
-{{-- <script src="{{ asset('metronic/js/scripts.bundle.js') }}"></script> --}}
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
+{{--
+<script src="{{ asset('metronic/js/scripts.bundle.js') }}"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- End of Scripts -->
 
 {{-- Text editor --}}
-{{-- <script src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script> --}}
+<script src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
 
 {{-- Multiples JS --}}
 <script src="{{ asset('assets/js/multiSelectUtils.js') }}"></script>

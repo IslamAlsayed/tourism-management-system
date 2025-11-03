@@ -2,10 +2,12 @@
     <thead>
         <tr>
             <th class="w-[60px] px-4 py-3 text-center">
-                @include('components.elements.all-checkbox-button', [
-                    'name' => 'selectAllItems',
-                    'id' => 'selectAllItems',
-                ])
+                @if (isset($data) && !empty($data) && $data->count() > 0)
+                    @include('components.elements.all-checkbox-button', [
+                        'name' => 'selectAllItems',
+                        'id' => 'selectAllItems',
+                    ])
+                @endif
             </th>
             @foreach ($columns as $column)
                 <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -52,7 +54,7 @@
                     <div class="w-[90px] h-[90px] mx-auto my-4">
                         <img src="{{ asset('assets/images/other/no-data.svg') }}" alt="no data">
                     </div>
-                    <p>{{ __('main.messages.no_records_found') }}</p>
+                    <p class="text-red-600 font-semibold">{{ __('main.messages.no_records_found') }}</p>
                 </td>
             </tr>
         @endforelse

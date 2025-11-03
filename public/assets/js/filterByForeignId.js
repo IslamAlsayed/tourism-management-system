@@ -2,6 +2,8 @@
 window.globalRequestCache = window.globalRequestCache || new Map();
 const globalRequestCache = window.globalRequestCache;
 const filterByForeignIdInstances = {};
+// ✅ Mapping من constrainId للـ reference الحالي عشان نلاقي الـ instance الصح
+const constrainIdToReference = {};
 
 function filterByForeignId(
     constrainId,
@@ -13,8 +15,10 @@ function filterByForeignId(
     const referenceSelect = () => document.getElementById(referenceId);
 
     let initializing = action == "edit";
-    if (filterByForeignIdInstances[constrainId]) {
-        return filterByForeignIdInstances[constrainId];
+    // ✅ استخدم constrainId + reference عشان لو نفس الـ constrainId بس model مختلف
+    const instanceKey = `${constrainId}_${reference}_${referenceId}`;
+    if (filterByForeignIdInstances[instanceKey]) {
+        return filterByForeignIdInstances[instanceKey];
     }
 
     // دالة تحمل البيانات من السيرفر
@@ -23,7 +27,9 @@ function filterByForeignId(
         selectedValue = null,
         append = false,
     ) {
-        const cacheKey = `${constrainId}_data`;
+        // ✅ إضافة context للكاش عشان نفرق بين الطلبات
+        const context = `${reference}_${referenceId}`;
+        const cacheKey = `${constrainId}_${context}`;
 
         // لو الطلب بنفس القيمه لسه شغال → تجاهله
         const existing = globalRequestCache.get(cacheKey);
@@ -44,13 +50,24 @@ function filterByForeignId(
                 ? constrainValue.sort().join(",")
                 : String(constrainValue);
 
-            if (oldValue == newValue) {
+            // ✅ نسمح بالطلب لو:
+            // 1. القيمة اتغيرت
+            // 2. في append mode (عشان all states/cities)
+            // 3. النوع اتغير من array لـ single أو العكس
+            // 4. الـ append mode اتغير
+            const typeChanged =
+                Array.isArray(existing.value) !== Array.isArray(constrainValue);
+            const appendChanged = existing.append !== append;
+
+            if (oldValue == newValue && !appendChanged && !typeChanged) {
                 if (window.APP_DEBUG)
                     console.log("✅ Ignored duplicate completed request");
                 return;
             } else {
                 if (window.APP_DEBUG)
-                    console.log("🔄 Value changed, clearing cache");
+                    console.log(
+                        "🔄 Value changed or mode changed, clearing cache",
+                    );
                 globalRequestCache.delete(cacheKey);
             }
         }
@@ -58,6 +75,7 @@ function filterByForeignId(
         globalRequestCache.set(cacheKey, {
             pending: true,
             value: constrainValue,
+            append: append,
         });
 
         document.getElementById(`${referenceId}-info`)?.classList.add("show");
@@ -116,6 +134,7 @@ function filterByForeignId(
                 globalRequestCache.set(cacheKey, {
                     pending: false,
                     value: null,
+                    append: append,
                 });
                 return;
             }
@@ -382,6 +401,7 @@ function filterByForeignId(
             globalRequestCache.set(cacheKey, {
                 pending: false,
                 value: constrainValue,
+                append: append,
             });
         }
     }
@@ -561,8 +581,11 @@ function filterByForeignId(
         }
     }
 
-    filterByForeignIdInstances[constrainId] = { loadReferenceData };
-    return filterByForeignIdInstances[constrainId];
+    // ✅ استخدم نفس الـ instanceKey
+    filterByForeignIdInstances[instanceKey] = { loadReferenceData };
+    // ✅ احفظ آخر instance key عشان handleClick/handleChange يعرف يلاقيه
+    constrainIdToReference[constrainId] = instanceKey;
+    return filterByForeignIdInstances[instanceKey];
 }
 
 function handleClick(e) {
@@ -576,7 +599,9 @@ function handleClick(e) {
     const constrainValue = li.dataset.value;
     if (!constrainValue) return;
 
-    const api = filterByForeignIdInstances[constrainId];
+    // ✅ استخدم الـ mapping عشان تلاقي الـ instance الصح
+    const instanceKey = constrainIdToReference[constrainId];
+    const api = instanceKey ? filterByForeignIdInstances[instanceKey] : null;
     api?.loadReferenceData(constrainValue);
 }
 
@@ -584,7 +609,9 @@ function handleChange(e) {
     const sel = e.target;
     if (!(sel instanceof HTMLSelectElement)) return;
 
-    const api = filterByForeignIdInstances[sel.id];
+    // ✅ استخدم الـ mapping عشان تلاقي الـ instance الصح
+    const instanceKey = constrainIdToReference[sel.id];
+    const api = instanceKey ? filterByForeignIdInstances[instanceKey] : null;
     if (!api) return;
 
     if (!sel.value) {

@@ -15,11 +15,17 @@ class TourGuideLanguage extends Model
         'language_id',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['tour_guide', 'language'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return ['tour_guide_id', 'language_id'];

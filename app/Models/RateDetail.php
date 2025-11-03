@@ -17,11 +17,17 @@ class RateDetail extends Model
         'price_type',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['rate', 'room_type'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return ['rate_id', 'room_type_id', 'season_id', 'room_type_id'];

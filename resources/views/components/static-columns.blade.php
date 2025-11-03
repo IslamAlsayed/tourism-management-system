@@ -103,6 +103,14 @@
         <td title="{{ optional($model->company)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->company)->name ?? '--', 30), $search) !!}</td>
     @break
 
+    @case('region')
+        <td title="{{ optional($model->region)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->region)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('subregion')
+        <td title="{{ optional($model->subregion)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->subregion)->name ?? '--', 30), $search) !!}</td>
+    @break
+
     @case('country')
         <td title="{{ optional($model->country)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->country)->name ?? '--', 30), $search) !!}</td>
     @break
@@ -115,12 +123,8 @@
         <td title="{{ optional($model->city)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->city)->name ?? '--', 30), $search) !!}</td>
     @break
 
-    @case('region')
-        <td title="{{ optional($model->region)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->region)->name ?? '--', 30), $search) !!}</td>
-    @break
-
-    @case('subregion')
-        <td title="{{ optional($model->subregion)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->subregion)->name ?? '--', 30), $search) !!}</td>
+    @case('nationality')
+        <td title="{{ optional($model->nationality)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->nationality)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('tour_guide')
@@ -230,6 +234,37 @@
                 {!! highlightSearch($model->rating ?? '--', $search) !!}/5
                 <i class="fas fa-star" style="color: #ffdd00"></i>
             </div>
+        </td>
+    @break
+
+    @case('client_type')
+        <td title="{{ __('main.' . $model->client_type == 'individual' ? 'individual' : 'corporate') }}">
+            <span
+                class="inline-block text-white bg-{{ $model->client_type == 'individual' ? 'yellow-400' : 'blue-600' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! $model->client_type == 'individual'
+                    ? highlightSearch(__('main.individual'), $search)
+                    : highlightSearch(__('main.corporate'), $search) !!}
+            </span>
+        </td>
+    @break
+
+    @case('client_status')
+        @php
+            $color =
+                $model->client_status == 'active'
+                    ? 'active'
+                    : ($model->client_status == 'inactive'
+                        ? 'inactive'
+                        : 'blacklisted');
+        @endphp
+        <td title="{{ __('main.' . $model->client_status) }}">
+            <span class="inline-block text-white bg-{{ $color }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! $model->client_status == 'active'
+                    ? highlightSearch(__('main.active'), $search)
+                    : ($model->client_status == 'inactive'
+                        ? highlightSearch(__('main.inactive'), $search)
+                        : highlightSearch(__('main.blacklisted'), $search)) !!}
+            </span>
         </td>
     @break
 

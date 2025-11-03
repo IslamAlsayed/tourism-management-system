@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasSearch,HasFactory, Notifiable;
+    use HasSearch, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -51,6 +51,9 @@ class User extends Authenticatable
         'updated_by',
     ];
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return [

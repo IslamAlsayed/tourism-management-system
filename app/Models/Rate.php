@@ -18,11 +18,17 @@ class Rate extends Model
         'room_type_id',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['country', 'currency', 'accommodation', 'season', 'room_type'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return ['currency_id', 'accommodation_id', 'season_id', 'room_type_id'];

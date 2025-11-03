@@ -29,6 +29,9 @@ class TransportationCompanyDepartment extends Model
         'city_id',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return [
@@ -41,6 +44,9 @@ class TransportationCompanyDepartment extends Model
         ];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return [
