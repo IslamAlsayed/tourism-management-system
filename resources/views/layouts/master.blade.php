@@ -6,6 +6,7 @@
     @livewireStyles
     @include('layouts.partials.head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     {{-- FontAwesome Icons --}}
     <link rel="stylesheet" href="{{ asset('vendor/toasts/css/all.min.css') }}">
     {{-- Toasts Styles --}}
