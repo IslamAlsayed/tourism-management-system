@@ -1,25 +1,49 @@
-name: Deploy to cPanel
+name: 🚀 Deploy to Production
 
 on:
   push:
     branches:
-      - deploy # الفرع اللي كل push فيه هيتم deploy
+      - production
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: ✅ Checkout Code
         uses: actions/checkout@v3
 
-      - name: SSH Deploy
+      - name: 🔐 SSH to Server & Deploy
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.CPANEL_HOST }}
           username: ${{ secrets.CPANEL_USER }}
           key: ${{ secrets.CPANEL_SSH_KEY }}
-          port: 22
           script: |
-            cd ~/project_root
-            ./deploy.sh
+            echo "📌 Switching to repositories folder..."
+            cd /home/mixtop/repositories/tourist-site
+
+            echo "📥 Pulling latest changes..."
+            git pull origin production
+
+            echo "📦 Installing composer dependencies..."
+            composer install --no-interaction --prefer-dist --optimize-autoloader
+
+            echo "📦 Installing npm dependencies..."
+            npm install
+
+            echo "⚙️ Building assets..."
+            npm run build
+
+            echo "📁 Copying new build to live project folder..."
+            rsync -av --delete /home/mixtop/repositories/tourist-site/ /home/mixtop/project_root/ --exclude=node_modules --exclude=.git --exclude=.github
+
+            echo "🧹 Clearing Laravel caches..."
+            cd /home/mixtop/project_root
+            php artisan optimize:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            echo "✅ Deployment Completed Successfully!"
