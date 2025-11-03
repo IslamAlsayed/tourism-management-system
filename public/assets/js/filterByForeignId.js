@@ -12,7 +12,7 @@ function filterByForeignId(
     const constrainWrapperSelector = `[data-for="${constrainId}"]`;
     const referenceSelect = () => document.getElementById(referenceId);
 
-    let initializing = action === "edit";
+    let initializing = action == "edit";
     if (filterByForeignIdInstances[constrainId]) {
         return filterByForeignIdInstances[constrainId];
     }
@@ -44,19 +44,13 @@ function filterByForeignId(
                 ? constrainValue.sort().join(",")
                 : String(constrainValue);
 
-            if (oldValue === newValue) {
+            if (oldValue == newValue) {
                 if (window.APP_DEBUG)
-                    console.log("✅ Ignored duplicate completed request", {
-                        oldValue,
-                        newValue,
-                    });
+                    console.log("✅ Ignored duplicate completed request");
                 return;
             } else {
                 if (window.APP_DEBUG)
-                    console.log("🔄 Value changed, clearing cache", {
-                        oldValue,
-                        newValue,
-                    });
+                    console.log("🔄 Value changed, clearing cache");
                 globalRequestCache.delete(cacheKey);
             }
         }
@@ -91,13 +85,13 @@ function filterByForeignId(
                 constrainValues = constrainValue
                     .filter((v) => v !== null && v !== undefined && v !== "")
                     .map((v) => parseInt(v));
-            } else if (typeof constrainValue === "string") {
+            } else if (typeof constrainValue == "string") {
                 // If it's a string, split by comma first
                 constrainValues = constrainValue
                     .split(",")
                     .filter((v) => v.trim())
                     .map((v) => parseInt(v.trim()));
-            } else if (typeof constrainValue === "number") {
+            } else if (typeof constrainValue == "number") {
                 // If it's a single number, wrap it in an array
                 constrainValues = [constrainValue];
             } else {
@@ -108,10 +102,10 @@ function filterByForeignId(
             if (
                 !constrainValues ||
                 (Array.isArray(constrainValues) &&
-                    constrainValues.length === 0) ||
-                constrainValues === "" ||
-                constrainValues === null ||
-                constrainValues === undefined
+                    constrainValues.length == 0) ||
+                constrainValues == "" ||
+                constrainValues == null ||
+                constrainValues == undefined
             ) {
                 if (window.APP_DEBUG)
                     console.log(
@@ -158,7 +152,7 @@ function filterByForeignId(
                 label.innerText = `(${currentData.length})` || 0;
             }
 
-            if (!currentData || currentData.length === 0) {
+            if (!currentData || currentData.length == 0) {
                 refSelect.innerHTML = '<option value="">--</option>';
                 refSelect.disabled = true;
 
@@ -169,10 +163,10 @@ function filterByForeignId(
                 if (oldWrapper) oldWrapper.remove();
 
                 // 🧹 أعد تهيئة specialSelect حتى لو فاضي (عشان الـ UI يتحدث)
-                if (refSelect.hasAttribute("special-search")) {
-                    if (window.specialSearch) window.specialSearch(refSelect);
-                } else if (refSelect.hasAttribute("special-multiple")) {
+                if (refSelect.hasAttribute("special-multiple")) {
                     if (window.specialSelect) window.specialSelect(refSelect);
+                } else if (refSelect.hasAttribute("special-search")) {
+                    if (window.specialSearch) window.specialSearch(refSelect);
                 }
 
                 // 🧽 نظف عداد البيانات
@@ -233,9 +227,7 @@ function filterByForeignId(
                 // ✅ استقبل الـ state من specialSelect بدل إنشاء واحد جديد
                 let state;
 
-                if (refSelect.hasAttribute("special-search")) {
-                    if (window.specialSearch) window.specialSearch(refSelect);
-                } else if (refSelect.hasAttribute("special-multiple")) {
+                if (refSelect.hasAttribute("special-multiple")) {
                     if (window.specialSelect) {
                         // ✅ إضافة listener للـ multiSelectUpdated قبل إنشاء الـ component
                         // ⚠️ فقط لـ state_id (عشان نحمل cities)
@@ -330,6 +322,8 @@ function filterByForeignId(
                         );
                         initializing = false;
                     }
+                } else if (refSelect.hasAttribute("special-search")) {
+                    if (window.specialSearch) window.specialSearch(refSelect);
                 }
 
                 if (!selectedValue) return;
@@ -423,7 +417,7 @@ function filterByForeignId(
             }
 
             // ✅ Subregion → Country (لو فيه country)
-            if (subregionVal && countryVal) {
+            if (subregionVal || countryVal) {
                 await filterByForeignId(
                     "subregion_id",
                     "country",
@@ -489,7 +483,7 @@ function filterByForeignId(
             }
 
             // ✅ State → City
-            if (stateVal) {
+            if (document.getElementById("state_id") && stateVal) {
                 await filterByForeignId(
                     "state_id",
                     "city",
@@ -511,6 +505,60 @@ function filterByForeignId(
         searchInput.addEventListener("input", function () {
             if (!this.value.trim()) clearDependents(constrainId);
         });
+    }
+
+    // ✅ إضافة listener على updatedSelect (من SpecialSearch - single select)
+    // Support for state_id → city_id
+    if (constrainId == "state_id" && referenceSelect()) {
+        referenceSelect().addEventListener("updatedSelect", async (e) => {
+            // ✅ تأكد إن الـ event جاي من state_id فقط
+            if (e.target.id != "state_id") return;
+
+            const stateId = e.detail?.value;
+            if (stateId) {
+                await filterByForeignId(
+                    "state_id",
+                    "city",
+                    "city_id",
+                    "create",
+                ).loadReferenceData(stateId);
+            } else {
+                // Clear cities if no state selected
+                const citySelect = document.getElementById("city_id");
+                if (citySelect) {
+                    citySelect.innerHTML = '<option value="">--</option>';
+                    citySelect.disabled = true;
+                }
+            }
+        });
+    }
+
+    // ✅ Support for subregion_id → state_id (in pages without country_id)
+    if (constrainId == "state_id") {
+        const subregionSelect = document.getElementById("subregion_id");
+        if (subregionSelect && !subregionSelect.dataset.stateListenerBound) {
+            subregionSelect.dataset.stateListenerBound = "true";
+            subregionSelect.addEventListener("updatedSelect", async (e) => {
+                if (e.target.id !== "subregion_id") return;
+
+                const subregionId = e.detail?.value;
+                if (subregionId) {
+                    await filterByForeignId(
+                        "subregion_id",
+                        "state",
+                        "state_id",
+                        action,
+                    ).loadReferenceData(subregionId);
+                } else {
+                    // Clear states if no subregion selected
+                    const stateSelect = document.getElementById("state_id");
+                    if (stateSelect) {
+                        stateSelect.innerHTML = '<option value="">--</option>';
+                        stateSelect.disabled = true;
+                    }
+                }
+            });
+        }
     }
 
     filterByForeignIdInstances[constrainId] = { loadReferenceData };
@@ -556,7 +604,7 @@ function clearDependents(fromId) {
         "city_id",
     ];
     const fromIndex = hierarchy.indexOf(fromId);
-    if (fromIndex === -1) return;
+    if (fromIndex == -1) return;
 
     // 🧹 امسح كاش المستوى نفسه بشكل كامل
     const selfKey = `${fromId}_data`;
@@ -606,7 +654,7 @@ function getHiddenInputValues(name) {
 
 function resetDependentTags(parentName, childInput) {
     const parentIds = getHiddenInputValues(parentName);
-    if (parentIds.length === 0) {
+    if (parentIds.length == 0) {
         const childTags =
             childInput.parentElement.querySelectorAll(".tag-item");
         if (childTags.length > 0) {
@@ -615,9 +663,9 @@ function resetDependentTags(parentName, childInput) {
     }
 }
 
-// ========================================
+// ===========================
 // HELPER FUNCTIONS
-// ========================================
+// ===========================
 const stateSelect = document.getElementById("state_id");
 stateSelect?.addEventListener("multiSelectUpdated", async (e) => {
     // ✅ تأكد إن الـ event جاي من state_id فقط

@@ -1,0 +1,25 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - deploy # الفرع اللي كل push فيه هيتم deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USER }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          port: 22
+          script: |
+            cd ~/project_root
+            ./deploy.sh

@@ -25,26 +25,12 @@ class TourGuideType extends Model
 
     public function getRelationshipNames()
     {
-        return [
-            'currency',
-            'region',
-            'subregion',
-            'country',
-            // 'states',
-            // 'city',
-        ];
+        return ['currency', 'region', 'subregion', 'country'];
     }
 
     public function getExcludedColumns()
     {
-        return [
-            'currency_id',
-            'region_id',
-            'subregion_id',
-            'country_id',
-            // 'state_ids',
-            // 'city_ids',
-        ];
+        return ['currency_id', 'region_id', 'subregion_id', 'country_id'];
     }
 
     public function currency()

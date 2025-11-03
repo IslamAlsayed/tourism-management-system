@@ -35,8 +35,12 @@ class States extends Component
 
     public function render()
     {
+        $data = State::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        foreach ($data as $state) {
+            $state['cities'] = $state->cities();
+        }
         return view('livewire.states', [
-            'data' => State::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'data' => $data,
             'totalCount' => State::count(),
         ]);
     }

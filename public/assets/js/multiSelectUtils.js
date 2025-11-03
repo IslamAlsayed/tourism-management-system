@@ -230,10 +230,6 @@ window.setTagsFromHiddenInputs = function (selectId) {
         });
 
         wrapper.prepend(tag);
-
-        // initializing = false;
-        window.renderOptions(refSelect, dropdown, state.selectedList);
-        window.sortDropdown(dropdown);
     });
 };
 

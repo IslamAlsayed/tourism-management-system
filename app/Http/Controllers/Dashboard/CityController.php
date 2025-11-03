@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\City;
-use App\Models\State;
-use App\Models\Country;
-use Illuminate\Http\Request;
+use App\Models\Region;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cities\CreateCitiesRequest;
 use App\Http\Requests\Cities\UpdateCitiesRequest;
@@ -19,9 +17,8 @@ class CityController extends Controller
 
     public function create()
     {
-        $states = State::orderBy('name')->get();
-        $countries = Country::orderBy('name')->get();
-        return view('pages.dashboard.cities.create', compact('countries', 'states'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.cities.create', get_defined_vars());
     }
 
     public function store(CreateCitiesRequest $request)
@@ -45,9 +42,8 @@ class CityController extends Controller
         if (!$city) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.city')]));
         }
-        $states = State::orderBy('name')->get();
-        $countries = Country::orderBy('name')->get();
-        return view('pages.dashboard.cities.edit', compact('city', 'countries', 'states'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.cities.edit', get_defined_vars());
     }
 
     public function update(UpdateCitiesRequest $request, $id)

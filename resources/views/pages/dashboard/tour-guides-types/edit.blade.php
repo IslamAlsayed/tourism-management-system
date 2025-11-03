@@ -84,6 +84,7 @@
                             @include('components.regions.edit', [
                                 'levels' => ['region', 'subregion', 'country', 'state', 'city'],
                                 'record' => $tourGuideType,
+                                'multiple' => true,
                             ])
                         </div>
 
@@ -169,6 +170,8 @@
             setTimeout(() => {
                 filterByForeignId("region_id", "subregion", "subregion_id", "edit");
                 filterByForeignId("subregion_id", "country", "country_id", "edit");
+                filterByForeignId("country_id", "state", "state_id", "edit");
+                filterByForeignId("state_id", "city", "city_id", "edit");
             }, 500);
         });
     </script>
@@ -219,7 +222,7 @@
 
                 await resetDependentTags("state_id", getInput("city_id"));
 
-                if (allStates?.checked) {
+                if (allStates && allStates?.checked) {
                     stateSelect.disabled = true;
                     getSelect("state_id").nextElementSibling?.classList.add('loading');
                     await loadData("country_id", "city", "city_id", countryId);
@@ -240,7 +243,7 @@
                     return;
                 }
 
-                if (allCities?.checked) {
+                if (allCities && allCities?.checked) {
                     citySelect.disabled = true;
                     citySelect.innerHTML = '<option value="">--</option>';
                     getSelect("city_id")?.nextElementSibling.classList.add('loading');
@@ -272,7 +275,7 @@
                         return;
                     }
 
-                    if (allStates?.checked) {
+                    if (allStates && allStates?.checked) {
                         stateSelect.disabled = true;
                         getSelect("state_id").nextElementSibling?.classList.add('loading');
                         await loadData("country_id", "city", "city_id", countryId);
@@ -310,7 +313,7 @@
                 });
             }
 
-            if (!allStates.dataset.bound) {
+            if (allStates && !allStates.dataset.bound) {
                 allStates.dataset.bound = "true";
                 allStates?.addEventListener("change", async () => {
                     if (isLoading) return;
@@ -323,7 +326,7 @@
                 });
             }
 
-            if (!allCities.dataset.bound) {
+            if (allCities && !allCities.dataset.bound) {
                 allCities.dataset.bound = "true";
                 allCities?.addEventListener("change", async () => {
                     if (allCities.checked) {

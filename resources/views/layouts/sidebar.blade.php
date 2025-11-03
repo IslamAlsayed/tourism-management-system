@@ -66,14 +66,14 @@
                                 <span
                                     class="kt-menu-title text-sm font-medium text-foreground {{ $hasActiveChild ? 'text-primary font-semibold' : '' }}">
                                     {{ __('sidebar.' . $item['title']) }}
-                                    @if (isset($item['status']) && config('app.db_mode') != 'production')
+                                    @if (isset($item['status']) && env('DB_MODE') != 'production')
                                         <span
                                             class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             {{ __('sidebar.' . $item['status']) }}
                                         </span>
                                     @endif
 
-                                    @if (isset($item['fixed']) && config('app.db_mode') != 'production')
+                                    @if (isset($item['fixed']) && env('DB_MODE') != 'production')
                                         <span
                                             class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             @if (gettype($item['fixed']) == 'boolean')
@@ -129,14 +129,14 @@
                                                 <span
                                                     class="kt-menu-title text-sm font-medium text-foreground {{ $childHasActiveChild ? 'text-primary font-semibold' : '' }}">
                                                     {{ __('sidebar.' . $child['title']) }}
-                                                    @if (isset($child['status']) && config('app.db_mode') != 'production')
+                                                    @if (isset($child['status']) && env('DB_MODE') != 'production')
                                                         <span
                                                             class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif
 
-                                                    @if (isset($child['fixed']) && config('app.db_mode') != 'production')
+                                                    @if (isset($child['fixed']) && env('DB_MODE') != 'production')
                                                         <span
                                                             class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             @if (gettype($child['fixed']) == 'boolean')
@@ -175,14 +175,14 @@
                                                                 class="kt-menu-title text-2sm font-normal {{ $subChildIsActive ? 'text-primary font-semibold' : '' }}">
                                                                 {{ __('sidebar.' . $subChild['title']) }}
 
-                                                                @if (isset($subChild['status']) && config('app.db_mode') != 'production')
+                                                                @if (isset($subChild['status']) && env('DB_MODE') != 'production')
                                                                     <span
                                                                         class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                                         {{ __('sidebar.' . $subChild['status']) }}
                                                                     </span>
                                                                 @endif
 
-                                                                @if (isset($subChild['fixed']) && config('app.db_mode') != 'production')
+                                                                @if (isset($subChild['fixed']) && env('DB_MODE') != 'production')
                                                                     <span
                                                                         class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                                         @if (gettype($subChild['fixed']) == 'boolean')
@@ -212,14 +212,14 @@
                                                     class="kt-menu-title text-2sm font-normal {{ $childIsActive ? 'text-primary font-semibold' : '' }}">
                                                     {{ __('sidebar.' . $child['title']) }}
 
-                                                    @if (isset($child['status']) && config('app.db_mode') != 'production')
+                                                    @if (isset($child['status']) && env('DB_MODE') != 'production')
                                                         <span
                                                             class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif
 
-                                                    @if (isset($child['fixed']) && config('app.db_mode') != 'production')
+                                                    @if (isset($child['fixed']) && env('DB_MODE') != 'production')
                                                         <span
                                                             class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             @if (gettype($child['fixed']) == 'boolean')
@@ -251,14 +251,14 @@
                                     class="kt-menu-title text-sm font-medium {{ $isActive ? 'text-primary font-semibold' : '' }}">
                                     {{ __('sidebar.' . $item['title']) }}
 
-                                    @if (isset($item['status']) && config('app.db_mode') != 'production')
+                                    @if (isset($item['status']) && env('DB_MODE') != 'production')
                                         <span
                                             class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             {{ __('sidebar.' . $item['status']) }}
                                         </span>
                                     @endif
 
-                                    @if (isset($item['fixed']) && config('app.db_mode') != 'production')
+                                    @if (isset($item['fixed']) && env('DB_MODE') != 'production')
                                         <span
                                             class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             @if (gettype($item['fixed']) == 'boolean')

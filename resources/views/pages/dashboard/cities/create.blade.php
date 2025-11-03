@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('cities.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.cities')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.cities')]) }}
                 </a>
             </div>
         </div>
@@ -62,48 +62,11 @@
                                 @enderror
                             </div>
 
-                            <!-- Country -->
-                            <div class="">
-                                <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.country') }}
-                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
-                                    required>
-                                    <option value="">--</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('country_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- State -->
-                            <div class="">
-                                <label for="state_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    <div>
-                                        {{ __('main.state') }}
-                                        <i id="state_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
-                                        <span class="text-red-600 text-sm span-info" id="state_id-info">
-                                            (You must select country first)
-                                        </span>
-                                    </div>
-                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="state_id" id="state_id" class="kt-select h-[45px]" special-search required>
-                                    <option value="">--</option>
-                                    {{-- States will be loaded dynamically based on selected country --}}
-                                </select>
-                                @error('state_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Regions [region, subregion, country, state] --}}
+                            @include('components.regions.create', [
+                                'levels' => ['region', 'subregion', 'country', 'state'],
+                                'multiple' => true,
+                            ])
 
                             <!-- Latitude -->
                             <div class="">
@@ -219,7 +182,124 @@
 @push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            filterByForeignId('country_id', 'state', 'state_id');
+            setTimeout(() => {
+                filterByForeignId("region_id", "subregion", "subregion_id");
+                filterByForeignId("subregion_id", "country", "country_id");
+                filterByForeignId("country_id", "state", "state_id");
+            }, 500);
+        });
+    </script>
+@endpush
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // ========================================
+            // HELPER FUNCTIONS
+            // ========================================
+            const getSelect = (id) => document.getElementById(id);
+            const getInput = (key) => document.querySelector(`[data-for='${key}'] .tag-input`);
+
+            const getSelectedIds = (name) => {
+                return [...document.querySelectorAll(`input[name='${name}']`)]
+                    .map(input => input.value)
+                    .filter(v => v !== "");
+            };
+
+            const loadData = async (fromId, model, toId, value, append = false) => {
+                const ref = filterByForeignId(fromId, model, toId);
+                if (ref && typeof ref.loadReferenceData === "function") {
+                    await ref.loadReferenceData(value, append);
+                }
+            };
+
+            // ========================================
+            // DOM ELEMENTS
+            // ========================================
+            const countrySelect = getSelect("country_id");
+            const stateSelect = getSelect("state_id");
+            const allStates = getSelect("all_states");
+
+            if (!countrySelect || !stateSelect) return;
+
+            // STATE MANAGEMENT
+            let isLoading = false;
+
+            // ========================================
+            // MAIN LOGIC
+            // ========================================
+            async function handleStateChange(triggerType) {
+                const countryId = getInput("country_id")?.dataset.id;
+
+                await resetDependentTags("country_id", getInput("state_id"));
+
+                if (allStates && allStates?.checked) {
+                    stateSelect.disabled = true;
+                    getSelect("state_id").nextElementSibling?.classList.add('loading');
+                    await loadData("country_id", "state", "state_id", countryId);
+                    return;
+                }
+
+                stateSelect.disabled = false;
+                getSelect("state_id").nextElementSibling?.classList.remove('loading');
+
+                if (allStates && allStates?.checked) {
+                    stateSelect.disabled = true;
+                    stateSelect.innerHTML = '<option value="">--</option>';
+                    getSelect("state_id")?.nextElementSibling.classList.add('loading');
+                    return;
+                }
+
+                stateSelect.disabled = false;
+                getSelect("state_id")?.nextElementSibling.classList.remove('loading');
+                await loadData("country_id", "state", "state_id", countryId);
+            }
+
+            // ========================================
+            // EVENT HANDLERS
+            // ========================================
+            if (!countrySelect.dataset.bound) {
+                countrySelect.dataset.bound = "true";
+                countrySelect?.addEventListener("updatedSelect", async () => {
+                    if (isLoading) return;
+                    isLoading = true;
+
+                    const countryId = getInput("country_id")?.dataset.id;
+
+                    if (!countryId) {
+                        stateSelect.innerHTML = '<option value="">--</option>';
+                        getSelect("state_id").nextElementSibling?.classList.add('loading');
+                        document.querySelectorAll(`input[name='state_id[]']`).forEach(i => i.remove());
+                        isLoading = false;
+                        return;
+                    }
+
+                    if (allStates && allStates?.checked) {
+                        stateSelect.disabled = true;
+                        getSelect("state_id").nextElementSibling?.classList.add('loading');
+                        await loadData("country_id", "state", "state_id", countryId);
+                    } else {
+                        stateSelect.disabled = false;
+                        getSelect("state_id").nextElementSibling?.classList.remove('loading');
+                        await loadData("country_id", "state", "state_id", countryId);
+                    }
+
+                    isLoading = false;
+                });
+            }
+
+            if (allStates && !allStates.dataset.bound) {
+                allStates.dataset.bound = "true";
+                allStates?.addEventListener("change", async () => {
+                    if (allStates.checked) {
+                        stateSelect.disabled = true;
+                        getSelect("state_id")?.nextElementSibling.classList.add('loading');
+                    } else {
+                        stateSelect.disabled = false;
+                        getSelect("state_id")?.nextElementSibling.classList.remove('loading');
+                    }
+                });
+            }
         });
     </script>
 @endpush

@@ -35,8 +35,13 @@ class Nationalities extends Component
 
     public function render()
     {
+        $data = Nationality::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        foreach ($data as $nationality) {
+            $nationality['states'] = $nationality->states();
+            $nationality['cities'] = $nationality->cities();
+        }
         return view('livewire.nationalities', [
-            'data' => Nationality::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
+            'data' => $data,
             'totalCount' => Nationality::count(),
         ]);
     }

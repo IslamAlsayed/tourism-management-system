@@ -24,11 +24,11 @@
         <div></div>
         <!-- Topbar -->
         <div class="flex items-center gap-2.5">
-            @if (config('app.db_mode') == 'production')
+            @if (env('DB_MODE') == 'production')
                 <span class="inline-block bg-danger text-white text-red-600 font-medium px-3 py-0.5 rounded-[9px] ms-2">
                     production
                 </span>
-            @elseif (config('app.db_mode') == 'testing')
+            @elseif (env('DB_MODE') == 'testing')
                 <span
                     class="inline-block bg-yellow-500 text-white text-red-600 font-medium px-3 py-0.5 rounded-[9px] ms-2">
                     testing

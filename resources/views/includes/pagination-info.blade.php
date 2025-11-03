@@ -1,17 +1,3 @@
-{{-- @if ($this->message)
-    <div class="custom-alerts" id="custom-alerts">
-        @foreach ($this->message as $key => $message)
-            @php $id = 'alert_' . uniqid(); @endphp
-
-            <div id="{{ $id }}" class="kt-alert kt-alert-{{ $key }} mb-5" role="alert">
-                {{ $message }}
-            </div>
-        @endforeach
-    </div>
-@endif --}}
-
-@include('components.elements.display-alert')
-
 <div class="flex-wrap gap-2 p-2">
     <div class="w-full flex justify-between items-start">
         <div>
@@ -28,7 +14,6 @@
 
         <div class="flex gap-2">
             <span id="selectedCount" style="align-self: anchor-center;"></span>
-
             <div class="flex flex-wrap gap-2 lg:gap-5">
                 <button type="button" id="deleteAllBtn" data-route="{{ route('deleteAll') }}"
                     data-model="{{ lcfirst($entityName) }}"
@@ -41,13 +26,21 @@
 
             @if (isset($showSearch) && $showSearch)
                 <div class="flex flex-wrap gap-2 lg:gap-5">
-                    <div class="flex">
+                    <div class="flex items-center search-container">
                         <label class="kt-input h-[45px]">
-                            <i class="ki-filled ki-magnifier"></i>
-                            <input wire:model.live="search" type="search"
-                                placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..."
-                                class="px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <input wire:model.live.debounce.500ms="search" class="py-2 rounded-lg" id="search"
+                                placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..." />
                         </label>
+
+                        @if (isset($searchValue) && $searchValue)
+                            <i class="fas fa-xmark text-red-600 cursor-pointer" wire:click="$set('search', '')"
+                                onclick="setTimeout(() => search.value = '', 500);"></i>
+                        @endif
+                        <div class="search-load">
+                            <div wire:loading wire:target="search">
+                                @include('components.load-data')
+                            </div>
+                        </div>
                     </div>
                 </div>
             @endif

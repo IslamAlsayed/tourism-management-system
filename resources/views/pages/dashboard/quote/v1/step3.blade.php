@@ -28,7 +28,7 @@
             <div class="mb-8">
                 <label class="form-label required">Available Rates</label>
                 <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
-                    <div class="kt-scrollable-x-auto">
+                    <div class="kt-scrollable-x-auto" wire:target="search" wire:loading.class="loading">
                         <table class="kt-table table-auto text-nowrap" data-kt-datatable-table="true">
                             <thead>
                                 <tr>
