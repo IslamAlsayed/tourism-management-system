@@ -20,11 +20,7 @@ document.querySelectorAll(".toast-inner").forEach((inner) => {
 });
 
 document.addEventListener("click", function (e) {
-    const toastBtn = e.target.closest(".push-toast-btn");
-    const confirmBtn = e.target.closest(".push-confirm-btn");
-    if (!toastBtn || !confirmBtn) return;
-
-    if (toastBtn) {
+    if (e.target.closest(".push-toast-btn")) {
         const type =
             target.dataset.type ||
             target.dataset.theme ||
@@ -48,9 +44,7 @@ document.addEventListener("click", function (e) {
             pin: pin,
             actions: JSON.parse(actions) || null,
         });
-    }
-
-    if (confirmBtn) {
+    } else if (e.target.closest(".push-confirm-btn")) {
         e.preventDefault();
 
         const isForm = target.tagName === "FORM";

@@ -48,6 +48,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', false));
+        return redirect(route('dashboard', false))->withSuccess(__('main.messages.welcome_back_name', ['name' => Auth::user()->name ?? 'User']));
     }
 }

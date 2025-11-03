@@ -1000,6 +1000,8 @@ return [
 
     // messages
     'messages' => [
+        'welcome_back_name' => 'مرحباً بعودتك، :name!',
+        'goodbye_name' => 'وداعاً، :name!',
         'no_records_found' => 'لم يتم العثور على سجلات.',
         'no_backup' => 'لم يتم إنشاء نسخة احتياطية بعد',
         'Updated Successfully' => 'تم التحديث بنجاح',
