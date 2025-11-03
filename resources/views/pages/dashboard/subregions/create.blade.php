@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('subregions.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.subregions')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.subregions')]) }}
                 </a>
             </div>
         </div>

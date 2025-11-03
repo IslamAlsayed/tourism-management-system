@@ -23,7 +23,7 @@ class RestaurantController extends Controller
     {
         $types = Type::all()->pluck('name', 'id');
         $regions = Region::all();
-        return view('pages.dashboard.restaurants.create', compact('types', 'regions'));
+        return view('pages.dashboard.restaurants.create', get_defined_vars());
     }
 
     public function store(RestaurantCreateRequest $request)
@@ -49,7 +49,7 @@ class RestaurantController extends Controller
         }
         $types = Type::all()->pluck('name', 'id');
         $regions = Region::all();
-        return view('pages.dashboard.restaurants.edit', compact('restaurant', 'types', 'regions'));
+        return view('pages.dashboard.restaurants.edit', get_defined_vars());
     }
 
     public function update(RestaurantUpdateRequest $request, $id)
@@ -58,10 +58,18 @@ class RestaurantController extends Controller
         if (!$restaurant) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.restaurant')]));
         }
-        $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
+
+        $data = $request->validated();
+        if ($request['state_id']) {
+            $data['state_id'] = array_unique($data['state_id']);
+        }
+        if ($request['city_id']) {
+            $data['city_id'] = array_unique($data['city_id']);
+        }
+
+        $data = $request->safe()->except('photo');
         $this->uploadPhoto($request, $restaurant, 'photo', "restaurants");
-        $updated = $restaurant->update($validated);
+        $updated = $restaurant->update($data);
         if ($updated) {
             return redirect()->route('restaurants.index')->with('success', __('main.messages.type_updated', ['type' => __('main.restaurant')]));
         }

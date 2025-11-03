@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('settings.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.settings')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.settings')]) }}
                 </a>
                 <button class="kt-btn kt-btn-primary">
                     {{ __('main.save_changes') }}
@@ -131,7 +131,7 @@
                         </div>
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.operating_system') }}</div>
-                            <div class="font-semibold">{{ config('app.db_mode') }}</div>
+                            <div class="font-semibold">{{ env('DB_MODE') }}</div>
                         </div>
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.status') }}</div>

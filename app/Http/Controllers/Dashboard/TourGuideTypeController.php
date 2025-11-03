@@ -7,12 +7,16 @@ use App\Models\State;
 use App\Models\Region;
 use App\Models\Currency;
 use App\Models\TourGuideType;
+use App\Traits\PhotoUploadTrait;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TourGuideType\TourGuideTypeCreateRequest;
 use App\Http\Requests\TourGuideType\TourGuideTypeUpdateRequest;
 
 class TourGuideTypeController extends Controller
 {
+    use PhotoUploadTrait;
+
     public function index()
     {
         return view('pages.dashboard.tour-guides-types.index');
@@ -22,60 +26,61 @@ class TourGuideTypeController extends Controller
     {
         $currencies = Currency::all();
         $regions = Region::all();
-        return view('pages.dashboard.tour-guides-types.create', compact('currencies', 'regions'));
+        return view('pages.dashboard.tour-guides-types.create', get_defined_vars());
     }
 
     public function store(TourGuideTypeCreateRequest $request)
     {
-        $data = $request->validated();
-
-        if ($request['state_id']) {
-            $data['state_id'] = array_unique($data['state_id']);
-        }
-        if ($request['city_id']) {
-            $data['city_id'] = array_unique($data['city_id']);
-        }
-
-        // ✅ اجلب قيم IDs الحالية (لو المستخدم اختار يدويًا)
-        $stateIds = $data['state_id'] ?? [];
-        $cityIds = $data['city_id'] ?? [];
-
-        // ✅ في حالة all_states = 1 → اجلب كل states حسب الدولة المختارة
-        if (!empty($data['all_states']) && $data['all_states'] == 1) {
-            $stateIds = State::where('country_id', $data['country_id'])->pluck('id')->toArray();
-        }
-
-        // ✅ في حالة all_cities = 1 → اجلب كل المدن بناءً على الدولة أو الـ states
-        if (!empty($data['all_cities']) && $data['all_cities'] == 1) {
-            // لو اختار "كل المدن" لكن كمان فعّل "كل المحافظات" → نجيب حسب الدولة فقط
-            if (!empty($data['all_states']) && $data['all_states'] == 1) {
-                $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
-            } else {
-                // لو اختار بعض المحافظات فقط
-                $cityIds = City::whereIn('state_id', $stateIds)->pluck('id')->toArray();
+        DB::beginTransaction();
+        try {
+            $data = $request->validated();
+            if ($request['state_id']) {
+                $data['state_id'] = array_unique($data['state_id']);
             }
-        }
+            if ($request['city_id']) {
+                $data['city_id'] = array_unique($data['city_id']);
+            }
 
-        // ✅ خزنها كـ string (comma-separated)
-        $data['state_id'] = !empty($stateIds) ? implode(',', $stateIds) : null;
-        $data['city_id'] = !empty($cityIds) ? implode(',', $cityIds) : null;
+            // ✅ اجلب قيم IDs الحالية (لو المستخدم اختار يدويًا)
+            $stateIds = $data['state_id'] ?? [];
+            $cityIds = $data['city_id'] ?? [];
 
-        // ✅ احذف المتغيرات اللي مالهاش لزوم من الـ request
-        unset($data['_token'], $data['save_and_add']);
+            // ✅ في حالة all_states = 1 → اجلب كل states حسب الدولة المختارة
+            if (!empty($data['all_states']) && $data['all_states'] == 1) {
+                $stateIds = State::where('country_id', $data['country_id'])->pluck('id')->toArray();
+            }
 
-        // 🧩 احفظ في قاعدة البيانات
-        $tourGuideType = TourGuideType::create($data);
+            // ✅ في حالة all_cities = 1 → اجلب كل المدن بناءً على الدولة أو الـ states
+            if (!empty($data['all_cities']) && $data['all_cities'] == 1) {
+                // لو اختار "كل المدن" لكن كمان فعّل "كل المحافظات" → نجيب حسب الدولة فقط
+                if (!empty($data['all_states']) && $data['all_states'] == 1) {
+                    $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
+                } else {
+                    // لو اختار بعض المحافظات فقط
+                    $cityIds = City::whereIn('state_id', $stateIds)->pluck('id')->toArray();
+                }
+            }
 
-        // ✅ إعادة التوجيه
-        if ($tourGuideType) {
-            $message = __('main.messages.type_created', ['type' => __('main.tour-guides-type')]);
+            // ✅ خزنها كـ string (comma-separated)
+            $data['state_id'] = !empty($stateIds) ? implode(',', $stateIds) : null;
+            $data['city_id'] = !empty($cityIds) ? implode(',', $cityIds) : null;
+
+            // ✅ احذف المتغيرات اللي مالهاش لزوم من الـ request
+            unset($data['_token'], $data['save_and_add']);
+
+            // 🧩 احفظ في قاعدة البيانات
+            TourGuideType::create($data);
+            DB::commit();
+            $message = __('main.messages.type_created', ['type' => __('main.tour-guide-type')]);
             if ($request->has('save_and_add')) {
                 return redirect()->back()->with('success', $message);
             }
             return redirect()->route('tour-guides-types.index')->with('success', $message);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            report($e);
+            return redirect()->route('tour-guides-types.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.tour-guide-type')]));
         }
-
-        return redirect()->route('tour-guides-types.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.tour-guides-type')]));
     }
 
     public function edit($id)
@@ -86,27 +91,35 @@ class TourGuideTypeController extends Controller
         }
         $currencies = Currency::all();
         $regions = Region::all();
-        return view('pages.dashboard.tour-guides-types.edit', compact('tourGuideType', 'currencies', 'regions'));
+        return view('pages.dashboard.tour-guides-types.edit', get_defined_vars());
     }
 
     public function update(TourGuideTypeUpdateRequest $request, $id)
     {
         $tourGuideType = TourGuideType::find($id);
-        $validated = $request->validated();
-        if ($request['state_id']) {
-            $validated['state_id'] = array_unique($validated['state_id']);
-        }
-        if ($request['city_id']) {
-            $validated['city_id'] = array_unique($validated['city_id']);
-        }
         if (!$tourGuideType) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.tour-guide-type')]));
         }
-        $updated = $tourGuideType->update($validated);
-        if ($updated) {
-            return redirect()->route('tour-guides-types.index')->with('success', __('main.messages.type_updated', ['type' => __('main.tour-guides-type')]));
+        DB::beginTransaction();
+        try {
+            $data = $request->validated();
+            if ($request['state_id']) {
+                $data['state_id'] = array_unique($data['state_id']);
+            }
+            if ($request['city_id']) {
+                $data['city_id'] = array_unique($data['city_id']);
+            }
+            $data = $request->safe()->except('photo');
+
+            $tourGuideType->update($data);
+            $this->uploadPhoto($request, $tourGuideType, 'photo', "tourGuidesTypes");
+            DB::commit();
+            return redirect()->route('tour-guides-types.index')->with('success', __('main.messages.type_updated', ['type' => __('main.tour-guide-type')]));
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            report($e);
+            return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.tour-guide-type')]));
         }
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.tour-guides-type')]));
     }
 
     public function destroy($id)

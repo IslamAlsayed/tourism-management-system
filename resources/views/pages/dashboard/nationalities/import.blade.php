@@ -15,7 +15,7 @@
             </a>
         </div>
 
-        @if (config('app.db_mode') != 'production')
+        @if (env('DB_MODE') != 'production')
             <table class="border min-w-half divide-y text-center divide-gray-200 mt-6">
                 <thead style="background-color: #ffea00;">
                     <tr>

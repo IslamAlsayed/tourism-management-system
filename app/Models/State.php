@@ -29,12 +29,12 @@ class State extends Model
 
     public function getRelationshipNames()
     {
-        return ['region', 'subregion', 'country', 'city'];
+        return ['region', 'subregion', 'country'];
     }
 
     public function getExcludedColumns()
     {
-        return ['region_id', 'subregion_id', 'country_id', 'city_id'];
+        return ['region_id', 'subregion_id', 'country_id'];
     }
 
     public function region()
@@ -52,8 +52,27 @@ class State extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function city()
+    public function cities()
     {
-        return $this->belongsTo(City::class);
+        if (!$this->city_id)
+            return [];
+        return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
+    }
+
+    public function getCityListAttribute()
+    {
+        if (!$this->city_id)
+            return [];
+        return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
+    }
+
+    public function getCityIdAttribute($value)
+    {
+        return $value ?: "";
+    }
+
+    public function setCityIdAttribute($value)
+    {
+        $this->attributes['city_id'] = is_array($value) ? implode(',', $value) : $value;
     }
 }

@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('tour-guides.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.tour-guides')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.tour-guides')]) }}
                 </a>
             </div>
         </div>
@@ -200,6 +200,7 @@
                             {{-- Regions [region, subregion, country, state, city] --}}
                             @include('components.regions.create', [
                                 'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                                'multiple' => true,
                             ])
 
                             <!-- Tourism Ministry Code -->
@@ -379,6 +380,8 @@
             setTimeout(() => {
                 filterByForeignId("region_id", "subregion", "subregion_id");
                 filterByForeignId("subregion_id", "country", "country_id");
+                filterByForeignId("country_id", "state", "state_id");
+                filterByForeignId("state_id", "city", "city_id");
             }, 500);
         });
     </script>
@@ -409,7 +412,7 @@
             // ========================================
             // DOM ELEMENTS
             // ========================================
-            const countrySelect = getSelect("country_id") || getSelect("subregion_id");
+            const countrySelect = getSelect("country_id");
             const stateSelect = getSelect("state_id");
             const citySelect = getSelect("city_id");
             const allStates = getSelect("all_states");
@@ -425,11 +428,11 @@
             // ========================================
             async function handleStateChange(triggerType) {
                 const stateIds = getSelectedIds("state_id[]");
-                const countryId = getInput("country_id")?.dataset.id || getInput("subregion_id")?.dataset.id;
+                const countryId = getInput("country_id")?.dataset.id;
 
                 await resetDependentTags("state_id", getInput("city_id"));
 
-                if (allStates?.checked) {
+                if (allStates && allStates?.checked) {
                     stateSelect.disabled = true;
                     getSelect("state_id").nextElementSibling?.classList.add('loading');
                     await loadData("country_id", "city", "city_id", countryId);
@@ -450,7 +453,7 @@
                     return;
                 }
 
-                if (allCities?.checked) {
+                if (allCities && allCities?.checked) {
                     citySelect.disabled = true;
                     citySelect.innerHTML = '<option value="">--</option>';
                     getSelect("city_id")?.nextElementSibling.classList.add('loading');
@@ -471,8 +474,7 @@
                     if (isLoading) return;
                     isLoading = true;
 
-                    const countryId = getInput("country_id")?.dataset.id || getInput("subregion_id")
-                        ?.dataset.id;
+                    const countryId = getInput("country_id")?.dataset.id;
 
                     if (!countryId) {
                         stateSelect.innerHTML = '<option value="">--</option>';
@@ -483,7 +485,7 @@
                         return;
                     }
 
-                    if (allStates?.checked) {
+                    if (allStates && allStates?.checked) {
                         stateSelect.disabled = true;
                         getSelect("state_id").nextElementSibling?.classList.add('loading');
                         await loadData("country_id", "city", "city_id", countryId);
@@ -521,7 +523,7 @@
                 });
             }
 
-            if (!allStates.dataset.bound) {
+            if (allStates && !allStates.dataset.bound) {
                 allStates.dataset.bound = "true";
                 allStates?.addEventListener("change", async () => {
                     if (isLoading) return;
@@ -534,7 +536,7 @@
                 });
             }
 
-            if (!allCities.dataset.bound) {
+            if (allCities && !allCities.dataset.bound) {
                 allCities.dataset.bound = "true";
                 allCities?.addEventListener("change", async () => {
                     if (allCities.checked) {

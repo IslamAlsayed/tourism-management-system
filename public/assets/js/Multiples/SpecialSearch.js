@@ -118,9 +118,28 @@ window.specialSearch = function (selectElement) {
     });
 
     searchInput.addEventListener("input", function () {
+        renderOptions(this.value);
+
         if (!this.value.trim()) {
+            // ✅ مسح القيمة المحددة
+            selectedValue = "";
+            selectedLabel = "";
+            searchInput.dataset.id = "";
+
+            // ✅ حذف hidden input للمستوى الحالي
+            if (selectElement) {
+                let parentNode = selectElement.parentNode;
+                if (parentNode) {
+                    parentNode
+                        .querySelectorAll(
+                            `input[type="hidden"][name="${selectElement.name}"]`,
+                        )
+                        .forEach((i) => i.remove());
+                }
+            }
+
+            // ✅ مسح المستويات التابعة
             clearDependents(selectElement.id);
-            renderOptions(this.value);
             return;
         }
     });
@@ -139,7 +158,6 @@ window.specialSearch = function (selectElement) {
         dropdown.classList.add("hidden");
 
         updateHiddenInput();
-
         const event = new CustomEvent("updatedSelect", {
             detail: { value, label },
         });
@@ -195,6 +213,11 @@ window.specialSearch = function (selectElement) {
                             .forEach((t) => t.remove());
                     }
                 }
+
+                let inputsLevel = document.querySelectorAll(
+                    `input[type="hidden"][name="${sel.name}"]`,
+                );
+                inputsLevel.forEach((input) => input.remove());
 
                 let dataLength = document
                     .getElementById(level)

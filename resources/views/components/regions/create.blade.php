@@ -3,14 +3,13 @@
 {{-- example: @include('components.create-regions', ['exclude' => ['country'], 'replaces' => ['country_id','subregion_id']]) --}}
 
 @if (isset($levels) && in_array('region', $levels))
-    <div class="{{ count($regions) <= 0 ? 'loading' : '' }}">
+    <div class="{{ isset($regions) && count($regions) <= 0 ? 'loading' : '' }}">
         <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
             <div>
                 {{ __('main.region') }}
-                @if (count($regions))
-                    <strong class="dataLength text-primary">({{ count($regions) ?: 0 }})</strong>
-                @endif
-                @if (count($regions) <= 0)
+                <strong
+                    class="dataLength text-primary">({{ isset($regions) && count($regions) ? count($regions) : 0 }})</strong>
+                @if (isset($regions) && count($regions) <= 0)
                     <span id="region_id-info" class="text-red-600 text-sm span-info show">
                         (Not regions found)
                     </span>
@@ -20,11 +19,13 @@
         </label>
         <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search>
             <option value="">--</option>
-            @foreach ($regions as $region)
-                <option value="{{ $region->id }}" {{ old('region_id') == $region->id ? 'selected' : '' }}>
-                    {{ app()->getLocale() == 'ar' ? ($region->name_ar ?: $region->name) : $region->name }}
-                </option>
-            @endforeach
+            @if (isset($regions))
+                @foreach ($regions as $region)
+                    <option value="{{ $region->id }}" {{ old('region_id') == $region->id ? 'selected' : '' }}>
+                        {{ app()->getLocale() == 'ar' ? ($region->name_ar ?: $region->name) : $region->name }}
+                    </option>
+                @endforeach
+            @endif
         </select>
         @error('region_id')
             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -83,12 +84,16 @@
         <label for="all_states" class="kt-label required mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
-                    <input type="hidden" name="all_states" value="0">
-                    <div class="custom-input">
-                        <input type="checkbox" name="all_states" id="all_states" value="1"
-                            {{ old('all_states') ? 'checked' : '' }}>
-                        <label for="all_states">{{ __('main.all_types', ['types' => __('main.states')]) }}</label>
-                    </div>
+                    @if (isset($multiple) && $multiple)
+                        <input type="hidden" name="all_states" value="0">
+                        <div class="custom-input">
+                            <input type="checkbox" name="all_states" id="all_states" value="1"
+                                {{ old('all_states') ? 'checked' : '' }}>
+                            <label for="all_states">{{ __('main.all_types', ['types' => __('main.states')]) }}</label>
+                        </div>
+                    @else
+                        {{ __('main.state') }}
+                    @endif
                     <strong class="dataLength text-primary"></strong>
                     <i id="state_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
                 </div>
@@ -99,7 +104,8 @@
             <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
 
-        <select name="state_id[]" id="state_id" class="kt-select h-[45px]" special-multiple>
+        <select name="{{ isset($multiple) && $multiple ? 'state_id[]' : 'state_id' }}" id="state_id"
+            class="kt-select h-[45px]" {{ isset($multiple) && $multiple ? 'special-multiple' : 'special-search' }}>
             <option value="">--</option>
         </select>
 
@@ -114,12 +120,16 @@
         <label for="all_cities" class="kt-label required mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
-                    <input type="hidden" name="all_cities" value="0">
-                    <div class="custom-input">
-                        <input type="checkbox" name="all_cities" id="all_cities" value="1"
-                            {{ old('all_cities') ? 'checked' : '' }}>
-                        <label for="all_cities">{{ __('main.all_types', ['types' => __('main.cities')]) }}</label>
-                    </div>
+                    @if (isset($multiple) && $multiple)
+                        <input type="hidden" name="all_cities" value="0">
+                        <div class="custom-input">
+                            <input type="checkbox" name="all_cities" id="all_cities" value="1"
+                                {{ old('all_cities') ? 'checked' : '' }}>
+                            <label for="all_cities">{{ __('main.all_types', ['types' => __('main.cities')]) }}</label>
+                        </div>
+                    @else
+                        {{ __('main.city') }}
+                    @endif
                     <strong class="dataLength text-primary"></strong>
                     <i id="city_id-loader" class="i-loader fas fa-refresh fa-spin text-primary"></i>
                 </div>
@@ -130,7 +140,8 @@
             <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
 
-        <select name="city_id[]" id="city_id" class="kt-select h-[45px]" special-multiple>
+        <select name="{{ isset($multiple) && $multiple ? 'city_id[]' : 'city_id' }}" id="city_id"
+            class="kt-select h-[45px]" {{ isset($multiple) && $multiple ? 'special-multiple' : 'special-search' }}>
             <option value="">--</option>
         </select>
 

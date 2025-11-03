@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('states.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.states')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.states')]) }}
                 </a>
             </div>
         </div>
@@ -145,23 +145,12 @@
                                 @enderror
                             </div>
 
-                            <!-- Country -->
-                            <div class="">
-                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
-                                <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
-                                    value="{{ $state->country_id }}">
-                                    <option value="">--</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ $state->country_id == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('country_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Regions [region, subregion, country, city] --}}
+                            @include('components.regions.edit', [
+                                'levels' => ['region', 'subregion', 'country', 'city'],
+                                'record' => $state,
+                                'multiple' => true,
+                            ])
                         </div>
 
                         <!-- State Settings -->
@@ -259,3 +248,131 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
+                filterByForeignId("subregion_id", "country", "country_id", "edit");
+                filterByForeignId("country_id", "city", "city_id", "edit");
+            }, 500);
+        });
+    </script>
+@endpush
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // ========================================
+            // HELPER FUNCTIONS
+            // ========================================
+            const getSelect = (id) => document.getElementById(id);
+            const getInput = (key) => document.querySelector(`[data-for='${key}'] .tag-input`);
+
+            const getSelectedIds = (name) => {
+                return [...document.querySelectorAll(`input[name='${name}']`)]
+                    .map(input => input.value)
+                    .filter(v => v !== "");
+            };
+
+            const loadData = async (fromId, model, toId, value, append = false) => {
+                const ref = filterByForeignId(fromId, model, toId);
+                if (ref && typeof ref.loadReferenceData === "function") {
+                    await ref.loadReferenceData(value, append);
+                }
+            };
+
+            // ========================================
+            // DOM ELEMENTS
+            // ========================================
+            const countrySelect = getSelect("country_id");
+            const citySelect = getSelect("city_id");
+            const allCities = getSelect("all_cities");
+
+            if (!countrySelect || !citySelect) return;
+
+            // STATE MANAGEMENT
+            let isLoading = false;
+
+            // ========================================
+            // MAIN LOGIC
+            // ========================================
+            async function handleStateChange(triggerType) {
+                const countryId = getInput("country_id")?.dataset.id;
+
+                await resetDependentTags("country_id", getInput("city_id"));
+
+                if (allCities && allCities?.checked) {
+                    citySelect.disabled = true;
+                    getSelect("city_id").nextElementSibling?.classList.add('loading');
+                    await loadData("country_id", "city", "city_id", countryId);
+                    return;
+                }
+
+                stateSelect.disabled = false;
+                getSelect("country_id").nextElementSibling?.classList.remove('loading');
+
+                if (allCities && allCities?.checked) {
+                    citySelect.disabled = true;
+                    citySelect.innerHTML = '<option value="">--</option>';
+                    getSelect("city_id")?.nextElementSibling.classList.add('loading');
+                    return;
+                }
+
+                citySelect.disabled = false;
+                getSelect("city_id")?.nextElementSibling.classList.remove('loading');
+                await loadData("country_id", "city", "city_id", countryId);
+            }
+
+            // ========================================
+            // EVENT HANDLERS
+            // ========================================
+            if (!countrySelect.dataset.bound) {
+                countrySelect.dataset.bound = "true";
+                countrySelect?.addEventListener("updatedSelect", async () => {
+                    if (isLoading) return;
+                    isLoading = true;
+
+                    const countryId = getInput("country_id")?.dataset.id;
+
+                    if (!countryId) {
+                        citySelect.innerHTML = '<option value="">--</option>';
+                        getSelect("city_id").nextElementSibling?.classList.add('loading');
+                        document.querySelectorAll(`input[name='city_id[]']`).forEach(i => i
+                            .remove());
+                        isLoading = false;
+                        return;
+                    }
+
+                    if (allCities && allCities?.checked) {
+                        citySelect.disabled = true;
+                        getSelect("city_id").nextElementSibling?.classList.add('loading');
+                        await loadData("country_id", "city", "city_id", countryId);
+                    } else {
+                        citySelect.disabled = false;
+                        getSelect("city_id").nextElementSibling?.classList.remove('loading');
+                        await loadData("country_id", "city", "city_id", countryId);
+                    }
+
+                    isLoading = false;
+                });
+            }
+
+            if (allCities && !allCities.dataset.bound) {
+                allCities.dataset.bound = "true";
+                allCities?.addEventListener("change", async () => {
+                    if (allCities.checked) {
+                        citySelect.disabled = true;
+                        getSelect("city_id")?.nextElementSibling.classList.add('loading');
+                    } else {
+                        citySelect.disabled = false;
+                        getSelect("city_id")?.nextElementSibling.classList.remove('loading');
+                        const countryId = getInput("country_id")?.dataset.id;
+                        if (countryId) await loadData("country_id", "city", "city_id", countryId);
+                    }
+                });
+            }
+        });
+    </script>
+@endpush

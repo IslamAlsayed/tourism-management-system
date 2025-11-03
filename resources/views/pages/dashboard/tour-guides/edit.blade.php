@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('countries.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['type' => __('main.tour-guides')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.tour-guides')]) }}
                 </a>
             </div>
         </div>
@@ -207,6 +207,7 @@
                             @include('components.regions.edit', [
                                 'levels' => ['region', 'subregion', 'country', 'state', 'city'],
                                 'record' => $tourGuide,
+                                'multiple' => true,
                             ])
 
                             <!-- Tourism Ministry Code -->
@@ -287,15 +288,10 @@
                         </div>
 
                         <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.save_type', ['type' => __('main.tour-guide')]) }}
-                            </button>
-                            <button type="submit" name="save_and_edit" value="1"
-                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                                <i class="ki-filled ki-plus text-sm me-2"></i>
-                                {{ __('main.save_and_edit_another') }}
+                                {{ __('main.update_type', ['type' => __('main.tour-guide')]) }}
                             </button>
                             <a href="{{ route('tour-guides.index') }}" class="kt-btn kt-btn-outline">
                                 {{ __('main.cancel') }}
@@ -386,6 +382,8 @@
             setTimeout(() => {
                 filterByForeignId("region_id", "subregion", "subregion_id", "edit");
                 filterByForeignId("subregion_id", "country", "country_id", "edit");
+                filterByForeignId("country_id", "state", "state_id", "edit");
+                filterByForeignId("state_id", "city", "city_id", "edit");
             }, 500);
         });
     </script>
@@ -436,7 +434,7 @@
 
                 await resetDependentTags("state_id", getInput("city_id"));
 
-                if (allStates?.checked) {
+                if (allStates && allStates?.checked) {
                     stateSelect.disabled = true;
                     getSelect("state_id").nextElementSibling?.classList.add('loading');
                     await loadData("country_id", "city", "city_id", countryId);
@@ -457,7 +455,7 @@
                     return;
                 }
 
-                if (allCities?.checked) {
+                if (allCities && allCities?.checked) {
                     citySelect.disabled = true;
                     citySelect.innerHTML = '<option value="">--</option>';
                     getSelect("city_id")?.nextElementSibling.classList.add('loading');
@@ -489,7 +487,7 @@
                         return;
                     }
 
-                    if (allStates?.checked) {
+                    if (allStates && allStates?.checked) {
                         stateSelect.disabled = true;
                         getSelect("state_id").nextElementSibling?.classList.add('loading');
                         await loadData("country_id", "city", "city_id", countryId);
@@ -527,7 +525,7 @@
                 });
             }
 
-            if (!allStates.dataset.bound) {
+            if (allStates && !allStates.dataset.bound) {
                 allStates.dataset.bound = "true";
                 allStates?.addEventListener("change", async () => {
                     if (isLoading) return;
@@ -540,7 +538,7 @@
                 });
             }
 
-            if (!allCities.dataset.bound) {
+            if (allCities && !allCities.dataset.bound) {
                 allCities.dataset.bound = "true";
                 allCities?.addEventListener("change", async () => {
                     if (allCities.checked) {
