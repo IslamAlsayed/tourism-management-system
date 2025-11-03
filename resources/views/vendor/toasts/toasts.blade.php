@@ -17,9 +17,7 @@
 
                         @if (isToastArray($type, 'emoji'))
                             <div class="toast-icon emoji fas" style="font-size: 20px">{!! isToastArray($type, 'emoji') !!}</div>
-                        @endif
-
-                        @if (!isToastArray($type, 'emoji'))
+                        @else
                             <i class="toast-icon fas fa-{{ isToastArray($type, 'icon') ?: getIcon($type) }}"></i>
                         @endif
 
