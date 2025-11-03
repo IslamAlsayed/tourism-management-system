@@ -380,8 +380,6 @@
             setTimeout(() => {
                 filterByForeignId("region_id", "subregion", "subregion_id");
                 filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
             }, 500);
         });
     </script>
@@ -405,7 +403,7 @@
             const loadData = async (fromId, model, toId, value, append = false) => {
                 const ref = filterByForeignId(fromId, model, toId);
                 if (ref && typeof ref.loadReferenceData === "function") {
-                    await ref.loadReferenceData(value, append);
+                    await ref.loadReferenceData(value, null, append);
                 }
             };
 
@@ -435,7 +433,7 @@
                 if (allStates && allStates?.checked) {
                     stateSelect.disabled = true;
                     getSelect("state_id").nextElementSibling?.classList.add('loading');
-                    await loadData("country_id", "city", "city_id", countryId);
+                    await loadData("country_id", "city", "city_id", countryId, true);
                     return;
                 }
 
@@ -488,7 +486,7 @@
                     if (allStates && allStates?.checked) {
                         stateSelect.disabled = true;
                         getSelect("state_id").nextElementSibling?.classList.add('loading');
-                        await loadData("country_id", "city", "city_id", countryId);
+                        await loadData("country_id", "city", "city_id", countryId, true);
                     } else {
                         stateSelect.disabled = false;
                         getSelect("state_id").nextElementSibling?.classList.remove('loading');
@@ -529,8 +527,26 @@
                     if (isLoading) return;
                     isLoading = true;
 
-                    // getSelect("city_id").nextElementSibling?.classList.add('loading');
-                    // document.querySelectorAll(`input[name='city_id[]']`).forEach(i => i.remove());
+                    // 🧹 امسح كل الكاش المتعلق بالـ states والـ cities
+                    if (window.globalRequestCache) {
+                        // امسح كاش الـ states
+                        const stateContext = `state_state_id`;
+                        const stateCacheKey = `country_id_${stateContext}`;
+                        window.globalRequestCache.delete(stateCacheKey);
+
+                        // امسح كاش الـ cities
+                        const cityContext = `city_city_id`;
+                        const cityCacheKey = `country_id_${cityContext}`;
+                        window.globalRequestCache.delete(cityCacheKey);
+
+                        // امسح كاش cities from states
+                        const cityFromStateKey = `state_id_${cityContext}`;
+                        window.globalRequestCache.delete(cityFromStateKey);
+
+                        if (window.APP_DEBUG)
+                            console.log('🧹 Cache cleared for states and cities');
+                    }
+
                     await handleStateChange("allStatesChange");
                     isLoading = false;
                 });

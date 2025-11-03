@@ -36,11 +36,17 @@ class TourGuide extends Model
         'city_id',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['guide_type', 'region', 'subregion', 'country'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return ['guide_type_id', 'region_id', 'subregion_id', 'country_id'];

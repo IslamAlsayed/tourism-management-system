@@ -7,7 +7,9 @@
         'searchValue' => $search,
         'showSearch' => true,
     ])
-        @include('components.columns', ['allColumns' => $allColumns ?? []])
+        @if (isset($data) && !empty($data) && $data->count() > 0)
+            @include('components.columns', ['allColumns' => $allColumns ?? []])
+        @endif
     @endcomponent
 
     <div class="kt-card-content">

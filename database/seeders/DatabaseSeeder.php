@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             UserSeeder::class,
             LanguageSeeder::class,
+            ClientSeeder::class,
         ]);
 
         // $this->call([

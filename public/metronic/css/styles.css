@@ -3178,12 +3178,156 @@
     background-color: var(--color-orange-100);
   }
 
+  .bg-yellow-400 {
+    background-color: var(--color-yellow-400);
+  }
+
+  .bg-yellow-400\/5 {
+    background-color: var(--color-yellow-400);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-yellow-400) 5%, transparent);
+    }
+  }
+
+  .bg-yellow-400\/10 {
+    background-color: var(--color-yellow-400);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-yellow-400) 10%, transparent);
+    }
+  }
+
+  .bg-blue-400 {
+    background-color: var(--color-blue-400);
+  }
+
+  .bg-blue-400\/5 {
+    background-color: var(--color-blue-400);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-blue-400) 5%, transparent);
+    }
+  }
+
+  .bg-blue-400\/10 {
+    background-color: var(--color-blue-400);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-blue-400) 10%, transparent);
+    }
+  }
+
+  .bg-blue-600 {
+    background-color: var(--color-blue-600);
+  }
+
+  .bg-blue-600\/5 {
+    background-color: var(--color-blue-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-blue-600) 5%, transparent);
+    }
+  }
+
+  .bg-blue-600\/10 {
+    background-color: var(--color-blue-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-blue-600) 10%, transparent);
+    }
+  }
+
+  .bg-active,
   .bg-success {
     background-color: var(--color-green-600);
   }
 
+  .bg-active\/5,
+  .bg-success\/5 {
+    background-color: var(--color-green-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-green-600) 5%, transparent);
+    }
+  }
+
+  .bg-active\/10,
+  .bg-success\/10 {
+    background-color: var(--color-green-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-green-600) 10%, transparent);
+    }
+  }
+
+  .bg-inactive,
   .bg-danger {
     background-color: var(--color-red-600);
+  }
+
+  .bg-inactive\/5,
+  .bg-danger\/5 {
+    background-color: var(--color-red-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-red-600) 5%, transparent);
+    }
+  }
+
+  .bg-inactive\/10,
+  .bg-danger\/10 {
+    background-color: var(--color-red-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-red-600) 10%, transparent);
+    }
+  }
+
+  .bg-inactive,
+  .bg-red {
+    background-color: var(--color-red-600);
+  }
+
+  .bg-inactive\/5,
+  .bg-red\/5 {
+    background-color: var(--color-red-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-red-600) 5%, transparent);
+    }
+  }
+
+  .bg-inactive\/10,
+  .bg-red\/10 {
+    background-color: var(--color-red-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-red-600) 10%, transparent);
+    }
+  }
+
+  .bg-blacklisted,
+  .bg-yellow {
+    background-color: var(--color-yellow-600);
+  }
+
+  .bg-blacklisted\/5,
+  .bg-yellow\/5 {
+    background-color: var(--color-yellow-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-yellow-600) 5%, transparent);
+    }
+  }
+
+  .bg-blacklisted\/10,
+  .bg-yellow\/10 {
+    background-color: var(--color-yellow-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-yellow-600) 10%, transparent);
+    }
   }
 
   .bg-primary {
@@ -4141,6 +4285,14 @@
     color: var(--color-red-600);
   }
 
+  .text-red-700 {
+    color: var(--color-red-700);
+  }
+
+  .text-red-800 {
+    color: var(--color-red-800);
+  }
+
   .text-mono {
     color: var(--mono);
   }
@@ -4191,6 +4343,18 @@
 
   .text-yellow-600 {
     color: var(--color-yellow-600);
+  }
+
+  .text-yellow-700 {
+    color: var(--color-yellow-700);
+  }
+
+  .text-yellow-800 {
+    color: var(--color-yellow-800);
+  }
+
+  .text-yellow-900 {
+    color: var(--color-yellow-900);
   }
 
   .capitalize {

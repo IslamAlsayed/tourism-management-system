@@ -1,5 +1,6 @@
 <div class="flex-wrap gap-2 p-2">
     <div class="w-full flex justify-between items-start">
+        {{-- Pagination Info --}}
         <div>
             <p class="text-sm text-gray-600 p-2">
                 {{ __('main.showing') }} {{ $data->firstItem() ?? 0 }} -
@@ -12,6 +13,7 @@
             </p>
         </div>
 
+        {{-- selected items count --}}
         <div class="flex gap-2">
             <span id="selectedCount" style="align-self: anchor-center;"></span>
             <div class="flex flex-wrap gap-2 lg:gap-5">
@@ -24,6 +26,7 @@
 
             {{ $slot }}
 
+            {{-- Search input --}}
             @if (isset($showSearch) && $showSearch)
                 <div class="flex flex-wrap gap-2 lg:gap-5">
                     <div class="flex items-center search-container">

@@ -6,6 +6,7 @@ use App\Http\Controllers\SystemLanguageController;
 use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\ExcelController;
 use App\Http\Controllers\Dashboard\StateController;
 use App\Http\Controllers\Dashboard\RegionController;
@@ -88,6 +89,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === USER MANAGEMENT ===
     Route::resource('users', UserController::class)->names('users');
+
+    // === CLIENT MANAGEMENT ===
+    Route::resource('clients', ClientController::class)->names('clients');
 
     // === CURRENCY MANAGEMENT ===
     Route::resource('currencies', CurrencyController::class)->names('currencies');

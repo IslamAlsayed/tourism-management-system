@@ -135,6 +135,47 @@ return [
     'keep_updated' => 'حافظ على المعلومات محدثة',
     'keep_updated_desc' => 'تأكد من أن معلومات المستخدم حديثة لضمان أفضل أداء للنظام',
 
+    // Client Management
+    'client' => 'عميل',
+    'clients' => 'العملاء',
+    'company_information' => 'معلومات الشركة',
+    'financial_information' => 'المعلومات المالية',
+
+    // Client Types & Status
+    'client_type' => 'نوع العميل',
+    'client_code' => 'كود العميل',
+    'select_client_type' => 'اختر نوع العميل',
+    'client_status' => 'حالة العميل',
+    'select_client_status' => 'اختر حالة العميل',
+    'individual' => 'فردي',
+    'corporate' => 'شركة',
+    'blacklisted' => 'محظور',
+    'all_client_types' => 'جميع أنواع العملاء',
+    'all_statuses' => 'جميع الحالات',
+    'all_status' => 'جميع الحالات',
+
+    // Company Fields
+    'company_name' => 'اسم الشركة',
+    'company_address' => 'عنوان الشركة',
+    'company_email' => 'البريد الإلكتروني للشركة',
+    'company_phone' => 'هاتف الشركة',
+    'tax_number' => 'الرقم الضريبي',
+    'commercial_registration' => 'السجل التجاري',
+
+    // Personal Fields
+    'select_nationality' => 'اختر الجنسية',
+    'passport_number' => 'رقم جواز السفر',
+    'id_number' => 'رقم الهوية',
+    'select_gender' => 'اختر الجنس',
+
+    // Financial Fields
+    'credit_limit' => 'الحد الائتماني',
+    'payment_terms' => 'شروط الدفع (أيام)',
+    'discount_rate' => 'نسبة الخصم (%)',
+
+    // Contact Fields
+    'whatsapp' => 'واتساب',
+
     'flag' => 'العلم',
     'currency' => 'العملة',
     'regions' => 'المناطق',

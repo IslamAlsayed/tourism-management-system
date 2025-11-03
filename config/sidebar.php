@@ -7,18 +7,18 @@ return [
             'icon' => 'ki-filled ki-element-11',
             'route' => 'dashboard',
         ],
-        [
-            'title' => 'quotation requests v1',
-            'fixed' => false,
-            'icon' => 'ki-filled ki-element-11',
-            'route' => 'dashboard.quote.v1.step1',
-        ],
-        [
-            'title' => 'quotation requests v2',
-            'fixed' => false,
-            'icon' => 'ki-filled ki-element-11',
-            'route' => 'dashboard.quote.v2.index',
-        ],
+        // [
+        //     'title' => 'quotation requests v1',
+        //     'fixed' => false,
+        //     'icon' => 'ki-filled ki-element-11',
+        //     'route' => 'dashboard.quote.v1.step1',
+        // ],
+        // [
+        //     'title' => 'quotation requests v2',
+        //     'fixed' => false,
+        //     'icon' => 'ki-filled ki-element-11',
+        //     'route' => 'dashboard.quote.v2.index',
+        // ],
 
         // ================= Users =================
         [
@@ -41,6 +41,31 @@ return [
                     'icon' => 'ki-filled ki-plus',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'users'],
+                ]
+            ],
+        ],
+
+        // ================= Clients =================
+        [
+            'title' => 'client management',
+            'icon' => 'ki-outline ki-users',
+            'status' => 'done',
+            'children' => [
+                [
+                    'title' => 'all clients',
+                    'icon' => 'ki-filled ki-people',
+                    'route' => 'clients.index',
+                ],
+                [
+                    'title' => 'create client',
+                    'icon' => 'ki-filled ki-people',
+                    'route' => 'clients.create',
+                ],
+                [
+                    'title' => 'import clients',
+                    'icon' => 'ki-filled ki-plus',
+                    'route' => 'import.data',
+                    'parameters' => ['models' => 'clients'],
                 ]
             ],
         ],
@@ -494,27 +519,6 @@ return [
         //         ],
         //     ],
         // ],
-
-        // ================= Tourist Sites =================
-        [
-            'title' => 'clients',
-            'fixed' => '+2',
-            'icon' => 'ki-filled ki-geolocation',
-            'children' => [
-                [
-                    'title' => 'clients',
-                    'fixed' => false,
-                    'icon' => 'ki-filled ki-geolocation',
-                    'route' => '#'
-                ],
-                [
-                    'title' => 'site entrance fees',
-                    'fixed' => false,
-                    'icon' => 'ki-filled ki-dollar',
-                    'route' => '#'
-                ],
-            ],
-        ],
 
         // ================= Tourist Sites =================
         [

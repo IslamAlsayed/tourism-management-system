@@ -135,6 +135,47 @@ return [
     'keep_updated' => 'Keep Information Updated',
     'keep_updated_desc' => 'Ensure user information is current for better system functionality',
 
+    // Client Management
+    'client' => 'Client',
+    'clients' => 'Clients',
+    'company_information' => 'Company Information',
+    'financial_information' => 'Financial Information',
+
+    // Client Types & Status
+    'client_type' => 'Client Type',
+    'client_code' => 'Client Code',
+    'select_client_type' => 'Select Client Type',
+    'client_status' => 'Client Status',
+    'select_client_status' => 'Select Client Status',
+    'individual' => 'Individual',
+    'corporate' => 'Corporate',
+    'blacklisted' => 'Blacklisted',
+    'all_client_types' => 'All Client Types',
+    'all_status' => 'All Status',
+    'all_statuses' => 'All Statuses',
+
+    // Company Fields
+    'company_name' => 'Company Name',
+    'company_address' => 'Company Address',
+    'company_email' => 'Company Email',
+    'company_phone' => 'Company Phone',
+    'tax_number' => 'Tax Number',
+    'commercial_registration' => 'Commercial Registration',
+
+    // Personal Fields
+    'select_nationality' => 'Select Nationality',
+    'passport_number' => 'Passport Number',
+    'id_number' => 'ID Number',
+    'select_gender' => 'Select Gender',
+
+    // Financial Fields
+    'credit_limit' => 'Credit Limit',
+    'payment_terms' => 'Payment Terms (Days)',
+    'discount_rate' => 'Discount Rate (%)',
+
+    // Contact Fields
+    'whatsapp' => 'WhatsApp',
+
     'flag' => 'Flag',
     'currency' => 'Currency',
     'regions' => 'Regions',

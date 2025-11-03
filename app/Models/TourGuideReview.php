@@ -16,11 +16,17 @@ class TourGuideReview extends Model
         'review',
     ];
 
+    /**
+     * Get relationship names for eager loading
+     */
     public function getRelationshipNames()
     {
         return ['tour_guide'];
     }
 
+    /**
+     * Get columns to exclude from search/display
+     */
     public function getExcludedColumns()
     {
         return [
