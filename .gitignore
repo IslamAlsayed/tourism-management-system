@@ -42,3 +42,4 @@ COMMIT_CONVENTIONS.md
 /.gitignore
 /resources/views/components/trash
 /resources/views/components/elements/display-alert.blade.php
+/commit_message.txt
