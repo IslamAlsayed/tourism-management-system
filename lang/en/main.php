@@ -1000,6 +1000,8 @@ return [
 
     // messages
     'messages' => [
+        'welcome_back_name' => 'Welcome back, :name!',
+        'goodbye_name' => 'Goodbye, :name!',
         'no_records_found' => 'No records found.',
         'no_backup' => 'No backup files found.',
         'Updated Successfully' => 'Updated Successfully',

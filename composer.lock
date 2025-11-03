@@ -1503,16 +1503,16 @@
         },
         {
             "name": "islamalsayed/laravel-toasts",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IslamAlsayed/laravel-toasts.git",
-                "reference": "b8126bf14da3bb72019997fa01c6067568503fa2"
+                "reference": "564f6ec202d691cc16d9213c53d3a9a7d73fe1d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IslamAlsayed/laravel-toasts/zipball/b8126bf14da3bb72019997fa01c6067568503fa2",
-                "reference": "b8126bf14da3bb72019997fa01c6067568503fa2",
+                "url": "https://api.github.com/repos/IslamAlsayed/laravel-toasts/zipball/564f6ec202d691cc16d9213c53d3a9a7d73fe1d9",
+                "reference": "564f6ec202d691cc16d9213c53d3a9a7d73fe1d9",
                 "shasum": ""
             },
             "require": {
@@ -1571,9 +1571,9 @@
             ],
             "support": {
                 "issues": "https://github.com/IslamAlsayed/laravel-toasts/issues",
-                "source": "https://github.com/IslamAlsayed/laravel-toasts/tree/v1.0.0"
+                "source": "https://github.com/IslamAlsayed/laravel-toasts/tree/v1.0.1"
             },
-            "time": "2025-11-02T22:57:55+00:00"
+            "time": "2025-11-03T12:58:39+00:00"
         },
         {
             "name": "laravel/framework",

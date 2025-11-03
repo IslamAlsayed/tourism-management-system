@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', false));
+        return redirect()->intended(route('dashboard', false))->withSuccess(__('main.messages.welcome_back_name', ['name' => Auth::user()->name ?? 'User']));
     }
 
     /**
@@ -42,6 +42,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->withSuccess(__('main.messages.goodbye_name', ['name' => Auth::user()->name ?? 'User']));
     }
 }
