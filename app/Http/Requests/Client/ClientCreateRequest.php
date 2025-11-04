@@ -29,9 +29,19 @@ class ClientCreateRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:20'],
             'mobile' => ['nullable', 'string', 'max:20'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
+
+            'region_id' => ['required', 'string', 'exists:regions,id'],
+            'subregion_id' => ['required', 'string', 'exists:subregions,id'],
+            'country_id' => ['required', 'string', 'exists:countries,id'],
+
+            'state_id' => ['required'],
+            'state_id.*' => ['integer', 'exists:states,id'],
+
+            'city_id' => ['required'],
+            'city_id.*' => ['integer', 'exists:cities,id'],
+            'nationality_id' => ['required', 'integer', 'exists:nationalities,id'],
+
             'address' => ['nullable', 'string', 'max:500'],
-            'city' => ['nullable', 'string', 'max:100'],
-            'country' => ['nullable', 'string', 'max:100'],
             'postal_code' => ['nullable', 'string', 'max:20'],
 
             // Company Information
@@ -43,7 +53,6 @@ class ClientCreateRequest extends FormRequest
             'company_email' => ['nullable', 'email', 'max:255'],
 
             // Personal Information
-            'nationality_id' => ['nullable', 'integer', 'exists:nationalities,id'],
             'passport_number' => ['nullable', 'string', 'max:50'],
             'id_number' => ['nullable', 'string', 'max:50'],
             'birth_date' => ['nullable', 'date'],

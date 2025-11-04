@@ -1,11 +1,7 @@
 <?php
 
 return [
-    // Common
-    'created_at' => 'تم الإنشاء في',
-    'updated_at' => 'تم التحديث في',
-    'inactive' => 'غير نشط',
-
+    
     // Dashboard
     'dashboard' => 'لوحة التحكم',
     'dashboard_subtitle' => 'المركز الرئيسي للتخصيص الشخصي',
@@ -20,7 +16,11 @@ return [
     'dashboard_welcome_description' => 'إدارة بيانات تطبيقك بكفاءة مع لوحة التحكم الشاملة. الوصول إلى جميع الميزات والضوابط في مكان واحد.',
     'system_overview' => 'نظرة عامة على النظام',
     'total_records' => 'إجمالي السجلات',
+    'created_at' => 'تم الإنشاء في',
+    'updated_at' => 'تم التحديث في',
+    'inactive' => 'غير نشط',
     'active' => 'نشط',
+    'pending' => 'قيد الانتظار',
     'users' => 'المستخدمين',
     'users_' => 'مستخدمين',
     'auto_refresh' => 'تحديث تلقائي',
@@ -138,9 +138,70 @@ return [
     // Client Management
     'client' => 'عميل',
     'clients' => 'العملاء',
-    'company_information' => 'معلومات الشركة',
     'financial_information' => 'المعلومات المالية',
+    'personal_information' => 'المعلومات الشخصية',
+    'passport_information' => 'معلومات جواز السفر',
+    'location_information' => 'معلومات الموقع',
+    'company_information' => 'معلومات الشركة/العمل',
+    'online_presence' => 'الوجود الإلكتروني',
+    'additional_settings' => 'إعدادات إضافية',
 
+    // Location fields
+    'region' => 'المنطقة',
+    'subregion' => 'المنطقة الفرعية',
+    'country' => 'الدولة',
+    'state' => 'الولاية/المحافظة',
+    'city' => 'المدينة',
+
+    // Personal name fields
+    'first_name' => 'الاسم الأول',
+    'middle_name' => 'الاسم الأوسط',
+    'gf_name' => 'اسم الجد',
+    'last_name' => 'اسم العائلة',
+
+    // Personal details
+    'gender' => 'الجنس',
+    'male' => 'ذكر',
+    'female' => 'أنثى',
+    'other' => 'آخر',
+    'birth_date' => 'تاريخ الميلاد',
+
+    // Passport information
+    'passport_issue_date' => 'تاريخ إصدار جواز السفر',
+    'passport_expiry_date' => 'تاريخ انتهاء جواز السفر',
+
+    // Email addresses
+    'personal_email' => 'البريد الشخصي',
+    'email_primary' => 'البريد الأساسي',
+    'work_email' => 'بريد العمل',
+    'secondary_email' => 'البريد الثانوي',
+
+    // Phone numbers
+    'primary_phone' => 'الهاتف الأساسي',
+    'secondary_phone' => 'الهاتف الثانوي',
+    'mobile_phone' => 'الهاتف المحمول',
+    'home_phone' => 'هاتف المنزل',
+    'work_phone' => 'هاتف العمل',
+    'work_phone_ext' => 'تحويلة هاتف العمل',
+    'fax_number' => 'رقم الفاكس',
+
+    // Company/Business information
+    'job_title' => 'المسمى الوظيفي',
+    'sector' => 'القطاع',
+    'department' => 'القسم',
+    'business_type' => 'نوع العمل',
+    'business_registration_number' => 'رقم السجل التجاري',
+    'tax_id' => 'الرقم الضريبي',
+
+    // Address information
+    'box' => 'صندوق البريد',
+    'postal_code' => 'الرمز البريدي',
+    'street_address' => 'عنوان الشارع',
+    'address_line_2' => 'العنوان - السطر الثاني',
+
+    // Online presence
+    'website_url' => 'رابط الموقع الإلكتروني',
+    'linkedin_url' => 'رابط لينكدان',
     // Client Types & Status
     'client_type' => 'نوع العميل',
     'client_code' => 'كود العميل',
@@ -277,9 +338,6 @@ return [
     'required_field' => 'حقل مطلوب',
     'optional_field' => 'حقل اختياري',
     'date_of_birth' => 'تاريخ الميلاد',
-    'gender' => 'الجنس',
-    'male' => 'ذكر',
-    'female' => 'أنثى',
     'and' => 'و',
     'all' => 'الكل',
     'all_column' => 'الكل الأعمدة',
@@ -402,7 +460,6 @@ return [
     'not_set' => 'غير مضبوط',
     'profile_completion' => 'إكمال الملف الشخصي',
     'complete_profile_message' => 'أكمل ملفك الشخصي للاستفادة القصوى من حسابك.',
-    'personal_information' => 'المعلومات الشخصية',
     'update_password' => 'تحديث كلمة المرور',
     'enter_current_password' => 'أدخل كلمة المرور الحالية',
     'enter_new_password' => 'أدخل كلمة المرور الجديدة',
@@ -618,7 +675,6 @@ return [
     'enter_city_name_arabic' => 'أدخل اسم المدينة بالعربية',
     'enter_city_name_english' => 'أدخل اسم المدينة بالإنجليزية',
     'select_country' => 'اختر الدولة',
-    'state' => 'الولاية',
     'states' => 'الولايات',
     'states_' => 'الولايات',
     'select_state' => 'اختر الولاية',
@@ -840,7 +896,6 @@ return [
     'contact_mobile' => 'جوال جهة الاتصال',
     'contact_email' => 'بريد جهة الاتصال',
     'street' => 'الشارع',
-    'postal_code' => 'الرمز البريدي',
     'contract_file_path' => 'مسار ملف العقد',
     'population' => 'عدد السكان',
     'numeric_code' => 'الرمز الرقمي',
@@ -864,13 +919,8 @@ return [
     'id' => 'المعرف',
     'name' => 'الاسم',
     'name_ar' => 'الاسم بالعربية',
-    'country' => 'الدولة',
-    'city' => 'المدينة',
-    'region' => 'المنطقة',
-    'subregion' => 'المنطقة الفرعية',
     'company_name_ar' => 'اسم الشركة بالعربية',
     'specialty' => 'التخصص',
-    'box' => 'صندوق البريد',
     'mobile' => 'الجوال',
     'website' => 'الموقع الإلكتروني',
     'free_wifi' => 'واي فاي مجاني',
@@ -916,14 +966,10 @@ return [
     'all_cities' => 'كل المدن',
     'username' => 'اسم المستخدم',
     'password' => 'كلمة المرور',
-    'first_name' => 'الاسم الأول',
-    'last_name' => 'اسم العائلة',
     'bio' => 'نبذة تعريفية',
     'user_code' => 'كود المستخدم',
     'employee_id' => 'رقم الموظف',
     'hire_date' => 'تاريخ التوظيف',
-    'birth_date' => 'تاريخ الميلاد',
-    'department' => 'القسم',
     'position' => 'الوظيفة',
     'preferences' => 'التفضيلات',
     'is_admin' => 'مشرف',
@@ -1118,5 +1164,5 @@ return [
         'new york' => 'نيويورك',
         'august' => 'أغسطس',
         'time' => 'ص',
-    ]
+    ],
 ];

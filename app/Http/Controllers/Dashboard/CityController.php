@@ -38,7 +38,7 @@ class CityController extends Controller
 
     public function edit($id)
     {
-        $city = City::with(['country', 'state'])->find($id);
+        $city = City::with(['region', 'subregion', 'country'])->find($id);
         if (!$city) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.city')]));
         }

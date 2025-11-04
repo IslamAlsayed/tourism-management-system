@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Currency\CreateCurrencyRequest;
-use App\Http\Requests\Currency\UpdateCurrencyRequest;
+use App\Http\Requests\Currency\CurrencyCreateRequest;
+use App\Http\Requests\Currency\CurrencyUpdateRequest;
 
 class CurrencyController extends Controller
 {
@@ -31,7 +31,7 @@ class CurrencyController extends Controller
         return view('pages.dashboard.currencies.edit', compact('currency', 'countries'));
     }
 
-    public function store(CreateCurrencyRequest $request)
+    public function store(CurrencyCreateRequest $request)
     {
         $validated = $request->validated();
         $currency = Currency::create($validated);
@@ -46,7 +46,7 @@ class CurrencyController extends Controller
         return redirect()->route('currencies.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.currency')]));
     }
 
-    public function update(UpdateCurrencyRequest $request, $id)
+    public function update(CurrencyUpdateRequest $request, $id)
     {
         $currency = Currency::find($id);
         if (!$currency) {

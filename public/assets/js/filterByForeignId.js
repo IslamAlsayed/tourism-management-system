@@ -406,10 +406,11 @@ function filterByForeignId(
         }
     }
 
-    if (!referenceSelect()._filterEventsBound) {
+    const refSelect = referenceSelect();
+    if (refSelect && !refSelect._filterEventsBound) {
         document.addEventListener("change", handleChange);
         document.addEventListener("click", handleClick);
-        referenceSelect()._filterEventsBound = true; // ✅ Mark as initialized
+        refSelect._filterEventsBound = true; // ✅ Mark as initialized
     }
 
     // 3) لو action == "edit" نحاول تحميل القيم الحالية فورًا
@@ -540,7 +541,6 @@ function filterByForeignId(
                     "state_id",
                     "city",
                     "city_id",
-                    "create",
                 ).loadReferenceData(stateId);
             } else {
                 // Clear cities if no state selected
@@ -554,7 +554,7 @@ function filterByForeignId(
     }
 
     // ✅ Support for subregion_id → state_id (in pages without country_id)
-    if (constrainId == "state_id") {
+    if (constrainId == "state_id" && !document.getElementById("country_id")) {
         const subregionSelect = document.getElementById("subregion_id");
         if (subregionSelect && !subregionSelect.dataset.stateListenerBound) {
             subregionSelect.dataset.stateListenerBound = "true";

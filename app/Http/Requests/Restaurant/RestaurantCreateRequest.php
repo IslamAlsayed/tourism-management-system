@@ -29,8 +29,12 @@ class RestaurantCreateRequest extends FormRequest
             'region_id' => ['required', 'string', 'exists:regions,id'],
             'subregion_id' => ['required', 'string', 'exists:subregions,id'],
             'country_id' => ['required', 'string', 'exists:countries,id'],
-            'state_id' => ['required', 'string', 'exists:states,id'],
-            'city_id' => ['required', 'string', 'exists:cities,id'],
+
+            'state_id' => ['required'],
+            'state_id.*' => ['integer', 'exists:states,id'],
+
+            'city_id' => ['required'],
+            'city_id.*' => ['integer', 'exists:cities,id'],
 
             'company_name_ar' => ['nullable', 'string', 'max:255'],
             'specialty' => ['nullable', 'string', 'max:255'],

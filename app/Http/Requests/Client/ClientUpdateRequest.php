@@ -27,13 +27,23 @@ class ClientUpdateRequest extends FormRequest
             'client_code' => ['nullable', 'string', 'max:50', 'unique:clients,client_code,' . $clientId],
             'first_name' => ['nullable', 'string', 'max:100'],
             'last_name' => ['nullable', 'string', 'max:100'],
-            'email' => ['required', 'email', 'max:255', 'unique:clients,email,' . $clientId],
+            'email' => ['nullable', 'email', 'max:255', 'unique:clients,email,' . $clientId],
             'phone' => ['nullable', 'string', 'max:20'],
             'mobile' => ['nullable', 'string', 'max:20'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:500'],
-            'city' => ['nullable', 'string', 'max:100'],
-            'country' => ['nullable', 'string', 'max:100'],
+
+            'region_id' => ['nullable', 'string', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'string', 'exists:countries,id'],
+
+            'state_id' => ['nullable'],
+            'state_id.*' => ['integer', 'exists:states,id'],
+
+            'city_id' => ['nullable'],
+            'city_id.*' => ['integer', 'exists:cities,id'],
+            'nationality_id' => ['nullable', 'integer', 'exists:nationalities,id'],
+
             'postal_code' => ['nullable', 'string', 'max:20'],
 
             // Company Information
@@ -45,7 +55,6 @@ class ClientUpdateRequest extends FormRequest
             'company_email' => ['nullable', 'email', 'max:255'],
 
             // Personal Information
-            'nationality_id' => ['nullable', 'integer', 'exists:nationalities,id'],
             'passport_number' => ['nullable', 'string', 'max:50'],
             'id_number' => ['nullable', 'string', 'max:50'],
             'birth_date' => ['nullable', 'date'],
