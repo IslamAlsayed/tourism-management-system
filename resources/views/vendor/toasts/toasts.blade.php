@@ -127,7 +127,7 @@
 
 @if ($errors->any())
     <div class="toasts">
-        <div class="toast toast-error{{ config('toasts.move') != 'enable' ? ' no_move' : '' }}">
+        <div class="toast toast-error {{ config('toasts.move') != 'enable' ? 'no_move' : '' }}">
             <i class="toast-icon fas fa-circle-xmark"></i>
 
             <div class="toast-text">

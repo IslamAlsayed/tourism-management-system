@@ -41,7 +41,7 @@ Route::get('/dashboard/countries/metronic-table', function () {
 |--------------------|
 */
 
-Route::get('/', fn() => view('welcome'));
+Route::get('/', fn() => view('index'));
 
 // Admin routes
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
