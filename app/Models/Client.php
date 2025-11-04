@@ -12,35 +12,49 @@ class Client extends Model
 
     protected $fillable = [
         'id',
-        'photo',
-        'name',
-        'email',
-        'phone',
         'first_name',
+        'middle_name',
+        'gf_name',
         'last_name',
-        'mobile',
-        'address',
-        'client_code',
-        'company_name',
-        'company_address',
-        'tax_number',
-        'commercial_registration',
-        'passport_number',
-        'id_number',
+        'gender',
         'birth_date',
-        'preferred_language',
+        'passport_number',
+        'passport_issue_date',
+        'passport_expiry_date',
+        'personal_email',
+        'email_primary',
+        'work_email',
+        'secondary_email',
+        'primary_phone',
+        'secondary_phone',
+        'mobile',
+        'home_phone',
+        'work_phone',
+        'work_phone_ext',
+        'fax_number',
+        'company_name',
+        'job_title',
+        'sector',
+        'department',
+        'business_type',
+        'business_registration_number',
+        'tax_id',
+        'box',
+        'postal_code',
+        'street_address',
+        'address_line_2',
+        'website_url',
+        'linkedin_url',
+        'status',
         'timezone',
-        'preferences',
-        'client_type', // individual, corporate
-        'client_status', // active, inactive, blacklisted
-        'credit_limit',
-        'payment_terms',
-        'discount_rate',
-        'is_active',
-        'is_verified',
         'notes',
         'created_by',
         'updated_by',
+        'region_id',
+        'subregion_id',
+        'country_id',
+        'state_id',
+        'city_id',
         'nationality_id',
     ];
 
@@ -49,7 +63,7 @@ class Client extends Model
      */
     public function getRelationshipNames()
     {
-        return ['nationality'];
+        return ['region', 'subregion', 'country', 'state', 'city'];
     }
 
     /**
@@ -58,15 +72,17 @@ class Client extends Model
     public function getExcludedColumns()
     {
         return [
+            'region_id',
+            'subregion_id',
+            'country_id',
+            'state_id',
+            'city_id',
             'nationality_id',
-            'preferences',
-            'tax_number',
-            'commercial_registration',
             'passport_number',
-            'id_number',
-            'credit_limit',
-            'payment_terms',
-            'discount_rate',
+            'passport_issue_date',
+            'passport_expiry_date',
+            'business_registration_number',
+            'tax_id',
             'notes',
             'created_by',
             'updated_by',
@@ -82,10 +98,8 @@ class Client extends Model
     {
         return [
             'birth_date' => 'date',
-            'is_active' => 'boolean',
-            'is_verified' => 'boolean',
-            'credit_limit' => 'decimal:2',
-            'discount_rate' => 'decimal:2',
+            'passport_issue_date' => 'date',
+            'passport_expiry_date' => 'date',
         ];
     }
 
@@ -93,7 +107,31 @@ class Client extends Model
      * Relationships
      */
 
-    // Nationality relationship
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
     public function nationality()
     {
         return $this->belongsTo(Nationality::class);

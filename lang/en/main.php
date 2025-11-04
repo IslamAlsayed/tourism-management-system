@@ -1,11 +1,6 @@
 <?php
 
 return [
-    // Common
-    'created_at' => 'Created At',
-    'updated_at' => 'Updated At',
-    'inactive' => 'Inactive',
-
     // Dashboard
     'dashboard' => 'Dashboard',
     'dashboard_subtitle' => 'Central Hub for Personal Customization',
@@ -20,7 +15,11 @@ return [
     'dashboard_welcome_description' => 'Manage your application data efficiently with our comprehensive dashboard. Access all features and controls in one place.',
     'system_overview' => 'System Overview',
     'total_records' => 'Total Records',
+    'created_at' => 'Created At',
+    'updated_at' => 'Updated At',
+    'inactive' => 'Inactive',
     'active' => 'Active',
+    'pending' => 'Pending',
     'users' => 'Users',
     'users_' => 'Users',
     'auto_refresh' => 'Auto refresh',
@@ -140,6 +139,68 @@ return [
     'clients' => 'Clients',
     'company_information' => 'Company Information',
     'financial_information' => 'Financial Information',
+    'personal_information' => 'Personal Information',
+    'passport_information' => 'Passport Information',
+    'location_information' => 'Location Information',
+    'online_presence' => 'Online Presence',
+    'additional_settings' => 'Additional Settings',
+
+    // Location fields
+    'region' => 'Region',
+    'subregion' => 'Subregion',
+    'country' => 'Country',
+    'state' => 'State',
+    'city' => 'City',
+
+    // Personal name fields
+    'first_name' => 'First Name',
+    'middle_name' => 'Middle Name',
+    'gf_name' => 'Grandfather Name',
+    'last_name' => 'Last Name',
+
+    // Personal details
+    'gender' => 'Gender',
+    'male' => 'Male',
+    'female' => 'Female',
+    'other' => 'Other',
+    'birth_date' => 'Birth Date',
+
+    // Passport information
+    'passport_issue_date' => 'Passport Issue Date',
+    'passport_expiry_date' => 'Passport Expiry Date',
+
+    // Email addresses
+    'personal_email' => 'Personal Email',
+    'email_primary' => 'Primary Email',
+    'work_email' => 'Work Email',
+    'secondary_email' => 'Secondary Email',
+
+    // Phone numbers
+    'primary_phone' => 'Primary Phone',
+    'secondary_phone' => 'Secondary Phone',
+    'mobile_phone' => 'Mobile Phone',
+    'home_phone' => 'Home Phone',
+    'work_phone' => 'Work Phone',
+    'work_phone_ext' => 'Work Phone Extension',
+    'fax_number' => 'Fax Number',
+
+    // Company/Business information
+    'job_title' => 'Job Title',
+    'sector' => 'Sector',
+    'department' => 'Department',
+    'business_type' => 'Business Type',
+    'business_registration_number' => 'Business Registration Number',
+    'tax_id' => 'Tax ID',
+
+    // Address information
+    'box' => 'P.O. Box',
+    'postal_code' => 'Postal Code',
+    'street_address' => 'Street Address',
+    'address_line_2' => 'Address Line 2',
+
+    // Online presence
+    'website_url' => 'Website URL',
+    'linkedin_url' => 'LinkedIn URL',
 
     // Client Types & Status
     'client_type' => 'Client Type',
@@ -277,9 +338,6 @@ return [
     'required_field' => 'Required field',
     'optional_field' => 'Optional field',
     'date_of_birth' => 'Date of Birth',
-    'gender' => 'Gender',
-    'male' => 'Male',
-    'female' => 'Female',
     'and' => 'And',
     'all' => 'All',
     'all_columns' => 'All Columns',
@@ -402,7 +460,6 @@ return [
     'not_set' => 'Not Set',
     'profile_completion' => 'Profile Completion',
     'complete_profile_message' => 'Complete your profile to get the most out of your account.',
-    'personal_information' => 'Personal Information',
     'update_password' => 'Update Password',
     'enter_current_password' => 'Enter current password',
     'enter_new_password' => 'Enter new password',
@@ -618,7 +675,6 @@ return [
     'enter_city_name_arabic' => 'Enter city name in Arabic',
     'enter_city_name_english' => 'Enter city name in English',
     'select_country' => 'Select Country',
-    'state' => 'State',
     'states' => 'States',
     'states_' => 'States',
     'select_state' => 'Select State',
@@ -840,7 +896,6 @@ return [
     'contact_mobile' => 'Contact Mobile',
     'contact_email' => 'Contact Email',
     'street' => 'Street',
-    'postal_code' => 'Postal Code',
     'contract_file_path' => 'Contract File Path',
     'population' => 'Population',
     'numeric_code' => 'Numeric Code',
@@ -864,13 +919,8 @@ return [
     'id' => 'ID',
     'name' => 'Name',
     'name_ar' => 'Name (Arabic)',
-    'country' => 'Country',
-    'city' => 'City',
-    'region' => 'Region',
-    'subregion' => 'Subregion',
     'company_name_ar' => 'Company Name (Arabic)',
     'specialty' => 'Specialty',
-    'box' => 'Box',
     'mobile' => 'Mobile',
     'website' => 'Website',
     'free_wifi' => 'Free WiFi',
@@ -916,14 +966,10 @@ return [
     'all_cities' => 'All Cities',
     'username' => 'Username',
     'password' => 'Password',
-    'first_name' => 'First Name',
-    'last_name' => 'Last Name',
     'bio' => 'Bio',
     'user_code' => 'User Code',
     'employee_id' => 'Employee ID',
     'hire_date' => 'Hire Date',
-    'birth_date' => 'Birth Date',
-    'department' => 'Department',
     'position' => 'Position',
     'preferences' => 'Preferences',
     'is_admin' => 'Is Admin',
@@ -1118,5 +1164,5 @@ return [
         'new_york' => 'new_york',
         'august' => 'August',
         'time' => 'AM',
-    ]
+    ],
 ];

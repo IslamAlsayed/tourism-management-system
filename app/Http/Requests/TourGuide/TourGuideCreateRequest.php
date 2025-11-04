@@ -35,6 +35,7 @@ class TourGuideCreateRequest extends FormRequest
             'currency_id' => ['required', 'string', 'max:50', 'exists:currencies,id'],
             'languages_ids' => ['required', 'array', 'exists:languages,id'],
             'guide_type_id' => ['required', 'string', 'max:50', 'exists:tour_guide_types,id'],
+
             'region_id' => ['required', 'string', 'exists:regions,id'],
             'subregion_id' => ['required', 'string', 'exists:subregions,id'],
             'country_id' => ['required', 'string', 'exists:countries,id'],

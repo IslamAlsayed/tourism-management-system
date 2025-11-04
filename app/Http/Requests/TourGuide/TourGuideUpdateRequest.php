@@ -35,6 +35,7 @@ class TourGuideUpdateRequest extends FormRequest
             'currency_id' => ['nullable', 'string', 'max:50', 'exists:currencies,id'],
             'languages_ids' => ['nullable', 'array', 'exists:languages,id'],
             'guide_type_id' => ['nullable', 'string', 'max:50', 'exists:tour_guide_types,id'],
+
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],

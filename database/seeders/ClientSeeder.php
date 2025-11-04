@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Client;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ClientSeeder extends Seeder
 {
@@ -13,29 +14,23 @@ class ClientSeeder extends Seeder
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        Client::truncate();
+        Schema::enableForeignKeyConstraints();
+
         // Create 50 clients with a mix of types
-        // 30 individual clients
-        Client::factory()
-            ->count(30)
-            ->individual()
-            ->create();
+        // 25 clients
+        Client::factory()->count(25)->create();
 
-        // 15 corporate clients (active and verified)
-        Client::factory()
-            ->count(15)
-            ->corporate()
-            ->active()
-            ->verified()
-            ->create();
+        // 15 clients (active)
+        Client::factory()->count(15)->active()->create();
 
-        // 5 additional corporate clients (random status)
-        Client::factory()
-            ->count(5)
-            ->corporate()
-            ->create();
+        // 15 clients (inactive)
+        Client::factory()->count(10)->inactive()->create();
 
         $this->command->info('50 clients created successfully!');
-        $this->command->info('- 30 individual clients');
-        $this->command->info('- 20 corporate clients');
+        $this->command->info('- 25 clients (random)');
+        $this->command->info('- 15 clients (active)');
+        $this->command->info('- 10 clients (inactive)');
     }
 }

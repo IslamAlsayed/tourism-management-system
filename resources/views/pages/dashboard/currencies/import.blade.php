@@ -8,7 +8,7 @@
             </a>
         </div>
 
-        @if (config('app.db_modedb_mode') != 'production')
+        @if (config('app.db_mode') != 'production')
             <table class="border min-w-half divide-y text-center divide-gray-200 mt-6">
                 <thead style="background-color: #ffea00;">
                     <tr>

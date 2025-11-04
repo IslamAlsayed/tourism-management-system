@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a class="kt-btn kt-btn-outline" href="{{ route('user.profile') }}">
+                <a class="kt-btn kt-btn-primary" href="{{ route('user.profile') }}">
                     {{ __('main.view_profile') }}
                 </a>
             </div>

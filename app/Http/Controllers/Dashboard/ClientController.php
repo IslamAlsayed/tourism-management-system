@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Client;
+use App\Models\Region;
 use App\Models\Nationality;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
@@ -13,26 +14,18 @@ class ClientController extends Controller
 {
     use PhotoUploadTrait;
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('pages.dashboard.clients.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $nationalities = Nationality::all();
-        return view('pages.dashboard.clients.create', compact('nationalities'));
+        $regions = Region::orderBy('name')->get();
+        $nationalities = Nationality::orderBy('name')->get();
+        return view('pages.dashboard.clients.create', get_defined_vars());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ClientCreateRequest $request)
     {
         $validated = $request->validated();
@@ -64,9 +57,6 @@ class ClientController extends Controller
         return redirect()->route('clients.index')->withError(__('main.messages.type_creation_failed', ['type' => __('main.client')]));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $client = Client::with(['nationality', 'creator', 'updater'])->find($id);
@@ -78,24 +68,17 @@ class ClientController extends Controller
         return view('pages.dashboard.clients.show', compact('client'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $client = Client::find($id);
-
         if (!$client) {
             return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.client')]));
         }
-
-        $nationalities = Nationality::all();
-        return view('pages.dashboard.clients.edit', compact('client', 'nationalities'));
+        $regions = Region::orderBy('name')->get();
+        $nationalities = Nationality::orderBy('name')->get();
+        return view('pages.dashboard.clients.edit', get_defined_vars());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(ClientUpdateRequest $request, $id)
     {
         $client = Client::find($id);
@@ -123,9 +106,6 @@ class ClientController extends Controller
         return redirect()->back()->withError(__('main.messages.type_update_failed', ['type' => __('main.client')]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $client = Client::find($id);
