@@ -51,12 +51,17 @@ jobs:
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan migrate --force"
 
-      # Step 4: Clear caches
+      # Step 4: Run seeders
+      - name: 🗄️ Seeders Database
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan db:seed"
+
+      # Step 5: Clear caches
       - name: 🧹 Clear Cache
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan optimize:clear"
 
-      # Step 5: Optimize
+      # Step 6: Optimize
       - name: ⚡ Optimize
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan optimize"
