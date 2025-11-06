@@ -43,3 +43,5 @@ COMMIT_CONVENTIONS.md
 /resources/views/components/trash
 /resources/views/components/elements/display-alert.blade.php
 /commit_message.txt
+/app/Excels
+/config/excel_models.php

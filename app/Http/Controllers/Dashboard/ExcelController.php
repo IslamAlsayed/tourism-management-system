@@ -11,23 +11,16 @@ use Illuminate\Support\Facades\Storage;
 
 class ExcelController extends Controller
 {
-    // protected $supportedModels;
-
-    // public function __construct()
-    // {
-    //     $this->supportedModels = config('excel_models');
-    // }
-
     public function import($models)
     {
-        if (!isset($this->supportedModels[$models])) {
-            return back()->with('error', "Invalid model: {$models}");
+        $modelName = Str::studly(Str::singular($models));
+        $models = Str::plural(strtolower($models));
+        $modelClass = "App\\Models\\{$modelName}";
+        if (!class_exists($modelClass)) {
+            return back()->withError("Invalid model: {$models}");
         }
-        // $models = $models;
         $title = __('main.import_types', ['types' => __('main.' . $models)]);
         $description = __('main.import_types_description', ['types' => __('main.' . $models)]);
-        dd(get_defined_vars());
-
         return view("pages.dashboard.$models.import", get_defined_vars());
     }
 

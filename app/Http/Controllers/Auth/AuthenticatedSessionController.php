@@ -16,6 +16,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+        if (session('login_attempted')) {
+            return view('auth.login');
+        }
+
+        session(['login_attempted' => true]);
+        showToastInfoMessage(__('main.messages.please_login_to_continue'));
         return view('auth.login');
     }
 
@@ -28,7 +34,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', false))->withSuccess(__('main.messages.welcome_back_name', ['name' => Auth::user()->name ?? 'User']));
+        showToastSuccessMessage(__('main.messages.welcome_back_name', ['name' => Auth::user()->name ?? 'User']));
+        return redirect()->intended(route('dashboard', false));
     }
 
     /**
@@ -42,6 +49,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/')->withSuccess(__('main.messages.goodbye_name', ['name' => Auth::user()->name ?? 'User']));
+        showToastSuccessMessage(__('main.messages.goodbye_name', ['name' => Auth::user()->name ?? 'User']));
+        return redirect('/');
     }
 }

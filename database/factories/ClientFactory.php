@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Client;
-use App\Models\Nationality;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,57 +20,78 @@ class ClientFactory extends Factory
      */
     public function definition(): array
     {
-        $clientType = $this->faker->randomElement(['individual', 'corporate']);
         $firstName = $this->faker->firstName();
+        $middleName = $this->faker->optional(0.7)->firstName();
         $lastName = $this->faker->lastName();
-        $name = $firstName . ' ' . $lastName;
 
         return [
-            'client_code' => 'CL-' . $this->faker->unique()->numerify('######'),
-            'name' => $name,
+            // Location information
+            'region_id' => \App\Models\Region::inRandomOrder()->first()?->id,
+            'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id,
+            'country_id' => \App\Models\Country::inRandomOrder()->first()?->id,
+            'state_id' => \App\Models\State::inRandomOrder()->first()?->id,
+            'city_id' => \App\Models\City::inRandomOrder()->first()?->id,
+            'nationality_id' => \App\Models\Nationality::inRandomOrder()->first()?->id,
+            'currency' => $this->faker->optional(0.7)->randomElement(['USD', 'EUR', 'GBP', 'SAR', 'AED']),
+
+            // Personal name information
             'first_name' => $firstName,
+            'middle_name' => $middleName,
+            'gf_name' => $this->faker->optional(0.5)->firstName(),
             'last_name' => $lastName,
-            'email' => $this->faker->unique()->safeEmail(),
-            'phone' => $this->faker->phoneNumber(),
-            'mobile' => $this->faker->phoneNumber(),
-            'whatsapp' => $this->faker->optional(0.7)->phoneNumber(),
-            'address' => $this->faker->address(),
-            'city' => $this->faker->city(),
-            'country' => $this->faker->country(),
-            'postal_code' => $this->faker->optional()->postcode(),
 
-            // Company Information (only for corporate clients)
-            'company_name' => $clientType === 'corporate' ? $this->faker->company() : null,
-            'company_address' => $clientType === 'corporate' ? $this->faker->address() : null,
-            'tax_number' => $clientType === 'corporate' ? $this->faker->optional()->numerify('TAX-##########') : null,
-            'commercial_registration' => $clientType === 'corporate' ? $this->faker->optional()->numerify('CR-##########') : null,
-            'company_phone' => $clientType === 'corporate' ? $this->faker->optional()->phoneNumber() : null,
-            'company_email' => $clientType === 'corporate' ? $this->faker->optional()->companyEmail() : null,
-
-            // Personal Information
-            'nationality_id' => Nationality::inRandomOrder()->first()?->id,
-            'passport_number' => $this->faker->optional(0.6)->bothify('??######'),
-            'id_number' => $this->faker->optional(0.7)->numerify('##########'),
-            'birth_date' => $this->faker->optional(0.8)->date('Y-m-d', '-25 years'),
+            // Personal details
             'gender' => $this->faker->randomElement(['male', 'female']),
+            'birth_date' => $this->faker->optional(0.8)->date('Y-m-d', '-25 years'),
 
-            // Client Classification
-            'client_type' => $clientType,
-            'client_status' => $this->faker->randomElement(['active', 'inactive', 'blacklisted']),
+            // Passport information
+            'passport_number' => $this->faker->optional(0.6)->bothify('??######'),
+            'passport_issue_date' => $this->faker->optional(0.6)->date('Y-m-d', '-2 years'),
+            'passport_expiry_date' => $this->faker->optional(0.6)->date('Y-m-d', '+8 years'),
 
-            // Financial Information
-            'credit_limit' => $this->faker->randomFloat(2, 5000, 100000),
-            'payment_terms' => $this->faker->randomElement([0, 7, 15, 30, 45, 60, 90]),
-            'discount_rate' => $this->faker->randomFloat(2, 0, 25),
-            'currency' => $this->faker->randomElement(['USD', 'EUR', 'SAR', 'AED', 'JOD']),
+            // Email addresses
+            'personal_email' => $this->faker->optional(0.7)->safeEmail(),
+            'email_primary' => $this->faker->unique()->safeEmail(),
+            'work_email' => $this->faker->optional(0.5)->companyEmail(),
+            'secondary_email' => $this->faker->optional(0.3)->safeEmail(),
 
-            // Additional Fields
-            'preferred_language' => $this->faker->randomElement(['en', 'ar']),
+            // Phone numbers
+            'primary_phone' => $this->faker->phoneNumber(),
+            'secondary_phone' => $this->faker->optional(0.6)->phoneNumber(),
+            'mobile' => $this->faker->optional(0.8)->phoneNumber(),
+            'home_phone' => $this->faker->optional(0.4)->phoneNumber(),
+            'work_phone' => $this->faker->optional(0.5)->phoneNumber(),
+            'work_phone_ext' => $this->faker->optional(0.3)->numerify('###'),
+            'fax_number' => $this->faker->optional(0.2)->phoneNumber(),
+            'whatsapp' => $this->faker->optional(0.7)->phoneNumber(),
+
+            // Company/Business information
+            'company_name' => $this->faker->optional(0.4)->company(),
+            'company_phone' => $this->faker->optional(0.4)->phoneNumber(),
+            'company_email' => $this->faker->optional(0.4)->companyEmail(),
+            'job_title' => $this->faker->optional(0.6)->jobTitle(),
+            'sector' => $this->faker->optional(0.5)->randomElement(['Tourism', 'Technology', 'Finance', 'Healthcare', 'Education']),
+            'department' => $this->faker->optional(0.5)->randomElement(['Sales', 'Marketing', 'IT', 'HR', 'Operations']),
+            'business_type' => $this->faker->optional(0.4)->randomElement(['B2B', 'B2C', 'B2G']),
+            'business_registration_number' => $this->faker->optional(0.3)->numerify('CR-##########'),
+            'tax_id' => $this->faker->optional(0.3)->numerify('TAX-##########'),
+
+            // Address information
+            'box' => $this->faker->optional(0.3)->numerify('P.O. Box ####'),
+            'postal_code' => $this->faker->optional(0.6)->postcode(),
+            'street_address' => $this->faker->optional(0.8)->streetAddress(),
+            'address_line_2' => $this->faker->optional(0.3)->secondaryAddress(),
+
+            // Online presence
+            'website_url' => $this->faker->optional(0.3)->url(),
+            'linkedin_url' => $this->faker->optional(0.2)->url(),
+
+            // Status and preferences
+            'status' => $this->faker->randomElement(['active', 'inactive', 'pending', 'blacklisted']),
+            'timezone' => $this->faker->randomElement(['UTC', 'Asia/Dubai', 'Asia/Riyadh', 'Europe/London', 'America/New_York']),
             'notes' => $this->faker->optional(0.4)->paragraph(),
-            'is_active' => $this->faker->boolean(85), // 85% active
-            'is_verified' => $this->faker->boolean(70), // 70% verified
 
-            // Audit Fields
+            // Tracking
             'created_by' => User::inRandomOrder()->first()?->id ?? 1,
             'updated_by' => null,
             'created_at' => $this->faker->dateTimeBetween('-2 years', 'now'),
@@ -80,55 +100,22 @@ class ClientFactory extends Factory
     }
 
     /**
-     * Indicate that the client is individual type.
-     */
-    public function individual(): static
-    {
-        return $this->state(fn(array $attributes) => [
-            'client_type' => 'individual',
-            'company_name' => null,
-            'company_address' => null,
-            'tax_number' => null,
-            'commercial_registration' => null,
-            'company_phone' => null,
-            'company_email' => null,
-        ]);
-    }
-
-    /**
-     * Indicate that the client is corporate type.
-     */
-    public function corporate(): static
-    {
-        return $this->state(fn(array $attributes) => [
-            'client_type' => 'corporate',
-            'company_name' => $this->faker->company(),
-            'company_address' => $this->faker->address(),
-            'tax_number' => $this->faker->numerify('TAX-##########'),
-            'commercial_registration' => $this->faker->numerify('CR-##########'),
-            'company_phone' => $this->faker->phoneNumber(),
-            'company_email' => $this->faker->companyEmail(),
-        ]);
-    }
-
-    /**
      * Indicate that the client is active.
      */
     public function active(): static
     {
         return $this->state(fn(array $attributes) => [
-            'client_status' => 'active',
-            'is_active' => true,
+            'status' => 'active',
         ]);
     }
 
     /**
-     * Indicate that the client is verified.
+     * Indicate that the client is inactive.
      */
-    public function verified(): static
+    public function inactive(): static
     {
         return $this->state(fn(array $attributes) => [
-            'is_verified' => true,
+            'status' => 'inactive',
         ]);
     }
 }

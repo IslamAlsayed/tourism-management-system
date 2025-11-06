@@ -17,8 +17,8 @@ return [
     'default_position' => env('TOASTS_DEFAULT_POSITION', 'top'),
     'default_theme' => env('TOASTS_DEFAULT_THEME', 'warning'),
 
-    'default_message' => env('TOASTS_DEFAULT_MESSAGE', 'Default message'),
-    'default_title' => env('TOASTS_DEFAULT_TITLE', 'Default title'),
+    'default_message' => env('TOASTS_DEFAULT_MESSAGE', ''),
+    'default_title' => env('TOASTS_DEFAULT_TITLE', ''),
 
     // Confirm modal defaults
     'default_confirm_title' => env('TOASTS_CONFIRM_TITLE', 'Confirmation'),

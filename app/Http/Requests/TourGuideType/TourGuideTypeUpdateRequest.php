@@ -25,6 +25,7 @@ class TourGuideTypeUpdateRequest extends FormRequest
             'type' => ['nullable', 'string', 'max:255'],
             'price' => ['nullable', 'string', 'max:20'],
             'currency_id' => ['nullable', 'string', 'max:50', 'exists:currencies,id'],
+
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],

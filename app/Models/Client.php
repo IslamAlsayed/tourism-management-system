@@ -11,37 +11,75 @@ class Client extends Model
     use HasSearch, HasFactory;
 
     protected $fillable = [
-        'id',
-        'photo',
-        'name',
-        'email',
-        'phone',
+        // Personal name information
         'first_name',
+        'middle_name',
+        'gf_name',
         'last_name',
-        'mobile',
-        'address',
-        'client_code',
-        'company_name',
-        'company_address',
-        'tax_number',
-        'commercial_registration',
-        'passport_number',
-        'id_number',
+
+        // Personal details
+        'gender',
         'birth_date',
-        'preferred_language',
+
+        // Location information
+        'region_id',
+        'subregion_id',
+        'country_id',
+        'state_id',
+        'city_id',
+        'nationality_id',
+        'currency',
+
+        // Passport information
+        'passport_number',
+        'passport_issue_date',
+        'passport_expiry_date',
+
+        // Email addresses
+        'personal_email',
+        'email_primary',
+        'work_email',
+        'secondary_email',
+
+        // Phone numbers
+        'primary_phone',
+        'secondary_phone',
+        'mobile',
+        'home_phone',
+        'work_phone',
+        'work_phone_ext',
+        'fax_number',
+        'whatsapp',
+
+        // Company/Business information
+        'company_name',
+        'company_phone',
+        'company_email',
+        'job_title',
+        'sector',
+        'department',
+        'business_type',
+        'business_registration_number',
+        'tax_id',
+
+        // Address information
+        'box',
+        'postal_code',
+        'street_address',
+        'address_line_2',
+
+        // Online presence
+        'website_url',
+        'linkedin_url',
+
+        // Status and preferences
+        'status',
         'timezone',
-        'preferences',
-        'client_type', // individual, corporate
-        'client_status', // active, inactive, blacklisted
-        'credit_limit',
-        'payment_terms',
-        'discount_rate',
-        'is_active',
-        'is_verified',
         'notes',
+
+        // Tracking
         'created_by',
         'updated_by',
-        'nationality_id',
     ];
 
     /**
@@ -49,7 +87,7 @@ class Client extends Model
      */
     public function getRelationshipNames()
     {
-        return ['nationality'];
+        return ['region', 'subregion', 'country', 'state', 'city'];
     }
 
     /**
@@ -58,15 +96,17 @@ class Client extends Model
     public function getExcludedColumns()
     {
         return [
+            'region_id',
+            'subregion_id',
+            'country_id',
+            'state_id',
+            'city_id',
             'nationality_id',
-            'preferences',
-            'tax_number',
-            'commercial_registration',
             'passport_number',
-            'id_number',
-            'credit_limit',
-            'payment_terms',
-            'discount_rate',
+            'passport_issue_date',
+            'passport_expiry_date',
+            'business_registration_number',
+            'tax_id',
             'notes',
             'created_by',
             'updated_by',
@@ -82,10 +122,8 @@ class Client extends Model
     {
         return [
             'birth_date' => 'date',
-            'is_active' => 'boolean',
-            'is_verified' => 'boolean',
-            'credit_limit' => 'decimal:2',
-            'discount_rate' => 'decimal:2',
+            'passport_issue_date' => 'date',
+            'passport_expiry_date' => 'date',
         ];
     }
 
@@ -93,7 +131,31 @@ class Client extends Model
      * Relationships
      */
 
-    // Nationality relationship
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
     public function nationality()
     {
         return $this->belongsTo(Nationality::class);

@@ -54,7 +54,7 @@
                                 </div>
 
                                 @error('password')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -75,7 +75,7 @@
                                 </div>
 
                                 @error('password')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -96,7 +96,7 @@
                                 </div>
 
                                 @error('confirmation_password')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Client;
+use App\Models\Region;
 use App\Models\Nationality;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
@@ -13,38 +14,29 @@ class ClientController extends Controller
 {
     use PhotoUploadTrait;
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('pages.dashboard.clients.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $nationalities = Nationality::all();
-        return view('pages.dashboard.clients.create', compact('nationalities'));
+        $regions = Region::orderBy('name')->get();
+        $nationalities = Nationality::orderBy('name')->get();
+        return view('pages.dashboard.clients.create', get_defined_vars());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ClientCreateRequest $request)
     {
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
 
-        // Generate client code if not provided
-        if (empty($validated['client_code'])) {
-            $validated['client_code'] = 'CL-' . str_pad(Client::count() + 1, 6, '0', STR_PAD_LEFT);
+        // Handle state_id and city_id arrays (if multi-select)
+        if (isset($validated['state_id']) && is_array($validated['state_id'])) {
+            $validated['state_id'] = $validated['state_id'][0] ?? null;
         }
-
-        // Build full name
-        $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
+        if (isset($validated['city_id']) && is_array($validated['city_id'])) {
+            $validated['city_id'] = $validated['city_id'][0] ?? null;
+        }
 
         // Set created_by
         $validated['created_by'] = getActiveUser()->id;
@@ -52,8 +44,6 @@ class ClientController extends Controller
         $created = Client::create($validated);
 
         if ($created) {
-            $this->uploadPhoto($request, $created, 'photo', "clients");
-
             if ($request->has('save_and_add')) {
                 return redirect()->back()->withSuccess(__('main.messages.type_created', ['type' => __('main.client')]));
             }
@@ -64,12 +54,9 @@ class ClientController extends Controller
         return redirect()->route('clients.index')->withError(__('main.messages.type_creation_failed', ['type' => __('main.client')]));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
-        $client = Client::with(['nationality', 'creator', 'updater'])->find($id);
+        $client = Client::with(['region', 'subregion', 'country', 'state', 'city', 'nationality', 'creator', 'updater'])->find($id);
 
         if (!$client) {
             return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.client')]));
@@ -78,24 +65,17 @@ class ClientController extends Controller
         return view('pages.dashboard.clients.show', compact('client'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $client = Client::find($id);
-
         if (!$client) {
             return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.client')]));
         }
-
-        $nationalities = Nationality::all();
-        return view('pages.dashboard.clients.edit', compact('client', 'nationalities'));
+        $regions = Region::orderBy('name')->get();
+        $nationalities = Nationality::orderBy('name')->get();
+        return view('pages.dashboard.clients.edit', get_defined_vars());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(ClientUpdateRequest $request, $id)
     {
         $client = Client::find($id);
@@ -105,14 +85,17 @@ class ClientController extends Controller
         }
 
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
 
-        // Update full name if first or last name changed
-        if (isset($validated['first_name']) || isset($validated['last_name'])) {
-            $validated['name'] = ($validated['first_name'] ?? $client->first_name) . ' ' . ($validated['last_name'] ?? $client->last_name);
+        // Handle state_id and city_id arrays (if multi-select)
+        if (isset($validated['state_id']) && is_array($validated['state_id'])) {
+            $validated['state_id'] = $validated['state_id'][0] ?? null;
+        }
+        if (isset($validated['city_id']) && is_array($validated['city_id'])) {
+            $validated['city_id'] = $validated['city_id'][0] ?? null;
         }
 
-        $this->uploadPhoto($request, $client, 'photo', "clients");
+        // Set updated_by
+        $validated['updated_by'] = getActiveUser()->id;
 
         $updated = $client->update($validated);
 
@@ -123,9 +106,6 @@ class ClientController extends Controller
         return redirect()->back()->withError(__('main.messages.type_update_failed', ['type' => __('main.client')]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $client = Client::find($id);
@@ -137,7 +117,6 @@ class ClientController extends Controller
         $deleted = $client->delete();
 
         if ($deleted) {
-            $this->deletePhoto($client, 'photo');
             return redirect()->back()->withSuccess(__('main.messages.type_deleted', ['type' => __('main.client')]));
         }
 
