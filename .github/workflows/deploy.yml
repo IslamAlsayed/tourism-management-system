@@ -21,32 +21,27 @@ jobs:
         run: |
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      # Step 1: Optimize
-      - name: ⚡ Optimize
-        run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }} && php artisan optimize"
-
       # Step 2: Go to project folder
       - name: 📂 Change to project directory
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }} && pwd"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && pwd"
 
       # Step 3: Pull latest code
       - name: 🔄 Git Pull
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }} && git pull origin production"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && git pull origin production"
 
       # Step 4: Run migrations
       - name: 🗄️ Migrate Database
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }} && php artisan migrate --force"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && php artisan migrate --force"
 
       # Step 5: Clear caches
       - name: 🧹 Clear Cache
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }} && php artisan optimize:clear"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && php artisan optimize:clear"
 
       # Step 6: Optimize
       - name: ⚡ Optimize
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }} && php artisan optimize"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && php artisan optimize"
