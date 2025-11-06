@@ -108,7 +108,7 @@
                                 class="border rounded p-2 block w-full" onchange="handleFileChange()" />
 
                             @error('file')
-                                <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
+                                <p class="text-red-600 text-xs italic mt-2">{{ $message }}</p>
                             @enderror
                         </div>
 

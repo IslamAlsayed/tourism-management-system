@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
     // Dashboard
     'dashboard' => 'لوحة التحكم',
     'dashboard_subtitle' => 'المركز الرئيسي للتخصيص الشخصي',
@@ -1046,6 +1046,7 @@ return [
 
     // messages
     'messages' => [
+        'please_login_to_continue' => 'يرجى تسجيل الدخول للمتابعة',
         'welcome_back_name' => 'مرحباً بعودتك، :name!',
         'goodbye_name' => 'وداعاً، :name!',
         'no_records_found' => 'لم يتم العثور على سجلات.',

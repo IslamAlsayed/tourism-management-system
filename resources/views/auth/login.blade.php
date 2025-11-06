@@ -14,49 +14,6 @@
     </style>
 @endpush
 
-@push('scripts')
-    <!-- Google tag (gtag.js) -->
-    {{-- <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-52YZ3XGZJ6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'G-52YZ3XGZJ6');
-    </script> --}}
-
-    <!-- Theme Mode -->
-    {{-- <script>
-        const defaultThemeMode = 'light'; // light|dark|system
-        let themeMode;
-
-        if (document.documentElement) {
-            if (localStorage.getItem('kt-theme')) {
-                themeMode = localStorage.getItem('kt-theme');
-            } else if (
-                document.documentElement.hasAttribute('data-kt-theme-mode')
-            ) {
-                themeMode =
-                    document.documentElement.getAttribute('data-kt-theme-mode');
-            } else {
-                themeMode = defaultThemeMode;
-            }
-
-            if (themeMode === 'system') {
-                themeMode = window.matchMedia('(prefers-color-scheme: dark)').matches ?
-                    'dark' :
-                    'light';
-            }
-
-            document.documentElement.classList.add(themeMode);
-        } --}}
-    </script>
-    <!-- End of Theme Mode -->
-@endpush
-
 @section('content')
     <!--begin::Authentication - Sign-in -->
     <div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg" style="height: 100svh">
@@ -145,6 +102,3 @@
     </div>
     <!--end::Authentication - Sign-in-->
 @endsection
-
-@push('scripts')
-@endpush

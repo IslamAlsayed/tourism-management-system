@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->string('client_code')->unique()->nullable();
 
             // Location information
             $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
@@ -25,8 +26,6 @@ return new class extends Migration {
 
             // Personal name information
             $table->string('first_name')->nullable();
-            $table->string('middle_name')->nullable();
-            $table->string('gf_name')->nullable(); // Grandfather name
             $table->string('last_name')->nullable();
 
             // Personal details
@@ -74,7 +73,7 @@ return new class extends Migration {
 
             // Status and preferences
             $table->enum('status', ['active', 'inactive', 'pending', 'blacklisted'])->default('active');
-            $table->string('timezone')->default('UTC');
+            $table->string('timezone')->nullable();
             $table->string('whatsapp')->nullable();
             $table->string('company_phone')->nullable();
             $table->string('company_email')->nullable();

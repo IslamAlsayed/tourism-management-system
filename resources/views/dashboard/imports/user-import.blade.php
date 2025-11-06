@@ -47,7 +47,7 @@
                                     onchange="document.getElementById('submit-button').disabled = !this.files.length" />
 
                                 @error('file')
-                                    <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
+                                    <p class="text-red-600 text-xs italic mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
 
