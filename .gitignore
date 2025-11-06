@@ -45,3 +45,4 @@ COMMIT_CONVENTIONS.md
 /commit_message.txt
 /app/Excels
 /config/excel_models.php
+/database/migrations2
