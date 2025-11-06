@@ -25,11 +25,11 @@ jobs:
       - name: 🔄 Clone or Pull Repository
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
-          TEMP_PATH=${{ secrets.SERVER_PATH }}/repository/tourist-site;
+          TEMP_PATH=${{ secrets.SERVER_PATH }}/repositories/tourist-site;
           if [ -d \$TEMP_PATH/.git ]; then
               cd \$TEMP_PATH && git reset --hard && git pull origin production;
           else
-              git clone -b production <repo-url> \$TEMP_PATH;
+              git clone -b production https://github.com/IslamAlsayed/tourist-site.git \$TEMP_PATH;
           fi
           "
 
@@ -37,7 +37,7 @@ jobs:
       - name: 📂 Sync Project Files
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
-          rsync -av --exclude='.git' --exclude='.env' ${{ secrets.SERVER_PATH }}/repository/tourist-site/ ${{ secrets.SERVER_PATH }}/project_root/
+          rsync -av --exclude='.git' --exclude='.env' ${{ secrets.SERVER_PATH }}/repositories/tourist-site/ ${{ secrets.SERVER_PATH }}/project_root/
           "
 
       # Step 3: Run migrations
