@@ -13,8 +13,6 @@ class Client extends Model
     protected $fillable = [
         // Personal name information
         'first_name',
-        'middle_name',
-        'gf_name',
         'last_name',
 
         // Personal details

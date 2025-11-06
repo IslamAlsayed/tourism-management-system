@@ -36,8 +36,6 @@ class ClientFactory extends Factory
 
             // Personal name information
             'first_name' => $firstName,
-            'middle_name' => $middleName,
-            'gf_name' => $this->faker->optional(0.5)->firstName(),
             'last_name' => $lastName,
 
             // Personal details
