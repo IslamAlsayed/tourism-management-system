@@ -2,9 +2,7 @@ name: 🚀 Deploy to Production
 
 on:
   push:
-    branches:
-      - production
-  workflow_dispatch:
+    branches: ["production"]
 
 jobs:
   deploy:
@@ -14,36 +12,19 @@ jobs:
       - name: ✅ Checkout Code
         uses: actions/checkout@v3
 
-      - name: 🔐 SSH to Server & Deploy
-        uses: appleboy/ssh-action@v0.1.7
+      - name: 🔐 Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
         with:
-          host: ${{ secrets.CPANEL_HOST }}
-          username: ${{ secrets.CPANEL_USER }}
-          key: ${{ secrets.CPANEL_SSH_KEY }}
-          script: |
-            echo "📌 Switching to repositories folder..."
-            cd /home/mixtop/repositories/tourist-site
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
-            echo "📥 Pulling latest changes..."
-            git pull origin production
-
-            echo "📦 Installing composer dependencies..."
-            composer install --no-interaction --prefer-dist --optimize-autoloader
-
-            echo "📦 Installing npm dependencies..."
-            npm install
-
-            echo "⚙️ Building assets..."
-            npm run build
-
-            echo "📁 Copying new build to live project folder..."
-            rsync -av --delete /home/mixtop/repositories/tourist-site/ /home/mixtop/project_root/ --exclude=node_modules --exclude=.git --exclude=.github
-
-            echo "🧹 Clearing Laravel caches..."
-            cd /home/mixtop/project_root
-            php artisan optimize:clear
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
-
-            echo "✅ Deployment Completed Successfully!"
+      - name: 🚀 Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          cd ${{ secrets.SERVER_PATH }}
+          git pull origin production
+          composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+          php artisan migrate --force
+          php artisan optimize:clear
+          php artisan optimize
+          exit
+          EOF
