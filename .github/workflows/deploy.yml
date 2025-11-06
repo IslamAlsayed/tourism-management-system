@@ -37,7 +37,10 @@ jobs:
       - name: 📂 Sync Project Files
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
-          rsync -av --exclude='.git' --exclude='.env' ${{ secrets.SERVER_PATH }}/repositories/tourist-site/ ${{ secrets.SERVER_PATH }}/project_root/
+          mkdir -p ${{ secrets.SERVER_PATH }}/project_root;
+          cp -R ${{ secrets.SERVER_PATH }}/repository/tourist-site/* ${{ secrets.SERVER_PATH }}/project_root/;
+          rm -rf ${{ secrets.SERVER_PATH }}/project_root/.git;
+          rm -f ${{ secrets.SERVER_PATH }}/project_root/.env
           "
 
       # Step 3: Run migrations
