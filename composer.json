@@ -51,17 +51,6 @@
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
-        "deploy": [
-            "git pull origin production",
-            "@composer install --no-interaction --prefer-dist --optimize-autoloader",
-            "@php artisan config:clear",
-            "@php artisan cache:clear",
-            "@php artisan route:clear",
-            "@php artisan view:clear",
-            "@php artisan config:cache",
-            "@php artisan route:cache",
-            "@php artisan view:cache"
-        ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
