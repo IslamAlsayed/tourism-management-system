@@ -21,27 +21,36 @@ jobs:
         run: |
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      # Step 2: Go to project folder
-      - name: 📂 Change to project directory
+      # Step 1: Clone or update repository in temporary folder
+      - name: 🔄 Clone or Pull Repository
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && pwd"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
+          TEMP_PATH=${{ secrets.SERVER_PATH }}/repository/tourist-site;
+          if [ -d \$TEMP_PATH/.git ]; then
+              cd \$TEMP_PATH && git reset --hard && git pull origin production;
+          else
+              git clone -b production <repo-url> \$TEMP_PATH;
+          fi
+          "
 
-      # Step 3: Pull latest code
-      - name: 🔄 Git Pull
+      # Step 2: Copy files to project_root excluding .git and other sensitive files
+      - name: 📂 Sync Project Files
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && git pull origin production"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
+          rsync -av --exclude='.git' --exclude='.env' ${{ secrets.SERVER_PATH }}/repository/tourist-site/ ${{ secrets.SERVER_PATH }}/project_root/
+          "
 
-      # Step 4: Run migrations
+      # Step 3: Run migrations
       - name: 🗄️ Migrate Database
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && php artisan migrate --force"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan migrate --force"
 
-      # Step 5: Clear caches
+      # Step 4: Clear caches
       - name: 🧹 Clear Cache
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && php artisan optimize:clear"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan optimize:clear"
 
-      # Step 6: Optimize
+      # Step 5: Optimize
       - name: ⚡ Optimize
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} " cd ${{ secrets.SERVER_PATH }} && php artisan optimize"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan optimize"
