@@ -37,9 +37,9 @@ Route::get('/dashboard/countries/metronic-table', function () {
 })->middleware('auth');
 
 /*
-|--------------------|
-|---- Web Routes ----|
-|--------------------|
+|----------------------|
+|----- Web Routes -----|
+|----------------------|
 */
 
 Route::get('/', fn() => view('welcome'));
