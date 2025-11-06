@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html class="h-full" data-kt-theme="true" data-kt-theme-mode="light" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
-    lang="{{ app()->getLocale() }}">
+<html class="h-full" data-kt-theme="true" data-kt-theme-mode="{{ config('app.app_theme', 'light') }}"
+    dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" lang="{{ app()->getLocale() }}">
 
 <head>
     @livewireStyles
     @include('layouts.partials.head')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 
     {{-- FontAwesome Icons --}}
     <link rel="stylesheet" href="{{ asset('vendor/toasts/css/all.min.css') }}">
@@ -21,8 +21,6 @@
     @if (view()->exists('vendor/toasts/toasts'))
         @include('vendor.toasts.toasts')
     @endif
-
-    @include('partials.theme-toggle')
 
     <!-- Page -->
     <!-- Main -->
@@ -49,7 +47,6 @@
     <!-- Scripts -->
     @livewireScripts
     @include('layouts.partials.scripts')
-    {{-- Toasts Scripts --}}
 </body>
 
 </html>

@@ -81,14 +81,16 @@
                             </div>
 
                             @if ($toast->type != 'confirm')
-                                <div class="toast-actions">
-                                    @foreach ($toast->actions as $action)
-                                        <a href="{{ $action['url'] }}"
-                                            class="toast-action {{ isEmoji($action['label']) ? 'emoji' : 'text' }}">
-                                            {{ $action['label'] }}
-                                        </a>
-                                    @endforeach
-                                </div>
+                                @if ($toast->actions)
+                                    <div class="toast-actions">
+                                        @foreach ($toast->actions as $action)
+                                            <a href="{{ $action['url'] }}"
+                                                class="toast-action {{ isEmoji($action['label']) ? 'emoji' : 'text' }}">
+                                                {{ $action['label'] }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                @endif
                             @elseif ($toast->type == 'confirm')
                                 @if ($toast->actions)
                                     <div class="toast-actions">
@@ -102,7 +104,7 @@
                                 @endif
 
                                 <div class="toast-actions">
-                                    <a href="{{ $toast->link }}"
+                                    <a href="{{ $toast->link ?? '#' }}"
                                         @if ($toast->target) target="{{ $toast->target }}" @endif
                                         class="toast-action onconfirm {{ isEmoji($toast->onconfirm) ? 'emoji' : 'text' }}">
                                         {{ $toast->onconfirm }}
@@ -127,26 +129,28 @@
 
 @if ($errors->any())
     <div class="toasts">
-        <div class="toast toast-error {{ config('toasts.move') != 'enable' ? 'no_move' : '' }}">
-            <i class="toast-icon fas fa-circle-xmark"></i>
+        <div class="toast-inner" @if (app()->getLocale() == 'ar') dir="rtl" @endif>
+            <div
+                class="toast toast-error {{ config('toasts.default_position') }} {{ config('toasts.move') != 'enable' ? 'no_move' : '' }}">
+                <i class="toast-icon fas fa-circle-xmark"></i>
 
-            <div class="toast-text">
-                <div class="text">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                <div class="toast-text">
+                    <div class="text">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="toast-closed toast-action">
-                <i class="fas fa-xmark"></i>
+                <div class="toast-closed toast-action">
+                    <i class="fas fa-xmark"></i>
+                </div>
             </div>
         </div>
     </div>
 @endif
-
 
 <script>
     configToast = @json(config('toasts'));

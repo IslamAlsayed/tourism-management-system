@@ -1046,6 +1046,7 @@ return [
 
     // messages
     'messages' => [
+        'please_login_to_continue' => 'Please login to continue.',
         'welcome_back_name' => 'Welcome back, :name!',
         'goodbye_name' => 'Goodbye, :name!',
         'no_records_found' => 'No records found.',

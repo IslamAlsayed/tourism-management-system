@@ -217,6 +217,9 @@ function createIcon(type, emoji, icon) {
                     iconElement.classList.add("fa-circle-check");
                     break;
                 case "error":
+                    iconElement.classList.add("fa-xmark");
+                    break;
+                case "danger":
                     iconElement.classList.add("fa-circle-xmark");
                     break;
                 case "warning":
@@ -265,7 +268,6 @@ function createCloseButton(toastElement) {
     close.appendChild(icon);
 
     icon.addEventListener("click", () => {
-        console.log(icon);
         // Find the closest .toast-inner ancestor to ensure correct removal
         let toastInner = toastElement.closest(".toast-inner");
         if (toastInner) {
@@ -309,10 +311,10 @@ function createConfirmButtons(onconfirm, onconfirmLink, oncancel) {
 }
 
 function createActionsButtons(actions) {
-    const _actions = document.createElement("div");
-    _actions.className = "toast-actions";
+    if (actions && Array.isArray(actions)) {
+        const _actions = document.createElement("div");
+        _actions.className = "toast-actions";
 
-    if (actions) {
         actions.forEach((action) => {
             const a = document.createElement("a");
             a.classList.add("toast-action");
@@ -322,15 +324,15 @@ function createActionsButtons(actions) {
             a.textContent = action.label;
             _actions.appendChild(a);
         });
-    }
 
-    return _actions;
+        return _actions;
+    }
 }
 
-export function pushToast({
+export function showToast({
     type,
-    title,
     message,
+    title,
     duration,
     emoji,
     icon,
@@ -338,49 +340,49 @@ export function pushToast({
     actions,
 }) {
     if (!type || !message) return;
+    setTimeout(() => {
+        const toasts = getOrCreateToasts();
 
-    const toasts = getOrCreateToasts();
+        root.style.setProperty("--toast-start-delay-time", `0s`);
 
-    root.style.setProperty("--toast-start-delay-time", `0s`);
+        const toastInner = document.createElement("div");
+        toastInner.className = "toast-inner";
 
-    const toastInner = document.createElement("div");
-    toastInner.className = "toast-inner";
+        const toast = document.createElement("div");
+        toast.className = `toast toast-${type} top`;
 
-    const toast = document.createElement("div");
-    toast.className = `toast toast-${type} top`;
+        if (configToast.move != "enable" || pin == "pin") {
+            const pin = document.createElement("i");
+            pin.className = "toast-icon pin fas fa-thumbtack";
 
-    if (configToast.move != "enable" || pin == "pin") {
-        const pin = document.createElement("i");
-        pin.className = "toast-icon pin fas fa-thumbtack";
+            toast.classList.add("no_move", "pin");
+            toast.appendChild(pin);
+        }
 
-        toast.classList.add("no_move", "pin");
-        toast.appendChild(pin);
-    }
+        if (duration) {
+            toast.setAttribute("data-duration", duration);
+        }
 
-    if (duration) {
-        toast.setAttribute("data-duration", duration);
-    }
+        toast.appendChild(createIcon(type, emoji, icon));
+        let __actions = createActionsButtons(actions);
+        toast.appendChild(createToastText(title, message, __actions));
+        toast.appendChild(createCloseButton(toast));
 
-    toast.appendChild(createIcon(type, emoji, icon));
-    let __actions = createActionsButtons(actions);
+        toastInner.appendChild(toast);
+        toasts.appendChild(toastInner);
 
-    toast.appendChild(createToastText(title, message, __actions));
-    toast.appendChild(createCloseButton(toast));
+        toastShake(toast);
 
-    toastInner.appendChild(toast);
-    toasts.appendChild(toastInner);
-
-    toastShake(toast);
-
-    // Set timeout for auto-dismiss
-    setToastTimes(toast);
-    userActive(toastInner, toast, totalAnimationTime, 1000);
+        // Set timeout for auto-dismiss
+        setToastTimes(toast);
+        userActive(toastInner, toast, totalAnimationTime, 1000);
+    }, 100);
 }
 
-export function pushToastConfirm({
+export function showToastConfirm({
     type,
-    title,
     message,
+    title,
     duration,
     emoji,
     icon,
@@ -392,45 +394,53 @@ export function pushToastConfirm({
 }) {
     if (!type || !message) return;
 
-    const toasts = getOrCreateToasts();
+    setTimeout(() => {
+        const toasts = getOrCreateToasts();
 
-    root.style.setProperty("--toast-start-delay-time", `0s`);
+        root.style.setProperty("--toast-start-delay-time", `0s`);
 
-    const toastInner = document.createElement("div");
-    toastInner.className = "toast-inner";
+        const toastInner = document.createElement("div");
+        toastInner.className = "toast-inner";
 
-    const toast = document.createElement("div");
-    toast.classList.add("toast", `toast-${type}`, "top", "confirm-forever");
+        const toast = document.createElement("div");
+        toast.classList.add("toast", `toast-${type}`, "top", "confirm-forever");
 
-    if (
-        configToast.move != "enable" ||
-        pin == "pin" ||
-        toast.classList.contains("confirm-forever")
-    ) {
-        const pin = document.createElement("i");
-        pin.className = "toast-icon pin fas fa-thumbtack";
+        if (
+            configToast.move != "enable" ||
+            pin == "pin" ||
+            toast.classList.contains("confirm-forever")
+        ) {
+            const pin = document.createElement("i");
+            pin.className = "toast-icon pin fas fa-thumbtack";
 
-        toast.classList.add("no_move", "pin");
-        toast.appendChild(pin);
-    }
+            toast.classList.add("no_move", "pin");
+            toast.appendChild(pin);
+        }
 
-    if (duration) {
-        toast.setAttribute("data-duration", duration);
-    }
+        if (duration) {
+            toast.setAttribute("data-duration", duration);
+        }
 
-    toast.appendChild(createIcon(type, emoji, icon));
-    let __actions = createActionsButtons(actions);
-    let __confirm = createConfirmButtons(onconfirm, onconfirmLink, oncancel);
+        toast.appendChild(createIcon(type, emoji, icon));
+        let __actions = createActionsButtons(actions);
+        let __confirm = createConfirmButtons(
+            onconfirm,
+            onconfirmLink,
+            oncancel,
+        );
 
-    toast.appendChild(createToastText(title, message, __actions, __confirm));
-    toast.appendChild(createCloseButton(toast));
+        toast.appendChild(
+            createToastText(title, message, __actions, __confirm),
+        );
+        toast.appendChild(createCloseButton(toast));
 
-    toastInner.appendChild(toast);
-    toasts.appendChild(toastInner);
+        toastInner.appendChild(toast);
+        toasts.appendChild(toastInner);
 
-    toastShake(toast);
+        toastShake(toast);
 
-    // Set timeout for auto-dismiss
-    setToastTimes(toast);
-    userActive(toastInner, toast, totalAnimationTime, 1000);
+        // Set timeout for auto-dismiss
+        setToastTimes(toast);
+        userActive(toastInner, toast, totalAnimationTime, 1000);
+    }, 100);
 }

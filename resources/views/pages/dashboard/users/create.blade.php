@@ -46,7 +46,7 @@
                                 <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]"
                                     value="{{ old('first_name') }}" required>
                                 @error('first_name')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -56,7 +56,7 @@
                                 <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]"
                                     value="{{ old('last_name') }}" required>
                                 @error('last_name')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -66,7 +66,7 @@
                                 <input type="email" name="email" id="email" class="kt-input h-[45px]"
                                     value="{{ old('email') }}" required>
                                 @error('email')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                 <label for="password" class="kt-label required mb-2">{{ __('main.password') }}</label>
                                 <input type="password" name="password" id="password" class="kt-input h-[45px]" required>
                                 @error('password')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -88,7 +88,7 @@
                                 <input type="password" name="password_confirmation" id="password_confirmation"
                                     class="kt-input h-[45px]" required>
                                 @error('password_confirmation')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                                         <input type="text" name="phone" id="phone" class="kt-input h-[45px]"
                                             value="{{ old('phone') }}">
                                         @error('phone')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -116,7 +116,7 @@
                                         <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
                                             value="{{ old('mobile') }}">
                                         @error('mobile')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -126,7 +126,7 @@
                                         <input type="text" name="address" id="address" class="kt-input h-[45px]"
                                             value="{{ old('address') }}">
                                         @error('address')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -146,7 +146,7 @@
                                         <input type="date" name="birth_date" id="birth_date"
                                             class="kt-input h-[45px]" value="{{ old('birth_date') }}">
                                         @error('birth_date')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -165,7 +165,7 @@
                                             @endforeach
                                         </select>
                                         @error('department')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -183,7 +183,7 @@
                                             @endforeach
                                         </select>
                                         @error('position')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@
                                                     {{ __('main.arabic') }}</option>
                                             </select>
                                             @error('preferred_language')
-                                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                             @enderror
                                         </div>
 
@@ -243,7 +243,7 @@
                                                 </option>
                                             </select>
                                             @error('timezone')
-                                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
@@ -302,7 +302,7 @@
                                             value="{{ old('preferences') }}">
                                         <trix-editor input="preferences"></trix-editor>
                                         @error('preferences')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -313,7 +313,7 @@
                                             value="{{ old('notes') }}">
                                         <trix-editor input="notes"></trix-editor>
                                         @error('notes')
-                                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
 

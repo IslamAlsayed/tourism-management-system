@@ -23,17 +23,24 @@
     --toast-info-icon-bgColor: #98d7fe;
 }
 
-.toast a,
-.toast a * {
+.toasts * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-transform: capitalize;
+}
+
+.toasts a,
+.toasts a * {
     text-decoration: none !important;
 }
 
 /*! modifying font style */
-.toast :not(i) {
+.toasts :not(i) {
     font-family: "Roboto Condensed", Arial !important;
 }
 
-.toast:has(.confirm-forever) {
+.toasts:has(.confirm-forever) {
     user-select: none !important;
 }
 
@@ -88,7 +95,7 @@
         }
 
         & .toast-icon {
-            padding-block-start: 10px;
+            padding-block-start: 7px;
             padding-inline-start: 15px;
 
             &.emoji {
@@ -113,7 +120,16 @@
             display: flex;
             position: relative;
             flex-direction: column;
-            padding: 10px 40px 15px 0;
+            padding: 5px 40px 5px 0;
+
+            & strong,
+            & b {
+                margin-bottom: 5px;
+            }
+
+            & p {
+                padding-bottom: 2px;
+            }
         }
 
         & .toast-actions {

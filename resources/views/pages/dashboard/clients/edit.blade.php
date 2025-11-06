@@ -27,73 +27,65 @@
             @csrf
             @method('PUT')
 
-            <!-- Personal Information -->
-            <div class="kt-card">
+            {{-- Personal Information --}}
+            <div class="kt-card mb-6">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.personal_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- First Name -->
+                        {{-- First Name --}}
                         <div>
-                            <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
+                            <label for="first_name" class="kt-label mb-2">{{ __('main.first_name') }}</label>
                             <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]"
-                                value="{{ old('first_name', $client->first_name) }}" required>
+                                value="{{ $client->first_name }}">
                             @error('first_name')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Middle Name -->
+                        {{-- Last Name --}}
                         <div>
-                            <label for="middle_name" class="kt-label mb-2">{{ __('main.middle_name') }}</label>
-                            <input type="text" name="middle_name" id="middle_name" class="kt-input h-[45px]"
-                                value="{{ old('middle_name', $client->middle_name) }}">
-                            @error('middle_name')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Grandfather Name -->
-                        <div>
-                            <label for="gf_name" class="kt-label mb-2">{{ __('main.gf_name') }}</label>
-                            <input type="text" name="gf_name" id="gf_name" class="kt-input h-[45px]"
-                                value="{{ old('gf_name', $client->gf_name) }}">
-                            @error('gf_name')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Last Name -->
-                        <div>
-                            <label for="last_name" class="kt-label required mb-2">{{ __('main.last_name') }}</label>
+                            <label for="last_name" class="kt-label mb-2">{{ __('main.last_name') }}</label>
                             <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]"
-                                value="{{ old('last_name', $client->last_name) }}" required>
+                                value="{{ $client->last_name }}">
                             @error('last_name')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Client Code --}}
+                        <div>
+                            <label for="client_code" class="kt-label mb-2">{{ __('main.client_code') }}</label>
+                            <div class="relative">
+                                <input type="text" name="client_code" id="client_code" class="kt-input h-[45px] pr-10"
+                                    value="{{ $client->client_code }}" disabled>
+                            </div>
+                            @error('client_code')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- Gender -->
+                        {{-- Gender --}}
                         <div>
                             <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
                             <select name="gender" id="gender" class="kt-input h-[45px]" special-search>
                                 <option value="">--</option>
-                                <option value="male" {{ old('gender', $client->gender) == 'male' ? 'selected' : '' }}>
+                                <option value="male" {{ $client->gender == 'male' ? 'selected' : '' }}>
                                     {{ __('main.male') }}
                                 </option>
-                                <option value="female" {{ old('gender', $client->gender) == 'female' ? 'selected' : '' }}>
+                                <option value="female" {{ $client->gender == 'female' ? 'selected' : '' }}>
                                     {{ __('main.female') }}
                                 </option>
                             </select>
                             @error('gender')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Nationality -->
+                        {{-- Nationality --}}
                         <div>
                             <label for="nationality_id" class="kt-label mb-2">{{ __('main.nationality') }}</label>
                             <select name="nationality_id" id="nationality_id" class="kt-input h-[45px]" special-search>
@@ -106,41 +98,41 @@
                                 @endforeach
                             </select>
                             @error('nationality_id')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Birth Date -->
+                        {{-- Birth Date --}}
                         <div>
                             <label for="birth_date" class="kt-label mb-2">{{ __('main.birth_date') }}</label>
                             <input type="date" name="birth_date" id="birth_date" class="kt-input h-[45px]"
                                 value="{{ old('birth_date', $client->birth_date) }}">
                             @error('birth_date')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Passport Information -->
-            <div class="kt-card">
+            {{-- Passport Information --}}
+            <div class="kt-card mb-6">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.passport_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- Passport Number -->
+                        {{-- Passport Number --}}
                         <div>
                             <label for="passport_number" class="kt-label mb-2">{{ __('main.passport_number') }}</label>
                             <input type="text" name="passport_number" id="passport_number" class="kt-input h-[45px]"
                                 value="{{ old('passport_number', $client->passport_number) }}">
                             @error('passport_number')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Passport Issue Date -->
+                        {{-- Passport Issue Date --}}
                         <div>
                             <label for="passport_issue_date"
                                 class="kt-label mb-2">{{ __('main.passport_issue_date') }}</label>
@@ -148,11 +140,11 @@
                                 class="kt-input h-[45px]"
                                 value="{{ old('passport_issue_date', $client->passport_issue_date) }}">
                             @error('passport_issue_date')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Passport Expiry Date -->
+                        {{-- Passport Expiry Date --}}
                         <div>
                             <label for="passport_expiry_date"
                                 class="kt-label mb-2">{{ __('main.passport_expiry_date') }}</label>
@@ -160,141 +152,139 @@
                                 class="kt-input h-[45px]"
                                 value="{{ old('passport_expiry_date', $client->passport_expiry_date) }}">
                             @error('passport_expiry_date')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Contact Information -->
-            <div class="kt-card">
+            {{-- Contact Information --}}
+            <div class="kt-card mb-6">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <!-- Email Addresses -->
+                    {{-- Email Addresses --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- Primary Email -->
+                        {{-- Primary Email --}}
                         <div>
-                            <label for="email_primary"
-                                class="kt-label required mb-2">{{ __('main.email_primary') }}</label>
+                            <label for="email_primary" class="kt-label mb-2">{{ __('main.email_primary') }}</label>
                             <input type="email" name="email_primary" id="email_primary" class="kt-input h-[45px]"
-                                value="{{ old('email_primary', $client->email_primary) }}" required>
+                                value="{{ old('email_primary', $client->email_primary) }}">
                             @error('email_primary')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Personal Email -->
+                        {{-- Personal Email --}}
                         <div>
                             <label for="personal_email" class="kt-label mb-2">{{ __('main.personal_email') }}</label>
                             <input type="email" name="personal_email" id="personal_email" class="kt-input h-[45px]"
                                 value="{{ old('personal_email', $client->personal_email) }}">
                             @error('personal_email')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Work Email -->
+                        {{-- Work Email --}}
                         <div>
                             <label for="work_email" class="kt-label mb-2">{{ __('main.work_email') }}</label>
                             <input type="email" name="work_email" id="work_email" class="kt-input h-[45px]"
                                 value="{{ old('work_email', $client->work_email) }}">
                             @error('work_email')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Secondary Email -->
+                        {{-- Secondary Email --}}
                         <div>
                             <label for="secondary_email" class="kt-label mb-2">{{ __('main.secondary_email') }}</label>
                             <input type="email" name="secondary_email" id="secondary_email" class="kt-input h-[45px]"
                                 value="{{ old('secondary_email', $client->secondary_email) }}">
                             @error('secondary_email')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
 
-                    <!-- Phone Numbers -->
+                    {{-- Phone Numbers --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- Primary Phone -->
+                        {{-- Primary Phone --}}
                         <div>
-                            <label for="primary_phone"
-                                class="kt-label required mb-2">{{ __('main.primary_phone') }}</label>
+                            <label for="primary_phone" class="kt-label mb-2">{{ __('main.primary_phone') }}</label>
                             <input type="text" name="primary_phone" id="primary_phone" class="kt-input h-[45px]"
-                                value="{{ old('primary_phone', $client->primary_phone) }}" required>
+                                value="{{ old('primary_phone', $client->primary_phone) }}">
                             @error('primary_phone')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Secondary Phone -->
+                        {{-- Secondary Phone --}}
                         <div>
                             <label for="secondary_phone" class="kt-label mb-2">{{ __('main.secondary_phone') }}</label>
                             <input type="text" name="secondary_phone" id="secondary_phone" class="kt-input h-[45px]"
                                 value="{{ old('secondary_phone', $client->secondary_phone) }}">
                             @error('secondary_phone')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Mobile Phone -->
+                        {{-- Mobile --}}
                         <div>
-                            <label for="mobile_phone" class="kt-label mb-2">{{ __('main.mobile_phone') }}</label>
-                            <input type="text" name="mobile_phone" id="mobile_phone" class="kt-input h-[45px]"
-                                value="{{ old('mobile_phone', $client->mobile_phone) }}">
-                            @error('mobile_phone')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                            <label for="mobile" class="kt-label mb-2">{{ __('main.mobile') }}</label>
+                            <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
+                                value="{{ old('mobile', $client->mobile) }}">
+                            @error('mobile')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Home Phone -->
+                        {{-- Home Phone --}}
                         <div>
                             <label for="home_phone" class="kt-label mb-2">{{ __('main.home_phone') }}</label>
                             <input type="text" name="home_phone" id="home_phone" class="kt-input h-[45px]"
                                 value="{{ old('home_phone', $client->home_phone) }}">
                             @error('home_phone')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Work Phone -->
+                        {{-- Work Phone --}}
                         <div>
                             <label for="work_phone" class="kt-label mb-2">{{ __('main.work_phone') }}</label>
                             <input type="text" name="work_phone" id="work_phone" class="kt-input h-[45px]"
                                 value="{{ old('work_phone', $client->work_phone) }}">
                             @error('work_phone')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Work Phone Extension -->
+                        {{-- Work Phone Extension --}}
                         <div>
                             <label for="work_phone_ext" class="kt-label mb-2">{{ __('main.work_phone_ext') }}</label>
                             <input type="text" name="work_phone_ext" id="work_phone_ext" class="kt-input h-[45px]"
                                 value="{{ old('work_phone_ext', $client->work_phone_ext) }}">
                             @error('work_phone_ext')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Fax Number -->
+                        {{-- Fax Number --}}
                         <div>
                             <label for="fax_number" class="kt-label mb-2">{{ __('main.fax_number') }}</label>
                             <input type="text" name="fax_number" id="fax_number" class="kt-input h-[45px]"
                                 value="{{ old('fax_number', $client->fax_number) }}">
                             @error('fax_number')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Location Information -->
-            <div class="kt-card">
+            {{-- Location Information --}}
+            <div class="kt-card mb-6">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                 </div>
@@ -303,116 +293,117 @@
                         {{-- Regions [region, subregion, country, state, city] --}}
                         @include('components.regions.edit', [
                             'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                            'record' => $client,
                             'multiple' => false,
                         ])
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- Box -->
+                        {{-- Box --}}
                         <div>
                             <label for="box" class="kt-label mb-2">{{ __('main.box') }}</label>
                             <input type="text" name="box" id="box" class="kt-input h-[45px]"
                                 value="{{ old('box', $client->box) }}">
                             @error('box')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Postal Code -->
+                        {{-- Postal Code --}}
                         <div>
                             <label for="postal_code" class="kt-label mb-2">{{ __('main.postal_code') }}</label>
                             <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]"
                                 value="{{ old('postal_code', $client->postal_code) }}">
                             @error('postal_code')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- Street Address -->
+                        {{-- Street Address --}}
                         <div>
                             <label for="street_address" class="kt-label mb-2">{{ __('main.street_address') }}</label>
                             <input id="street_address" type="hidden" name="street_address"
                                 value="{{ $client->street_address }}">
                             <trix-editor input="street_address"></trix-editor>
                             @error('street_address')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Address Line 2 -->
+                        {{-- Address Line 2 --}}
                         <div>
                             <label for="address_line_2" class="kt-label mb-2">{{ __('main.address_line_2') }}</label>
                             <input id="address_line_2" type="hidden" name="address_line_2"
                                 value="{{ $client->address_line_2 }}">
                             <trix-editor input="address_line_2"></trix-editor>
                             @error('address_line_2')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Company/Business Information -->
-            <div class="kt-card">
+            {{-- Company/Business Information --}}
+            <div class="kt-card mb-6">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.company_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- Company Name -->
+                        {{-- Company Name --}}
                         <div>
                             <label for="company_name" class="kt-label mb-2">{{ __('main.company_name') }}</label>
                             <input type="text" name="company_name" id="company_name" class="kt-input h-[45px]"
                                 value="{{ old('company_name', $client->company_name) }}">
                             @error('company_name')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Job Title -->
+                        {{-- Job Title --}}
                         <div>
                             <label for="job_title" class="kt-label mb-2">{{ __('main.job_title') }}</label>
                             <input type="text" name="job_title" id="job_title" class="kt-input h-[45px]"
                                 value="{{ old('job_title', $client->job_title) }}">
                             @error('job_title')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Sector -->
+                        {{-- Sector --}}
                         <div>
                             <label for="sector" class="kt-label mb-2">{{ __('main.sector') }}</label>
                             <input type="text" name="sector" id="sector" class="kt-input h-[45px]"
                                 value="{{ old('sector', $client->sector) }}">
                             @error('sector')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Department -->
+                        {{-- Department --}}
                         <div>
                             <label for="department" class="kt-label mb-2">{{ __('main.department') }}</label>
                             <input type="text" name="department" id="department" class="kt-input h-[45px]"
                                 value="{{ old('department', $client->department) }}">
                             @error('department')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Business Type -->
+                        {{-- Business Type --}}
                         <div>
                             <label for="business_type" class="kt-label mb-2">{{ __('main.business_type') }}</label>
                             <input type="text" name="business_type" id="business_type" class="kt-input h-[45px]"
                                 value="{{ old('business_type', $client->business_type) }}">
                             @error('business_type')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Business Registration Number -->
+                        {{-- Business Registration Number --}}
                         <div>
                             <label for="business_registration_number"
                                 class="kt-label mb-2">{{ __('main.business_registration_number') }}</label>
@@ -420,61 +411,61 @@
                                 class="kt-input h-[45px]"
                                 value="{{ old('business_registration_number', $client->business_registration_number) }}">
                             @error('business_registration_number')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Tax ID -->
+                        {{-- Tax ID --}}
                         <div>
                             <label for="tax_id" class="kt-label mb-2">{{ __('main.tax_id') }}</label>
                             <input type="text" name="tax_id" id="tax_id" class="kt-input h-[45px]"
                                 value="{{ old('tax_id', $client->tax_id) }}">
                             @error('tax_id')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Online Presence -->
-            <div class="kt-card">
+            {{-- Online Presence --}}
+            <div class="kt-card mb-6">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.online_presence') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- Website URL -->
+                        {{-- Website URL --}}
                         <div>
                             <label for="website_url" class="kt-label mb-2">{{ __('main.website_url') }}</label>
                             <input type="url" name="website_url" id="website_url" class="kt-input h-[45px]"
                                 value="{{ old('website_url', $client->website_url) }}">
                             @error('website_url')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- LinkedIn URL -->
+                        {{-- LinkedIn URL --}}
                         <div>
                             <label for="linkedin_url" class="kt-label mb-2">{{ __('main.linkedin_url') }}</label>
                             <input type="url" name="linkedin_url" id="linkedin_url" class="kt-input h-[45px]"
                                 value="{{ old('linkedin_url', $client->linkedin_url) }}">
                             @error('linkedin_url')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Additional Settings -->
+            {{-- Additional Settings --}}
             <div class="kt-card">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.additional_settings') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        <!-- Status -->
+                        {{-- Status --}}
                         <div>
                             <label for="status" class="kt-label mb-2">{{ __('main.status') }}</label>
                             <select name="status" id="status" class="kt-input h-[45px]">
@@ -496,11 +487,11 @@
                                 </option>
                             </select>
                             @error('status')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Timezone -->
+                        {{-- Timezone --}}
                         <div>
                             <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
                             <select name="timezone" id="timezone" class="kt-input h-[45px]" special-search>
@@ -513,31 +504,32 @@
                                 @endforeach
                             </select>
                             @error('timezone')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
 
-                    <!-- Notes -->
+                    {{-- Notes --}}
                     <div>
                         <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
                         <input id="notes" type="hidden" name="notes" value="{{ $client->notes }}">
                         <trix-editor input="notes"></trix-editor>
                         @error('notes')
-                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
             </div>
 
-            <!-- Form Actions -->
-            <div class="flex justify-end gap-4">
+            {{-- Submit Buttons --}}
+            <div class="flex items-center gap-4 pt-4">
+                <button type="submit" class="kt-btn kt-btn-primary">
+                    <i class="ki-filled ki-check text-sm me-2"></i>
+                    {{ __('main.update_type', ['type' => __('main.client')]) }}
+                </button>
                 <a href="{{ route('clients.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.cancel') }}
                 </a>
-                <button type="submit" class="kt-btn kt-btn-primary">
-                    {{ __('main.save') }}
-                </button>
             </div>
         </form>
     </div>

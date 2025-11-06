@@ -11,6 +11,16 @@ class Client extends Model
     use HasSearch, HasFactory;
 
     protected $fillable = [
+        // Personal name information
+        'first_name',
+        'middle_name',
+        'gf_name',
+        'last_name',
+
+        // Personal details
+        'gender',
+        'birth_date',
+
         // Location information
         'region_id',
         'subregion_id',
@@ -19,28 +29,18 @@ class Client extends Model
         'city_id',
         'nationality_id',
         'currency',
-        
-        // Personal name information
-        'first_name',
-        'middle_name',
-        'gf_name',
-        'last_name',
-        
-        // Personal details
-        'gender',
-        'birth_date',
-        
+
         // Passport information
         'passport_number',
         'passport_issue_date',
         'passport_expiry_date',
-        
+
         // Email addresses
         'personal_email',
         'email_primary',
         'work_email',
         'secondary_email',
-        
+
         // Phone numbers
         'primary_phone',
         'secondary_phone',
@@ -50,7 +50,7 @@ class Client extends Model
         'work_phone_ext',
         'fax_number',
         'whatsapp',
-        
+
         // Company/Business information
         'company_name',
         'company_phone',
@@ -61,22 +61,22 @@ class Client extends Model
         'business_type',
         'business_registration_number',
         'tax_id',
-        
+
         // Address information
         'box',
         'postal_code',
         'street_address',
         'address_line_2',
-        
+
         // Online presence
         'website_url',
         'linkedin_url',
-        
+
         // Status and preferences
         'status',
         'timezone',
         'notes',
-        
+
         // Tracking
         'created_by',
         'updated_by',

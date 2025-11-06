@@ -20,25 +20,12 @@
 </head>
 
 <body>
-    <div class="toasts">
-        <div class="toast toast-error {{ config('toasts.move') != 'enable' ? 'no_move' : '' }}">
-            <i class="toast-icon fas fa-circle-xmark"></i>
+    @if (view()->exists('vendor/toasts/toasts'))
+        @include('vendor.toasts.toasts')
+    @endif
 
-            <div class="toast-text">
-                <div class="text">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+    <h2>welcome</h2>
 
-            <div class="toast-closed toast-action">
-                <i class="fas fa-xmark"></i>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>

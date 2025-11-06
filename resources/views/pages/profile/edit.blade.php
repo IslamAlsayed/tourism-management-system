@@ -58,7 +58,7 @@
                                     {{ __('main.allowed_formats') }}
                                 </p>
                                 @error('photo')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                                 <button type="submit" class="kt-btn kt-btn-primary w-full" id="upload-button" disabled>
                                     {{ __('main.update_photo') }}
@@ -85,7 +85,7 @@
                                         <input class="kt-input h-[45px]" name="name" type="text"
                                             value="{{ old('name', $user->name) }}" required />
                                         @error('name')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                            <span class="text-red-600 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="flex flex-col gap-1">
@@ -95,7 +95,7 @@
                                         <input class="kt-input h-[45px]" name="email" type="email"
                                             value="{{ old('email', $user->email) }}" required />
                                         @error('email')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                            <span class="text-red-600 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
                                     <input class="kt-input h-[45px]" name="phone" type="text"
                                         value="{{ old('phone', $user->phone) }}" />
                                     @error('phone')
-                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-600 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -118,7 +118,7 @@
                                     <input id="bio" type="hidden" name="bio" value="{{ $user->bio }}">
                                     <trix-editor input="bio"></trix-editor>
                                     @error('bio')
-                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-600 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>
 
@@ -166,7 +166,7 @@
                                             </button>
                                         </div>
                                         @error('password', 'userDeletion')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                            <span class="text-red-600 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <button type="submit" class="kt-btn kt-btn-danger w-full sm:w-auto">

@@ -3,9 +3,10 @@ import {
     resetToastTimes,
     toastShake,
     setToastTimes,
+    removeToast,
     userActive,
-    pushToast,
-    pushToastConfirm,
+    showToast,
+    showToastConfirm,
 } from "./global.js";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -17,6 +18,21 @@ document.querySelectorAll(".toast-inner").forEach((inner) => {
     toastShake(toast);
     setToastTimes(toast);
     userActive(inner, toast, totalAnimationTime, 0);
+});
+
+// مراقبة DOM وتفعيل removeToast عند التغييرات
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        document.querySelectorAll(".toasts").forEach((toastsContainer) => {
+            const toastClosed =
+                toastsContainer.querySelectorAll(".toast-closed");
+            toastClosed.forEach((closed) => {
+                closed.addEventListener("click", () => {
+                    removeToast(closed.closest(".toast-inner"));
+                });
+            });
+        });
+    }, 100);
 });
 
 document.addEventListener("click", function (e) {
@@ -34,7 +50,7 @@ document.addEventListener("click", function (e) {
         const icon = target.dataset.icon || null;
         const actions = target.dataset.actions || null;
 
-        pushToast({
+        showToast({
             type: type,
             title: title,
             message: message,
@@ -62,14 +78,18 @@ document.addEventListener("click", function (e) {
         const pin = target.dataset.pin || null;
         const emoji = target.dataset.emoji || null;
         const icon = target.dataset.icon || null;
+        let yesText = window.APP_LANG == "ar" ? "نعم" : "Yes";
         const onconfirm =
             target.dataset.onconfirm ||
             configToast.default_onconfirm_text ||
+            yesText ||
             "Yes";
         const onconfirmLink = target.dataset.onconfirmlink || "#";
+        let noText = window.APP_LANG == "ar" ? "لا" : "No";
         const oncancel =
             target.dataset.oncancel ||
             configToast.default_oncancel_text ||
+            noText ||
             "No";
         const actions = target.dataset.actions || null;
 
@@ -84,7 +104,7 @@ document.addEventListener("click", function (e) {
             }
         };
 
-        pushToastConfirm({
+        showToastConfirm({
             type: type,
             title: title,
             message: message,
@@ -100,9 +120,10 @@ document.addEventListener("click", function (e) {
     }
 });
 
-window.pushToast = pushToast;
-window.pushToastConfirm = pushToastConfirm;
+window.removeToast = removeToast;
+window.showToast = showToast;
+window.showToastConfirm = showToastConfirm;
 
 document.addEventListener("livewire:init", () => {
-    Livewire.on("show-toast", (d) => window.pushToast(d[0]));
+    Livewire.on("show-toast", (d) => window.showToast(d[0]));
 });
