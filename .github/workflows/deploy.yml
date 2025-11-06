@@ -38,8 +38,8 @@ jobs:
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
           mkdir -p ${{ secrets.SERVER_PATH }}/project_root;
-          cp -R ${{ secrets.SERVER_PATH }}/repositories/tourist-site/* ${{ secrets.SERVER_PATH }}/project_root/;
-          rm -rf ${{ secrets.SERVER_PATH }}/project_root/.git;
+          shopt -s extglob
+          cp -R ${{ secrets.SERVER_PATH }}/repositories/tourist-site/!(".env"|".git") ${{ secrets.SERVER_PATH }}/project_root/
           "
 
       # Step 3: Run migrations
