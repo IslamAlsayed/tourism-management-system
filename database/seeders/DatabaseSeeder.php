@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SystemLanguageSeeder::class,
             LanguageSeeder::class,
+            CurrencySeeder::class,
             ClientSeeder::class,
         ]);
     }

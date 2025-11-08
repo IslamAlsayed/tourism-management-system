@@ -5,13 +5,14 @@ namespace App\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class Users extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,9 +36,9 @@ class Users extends Component
 
     public function render()
     {
-        return view('livewire.users', [
-            'data' => User::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
-            'totalCount' => User::count(),
-        ]);
+        $query = User::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        return view('livewire.users', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: User::count()]);
     }
 }

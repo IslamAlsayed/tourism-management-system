@@ -3,6 +3,7 @@
         'data' => $data,
         'title' => __('main.hotels'),
         'entityName' => __('main.hotel'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])

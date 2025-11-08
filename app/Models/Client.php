@@ -11,6 +11,8 @@ class Client extends Model
     use HasSearch, HasFactory;
 
     protected $fillable = [
+        'id',
+
         // Personal name information
         'first_name',
         'last_name',
@@ -100,29 +102,28 @@ class Client extends Model
             'state_id',
             'city_id',
             'nationality_id',
-            'passport_number',
-            'passport_issue_date',
-            'passport_expiry_date',
-            'business_registration_number',
-            'tax_id',
-            'notes',
-            'created_by',
-            'updated_by',
         ];
     }
 
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'birth_date' => 'datetime',
+        'passport_issue_date' => 'datetime',
+        'passport_expiry_date' => 'datetime',
+    ];
+
+    public function getFormattedBirthDateAttribute()
     {
-        return [
-            'birth_date' => 'date',
-            'passport_issue_date' => 'date',
-            'passport_expiry_date' => 'date',
-        ];
+        return $this->birth_date ? $this->birth_date->format('Y-m-d') : null;
+    }
+
+    public function getAgeAttribute()
+    {
+        return $this->birth_date ? $this->birth_date->age : null;
     }
 
     /**
@@ -194,10 +195,10 @@ class Client extends Model
     }
 
     // Filter by client status
-    public function scopeOfStatus($query, $status)
-    {
-        return $query->where('client_status', $status);
-    }
+    // public function scopeOfStatus($query, $status)
+    // {
+    //     return $query->where('client_status', $status);
+    // }
 
     /**
      * Accessors & Mutators

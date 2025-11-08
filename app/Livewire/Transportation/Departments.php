@@ -7,11 +7,12 @@ use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\WithSorting;
 use App\Models\TransportationCompanyDepartment;
 
 class Departments extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely, WithSorting;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,9 +36,8 @@ class Departments extends Component
 
     public function render()
     {
-        return view('livewire.transportation.departments', [
-            'data' => TransportationCompanyDepartment::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
-            'totalCount' => TransportationCompanyDepartment::count(),
-        ]);
+        $query = TransportationCompanyDepartment::query()->with($this->relations)->search($this->search);
+        $this->applySorting($query);
+        return view('livewire.transportation.departments', ['data' => $query->paginate(getPaginate()), 'totalCount' => TransportationCompanyDepartment::count()]);
     }
 }

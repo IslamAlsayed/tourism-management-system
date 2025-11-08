@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.restaurants'),
         'entityName' => __('main.restaurant'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])

@@ -290,6 +290,13 @@ window.sortDropdown = function (dropdown) {
     enabledItems.forEach((li) => dropdown.appendChild(li));
 };
 
+// إغلاق جميع القوائم المنسدلة
+window.closeAllDropdowns = function () {
+    document
+        .querySelectorAll(".dropdown")
+        .forEach((dd) => dd.classList.add("hidden"));
+};
+
 // جلب القيم المختارة من inputs hidden
 window.getSelectedIds = function (name) {
     return [...document.querySelectorAll(`input[name='${name}']`)]

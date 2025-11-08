@@ -24,7 +24,7 @@ return [
         [
             'title' => 'user management',
             'icon' => 'ki-outline ki-users',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'all users',
@@ -49,7 +49,7 @@ return [
         [
             'title' => 'client management',
             'icon' => 'ki-outline ki-users',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'all clients',
@@ -74,7 +74,7 @@ return [
         [
             'title' => 'currency management',
             'icon' => 'ki-filled ki-dollar',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'all currencies',
@@ -99,7 +99,7 @@ return [
         [
             'title' => 'location management',
             'icon' => 'ki-filled ki-geolocation',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'regions',
@@ -230,12 +230,12 @@ return [
         [
             'title' => 'accommodations',
             'icon' => 'ki-filled ki-home-2',
-            'status' => 'updating...',
+            // 'status' => 'updating...',
             'children' => [
                 [
                     'title' => 'imports',
                     'icon' => 'ki-filled ki-chart-line-up',
-                    'status' => 'updating...',
+                    // 'status' => 'updating...',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'accommodations'],
                 ],
@@ -244,49 +244,49 @@ return [
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'hotel'],
-                    'status' => 'updating...',
+                    // 'status' => 'updating...',
                 ],
                 [
                     'title' => 'resorts',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'resort'],
-                    'status' => 'updating...',
+                    // 'status' => 'updating...',
                 ],
                 [
                     'title' => 'campings',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'camping'],
-                    'status' => 'updating...',
+                    // 'status' => 'updating...',
                 ],
                 [
                     'title' => 'hostels',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'hostel'],
-                    'status' => 'updating...',
+                    // 'status' => 'updating...',
                 ],
                 [
                     'title' => 'lodges',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'lodge'],
-                    'status' => 'updating...',
+                    // 'status' => 'updating...',
                 ],
                 [
                     'title' => 'rooms types',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'rooms-types'],
-                    'status' => 'updating...',
+                    // 'status' => 'updating...',
                 ],
                 [
                     'title' => 'seasons',
                     'icon' => 'ki-filled ki-home-2',
                     'route' => 'accommodations.type',
                     'parameters' => ['type' => 'season'],
-                    'status' => 'updating...',
+                    // 'status' => 'updating...',
                 ]
             ],
         ],
@@ -295,7 +295,7 @@ return [
         [
             'title' => 'accommodations types',
             'icon' => 'ki-filled ki-coffee',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'all types',
@@ -320,7 +320,7 @@ return [
         [
             'title' => 'food & beverage',
             'icon' => 'ki-filled ki-coffee',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'all restaurants',
@@ -344,7 +344,7 @@ return [
         // ================= Tour Guides =================
         [
             'title' => 'tour guides',
-            'status' => 'done',
+            // 'status' => 'done',
             'icon' => 'ki-filled ki-coffee',
             'children' => [
                 [
@@ -425,13 +425,13 @@ return [
                 [
                     'title' => 'companies',
                     'icon' => 'ki-filled ki-bus',
-                    'status' => 'done',
+                    // 'status' => 'done',
                     'route' => 'transportation-companies.index'
                 ],
                 [
                     'title' => 'departments',
                     'icon' => 'ki-filled ki-bus',
-                    'status' => 'done',
+                    // 'status' => 'done',
                     'route' => 'transportation-departments.index'
                 ],
                 [
@@ -449,7 +449,7 @@ return [
                 [
                     'title' => 'vehicles',
                     'icon' => 'ki-filled ki-car',
-                    'status' => 'done',
+                    // 'status' => 'done',
                     'children' => [
                         [
                             'title' => 'bus types',
@@ -585,7 +585,7 @@ return [
         [
             'title' => 'reports & analytics',
             'icon' => 'ki-filled ki-chart-simple',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'reports dashboard',
@@ -614,7 +614,7 @@ return [
         [
             'title' => 'languages',
             'icon' => 'fas fa-globe',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'all languages',
@@ -633,7 +633,7 @@ return [
         [
             'title' => 'system languages',
             'icon' => 'fas fa-globe',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'all languages',
@@ -652,7 +652,7 @@ return [
         [
             'title' => 'profile management',
             'icon' => 'ki-filled ki-profile-circle',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'view profile',
@@ -676,7 +676,7 @@ return [
         [
             'title' => 'settings',
             'icon' => 'ki-filled ki-setting-2',
-            'status' => 'done',
+            // 'status' => 'done',
             'children' => [
                 [
                     'title' => 'general settings',

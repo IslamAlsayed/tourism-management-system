@@ -23,27 +23,29 @@ class TourGuideCreateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'name_ar' => ['nullable', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:tour_guides,email'],
             'mobile_01' => ['required', 'string', 'max:20'],
+            'gender' => ['required', 'in:male,female'],
+            'guide_type_id' => ['required', 'exists:tour_guide_types,id'],
+            'country_id' => ['required', 'exists:countries,id'],
+
+            'name_ar' => ['nullable', 'string', 'max:255'],
             'mobile_02' => ['nullable', 'string', 'max:20'],
             'home_city' => ['nullable', 'string', 'max:255'],
-            'birth_year' => ['nullable', 'integer', 'min:1900', 'max:' . (date('Y'))],
-            'gender' => ['required', 'string', 'max:10'],
-            'photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],
-            'national_guide_id' => ['nullable', 'string'],
-            'currency_id' => ['required', 'string', 'max:50', 'exists:currencies,id'],
-            'languages_ids' => ['required', 'array', 'exists:languages,id'],
-            'guide_type_id' => ['required', 'string', 'max:50', 'exists:tour_guide_types,id'],
+            'birth_year' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
+            'photo' => ['nullable', 'image', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],
+            'national_guide_id' => ['nullable', 'string', 'max:100'],
+            'currency_id' => ['nullable', 'exists:currencies,id'],
+            'languages_ids' => ['nullable', 'array'],
+            'languages_ids.*' => ['exists:languages,id'],
 
-            'region_id' => ['required', 'string', 'exists:regions,id'],
-            'subregion_id' => ['required', 'string', 'exists:subregions,id'],
-            'country_id' => ['required', 'string', 'exists:countries,id'],
+            'region_id' => ['nullable', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'exists:subregions,id'],
 
-            'state_id' => ['required'],
+            'state_id' => ['nullable', 'array'],
             'state_id.*' => ['integer', 'exists:states,id'],
 
-            'city_id' => ['required'],
+            'city_id' => ['nullable', 'array'],
             'city_id.*' => ['integer', 'exists:cities,id'],
 
             'tourism_ministry_code' => ['nullable', 'string', 'max:100'],
@@ -52,7 +54,7 @@ class TourGuideCreateRequest extends FormRequest
             'extra_fees_1' => ['nullable', 'numeric', 'min:0'],
             'extra_fees_2' => ['nullable', 'numeric', 'min:0'],
             'status' => ['nullable', 'boolean'],
-            'notes' => ['nullable', 'string', 'max:500']
+            'notes' => ['nullable', 'string', 'max:1000']
         ];
     }
 }

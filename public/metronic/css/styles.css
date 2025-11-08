@@ -3330,6 +3330,26 @@
     }
   }
 
+  .bg-pink {
+    background-color: var(--color-pink-500);
+  }
+
+  .bg-pink\/5 {
+    background-color: var(--color-pink-500);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-pink-500) 5%, transparent);
+    }
+  }
+
+  .bg-pink\/10 {
+    background-color: var(--color-pink-500);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-pink-500) 10%, transparent);
+    }
+  }
+
   .bg-primary {
     background-color: var(--primary);
   }

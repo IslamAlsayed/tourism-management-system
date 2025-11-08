@@ -24,7 +24,7 @@
         <div></div>
         <!-- Topbar -->
         <div class="flex items-center gap-2.5">
-            @if (env('DB_MODE') == 'production')
+            {{-- @if (env('DB_MODE') == 'production')
                 <span class="inline-block bg-danger text-white text-red-600 font-medium px-3 py-0.5 rounded-[9px] ms-2">
                     production
                 </span>
@@ -38,7 +38,7 @@
                     class="inline-block bg-yellow-500 text-white text-primary font-medium px-3 py-0.5 rounded-[9px] ms-2">
                     local
                 </span>
-            @endif
+            @endif --}}
 
             @include('partials.topbar-search-modal')
             @include('partials.topbar-notification-dropdown')

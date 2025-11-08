@@ -7,11 +7,12 @@ use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\WithSorting;
 use App\Models\TransportationBusType;
 
 class BusTypes extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely, WithSorting;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,9 +36,8 @@ class BusTypes extends Component
 
     public function render()
     {
-        return view('livewire.transportation.bus-types', [
-            'data' => TransportationBusType::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
-            'totalCount' => TransportationBusType::count(),
-        ]);
+        $query = TransportationBusType::query()->with($this->relations)->search($this->search);
+        $this->applySorting($query);
+        return view('livewire.transportation.bus-types', ['data' => $query->paginate(getPaginate()), 'totalCount' => TransportationBusType::count()]);
     }
 }

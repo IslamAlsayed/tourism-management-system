@@ -3,13 +3,23 @@
 @section('content')
     <x-import-form :title="$title" :description="$description" :models="$models" :requirements="[
         [
+            'condition' => \App\Models\Region::count() > 0,
+            'route' => route('regions.create'),
+            'label' => __('main.regions_'),
+        ],
+        [
+            'condition' => \App\Models\Subregion::count() > 0,
+            'route' => route('subregions.create'),
+            'label' => __('main.subregions_'),
+        ],
+        [
             'condition' => \App\Models\Country::count() > 0,
-            'route' => route('countries.index'),
+            'route' => route('countries.create'),
             'label' => __('main.countries_'),
         ],
         [
             'condition' => \App\Models\State::count() > 0,
-            'route' => route('states.index'),
+            'route' => route('states.create'),
             'label' => __('main.states_'),
         ],
     ]">
@@ -27,16 +37,20 @@
                     <tr>
                         <th class="border px-2">name</th>
                         <th class="border px-2">name_ar</th>
-                        <th class="border px-2">state_id</th>
+                        <th class="border px-2">region_id</th>
+                        <th class="border px-2">subregion_id</th>
                         <th class="border px-2">country_id</th>
+                        <th class="border px-2">state_id</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">Andorra la Vella</td>
-                        <td class="border px-2">أندورا</td>
-                        <td class="border px-2">488</td>
-                        <td class="border px-2">6</td>
+                        <td class="border px-2">city</td>
+                        <td class="border px-2">مدينة</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">2</td>
+                        <td class="border px-2">3</td>
+                        <td class="border px-2">4</td>
                     </tr>
                 </tbody>
             </table>
@@ -58,9 +72,7 @@
                         <td class="border px-2">1.52109</td>
                         <td class="border px-2">Q1863</td>
                         <td class="border px-2">468416843</td>
-                        <td class="border px-2">
-                            [{"tzName": "Afghanistan Time","zoneName":"Asia/Kabul",...}]
-                        </td>
+                        <td class="border px-2">City/city +0</td>
                     </tr>
                 </tbody>
             </table>

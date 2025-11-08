@@ -29,18 +29,25 @@
         </div>
 
         <div class="w-full flex justify-end gap-2 mt-4 h-[40px]">
-            <div class="kt-btn kt-btn-outline bg-secondary px-3" type="button" wire:click="toggleAll" toggle-input>
-                <div
-                    class="custom-sm-toggle-input {{ count(array_diff($pendingColumns, ['all'])) === count($allColumns) ? 'active' : '' }}">
-                    <div class="handle"></div>
+            @if (!$hasCustomColumns)
+                <div class="kt-btn kt-btn-outline bg-secondary px-3" type="button" wire:click="toggleAll"
+                    wire:loading.attr="disabled" toggle-button>
+                    <label for="toggleAll" class="cursor-pointer">
+                        {{ __('main.all_columns') }}
+                    </label>
                 </div>
+            @endif
 
-                <label for="toggleAll">
-                    {{ __('main.all_columns') }}
-                </label>
-            </div>
+            {{-- check if user has custom columns --}}
+            @if ($hasCustomColumns)
+                <div type="button" wire:click="resetColumns" wire:loading.attr="disabled" toggle-button
+                    class="kt-btn kt-btn-outline bg-danger text-white px-3 rounded">
+                    {{-- {{ __('Reset') }} --}}
+                    {{ __('Reset to Default') }}
+                </div>
+            @endif
 
-            <div type="button" wire:click="applyColumns" toggle-input
+            <div type="button" wire:click="applyColumns" wire:loading.attr="disabled" toggle-button
                 class="kt-btn kt-btn-outline bg-primary text-white px-3 rounded">
                 {{ __('Apply') }}
             </div>

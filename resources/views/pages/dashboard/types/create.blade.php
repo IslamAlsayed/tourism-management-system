@@ -56,21 +56,8 @@
                             </div>
                         </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.save_type', ['type' => __('main.type')]) }}
-                            </button>
-                            <button type="submit" name="save_and_add" value="1"
-                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                                <i class="ki-filled ki-plus text-sm me-2"></i>
-                                {{ __('main.save_and_add_another') }}
-                            </button>
-                            <a href="{{ route('types.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
-                        </div>
+                        <!-- Save Submit Buttons -->
+                        @include('components.elements.save-submit', ['models' => 'types'])
                     </form>
                 </div>
             </div>

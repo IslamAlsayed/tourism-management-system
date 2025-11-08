@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.transportation-vehicles'),
         'entityName' => __('main.transportation-vehicles'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])

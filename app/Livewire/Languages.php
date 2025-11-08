@@ -5,13 +5,14 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Language;
 use Livewire\WithPagination;
+use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class Languages extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -46,9 +47,17 @@ class Languages extends Component
 
     public function render()
     {
-        return view('livewire.languages', [
-            'data' => Language::query()->with($this->relations)->orderBy('name')->search($this->search)->paginate(getPaginate()),
-            'totalCount' => Language::count(),
-        ]);
+        $query = Language::query()->orderBy('name');
+        if (!empty($this->search)) {
+            $query->search($this->search);
+        }
+        if (!empty($this->columns) && !empty($this->relations)) {
+            $relationsToLoad = array_intersect($this->relations, $this->columns);
+            if (!empty($relationsToLoad)) {
+                $query->with($relationsToLoad);
+            }
+        }
+        $this->applySorting($query);
+        return view('livewire.languages', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: Language::count()]);
     }
 }

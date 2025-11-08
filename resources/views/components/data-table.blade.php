@@ -1,7 +1,7 @@
 <table class="kt-table table-auto text-nowrap">
     <thead>
         <tr>
-            <th class="w-[60px] px-4 py-3 text-center">
+            <th class="w-[60px] px-4 py-3 text-center" style="padding-inline-start: 21px">
                 @if (isset($data) && !empty($data) && $data->count() > 0)
                     @include('components.elements.all-checkbox-button', [
                         'name' => 'selectAllItems',
@@ -10,8 +10,12 @@
                 @endif
             </th>
             @foreach ($columns as $column)
-                <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th wire:click="sortBy('{{ $column }}')"
+                    title="{{ __('main.sort_by') }} {{ __('main.' . $column) }}"
+                    class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 transition-colors">
                     {{ __('main.' . $column) }}
+                    <i class="fas {{ $this->getSortIcon($column) }} ms-2"
+                        style="font-size: 14px; {{ $this->isSortedBy($column) ? 'color: #3b82f6;' : '' }}"></i>
                 </th>
             @endforeach
             <th class="px-4 py-3"></th>

@@ -5,13 +5,14 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Restaurant;
 use Livewire\WithPagination;
+use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class Restaurants extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,14 +36,14 @@ class Restaurants extends Component
 
     public function render()
     {
-        $data = Restaurant::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        $query = Restaurant::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         foreach ($data as $restaurant) {
             $restaurant['states'] = $restaurant->states();
             $restaurant['cities'] = $restaurant->cities();
         }
-        return view('livewire.restaurants', [
-            'data' => $data,
-            'totalCount' => Restaurant::count(),
-        ]);
+        return view('livewire.restaurants', ['data' => $data, 'totalCount' => $this->totalCount ?: Restaurant::count()]);
     }
 }

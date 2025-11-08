@@ -38,9 +38,9 @@
                             <!-- Nationality Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
-                                    class="kt-label required mb-2">{{ __('main.type_name_arabic', ['type' => __('main.nationality')]) }}</label>
+                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.nationality')]) }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ $nationality->name_ar }}" required>
+                                    value="{{ $nationality->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -49,9 +49,9 @@
                             <!-- Nationality Name (English) -->
                             <div class="">
                                 <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.type_name_english', ['type' => __('main.nationality')]) }}</label>
+                                    class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.nationality')]) }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ $nationality->name }}" required>
+                                    value="{{ $nationality->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -75,16 +75,8 @@
                             </div>
                         </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.update_type', ['type' => __('main.nationality')]) }}
-                            </button>
-                            <a href="{{ route('nationalities.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
-                        </div>
+                        <!-- Update Submit Buttons -->
+                        @include('components.elements.update-submit', ['models' => 'nationalities'])
                     </form>
                 </div>
             </div>

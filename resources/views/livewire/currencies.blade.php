@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.currencies'),
         'entityName' => __('main.currency'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])

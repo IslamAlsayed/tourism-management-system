@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Event;
+use App\Events\ImportExportCompleted;
+use App\Listeners\NotifyUserAfterImport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // تسجيل الـ Event والـ Listener
+        Event::listen(
+            ImportExportCompleted::class,
+            NotifyUserAfterImport::class
+        );
     }
 }
