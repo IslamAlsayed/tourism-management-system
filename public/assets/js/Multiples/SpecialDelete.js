@@ -4,17 +4,21 @@ window.specialDelete = function (selectAllId, rowCheckboxSelector) {
     const checkboxes = document.querySelectorAll(rowCheckboxSelector);
     const deleteAllBtn = document.getElementById("deleteAllBtn");
 
+    if (!selectAll || checkboxes.length === 0 || !deleteAllBtn) return;
+
     // مسح الأحداث القديمة
-    if (selectAll) selectAll.replaceWith(selectAll.cloneNode(true));
-    document
-        .querySelectorAll(rowCheckboxSelector)
-        .forEach((cb) => cb.replaceWith(cb.cloneNode(true)));
+    const newSelectAll = selectAll.cloneNode(true);
+    selectAll.parentNode.replaceChild(newSelectAll, selectAll);
 
-    // ثم إعادة الربط
-    const newSelectAll = document.getElementById(selectAllId);
-    const newCheckboxes = document.querySelectorAll(rowCheckboxSelector);
+    const newCheckboxes = [];
+    document.querySelectorAll(rowCheckboxSelector).forEach((cb) => {
+        const newCb = cb.cloneNode(true);
+        cb.parentNode.replaceChild(newCb, cb);
+        newCheckboxes.push(newCb);
+    });
 
-    if (!newSelectAll || newCheckboxes.length === 0 || !deleteAllBtn) return;
+    // Mark as initialized
+    newSelectAll.dataset.initialized = "true";
 
     deleteAllBtn?.classList.add("hidden");
 
@@ -32,9 +36,7 @@ window.specialDelete = function (selectAllId, rowCheckboxSelector) {
             if (!checkbox.checked) {
                 newSelectAll.checked = false;
             } else {
-                const allChecked = Array.from(newCheckboxes).every(
-                    (cb) => cb.checked
-                );
+                const allChecked = newCheckboxes.every((cb) => cb.checked);
                 newSelectAll.checked = allChecked;
             }
 
@@ -44,9 +46,9 @@ window.specialDelete = function (selectAllId, rowCheckboxSelector) {
 
     // ✅ زر الحذف
     if (deleteAllBtn) {
-        deleteAllBtn?.addEventListener("click", () => {
+        const deleteHandler = () => {
             const selected = document.querySelectorAll(
-                `${rowCheckboxSelector}:checked`
+                `${rowCheckboxSelector}:checked`,
             );
             if (selected.length == 0) {
                 alert("Please select at least one item to delete.");
@@ -102,13 +104,18 @@ window.specialDelete = function (selectAllId, rowCheckboxSelector) {
 
             document.body.appendChild(deleteForm);
             deleteForm.submit();
-        });
+        };
+
+        // Remove old listener and add new one
+        const newDeleteBtn = deleteAllBtn.cloneNode(true);
+        deleteAllBtn.parentNode.replaceChild(newDeleteBtn, deleteAllBtn);
+        newDeleteBtn.addEventListener("click", deleteHandler);
     }
 };
 
 function updateDeleteButtonVisibility(rowCheckboxSelector) {
     const selected = document.querySelectorAll(
-        `${rowCheckboxSelector}:checked`
+        `${rowCheckboxSelector}:checked`,
     );
     if (selected.length != 0) {
         deleteAllBtn?.classList.remove("hidden");
@@ -124,7 +131,7 @@ function updateDeleteButtonVisibility(rowCheckboxSelector) {
 function resetDeleteSelection() {
     const selectAllItems = document.getElementById("selectAllItems");
     const anyChecked = document.querySelector(
-        "input[name='selectedItems[]']:checked"
+        "input[name='selectedItems[]']:checked",
     );
     if (anyChecked && selectAllItems) {
         selectAllItems.click();

@@ -55,8 +55,8 @@
                             <!-- Name (English) -->
                             <div class="">
                                 <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.type_name_english', ['type' => __('main.tour-guide')]) }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.tour-guide')]) }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $tourGuide->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -65,8 +65,8 @@
 
                             <!-- Email -->
                             <div class="">
-                                <label for="email" class="kt-label required mb-2">{{ __('main.email') }}</label>
-                                <input type="email" name="email" id="email" class="kt-input h-[45px]" required
+                                <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
+                                <input type="email" name="email" id="email" class="kt-input h-[45px]"
                                     value="{{ $tourGuide->email }}">
                                 @error('email')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -75,9 +75,9 @@
 
                             <!-- Mobile 01 -->
                             <div class="">
-                                <label for="mobile_01" class="kt-label required mb-2">{{ __('main.mobile_01') }}</label>
+                                <label for="mobile_01" class="kt-label mb-2">{{ __('main.mobile_01') }}</label>
                                 <input type="text" name="mobile_01" id="mobile_01" class="kt-input h-[45px]"
-                                    max="2" required value="{{ $tourGuide->mobile_01 }}">
+                                    max="2" value="{{ $tourGuide->mobile_01 }}">
                                 @error('mobile_01')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -115,8 +115,8 @@
 
                             <!-- Gender -->
                             <div class="">
-                                <label for="gender" class="kt-label required mb-2">{{ __('main.gender') }}</label>
-                                <select name="gender" id="gender" class="kt-select h-[45px]" special-search required>
+                                <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
+                                <select name="gender" id="gender" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     <option value="male" {{ $tourGuide->gender == 'male' ? 'selected' : '' }}>male
                                     </option>
@@ -141,14 +141,13 @@
 
                             <!-- Currency -->
                             <div class="">
-                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
+                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.currency') }}
                                     <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search
-                                    required>
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -164,15 +163,14 @@
 
                             <!-- Guide languages -->
                             <div class="">
-                                <label for="languages_ids"
-                                    class="kt-label required mb-2 flex items-center justify-between">
+                                <label for="languages_ids" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.language') }}
                                     <a href="{{ route('languages.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
                                 <select name="languages_ids[]" id="languages_ids" class="kt-select h-[45px]"
-                                    special-multiple required>
+                                    special-multiple>
                                     <option value="">--</option>
                                     @foreach ($languages_ids as $key => $language)
                                         <option value="{{ $key }}"
@@ -190,7 +188,7 @@
                             <div class="">
                                 <label for="guide_type_id" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
                                 <select name="guide_type_id" id="guide_type_id" class="kt-input h-[45px]" special-search
-                                    data-current-value="{{ $tourGuide->guide_type_id ?? 1 }}" required>
+                                    data-current-value="{{ $tourGuide->guide_type_id ?? 1 }}">
                                     <option value="">--</option>
                                     @foreach ($guideTypes as $type)
                                         <option value="{{ $type->id }}"
@@ -288,16 +286,8 @@
                             </div>
                         </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4 pt-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.update_type', ['type' => __('main.tour-guide')]) }}
-                            </button>
-                            <a href="{{ route('tour-guides.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
-                        </div>
+                        <!-- Update Submit Buttons -->
+                        @include('components.elements.update-submit', ['models' => 'tour-guides'])
                     </form>
                 </div>
             </div>

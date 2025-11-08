@@ -77,7 +77,6 @@ document.addEventListener("livewire:load", () => {
 });
 
 window.removeDisabledOptions = function () {
-    console.log("Removing disabled options...");
     // handle disabled options
     let lists = [
         document.querySelectorAll("select option"),

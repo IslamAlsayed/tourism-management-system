@@ -5,13 +5,14 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\TourGuide;
 use Livewire\WithPagination;
+use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class TourGuides extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,14 +36,14 @@ class TourGuides extends Component
 
     public function render()
     {
-        $data = TourGuide::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        $query = TourGuide::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         foreach ($data as $tourGuides) {
             $tourGuides['states'] = $tourGuides->states();
             $tourGuides['cities'] = $tourGuides->cities();
         }
-        return view('livewire.tour-guides', [
-            'data' => $data,
-            'totalCount' => TourGuide::count(),
-        ]);
+        return view('livewire.tour-guides', ['data' => $data, 'totalCount' => $this->totalCount ?: TourGuide::count()]);
     }
 }

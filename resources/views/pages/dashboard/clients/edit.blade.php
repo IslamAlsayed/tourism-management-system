@@ -521,16 +521,8 @@
                 </div>
             </div>
 
-            {{-- Submit Buttons --}}
-            <div class="flex items-center gap-4 pt-4">
-                <button type="submit" class="kt-btn kt-btn-primary">
-                    <i class="ki-filled ki-check text-sm me-2"></i>
-                    {{ __('main.update_type', ['type' => __('main.client')]) }}
-                </button>
-                <a href="{{ route('clients.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.cancel') }}
-                </a>
-            </div>
+            <!-- Update Submit Buttons -->
+            @include('components.elements.update-submit', ['models' => 'clients'])
         </form>
     </div>
 @endsection

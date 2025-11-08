@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Auth;
+
 trait CustomColumns
 {
     public string $modelClass;
@@ -11,6 +13,8 @@ trait CustomColumns
     public array $allColumns = [];
     public array $columns = [];
     public array $pendingColumns = [];
+    public bool $isAllSelected = false;
+    public bool $hasCustomColumns = false; // Track if user has saved custom columns
 
     public function mountWithCustomColumns(string $modelClass): void
     {
@@ -28,13 +32,17 @@ trait CustomColumns
 
         $this->searchColumns = array_filter($this->allColumns, fn($c) => !in_array($c, $this->relations));
 
-        // استرجاع الأعمدة من الـ session أو DB أو افتراضي
-        $savedColumns = session("user_table_columns_{$modelClass}");
+        // استرجاع الأعمدة من DB للمستخدم الحالي
+        $savedColumns = null;
 
-        // تقدر تعدل لو عايز تخزن لكل مستخدم في DB
-        // $savedColumns = auth()->user()->getTableColumnsFor($modelClass);
+        if (Auth::check()) {
+            $savedColumns = getActiveUser()->getTableColumnsFor($modelClass);
+            $this->hasCustomColumns = !is_null($savedColumns); // Set flag if custom columns exist
+        }
 
-        $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)));
+        // إذا لم توجد إعدادات محفوظة، استخدم الافتراضي
+        $defaultColumnsCount = getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+        $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, $defaultColumnsCount);
 
         $this->pendingColumns = $this->columns;
     }
@@ -50,11 +58,20 @@ trait CustomColumns
         // رتب الأعمدة بنفس ترتيبها الأصلي
         $this->columns = array_values(array_intersect($this->allColumns, $cleanPending));
 
-        // حفظ التغييرات في الجلسة
-        session(["user_table_columns_{$this->modelClass}" => $this->columns]);
+        // حفظ التغييرات في قاعدة البيانات للمستخدم الحالي
+        if (Auth::check()) {
+            getActiveUser()->saveTableColumnsFor($this->modelClass, $this->columns);
+            $this->hasCustomColumns = true; // Mark that user now has custom columns
+        }
+    }
 
-        // حفظ في DB (لو حابب)
-        // auth()->user()->saveTableColumnsFor($this->modelClass, $this->columns);
+    /**
+     * Check if all columns are selected
+     */
+    public function getIsAllSelectedProperty(): bool
+    {
+        $current = array_diff($this->pendingColumns, ['all']);
+        return count($current) === count($this->allColumns);
     }
 
     public function toggleAll(): void
@@ -62,69 +79,37 @@ trait CustomColumns
         $model = new $this->modelClass();
         $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 
-        // نجيب الأعمدة المسموح بيها فعليًا
-        $cleanAll = array_values(array_diff($this->allColumns, $excluded));
-
-        // نشيل "all" من pending قبل المقارنة
-        $current = array_diff($this->pendingColumns, ['all']);
-
-        // لو فعلاً كل الأعمدة متحددة حاليًا → اعمل UnAll
-        if (count($current) === count($cleanAll)) {
+        // لو كل الأعمدة محددة → ارجع للافتراضي
+        if ($this->isAllSelected) {
             $fillable = array_values(array_diff($model->getFillable(), $excluded));
-            // رجّع أول 5 فقط
-            $this->pendingColumns = array_slice($fillable, 0, getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)));
+            $defaultColumnsCount = getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+            $this->pendingColumns = array_slice($fillable, 0, $defaultColumnsCount);
         }
-        // غير كده → اعمل All
+        // غير كده → حدد الكل
         else {
-            $this->pendingColumns = array_merge(['all'], $cleanAll);
+            $this->pendingColumns = $this->allColumns;
         }
 
+        // Apply changes immediately for better UX
         $this->applyColumns();
     }
 
-    public function scopeSearch(string $modelClass, string $search = null)
+    /**
+     * Reset columns to default for current user
+     */
+    public function resetColumns(): void
     {
-        $model = new $modelClass();
+        if (Auth::check()) {
+            getActiveUser()->deleteTableColumnsFor($this->modelClass);
+            $this->hasCustomColumns = false; // Mark that custom columns are removed
+        }
 
-        return $model::query()->when($search, function ($query) {
-            // $search = strtolower($this->search);
+        $model = new $this->modelClass();
+        $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
+        $fillable = array_values(array_diff($model->getFillable(), $excluded));
+        $defaultColumnsCount = getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
 
-            // $items = [];
-            // foreach ($this->relations as $relate) {
-            //     $model = $relate->getModel();
-            //     $items[$relate] = $model::query()->when($this->search, function ($query) {
-            //         $query->where(function ($q) {
-            //             foreach ($model->getFillable() as $column) {
-            //                 $q->orWhere($column, 'like', '%' . $this->search . '%');
-            //             }
-            //         });
-            //     })->get('id');
-            // }
-
-            // $query->where(function ($q) use ($search, $items) {
-            //     foreach ($items as $key => $item) {
-            //         $q->orWhereIn($key . '_id', $item);
-            //     }
-
-            //     foreach ($this->searchColumns as $column) {
-            //         $q->orWhere($column, 'like', '%' . $search . '%');
-            //     }
-            // });
-
-            $search = strtolower($this->search);
-            $query->where(function ($q) use ($search) {
-                foreach ($this->searchColumns as $column) {
-                    $q->orWhere($column, 'like', '%' . $search . '%');
-                }
-            });
-            foreach ($this->relations as $relate) {
-                $query->orWhereHas($relate, function ($q) use ($search) {
-                    $model = $q->getModel();
-                    foreach ($model->getFillable() as $column) {
-                        $q->orWhere($column, 'like', '%' . $search . '%');
-                    }
-                });
-            }
-        })->with($this->relations)->paginate(getPaginate());
+        $this->columns = array_slice($fillable, 0, $defaultColumnsCount);
+        $this->pendingColumns = $this->columns;
     }
 }

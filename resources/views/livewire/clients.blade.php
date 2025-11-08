@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.clients'),
         'entityName' => __('main.client'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])
@@ -16,23 +17,23 @@
         @if (isset($data) && !empty($data) && $data->count() > 0)
             <!-- Filters -->
             <div class="mb-4 ps-4 flex gap-4" wire:target="search" wire:loading.class="loading">
-                <select wire:model.live="filterClientType" class="kt-input h-[40px] w-48">
-                    <option value="">{{ __('main.all_client_types') }}</option>
-                    <option value="individual">{{ __('main.individual') }}</option>
-                    <option value="corporate">{{ __('main.corporate') }}</option>
+                <select wire:model.live="filterClientGender" class="kt-input h-[40px] w-48">
+                    <option value="">{{ __('main.gender') }}</option>
+                    <option value="male">{{ __('main.male') }}</option>
+                    <option value="female">{{ __('main.female') }}</option>
                 </select>
 
-                <select wire:model.live="filterClientStatus" class="kt-input h-[40px] w-48">
-                    <option value="">{{ __('main.all_status') }}</option>
+                {{-- <select wire:model.live="filterClientStatus" class="kt-input h-[40px] w-48">
+                    <option value="">{{ __('main.status') }}</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
                     <option value="blacklisted">{{ __('main.blacklisted') }}</option>
-                </select>
+                </select> --}}
             </div>
         @endif
 
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="clients_table">
-            <div class="kt-scrollable-x-auto" wire:target="search,filterClientType,filterClientStatus"
+            <div class="kt-scrollable-x-auto" wire:target="search,filterClientGender,filterClientStatus"
                 wire:loading.class="loading">
                 @component('components.data-table', [
                     'data' => $data,

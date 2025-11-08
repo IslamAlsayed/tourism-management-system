@@ -138,14 +138,13 @@
 
                             <!-- Currency -->
                             <div class="">
-                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
+                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.currency') }}
                                     <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search
-                                    required>
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -161,12 +160,11 @@
 
                             <!-- Guide languages -->
                             <div class="">
-                                <label for="languages_ids"
-                                    class="kt-label required mb-2 flex items-center justify-between">
+                                <label for="languages_ids" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.language') }}
                                 </label>
                                 <select name="languages_ids[]" id="languages_ids" class="kt-select h-[45px]"
-                                    special-multiple required>
+                                    special-multiple>
                                     <option value="">--</option>
                                     @foreach ($languages_ids as $id => $language)
                                         <option value="{{ $id }}">
@@ -181,7 +179,8 @@
 
                             <!-- Guide Type -->
                             <div class="">
-                                <label for="guide_type_id" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
+                                <label for="guide_type_id"
+                                    class="kt-label required mb-2">{{ __('main.guide_type') }}</label>
                                 <select name="guide_type_id" id="guide_type_id" class="kt-input h-[45px]"
                                     special-multiple data-current-value="{{ $tourGuide->guide_type_id ?? 1 }}" required>
                                     <option value="">--</option>
@@ -280,21 +279,8 @@
                             </div>
                         </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.save_type', ['type' => __('main.tour-guide')]) }}
-                            </button>
-                            <button type="submit" name="save_and_add" value="1"
-                                class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                                <i class="ki-filled ki-plus text-sm me-2"></i>
-                                {{ __('main.save_and_add_another') }}
-                            </button>
-                            <a href="{{ route('tour-guides.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
-                        </div>
+                        <!-- Save Submit Buttons -->
+                        @include('components.elements.save-submit', ['models' => 'tour-guides'])
                     </form>
                 </div>
             </div>

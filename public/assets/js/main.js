@@ -24,6 +24,39 @@ document.addEventListener("updatedPaginate", () => {
     }, 200);
 });
 
+// Re-initialize checkbox selection after Livewire updates
+document.addEventListener("livewire:initialized", () => {
+    Livewire.hook("morph.updated", ({ el, component }) => {
+        // Only re-initialize if the table was updated
+        if (
+            el.querySelector &&
+            (el.querySelector(".kt-table") || el.classList.contains("kt-table"))
+        ) {
+            setTimeout(() => {
+                resetDeleteSelection();
+                specialDelete(
+                    "selectAllItems",
+                    "input[name='selectedItems[]']",
+                );
+            }, 150);
+        }
+    });
+
+    // Also handle after commit (when all DOM updates are complete)
+    Livewire.hook("commit", ({ component, respond }) => {
+        setTimeout(() => {
+            const selectAll = document.getElementById("selectAllItems");
+            if (selectAll && !selectAll.dataset.initialized) {
+                resetDeleteSelection();
+                specialDelete(
+                    "selectAllItems",
+                    "input[name='selectedItems[]']",
+                );
+            }
+        }, 200);
+    });
+});
+
 function closeAllDropdowns() {
     document
         .querySelectorAll(".dropdown")

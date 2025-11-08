@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\Setting;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('getActiveUser')) {
@@ -304,5 +305,12 @@ if (!function_exists('db_connection')) {
             'production' => 'mysql_production',
             default => 'mysql',
         };
+    }
+}
+
+if (!function_exists('studlySingular')) {
+    function studlySingular(?string $models)
+    {
+        return implode('', array_map([Str::class, 'studly'], array_map([Str::class, 'singular'], explode('-', $models))));
     }
 }

@@ -134,7 +134,7 @@
                         </div>
 
                         <!-- Employment Information -->
-                        <div class="kt-card mb-4">
+                        <div class="kt-card">
                             <div class="kt-card-header">
                                 <h3 class="kt-card-title">{{ __('main.employment_information') }}</h3>
                             </div>
@@ -278,7 +278,7 @@
                                     <div class="grid lg:grid-cols-2 gap-6">
                                         <div class="flex items-center gap-3">
                                             <input type="hidden" name="force_password_change" value="0">
-                                            <input type="checkbox" name="force_password_change"
+                                            <input type="checkbox" name="force_password_change" disabled
                                                 id="force_password_change" class="kt-checkbox" value="1"
                                                 {{ old('force_password_change') ? 'checked' : '' }}>
                                             <label for="force_password_change"
@@ -317,23 +317,11 @@
                                         @enderror
                                     </div>
 
-                                    <!-- Submit Buttons -->
-                                    <div class="flex items-center gap-4">
-                                        <button type="submit" class="kt-btn kt-btn-primary">
-                                            <i class="ki-filled ki-check text-sm me-2"></i>
-                                            {{ __('main.create_new_user') }}
-                                        </button>
-                                        <button type="submit" name="save_and_add" value="1"
-                                            class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                                            <i class="ki-filled ki-plus text-sm me-2"></i>
-                                            {{ __('main.save_and_add_another') }}
-                                        </button>
-                                        <a href="{{ route('users.index') }}" class="kt-btn kt-btn-outline">
-                                            {{ __('main.cancel') }}
-                                        </a>
-                                    </div>
+                                    <!-- Save Submit Buttons -->
+                                    @include('components.elements.save-submit', ['models' => 'users'])
                                 </div>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>

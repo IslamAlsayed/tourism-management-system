@@ -45,9 +45,9 @@
                         <div class="grid lg:grid-cols-3 gap-6 mb-4">
                             <!-- First Name -->
                             <div class="">
-                                <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
+                                <label for="first_name" class="kt-label mb-2">{{ __('main.first_name') }}</label>
                                 <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]"
-                                    value="{{ $user->first_name }}" required>
+                                    value="{{ $user->first_name }}">
                                 @error('first_name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -55,9 +55,9 @@
 
                             <!-- Last Name -->
                             <div class="">
-                                <label for="last_name" class="kt-label required mb-2">{{ __('main.last_name') }}</label>
+                                <label for="last_name" class="kt-label mb-2">{{ __('main.last_name') }}</label>
                                 <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]"
-                                    value="{{ $user->last_name }}" required>
+                                    value="{{ $user->last_name }}">
                                 @error('last_name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -65,9 +65,9 @@
 
                             <!-- Email -->
                             <div class="">
-                                <label for="email" class="kt-label required mb-2">{{ __('main.email') }}</label>
+                                <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
                                 <input type="email" name="email" id="email" class="kt-input h-[45px]"
-                                    value="{{ $user->email }}" required>
+                                    value="{{ $user->email }}">
                                 @error('email')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -115,7 +115,7 @@
                         </div>
 
                         <!-- Employment Information -->
-                        <div class="kt-card mb-4">
+                        <div class="kt-card">
                             <div class="kt-card-header">
                                 <h3 class="kt-card-title">{{ __('main.employment_information') }}</h3>
                             </div>
@@ -244,7 +244,7 @@
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="force_password_change" value="0">
                                         <input type="checkbox" name="force_password_change" id="force_password_change"
-                                            class="kt-checkbox" value="1"
+                                            class="kt-checkbox" value="1" disabled
                                             {{ $user->force_password_change == 1 ? 'checked' : '' }}>
                                         <label for="force_password_change"
                                             class="kt-label mb-0">{{ __('main.force_password_change') }}</label>
@@ -280,16 +280,8 @@
                                     @enderror
                                 </div>
 
-                                <!-- Submit Buttons -->
-                                <div class="flex items-center gap-4">
-                                    <button type="submit" class="kt-btn kt-btn-primary">
-                                        <i class="ki-filled ki-check text-sm me-2"></i>
-                                        {{ __('main.update_user') }}
-                                    </button>
-                                    <a href="{{ route('users.index') }}" class="kt-btn kt-btn-outline">
-                                        {{ __('main.cancel') }}
-                                    </a>
-                                </div>
+                                <!-- Update Submit Buttons -->
+                                @include('components.elements.update-submit', ['models' => 'users'])
                             </div>
                         </div>
                     </form>

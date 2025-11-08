@@ -5,13 +5,14 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Nationality;
 use Livewire\WithPagination;
+use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class Nationalities extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,14 +36,14 @@ class Nationalities extends Component
 
     public function render()
     {
-        $data = Nationality::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        $query = Nationality::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         foreach ($data as $nationality) {
             $nationality['states'] = $nationality->states();
             $nationality['cities'] = $nationality->cities();
         }
-        return view('livewire.nationalities', [
-            'data' => $data,
-            'totalCount' => Nationality::count(),
-        ]);
+        return view('livewire.nationalities', ['data' => $data, 'totalCount' => $this->totalCount ?: Nationality::count()]);
     }
 }

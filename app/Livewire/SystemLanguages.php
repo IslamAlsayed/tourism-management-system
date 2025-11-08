@@ -5,17 +5,18 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\SystemLanguage;
 use Livewire\WithPagination;
+use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class SystemLanguages extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
     public $message = [];
-    public $view = 'grid'; // or table
+    public $view = 'grid';
 
     public function updatingSearch()
     {
@@ -26,7 +27,6 @@ class SystemLanguages extends Component
     {
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(SystemLanguage::class);
-        // display view mode [ grid | table ]
         $this->view = session('languages_view', 'grid');
         $this->resetPage();
     }
@@ -36,7 +36,6 @@ class SystemLanguages extends Component
         $this->safeDestroy($id, 'system_language');
     }
 
-    // Toggle between grid and table view
     public function toggleView()
     {
         $this->view = $this->view === 'table' ? 'grid' : 'table';
@@ -45,9 +44,9 @@ class SystemLanguages extends Component
 
     public function render()
     {
-        return view('livewire.system-languages', [
-            'data' => SystemLanguage::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
-            'totalCount' => SystemLanguage::count(),
-        ]);
+        $query = SystemLanguage::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        return view('livewire.system-languages', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: SystemLanguage::count()]);
     }
 }

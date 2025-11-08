@@ -80,8 +80,8 @@
 
                             <!-- Car route -->
                             <div class="">
-                                <label for="car_route_id" class="kt-label required mb-2">Car Route</label>
-                                <select name="car_route_id" id="car_route_id" class="kt-input h-[45px]" required>
+                                <label for="car_route_id" class="kt-label mb-2">Car Route</label>
+                                <select name="car_route_id" id="car_route_id" class="kt-input h-[45px]">
                                     <option value="">--</option>
                                     @foreach ($carRoutes as $carRoute)
                                         <option value="{{ $carRoute->id }}" title="{{ $carRoute->route }}"
@@ -103,8 +103,8 @@
 
                             <!-- Currencies -->
                             <div class="">
-                                <label for="currency_id" class="kt-label required mb-2">Currency</label>
-                                <select name="currency_id" id="currency_id" class="kt-input h-[45px]" required>
+                                <label for="currency_id" class="kt-label mb-2">Currency</label>
+                                <select name="currency_id" id="currency_id" class="kt-input h-[45px]">
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -126,16 +126,10 @@
                             </div>
                         </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.update_type', ['type' => __('main.transportation_vehicles')]) }}
-                            </button>
-                            <a href="{{ route('transportation-vehicles.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
-                        </div>
+                        <!-- Update Submit Buttons -->
+                        @include('components.elements.update-submit', [
+                            'models' => 'transportation-vehicles',
+                        ])
                     </form>
                 </div>
             </div>
