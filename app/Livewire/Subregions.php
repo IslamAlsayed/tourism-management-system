@@ -5,13 +5,14 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Subregion;
 use Livewire\WithPagination;
+use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class Subregions extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,9 +36,9 @@ class Subregions extends Component
 
     public function render()
     {
-        return view('livewire.subregions', [
-            'data' => Subregion::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
-            'totalCount' => Subregion::count(),
-        ]);
+        $query = Subregion::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        return view('livewire.subregions', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: Subregion::count()]);
     }
 }

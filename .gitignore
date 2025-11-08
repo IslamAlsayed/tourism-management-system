@@ -21,11 +21,9 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+*.md
 
 # Project Documentation (Local Only)
-GIT_STRATEGY.md
-PROJECT_CONFIG.md
-COMMIT_CONVENTIONS.md
 /public/assets/js/filterByForeignId2.js
 /public/assets/js/filterByForeignId copy.js
 /public/assets/js/filterByForeignId copy2.js
@@ -43,6 +41,5 @@ COMMIT_CONVENTIONS.md
 /resources/views/components/trash
 /resources/views/components/elements/display-alert.blade.php
 /commit_message.txt
-/app/Excels
 /config/excel_models.php
 /database/migrations2

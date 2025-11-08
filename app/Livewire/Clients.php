@@ -6,18 +6,19 @@ use App\Models\Client;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
+use App\Traits\WithSorting;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class Clients extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
 
     public $search = '';
     public $totalCount = '';
     public $message = [];
-    public $filterClientType = '';
-    public $filterClientStatus = '';
+    public $filterClientGender = '';
+    // public $filterClientStatus = '';
 
     public function updatingSearch()
     {
@@ -48,26 +49,15 @@ class Clients extends Component
 
     public function render()
     {
-        $query = Client::query()->with($this->relations);
-
-        // Apply search
-        if ($this->search) {
-            $query->search($this->search);
+        $query = Client::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        if ($this->filterClientGender) {
+            $query->where('gender', $this->filterClientGender);
         }
-
-        // Apply client type filter
-        if ($this->filterClientType) {
-            $query->where('client_type', $this->filterClientType);
-        }
-
-        // Apply client status filter
-        if ($this->filterClientStatus) {
-            $query->where('client_status', $this->filterClientStatus);
-        }
-
-        return view('livewire.clients', [
-            'data' => $query->paginate(getPaginate()),
-            'totalCount' => Client::count(),
-        ]);
+        // if ($this->filterClientStatus) {
+        //     $query->where('client_status', $this->filterClientStatus);
+        // }
+        $this->applySorting($query);
+        return view('livewire.clients', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: Client::count()]);
     }
 }

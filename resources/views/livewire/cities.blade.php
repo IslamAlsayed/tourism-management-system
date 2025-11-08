@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.cities'),
         'entityName' => __('main.city'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])

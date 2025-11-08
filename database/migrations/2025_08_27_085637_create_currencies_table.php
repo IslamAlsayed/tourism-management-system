@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->string('symbol')->nullable();
             $table->boolean('is_active')->nullable()->default(true);
             $table->timestamps();
+
+            $table->index(['name', 'code']);
         });
     }
 

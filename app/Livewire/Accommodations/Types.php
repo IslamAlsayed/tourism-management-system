@@ -8,10 +8,11 @@ use Livewire\WithPagination;
 use App\Models\Accommodation;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\WithSorting;
 
 class Types extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting;
 
     public $search = '';
     public $totalCount = '';
@@ -48,12 +49,10 @@ class Types extends Component
     public function render()
     {
         $typeModel = Type::where('name', 'like', '%' . $this->type . '%')->first();
-        $data = Accommodation::with('type')->where('type_id', $typeModel?->id ?? 0)->paginate(getPaginate());
+        $query = Accommodation::with('type')->where('type_id', $typeModel?->id ?? 0);
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         $this->totalCount = $data->total();
-
-        return view('livewire.accommodations.types', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
-        ]);
+        return view('livewire.accommodations.types', ['data' => $data, 'totalCount' => $this->totalCount]);
     }
 }

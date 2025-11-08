@@ -45,22 +45,22 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Name --}}
                             <div class="">
-                                <label for="name" class="kt-label required mb-2">Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                <label for="name" class="kt-label mb-2">Name (English)</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $restaurant->name }}">
                             </div>
 
                             {{-- Name Arabic --}}
                             <div class="">
-                                <label for="name_ar" class="kt-label required mb-2">Name (Arabic)</label>
+                                <label for="name_ar" class="kt-label mb-2">Name (Arabic)</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ $restaurant->name_ar }}">
                             </div>
 
                             {{-- Type --}}
                             <div class="">
-                                <label for="type" class="kt-label required mb-2">Type</label>
-                                <select name="type_id" id="type_id" class="kt-select h-[45px]" special-search required
+                                <label for="type" class="kt-label mb-2">Type</label>
+                                <select name="type_id" id="type_id" class="kt-select h-[45px]" special-search
                                     value={{ $restaurant->type_id }}>
                                     <option value="">--</option>
                                     @foreach ($types as $id => $name)
@@ -80,7 +80,7 @@
 
                             {{-- Rating --}}
                             <div class="">
-                                <label for="rating" class="kt-label required mb-2">Rating</label>
+                                <label for="rating" class="kt-label mb-2">Rating</label>
                                 <select name="rating" id="rating" class="kt-select h-[45px]" special-search
                                     value="{{ $restaurant->rating }}">
                                     <option value="">--</option>
@@ -95,14 +95,14 @@
 
                             {{-- Specialty --}}
                             <div class="">
-                                <label for="specialty" class="kt-label required mb-2">Specialty</label>
+                                <label for="specialty" class="kt-label mb-2">Specialty</label>
                                 <input type="text" name="specialty" id="specialty" class="kt-input h-[45px]"
                                     value="{{ $restaurant->specialty }}">
                             </div>
 
                             {{-- Company Name (Arabic) --}}
                             <div class="">
-                                <label for="company_name_ar" class="kt-label required mb-2">Company Name
+                                <label for="company_name_ar" class="kt-label mb-2">Company Name
                                     (Arabic)</label>
                                 <input type="text" name="company_name_ar" id="company_name_ar" class="kt-input h-[45px]"
                                     value="{{ $restaurant->company_name_ar }}">
@@ -110,70 +110,70 @@
 
                             {{-- phone_01 --}}
                             <div class="">
-                                <label for="phone_01" class="kt-label required mb-2">Phone 01</label>
+                                <label for="phone_01" class="kt-label mb-2">Phone 01</label>
                                 <input type="text" name="phone_01" id="phone_01" class="kt-input h-[45px]"
                                     value="{{ $restaurant->phone_01 }}">
                             </div>
 
                             {{-- phone_02 --}}
                             <div class="">
-                                <label for="phone_02" class="kt-label required mb-2">Phone 02</label>
+                                <label for="phone_02" class="kt-label mb-2">Phone 02</label>
                                 <input type="text" name="phone_02" id="phone_02" class="kt-input h-[45px]"
                                     value="{{ $restaurant->phone_02 }}">
                             </div>
 
                             {{-- fax --}}
                             <div class="">
-                                <label for="fax" class="kt-label required mb-2">Fax</label>
+                                <label for="fax" class="kt-label mb-2">Fax</label>
                                 <input type="text" name="fax" id="fax" class="kt-input h-[45px]"
                                     value="{{ $restaurant->fax }}">
                             </div>
 
                             {{-- email_01 --}}
                             <div class="">
-                                <label for="email_01" class="kt-label required mb-2">Email 1</label>
+                                <label for="email_01" class="kt-label mb-2">Email 1</label>
                                 <input type="text" name="email_01" id="email_01" class="kt-input h-[45px]"
                                     value="{{ $restaurant->email_01 }}">
                             </div>
 
                             {{-- email_02 --}}
                             <div class="">
-                                <label for="email_02" class="kt-label required mb-2">Email 2</label>
+                                <label for="email_02" class="kt-label mb-2">Email 2</label>
                                 <input type="text" name="email_02" id="email_02" class="kt-input h-[45px]"
                                     value="{{ $restaurant->email_02 }}">
                             </div>
 
                             {{-- Contact Person --}}
                             <div class="">
-                                <label for="contact_person" class="kt-label required mb-2">Contact Person</label>
+                                <label for="contact_person" class="kt-label mb-2">Contact Person</label>
                                 <input type="text" name="contact_person" id="contact_person"
                                     class="kt-input h-[45px]" value="{{ $restaurant->contact_person }}">
                             </div>
 
                             {{-- Box --}}
                             <div class="">
-                                <label for="box" class="kt-label required mb-2">Box</label>
+                                <label for="box" class="kt-label mb-2">Box</label>
                                 <input type="text" name="box" id="box" class="kt-input h-[45px]"
                                     value="{{ $restaurant->box }}">
                             </div>
 
                             {{-- Postal Code --}}
                             <div class="">
-                                <label for="postal_code" class="kt-label required mb-2">Postal Code</label>
+                                <label for="postal_code" class="kt-label mb-2">Postal Code</label>
                                 <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]"
                                     value="{{ $restaurant->postal_code }}">
                             </div>
 
                             {{-- Mobile --}}
                             <div class="">
-                                <label for="mobile" class="kt-label required mb-2">Mobile</label>
+                                <label for="mobile" class="kt-label mb-2">Mobile</label>
                                 <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
                                     value="{{ $restaurant->mobile }}">
                             </div>
 
                             {{-- Website --}}
                             <div class="">
-                                <label for="website" class="kt-label required mb-2">Website</label>
+                                <label for="website" class="kt-label mb-2">Website</label>
                                 <input type="text" name="website" id="website" class="kt-input h-[45px]"
                                     value="{{ $restaurant->website }}">
                             </div>
@@ -251,16 +251,8 @@
                             </div>
                         </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4 pt-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.update_type', ['type' => __('main.restaurant')]) }}
-                            </button>
-                            <a href="{{ route('restaurants.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
-                        </div>
+                        <!-- Update Submit Buttons -->
+                        @include('components.elements.update-submit', ['models' => 'restaurants'])
                     </form>
                 </div>
             </div>

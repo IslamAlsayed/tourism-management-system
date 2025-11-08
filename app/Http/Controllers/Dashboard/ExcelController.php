@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Jobs\ExportDataJob;
 use App\Jobs\ImportDataJob;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Events\ImportExportCompleted;
 use Illuminate\Support\Facades\Storage;
 
 class ExcelController extends Controller
 {
     public function import($models)
     {
-        $modelName = Str::studly(Str::singular($models));
-        $models = Str::plural(strtolower($models));
-        $modelClass = "App\\Models\\{$modelName}";
+        $modelName = studlySingular($models);
+        $modelClass = "App\\Models\\$modelName";
         if (!class_exists($modelClass)) {
             return back()->withError("Invalid model: {$models}");
         }
@@ -26,8 +26,8 @@ class ExcelController extends Controller
 
     public function importData(Request $request, $models)
     {
-        $request->validate(['file' => 'required|file|mimes:csv,xlsx,xls']);
-        $modelName = Str::studly(Str::singular($models));
+        $request->validate(['file' => 'required|file|mimes:csv,xlsx']);
+        $modelName = studlySingular($models);
         $models = Str::plural(strtolower($models));
         $modelClass = "App\\Models\\{$modelName}";
         if (!class_exists($modelClass)) {
@@ -40,7 +40,10 @@ class ExcelController extends Controller
         $filePath = $file->storeAs($folder, $filename, 'public');
         $absolutePath = Storage::disk('public')->path($filePath);
         ImportDataJob::dispatch($modelClass, $absolutePath);
-        return back()->with('success', "Import job for {$models} has been queued successfully.");
+
+        $modelNameAr = __('main.' . $models);
+        event(new ImportExportCompleted(__('main.import_queued', ['model' => $modelNameAr])));
+        return back()->with('success', __('main.import_queued', ['model' => $modelNameAr]));
     }
 
     public function exportData($models, $type = null)
@@ -51,7 +54,7 @@ class ExcelController extends Controller
         if ($type) {
             $models = $type;
         }
-        $modelName = Str::studly(Str::singular($models));
+        $modelName = studlySingular($models);
         $modelClass = "App\\Models\\{$modelName}";
         $filename = generateUniqueFilename($models) . '.' . config('app.excel_export_format', 'xlsx');
         ExportDataJob::dispatchSync($modelClass, $filename);

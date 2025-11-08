@@ -69,7 +69,7 @@
                         @endforeach
 
                         @if ($hasUnmetRequirements)
-                            <div class="kt-alert text-block flex items-center mb-4" style="background: #ff7c7f">
+                            <div class="kt-alert text-white flex items-center mb-4" style="background: #ff6166">
                                 <i class="fas fa-exclamation-circle"></i>
                                 {{ __('main.you_must_add') }}
 
@@ -101,10 +101,10 @@
                         <div class="mb-4">
                             <label for="file" class="inline-block text-gray-700 text-sm font-bold mb-2">
                                 {{ __('main.import_file') }}
-                                <strong>only (.csv,.xlsx,.xls)</strong>
+                                <strong>only .csv | .xlsx</strong>
                             </label>
 
-                            <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls"
+                            <input type="file" name="file" id="file" accept=".csv,.xlsx"
                                 class="border rounded p-2 block w-full" onchange="handleFileChange()" />
 
                             @error('file')

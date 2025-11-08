@@ -7,10 +7,11 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
+use App\Traits\WithSorting;
 
 class Hotels extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting;
     public $search = '';
     public $totalCount = '';
 
@@ -44,21 +45,9 @@ class Hotels extends Component
     public function render()
     {
         $this->totalCount = Hotel::count();
-        $data = $this->scopeSearch(Hotel::class);
-
-        // $data = Hotel::query()
-        //     ->when($this->search, function ($query) {
-        //         $search = strtolower($this->search);
-        //         $query->where(function ($q) use ($search) {
-        //             foreach ($this->searchColumns as $column) {
-        //                 $q->orWhere($column, 'like', '%' . $search . '%');
-        //             }
-        //         });
-        //     })->paginate(getPaginate());
-
-        return view('livewire.accommodations.hotels', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
-        ]);
+        $query = Hotel::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        return view('livewire.accommodations.hotels', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount]);
     }
 }

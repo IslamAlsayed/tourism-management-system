@@ -24,6 +24,17 @@
                 </button>
             </div>
 
+            {{-- Reset Sort Button --}}
+            @if (isset($sortField) && !empty($sortField))
+                <div class="flex items-center">
+                    <button type="button" wire:click="resetSort" title="{{ __('main.reset_sort') }}" toggle-button
+                        class="kt-btn kt-btn-outline bg-white px-3 h-[45px] hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
+                        <span class="text-sm">{{ __('main.reset_sort') }}</span>
+                    </button>
+                </div>
+            @endif
+
             {{ $slot }}
 
             {{-- Search input --}}
@@ -32,7 +43,8 @@
                     <div class="flex items-center search-container">
                         <label class="kt-input h-[45px]">
                             <input wire:model.live.debounce.500ms="search" class="py-2 rounded-lg" id="search"
-                                placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..." />
+                                placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..."
+                                autocomplete="off" />
                         </label>
 
                         @if (isset($searchValue) && $searchValue)

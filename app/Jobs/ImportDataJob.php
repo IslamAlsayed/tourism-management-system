@@ -44,8 +44,28 @@ class ImportDataJob implements ShouldQueue
         $counter = 0;
 
         foreach ($rows as $row) {
-            // خُد القيم فقط اللي الموديل بيسمح بيها
+            // تنظيف البيانات: إزالة المسافات الزائدة وتحويل القيم الفارغة
+            $row = array_map(function ($value) {
+                if (is_string($value)) {
+                    $value = trim($value);
+                    // تحويل القيم الفارغة أو "null" إلى null حقيقي
+                    if ($value === '' || strtolower($value) === 'null') {
+                        return null;
+                    }
+                }
+                return $value;
+            }, $row);
+
+            // خُد القيم فقط اللي الموديل بيسمح بيها (تجاهل الأعمدة الزائدة)
             $filtered = array_intersect_key($row, array_flip($fillable));
+
+            // إضافة الأعمدة الناقصة بقيمة null
+            foreach ($fillable as $column) {
+                if (!array_key_exists($column, $filtered)) {
+                    $filtered[$column] = null;
+                }
+            }
+
             $buffer[] = $filtered;
 
             if (count($buffer) >= $this->chunkSize) {
@@ -61,6 +81,22 @@ class ImportDataJob implements ShouldQueue
             $counter += count($buffer);
         }
 
-        event(new ImportExportCompleted("Import completed for {$this->modelClass}. Total records imported: {$counter}"));
+        // استخراج اسم الموديل بشكل أنظف
+        $modelName = class_basename($this->modelClass);
+        $modelNamePlural = \Illuminate\Support\Str::plural(strtolower($modelName));
+        $modelNameAr = __('main.' . $modelNamePlural);
+
+        // إرسال رسالة نجاح مفصلة
+        $message = __('main.import_completed_successfully', [
+            'model' => $modelNameAr,
+            'count' => number_format($counter),
+        ]);
+
+        // في حالة عدم وجود ترجمة، استخدم رسالة افتراضية
+        if (str_contains($message, 'main.import_completed_successfully')) {
+            $message = "تم استيراد " . number_format($counter) . " سجل من {$modelNameAr} بنجاح!";
+        }
+
+        event(new ImportExportCompleted($message));
     }
 }

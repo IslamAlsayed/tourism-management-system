@@ -5,13 +5,14 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Currency;
 use Livewire\WithPagination;
+use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class Currencies extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,9 +36,9 @@ class Currencies extends Component
 
     public function render()
     {
-        return view('livewire.currencies', [
-            'data' => Currency::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
-            'totalCount' => Currency::count(),
-        ]);
+        $query = Currency::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        return view('livewire.currencies', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: Currency::count()]);
     }
 }

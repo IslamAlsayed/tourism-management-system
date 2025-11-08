@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.system_languages'),
         'entityName' => __('main.language'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])

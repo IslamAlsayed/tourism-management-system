@@ -100,7 +100,7 @@ window.specialSearch = function (selectElement) {
     // EVENT HANDLERS
     // ========================================
     searchInput.addEventListener("click", (e) => {
-        closeAllDropdowns();
+        window.closeAllDropdowns();
         searchInput.removeAttribute("readonly");
 
         const currentFilter = searchInput.value?.trim() || "";

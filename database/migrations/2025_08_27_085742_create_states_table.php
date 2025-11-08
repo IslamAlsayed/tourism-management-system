@@ -27,6 +27,8 @@ return new class extends Migration {
             $table->decimal('longitude', 10, 6)->nullable();
             $table->string('timezone')->nullable();
             $table->timestamps();
+
+            $table->index(['name', 'name_ar', 'country_id']);
         });
     }
 

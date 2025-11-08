@@ -33,7 +33,6 @@
             'label' => __('main.nationalities'),
         ],
     ]">
-
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}
@@ -66,8 +65,6 @@
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
                 <thead style="background-color: #ffea00;">
                     <tr>
-                        <th class="border px-2">middle_name</th>
-                        <th class="border px-2">gf_name</th>
                         <th class="border px-2">gender</th>
                         <th class="border px-2">nationality</th>
                         <th class="border px-2">birth_date</th>
@@ -75,8 +72,6 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">Michael</td>
-                        <td class="border px-2">James</td>
                         <td class="border px-2">male</td>
                         <td class="border px-2">American</td>
                         <td class="border px-2">1990-01-15</td>
@@ -258,4 +253,3 @@
 
     </x-import-form>
 @endsection
-

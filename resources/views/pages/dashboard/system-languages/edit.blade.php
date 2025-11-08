@@ -45,9 +45,9 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Language Code -->
                             <div class="">
-                                <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>
+                                <label for="code" class="kt-label mb-2">{{ __('main.code') }}</label>
                                 <input type="text" name="code" id="code" class="kt-input h-[45px]" min="2"
-                                    required value="{{ $language->code }}">
+                                    value="{{ $language->code }}">
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -55,8 +55,8 @@
 
                             <!-- Language Name (Arabic) -->
                             <div class="">
-                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ $language->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -65,8 +65,8 @@
 
                             <!-- Language Name -->
                             <div class="">
-                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $language->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -74,16 +74,8 @@
                             </div>
                         </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.update_type', ['type' => __('main.language')]) }}
-                            </button>
-                            <a href="{{ route('languages.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
-                        </div>
+                        <!-- Update Submit Buttons -->
+                        @include('components.elements.update-submit', ['models' => 'languages'])
                     </form>
                 </div>
             </div>

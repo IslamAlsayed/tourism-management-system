@@ -103,4 +103,45 @@ class User extends Authenticatable
             $this->attributes['password'] = Hash::make($value);
         }
     }
+
+    /**
+     * Get the table column settings for this user
+     */
+    public function tableColumns()
+    {
+        return $this->hasMany(TableColumn::class);
+    }
+
+    /**
+     * Get columns for a specific model class
+     */
+    public function getTableColumnsFor(string $modelClass)
+    {
+        $userSettings = $this->tableColumns()
+            ->where('model_class', $modelClass)
+            ->first();
+
+        return $userSettings ? $userSettings->columns : null;
+    }
+
+    /**
+     * Save table columns for a specific model class
+     */
+    public function saveTableColumnsFor(string $modelClass, array $columns)
+    {
+        $this->tableColumns()->updateOrCreate(
+            ['model_class' => $modelClass],
+            ['columns' => $columns]
+        );
+    }
+
+    /**
+     * Delete table columns settings for a specific model class
+     */
+    public function deleteTableColumnsFor(string $modelClass)
+    {
+        $this->tableColumns()
+            ->where('model_class', $modelClass)
+            ->delete();
+    }
 }

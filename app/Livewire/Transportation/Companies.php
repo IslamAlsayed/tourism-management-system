@@ -7,11 +7,12 @@ use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\WithSorting;
 use App\Models\TransportationCompany;
 
 class Companies extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely, WithSorting;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,9 +36,8 @@ class Companies extends Component
 
     public function render()
     {
-        return view('livewire.transportation.companies', [
-            'data' => TransportationCompany::query()->with($this->relations)->search($this->search)->paginate(getPaginate()),
-            'totalCount' => TransportationCompany::count(),
-        ]);
+        $query = TransportationCompany::query()->with($this->relations)->search($this->search);
+        $this->applySorting($query);
+        return view('livewire.transportation.companies', ['data' => $query->paginate(getPaginate()), 'totalCount' => TransportationCompany::count()]);
     }
 }

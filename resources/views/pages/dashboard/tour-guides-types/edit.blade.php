@@ -37,8 +37,8 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Type --}}
                             <div class="">
-                                <label for="type" class="kt-label required mb-2">{{ __('main.type') }}</label>
-                                <input type="text" name="type" id="type" class="kt-input h-[45px]" required
+                                <label for="type" class="kt-label mb-2">{{ __('main.type') }}</label>
+                                <input type="text" name="type" id="type" class="kt-input h-[45px]"
                                     value="{{ $tourGuideType->type }}">
                                 @error('type')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -47,9 +47,9 @@
 
                             {{-- Price --}}
                             <div class="">
-                                <label for="price" class="kt-label required mb-2">{{ __('main.price') }}</label>
+                                <label for="price" class="kt-label mb-2">{{ __('main.price') }}</label>
                                 <input type="text" name="price" min="1" id="price" class="kt-input h-[45px]"
-                                    required value="{{ $tourGuideType->price }}">
+                                    value="{{ $tourGuideType->price }}">
                                 @error('price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -57,7 +57,7 @@
 
                             {{-- Currency --}}
                             <div class="">
-                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
+                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
                                     <div class="text-nowrap">
                                         {{ __('main.currency') }}
                                         <strong class="dataLength text-primary">({{ $currencies->count() ?: 0 }})</strong>
@@ -88,16 +88,8 @@
                             ])
                         </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.update_type', ['type' => __('main.tour-guide-type')]) }}
-                            </button>
-                            <a href="{{ route('tour-guides-types.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
-                        </div>
+                        <!-- Update Submit Buttons -->
+                        @include('components.elements.update-submit', ['models' => 'tour-guide-types'])
                     </form>
                 </div>
             </div>

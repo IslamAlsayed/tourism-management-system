@@ -32,7 +32,7 @@
                     <form method="POST" action="{{ route('currencies.store') }}" class="space-y-6 p-4">
                         @csrf
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Currency Name -->
                             <div class="mb-3">
                                 <label for="name"
@@ -81,30 +81,17 @@
 
                                     <div class="flex items-center gap-3">
                                         <input type="checkbox" name="auto_update_rate" id="auto_update_rate"
-                                            class="kt-checkbox" value="1"
+                                            class="kt-checkbox" value="1" disabled
                                             {{ old('auto_update_rate', '1') ? 'checked' : '' }}>
                                         <label for="auto_update_rate"
                                             class="kt-label mb-0">{{ __('main.auto_update_rate') }}</label>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Submit Buttons -->
-                            <div class="flex items-center gap-4 pt-4">
-                                <button type="submit" class="kt-btn kt-btn-primary">
-                                    <i class="ki-filled ki-check text-sm me-2"></i>
-                                    {{ __('main.save_currency') }}
-                                </button>
-                                <button type="submit" name="save_and_add" value="1"
-                                    class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                                    <i class="ki-filled ki-plus text-sm me-2"></i>
-                                    {{ __('main.save_and_add_another') }}
-                                </button>
-                                <a href="{{ route('currencies.index') }}" class="kt-btn kt-btn-outline">
-                                    {{ __('main.cancel') }}
-                                </a>
-                            </div>
                         </div>
+
+                        <!-- Save Submit Buttons -->
+                        @include('components.elements.save-submit', ['models' => 'currencies'])
                     </form>
                 </div>
             </div>
