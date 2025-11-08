@@ -6,12 +6,14 @@ use App\Models\City;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
+use App\Traits\WithSorting;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class Cities extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
+
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,13 +37,13 @@ class Cities extends Component
 
     public function render()
     {
-        $data = City::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        $query = City::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         foreach ($data as $city) {
             $city['states'] = $city->states();
         }
-        return view('livewire.cities', [
-            'data' => $data,
-            'totalCount' => City::count(),
-        ]);
+        return view('livewire.cities', ['data' => $data, 'totalCount' => $this->totalCount ?: City::count()]);
     }
 }

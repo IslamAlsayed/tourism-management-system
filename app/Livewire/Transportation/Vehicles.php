@@ -7,12 +7,13 @@ use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\WithSorting;
 use App\Models\TransportationCarRoute;
 use App\Models\TransportationCarRoutePrice;
 
 class Vehicles extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely, WithSorting;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -42,17 +43,12 @@ class Vehicles extends Component
                 array_unshift($this->allColumns, $col);
             }
         }
-
         $this->totalCount = TransportationCarRoutePrice::count();
-        $data = TransportationCarRoutePrice::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
-
+        $query = TransportationCarRoutePrice::query()->with($this->relations)->search($this->search);
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         [$this->allColumns, $this->relations, $this->columns] = $this->removeValueFromArrays('car_route', ...[$this->allColumns, $this->relations, $this->columns]);
-
-
-        return view('livewire.transportation.vehicles', [
-            'data' => $data,
-            'totalCount' => $this->totalCount,
-        ]);
+        return view('livewire.transportation.vehicles', ['data' => $data, 'totalCount' => $this->totalCount]);
     }
 
     private function removeValueFromArrays($value, array ...$arrays)

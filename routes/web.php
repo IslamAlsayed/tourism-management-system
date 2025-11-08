@@ -1,8 +1,10 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SystemLanguageController;
+use App\Http\Controllers\Admin\SidebarManagerController;
 use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -17,7 +19,6 @@ use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\SubregionController;
 use App\Http\Controllers\Dashboard\TourGuideController;
-use App\Http\Controllers\Admin\SidebarManagerController;
 use App\Http\Controllers\Dashboard\RestaurantController;
 use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\AccommodationController;
@@ -36,9 +37,9 @@ Route::get('/dashboard/countries/metronic-table', function () {
 })->middleware('auth');
 
 /*
-|--------------------|
-|---- Web Routes ----|
-|--------------------|
+|----------------------|
+|----- Web Routes -----|
+|----------------------|
 */
 
 Route::get('/', fn() => view('welcome'));

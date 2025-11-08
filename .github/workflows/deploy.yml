@@ -2,9 +2,7 @@ name: 🚀 Deploy to Production
 
 on:
   push:
-    branches:
-      - production
-  workflow_dispatch:
+    branches: ["production"]
 
 jobs:
   deploy:
@@ -14,36 +12,56 @@ jobs:
       - name: ✅ Checkout Code
         uses: actions/checkout@v3
 
-      - name: 🔐 SSH to Server & Deploy
-        uses: appleboy/ssh-action@v0.1.7
+      - name: 🔐 Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
         with:
-          host: ${{ secrets.CPANEL_HOST }}
-          username: ${{ secrets.CPANEL_USER }}
-          key: ${{ secrets.CPANEL_SSH_KEY }}
-          script: |
-            echo "📌 Switching to repositories folder..."
-            cd /home/mixtop/repositories/tourist-site
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
-            echo "📥 Pulling latest changes..."
-            git pull origin production
+      - name: 🧩 Add server to known hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-            echo "📦 Installing composer dependencies..."
-            composer install --no-interaction --prefer-dist --optimize-autoloader
+      # Step 1: Clone or update repository in temporary folder
+      - name: 🔄 Clone or Pull Repository
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
+          TEMP_PATH=${{ secrets.SERVER_PATH }}/repositories/tourist-site;
+          if [ -d \$TEMP_PATH/.git ]; then
+              cd \$TEMP_PATH && git reset --hard && git pull origin production;
+          else
+              git clone -b production https://github.com/IslamAlsayed/tourist-site.git \$TEMP_PATH;
+          fi
+          "
 
-            echo "📦 Installing npm dependencies..."
-            npm install
+      # Step 2: Copy files to project_root excluding .git and other sensitive files
+      - name: 📂 Sync Project Files
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "
+          SRC=${{ secrets.SERVER_PATH }}/repositories/tourist-site
+          DST=${{ secrets.SERVER_PATH }}/project_root
 
-            echo "⚙️ Building assets..."
-            npm run build
+          mkdir -p \$DST
 
-            echo "📁 Copying new build to live project folder..."
-            rsync -av --delete /home/mixtop/repositories/tourist-site/ /home/mixtop/project_root/ --exclude=node_modules --exclude=.git --exclude=.github
+          cd \$SRC
+          find . -mindepth 1 -not -name '.git' -not -name '.env' -exec cp -r --parents '{}' \$DST \;
+          "
 
-            echo "🧹 Clearing Laravel caches..."
-            cd /home/mixtop/project_root
-            php artisan optimize:clear
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
+      # Step 3: Run migrations
+      - name: 🗄️ Migrate Database
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan migrate --force"
 
-            echo "✅ Deployment Completed Successfully!"
+      # Step 4: Run seeders
+      - name: 🗄️ Seeders Database
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan db:seed"
+
+      # Step 5: Clear caches
+      - name: 🧹 Clear Cache
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan optimize:clear"
+
+      # Step 6: Optimize
+      - name: ⚡ Optimize
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan optimize"

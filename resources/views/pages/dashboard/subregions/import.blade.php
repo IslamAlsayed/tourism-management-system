@@ -1,7 +1,13 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models">
+    <x-import-form :title="$title" :description="$description" :models="$models" :requirements="[
+        [
+            'condition' => \App\Models\Region::count() > 0,
+            'route' => route('regions.create'),
+            'label' => __('main.regions_'),
+        ],
+    ]">
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}
@@ -20,8 +26,8 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">Middle east</td>
-                        <td class="border px-2">الشرق الاوسط</td>
+                        <td class="border px-2">region</td>
+                        <td class="border px-2">منطقة</td>
                         <td class="border px-2">1</td>
                     </tr>
                 </tbody>

@@ -127,3 +127,21 @@ window.showToastConfirm = showToastConfirm;
 document.addEventListener("livewire:init", () => {
     Livewire.on("show-toast", (d) => window.showToast(d[0]));
 });
+
+document.addEventListener("livewire:init", () => {
+    Livewire.on("show-toast-confirm", (d) => window.showToastConfirm(d[0]));
+});
+
+// console.log("userId: ", window.USERID);
+
+// // Listen for Echo broadcast events
+// if (typeof Echo !== "undefined") {
+//     console.log("Echo");
+//     Echo.private(`import-channel-${window.USERID}`).listen(
+//         "show-toast",
+//         (e) => {
+//             console.log("broadcast", e);
+//             window.showToast(e);
+//         },
+//     );
+// }

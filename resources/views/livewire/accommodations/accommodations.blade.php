@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.accommodations'),
         'entityName' => __('main.accommodation'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])

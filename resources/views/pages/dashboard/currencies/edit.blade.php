@@ -33,11 +33,11 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Currency Name -->
                             <div class="">
-                                <label for="name" class="kt-label required mb-2">{{ __('main.currency_name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                <label for="name" class="kt-label mb-2">{{ __('main.currency_name') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $currency->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -46,10 +46,9 @@
 
                             <!-- Currency Code -->
                             <div class="">
-                                <label for="code"
-                                    class="kt-label required mb-2">{{ __('main.currency_code_iso') }}</label>
+                                <label for="code" class="kt-label mb-2">{{ __('main.currency_code_iso') }}</label>
                                 <input type="text" name="code" id="code" class="kt-input h-[45px]" maxlength="3"
-                                    required value="{{ $currency->code }}" />
+                                    value="{{ $currency->code }}" />
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -57,10 +56,9 @@
 
                             <!-- Currency Symbol -->
                             <div class="">
-                                <label for="symbol"
-                                    class="kt-label required mb-2">{{ __('main.currency_symbol') }}</label>
+                                <label for="symbol" class="kt-label mb-2">{{ __('main.currency_symbol') }}</label>
                                 <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]" max="5"
-                                    required value="{{ $currency->symbol }}">
+                                    value="{{ $currency->symbol }}">
                                 @error('symbol')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -81,27 +79,14 @@
 
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="auto_update_rate" id="auto_update_rate" class="kt-checkbox"
-                                        value="1" {{ $currency->auto_update_rate == 1 ? 'checked' : '' }}>
+                                        value="1" {{ $currency->auto_update_rate == 1 ? 'checked' : '' }} disabled>
                                     <label for="auto_update_rate"
                                         class="kt-label mb-0">{{ __('main.auto_update_rate') }}</label>
                                 </div>
                             </div>
 
-                            <!-- Submit Buttons -->
-                            <div class="flex items-center gap-4 pt-4">
-                                <button type="submit" class="kt-btn kt-btn-primary">
-                                    <i class="ki-filled ki-check text-sm me-2"></i>
-                                    {{ __('main.save_currency') }}
-                                </button>
-                                <button type="submit" name="save_and_edit" value="1"
-                                    class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                                    <i class="ki-filled ki-plus text-sm me-2"></i>
-                                    {{ __('main.save_and_edit_another') }}
-                                </button>
-                                <a href="{{ route('currencies.index') }}" class="kt-btn kt-btn-outline">
-                                    {{ __('main.cancel') }}
-                                </a>
-                            </div>
+                            <!-- Update Submit Buttons -->
+                            @include('components.elements.update-submit', ['models' => 'currencies'])
                         </div>
                     </form>
                 </div>

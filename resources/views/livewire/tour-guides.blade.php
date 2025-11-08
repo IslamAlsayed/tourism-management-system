@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.tour-guides'),
         'entityName' => __('main.tour-guide'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])

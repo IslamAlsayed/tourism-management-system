@@ -6,12 +6,13 @@ use App\Models\Country;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
+use App\Traits\WithSorting;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class Countries extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,14 +36,14 @@ class Countries extends Component
 
     public function render()
     {
-        $data = Country::query()->with($this->relations)->search($this->search)->paginate(getPaginate());
+        $query = Country::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         foreach ($data as $country) {
-            $country['states'] = $country->states();
-            $country['cities'] = $country->cities();
+            $country->states = $country->states();
+            $country->cities = $country->cities();
         }
-        return view('livewire.countries', [
-            'data' => $data,
-            'totalCount' => Country::count(),
-        ]);
+        return view('livewire.countries', ['data' => $data, 'totalCount' => $this->totalCount ?: Country::count()]);
     }
 }

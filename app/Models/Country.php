@@ -25,7 +25,6 @@ class Country extends Model
         'latitude',
         'longitude',
         'population',
-        'continent',
         'area',
         'is_active',
         'is_independent',

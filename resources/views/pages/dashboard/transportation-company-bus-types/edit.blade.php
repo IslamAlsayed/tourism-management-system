@@ -69,8 +69,8 @@
 
                             <!-- Transportation company -->
                             <div class="">
-                                <label for="company_id" class="kt-label required mb-2">Transportation Company</label>
-                                <select name="company_id" id="company_id" class="kt-input h-[45px]" required>
+                                <label for="company_id" class="kt-label mb-2">Transportation Company</label>
+                                <select name="company_id" id="company_id" class="kt-input h-[45px]">
                                     <option value="">--</option>
                                     @foreach ($transportationCompanies as $company)
                                         <option value="{{ $company->id }}"
@@ -82,8 +82,8 @@
 
                             <!-- Transportation bus type -->
                             <div class="">
-                                <label for="bus_type_id" class="kt-label required mb-2">Transportation Bus Type</label>
-                                <select name="bus_type_id" id="bus_type_id" class="kt-input h-[45px]" required>
+                                <label for="bus_type_id" class="kt-label mb-2">Transportation Bus Type</label>
+                                <select name="bus_type_id" id="bus_type_id" class="kt-input h-[45px]">
                                     <option value="">--</option>
                                     @foreach ($transportationBusTypes as $busType)
                                         <option value="{{ $busType->id }}"
@@ -94,16 +94,10 @@
                             </div>
                         </div>
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                {{ __('main.update_type', ['type' => __('main.transportation_company_bus_type')]) }}
-                            </button>
-                            <a href="{{ route('transportation-company-bus-types.index') }}" class="kt-btn kt-btn-outline">
-                                {{ __('main.cancel') }}
-                            </a>
-                        </div>
+                        <!-- Update Submit Buttons -->
+                        @include('components.elements.update-submit', [
+                            'models' => 'transportation-company-bus-types',
+                        ])
                     </form>
                 </div>
             </div>

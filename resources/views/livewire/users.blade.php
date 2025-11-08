@@ -4,6 +4,7 @@
         'columns' => $columns,
         'title' => __('main.users'),
         'entityName' => __('main.user'),
+        'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
     ])

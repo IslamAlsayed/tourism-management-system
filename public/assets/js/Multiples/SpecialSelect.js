@@ -163,7 +163,7 @@ window.specialSelect = function (selectElement, options = {}) {
     });
 
     tagInput.addEventListener("click", (e) => {
-        closeAllDropdowns();
+        window.closeAllDropdowns();
         dropdown.classList.remove("hidden");
 
         if (dropdown.children.length === 0) {

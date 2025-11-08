@@ -39,6 +39,8 @@ return new class extends Migration {
             $table->boolean('is_developed')->nullable()->default(true);
             $table->boolean('is_landlocked')->nullable()->default(true);
             $table->timestamps();
+
+            $table->index(['name', 'name_ar', 'timezone']);
         });
     }
 
