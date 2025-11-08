@@ -54,7 +54,7 @@ jobs:
       # Step 4: Run seeders
       - name: 🗄️ Seeders Database
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan db:seed"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan db:seed --force"
 
       # Step 5: Clear caches
       - name: 🧹 Clear Cache
