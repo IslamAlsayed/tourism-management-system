@@ -102,6 +102,16 @@ class TouristSite extends Model
         'updated_by',
     ];
 
+    public function getRelationshipNames()
+    {
+        return ['region', 'subregion', 'country', 'state', 'city'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return ['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+    }
+
     protected $casts = [
         'operating_days' => 'array',
         'special_hours' => 'array',
