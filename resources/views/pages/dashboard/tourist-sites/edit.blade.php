@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
-@section('title', 'Edit Tourist Site')
+@section('title', __('main.edit_type', ['type' => __('main.tourist_site')]))
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    Edit Tourist Site
+                    {{ __('main.edit_type', ['type' => __('main.tourist_site')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    Update tourist site information
+                    {{ __('main.edit_type_description', ['type' => __('main.tourist_site')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="#" class="kt-btn kt-btn-outline">
-                    Back to Tourist Sites
+                <a href="{{ route('tourist-sites.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_types', ['types' => __('main.tourist_sites')]) }}
                 </a>
             </div>
         </div>
@@ -26,188 +26,201 @@
             <!-- Tourist Site Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">Basic Information</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.tourist_site')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form class="space-y-6 p-4">
-                        <!-- Site Photo -->
-                        <div class="text-center">
-                            <div class="relative inline-block">
-                                <div
-                                    class="w-24 h-24 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="site-preview" src="{{ asset('metronic/media/avatars/300-6.png') }}"
-                                        alt="Tourist Site Image" class="w-full h-full object-cover">
-                                </div>
-                                <label for="photo"
-                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark">
-                                    <i class="ki-filled ki-camera text-sm"></i>
-                                </label>
-                                <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
-                            </div>
-                            <div class="text-sm text-secondary-foreground">Upload tourist site photo</div>
-                        </div>
+                    <form method="POST" action="{{ route('tourist-sites.update', $touristSite->id) }}"
+                        enctype="multipart/form-data" class="space-y-6 p-4">
+                        @csrf
+                        @method('PUT')
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Site Name -->
-                            <div class="mb-4">
-                                <label for="name" class="kt-label required mb-2">Site Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input" required
-                                    value="Al-Ula Heritage Site">
+                        <!-- Country Photo -->
+                        @include('components.input-image', [
+                            'column' => 'tourist_site',
+                            'columnName' => 'photo',
+                            'photoUrl' => $touristSite->photo ? asset('storage/' . $touristSite->photo) : '',
+                        ])
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                            <!-- Site Name (Arabic) -->
+                            <div class="">
+                                <label for="name_ar"
+                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.tourist_site')]) }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->name_ar }}">
+                                @error('name_ar')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <!-- Site Name Arabic -->
-                            <div class="mb-4">
-                                <label for="name_ar" class="kt-label required mb-2">Site Name (Arabic)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input" required
-                                    value="موقع العلا التراثي">
+                            <!-- Site Name (English) -->
+                            <div class="">
+                                <label for="name"
+                                    class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.tourist_site')]) }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->name }}">
+                                @error('name')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Site Type -->
-                            <div class="mb-4">
-                                <label for="type" class="kt-label required mb-2">Site Type</label>
-                                <select name="type" id="type" class="kt-select" required>
+                            <div class="">
+                                <label for="site_type" class="kt-label mb-2 flex items-center justify-between">
+                                    {{ __('main.site_type') }}
+                                </label>
+                                <select name="site_type" id="site_type" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
-                                    <option value="Historical Site" selected>Historical Site</option>
-                                    <option value="Natural Wonder">Natural Wonder</option>
-                                    <option value="Museum">Museum</option>
-                                    <option value="Landmark">Landmark</option>
-                                    <option value="Shopping Center">Shopping Center</option>
-                                    <option value="Historic District">Historic District</option>
-                                    <option value="Religious Site">Religious Site</option>
-                                    <option value="Entertainment">Entertainment</option>
-                                    <option value="Park">Park</option>
-                                    <option value="Beach">Beach</option>
+                                    @foreach ($siteTypes as $key => $siteType)
+                                        <option value="{{ $key }}"
+                                            {{ $touristSite->site_type == $key ? 'selected' : '' }}>
+                                            {{ $siteType }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                @error('site_type')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <!-- Category -->
-                            <div class="mb-4">
-                                <label for="category" class="kt-label mb-2">Category</label>
-                                <select name="category" id="category" class="kt-select">
+                            <div class="">
+                                <label for="category" class="kt-label mb-2 flex items-center justify-between">
+                                    {{ __('main.category') }}
+                                </label>
+                                <select name="category" id="category" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
-                                    <option value="Cultural" selected>Cultural</option>
-                                    <option value="Adventure">Adventure</option>
-                                    <option value="Family">Family</option>
-                                    <option value="Educational">Educational</option>
-                                    <option value="Religious">Religious</option>
-                                    <option value="Nature">Nature</option>
-                                    <option value="Entertainment">Entertainment</option>
-                                    <option value="Shopping">Shopping</option>
+                                    @foreach ($categories as $key => $category)
+                                        <option value="{{ $key }}"
+                                            {{ $touristSite->category == $key ? 'selected' : '' }}>
+                                            {{ $category }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                @error('category')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            {{-- Regions [region, subregion, country, state, city] --}}
+                            @include('components.regions.edit', [
+                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                                'multiple' => false,
+                                'record' => $touristSite,
+                            ])
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Country -->
-                            <div class="mb-4">
-                                <label for="country" class="kt-label required mb-2">Country</label>
-                                <select name="country" id="country" class="kt-select" required>
-                                    <option value="">--</option>
-                                    <option value="Saudi Arabia" selected>Saudi Arabia</option>
-                                    <option value="UAE">United Arab Emirates</option>
-                                    <option value="Qatar">Qatar</option>
-                                    <option value="Kuwait">Kuwait</option>
-                                    <option value="Bahrain">Bahrain</option>
-                                    <option value="Oman">Oman</option>
-                                </select>
-                            </div>
-
-                            <!-- City -->
-                            <div class="mb-4">
-                                <label for="city" class="kt-label required mb-2">City</label>
-                                <input type="text" name="city" id="city" class="kt-input" required
-                                    value="Al-Ula">
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 gap-2">
                             <!-- Address -->
-                            <div class="mb-4">
-                                <label for="address" class="kt-label mb-2">Address</label>
-                                <input id="address" type="hidden" name="address"
-                                    value="Al-Ula Heritage Site, Al-Ula 43512, Saudi Arabia">
-                                <trix-editor input="address"></trix-editor>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'address',
+                                'value' => $touristSite->address,
+                            ])
 
-                            <!-- Description -->
-                            <div class="mb-4">
-                                <label for="description" class="kt-label mb-2">Description</label>
-                                <input id="description" type="hidden" name="description"
-                                    value="Ancient Nabatean city with rock-cut tombs and archaeological wonders dating back thousands of years.">
-                                <trix-editor input="description"></trix-editor>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'description',
+                                'value' => $touristSite->description,
+                            ])
                         </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Phone -->
-                            <div class="mb-4">
-                                <label for="phone" class="kt-label mb-2">Phone</label>
-                                <input type="tel" name="phone" id="phone" class="kt-input"
-                                    value="+966 14 884 4444">
+                            <div class="">
+                                <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
+                                <input type="text" name="phone" id="phone" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->phone }}">
+                                @error('phone')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <!-- Email -->
-                            <div class="mb-4">
-                                <label for="email" class="kt-label mb-2">Email</label>
-                                <input type="email" name="email" id="email" class="kt-input"
-                                    value="info@experiencealula.com">
+                            <div class="">
+                                <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
+                                <input type="email" name="email" id="email" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->email }}">
+                                @error('email')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <!-- Website -->
-                            <div class="mb-4">
-                                <label for="website" class="kt-label mb-2">Website</label>
-                                <input type="url" name="website" id="website" class="kt-input"
-                                    value="www.experiencealula.com">
+                            <div class="">
+                                <label for="website" class="kt-label mb-2">{{ __('main.website') }}</label>
+                                <input type="url" name="website" id="website" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->website }}">
+                                @error('website')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Entrance Fee -->
-                            <div class="mb-4">
-                                <label for="entrance_fee" class="kt-label mb-2">Entrance Fee</label>
-                                <input type="text" name="entrance_fee" id="entrance_fee" class="kt-input"
-                                    value="150 SAR">
+                            <div class="">
+                                <label for="entrance_fee" class="kt-label mb-2">{{ __('main.entrance_fee') }}</label>
+                                <input type="text" name="entrance_fee" id="entrance_fee" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->entrance_fee }}">
+                                @error('entrance_fee')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <!-- Opening Hours -->
-                            <div class="mb-4">
-                                <label for="opening_hours" class="kt-label mb-2">Opening Hours</label>
-                                <input type="text" name="opening_hours" id="opening_hours" class="kt-input"
-                                    value="8:00 AM - 6:00 PM">
+                            <div class="">
+                                <label for="opening_hours" class="kt-label mb-2">{{ __('main.opening_hours') }}</label>
+                                <input type="text" name="opening_hours" id="opening_hours" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->opening_hours }}">
+                                @error('opening_hours')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Best Time to Visit -->
-                            <div class="mb-4">
-                                <label for="best_time" class="kt-label mb-2">Best Time to Visit</label>
-                                <input type="text" name="best_time" id="best_time" class="kt-input"
-                                    value="Early morning or late afternoon">
+                            <div class="">
+                                <label for="best_time" class="kt-label mb-2">{{ __('main.best_time') }}</label>
+                                <input type="time" name="best_time" id="best_time" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->best_time }}">
+                                @error('best_time')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <!-- Duration -->
-                            <div class="mb-4">
-                                <label for="duration" class="kt-label mb-2">Recommended Duration</label>
-                                <input type="text" name="duration" id="duration" class="kt-input"
-                                    value="3-4 hours">
+                            <div class="">
+                                <label for="duration" class="kt-label mb-2">{{ __('main.duration') }}</label>
+                                <input type="text" name="duration" id="duration" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->duration }}">
+                                @error('duration')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
-                        </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
+                            <!-- Recommended Duration -->
+                            <div class="">
+                                <label for="recommended_duration"
+                                    class="kt-label mb-2">{{ __('main.recommended_duration') }}</label>
+                                <input type="text" name="recommended_duration" id="recommended_duration"
+                                    class="kt-input h-[45px]" value="{{ $touristSite->recommended_duration }}">
+                                @error('recommended_duration')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Coordinates -->
-                            <div class="mb-4">
-                                <label for="coordinates" class="kt-label mb-2">GPS Coordinates</label>
-                                <input type="text" name="coordinates" id="coordinates" class="kt-input"
-                                    value="26.6089° N, 37.9128° E">
+                            <div class="">
+                                <label for="coordinates" class="kt-label mb-2">{{ __('main.coordinates') }}</label>
+                                <input type="text" name="coordinates" id="coordinates" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->coordinates }}">
+                                @error('coordinates')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <!-- Status -->
-                            <div class="mb-4">
-                                <label for="status" class="kt-label required mb-2">Status</label>
-                                <select name="status" id="status" class="kt-select" required>
-                                    <option value="active" selected>Active</option>
+                            <div class="">
+                                <label for="status" class="mb-2 kt-label">{{ __('main.status') }}</label>
+                                <select name="status" id="status" class="kt-select h-[45px]" special-search>
+                                    <option value="">--</option>
+                                    <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                     <option value="under_renovation">Under Renovation</option>
                                     <option value="seasonal">Seasonal</option>
@@ -217,116 +230,195 @@
 
                         <!-- Facilities -->
                         <div class="mb-4">
-                            <label class="kt-label mb-2">Facilities</label>
+                            <h4 class="mb-2 font-semibold">{{ __('main.facilities') }}</h4>
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="parking" class="kt-checkbox"
-                                        value="parking" checked>
-                                    <label for="parking" class="kt-label mb-0">Parking</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="facilities[wheelchair_accessible]"
+                                        id="wheelchair_accessible" class="kt-checkbox" value="wheelchair_accessible"
+                                        {{ in_array('wheelchair_accessible', $touristSite->facilities) ? 'checked' : '' }}>
+                                    <label for="wheelchair_accessible"
+                                        class="kt-label mb-0">{{ __('main.wheelchair_accessible') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="restrooms" class="kt-checkbox"
-                                        value="restrooms" checked>
-                                    <label for="restrooms" class="kt-label mb-0">Restrooms</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="facilities[free_wifi]" id="free_wifi"
+                                        class="kt-checkbox" value="free_wifi"
+                                        {{ in_array('free_wifi', $touristSite->facilities) ? 'checked' : '' }}>
+                                    <label for="free_wifi" class="kt-label mb-0">{{ __('main.free_wifi') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="restaurants" class="kt-checkbox"
-                                        value="restaurants" checked>
-                                    <label for="restaurants" class="kt-label mb-0">Restaurants</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="facilities[parking]" id="parking" class="kt-checkbox"
+                                        value="parking"
+                                        {{ in_array('parking', $touristSite->facilities) ? 'checked' : '' }}>
+                                    <label for="parking" class="kt-label mb-0">{{ __('main.parking') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="gift_shop" class="kt-checkbox"
-                                        value="gift_shop" checked>
-                                    <label for="gift_shop" class="kt-label mb-0">Gift Shop</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="facilities[restrooms]" id="restrooms"
+                                        class="kt-checkbox" value="restrooms"
+                                        {{ in_array('restrooms', $touristSite->facilities) ? 'checked' : '' }}>
+                                    <label for="restrooms" class="kt-label mb-0">{{ __('main.restrooms') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="wifi" class="kt-checkbox"
-                                        value="wifi" checked>
-                                    <label for="wifi" class="kt-label mb-0">Free WiFi</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="facilities[restaurants]" id="restaurants"
+                                        class="kt-checkbox" value="restaurants"
+                                        {{ in_array('restaurants', $touristSite->facilities) ? 'checked' : '' }}>
+                                    <label for="restaurants" class="kt-label mb-0">{{ __('main.restaurants') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="guided_tours" class="kt-checkbox"
-                                        value="guided_tours" checked>
-                                    <label for="guided_tours" class="kt-label mb-0">Guided Tours</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="facilities[gift_shop]" id="gift_shop"
+                                        class="kt-checkbox" value="gift_shop"
+                                        {{ in_array('gift_shop', $touristSite->facilities) ? 'checked' : '' }}>
+                                    <label for="gift_shop" class="kt-label mb-0">{{ __('main.gift_shop') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="audio_guide" class="kt-checkbox"
-                                        value="audio_guide" checked>
-                                    <label for="audio_guide" class="kt-label mb-0">Audio Guide</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="facilities[guided_tours]" id="guided_tours"
+                                        class="kt-checkbox" value="guided_tours"
+                                        {{ in_array('guided_tours', $touristSite->facilities) ? 'checked' : '' }}>
+                                    <label for="guided_tours" class="kt-label mb-0">{{ __('main.guided_tours') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="wheelchair" class="kt-checkbox"
-                                        value="wheelchair">
-                                    <label for="wheelchair" class="kt-label mb-0">Wheelchair Accessible</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="facilities[audio_guide]" id="audio_guide"
+                                        class="kt-checkbox" value="audio_guide"
+                                        {{ in_array('audio_guide', $touristSite->facilities) ? 'checked' : '' }}>
+                                    <label for="audio_guide" class="kt-label mb-0">{{ __('main.audio_guide') }}</label>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Activities -->
                         <div class="mb-4">
-                            <label class="kt-label mb-2">Available Activities</label>
+                            <h4 class="mb-2 font-semibold">{{ __('main.activities') }}</h4>
+
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="photography" class="kt-checkbox"
-                                        value="photography" checked>
-                                    <label for="photography" class="kt-label mb-0">Photography</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="activities[photography]" id="photography"
+                                        class="kt-checkbox" value="photography"
+                                        {{ in_array('photography', $touristSite->activities) ? 'checked' : '' }}>
+                                    <label for="photography" class="kt-label mb-0">{{ __('main.photography') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="hiking" class="kt-checkbox"
-                                        value="hiking" checked>
-                                    <label for="hiking" class="kt-label mb-0">Hiking</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="activities[hiking]" id="hiking" class="kt-checkbox"
+                                        value="hiking"
+                                        {{ in_array('hiking', $touristSite->activities) ? 'checked' : '' }}>
+                                    <label for="hiking" class="kt-label mb-0">{{ __('main.hiking') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="swimming" class="kt-checkbox"
-                                        value="swimming">
-                                    <label for="swimming" class="kt-label mb-0">Swimming</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="activities[swimming]" id="swimming"
+                                        class="kt-checkbox" value="swimming"
+                                        {{ in_array('swimming', $touristSite->activities) ? 'checked' : '' }}>
+                                    <label for="swimming" class="kt-label mb-0">{{ __('main.swimming') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="camping" class="kt-checkbox"
-                                        value="camping">
-                                    <label for="camping" class="kt-label mb-0">Camping</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="activities[camping]" id="camping" class="kt-checkbox"
+                                        value="camping"
+                                        {{ in_array('camping', $touristSite->activities) ? 'checked' : '' }}>
+                                    <label for="camping" class="kt-label mb-0">{{ __('main.camping') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="shopping" class="kt-checkbox"
-                                        value="shopping" checked>
-                                    <label for="shopping" class="kt-label mb-0">Shopping</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="activities[shopping]" id="shopping"
+                                        class="kt-checkbox" value="shopping"
+                                        {{ in_array('shopping', $touristSite->activities) ? 'checked' : '' }}>
+                                    <label for="shopping" class="kt-label mb-0">{{ __('main.shopping') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="dining" class="kt-checkbox"
-                                        value="dining" checked>
-                                    <label for="dining" class="kt-label mb-0">Dining</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="activities[dining]" id="dining" class="kt-checkbox"
+                                        value="dining"
+                                        {{ in_array('dining', $touristSite->activities) ? 'checked' : '' }}>
+                                    <label for="dining" class="kt-label mb-0">{{ __('main.dining') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="entertainment" class="kt-checkbox"
-                                        value="entertainment">
-                                    <label for="entertainment" class="kt-label mb-0">Entertainment</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="activities[entertainment]" id="entertainment"
+                                        class="kt-checkbox" value="entertainment"
+                                        {{ in_array('entertainment', $touristSite->activities) ? 'checked' : '' }}>
+                                    <label for="entertainment"
+                                        class="kt-label mb-0">{{ __('main.entertainment') }}</label>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="activities[]" id="education" class="kt-checkbox"
-                                        value="education" checked>
-                                    <label for="education" class="kt-label mb-0">Educational Tours</label>
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="activities[educational_tours]" id="educational_tours"
+                                        class="kt-checkbox" value="educational_tours"
+                                        {{ in_array('educational_tours', $touristSite->activities) ? 'checked' : '' }}>
+                                    <label for="educational_tours"
+                                        class="kt-label mb-0">{{ __('main.educational_tours') }}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Services -->
+                        <div class="mb-4">
+                            <h4 class="mb-2 font-semibold">{{ __('main.services') }}</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="services[translation]" id="translation"
+                                        class="kt-checkbox" value="translation"
+                                        {{ in_array('translation', $touristSite->services) ? 'checked' : '' }}>
+                                    <label for="translation" class="kt-label mb-0">{{ __('main.translation') }}</label>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="services[special_events]" id="special_events"
+                                        class="kt-checkbox" value="special_events"
+                                        {{ in_array('special_events', $touristSite->services) ? 'checked' : '' }}>
+                                    <label for="special_events"
+                                        class="kt-label mb-0">{{ __('main.special_events') }}</label>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="services[group_bookings]" id="group_bookings"
+                                        class="kt-checkbox" value="group_bookings"
+                                        {{ in_array('group_bookings', $touristSite->services) ? 'checked' : '' }}>
+                                    <label for="group_bookings"
+                                        class="kt-label mb-0">{{ __('main.group_bookings') }}</label>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="services[online_booking]" id="online_booking"
+                                        class="kt-checkbox" value="online_booking"
+                                        {{ in_array('online_booking', $touristSite->services) ? 'checked' : '' }}>
+                                    <label for="online_booking"
+                                        class="kt-label mb-0">{{ __('main.online_booking') }}</label>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="services[mobile_app]" id="mobile_app"
+                                        class="kt-checkbox" value="mobile_app"
+                                        {{ in_array('mobile_app', $touristSite->services) ? 'checked' : '' }}>
+                                    <label for="mobile_app" class="kt-label mb-0">{{ __('main.mobile_app') }}</label>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="" value="0">
+                                    <input type="checkbox" name="services[virtual_tours]" id="virtual_tours"
+                                        class="kt-checkbox" value="virtual_tours"
+                                        {{ in_array('virtual_tours', $touristSite->services) ? 'checked' : '' }}>
+                                    <label for="virtual_tours"
+                                        class="kt-label mb-0">{{ __('main.virtual_tours') }}</label>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Notes -->
-                        <div class="mb-4">
-                            <label for="notes" class="kt-label mb-2">Additional Notes</label>
-                            <input id="notes" type="hidden" name="notes"
-                                value="UNESCO World Heritage site with ongoing archaeological discoveries. Best visited during cooler months.">
-                            <trix-editor input="notes"></trix-editor>
-                        </div>
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'notes',
+                            'value' => $touristSite->notes,
+                        ])
 
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4 pt-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                Update Tourist Site
-                            </button>
-                            <a href="#" class="kt-btn kt-btn-outline">
-                                Cancel
-                            </a>
-                        </div>
+                        <!-- Save Submit Buttons -->
+                        @include('components.elements.update-submit', ['models' => 'tourist-sites'])
                     </form>
                 </div>
             </div>
@@ -334,40 +426,43 @@
             <!-- Tips -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">Update Tips</h3>
+                    <h3 class="kt-card-title">{{ __('main.tourist_site_tips') }}</h3>
                 </div>
-                <div class="kt-card-body p-2">
+                <div class="p-2 kt-card-body">
                     <div class="space-y-3">
                         <div class="flex items-center gap-3">
-                            <div class="bg-success-light rounded-full p-2">
+                            <div class="p-2 rounded-full bg-success-light">
                                 <i class="ki-filled ki-information text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">Keep Information Current</div>
-                                <div class="text-sm text-secondary-foreground">Regularly update opening hours, fees, and
-                                    special events</div>
+                                <div class="mb-2 font-semibold">{{ __('main.detailed_information') }}</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    {{ __('main.detailed_information_description') }}
+                                </div>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-camera text-warning"></i>
+                            <div class="p-2 rounded-full bg-success-light">
+                                <i class="ki-filled ki-information text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">Refresh Photos</div>
-                                <div class="text-sm text-secondary-foreground">Update photos to reflect seasonal changes
-                                    and improvements</div>
+                                <div class="mb-2 font-semibold">{{ __('main.high_quality_photos') }}</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    {{ __('main.high_quality_photos_description') }}
+                                </div>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
+                            <div class="p-2 rounded-full bg-primary-light">
                                 <i class="ki-filled ki-star text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">Monitor Reviews</div>
-                                <div class="text-sm text-secondary-foreground">Track visitor feedback to improve the
-                                    tourist experience</div>
+                                <div class="mb-2 font-semibold">{{ __('main.visitor_experience') }}</div>
+                                <div class="text-sm text-secondary-foreground">
+                                    {{ __('main.visitor_experience_description') }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -376,3 +471,18 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
+                filterByForeignId("subregion_id", "country", "country_id", "edit");
+                filterByForeignId("country_id", "state", "state_id", "edit");
+                filterByForeignId("state_id", "city", "city_id", "edit");
+            }, 500);
+        });
+    </script>
+@endpush
+
+@include('components.regions.script-cascading')

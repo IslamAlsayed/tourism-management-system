@@ -6,8 +6,8 @@
         'title' => __('main.transportation-departments'),
         'description' => __('main.manage_system_types', ['types' => __('main.transportation-department')]),
         'import_url' => route('import.data', ['models' => 'transportation-departments']),
-        'page_add_url' => route('transportation-departments.create'),
-        'page_add_title' => __('main.add_new_type', ['type' => __('main.transportation-department')]),
+        'page_create_url' => route('transportation-departments.create'),
+        'page_create_title' => __('main.create_type', ['type' => __('main.transportation-department')]),
     ])
     <!-- End of Container -->
 

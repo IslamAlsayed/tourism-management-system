@@ -24,7 +24,7 @@ class SystemLanguageCreateRequest extends FormRequest
         return [
             "name" => "required|unique:languages,name",
             "code" => "required|unique:languages,code",
-            'photo' => ['required', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg', 'unique:languages,photo'],
+            'photo' => ['required', 'string', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120']
         ];
     }
 }

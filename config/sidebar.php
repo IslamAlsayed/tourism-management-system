@@ -523,20 +523,24 @@ return [
         // ================= Tourist Sites =================
         [
             'title' => 'tourist sites',
-            'fixed' => '+2',
             'icon' => 'ki-filled ki-geolocation',
+            'status' => 'done',
             'children' => [
                 [
-                    'title' => 'tourist sites',
-                    'fixed' => false,
+                    'title' => 'all tourist sites',
                     'icon' => 'ki-filled ki-geolocation',
-                    'route' => '#'
+                    'route' => 'tourist-sites.index'
                 ],
                 [
-                    'title' => 'site entrance fees',
-                    'fixed' => false,
-                    'icon' => 'ki-filled ki-dollar',
-                    'route' => '#'
+                    'title' => 'create tourist site',
+                    'icon' => 'ki-filled ki-plus',
+                    'route' => 'tourist-sites.create'
+                ],
+                [
+                    'title' => 'import tourist sites',
+                    'icon' => 'ki-filled ki-upload',
+                    'route' => 'import.data',
+                    'parameters' => ['models' => 'tourist-sites'],
                 ],
             ],
         ],

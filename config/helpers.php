@@ -41,4 +41,28 @@ return [
         'finance' => 'finance',
         'other' => 'other',
     ],
+
+    'site_types' => [
+        'historical' => 'Historical Site',
+        'natural' => 'Natural Wonder',
+        'museum' => 'Museum',
+        'landmark' => 'Landmark',
+        'shopping' => 'Shopping Center',
+        'historic' => 'Historic District',
+        'religious' => 'Religious Site',
+        'entertainment' => 'Entertainment',
+        'park' => 'Park',
+        'beach' => 'Beach',
+    ],
+
+    'categories' => [
+        'cultural' => 'Cultural',
+        'adventure' => 'Adventure',
+        'family' => 'Family',
+        'educational' => 'Educational',
+        'religious' => 'Religious',
+        'nature' => 'Nature',
+        'entertainment' => 'Entertainment',
+        'shopping' => 'Shopping',
+    ],
 ];

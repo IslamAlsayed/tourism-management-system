@@ -159,7 +159,6 @@ class CountryController extends Controller
         if ($deleted) {
             return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.country')]));
         }
-
         return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.country')]));
     }
 

@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.add_type', ['type' => __('main.tour-guide-type')]))
+@section('title', __('main.create_type', ['type' => __('main.tour-guide-type')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.add_type', ['type' => __('main.tour-guide-type')]) }}
+                    {{ __('main.create_type', ['type' => __('main.tour-guide-type')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.add_type_description', ['type' => __('main.tour-guide-type')]) }}
+                    {{ __('main.create_type_description', ['type' => __('main.tour-guide-type')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -105,7 +105,7 @@
                                 <i class="ki-filled ki-geolocation text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
                             </div>
                         </div>

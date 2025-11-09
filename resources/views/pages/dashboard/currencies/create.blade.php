@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.add_type', ['type' => __('main.currency')]))
+@section('title', __('main.create_type', ['type' => __('main.currency')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.add_currency') }}
+                    {{ __('main.create_type', ['type' => __('main.currency')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.add_currency_description') }}
+                    {{ __('main.create_type_description', ['type' => __('main.currency')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -68,8 +68,7 @@
 
                             <!-- Currency Settings -->
                             <div class="space-y-4">
-                                <h4 class="font-semibold">{{ __('main.currency_settings') }}</h4>
-
+                                <h4 class="mb-2 font-semibold">{{ __('main.currency_settings') }}</h4>
                                 <div class="grid lg:grid-cols-1 gap-4">
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_active" value="0">
@@ -108,7 +107,7 @@
                                 <i class="ki-filled ki-information text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.iso_4217_codes') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.iso_4217_codes') }}</div>
                                 <div class="text-sm text-secondary-foreground">
                                     {{ __('main.use_standard_currency_codes') }}
                                 </div>
@@ -120,7 +119,7 @@
                                 <i class="ki-filled ki-chart-line text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.exchange_rates') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.exchange_rates') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.auto_update_rates_hint') }}
                                 </div>
                             </div>
@@ -131,7 +130,7 @@
                                 <i class="ki-filled ki-dollar text-warning"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.formatting_display') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.formatting_display') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.check_format_hint') }}</div>
                             </div>
                         </div>

@@ -6,8 +6,8 @@
         'title' => __('main.languages'),
         'description' => __('main.manage_system_types', ['types' => __('main.languages')]),
         'import_url' => route('import.data', ['models' => 'languages']),
-        'page_add_url' => route('languages.create'),
-        'page_add_title' => __('main.add_new_type', ['type' => __('main.language')]),
+        'page_create_url' => route('languages.create'),
+        'page_create_title' => __('main.create_type', ['type' => __('main.language')]),
     ])
     <!-- End of Container -->
 

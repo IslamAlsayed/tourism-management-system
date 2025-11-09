@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.add_type', ['type' => __('main.client')]))
+@section('title', __('main.create_type', ['type' => __('main.client')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.add_type', ['type' => __('main.client')]) }}
+                    {{ __('main.create_type', ['type' => __('main.client')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.add_type_description', ['type' => __('main.client')]) }}
+                    {{ __('main.create_type_description', ['type' => __('main.client')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
