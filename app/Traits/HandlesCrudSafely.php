@@ -15,7 +15,6 @@ trait HandlesCrudSafely
             return $callback();
         } catch (\Throwable $e) {
             Log::error('Livewire SafeRun Error: ' . $e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getLine()]);
-            // session()->flash('danger', __('main.messages.general_error') . ' | ' . $e->getMessage() ?? 'Something went wrong, please try again later.');
             $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Something went wrong, please try again later.', 'title' => 'Error', 'emoji' => '❌']);
         }
     }
@@ -26,7 +25,7 @@ trait HandlesCrudSafely
     public function safeDestroy($id, $type, $showToast = true)
     {
         return $this->safeRun(function () use ($id, $type, $showToast) {
-            $modelName = ucfirst($type);
+            $modelName = studlySingular($type);
             $modelClass = "App\\Models\\$modelName";
             if (!class_exists($modelClass)) {
                 throw new \Exception("Model class $modelClass does not exist");
@@ -36,13 +35,13 @@ trait HandlesCrudSafely
             $type = strtolower(implode('-', $parts));
 
             if (!$model) {
-                $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Tour guide not found.', 'title' => 'Error', 'emoji' => '❌']);
+                $this->dispatch('show-toast', ['type' => 'error', 'message' => __('main.messages.type_not_found', ['type' => __('main.' . singularLowerCaseName($type, '-'))]), 'title' => __('main.error'), 'emoji' => '❌']);
             } elseif ($model->delete()) {
                 if ($showToast) {
-                    $this->dispatch('show-toast', ['type' => 'success', 'message' => 'Tour guide deleted successfully!', 'title' => 'Deleted', 'emoji' => '🎯']);
+                    $this->dispatch('show-toast', ['type' => 'success', 'message' => __('main.messages.type_deleted', ['type' => __('main.' . singularLowerCaseName($type, '-'))]), 'title' => __('main.deleted')]);
                 }
             } else {
-                $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Tour guide not found.', 'title' => 'Error', 'emoji' => '❌']);
+                $this->dispatch('show-toast', ['type' => 'error', 'message' => __('main.messages.type_not_found', ['type' => __('main.' . singularLowerCaseName($type, '-'))]), 'title' => __('main.error'), 'emoji' => '❌']);
             }
         });
     }

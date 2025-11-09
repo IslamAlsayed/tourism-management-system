@@ -15,8 +15,8 @@
                 {{ __('main.import_csv') }}
             </a>
         @endif
-        <a class="kt-btn kt-btn-primary" href="{{ $page_add_url }}">
-            {{ $page_add_title }}
+        <a class="kt-btn kt-btn-primary" href="{{ $page_create_url }}">
+            {{ $page_create_title }}
         </a>
     </div>
 </div>

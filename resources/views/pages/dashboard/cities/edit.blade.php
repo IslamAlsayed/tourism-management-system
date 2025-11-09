@@ -140,7 +140,7 @@
                                 <i class="ki-filled ki-information text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.ensure_data_accuracy') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.ensure_data_accuracy') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.verify_city_coordinates') }}
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                                 <i class="ki-filled ki-geolocation text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.use_map_services') }}</div>
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                                 <i class="ki-filled ki-flag text-warning"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.country_selection') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.country_selection') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.must_select_country') }}</div>
                             </div>
                         </div>

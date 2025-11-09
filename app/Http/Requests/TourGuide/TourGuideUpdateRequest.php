@@ -35,7 +35,7 @@ class TourGuideUpdateRequest extends FormRequest
             'mobile_02' => ['nullable', 'string', 'max:20'],
             'home_city' => ['nullable', 'string', 'max:255'],
             'birth_year' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
-            'photo' => ['nullable', 'image', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],
+            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'national_guide_id' => ['nullable', 'string', 'max:100'],
             'currency_id' => ['nullable', 'exists:currencies,id'],
             'languages_ids' => ['nullable', 'array'],

@@ -5,8 +5,8 @@
     @include('includes.table-breadcrumb', [
         'title' => 'Air Transport',
         'description' => 'Manage airports and airlines',
-        'page_add_url' => '#',
-        'page_add_title' => 'Add New Air Transport',
+        'page_create_url' => '#',
+        'page_create_title' => 'Add New Air Transport',
     ])
     <!-- End of Container -->
 

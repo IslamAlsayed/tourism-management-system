@@ -338,7 +338,7 @@
                                 <i class="ki-filled ki-information text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.complete_profile') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.complete_profile') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.complete_profile_desc') }}
                                 </div>
                             </div>
@@ -349,7 +349,7 @@
                                 <i class="ki-filled ki-security-user text-warning"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.secure_password') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.secure_password') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.secure_password_desc') }}
                                 </div>
                             </div>

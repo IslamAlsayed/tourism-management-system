@@ -46,7 +46,7 @@ class CountryCreateRequest extends FormRequest
             'timezone' => ['nullable', 'string', 'max:255'],
             'languages' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
-            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'is_active' => ['boolean'],
             'is_independent' => ['boolean'],
             'is_developed' => ['boolean'],

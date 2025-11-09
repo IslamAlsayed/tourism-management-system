@@ -13,10 +13,10 @@
     </div>
 
     <div class="hidden" data-target-model="#columnsModal" id="columnsModal"
-        style="{{ app()->getLocale() == 'ar' ? 'right: auto; left: 0;' : 'left: auto; right: 0;' }}">
+        style="{{ app()->getLocale() == 'ar' ? 'right: auto; left: 0; direction: rtl;' : 'left: auto; right: 0; direction: rtl;' }}">
         <div class="grid grid-cols-2 xl:grid-cols-3 gap-2">
             @foreach ($allColumns as $column)
-                <div class="custom-input"
+                <div class="custom-input" title="{{ __('main.' . $column) }}"
                     wire:key="col-{{ $column }}-{{ in_array($column, $pendingColumns) ? '1' : '0' }}">
                     <input type="checkbox" name="remember" wire:model="pendingColumns" value="{{ $column }}"
                         id="col-{{ $column }}">
@@ -42,7 +42,6 @@
             @if ($hasCustomColumns)
                 <div type="button" wire:click="resetColumns" wire:loading.attr="disabled" toggle-button
                     class="kt-btn kt-btn-outline bg-danger text-white px-3 rounded">
-                    {{-- {{ __('Reset') }} --}}
                     {{ __('Reset to Default') }}
                 </div>
             @endif

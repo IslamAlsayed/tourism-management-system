@@ -5,8 +5,8 @@
     @include('includes.table-breadcrumb', [
         'title' => 'Vehicles',
         'description' => 'Manage tourist buses, transport vehicles, and 4x4 vehicles',
-        'page_add_url' => '#',
-        'page_add_title' => 'Add New Vehicle',
+        'page_create_url' => '#',
+        'page_create_title' => 'Add New Vehicle',
     ])
     <!-- End of Container -->
 

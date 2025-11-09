@@ -65,6 +65,10 @@ return [
     'add new currency' => 'Add New Currency',
     'create currency' => 'Create Currency',
     'import currencies' => 'Import Currencies',
+    'all tourist sites' => 'All Tourist Sites',
+    'add new tourist site' => 'Add New Tourist Site',
+    'create tourist site' => 'Create Tourist Site',
+    'import tourist sites' => 'Import Tourist Sites',
 
     'restaurant management' => 'Restaurant Management',
     'all restaurants' => 'All Restaurants',

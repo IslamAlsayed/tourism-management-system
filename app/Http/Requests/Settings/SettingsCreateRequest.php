@@ -28,7 +28,7 @@ class SettingsCreateRequest extends FormRequest
             'app_language' => ['required', 'string'],
             'app_version' => ['required', 'string'],
             'app_php_version' => ['required', 'string'],
-            'photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],
+            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'app_status' => ['nullable', 'boolean'],
             'app_password_length' => ['required', 'integer'],
             'app_session_lifetime' => ['required', 'integer'],

@@ -65,6 +65,10 @@ return [
     'add new currency' => 'إضافة عملة جديدة',
     'create currency' => 'إنشاء عملة جديدة',
     'import currencies' => 'استيراد عملات',
+    'all tourist sites' => 'جميع المواقع السياحية',
+    'add new tourist site' => 'إضافة موقع سياحي جديد',
+    'create tourist site' => 'إنشاء موقع سياحي جديد',
+    'import tourist sites' => 'استيراد المواقع السياحية',
 
     'restaurant management' => 'إدارة المطاعم',
     'all restaurants' => 'جميع المطاعم',

@@ -5,8 +5,8 @@
     @include('includes.table-breadcrumb', [
         'title' => 'Food & Beverage',
         'description' => 'Manage restaurants, cafes, and dining establishments',
-        'page_add_url' => '#',
-        'page_add_title' => 'Add New Restaurant',
+        'page_create_url' => '#',
+        'page_create_title' => 'Add New Restaurant',
     ])
     <!-- End of Container -->
 

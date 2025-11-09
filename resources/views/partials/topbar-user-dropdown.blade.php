@@ -52,16 +52,14 @@
                 <div class="kt-dropdown-menu w-[180px]" data-kt-dropdown-menu="true">
                     <ul class="kt-dropdown-menu-sub">
                         @foreach ($system_languages as $key => $language)
-                            <li class="{{ getCurrentLocale() == $language->code ? 'active' : '' }}">
+                            <li class="{{ getCurrentLocale() == $language->code ? 'active disabled' : '' }}">
                                 <a class="kt-dropdown-menu-link"
                                     href="{{ route('system-languages.change', $language->code) }}">
                                     <span class="flex items-center gap-2">
                                         <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->code . '.svg') : asset('storage/' . $language->flag) }}"
-                                            {{-- alt="{{ getCurrentLocale() == 'ar' ? $language->name : $language->name_ar ?? '' }}" --}} alt="{{ $language->name ?? '' }}"
                                             class="inline-block rounded-full size-4">
                                         <span class="kt-menu-title">
-                                            {{-- {{ getCurrentLocale() == 'ar' ? $language->name : $language->name_ar ?? '' }} --}}
-                                            {{ $language->name ?? '' }}
+                                            {{ __('languages.' . lcfirst($language->name)) ?? '' }}
                                         </span>
                                     </span>
                                     @if (getCurrentLocale() === $language->code)
