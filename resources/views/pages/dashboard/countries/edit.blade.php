@@ -281,7 +281,7 @@
                                 <i class="ki-filled ki-geolocation text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
                             </div>
                         </div>
@@ -291,7 +291,7 @@
                                 <i class="ki-filled ki-flag text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.iso_codes') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.iso_codes') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.iso_codes_hint') }}
                                 </div>
                             </div>
@@ -302,7 +302,7 @@
                                 <i class="ki-filled ki-dollar text-warning"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.official_currency') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.official_currency') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.currency_hint') }}</div>
                             </div>
                         </div>

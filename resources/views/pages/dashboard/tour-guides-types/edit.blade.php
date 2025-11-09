@@ -106,7 +106,7 @@
                                 <i class="ki-filled ki-geolocation text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
                             </div>
                         </div>

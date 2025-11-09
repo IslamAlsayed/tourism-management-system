@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.add_type', ['type' => __('main.country')]))
+@section('title', __('main.create_type', ['type' => __('main.country')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.add_type', ['type' => __('main.country')]) }}
+                    {{ __('main.create_type', ['type' => __('main.country')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.add_type_description', ['type' => __('main.country')]) }}
+                    {{ __('main.create_type_description', ['type' => __('main.country')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -26,7 +26,7 @@
             <!-- Country Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.country_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.country')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('countries.store') }}" enctype="multipart/form-data"
@@ -271,7 +271,7 @@
                                 <i class="ki-filled ki-geolocation text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
                             </div>
                         </div>
@@ -281,7 +281,7 @@
                                 <i class="ki-filled ki-flag text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.iso_codes') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.iso_codes') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.iso_codes_hint') }}
                                 </div>
                             </div>
@@ -292,7 +292,7 @@
                                 <i class="ki-filled ki-dollar text-warning"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.official_currency') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.official_currency') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.currency_hint') }}</div>
                             </div>
                         </div>

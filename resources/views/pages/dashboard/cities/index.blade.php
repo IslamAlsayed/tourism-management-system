@@ -6,8 +6,8 @@
         'title' => __('main.cities'),
         'description' => __('main.manage_system_types', ['types' => __('main.cities')]),
         'import_url' => route('import.data', ['models' => 'cities']),
-        'page_add_url' => route('cities.create'),
-        'page_add_title' => __('main.add_new_type', ['type' => __('main.city')]),
+        'page_create_url' => route('cities.create'),
+        'page_create_title' => __('main.create_type', ['type' => __('main.city')]),
     ])
     <!-- End of Container -->
 

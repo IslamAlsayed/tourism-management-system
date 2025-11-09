@@ -308,9 +308,26 @@ if (!function_exists('db_connection')) {
     }
 }
 
+// ارجاع الاسم مفرد جمع
 if (!function_exists('studlySingular')) {
-    function studlySingular(?string $models)
+    function studlySingular(?string $models, string $type = '')
     {
-        return implode('', array_map([Str::class, 'studly'], array_map([Str::class, 'singular'], explode('-', $models))));
+        return implode($type, array_map([Str::class, 'studly'], array_map([Str::class, 'singular'], explode('-', $models))));
+    }
+}
+
+// ارجاع الاسم مفرد جمع مفصول بشرطة
+if (!function_exists('studyCapitalCaseName')) {
+    function studyCapitalCaseName(?string $models, string $type = '-')
+    {
+        return implode($type, array_map([Str::class, 'studly'], explode('-', $models)));
+    }
+}
+
+// ارجاع الاسم مفرد مفصول بشرطة
+if (!function_exists('singularLowerCaseName')) {
+    function singularLowerCaseName(?string $models, string $type = '-')
+    {
+        return implode($type, array_map([Str::class, 'lower'], array_map([Str::class, 'singular'], explode('-', $models))));
     }
 }

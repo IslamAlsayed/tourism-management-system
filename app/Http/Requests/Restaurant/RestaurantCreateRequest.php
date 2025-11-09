@@ -50,7 +50,7 @@ class RestaurantCreateRequest extends FormRequest
             'street' => ['nullable', 'string', 'max:255'],
             'mobile' => ['nullable', 'string', 'max:20'],
             'website' => ['nullable', 'string', 'max:255'],
-            'photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],
+            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'notes' => ['nullable', 'string', 'max:500'],
             'is_active' => ['boolean'],
             'wheelchair_accessible' => ['boolean'],

@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\ClientController;
+use App\Http\Controllers\Dashboard\TouristSiteController;
 use App\Http\Controllers\Dashboard\ExcelController;
 use App\Http\Controllers\Dashboard\StateController;
 use App\Http\Controllers\Dashboard\RegionController;
@@ -129,6 +130,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('transportation/bus-types', BusTypeController::class)->names('transportation-bus-types');
     Route::resource('transportation/company/bus-types', CompanyBusTypeController::class)->names('transportation-company-bus-types');
     Route::resource('transportation/vehicles', VehicleController::class)->names('transportation-vehicles');
+
+    // === TOURIST SITES MANAGEMENT ===
+    Route::resource('tourist-sites', TouristSiteController::class)->names('tourist-sites');
 
     // === ACCOMMODATIONS MANAGEMENT ===
     Route::resource('types', TypeController::class)->names('types');

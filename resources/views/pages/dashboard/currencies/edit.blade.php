@@ -67,8 +67,7 @@
 
                         <!-- Currency Settings -->
                         <div class="space-y-4">
-                            <h4 class="font-semibold">{{ __('main.currency_settings') }}</h4>
-
+                            <h4 class="mb-2 font-semibold">{{ __('main.currency_settings') }}</h4>
                             <div class="grid lg:grid-cols-1 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
@@ -104,7 +103,7 @@
                                 <i class="ki-filled ki-information text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.iso_4217_codes') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.iso_4217_codes') }}</div>
                                 <div class="text-sm text-secondary-foreground">
                                     {{ __('main.use_standard_currency_codes') }}
                                 </div>
@@ -116,7 +115,7 @@
                                 <i class="ki-filled ki-chart-line text-success"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.exchange_rates') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.exchange_rates') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.auto_update_rates_hint') }}
                                 </div>
                             </div>
@@ -127,7 +126,7 @@
                                 <i class="ki-filled ki-dollar text-warning"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.formatting_display') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.formatting_display') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.check_format_hint') }}</div>
                             </div>
                         </div>

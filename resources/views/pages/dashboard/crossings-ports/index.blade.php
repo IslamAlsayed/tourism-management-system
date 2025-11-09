@@ -5,8 +5,8 @@
     @include('includes.table-breadcrumb', [
         'title' => 'Crossings & Ports',
         'description' => 'Manage land crossings, airports, and seaports',
-        'page_add_url' => '#',
-        'page_add_title' => 'Add New Crossing/Port',
+        'page_create_url' => '#',
+        'page_create_title' => 'Add New Crossing/Port',
     ])
     <!-- End of Container -->
 

@@ -274,8 +274,8 @@
                         <!-- Tour guide Settings -->
                         <div class="space-y-4 mb-4">
                             <h4 class="font-semibold mb-2">
-                                {{ __('main.type_settings', ['type' => __('main.tour-guide')]) }}</h4>
-
+                                {{ __('main.type_settings', ['type' => __('main.tour-guide')]) }}
+                            </h4>
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="status" value="0">
@@ -304,7 +304,7 @@
                                 <i class="ki-filled ki-geolocation text-primary"></i>
                             </div>
                             <div>
-                                <div class="font-semibold">{{ __('main.geographic_coordinates') }}</div>
+                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
                                 <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
                             </div>
                         </div>

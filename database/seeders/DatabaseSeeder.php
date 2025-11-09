@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             CurrencySeeder::class,
             ClientSeeder::class,
+            TouristSiteSeeder::class,
         ]);
     }
 }

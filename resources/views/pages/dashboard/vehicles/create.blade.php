@@ -208,7 +208,7 @@
 
                         <!-- Features -->
                         <div class="mb-4">
-                            <label class="kt-label mb-2">Vehicle Features</label>
+                            <h4 class="mb-2 font-semibold">{{ __('main.features') }}</h4>
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" name="features[]" id="air_conditioning" class="kt-checkbox"
