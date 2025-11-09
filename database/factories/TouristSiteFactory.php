@@ -100,9 +100,9 @@ class TouristSiteFactory extends Factory
             'twitter_url' => $this->faker->optional(0.2)->url(),
 
             // Facilities & Activities & Services
-            'facilities' => $this->faker->randomElements(['parking', 'free_wifi', 'gift_shop', 'restrooms', 'audio_guide', 'restaurants', 'guided_tours', 'wheelchair_accessible'], $this->faker->numberBetween(1, 8)),
+            'facilities' => $this->faker->randomElements(['wheelchair_accessible', 'free_wifi', 'parking', 'restrooms', 'restaurants', 'gift_shop', 'guided_tours', 'audio_guide'], $this->faker->numberBetween(1, 8)),
             'activities' => $this->faker->randomElements(['photography', 'hiking', 'swimming', 'camping', 'shopping', 'dining', 'entertainment', 'educational_tours'], $this->faker->numberBetween(1, 8)),
-            'services' => $this->faker->randomElements(['translation', 'special_events', 'group_bookings', 'online_booking', 'mobile_app', 'virtual_tours'], $this->faker->numberBetween(1, 10)),
+            'services' => $this->faker->randomElements(['translation', 'special_events', 'group_bookings', 'online_booking', 'mobile_app', 'virtual_tours'], $this->faker->numberBetween(1, 6)),
 
             'has_parking' => $this->faker->boolean(70),
             'has_restaurant' => $this->faker->boolean(50),
