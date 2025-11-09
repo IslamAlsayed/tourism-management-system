@@ -1,9 +1,7 @@
-<!-- Sidebar -->
-{{-- <div class="kt-sidebar bg-background border-e border-e-border fixed z-20 hidden lg:flex flex-col items-stretch shrink-0 [--kt-drawer-enable:true] lg:[--kt-drawer-enable:false]" --}}
-
+{{-- Sidebar --}}
 <div class="kt-sidebar bg-background border-e border-e-border fixed top-0 bottom-0 z-20 hidden lg:flex flex-col items-stretch shrink-0 [--kt-drawer-enable:true] lg:[--kt-drawer-enable:false]"
     data-kt-drawer="true" data-kt-drawer-class="kt-drawer kt-drawer-start top-0 bottom-0" id="sidebar">
-    <!-- Sidebar Header -->
+    {{-- Sidebar Header --}}
     <div class="kt-sidebar-header hidden lg:flex text-center justify-center relative px-3 lg:px-4 shrink-0 py-2"
         id="sidebar_header">
         <a class="dark:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
@@ -27,13 +25,13 @@
         </button>
     </div>
 
-    <!-- Sidebar Content -->
+    {{-- Sidebar Content --}}
     <div class="kt-sidebar-content flex grow shrink-0 py-5 pe-2" id="sidebar_content">
-        <div class="kt-scrollable-y-hover grow shrink-0 flex ps-2 lg:ps-5 pe-1 lg:pe-3" data-kt-scrollable="true"
-            data-kt-scrollable-dependencies="#sidebar_header" data-kt-scrollable-height="auto"
+        <div class="kt-scrollable-y-hover grow shrink-0 flex ps-2 lg:ps-5 pe-1 lg:pe-3" style="padding-inline-end: 0"
+            data-kt-scrollable="true" data-kt-scrollable-dependencies="#sidebar_header" data-kt-scrollable-height="auto"
             data-kt-scrollable-offset="0px" data-kt-scrollable-wrappers="#sidebar_content" id="sidebar_scrollable">
 
-            <!-- Dynamic Sidebar Menu -->
+            {{-- Dynamic Sidebar Menu --}}
             <div class="kt-menu flex flex-col grow gap-1" data-kt-menu="true" id="sidebar_menu">
                 @php
                     $menuItems = config('sidebar.menu');
@@ -53,7 +51,7 @@
                     @endphp
 
                     @if ($hasChildren)
-                        <!-- Menu with Children -->
+                        {{-- Menu with Children --}}
                         <div class="kt-menu-item {{ $hasActiveChild ? 'show' : '' }}"
                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                             <div
@@ -95,7 +93,7 @@
                                 </span>
                             </div>
 
-                            <!-- Children -->
+                            {{-- Children --}}
                             <div
                                 class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border {{ $hasActiveChild ? 'show' : '' }}">
                                 @foreach ($item['children'] as $child)
@@ -113,7 +111,7 @@
                                     @endphp
 
                                     @if ($childHasChildren)
-                                        <!-- Nested submenu -->
+                                        {{-- Nested submenu --}}
                                         <div class="kt-menu-item {{ $childHasActiveChild ? 'kt-menu-item-show show' : '' }}"
                                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                                             <div
@@ -158,7 +156,7 @@
                                                 </span>
                                             </div>
 
-                                            <!-- SubChildren -->
+                                            {{-- SubChildren --}}
                                             <div
                                                 class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border">
                                                 @foreach ($child['children'] as $subChild)
@@ -199,7 +197,7 @@
                                             </div>
                                         </div>
                                     @else
-                                        <!-- Simple child -->
+                                        {{-- Simple child --}}
                                         <div class="kt-menu-item">
                                             <a class="kt-menu-link border border-transparent items-center grow {{ $childIsActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
                                                 href="{{ isset($child['route']) && $child['route'] !== '#' ? route($child['route'], isset($child['parameters']) ? $child['parameters'] : []) : 'javascript:void(0)' }}"
@@ -237,7 +235,7 @@
                             </div>
                         </div>
                     @else
-                        <!-- Simple Menu Item -->
+                        {{-- Simple Menu Item --}}
                         <div class="kt-menu-item">
                             <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $isActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg"
                                 href="{{ isset($item['route']) && $item['route'] !== '#' ? route($item['route'], isset($item['parameters']) ? $item['parameters'] : []) : 'javascript:void(0)' }}"

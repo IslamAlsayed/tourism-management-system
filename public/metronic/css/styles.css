@@ -14842,15 +14842,15 @@
   .demo1 {
     --sidebar-transition-duration: 0.3s;
     --sidebar-transition-timing: ease;
-    --sidebar-width: 330px;
+    --sidebar-width: 290px;
     --sidebar-width-collapse: 80px;
-    --sidebar-default-width: 330px;
+    --sidebar-default-width: 290px;
     --header-height: 70px;
   }
 
   @media (max-width: 64rem) {
     .demo1 {
-      --sidebar-width: 330px;
+      --sidebar-width: 290px;
       --header-height: 60px;
     }
   }

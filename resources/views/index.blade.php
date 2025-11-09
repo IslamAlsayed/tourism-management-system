@@ -7,15 +7,15 @@
 
     <title>Laravel</title>
 
-    <!-- Fonts -->
+    {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
-    <!-- FontAwesome Icons -->
+    {{-- FontAwesome Icons --}}
     <link rel="stylesheet" href="{{ asset('vendor/toasts/css/all.min.css') }}">
-    <!-- Toasts Styles -->
+    {{-- Toasts Styles --}}
     <link rel="stylesheet" href="{{ asset('vendor/toasts/css/toasts.css') }}">
-    <!-- Toasts Scripts -->
+    {{-- Toasts Scripts --}}
     <script type="module" src="{{ asset('vendor/toasts/js/toasts.js') }}"></script>
 </head>
 

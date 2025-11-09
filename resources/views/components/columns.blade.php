@@ -13,7 +13,7 @@
     </div>
 
     <div class="hidden" data-target-model="#columnsModal" id="columnsModal"
-        style="{{ app()->getLocale() == 'ar' ? 'right: auto; left: 0; direction: rtl;' : 'left: auto; right: 0; direction: rtl;' }}">
+        style="{{ app()->getLocale() == 'ar' ? 'right: auto; left: 0; direction: rtl;' : 'left: auto; right: 0; direction: ltr;' }}">
         <div class="grid grid-cols-2 xl:grid-cols-3 gap-2">
             @foreach ($allColumns as $column)
                 <div class="custom-input" title="{{ __('main.' . $column) }}"
