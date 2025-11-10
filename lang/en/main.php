@@ -229,6 +229,8 @@ return [
     // Statuses
     'maintenance' => 'Maintenance',
     'permanently_closed' => 'Permanently Closed',
+    'under_renovation' => 'Under Renovation',
+    'seasonal' => 'Seasonal',
     'tourist_site_tips' => 'Tourist Site Tips',
     'detailed_information' => 'Detailed Information',
     'detailed_information_description' => 'Detailed Information Description',

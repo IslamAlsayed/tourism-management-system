@@ -69,7 +69,9 @@
                                 <label for="site_type" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.site_type') }}
                                 </label>
-                                <select name="site_type" id="site_type" class="kt-select h-[45px]" special-search>
+                                <select name="site_type" id="site_type" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $touristSite->site_type }}"
+                                    value="{{ $touristSite->site_type }}">
                                     <option value="">--</option>
                                     @foreach ($siteTypes as $key => $siteType)
                                         <option value="{{ $key }}"
@@ -88,7 +90,9 @@
                                 <label for="category" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.category') }}
                                 </label>
-                                <select name="category" id="category" class="kt-select h-[45px]" special-search>
+                                <select name="category" id="category" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $touristSite->category }}"
+                                    value="{{ $touristSite->category }}">
                                     <option value="">--</option>
                                     @foreach ($categories as $key => $category)
                                         <option value="{{ $key }}"
@@ -218,12 +222,24 @@
                             <!-- Status -->
                             <div class="">
                                 <label for="status" class="mb-2 kt-label">{{ __('main.status') }}</label>
-                                <select name="status" id="status" class="kt-select h-[45px]" special-search>
+                                <select name="status" id="status" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $touristSite->status }}" value="{{ $touristSite->status }}">
                                     <option value="">--</option>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="under_renovation">Under Renovation</option>
-                                    <option value="seasonal">Seasonal</option>
+                                    <option value="active" {{ $touristSite->status == 'active' ? 'selected' : '' }}>
+                                        {{ __('main.active') }}</option>
+                                    <option value="inactive" {{ $touristSite->status == 'inactive' ? 'selected' : '' }}>
+                                        {{ __('main.inactive') }}</option>
+                                    <option value="maintenance"
+                                        {{ $touristSite->status == 'maintenance' ? 'selected' : '' }}>
+                                        {{ __('main.maintenance') }}</option>
+                                    <option value="permanently_closed"
+                                        {{ $touristSite->status == 'permanently_closed' ? 'selected' : '' }}>
+                                        {{ __('main.permanently_closed') }}</option>
+                                    <option value="under_renovation"
+                                        {{ $touristSite->status == 'under_renovation' ? 'selected' : '' }}>
+                                        {{ __('main.under_renovation') }}</option>
+                                    <option value="seasonal" {{ $touristSite->status == 'seasonal' ? 'selected' : '' }}>
+                                        {{ __('main.seasonal') }}</option>
                                 </select>
                             </div>
                         </div>

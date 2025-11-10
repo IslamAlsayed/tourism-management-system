@@ -70,8 +70,8 @@ return [
     'adults' => 'البالغين',
     'arrival_date' => 'موعد الوصول',
     'departure_date' => 'موعد الرجوع',
-    'nights' => 'الايام',
-    'grand_total' => 'كامل الاجمالي',
+    'nights' => 'الليالي',
+    'grand_total' => 'الإجمالي الكلي',
 
     // Form and UI Components
     'actions' => 'الإجراءات',
@@ -228,8 +228,10 @@ return [
     'extreme' => 'متطرف',
 
     // Statuses
-    'maintenance' => 'صيانة',
+    'maintenance' => 'الصيانة',
     'permanently_closed' => 'مغلق بشكل دائم',
+    'under_renovation' => 'تحت التجديد',
+    'seasonal' => 'موسمي',
     'tourist_site_tips' => 'نصائح حول المواقع السياحية',
     'detailed_information' => 'معلومات مفصلة',
     'detailed_information_description' => 'وصف المعلومات المفصلة',
