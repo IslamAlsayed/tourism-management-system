@@ -106,7 +106,7 @@ class TouristSiteCreateRequest extends FormRequest
             'best_visit_time.*' => ['string', 'max:50'],
 
             // Administrative
-            'status' => ['nullable', 'string', 'in:active,inactive,maintenance,permanently_closed'],
+            'status' => ['nullable', 'string', 'in:active,inactive,maintenance,permanently_closed,under_renovation,seasonal'],
             'is_featured' => ['nullable', 'boolean'],
             'is_verified' => ['nullable', 'boolean'],
             'notes' => ['nullable', 'string'],
@@ -115,38 +115,38 @@ class TouristSiteCreateRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get custom error messages for validation.
-     */
-    public function messages(): array
-    {
-        return [
-            'name.required' => __('main.validation.name_required'),
-            'type.required' => __('main.validation.type_required'),
-            'category.required' => __('main.validation.category_required'),
-            'latitude.between' => __('main.validation.latitude_range'),
-            'longitude.between' => __('main.validation.longitude_range'),
-            'main_image.image' => __('main.validation.main_image_format'),
-            'main_image.max' => __('main.validation.main_image_size'),
-            'gallery_images.*.image' => __('main.validation.gallery_image_format'),
-            'gallery_images.*.max' => __('main.validation.gallery_image_size'),
-        ];
-    }
+    // /**
+    //  * Get custom error messages for validation.
+    //  */
+    // public function messages(): array
+    // {
+    //     return [
+    //         'name.required' => __('main.validation.name_required'),
+    //         'type.required' => __('main.validation.type_required'),
+    //         'category.required' => __('main.validation.category_required'),
+    //         'latitude.between' => __('main.validation.latitude_range'),
+    //         'longitude.between' => __('main.validation.longitude_range'),
+    //         'main_image.image' => __('main.validation.main_image_format'),
+    //         'main_image.max' => __('main.validation.main_image_size'),
+    //         'gallery_images.*.image' => __('main.validation.gallery_image_format'),
+    //         'gallery_images.*.max' => __('main.validation.gallery_image_size'),
+    //     ];
+    // }
 
-    /**
-     * Get custom attribute names for validation.
-     */
-    public function attributes(): array
-    {
-        return [
-            'name' => __('main.name'),
-            'name_ar' => __('main.name_ar'),
-            'type' => __('main.type'),
-            'category' => __('main.category'),
-            'latitude' => __('main.latitude'),
-            'longitude' => __('main.longitude'),
-            'main_image' => __('main.main_image'),
-            'gallery_images' => __('main.gallery_images'),
-        ];
-    }
+    // /**
+    //  * Get custom attribute names for validation.
+    //  */
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'name' => __('main.name'),
+    //         'name_ar' => __('main.name_ar'),
+    //         'type' => __('main.type'),
+    //         'category' => __('main.category'),
+    //         'latitude' => __('main.latitude'),
+    //         'longitude' => __('main.longitude'),
+    //         'main_image' => __('main.main_image'),
+    //         'gallery_images' => __('main.gallery_images'),
+    //     ];
+    // }
 }

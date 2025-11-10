@@ -220,10 +220,12 @@
                                 <label for="status" class="mb-2 kt-label required">Status</label>
                                 <select name="status" id="status" class="kt-select h-[45px]" special-search required>
                                     <option value="">--</option>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="under_renovation">Under Renovation</option>
-                                    <option value="seasonal">Seasonal</option>
+                                    <option value="active">{{ __('main.active') }}</option>
+                                    <option value="inactive">{{ __('main.inactive') }}</option>
+                                    <option value="maintenance">{{ __('main.maintenance') }}</option>
+                                    <option value="permanently_closed">{{ __('main.permanently_closed') }}</option>
+                                    <option value="under_renovation">{{ __('main.under_renovation') }}</option>
+                                    <option value="seasonal">{{ __('main.seasonal') }}</option>
                                 </select>
                             </div>
                         </div>

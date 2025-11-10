@@ -83,8 +83,8 @@ class TouristSiteController extends Controller
         }
         $regions = Region::orderBy('name')->get();
         $currencies = Currency::orderBy('name')->get();
-        $siteTypes = TouristSite::getSiteTypes();
-        $categories = TouristSite::getCategories();
+        $siteTypes = config('helpers.site_types') ?: [];
+        $categories = config('helpers.categories') ?: [];
         $difficultyLevels = TouristSite::getDifficultyLevels();
         $statuses = TouristSite::getStatuses();
         return view('pages.dashboard.tourist-sites.edit', get_defined_vars());
