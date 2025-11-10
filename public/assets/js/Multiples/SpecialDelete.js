@@ -128,16 +128,6 @@ function updateDeleteButtonVisibility(rowCheckboxSelector) {
     }
 }
 
-function resetDeleteSelection() {
-    const selectAllItems = document.getElementById("selectAllItems");
-    const anyChecked = document.querySelector(
-        "input[name='selectedItems[]']:checked",
-    );
-    if (anyChecked && selectAllItems) {
-        selectAllItems.click();
-    }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     // detect all selects
     specialDelete("selectAllItems", "input[name='selectedItems[]']");
@@ -145,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // document.addEventListener("updatedPaginate", () => {
     //     console.log("updatedPaginate");
     //     setTimeout(() => {
-    //         resetDeleteSelection();
+    //         window.resetDeleteSelection();
     //         SpecialDelete("selectAllItems", "input[name='selectedItems[]']");
     //     }, 200);
     // });

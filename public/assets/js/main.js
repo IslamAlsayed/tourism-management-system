@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("updatedPaginate", () => {
     setTimeout(() => {
-        resetDeleteSelection();
+        window.resetDeleteSelection();
         specialDelete("selectAllItems", "input[name='selectedItems[]']");
     }, 200);
 });
@@ -33,7 +33,7 @@ document.addEventListener("livewire:initialized", () => {
             (el.querySelector(".kt-table") || el.classList.contains("kt-table"))
         ) {
             setTimeout(() => {
-                resetDeleteSelection();
+                window.resetDeleteSelection();
                 specialDelete(
                     "selectAllItems",
                     "input[name='selectedItems[]']",
@@ -47,7 +47,7 @@ document.addEventListener("livewire:initialized", () => {
         setTimeout(() => {
             const selectAll = document.getElementById("selectAllItems");
             if (selectAll && !selectAll.dataset.initialized) {
-                resetDeleteSelection();
+                window.resetDeleteSelection();
                 specialDelete(
                     "selectAllItems",
                     "input[name='selectedItems[]']",
