@@ -297,6 +297,16 @@ window.closeAllDropdowns = function () {
         .forEach((dd) => dd.classList.add("hidden"));
 };
 
+window.resetDeleteSelection = function () {
+    const selectAllItems = document.getElementById("selectAllItems");
+    const anyChecked = document.querySelector(
+        "input[name='selectedItems[]']:checked",
+    );
+    if (anyChecked && selectAllItems) {
+        selectAllItems.click();
+    }
+};
+
 // جلب القيم المختارة من inputs hidden
 window.getSelectedIds = function (name) {
     return [...document.querySelectorAll(`input[name='${name}']`)]
