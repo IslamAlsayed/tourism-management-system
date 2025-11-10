@@ -28,12 +28,12 @@ class TouristSiteUpdateRequest extends FormRequest
             'site_code' => ['nullable', 'string', 'max:50', Rule::unique('tourist_sites', 'site_code')->ignore($touristSiteId)],
 
             // Basic Information
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'description_ar' => ['nullable', 'string'],
-            'site_type' => ['required', 'string', 'in:historical,natural,cultural,religious,recreational,archaeological,museum,park,other'],
-            'category' => ['required', 'string', 'in:monument,landmark,attraction,site,facility'],
+            'site_type' => ['nullable', 'string', 'in:' . implode(',', array_keys(config('helpers.site_types') ?? []))],
+            'category' => ['nullable', 'string', 'in:' . implode(',', array_keys(config('helpers.categories') ?? []))],
 
             // Location Information
             'region_id' => ['nullable', 'exists:regions,id'],
@@ -89,6 +89,7 @@ class TouristSiteUpdateRequest extends FormRequest
             'wheelchair_accessible' => ['nullable', 'boolean'],
 
             // Media & Resources
+            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'main_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'], // 5MB
             'gallery_images' => ['nullable', 'array'],
             'gallery_images.*' => ['image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
@@ -117,38 +118,38 @@ class TouristSiteUpdateRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get custom error messages for validation.
-     */
-    public function messages(): array
-    {
-        return [
-            'name.required' => __('main.validation.name_required'),
-            'type.required' => __('main.validation.type_required'),
-            'category.required' => __('main.validation.category_required'),
-            'latitude.between' => __('main.validation.latitude_range'),
-            'longitude.between' => __('main.validation.longitude_range'),
-            'main_image.image' => __('main.validation.main_image_format'),
-            'main_image.max' => __('main.validation.main_image_size'),
-            'gallery_images.*.image' => __('main.validation.gallery_image_format'),
-            'gallery_images.*.max' => __('main.validation.gallery_image_size'),
-        ];
-    }
+    // /**
+    //  * Get custom error messages for validation.
+    //  */
+    // public function messages(): array
+    // {
+    //     return [
+    //         'name.nullable' => __('main.validation.nullable'),
+    //         'type.nullable' => __('main.validation.nullable'),
+    //         'category.nullable' => __('main.validation.nullable'),
+    //         'latitude.between' => __('main.validation.latitude_range'),
+    //         'longitude.between' => __('main.validation.longitude_range'),
+    //         'main_image.image' => __('main.validation.main_image_format'),
+    //         'main_image.max' => __('main.validation.main_image_size'),
+    //         'gallery_images.*.image' => __('main.validation.gallery_image_format'),
+    //         'gallery_images.*.max' => __('main.validation.gallery_image_size'),
+    //     ];
+    // }
 
-    /**
-     * Get custom attribute names for validation.
-     */
-    public function attributes(): array
-    {
-        return [
-            'name' => __('main.name'),
-            'name_ar' => __('main.name_ar'),
-            'type' => __('main.type'),
-            'category' => __('main.category'),
-            'latitude' => __('main.latitude'),
-            'longitude' => __('main.longitude'),
-            'main_image' => __('main.main_image'),
-            'gallery_images' => __('main.gallery_images'),
-        ];
-    }
+    // /**
+    //  * Get custom attribute names for validation.
+    //  */
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'name' => __('main.name'),
+    //         'name_ar' => __('main.name_ar'),
+    //         'type' => __('main.type'),
+    //         'category' => __('main.category'),
+    //         'latitude' => __('main.latitude'),
+    //         'longitude' => __('main.longitude'),
+    //         'main_image' => __('main.main_image'),
+    //         'gallery_images' => __('main.gallery_images'),
+    //     ];
+    // }
 }
