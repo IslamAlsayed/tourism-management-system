@@ -22,24 +22,5 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 *.md
-
-# Project Documentation (Local Only)
-/public/assets/js/filterByForeignId2.js
-/public/assets/js/filterByForeignId copy.js
-/public/assets/js/filterByForeignId copy2.js
-/app/Excels
-/storage/app/private/uploads
-/app/Jobs/ImportDataToDBJob.php
-/app/Jobs/ImportUpdateDataToDBJob.php
-/Source-metronic
-/MD
-/public/assets/js/FilterByForeignId2.js
-/public/assets/js/FilterByForeignId3.js.backup
-/artisan.php
-/.gitattributes
-/.gitignore
-/resources/views/components/trash
-/resources/views/components/elements/display-alert.blade.php
-/commit_message.txt
-/config/excel_models.php
-/database/migrations2
+*copy.php
+/storage/app/private
