@@ -13,6 +13,7 @@
                             <div class="inline-flex flex-wrap items-center gap-3">
                                 @foreach ($fileTypes as $fileTypeId => $fileType)
                                     <div class="custom-input">
+                                        <span class="pseudo-checkbox"></span>
                                         <input type="checkbox" name="fileTypeIds[]" class="mb-0 fileTypeIds"
                                             id="{{ str_replace(' ', '-', $fileType) }}" value="{{ $fileType }}">
                                         <label for="{{ str_replace(' ', '-', $fileType) }}">

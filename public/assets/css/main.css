@@ -42,10 +42,10 @@
 }
 
 .kt-scrollable-x-auto::after {
-    content: 'Loading...';
+    content: '';
     width: 100%;
     height: 100svh;
-    background-color: #ffffff55;
+    background-color: #ffffff00;
     position: absolute;
     top: 10%;
     left: 50%;
@@ -62,15 +62,15 @@
 
 .kt-scrollable-x-auto.loading {
     & table {
-        backdrop-filter: blur(2px);
-        filter: blur(2px);
-        opacity: 0.5;
+        backdrop-filter: blur(1px);
+        filter: blur(1px);
+        opacity: 0.9;
     }
 }
 
 .kt-scrollable-x-auto.loading::after {
     display: inline-block;
-    animation: loading 2.4s infinite linear;
+    /* animation: loading 2.4s infinite linear; */
 }
 
 @keyframes loading {
@@ -191,16 +191,19 @@
         5px 0px 7px #f3f3f3;
 }
 
-#columnsModal .grid {
+#columnsModal .grid,
+#notifications {
     overflow-y: scroll;
     max-height: 504px;
 }
 
-#columnsModal .grid::-webkit-scrollbar {
+#columnsModal .grid::-webkit-scrollbar,
+#notifications::-webkit-scrollbar {
     width: 3px;
 }
 
-#columnsModal .grid::-webkit-scrollbar-thumb {
+#columnsModal .grid::-webkit-scrollbar-thumb,
+#notifications::-webkit-scrollbar-thumb {
     background-color: var(--color-primary);
 }
 
@@ -232,6 +235,20 @@
             margin-inline-end: 5px;
         }
     }
+
+    #filterClient {
+        padding: 0 10px;
+
+        &>div,
+        & select {
+            width: 100%;
+        }
+    }
+
+    #search-container,
+    #pagination_links {
+        display: none;
+    }
 }
 
 @media (max-width: 425px) {
@@ -239,11 +256,9 @@
         width: 270px;
         padding: 10px;
         border-radius: 3px;
-        left: 50% !important;
-        right: auto !important;
-        transform: translateX(-50%);
+        font-size: 9px;
 
-        &>div {
+        &>div:not(.actions-buttons) {
             gap: 3px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -255,6 +270,38 @@
             border-radius: 1px;
             margin-inline-end: 5px;
         }
+
+        & .actions-buttons>div {
+            /* display: flex; */
+            width: fit-content;
+            font-size: 9px;
+            padding: 9px;
+            height: 22px;
+            flex-direction: row;
+        }
+
+        .custom-input {
+            --unchecked: #27272a;
+            --checked: #1379f0;
+            --stroke: 1px;
+            --inset: 1px;
+            --size: 12px;
+            --gap: 9px;
+
+            & .pseudo-checkbox::before {
+                border-radius: 2px;
+            }
+
+            & .pseudo-checkbox::after {
+                border-radius: 0.7px;
+            }
+        }
+    }
+}
+
+#notifications {
+    & .notification {
+        border-bottom: 1px solid #ddd;
     }
 }
 

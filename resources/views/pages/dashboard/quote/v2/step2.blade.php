@@ -71,6 +71,7 @@
                                                     <div class="inline-flex flex-wrap items-center gap-6">
                                                         @foreach ($stars as $star)
                                                             <div class="custom-input">
+                                                                <span class="pseudo-checkbox"></span>
                                                                 <input type="checkbox" name="starsOptions[]"
                                                                     class="mb-0 starsOptions" id="{{ $star }}"
                                                                     value="{{ $star }}">

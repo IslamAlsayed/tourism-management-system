@@ -40,7 +40,7 @@
             {{-- Search input --}}
             @if (isset($showSearch) && $showSearch)
                 <div class="flex flex-wrap gap-2 lg:gap-5">
-                    <div class="flex items-center search-container">
+                    <div class="flex items-center search-container" id="search-container">
                         <label class="kt-input h-[45px]">
                             <input wire:model.live.debounce.500ms="search" class="py-2 rounded-lg" id="search"
                                 placeholder="{{ __('main.search_in') }} {{ $entityName ?? __('main.items') }}..."

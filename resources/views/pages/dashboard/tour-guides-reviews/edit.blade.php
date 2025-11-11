@@ -73,6 +73,7 @@
                                     <div class="inline-flex flex-wrap items-center gap-6">
                                         @for ($star = 1; $star <= 5; $star++)
                                             <div class="custom-input">
+                                                <span class="pseudo-checkbox"></span>
                                                 <input type="radio" name="rating" class="mb-0 rating"
                                                     id="{{ $star }}" value="{{ $star }}"
                                                     {{ $tourGuideReview->rating == $star ? 'checked' : '' }}>

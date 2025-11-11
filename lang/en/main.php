@@ -45,6 +45,8 @@ return [
     'error' => 'error',
     'info' => 'info',
     'warning' => 'warning',
+    'report' => 'Report',
+    'reports' => 'Reports',
 
     // Common Actions
     'save' => 'Save',
@@ -739,7 +741,6 @@ return [
     // Miscellaneous
     'page_under_construction' => 'Page under construction',
     'loading' => 'Loading...',
-    'notifications' => 'Notifications',
     'no_data_available' => 'No data available',
     'more_info' => 'More Info',
 
@@ -1188,6 +1189,22 @@ return [
     'Transportation & Other Services' => 'Transportation & Other Services',
     'Select transportation companies, other services, and suppliers for your booking' => 'Select transportation companies, other services, and suppliers for your booking',
 
+    // Notifications
+    'notifications' => 'Notifications',
+    'mark_all_read' => 'Mark All Read',
+    'mark_read' => 'Mark Read',
+    'no_notifications' => 'No notifications',
+    'view_all_notifications' => 'View All Notifications',
+    'are_you_sure' => 'Are you sure?',
+    'additional_optional_fields' => 'Additional Optional Fields',
+    'mark_unread' => 'Mark as Unread',
+    'no_notifications_description' => 'You\'re all caught up! New notifications will appear here.',
+    'notification_marked_as_read' => 'Notification marked as read',
+    'notification_marked_as_unread' => 'Notification marked as unread',
+    'all_notifications_marked_as_read' => 'All notifications marked as read',
+    'notification_deleted' => 'Notification deleted successfully',
+    'unread' => 'Unread',
+    'read' => 'Read',
 
     // messages
     'messages' => [
