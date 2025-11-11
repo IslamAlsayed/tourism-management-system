@@ -34,55 +34,57 @@
                     </button>
                 </span>
 
-                {{-- First Page --}}
-                <span>
-                    <button wire:click="gotoPage(1)" wire:key="page-1"
-                        class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($data->currentPage() == 1) text-white bg-blue-600 @else text-blue-600 bg-white hover:bg-blue-50 @endif">
-                        1
-                    </button>
-                </span>
-
-                {{-- Left Dots --}}
-                @if ($data->currentPage() > 4)
-                    <span><span>...</span></span>
-                @endif
-
-                {{-- Middle Pages (max 5 pages dynamic) --}}
-                @php
-                    $start = max(2, $data->currentPage() - 2);
-                    $end = min($data->lastPage() - 1, $data->currentPage() + 2);
-
-                    // Ensure we always show 5 pages when possible
-                    if ($data->currentPage() <= 3) {
-                        $end = min(6, $data->lastPage() - 1);
-                    }
-
-                    if ($data->currentPage() >= $data->lastPage() - 2) {
-                        $start = max($data->lastPage() - 5, 2);
-                    }
-                @endphp
-
-                @for ($i = $start; $i <= $end; $i++)
-                    <button wire:click="gotoPage({{ $i }})" wire:key="page-{{ $i }}"
-                        class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($i == $data->currentPage()) text-white bg-blue-600 @else text-blue-600 bg-white hover:bg-blue-50 @endif">
-                        {{ $i }}
-                    </button>
-                @endfor
-
-                {{-- Right Dots --}}
-                @if ($data->currentPage() < $data->lastPage() - 3)
-                    <span><span>...</span></span>
-                @endif
-
-                {{-- Last Page --}}
-                @if ($data->lastPage() > 1)
+                <div class="flex items-center gap-1" id="pagination_links">
+                    {{-- First Page --}}
                     <span>
-                        <button wire:click="gotoPage({{ $data->lastPage() }})" wire:key="page-last"
-                            class="px-3 py-1 border border-gray-300 rounded hover:bg-blue-50 cursor-pointer @if ($data->currentPage() == $data->lastPage()) text-white bg-blue-600 @else text-blue-600 bg-white @endif">
-                            {{ $data->lastPage() }}
+                        <button wire:click="gotoPage(1)" wire:key="page-1"
+                            class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($data->currentPage() == 1) text-white bg-blue-600 @else text-blue-600 bg-white hover:bg-blue-50 @endif">
+                            1
                         </button>
                     </span>
-                @endif
+
+                    {{-- Left Dots --}}
+                    @if ($data->currentPage() > 4)
+                        <span><span>...</span></span>
+                    @endif
+
+                    {{-- Middle Pages (max 5 pages dynamic) --}}
+                    @php
+                        $start = max(2, $data->currentPage() - 2);
+                        $end = min($data->lastPage() - 1, $data->currentPage() + 2);
+
+                        // Ensure we always show 5 pages when possible
+                        if ($data->currentPage() <= 3) {
+                            $end = min(6, $data->lastPage() - 1);
+                        }
+
+                        if ($data->currentPage() >= $data->lastPage() - 2) {
+                            $start = max($data->lastPage() - 5, 2);
+                        }
+                    @endphp
+
+                    @for ($i = $start; $i <= $end; $i++)
+                        <button wire:click="gotoPage({{ $i }})" wire:key="page-{{ $i }}"
+                            class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($i == $data->currentPage()) text-white bg-blue-600 @else text-blue-600 bg-white hover:bg-blue-50 @endif">
+                            {{ $i }}
+                        </button>
+                    @endfor
+
+                    {{-- Right Dots --}}
+                    @if ($data->currentPage() < $data->lastPage() - 3)
+                        <span><span>...</span></span>
+                    @endif
+
+                    {{-- Last Page --}}
+                    @if ($data->lastPage() > 1)
+                        <span>
+                            <button wire:click="gotoPage({{ $data->lastPage() }})" wire:key="page-last"
+                                class="px-3 py-1 border border-gray-300 rounded hover:bg-blue-50 cursor-pointer @if ($data->currentPage() == $data->lastPage()) text-white bg-blue-600 @else text-blue-600 bg-white @endif">
+                                {{ $data->lastPage() }}
+                            </button>
+                        </span>
+                    @endif
+                </div>
 
                 {{-- Next --}}
                 <span>

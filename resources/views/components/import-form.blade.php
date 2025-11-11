@@ -36,6 +36,7 @@
                                         <div class="inline-flex flex-wrap gap-4 mb-4">
                                             @foreach ($chunk as $item)
                                                 <div class="custom-input">
+                                                    <span class="pseudo-checkbox"></span>
                                                     <input type="radio" name="{{ $optionName }}"
                                                         class="mb-0 toggle-trigger" id="{{ $item }}"
                                                         data-toggle-target="{{ $item }}"

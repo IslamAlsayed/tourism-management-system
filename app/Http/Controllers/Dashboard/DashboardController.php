@@ -31,6 +31,12 @@ class DashboardController extends Controller
             'users' => User::count(),
         ];
 
+        // showToastSuccessMessage('Welcome to the Dashboard!');
+        // showToastSuccessMessage('Great to see you again!');
+        // showToastSuccessMessage('Ready to manage your data?');
+        // showToastSuccessMessage('Let\'s get started!');
+        // showToastSuccessMessage('Dashboard loaded successfully!');
+        // showToastSuccessMessage('Hello! Have a productive day!');
         return view('pages.dashboard.index', compact('stats'));
     }
 

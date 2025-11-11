@@ -46,6 +46,8 @@ return [
     'error' => 'خطأ',
     'info' => 'معلومات',
     'warning' => 'تحذير',
+    'report' => 'تقرير',
+    'reports' => 'تقارير',
 
     // Common Actions
     'save' => 'حفظ',
@@ -1189,6 +1191,21 @@ return [
     'Transportation & Other Services' => 'النقل والخدمات الأخرى',
     'Select transportation companies, other services, and suppliers for your booking' => 'اختر شركات النقل، والخدمات الأخرى، والموردين لحجزك',
 
+    // Notifications
+    'mark_all_read' => 'تحديد الكل كمقروء',
+    'mark_read' => 'تحديد كمقروء',
+    'no_notifications' => 'لا توجد إشعارات',
+    'view_all_notifications' => 'عرض جميع الإشعارات',
+    'are_you_sure' => 'هل أنت متأكد؟',
+    'additional_optional_fields' => 'حقول اختيارية إضافية',
+    'mark_unread' => 'تحديد كغير مقروء',
+    'no_notifications_description' => 'أنت محدث بالكامل! ستظهر الإشعارات الجديدة هنا.',
+    'notification_marked_as_read' => 'تم تحديد الإشعار كمقروء',
+    'notification_marked_as_unread' => 'تم تحديد الإشعار كغير مقروء',
+    'all_notifications_marked_as_read' => 'تم تحديد جميع الإشعارات كمقروءة',
+    'notification_deleted' => 'تم حذف الإشعار بنجاح',
+    'unread' => 'غير مقروء',
+    'read' => 'مقروء',
 
     // messages
     'messages' => [

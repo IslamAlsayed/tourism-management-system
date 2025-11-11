@@ -32,6 +32,7 @@ use App\Http\Controllers\Dashboard\Transportation\DepartmentController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyBusTypeController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
+use App\Http\Controllers\Dashboard\NotificationController;
 
 Route::get('/dashboard/countries/metronic-table', function () {
     return view('pages.dashboard.countries.metronic-table');
@@ -185,6 +186,19 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::post('/toggle-visibility', [SidebarManagerController::class, 'toggleVisibility'])->name('toggle-visibility');
         Route::post('/reset', [SidebarManagerController::class, 'resetToDefault'])->name('reset');
         Route::get('/export', [SidebarManagerController::class, 'exportConfig'])->name('export');
+    });
+
+    // === NOTIFICATIONS ===
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        // Route::get('/', App\Livewire\NotificationIndex::class)->name('index');
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        // Keep API routes for any AJAX calls if needed
+        Route::get('/recent', [NotificationController::class, 'getRecent'])->name('recent');
+        Route::get('/unread-count', [NotificationController::class, 'getUnreadCount'])->name('unread-count');
+        Route::post('/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('mark-all-read');
+        Route::post('/{notification}/mark-read', [NotificationController::class, 'markAsRead'])->name('mark-read');
+        Route::post('/{notification}/mark-unread', [NotificationController::class, 'markAsUnread'])->name('mark-unread');
+        Route::delete('/{notification}', [NotificationController::class, 'destroy'])->name('destroy');
     });
 
     Route::get('import/{models}/data', [ExcelController::class, 'import'])->name('import.data');

@@ -18,7 +18,7 @@ class Clients extends Component
     public $totalCount = '';
     public $message = [];
     public $filterClientGender = '';
-    // public $filterClientStatus = '';
+    public $filterClientStatus = '';
 
     public function updatingSearch()
     {
@@ -54,9 +54,9 @@ class Clients extends Component
         if ($this->filterClientGender) {
             $query->where('gender', $this->filterClientGender);
         }
-        // if ($this->filterClientStatus) {
-        //     $query->where('client_status', $this->filterClientStatus);
-        // }
+        if ($this->filterClientStatus) {
+            $query->where('status', $this->filterClientStatus);
+        }
         $this->applySorting($query);
         return view('livewire.clients', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: Client::count()]);
     }

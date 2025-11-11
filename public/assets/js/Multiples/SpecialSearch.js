@@ -11,6 +11,10 @@ window.specialSearch = function (selectElement) {
     selectElement.removeAttribute("required");
     selectElement.style.display = "none";
 
+    const placeHolder = selectElement.dataset.label
+        ? selectElement.dataset.label + "..."
+        : "Select...";
+
     const wrapper = document.createElement("div");
     wrapper.className = "search-select-tag";
     wrapper.dataset.for = selectElement.id;
@@ -19,7 +23,7 @@ window.specialSearch = function (selectElement) {
     wrapper.innerHTML = `
         <div class="wrapper">
             <div class="tag-container">
-                <input type="search" class="tag-input" placeholder="Search..." autocomplete="off" readonly>
+                <input type="search" class="tag-input" placeholder="${placeHolder}" autocomplete="off" readonly>
             </div>
             <ul class="dropdown hidden"></ul>
         </div>
