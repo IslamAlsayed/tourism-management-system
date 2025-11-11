@@ -55,7 +55,7 @@
                                 <div class="shrink-0 relative">
                                     <div class="cursor-pointer shrink-0 notification-actions-toggle"
                                         data-id="{{ $notification->id }}">
-                                        <i class="fas fa-ellipsis"></i>
+                                        <i class="fas fa-ellipsis" style="color: #4a5565"></i>
                                     </div>
 
                                     <div data-dropdown="{{ $notification->id }}"

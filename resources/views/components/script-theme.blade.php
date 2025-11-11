@@ -13,7 +13,7 @@
             themeMode = defaultThemeMode;
         }
         if (themeMode == 'system') {
-            themeMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            themeMode = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
         }
         document.documentElement.classList.add(themeMode);
         localStorage.setItem('kt-theme', themeMode);
