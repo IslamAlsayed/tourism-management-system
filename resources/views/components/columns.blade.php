@@ -18,17 +18,21 @@
             @foreach ($allColumns as $column)
                 <div class="custom-input" title="{{ __('main.' . $column) }}"
                     wire:key="col-{{ $column }}-{{ in_array($column, $pendingColumns) ? '1' : '0' }}">
-                    <input type="checkbox" name="remember" wire:model="pendingColumns" value="{{ $column }}"
-                        id="col-{{ $column }}">
-                    <label for="col-{{ $column }}">
-                        {{ limitedText(ucfirst(__('main.' . $column)), 15) }}
-                        {!! in_array($column, $relations) ? '<span class="text-red-600">R</span>' : '' !!}
-                    </label>
+                    @include('components.elements.checkbox-button', [
+                        'name' => 'remember',
+                        'id' => 'col-' . $column,
+                        'value' => $column,
+                        'styles' => 'style="z-index: -1;"',
+                        'label' =>
+                            limitedText(ucfirst(__('main.' . $column)), 15) .
+                            (in_array($column, $relations) ? ' <span class="text-red-600">R</span>' : ''),
+                    ])
                 </div>
             @endforeach
         </div>
 
-        <div class="w-full flex justify-end gap-2 mt-4 h-[40px]">
+        <div class="w-full flex justify-end gap-2 mt-4 h-[40px] actions-buttons">
+            {{-- select all button --}}
             @if (!$hasCustomColumns)
                 <div class="kt-btn kt-btn-outline bg-secondary px-3" type="button" wire:click="toggleAll"
                     wire:loading.attr="disabled" toggle-button>
@@ -46,6 +50,7 @@
                 </div>
             @endif
 
+            {{-- apply button --}}
             <div type="button" wire:click="applyColumns" wire:loading.attr="disabled" toggle-button
                 class="kt-btn kt-btn-outline bg-primary text-white px-3 rounded">
                 {{ __('Apply') }}

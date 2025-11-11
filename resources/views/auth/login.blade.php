@@ -89,10 +89,12 @@
                     </div>
                 </div>
                 <label class="kt-label">
-                    <div class="custom-input">
-                        <input type="checkbox" name="remember" class="mb-0" id="remember-me" value="1">
-                        <label for="remember-me">Remember me</label>
-                    </div>
+                    @include('components.elements.checkbox-button', [
+                        'name' => 'remember',
+                        'id' => 'remember-me',
+                        'value' => '1',
+                        'label' => 'Remember me',
+                    ])
                 </label>
                 <button class="kt-btn kt-btn-primary flex justify-center grow" type="submit">
                     Sign In
