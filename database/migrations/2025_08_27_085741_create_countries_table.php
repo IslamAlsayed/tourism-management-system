@@ -40,7 +40,7 @@ return new class extends Migration {
             $table->boolean('is_landlocked')->nullable()->default(true);
             $table->timestamps();
 
-            $table->index(['name', 'name_ar', 'timezone']);
+            $table->index(['name', 'name_ar']);
         });
     }
 
