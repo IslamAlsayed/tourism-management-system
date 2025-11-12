@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use App\Models\AirTransport;
-use App\Models\Country;
 use App\Models\State;
-use App\Models\City;
+use App\Models\Country;
+use App\Models\AirTransport;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class AirTransportSeeder extends Seeder
 {
@@ -16,6 +15,10 @@ class AirTransportSeeder extends Seeder
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        AirTransport::truncate();
+        Schema::enableForeignKeyConstraints();
+
         // Get Saudi Arabia for location context
         $saudiArabia = Country::where('name', 'Saudi Arabia')->orWhere('name_ar', 'السعودية')->first();
         $riyadhState = $saudiArabia ? State::where('country_id', $saudiArabia->id)->where('name', 'Riyadh')->first() : null;
@@ -64,7 +67,7 @@ class AirTransportSeeder extends Seeder
                 'code' => 'EK',
                 'description' => 'Dubai-based international airline, one of the largest in the Middle East.',
                 'type' => 'airline',
-                'service_type' => 'scheduled',
+                'service_type' => 'schedule',
                 'is_active' => true,
                 'is_international' => true,
                 'is_domestic' => false,
@@ -97,7 +100,7 @@ class AirTransportSeeder extends Seeder
                 'code' => 'QR',
                 'description' => 'National airline of Qatar, known for luxury service and extensive network.',
                 'type' => 'airline',
-                'service_type' => 'scheduled',
+                'service_type' => 'schedule',
                 'is_active' => true,
                 'is_international' => true,
                 'is_domestic' => false,
@@ -130,7 +133,7 @@ class AirTransportSeeder extends Seeder
                 'code' => 'KU',
                 'description' => 'National carrier of Kuwait, serving destinations across the Middle East, Europe, and Asia.',
                 'type' => 'airline',
-                'service_type' => 'scheduled',
+                'service_type' => 'schedule',
                 'is_active' => true,
                 'is_international' => true,
                 'is_domestic' => false,
@@ -157,7 +160,7 @@ class AirTransportSeeder extends Seeder
                 'code' => 'MS',
                 'description' => 'Flag carrier of Egypt and the oldest airline in Africa and the Arab world.',
                 'type' => 'airline',
-                'service_type' => 'scheduled',
+                'service_type' => 'schedule',
                 'is_active' => true,
                 'is_international' => true,
                 'is_domestic' => true,
