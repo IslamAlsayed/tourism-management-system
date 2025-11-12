@@ -5,6 +5,7 @@
     @include('includes.table-breadcrumb', [
         'title' => __('main.clients'),
         'description' => __('main.manage_system_types', ['types' => __('main.clients')]),
+        'import_url' => route('import.data', ['models' => 'clients']),
         'page_create_url' => route('clients.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.client')]),
     ])

@@ -30,7 +30,7 @@
 
         <div class="w-full flex justify-end gap-2 mt-4 h-[40px] actions-buttons">
             {{-- select all button --}}
-            @if (!$hasCustomColumns)
+            @if (count($pendingColumns) < count($allColumns))
                 <div class="kt-btn kt-btn-outline bg-secondary px-3" type="button" wire:click="toggleAll"
                     wire:loading.attr="disabled" toggle-button>
                     <label for="toggleAll" class="cursor-pointer">

@@ -109,17 +109,13 @@ class ClientController extends Controller
     public function destroy($id)
     {
         $client = Client::find($id);
-
         if (!$client) {
             return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.client')]));
         }
-
         $deleted = $client->delete();
-
         if ($deleted) {
             return redirect()->back()->withSuccess(__('main.messages.type_deleted', ['type' => __('main.client')]));
         }
-
         return redirect()->back()->withError(__('main.messages.type_deletion_failed', ['type' => __('main.client')]));
     }
 }
