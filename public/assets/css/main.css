@@ -224,8 +224,7 @@
     background-color: var(--color-primary);
 }
 
-#filterClient,
-#filterCrossingPorts {
+.filterTable {
     display: flex;
     gap: 15px;
     align-items: end;
@@ -273,8 +272,7 @@
         }
     }
 
-    #filterClient,
-    #filterCrossingPorts {
+    .filterTable {
         flex-direction: column;
         padding: 0 10px;
 

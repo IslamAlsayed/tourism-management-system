@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->foreignId('city_id')->nullable()->constrained('cities')->onDelete('set null');
 
             // Type of crossing/port
-            $table->enum('type', array_keys(config('helpers.crossing_port_types')));
+            $table->enum('type', ['land_crossing', 'international_airport', 'domestic_airport', 'seaport', 'river_port', 'border_crossing']);
 
             // Coordinates
             $table->decimal('latitude', 10, 8)->nullable();
@@ -62,7 +62,7 @@ return new class extends Migration {
             $table->string('immigration_office')->nullable();
 
             // Status and preferences
-            $table->enum('status', array_keys(config('helpers.crossing_port_statuses')))->nullable()->default('active');
+            $table->enum('status', ['active', 'inactive', 'under_construction', 'maintenance'])->nullable()->default('active');
             $table->text('notes')->nullable();
 
             // Images and documents
