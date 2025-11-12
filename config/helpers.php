@@ -115,5 +115,29 @@ return [
         'friday' => 'friday',
         'saturday' => 'saturday',
         'sunday' => 'sunday'
-    ]
+    ],
+
+    'air_transport_types' => [
+        'airline' => 'airline',
+        'charter_company' => 'charter_company',
+        'cargo_airline' => 'cargo_airline',
+        'aircraft_operator' => 'aircraft_operator',
+        'aircraft_manufacturer' => 'aircraft_manufacturer'
+    ],
+
+    'air_transport_service_types' => [
+        'schedule' => 'schedule',
+        'charter' => 'charter',
+        'cargo' => 'cargo',
+        'private' => 'private',
+        'mixed' => 'mixed',
+    ],
+
+    'air_transport_statuses' => [
+        'active' => 'active',
+        'inactive' => 'inactive',
+        'suspended' => 'suspended',
+        'merged' => 'merged',
+        'bankrupt' => 'bankrupt',
+    ],
 ];

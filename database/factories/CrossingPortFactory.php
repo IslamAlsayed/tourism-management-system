@@ -34,7 +34,6 @@ class CrossingPortFactory extends Factory
             'name' => $name,
             'name_ar' => $nameAr,
             'description' => $this->faker->optional(0.7)->paragraph(),
-            'description_ar' => $this->faker->optional(0.5)->realText(200),
 
             // Location information
             'region_id' => \App\Models\Region::inRandomOrder()->first()?->id,
@@ -67,7 +66,6 @@ class CrossingPortFactory extends Factory
 
             // Address
             'address' => $this->faker->optional(0.8)->address(),
-            'address_ar' => $this->faker->optional(0.6)->address(),
             'postal_code' => $this->faker->optional(0.7)->postcode(),
 
             // Additional information
@@ -81,7 +79,6 @@ class CrossingPortFactory extends Factory
             // Status and preferences
             'status' => $this->faker->randomElement(array_keys(config('helpers.crossing_port_statuses'))),
             'notes' => $this->faker->optional(0.4)->paragraph(),
-            'notes_ar' => $this->faker->optional(0.3)->realText(150),
 
             // Images and documents (as JSON arrays)
             'images' => $this->faker->optional(0.3)->randomElements([
