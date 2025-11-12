@@ -4,12 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\AirTransport;
-use App\Models\Country;
-use App\Models\State;
-use App\Models\City;
-use App\Models\Region;
-use App\Models\Subregion;
-use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AirTransport>
@@ -206,7 +200,7 @@ class AirTransportFactory extends Factory
     {
         switch ($type) {
             case 'airline':
-                return $this->faker->randomElement(['scheduled', 'mixed']);
+                return $this->faker->randomElement(['schedule', 'mixed']);
             case 'charter_company':
                 return 'charter';
             case 'cargo_airline':
@@ -214,9 +208,9 @@ class AirTransportFactory extends Factory
             case 'aircraft_operator':
                 return $this->faker->randomElement(['charter', 'private']);
             case 'aircraft_manufacturer':
-                return 'scheduled';
+                return 'schedule';
             default:
-                return 'scheduled';
+                return 'schedule';
         }
     }
 
@@ -451,7 +445,7 @@ class AirTransportFactory extends Factory
     {
         return $this->state(fn(array $attributes) => [
             'type' => 'airline',
-            'service_type' => 'scheduled',
+            'service_type' => 'schedule',
             'is_international' => false,
             'is_domestic' => true,
             'fleet_size' => $this->faker->numberBetween(5, 30),
