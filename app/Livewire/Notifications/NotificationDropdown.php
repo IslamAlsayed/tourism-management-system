@@ -95,9 +95,7 @@ class NotificationDropdown extends Component
                 $notification->delete();
                 $this->refreshNotifications();
 
-                // Emit event to update other notification components
-                // $this->dispatch('notificationDeleted', id: $notificationId);
-
+                // Emit event to delete notification by id
                 $this->dispatch('notification-deleted', id: $notificationId);
                 Log::info(__('main.notification_deleted'));
             } else {

@@ -90,7 +90,7 @@ trait CustomColumns
             $this->pendingColumns = $this->allColumns;
         }
 
-        // Apply changes immediately for better UX
+        // Apply changes immediately for toggleAll for better UX
         $this->applyColumns();
     }
 
@@ -111,5 +111,22 @@ trait CustomColumns
 
         $this->columns = array_slice($fillable, 0, $defaultColumnsCount);
         $this->pendingColumns = $this->columns;
+    }
+
+    /**
+     * Update pendingColumns when checkbox changes
+     * This method is automatically called by Livewire when pendingColumns property is updated
+     */
+    public function updatedPendingColumns(): void
+    {
+        // Ensure that the pending columns are properly filtered and sorted
+        $model = new $this->modelClass();
+        $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
+
+        // Clean the pending columns - remove any excluded columns
+        $this->pendingColumns = array_values(array_diff($this->pendingColumns, $excluded));
+
+        // Just update the UI state, user still needs to click "Apply" to save to database
+        // This provides better control and prevents accidental saves
     }
 }

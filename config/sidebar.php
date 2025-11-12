@@ -524,7 +524,6 @@ return [
         [
             'title' => 'tourist sites',
             'icon' => 'ki-filled ki-geolocation',
-            'status' => 'done',
             'children' => [
                 [
                     'title' => 'all tourist sites',
@@ -548,39 +547,48 @@ return [
         // ================= Crossings & Ports =================
         [
             'title' => 'crossings & ports',
-            'fixed' => '+4',
             'icon' => 'ki-filled ki-pointers',
+            'status' => 'done',
             'children' => [
                 [
-                    'title' => 'land crossings',
-                    'fixed' => false,
+                    'title' => 'all crossings ports',
                     'icon' => 'ki-filled ki-pointers',
-                    'route' => '#'
+                    'route' => 'crossings-ports.index'
+                ],
+                [
+                    'title' => 'create crossing port',
+                    'icon' => 'ki-filled ki-plus',
+                    'route' => 'crossings-ports.create'
+                ],
+                [
+                    'title' => 'import crossings ports',
+                    'icon' => 'ki-filled ki-upload',
+                    'route' => 'import.data',
+                    'parameters' => ['models' => 'crossings-ports'],
                 ],
                 [
                     'title' => 'airports',
-                    'fixed' => '+2',
                     'icon' => 'ki-filled ki-airplane-square',
                     'children' => [
                         [
                             'title' => 'international airports',
-                            'fixed' => false,
                             'icon' => 'ki-solid ki-airplane-square',
-                            'route' => '#'
+                            'route' => 'crossings-ports.type',
+                            'parameters' => ['type' => 'international-airports'],
                         ],
                         [
                             'title' => 'domestic airports',
-                            'fixed' => false,
                             'icon' => 'ki-duotone ki-airplane',
-                            'route' => '#'
+                            'route' => 'crossings-ports.type',
+                            'parameters' => ['type' => 'domestic-airports'],
                         ],
                     ],
                 ],
                 [
                     'title' => 'seaports',
-                    'fixed' => false,
                     'icon' => 'ki-filled ki-ship',
-                    'route' => '#'
+                    'route' => 'crossings-ports.type',
+                    'parameters' => ['type' => 'seaports'],
                 ],
             ],
         ],

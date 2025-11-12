@@ -3,17 +3,17 @@
 @section('table-content')
     <!-- Container -->
     @include('includes.table-breadcrumb', [
-        'title' => __('main.crossings-ports'),
-        'description' => __('main.manage_system_types', ['types' => __('main.crossings-ports')]),
+        'title' => $typeLabel,
+        'description' => __('main.manage_system_types', ['types' => $typeLabel]),
         'page_create_url' => route('crossings-ports.create'),
-        'page_create_title' => __('main.create_type', ['type' => __('main.crossings-ports')]),
+        'page_create_title' => __('main.create_type', ['type' => __('main.crossing-port')]),
     ])
     <!-- End of Container -->
 
     <!-- Container -->
     <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
-            <livewire:crossings-ports />
+            <livewire:crossings-ports :filterType="$typeValue" />
         </div>
     </div>
     <!-- End of Container -->

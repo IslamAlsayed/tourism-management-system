@@ -25,7 +25,7 @@
         @forelse ($data as $item)
             <tr wire:key="{{ $item->id }}" class="hover:bg-gray-100">
                 <td class="text-center">
-                    @include('components.elements.all-checkbox-button', [
+                    @include('components.elements.checkbox-button', [
                         'name' => 'selectedItems[]',
                         'id' => 'selectedItems' . $item->id,
                     ])
