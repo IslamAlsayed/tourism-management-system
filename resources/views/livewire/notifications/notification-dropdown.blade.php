@@ -32,7 +32,7 @@
 
         {{-- Notifications List --}}
         <div class="max-h-96 overflow-y-auto">
-            <div style="overflow-y: scroll; max-height: 350px;" id="notifications">
+            <div style="overflow-y: scroll; overflow-X: hidden; max-height: 350px;" id="notifications">
                 @forelse($notifications as $notification)
                     <div wire:key="notification-{{ $notification->id }}"
                         class="notification p-3 border-gray-100 hover:bg-gray-50 {{ !$notification->is_read ? 'bg-blue-50' : '' }} notification-{{ $notification->id }}">
@@ -163,7 +163,10 @@
         });
         window.addEventListener('notification-deleted', (e) => {
             const notificationId = e.detail.id;
-            document.querySelector('.notification-' + notificationId)?.remove();
+            document.querySelector('.notification-' + notificationId).className += ' fade-out loading';
+            setTimeout(() => {
+                document.querySelector('.notification-' + notificationId)?.remove();
+            }, 250);
         });
     </script>
 @endpush

@@ -18,15 +18,12 @@
             @foreach ($allColumns as $column)
                 <div class="custom-input" title="{{ __('main.' . $column) }}"
                     wire:key="col-{{ $column }}-{{ in_array($column, $pendingColumns) ? '1' : '0' }}">
-                    @include('components.elements.checkbox-button', [
-                        'name' => 'remember',
-                        'id' => 'col-' . $column,
-                        'value' => $column,
-                        'styles' => 'style="z-index: -1;"',
-                        'label' =>
-                            limitedText(ucfirst(__('main.' . $column)), 15) .
-                            (in_array($column, $relations) ? ' <span class="text-red-600">R</span>' : ''),
-                    ])
+                    <input type="checkbox" name="remember" wire:model="pendingColumns" value="{{ $column }}"
+                        id="col-{{ $column }}">
+                    <label for="col-{{ $column }}">
+                        {{ limitedText(ucfirst(__('main.' . $column)), 15) }}
+                        {!! in_array($column, $relations) ? '<span class="text-red-600">R</span>' : '' !!}
+                    </label>
                 </div>
             @endforeach
         </div>
@@ -46,14 +43,14 @@
             @if ($hasCustomColumns)
                 <div type="button" wire:click="resetColumns" wire:loading.attr="disabled" toggle-button
                     class="kt-btn kt-btn-outline bg-danger text-white px-3 rounded">
-                    {{ __('Reset to Default') }}
+                    {{ __('main.reset_to_default') }}
                 </div>
             @endif
 
             {{-- apply button --}}
             <div type="button" wire:click="applyColumns" wire:loading.attr="disabled" toggle-button
                 class="kt-btn kt-btn-outline bg-primary text-white px-3 rounded">
-                {{ __('Apply') }}
+                {{ __('main.apply') }}
             </div>
         </div>
     </div>

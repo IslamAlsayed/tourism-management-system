@@ -3,15 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\SystemLanguageController;
-use App\Http\Controllers\Admin\SidebarManagerController;
 use App\Http\Controllers\Dashboard\CityController;
 use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Controllers\Dashboard\ClientController;
-use App\Http\Controllers\Dashboard\TouristSiteController;
+use App\Http\Controllers\SystemLanguageController;
 use App\Http\Controllers\Dashboard\ExcelController;
 use App\Http\Controllers\Dashboard\StateController;
+use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\RegionController;
 use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\ReportsController;
@@ -20,8 +18,12 @@ use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\SubregionController;
 use App\Http\Controllers\Dashboard\TourGuideController;
+use App\Http\Controllers\Admin\SidebarManagerController;
 use App\Http\Controllers\Dashboard\RestaurantController;
 use App\Http\Controllers\Dashboard\NationalityController;
+use App\Http\Controllers\Dashboard\TouristSiteController;
+use App\Http\Controllers\Dashboard\CrossingPortController;
+use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\TourGuideTypeController;
 use App\Http\Controllers\Dashboard\TourGuideReviewController;
@@ -32,7 +34,6 @@ use App\Http\Controllers\Dashboard\Transportation\DepartmentController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyBusTypeController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
-use App\Http\Controllers\Dashboard\NotificationController;
 
 Route::get('/dashboard/countries/metronic-table', function () {
     return view('pages.dashboard.countries.metronic-table');
@@ -95,6 +96,10 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === CLIENT MANAGEMENT ===
     Route::resource('clients', ClientController::class)->names('clients');
+
+    // === CROSSING PORTS MANAGEMENT ===
+    Route::resource('crossings-ports', CrossingPortController::class)->names('crossings-ports');
+    Route::get('crossings-ports/type/{type}', [CrossingPortController::class, 'type'])->name('crossings-ports.type');
 
     // === CURRENCY MANAGEMENT ===
     Route::resource('currencies', CurrencyController::class)->names('currencies');

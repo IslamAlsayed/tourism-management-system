@@ -22,24 +22,24 @@ return [
     ],
 
     'positions' => [
-        'manager' => 'manager',
-        'developer' => 'developer',
-        'designer' => 'designer',
-        'hr' => 'hr',
-        'sales' => 'sales',
-        'marketing' => 'marketing',
-        'support' => 'support',
-        'other' => 'other',
+        'manager' => 'Manager',
+        'developer' => 'Developer',
+        'designer' => 'Designer',
+        'hr' => 'HR',
+        'sales' => 'Sales',
+        'marketing' => 'Marketing',
+        'support' => 'Support',
+        'other' => 'Other',
     ],
 
     'departments' => [
-        'it' => 'it',
-        'hr' => 'hr',
-        'sales' => 'sales',
-        'marketing' => 'marketing',
-        'support' => 'support',
-        'finance' => 'finance',
-        'other' => 'other',
+        'it' => 'IT',
+        'hr' => 'HR',
+        'sales' => 'Sales',
+        'marketing' => 'Marketing',
+        'support' => 'Support',
+        'finance' => 'Finance',
+        'other' => 'Other',
     ],
 
     'site_types' => [
@@ -56,13 +56,64 @@ return [
     ],
 
     'categories' => [
-        'cultural' => 'Cultural',
-        'adventure' => 'Adventure',
-        'family' => 'Family',
-        'educational' => 'Educational',
-        'religious' => 'Religious',
-        'nature' => 'Nature',
-        'entertainment' => 'Entertainment',
-        'shopping' => 'Shopping',
+        'cultural' => 'cultural',
+        'adventure' => 'adventure',
+        'family' => 'family',
+        'educational' => 'educational',
+        'religious' => 'religious',
+        'nature' => 'nature',
+        'entertainment' => 'entertainment',
+        'shopping' => 'shopping',
     ],
+
+    'crossing_port_types' => [
+        'land_crossing' => 'land_crossing',
+        'international_airport' => 'international_airport',
+        'domestic_airport' => 'domestic_airport',
+        'seaport' => 'seaport',
+        'river_port' => 'river_port',
+        'border_crossing' => 'border_crossing',
+    ],
+
+    'crossing_port_statuses' => [
+        'active' => 'active',
+        'inactive' => 'inactive',
+        'under_construction' => 'under_construction',
+        'maintenance' => 'maintenance',
+    ],
+
+    'crossing_port_facilities' => [
+        'customs' => 'customs',
+        'immigration' => 'immigration',
+        'security' => 'security',
+        'duty_free' => 'duty_free',
+        'vip_lounge' => 'vip_lounge',
+        'restaurants' => 'restaurants',
+        'currency_exchange' => 'currency_exchange',
+        'shops' => 'shops',
+        'cargo_handling' => 'cargo_handling',
+        'passenger_terminal' => 'passenger_terminal',
+        'parking' => 'parking',
+    ],
+
+    'crossing_port_services' => [
+        'baggage_handling' => 'baggage_handling',
+        'ground_services' => 'ground_services',
+        'fueling' => 'fueling',
+        'cargo_services' => 'cargo_services',
+        'passenger_services' => 'passenger_services',
+        'ship_services' => 'ship_services',
+        'inspection_services' => 'inspection_services',
+        'document_processing' => 'document_processing',
+    ],
+
+    'days' => [
+        'monday' => 'monday',
+        'tuesday' => 'tuesday',
+        'wednesday' => 'wednesday',
+        'thursday' => 'thursday',
+        'friday' => 'friday',
+        'saturday' => 'saturday',
+        'sunday' => 'sunday'
+    ]
 ];

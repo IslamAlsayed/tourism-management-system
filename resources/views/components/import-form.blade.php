@@ -33,23 +33,17 @@
                                     @endphp
 
                                     @foreach ($optionChunks as $chunk)
-                                        <div class="inline-flex flex-wrap gap-4 mb-4">
-                                            @foreach ($chunk as $item)
-                                                <div class="custom-input">
-                                                    <span class="pseudo-checkbox"></span>
-                                                    <input type="radio" name="{{ $optionName }}"
-                                                        class="mb-0 toggle-trigger" id="{{ $item }}"
-                                                        data-toggle-target="{{ $item }}"
-                                                        data-toggle-id="{{ $item }}" value="{{ $item }}"
-                                                        {{ in_array($item, $disabledOptions) ? 'disabled' : '' }}>
-                                                    <label for="{{ $item }}">
-                                                        @if (in_array($item, $disabledOptions))
-                                                            <i class="fas fa-xmark text-red-600"></i>
-                                                        @endif
-                                                        {{ __('main.' . $item) }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
+                                        <div class="custom-input">
+                                            <input type="radio" name="{{ $optionName }}" class="mb-0 toggle-trigger"
+                                                id="{{ $item }}" data-toggle-target="{{ $item }}"
+                                                data-toggle-id="{{ $item }}" value="{{ $item }}"
+                                                {{ in_array($item, $disabledOptions) ? 'disabled' : '' }}>
+                                            <label for="{{ $item }}">
+                                                @if (in_array($item, $disabledOptions))
+                                                    <i class="fas fa-xmark text-red-600"></i>
+                                                @endif
+                                                {{ __('main.' . $item) }}
+                                            </label>
                                         </div>
                                     @endforeach
                                 @endif

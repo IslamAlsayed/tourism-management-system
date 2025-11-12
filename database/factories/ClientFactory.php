@@ -85,7 +85,7 @@ class ClientFactory extends Factory
             'linkedin_url' => $this->faker->optional(0.2)->url(),
 
             // Status and preferences
-            'status' => $this->faker->randomElement(['active', 'inactive', 'pending', 'blacklisted']),
+            'client_status' => $this->faker->randomElement(['active', 'inactive', 'pending', 'blacklisted']),
             'timezone' => $this->faker->randomElement(['UTC', 'Asia/Dubai', 'Asia/Riyadh', 'Europe/London', 'America/New_York']),
             'notes' => $this->faker->optional(0.4)->paragraph(),
 
@@ -103,7 +103,7 @@ class ClientFactory extends Factory
     public function active(): static
     {
         return $this->state(fn(array $attributes) => [
-            'status' => 'active',
+            'client_status' => 'active',
         ]);
     }
 
@@ -113,7 +113,7 @@ class ClientFactory extends Factory
     public function inactive(): static
     {
         return $this->state(fn(array $attributes) => [
-            'status' => 'inactive',
+            'client_status' => 'inactive',
         ]);
     }
 }
