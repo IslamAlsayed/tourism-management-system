@@ -72,7 +72,7 @@ return new class extends Migration {
             $table->string('linkedin_url')->nullable();
 
             // Status and preferences
-            $table->enum('status', ['active', 'inactive', 'pending', 'blacklisted'])->default('active');
+            $table->enum('client_status', ['active', 'inactive', 'pending', 'blacklisted'])->default('active');
             $table->string('timezone')->nullable();
             $table->string('whatsapp')->nullable();
             $table->string('company_phone')->nullable();
@@ -90,7 +90,7 @@ return new class extends Migration {
             $table->index('email_primary');
             $table->index('personal_email');
             $table->index('passport_number');
-            $table->index('status');
+            $table->index('client_status');
             $table->index(['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id']);
         });
     }

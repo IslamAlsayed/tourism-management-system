@@ -1,365 +1,495 @@
 @extends('layouts.master')
 
-@section('title', 'Edit Crossing/Port')
+@section('title', __('main.edit_type', ['type' => __('main.crossing_port')]))
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    Edit Crossing/Port
+                    {{ __('main.edit_type', ['type' => __('main.crossing_port')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    Update crossing/port information
+                    {{ __('main.edit_type_description', ['type' => __('main.crossing_port')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="#" class="kt-btn kt-btn-outline">
-                    Back to Crossings & Ports
+                <a href="{{ route('crossings-ports.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_types', ['types' => __('main.crossings_ports')]) }}
                 </a>
             </div>
         </div>
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-4 lg:gap-6">
-            <!-- Crossing/Port Form -->
-            <div class="kt-card">
+        <form class="space-y-6" method="POST" action="{{ route('crossings-ports.update', $crossingPort->id) }}"
+            enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+
+            {{-- Basic Information --}}
+            <div class="kt-card mb-6">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">Basic Information</h3>
+                    <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
                 </div>
-                <div class="kt-card-body">
-                    <form class="space-y-6 p-4">
-                        <!-- Logo/Image -->
-                        <div class="text-center">
-                            <div class="relative inline-block">
-                                <div
-                                    class="w-24 h-24 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="crossing-preview" src="{{ asset('metronic/media/avatars/300-7.png') }}"
-                                        alt="Crossing/Port Logo" class="w-full h-full object-cover">
-                                </div>
-                                <label for="logo"
-                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark">
-                                    <i class="ki-filled ki-camera text-sm"></i>
-                                </label>
-                                <input type="file" id="logo" name="logo" class="hidden" accept="image/*">
-                            </div>
-                            <div class="text-sm text-secondary-foreground">Upload logo or image</div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        {{-- Name --}}
+                        <div>
+                            <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
+                            <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->name }}">
+                            @error('name')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Name -->
-                            <div class="mb-4">
-                                <label for="name" class="kt-label required mb-2">Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input" required
-                                    value="King Fahd Causeway">
-                            </div>
-
-                            <!-- Name Arabic -->
-                            <div class="mb-4">
-                                <label for="name_ar" class="kt-label required mb-2">Name (Arabic)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input" required
-                                    value="جسر الملك فهد">
-                            </div>
+                        {{-- Arabic Name --}}
+                        <div>
+                            <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                            <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->name_ar }}">
+                            @error('name_ar')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Type -->
-                            <div class="mb-4">
-                                <label for="type" class="kt-label required mb-2">Type</label>
-                                <select name="type" id="type" class="kt-select" required>
-                                    <option value="">--</option>
-                                    <option value="Land Crossing" selected>Land Crossing</option>
-                                    <option value="International Airport">International Airport</option>
-                                    <option value="Domestic Airport">Domestic Airport</option>
-                                    <option value="Seaport">Seaport</option>
-                                    <option value="River Port">River Port</option>
-                                    <option value="Border Post">Border Post</option>
-                                    <option value="Customs Point">Customs Point</option>
-                                </select>
-                            </div>
-
-                            <!-- Code -->
-                            <div class="mb-4">
-                                <label for="code" class="kt-label required mb-2">Code</label>
-                                <input type="text" name="code" id="code" class="kt-input" required maxlength="10"
-                                    value="KFC">
-                            </div>
+                        {{-- Code --}}
+                        <div>
+                            <label for="code" class="kt-label mb-2">{{ __('main.code') }}</label>
+                            <input type="text" name="code" id="code" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->code }}" placeholder="e.g., RUH, JED" disabled />
+                            @error('code')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Country -->
-                            <div class="mb-4">
-                                <label for="country" class="kt-label required mb-2">Country</label>
-                                <select name="country" id="country" class="kt-select" required>
-                                    <option value="">--</option>
-                                    <option value="Saudi Arabia" selected>Saudi Arabia</option>
-                                    <option value="UAE">United Arab Emirates</option>
-                                    <option value="Qatar">Qatar</option>
-                                    <option value="Kuwait">Kuwait</option>
-                                    <option value="Bahrain">Bahrain</option>
-                                    <option value="Oman">Oman</option>
-                                </select>
-                            </div>
-
-                            <!-- City -->
-                            <div class="mb-4">
-                                <label for="city" class="kt-label required mb-2">City</label>
-                                <input type="text" name="city" id="city" class="kt-input" required
-                                    value="Dammam">
-                            </div>
+                        {{-- Type --}}
+                        <div>
+                            <label for="crossings-ports-type" class="kt-label mb-2">{{ __('main.type') }}</label>
+                            <select name="type" id="crossings-ports-type" class="kt-input h-[45px]" special-search
+                                data-current-value="{{ $crossingPort->type }}" data-value="{{ $crossingPort->type }}">
+                                <option value="">--</option>
+                                @foreach ($crossing_port_types as $key => $type)
+                                    <option value="{{ $key }}"
+                                        {{ $crossingPort->type == $key ? 'selected' : '' }}>
+                                        {{ __('main.' . $type) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('type')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Address -->
-                            <div class="mb-4">
-                                <label for="address" class="kt-label mb-2">Address</label>
-                                <textarea name="address" id="address" rows="3" class="kt-input">King Fahd Causeway, Dammam 31421, Saudi Arabia</textarea>
-                            </div>
-
-                            <!-- Description -->
-                            <div class="mb-4">
-                                <label for="description" class="kt-label mb-2">Description</label>
-                                <textarea name="description" id="description" rows="3" class="kt-input">Major land crossing connecting Saudi Arabia and Bahrain, spanning 25 kilometers across the Arabian Gulf.</textarea>
-                            </div>
+                        {{-- Status --}}
+                        <div>
+                            <label for="status" class="kt-label mb-2">{{ __('main.status') }}</label>
+                            <select name="status" id="status" class="kt-input h-[45px]" special-search>
+                                <option value="">--</option>
+                                @foreach ($crossing_port_statuses as $key => $status)
+                                    <option value="{{ $key }}"
+                                        {{ $crossingPort->status == $key ? 'selected' : '' }}>
+                                        {{ __('main.' . $status) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('status')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
+                    </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6">
-                            <!-- Phone -->
-                            <div class="mb-4">
-                                <label for="phone" class="kt-label mb-2">Phone</label>
-                                <input type="tel" name="phone" id="phone" class="kt-input"
-                                    value="+966 13 123 4567">
-                            </div>
-
-                            <!-- Email -->
-                            <div class="mb-4">
-                                <label for="email" class="kt-label mb-2">Email</label>
-                                <input type="email" name="email" id="email" class="kt-input"
-                                    value="info@kfc.gov.sa">
-                            </div>
-
-                            <!-- Website -->
-                            <div class="mb-4">
-                                <label for="website" class="kt-label mb-2">Website</label>
-                                <input type="url" name="website" id="website" class="kt-input"
-                                    value="www.kfc.gov.sa">
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Capacity -->
-                            <div class="mb-4">
-                                <label for="capacity" class="kt-label mb-2">Capacity</label>
-                                <input type="text" name="capacity" id="capacity" class="kt-input"
-                                    value="50,000 vehicles/day">
-                            </div>
-
-                            <!-- Operating Hours -->
-                            <div class="mb-4">
-                                <label for="operating_hours" class="kt-label mb-2">Operating Hours</label>
-                                <input type="text" name="operating_hours" id="operating_hours" class="kt-input"
-                                    value="24/7">
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Coordinates -->
-                            <div class="mb-4">
-                                <label for="coordinates" class="kt-label mb-2">GPS Coordinates</label>
-                                <input type="text" name="coordinates" id="coordinates" class="kt-input"
-                                    value="26.1792° N, 50.1971° E">
-                            </div>
-
-                            <!-- Status -->
-                            <div class="mb-4">
-                                <label for="status" class="kt-label required mb-2">Status</label>
-                                <select name="status" id="status" class="kt-select" required>
-                                    <option value="active" selected>Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="maintenance">Under Maintenance</option>
-                                    <option value="construction">Under Construction</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Services -->
-                        <div class="mb-4">
-                            <label class="kt-label mb-2">Available Services</label>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="services[]" id="customs" class="kt-checkbox"
-                                        value="customs" checked>
-                                    <label for="customs" class="kt-label mb-0">Customs</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="services[]" id="immigration" class="kt-checkbox"
-                                        value="immigration" checked>
-                                    <label for="immigration" class="kt-label mb-0">Immigration</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="services[]" id="security" class="kt-checkbox"
-                                        value="security" checked>
-                                    <label for="security" class="kt-label mb-0">Security</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="services[]" id="parking" class="kt-checkbox"
-                                        value="parking" checked>
-                                    <label for="parking" class="kt-label mb-0">Parking</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="services[]" id="restaurants" class="kt-checkbox"
-                                        value="restaurants" checked>
-                                    <label for="restaurants" class="kt-label mb-0">Restaurants</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="services[]" id="shopping" class="kt-checkbox"
-                                        value="shopping" checked>
-                                    <label for="shopping" class="kt-label mb-0">Shopping</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="services[]" id="wifi" class="kt-checkbox"
-                                        value="wifi" checked>
-                                    <label for="wifi" class="kt-label mb-0">Free WiFi</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="services[]" id="lounges" class="kt-checkbox"
-                                        value="lounges">
-                                    <label for="lounges" class="kt-label mb-0">VIP Lounges</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Facilities -->
-                        <div class="mb-4">
-                            <label class="kt-label mb-2">Facilities</label>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="restrooms" class="kt-checkbox"
-                                        value="restrooms" checked>
-                                    <label for="restrooms" class="kt-label mb-0">Restrooms</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="medical" class="kt-checkbox"
-                                        value="medical" checked>
-                                    <label for="medical" class="kt-label mb-0">Medical Center</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="banking" class="kt-checkbox"
-                                        value="banking" checked>
-                                    <label for="banking" class="kt-label mb-0">Banking</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="currency_exchange"
-                                        class="kt-checkbox" value="currency_exchange" checked>
-                                    <label for="currency_exchange" class="kt-label mb-0">Currency Exchange</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="car_rental" class="kt-checkbox"
-                                        value="car_rental" checked>
-                                    <label for="car_rental" class="kt-label mb-0">Car Rental</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="hotels" class="kt-checkbox"
-                                        value="hotels">
-                                    <label for="hotels" class="kt-label mb-0">Hotels</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="transportation" class="kt-checkbox"
-                                        value="transportation" checked>
-                                    <label for="transportation" class="kt-label mb-0">Transportation</label>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="information" class="kt-checkbox"
-                                        value="information" checked>
-                                    <label for="information" class="kt-label mb-0">Information Desk</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Notes -->
-                        <div class="mb-4">
-                            <label for="notes" class="kt-label mb-2">Additional Notes</label>
-                            <textarea name="notes" id="notes" rows="4" class="kt-input">One of the longest bridges in the world, connecting Saudi Arabia and Bahrain. Features modern facilities and efficient border control.</textarea>
-                        </div>
-
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4 pt-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                Update Crossing/Port
-                            </button>
-                            <a href="#" class="kt-btn kt-btn-outline">
-                                Cancel
-                            </a>
-                        </div>
-                    </form>
+                    {{-- Description --}}
+                    <div>
+                        <label for="description" class="kt-label mb-2">{{ __('main.description') }}</label>
+                        <input id="description" type="hidden" name="description" value="{{ $crossingPort->description }}">
+                        <trix-editor input="description" class="trix-content"></trix-editor>
+                        @error('description')
+                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
             </div>
 
-            <!-- Tips -->
-            <div class="kt-card">
+            {{-- Location Information --}}
+            <div class="kt-card mb-6">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">Update Tips</h3>
+                    <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                 </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-success"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">Keep Information Current</div>
-                                <div class="text-sm text-secondary-foreground">Regularly update operating hours, capacity,
-                                    and service information</div>
-                            </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        @include('components.regions.edit', [
+                            'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                            'multiple' => false,
+                            'record' => $crossingPort,
+                        ])
+
+                        {{-- Latitude --}}
+                        <div>
+                            <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
+                            <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->latitude }}" step="any" min="-90" max="90"
+                                placeholder="24.9576" />
+                            @error('latitude')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-shield-tick text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">Security Updates</div>
-                                <div class="text-sm text-secondary-foreground">Ensure all security protocols and safety
-                                    measures are up to date</div>
-                            </div>
+                        {{-- Longitude --}}
+                        <div>
+                            <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
+                            <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->longitude }}" step="any" min="-180" max="180"
+                                placeholder="46.6988" />
+                            @error('longitude')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    {{-- Address --}}
+                    <div class="">
+                        <label for="address" class="kt-label mb-2">{{ __('main.address') }}</label>
+                        <input id="address" type="hidden" name="address" value="{{ $crossingPort->address }}">
+                        <trix-editor input="address"></trix-editor>
+                        @error('address')
+                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            {{-- Operating Information --}}
+            <div class="kt-card mb-6">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.operating_information') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {{-- Opening Time --}}
+                        <div>
+                            <label for="opening_time" class="kt-label mb-2">{{ __('main.opening_time') }}</label>
+                            <input type="time" name="opening_time" id="opening_time" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->opening_time }}">
+                            @error('opening_time')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-star text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">Service Excellence</div>
-                                <div class="text-sm text-secondary-foreground">Monitor service quality and efficiency
-                                    metrics</div>
-                            </div>
+                        {{-- Closing Time --}}
+                        <div>
+                            <label for="closing_time" class="kt-label mb-2">{{ __('main.closing_time') }}</label>
+                            <input type="time" name="closing_time" id="closing_time" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->closing_time }}">
+                            @error('closing_time')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Capacity --}}
+                        <div>
+                            <label for="capacity" class="kt-label mb-2">{{ __('main.capacity') }}</label>
+                            <input type="number" name="capacity" id="capacity" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->capacity }}" min="1"
+                                placeholder="{{ __('main.passengers_per_hour') }}" />
+                            @error('capacity')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Elevation (for airports) --}}
+                        <div>
+                            <label for="elevation" class="kt-label mb-2">{{ __('main.elevation') }}</label>
+                            <input type="text" name="elevation" id="elevation" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->elevation }}" placeholder="2049 ft" />
+                            @error('elevation')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            {{-- Contact Information --}}
+            <div class="kt-card mb-6">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {{-- Phone --}}
+                        <div>
+                            <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
+                            <input type="text" name="phone" id="phone" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->phone }}">
+                            @error('phone')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Email --}}
+                        <div>
+                            <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
+                            <input type="email" name="email" id="email" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->email }}">
+                            @error('email')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Website --}}
+                        <div>
+                            <label for="website" class="kt-label mb-2">{{ __('main.website') }}</label>
+                            <input type="url" name="website" id="website" class="kt-input h-[45px]"
+                                value="{{ $crossingPort->website }}">
+                            @error('website')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Additional Information --}}
+            <div class="kt-card mb-6">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.additional_information') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    {{-- Notes --}}
+                    <div>
+                        <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
+                        <input id="notes" type="hidden" name="notes" value="{{ $crossingPort->notes }}">
+                        <trix-editor input="notes" class="trix-content"></trix-editor>
+                        @error('notes')
+                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {{-- Is Operational --}}
+                        <div class="flex items-center gap-3">
+                            <input type="hidden" name="is_operational" value="0">
+                            <input type="checkbox" name="is_operational" id="is_operational" class="kt-checkbox"
+                                value="1"
+                                {{ in_array('is_operational', $crossingPort->getAttributes()) ? 'checked' : '' }}>
+                            <label for="is_operational" class="kt-label mb-0">{{ __('main.operational') }}</label>
+                            @error('is_operational')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Is 24 Hours --}}
+                        <div class="flex items-center gap-3">
+                            <input type="hidden" name="is_24_hours" value="0">
+                            <input type="checkbox" name="is_24_hours" id="is_24_hours" class="kt-checkbox"
+                                value="1"
+                                {{ in_array('is_24_hours', $crossingPort->getAttributes()) ? 'checked' : '' }}>
+                            <label for="is_24_hours" class="kt-label mb-0">{{ __('main.24_hours') }}</label>
+                            @error('is_24_hours')
+                                Add <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kt-card-body p-4">
+                    {{-- Operating Days --}}
+                    <label for="operating_days" class="kt-label mb-2">{{ __('main.operating_days') }}</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                        @foreach ($days as $key => $item)
+                            <div class="flex items-center gap-2">
+                                <input type="hidden" name="" value="0">
+                                <input type="checkbox" name="operating_days[{{ $key }}]"
+                                    id="{{ $key }}" class="kt-checkbox" value="{{ $key }}"
+                                    {{ in_array($key, $crossingPort->operating_days) ? 'checked' : '' }}>
+                                <label for="{{ $key }}" class="kt-label mb-0">{{ __('main.' . $key) }}</label>
+                                @error('operating_days.' . $key)
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="kt-card-body p-4">
+                    {{-- Facilities --}}
+                    <label for="facilities" class="kt-label mb-2">{{ __('main.facilities') }}</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4" id="facilities">
+                        @foreach ($crossing_port_facilities as $key => $item)
+                            <div class="flex items-center gap-2 facility_type" data-facility-type="{{ $key }}">
+                                <input type="hidden" name="" value="0">
+                                <input type="checkbox" name="facilities[{{ $key }}]" id="{{ $key }}"
+                                    class="kt-checkbox" value="{{ $key }}"
+                                    {{ in_array($key, $crossingPort->facilities) ? 'checked' : '' }}>
+                                <label for="{{ $key }}" class="kt-label mb-0">{{ __('main.' . $key) }}</label>
+                                @error('facilities.' . $key)
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="kt-card-body p-4">
+                    {{-- Services --}}
+                    <label for="services" class="kt-label mb-2">{{ __('main.services') }}</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4" id="services">
+                        @foreach ($crossing_port_services as $key => $item)
+                            <div class="flex items-center gap-2 service_type" data-service-type="{{ $key }}">
+                                <input type="hidden" name="" value="0">
+                                <input type="checkbox" name="services[{{ $key }}]" id="{{ $key }}"
+                                    class="kt-checkbox" value="{{ $key }}"
+                                    {{ in_array($key, $crossingPort->services) ? 'checked' : '' }}>
+                                <label for="{{ $key }}" class="kt-label mb-0">{{ __('main.' . $key) }}</label>
+                                @error('services.' . $key)
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            @include('components.elements.update-submit', ['models' => 'crossings-ports'])
+        </form>
     </div>
 @endsection
 
 @push('scripts')
     <script>
-        // Logo preview
-        document.getElementById('logo').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('crossing-preview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
+                filterByForeignId("subregion_id", "country", "country_id", "edit");
+                filterByForeignId("country_id", "state", "state_id", "edit");
+                filterByForeignId("state_id", "city", "city_id", "edit");
+            }, 500);
         });
+    </script>
+@endpush
 
-        // Auto-uppercase code
-        document.getElementById('code').addEventListener('input', function(e) {
-            this.value = this.value.toUpperCase();
+@include('components.regions.script-cascading')
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let crossingsPortsType = document.getElementById("crossings-ports-type");
+            let facilitiesParent = document.getElementById("facilities");
+            let servicesParent = document.getElementById("services");
+
+            crossingsPortsType.addEventListener('updatedSelect', (e) => {
+                let type = e.detail.value;
+                let facilitiesTypes = document.querySelectorAll(".facility_type");
+                let serviceTypes = document.querySelectorAll(".service_type");
+
+                facilitiesTypes.forEach((facility) => {
+                    let facilityType = facility.dataset.facilityType;
+
+                    if (type) {
+                        if (type == 'international_airport') {
+                            facilitiesParent.parentElement.style.display = 'block';
+                            if (facilityType == 'duty_free' || facilityType == 'vip_lounge' ||
+                                facilityType == 'restaurants' || facilityType ==
+                                'currency_exchange' ||
+                                facilityType == 'shops') {
+                                facility.style.display = 'flex';
+                            } else {
+                                facility.style.display = 'none';
+                                facility.querySelector('input[type="checkbox"]').checked = false;
+                            }
+                        } else if (type == 'domestic_airport') {
+                            facilitiesParent.parentElement.style.display = 'block';
+                            if (facilityType == 'restaurants' || facilityType ==
+                                'currency_exchange' ||
+                                facilityType == 'shops') {
+                                facility.style.display = 'flex';
+                            } else {
+                                facility.style.display = 'none';
+                                facility.querySelector('input[type="checkbox"]').checked =
+                                    false;
+                            }
+                        } else if (type == 'seaport') {
+                            facilitiesParent.parentElement.style.display = 'block';
+                            if (facilityType == 'cargo_handling' ||
+                                facilityType ==
+                                'passenger_terminal' || facilityType ==
+                                'parking') {
+                                facility.style.display = 'flex';
+                            } else {
+                                facility.style.display = 'none';
+                                facility.querySelector('input[type="checkbox"]')
+                                    .checked = false;
+                            }
+                        } else {
+                            facilitiesParent.parentElement.style.display = 'block';
+                            if (facilityType == 'customs' || facilityType == 'immigration' ||
+                                facilityType == 'security') {
+                                facility.style.display = 'flex';
+                            } else {
+                                facility.style.display = 'none';
+                                facility.querySelector('input[type="checkbox"]').checked = false;
+                            }
+                        }
+                    } else {
+                        facilitiesParent.parentElement.style.display = 'none';
+                        facilitiesTypes.forEach((facility) => {
+                            facility.style.display = 'none';
+                            facility.querySelector('input[type="checkbox"]').checked =
+                                false;
+                        });
+                    }
+                });
+
+                serviceTypes.forEach((service) => {
+                    let serviceType = service.dataset.serviceType;
+
+                    if (type) {
+                        if (type == 'international_airport' || type == 'domestic_airport') {
+                            servicesParent.parentElement.style.display = 'block';
+                            if (serviceType == 'baggage_handling' || serviceType ==
+                                'ground_services' ||
+                                serviceType == 'fueling') {
+                                service.style.display = 'flex';
+                            } else {
+                                service.style.display = 'none';
+                                service.querySelector('input[type="checkbox"]').checked = false;
+                            }
+                        } else if (type == 'seaport') {
+                            servicesParent.parentElement.style.display = 'block';
+                            if (serviceType == 'cargo_services' || serviceType ==
+                                'passenger_services' ||
+                                serviceType == 'ship_services') {
+                                service.style.display = 'flex';
+                            } else {
+                                service.style.display = 'none';
+                                service.querySelector('input[type="checkbox"]').checked = false;
+                            }
+                        } else {
+                            servicesParent.parentElement.style.display = 'block';
+                            if (serviceType == 'inspection_services' || serviceType ==
+                                'document_processing') {
+                                service.style.display = 'flex';
+                            } else {
+                                service.style.display = 'none';
+                                service.querySelector('input[type="checkbox"]').checked = false;
+                            }
+                        }
+                    } else {
+                        servicesParent.parentElement.style.display = 'none';
+                        servicesTypes.forEach((service) => {
+                            service.style.display = 'none';
+                            service.querySelector('input[type="checkbox"]').checked =
+                                false;
+                        });
+                    }
+                });
+
+            });
         });
     </script>
 @endpush

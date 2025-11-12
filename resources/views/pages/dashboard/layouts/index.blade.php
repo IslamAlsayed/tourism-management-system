@@ -23,7 +23,6 @@
 
         document.addEventListener('click', function(event) {
             if (dataTargetModel?.classList.contains('hidden')) return;
-
             if (!parentWrapper?.contains(event.target)) {}
         });
 
@@ -33,9 +32,7 @@
 
         window.addEventListener('scroll', function(event) {
             if (dataTargetModel?.classList.contains('hidden')) return;
-
             if (isMouseInsideModal) return;
-
             if (toggleScroll) {
                 dataTargetModel?.classList.add('hidden');
             }
@@ -59,6 +56,21 @@
             if (!(atTop && event.deltaY < 0) && !(atBottom && event.deltaY > 0)) {
                 event.stopPropagation();
                 event.preventDefault();
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            const toggleBtn = e.target.closest('#columns');
+            const dropdown = document.getElementById('columnsModal');
+            const insideDropdown = e.target.closest('#columnsModal');
+
+            if (toggleBtn) {
+                dropdown.classList.toggle('hidden');
+                return;
+            }
+
+            if (!insideDropdown) {
+                dataTargetModel.classList.add('hidden');
             }
         });
     </script>

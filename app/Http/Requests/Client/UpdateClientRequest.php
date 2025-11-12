@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreClientRequest extends FormRequest
+class UpdateClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,6 +21,8 @@ class StoreClientRequest extends FormRequest
      */
     public function rules(): array
     {
+        $clientId = $this->route('client');
+
         return [
             // Location
             'region_id' => 'nullable|exists:regions,id',
@@ -47,7 +49,7 @@ class StoreClientRequest extends FormRequest
 
             // Emails
             'personal_email' => 'nullable|email|max:255',
-            'email_primary' => 'required|email|max:255|unique:clients,email_primary',
+            'email_primary' => 'required|email|max:255|unique:clients,email_primary,' . $clientId,
             'work_email' => 'nullable|email|max:255',
             'secondary_email' => 'nullable|email|max:255',
 
@@ -80,7 +82,7 @@ class StoreClientRequest extends FormRequest
             'linkedin_url' => 'nullable|url|max:255',
 
             // Status
-            'status' => 'nullable|in:active,inactive,pending,blacklisted',
+            'client_status' => 'nullable|in:active,inactive,pending,blacklisted',
             'timezone' => 'nullable|string|max:50',
             'notes' => 'nullable|string|max:1000',
         ];
@@ -133,9 +135,10 @@ class StoreClientRequest extends FormRequest
             'address_line_2' => __('main.address_line_2'),
             'website_url' => __('main.website_url'),
             'linkedin_url' => __('main.linkedin_url'),
-            'status' => __('main.status'),
+            'client_status' => __('main.status'),
             'timezone' => __('main.timezone'),
             'notes' => __('main.notes'),
         ];
     }
 }
+

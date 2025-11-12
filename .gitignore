@@ -24,3 +24,4 @@ Thumbs.db
 *.md
 *copy.php
 /storage/app/private
+*copy.*

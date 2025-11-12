@@ -94,6 +94,12 @@ return [
     'create guide review' => 'Create Guide Review',
     'import guides reviews' => 'Import Guides Reviews',
 
+    'crossing ports management' => 'Crossing/Ports Management',
+    'all crossings ports' => 'All Crossings/Ports',
+    'add new crossing port' => 'Add New Crossing/Port',
+    'create crossing port' => 'Create Crossing/Port',
+    'import crossings ports' => 'Import Crossings/Ports',
+
     'exchange rates' => 'Exchange Rates',
     'update rates' => 'Update Rates',
     'profile management' => 'Profile Management',
