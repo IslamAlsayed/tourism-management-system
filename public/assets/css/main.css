@@ -89,6 +89,23 @@
 
 /* End datatable loading */
 
+.fade-out {
+    animation: fadeOut 250ms forwards linear;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+        transform: translateX(100%);
+    }
+}
+
 .kt-input:not(input) {
     &:has(input:focus-visible) {
         box-shadow: none;
@@ -199,12 +216,25 @@
 
 #columnsModal .grid::-webkit-scrollbar,
 #notifications::-webkit-scrollbar {
-    width: 3px;
+    width: 2px;
 }
 
 #columnsModal .grid::-webkit-scrollbar-thumb,
 #notifications::-webkit-scrollbar-thumb {
     background-color: var(--color-primary);
+}
+
+#filterClient,
+#filterCrossingPorts {
+    display: flex;
+    gap: 15px;
+    align-items: end;
+
+    &>div,
+    & select {
+        width: auto;
+        min-width: 120px;
+    }
 }
 
 @media (max-width: 1280px) {
@@ -217,6 +247,13 @@
     #columnsModal {
         width: 320px;
         font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    #columnsModal {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
     }
 }
 
@@ -236,7 +273,9 @@
         }
     }
 
-    #filterClient {
+    #filterClient,
+    #filterCrossingPorts {
+        flex-direction: column;
         padding: 0 10px;
 
         &>div,

@@ -73,7 +73,8 @@ class Client extends Model
         'linkedin_url',
 
         // Status and preferences
-        'status',
+        // 'status',
+        'client_status',
         'timezone',
         'notes',
 
@@ -195,10 +196,10 @@ class Client extends Model
     }
 
     // Filter by client status
-    // public function scopeOfStatus($query, $status)
-    // {
-    //     return $query->where('client_status', $status);
-    // }
+    public function scopeOfStatus($query, $status)
+    {
+        return $query->where('client_status', $status);
+    }
 
     /**
      * Accessors & Mutators

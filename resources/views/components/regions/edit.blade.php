@@ -89,19 +89,11 @@
                 <div class="flex items-center justify-between gap-1">
                     @if (isset($multiple) && $multiple)
                         <input type="hidden" name="all_states" value="0">
-                        @include('components.elements.checkbox-button', [
-                            'name' => 'all_states',
-                            'id' => 'all_states',
-                            'value' => '1',
-                            'styles' => 'width: 15px !important; height: 15px !important;',
-                            'label' => __('main.all_types', ['types' => __('main.states')]),
-                        ])
-                        {{-- <div class="custom-input">
-                            <span class="pseudo-checkbox" style="width: 15px; height: 15px;"></span>
+                        <div class="custom-input">
                             <input type="checkbox" name="all_states" id="all_states" value="1"
                                 {{ old('all_states') ? 'checked' : '' }}>
                             <label for="all_states">{{ __('main.all_types', ['types' => __('main.states')]) }}</label>
-                        </div> --}}
+                        </div>
                     @else
                         {{ __('main.states') }}
                     @endif
@@ -143,19 +135,11 @@
                 <div class="flex items-center justify-between gap-1">
                     @if (isset($multiple) && $multiple)
                         <input type="hidden" name="all_cities" value="0">
-                        @include('components.elements.checkbox-button', [
-                            'name' => 'all_cities',
-                            'id' => 'all_cities',
-                            'value' => '1',
-                            'styles' => 'width: 15px !important; height: 15px !important;',
-                            'label' => __('main.all_types', ['types' => __('main.cities')]),
-                        ])
-                        {{-- <div class="custom-input">
-                            <span class="pseudo-checkbox" style="width: 15px; height: 15px;"></span>
+                        <div class="custom-input">
                             <input type="checkbox" name="all_cities" id="all_cities" value="1"
                                 {{ old('all_cities') ? 'checked' : '' }}>
                             <label for="all_cities">{{ __('main.all_types', ['types' => __('main.cities')]) }}</label>
-                        </div> --}}
+                        </div>
                     @else
                         {{ __('main.city') }}
                     @endif
