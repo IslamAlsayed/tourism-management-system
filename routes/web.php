@@ -23,7 +23,6 @@ use App\Http\Controllers\Dashboard\RestaurantController;
 use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\TouristSiteController;
 use App\Http\Controllers\Dashboard\CrossingPortController;
-use App\Http\Controllers\Dashboard\AirTransportController;
 use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\TourGuideTypeController;
@@ -101,10 +100,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // === CROSSING PORTS MANAGEMENT ===
     Route::resource('crossings-ports', CrossingPortController::class)->names('crossings-ports');
     Route::get('crossings-ports/type/{type}', [CrossingPortController::class, 'type'])->name('crossings-ports.type');
-
-    // === AIR TRANSPORT MANAGEMENT ===
-    Route::resource('air-transports', AirTransportController::class)->names('air-transports');
-    Route::get('air-transports/type/{type}', [AirTransportController::class, 'type'])->name('air-transports.type');
 
     // === CURRENCY MANAGEMENT ===
     Route::resource('currencies', CurrencyController::class)->names('currencies');
