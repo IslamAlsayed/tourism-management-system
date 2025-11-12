@@ -234,6 +234,14 @@
         <td title="{{ optional($model->currency)->code ?? '--' }}">{!! highlightSearch(limitedText(optional($model->currency)->code ?? '--', 30), $search) !!}</td>
     @break
 
+    @case('creator')
+        <td title="{{ optional($model->creator)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->creator)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('updater')
+        <td title="{{ optional($model->updater)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->updater)->name ?? '--', 30), $search) !!}</td>
+    @break
+
     @case('company')
         <td title="{{ optional($model->company)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->company)->name ?? '--', 30), $search) !!}</td>
     @break
@@ -548,11 +556,11 @@
     @break
 
     @case('created_by')
-        <td title="{{ optional($model)->created_by->name }}">{!! highlightSearch(limitedText(optional($model)->created_by->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->created_by)->name ?: '' }}">{!! highlightSearch(limitedText(optional($model->created_by)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('updated_by')
-        <td title="{{ optional($model)->updated_by->name }}">{!! highlightSearch(limitedText(optional($model)->updated_by->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->updated_by)->name ?: '' }}">{!! highlightSearch(limitedText(optional($model->updated_by)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @default

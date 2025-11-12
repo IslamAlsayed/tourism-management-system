@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             CurrencySeeder::class,
             ClientSeeder::class,
             TouristSiteSeeder::class,
+            CrossingPortSeeder::class,
         ]);
     }
 }

@@ -2,8 +2,8 @@
     @component('includes.pagination-info', [
         'data' => $data,
         'columns' => $columns,
-        'title' => __('main.crossings-ports'),
-        'entityName' => __('main.crossing-port'),
+        'title' => __('main.air-transports'),
+        'entityName' => __('main.air-transport'),
         'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
@@ -20,12 +20,23 @@
                 <label for="type" style="font-size: 14px;">{{ __('main.type') }}</label>
                 <select wire:model.live="filterType" id="type" class="kt-input h-[40px] w-48 max-w-full">
                     <option value="">--</option>
-                    <option value="land_crossing">{{ __('main.land_crossing') }}</option>
-                    <option value="international_airport">{{ __('main.international_airport') }}</option>
-                    <option value="domestic_airport">{{ __('main.domestic_airport') }}</option>
-                    <option value="seaport">{{ __('main.seaport') }}</option>
-                    <option value="river_port">{{ __('main.river_port') }}</option>
-                    <option value="border_crossing">{{ __('main.border_crossing') }}</option>
+                    <option value="airline">{{ __('main.airline') }}</option>
+                    <option value="charter_company">{{ __('main.charter_company') }}</option>
+                    <option value="cargo_airline">{{ __('main.cargo_airline') }}</option>
+                    <option value="aircraft_operator">{{ __('main.aircraft_operator') }}</option>
+                    <option value="aircraft_manufacturer">{{ __('main.aircraft_manufacturer') }}</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="service_type" style="font-size: 14px;">{{ __('main.service_type') }}</label>
+                <select wire:model.live="filterServiceType" id="service_type" class="kt-input h-[40px] w-48">
+                    <option value="">--</option>
+                    <option value="scheduled">{{ __('main.scheduled') }}</option>
+                    <option value="charter">{{ __('main.charter') }}</option>
+                    <option value="cargo">{{ __('main.cargo') }}</option>
+                    <option value="mixed">{{ __('main.mixed') }}</option>
+                    <option value="private">{{ __('main.private') }}</option>
                 </select>
             </div>
 
@@ -35,14 +46,23 @@
                     <option value="">--</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
-                    <option value="under_construction">{{ __('main.under_construction') }}</option>
-                    <option value="maintenance">{{ __('main.maintenance') }}</option>
+                    <option value="suspended">{{ __('main.suspended') }}</option>
+                    <option value="bankruptcy">{{ __('main.bankruptcy') }}</option>
                 </select>
             </div>
 
             <div>
-                <label for="operational" style="font-size: 14px;">{{ __('main.operational') }}</label>
-                <select wire:model.live="filterOperational" id="operational" class="kt-input h-[40px] w-48">
+                <label for="active" style="font-size: 14px;">{{ __('main.active') }}</label>
+                <select wire:model.live="filterActive" id="active" class="kt-input h-[40px] w-48">
+                    <option value="">--</option>
+                    <option value="1">{{ __('main.yes') }}</option>
+                    <option value="0">{{ __('main.no') }}</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="international" style="font-size: 14px;">{{ __('main.international') }}</label>
+                <select wire:model.live="filterInternational" id="international" class="kt-input h-[40px] w-48">
                     <option value="">--</option>
                     <option value="1">{{ __('main.yes') }}</option>
                     <option value="0">{{ __('main.no') }}</option>
@@ -50,7 +70,7 @@
             </div>
 
             {{-- Reset Sort Button --}}
-            @if ($filterType || $filterStatus || $filterOperational)
+            @if ($filterType || $filterServiceType || $filterStatus || $filterActive || $filterInternational)
                 <div>
                     <button type="button" wire:click="resetFilter" title="{{ __('main.reset_validate') }}"
                         toggle-button class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">
@@ -61,14 +81,15 @@
             @endif
         </div>
 
-        <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="crossings-ports_table">
-            <div class="kt-scrollable-x-auto" wire:target="search,filterType,filterStatus,filterOperational,resetFilter"
+        <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="air-transports_table">
+            <div class="kt-scrollable-x-auto"
+                wire:target="search,filterType,filterServiceType,filterStatus,filterActive,filterInternational,resetFilter"
                 wire:loading.class="loading">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'crossings-ports',
+                    'models' => 'air-transports',
                 ])
                 @endcomponent
             </div>
