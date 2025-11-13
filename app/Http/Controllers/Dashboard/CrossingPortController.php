@@ -7,6 +7,7 @@ use App\Models\CrossingPort;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CrossingPort\CrossingPortCreateRequest;
 use App\Http\Requests\CrossingPort\CrossingPortUpdateRequest;
+use App\Models\Currency;
 
 class CrossingPortController extends Controller
 {
@@ -17,11 +18,7 @@ class CrossingPortController extends Controller
 
     public function create()
     {
-        $days = config('helpers.days');
-        $crossing_port_types = config('helpers.crossing_port_types');
-        $crossing_port_statuses = config('helpers.crossing_port_statuses');
-        $crossing_port_facilities = config('helpers.crossing_port_facilities');
-        $crossing_port_services = config('helpers.crossing_port_services');
+        $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
         $regions = Region::orderBy('name')->get();
         return view('pages.dashboard.crossings-ports.create', get_defined_vars());
     }
@@ -38,8 +35,6 @@ class CrossingPortController extends Controller
             $validated['city_id'] = $validated['city_id'][0] ?? null;
         }
 
-        // Set created_by
-        $validated['created_by'] = getActiveUser()->id;
         $created = CrossingPort::create($validated);
         if ($created) {
             if ($request->has('save_and_add')) {
@@ -52,7 +47,7 @@ class CrossingPortController extends Controller
 
     public function show($id)
     {
-        $crossingPort = CrossingPort::with(['region', 'subregion', 'country', 'state', 'city', 'creator', 'updater'])->find($id);
+        $crossingPort = CrossingPort::with(['region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$crossingPort) {
             return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         }
@@ -65,11 +60,7 @@ class CrossingPortController extends Controller
         if (!$crossingPort) {
             return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         }
-        $days = config('helpers.days');
-        $crossing_port_types = config('helpers.crossing_port_types');
-        $crossing_port_statuses = config('helpers.crossing_port_statuses');
-        $crossing_port_facilities = config('helpers.crossing_port_facilities');
-        $crossing_port_services = config('helpers.crossing_port_services');
+        $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
         $regions = Region::orderBy('name')->get();
         return view('pages.dashboard.crossings-ports.edit', get_defined_vars());
     }
@@ -90,8 +81,6 @@ class CrossingPortController extends Controller
             $validated['city_id'] = $validated['city_id'][0] ?? null;
         }
 
-        // Set updated_by
-        $validated['updated_by'] = getActiveUser()->id;
         $updated = $crossingPort->update($validated);
         if ($updated) {
             return redirect()->route('crossings-ports.index')->withSuccess(__('main.messages.type_updated', ['type' => __('main.crossing_port')]));

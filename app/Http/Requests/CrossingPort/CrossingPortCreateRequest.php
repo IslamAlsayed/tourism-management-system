@@ -22,12 +22,6 @@ class CrossingPortCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // Basic information
-            'code' => ['nullable', 'string', 'max:10', 'unique:crossing_ports,code'],
-            'name' => ['required', 'string', 'max:255'],
-            'name_ar' => ['nullable', 'string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:1000'],
-
             // Location information
             'region_id' => ['nullable', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'exists:subregions,id'],
@@ -37,55 +31,53 @@ class CrossingPortCreateRequest extends FormRequest
             'city_id' => ['nullable'],
             'city_id.*' => ['exists:cities,id'],
 
-            // Type and coordinates
+            // Basic information
+            'name' => ['required', 'string', 'max:255'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
             'type' => ['required', 'in:' . implode(',', array_keys(config('helpers.crossing_port_types')))],
+            'code' => ['nullable', 'string', 'max:10', 'unique:crossing_ports,code'],
+            'description' => ['nullable', 'string', 'max:1000'],
+
+            // Geographic coordinates
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'elevation' => ['nullable', 'string', 'max:50'],
 
             // Operating information
-            'is_operational' => ['nullable', 'boolean'],
-            'is_24_hours' => ['nullable', 'boolean'],
-            'opening_time' => ['nullable', 'date_format:H:i'],
-            'closing_time' => ['nullable', 'date_format:H:i', 'after:opening_time'],
-            'operating_days' => ['nullable', 'array'],
-            'operating_days.*' => ['in:' . implode(',', array_keys(config('helpers.days')))],
+            'operating_hours' => ['nullable', 'string', 'max:255'],
+            'operating_hours_ar' => ['nullable', 'string', 'max:255'],
+            'is_24_7' => ['nullable', 'boolean'],
+            'is_active' => ['nullable', 'boolean'],
+            'is_commercial' => ['nullable', 'boolean'],
+            'is_passenger' => ['nullable', 'boolean'],
+            'is_international' => ['nullable', 'boolean'],
 
-            // Facilities and services
-            'facilities' => ['nullable', 'array'],
-            'facilities.*' => ['string', 'max:100'],
-            'services' => ['nullable', 'array'],
-            'services.*' => ['string', 'max:100'],
+            // Visa and immigration policies
+            'allows_visa_on_arrival' => ['nullable', 'boolean'],
+            'nationality_policy' => ['nullable', 'array'],
+            'departure_tax' => ['nullable', 'numeric', 'min:0'],
+            'departure_tax_currency' => ['nullable', 'string', 'size:3'],
 
             // Contact information
-            'phone' => ['nullable', 'string', 'max:20'],
-            'fax' => ['nullable', 'string', 'max:20'],
+            'contact_phone' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
             'website' => ['nullable', 'url', 'max:255'],
 
-            // Address
-            'address' => ['nullable', 'string', 'max:500'],
-            'postal_code' => ['nullable', 'string', 'max:20'],
+            // Display and classification
+            'sort_order' => ['nullable', 'integer', 'min:0'],
+            'is_major' => ['nullable', 'boolean'],
 
-            // Additional information
-            'capacity' => ['nullable', 'integer', 'min:1'],
-            'runway_info' => ['nullable', 'array'],
-            'runway_info.length' => ['nullable', 'string', 'max:20'],
-            'runway_info.width' => ['nullable', 'string', 'max:20'],
-            'runway_info.surface' => ['nullable', 'string', 'max:50'],
-            'runway_info.lighting' => ['nullable', 'boolean'],
-            'customs_office' => ['nullable', 'string', 'max:255'],
-            'immigration_office' => ['nullable', 'string', 'max:255'],
+            // Visa requirements
+            'visa_required' => ['nullable', 'boolean'],
+            'visa_fee' => ['nullable', 'numeric', 'min:0'],
+            'visa_fee_currency' => ['nullable', 'string', 'size:3'],
+            'visa_duration' => ['nullable', 'integer', 'min:1'],
+            'visa_conditions' => ['nullable', 'string', 'max:1000'],
+            'visa_application_url' => ['nullable', 'url', 'max:255'],
+            'visa_policy_source' => ['nullable', 'url', 'max:255'],
+            'visa_last_update' => ['nullable', 'date'],
 
-            // Status and notes
-            'status' => ['nullable', 'in:' . implode(',', array_keys(config('helpers.crossing_port_statuses')))],
-            'notes' => ['nullable', 'string', 'max:1000'],
-
-            // Images and documents
-            'images' => ['nullable', 'array'],
-            'images.*' => ['string', 'max:255'],
-            'documents' => ['nullable', 'array'],
-            'documents.*' => ['string', 'max:255'],
+            // Additional notes
+            'note' => ['nullable', 'string', 'max:1000'],
         ];
     }
 

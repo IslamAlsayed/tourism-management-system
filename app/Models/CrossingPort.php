@@ -12,42 +12,43 @@ class CrossingPort extends Model
 
     protected $fillable = [
         'id',
-        'code',
         'name',
         'name_ar',
-        'status',
-        'description',
+        'type',
+        'code',
         'region_id',
         'subregion_id',
         'country_id',
         'state_id',
         'city_id',
-        'type',
+        'description',
         'latitude',
         'longitude',
-        'elevation',
-        'is_operational',
-        'is_24_hours',
-        'opening_time',
-        'closing_time',
-        'operating_days',
-        'facilities',
-        'services',
-        'phone',
-        'fax',
+        'operating_hours',
+        'operating_hours_ar',
+        'is_24_7',
+        'is_active',
+        'is_commercial',
+        'is_passenger',
+        'is_international',
+        'allows_visa_on_arrival',
+        'nationality_policy',
+        'departure_tax',
+        'departure_tax_currency',
+        'contact_phone',
         'email',
         'website',
-        'address',
-        'postal_code',
-        'capacity',
-        'runway_info',
-        'customs_office',
-        'immigration_office',
-        'notes',
-        'images',
-        'documents',
-        'created_by',
-        'updated_by',
+        'sort_order',
+        'is_major',
+        'visa_required',
+        'visa_fee',
+        'visa_fee_currency',
+        'visa_duration',
+        'visa_conditions',
+        'visa_application_url',
+        'visa_policy_source',
+        'visa_last_update',
+        'note',
     ];
 
     /**
@@ -72,18 +73,22 @@ class CrossingPort extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'is_operational' => 'boolean',
-        'is_24_hours' => 'boolean',
-        'operating_days' => 'array',
-        'facilities' => 'array',
-        'services' => 'array',
-        'runway_info' => 'array',
-        'images' => 'array',
-        'documents' => 'array',
+        'is_24_7' => 'boolean',
+        'is_active' => 'boolean',
+        'is_commercial' => 'boolean',
+        'is_passenger' => 'boolean',
+        'is_international' => 'boolean',
+        'allows_visa_on_arrival' => 'boolean',
+        'nationality_policy' => 'array',
+        'departure_tax' => 'decimal:2',
+        'visa_fee' => 'decimal:2',
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
-        'opening_time' => 'datetime:H:i',
-        'closing_time' => 'datetime:H:i',
+        'sort_order' => 'integer',
+        'is_major' => 'boolean',
+        'visa_required' => 'boolean',
+        'visa_duration' => 'integer',
+        'visa_last_update' => 'datetime',
     ];
 
     /**
@@ -114,17 +119,7 @@ class CrossingPort extends Model
         return $this->belongsTo(City::class);
     }
 
-    // Creator relationship
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
 
-    // Updater relationship
-    public function updater()
-    {
-        return $this->belongsTo(User::class, 'updated_by');
-    }
 
     /**
      * Scopes
@@ -133,13 +128,7 @@ class CrossingPort extends Model
     // Active crossing ports only
     public function scopeActive($query)
     {
-        return $query->where('status', 'active');
-    }
-
-    // Operational crossing ports only
-    public function scopeOperational($query)
-    {
-        return $query->where('is_operational', true);
+        return $query->where('is_active', true);
     }
 
     // Filter by crossing port type
@@ -148,16 +137,34 @@ class CrossingPort extends Model
         return $query->where('type', $type);
     }
 
-    // Filter by crossing port status
-    public function scopeOfStatus($query, $status)
-    {
-        return $query->where('status', $status);
-    }
-
-    // 24 hours crossing ports
+    // 24/7 crossing ports
     public function scope24Hours($query)
     {
-        return $query->where('is_24_hours', true);
+        return $query->where('is_24_7', true);
+    }
+
+    // International crossing ports only
+    public function scopeInternational($query)
+    {
+        return $query->where('is_international', true);
+    }
+
+    // Commercial crossing ports only
+    public function scopeCommercial($query)
+    {
+        return $query->where('is_commercial', true);
+    }
+
+    // Passenger crossing ports only
+    public function scopePassenger($query)
+    {
+        return $query->where('is_passenger', true);
+    }
+
+    // Major crossing ports only
+    public function scopeMajor($query)
+    {
+        return $query->where('is_major', true);
     }
 
     /**
@@ -200,16 +207,18 @@ class CrossingPort extends Model
         return $types[$this->type] ?? $this->type;
     }
 
-    // Get status label
+    // Get active status label
     public function getStatusLabel()
     {
-        $statuses = [
-            'active' => 'Active',
-            'inactive' => 'Inactive',
-            'under_construction' => 'Under Construction',
-            'maintenance' => 'Under Maintenance',
-        ];
+        return $this->is_active ? 'Active' : 'Inactive';
+    }
 
-        return $statuses[$this->status] ?? $this->status;
+    // Get operating hours formatted
+    public function getFormattedOperatingHours()
+    {
+        if ($this->is_24_7) {
+            return '24/7';
+        }
+        return $this->operating_hours ?? 'Not specified';
     }
 }

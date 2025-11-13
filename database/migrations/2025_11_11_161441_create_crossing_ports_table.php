@@ -12,76 +12,70 @@ return new class extends Migration {
     {
         Schema::create('crossing_ports', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique()->nullable(); // ICAO code for airports, custom code for others
 
-            // Basic information
-            $table->string('name'); // Name in English
-            $table->string('name_ar')->nullable(); // Name in Arabic
-            $table->text('description')->nullable();
-
-            // Location information
+            // Location relationships
             $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
             $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
             $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
             $table->foreignId('state_id')->nullable()->constrained('states')->onDelete('set null');
             $table->foreignId('city_id')->nullable()->constrained('cities')->onDelete('set null');
 
-            // Type of crossing/port
+            // Basic information
+            $table->string('name');
+            $table->string('name_ar')->nullable();
             $table->enum('type', ['land_crossing', 'international_airport', 'domestic_airport', 'seaport', 'river_port', 'border_crossing']);
+            $table->string('code')->unique()->nullable();
+            $table->text('description')->nullable();
 
-            // Coordinates
+            // Geographic coordinates
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->string('elevation')->nullable(); // For airports
 
             // Operating information
-            $table->boolean('is_operational')->default(true);
-            $table->boolean('is_24_hours')->default(false);
-            $table->time('opening_time')->nullable();
-            $table->time('closing_time')->nullable();
-            $table->json('operating_days')->nullable(); // Days of week
+            $table->string('operating_hours')->nullable();
+            $table->string('operating_hours_ar')->nullable();
+            $table->boolean('is_24_7')->default(false);
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_commercial')->default(false);
+            $table->boolean('is_passenger')->default(true);
+            $table->boolean('is_international')->default(false);
 
-            // Facilities and services
-            $table->json('facilities')->nullable(); // Customs, immigration, quarantine, etc.
-            $table->json('services')->nullable(); // VIP services, cargo handling, etc.
+            // Visa and immigration policies
+            $table->boolean('allows_visa_on_arrival')->default(false);
+            $table->json('nationality_policy')->nullable(); // Policies per nationality
+            $table->decimal('departure_tax', 8, 2)->nullable();
+            $table->string('departure_tax_currency', 3)->nullable();
 
             // Contact information
-            $table->string('phone')->nullable();
-            $table->string('fax')->nullable();
+            $table->string('contact_phone')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
 
-            // Address
-            $table->text('address')->nullable();
-            $table->string('postal_code')->nullable();
+            // Display and classification
+            $table->integer('sort_order')->default(0);
+            $table->boolean('is_major')->default(false);
 
-            // Additional information
-            $table->integer('capacity')->nullable(); // Passengers per hour/day
-            $table->json('runway_info')->nullable(); // For airports - runway length, surface type
-            $table->string('customs_office')->nullable();
-            $table->string('immigration_office')->nullable();
+            // Visa requirements
+            $table->boolean('visa_required')->default(false);
+            $table->decimal('visa_fee', 8, 2)->nullable();
+            $table->string('visa_fee_currency', 3)->nullable();
+            $table->integer('visa_duration')->nullable(); // Days
+            $table->text('visa_conditions')->nullable();
+            $table->string('visa_application_url')->nullable();
+            $table->string('visa_policy_source')->nullable();
+            $table->timestamp('visa_last_update')->nullable();
 
-            // Status and preferences
-            $table->enum('status', ['active', 'inactive', 'under_construction', 'maintenance'])->nullable()->default('active');
-            $table->text('notes')->nullable();
-
-            // Images and documents
-            $table->json('images')->nullable();
-            $table->json('documents')->nullable();
-
-            // Tracking
-            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            // Additional notes
+            $table->text('note')->nullable();
 
             $table->timestamps();
 
-            // Indexes
-            $table->index('code');
-            $table->index('type');
-            $table->index('status');
-            $table->index(['latitude', 'longitude'], 'cp_coordinates_index');
-            $table->index(['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'], 'cp_location_index');
-            $table->index('is_operational');
+            // Indexes for better performance
+            $table->index(['type']);
+            $table->index(['is_active']);
+            $table->index(['is_international']);
+            $table->index(['country_id', 'state_id', 'city_id']);
+            $table->index(['latitude', 'longitude']);
         });
     }
 

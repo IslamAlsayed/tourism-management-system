@@ -78,22 +78,6 @@
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        {{-- Status --}}
-                        <div>
-                            <label for="status" class="kt-label mb-2">{{ __('main.status') }}</label>
-                            <select name="status" id="status" class="kt-input h-[45px]" special-search>
-                                <option value="">--</option>
-                                @foreach ($crossing_port_statuses as $status)
-                                    <option value="{{ $status }}" {{ old('status') == $status ? 'selected' : '' }}>
-                                        {{ __('main.' . $status) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('status')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
                     </div>
 
                     {{-- Description --}}
@@ -287,63 +271,6 @@
                                 Add <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
-                </div>
-
-                <div class="kt-card-body p-4">
-                    {{-- Operating Days --}}
-                    <h3 class="font-semibold mb-2">{{ __('main.operating_days') }}</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                        @foreach ($days as $key => $item)
-                            <div class="flex items-center gap-2">
-                                <input type="hidden" name="" value="0">
-                                <input type="checkbox" name="operating_days[{{ $key }}]"
-                                    id="{{ $key }}" class="kt-checkbox" value="{{ $key }}"
-                                    {{ old('operating_days.' . $key) ? 'checked' : '' }}>
-                                <label for="{{ $key }}" class="kt-label mb-0">{{ __('main.' . $key) }}</label>
-                                @error('operating_days.' . $key)
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="kt-card-body p-4">
-                    {{-- Facilities --}}
-                    <h3 class="font-semibold mb-2">{{ __('main.facilities') }}</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4" id="facilities">
-                        @foreach ($crossing_port_facilities as $key => $item)
-                            <div class="flex items-center gap-2 facility_type" data-facility-type="{{ $key }}">
-                                <input type="hidden" name="" value="0">
-                                <input type="checkbox" name="facilities[{{ $key }}]" id="{{ $key }}"
-                                    class="kt-checkbox" value="{{ $key }}"
-                                    {{ old('facilities.' . $key) ? 'checked' : '' }}>
-                                <label for="{{ $key }}" class="kt-label mb-0">{{ __('main.' . $key) }}</label>
-                                @error('facilities.' . $key)
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="kt-card-body p-4">
-                    {{-- Services --}}
-                    <h3 class="font-semibold mb-2">{{ __('main.services') }}</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4" id="services">
-                        @foreach ($crossing_port_services as $key => $item)
-                            <div class="flex items-center gap-2 service_type" data-service-type="{{ $key }}">
-                                <input type="hidden" name="" value="0">
-                                <input type="checkbox" name="services[{{ $key }}]" id="{{ $key }}"
-                                    class="kt-checkbox" value="{{ $key }}"
-                                    {{ old('services.' . $key) ? 'checked' : '' }}>
-                                <label for="{{ $key }}" class="kt-label mb-0">{{ __('main.' . $key) }}</label>
-                                @error('services.' . $key)
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        @endforeach
                     </div>
                 </div>
             </div>

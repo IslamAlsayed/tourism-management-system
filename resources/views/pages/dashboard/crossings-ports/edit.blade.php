@@ -81,23 +81,6 @@
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        {{-- Status --}}
-                        <div>
-                            <label for="status" class="kt-label mb-2">{{ __('main.status') }}</label>
-                            <select name="status" id="status" class="kt-input h-[45px]" special-search>
-                                <option value="">--</option>
-                                @foreach ($crossing_port_statuses as $key => $status)
-                                    <option value="{{ $key }}"
-                                        {{ $crossingPort->status == $key ? 'selected' : '' }}>
-                                        {{ __('main.' . $status) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('status')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
                     </div>
 
                     {{-- Description --}}
@@ -271,86 +254,16 @@
 
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {{-- Is Operational --}}
-                        <div class="flex items-center gap-3">
-                            <input type="hidden" name="is_operational" value="0">
-                            <input type="checkbox" name="is_operational" id="is_operational" class="kt-checkbox"
-                                value="1"
-                                {{ in_array('is_operational', $crossingPort->getAttributes()) ? 'checked' : '' }}>
-                            <label for="is_operational" class="kt-label mb-0">{{ __('main.operational') }}</label>
-                            @error('is_operational')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                         {{-- Is 24 Hours --}}
                         <div class="flex items-center gap-3">
                             <input type="hidden" name="is_24_hours" value="0">
                             <input type="checkbox" name="is_24_hours" id="is_24_hours" class="kt-checkbox"
-                                value="1"
-                                {{ in_array('is_24_hours', $crossingPort->getAttributes()) ? 'checked' : '' }}>
+                                value="1" {{ $crossingPort->is_24_hours == 1 ? 'checked' : '' }}>
                             <label for="is_24_hours" class="kt-label mb-0">{{ __('main.24_hours') }}</label>
                             @error('is_24_hours')
                                 Add <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
-                </div>
-
-                <div class="kt-card-body p-4">
-                    {{-- Operating Days --}}
-                    <label for="operating_days" class="kt-label mb-2">{{ __('main.operating_days') }}</label>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                        @foreach ($days as $key => $item)
-                            <div class="flex items-center gap-2">
-                                <input type="hidden" name="" value="0">
-                                <input type="checkbox" name="operating_days[{{ $key }}]"
-                                    id="{{ $key }}" class="kt-checkbox" value="{{ $key }}"
-                                    {{ in_array($key, $crossingPort->operating_days) ? 'checked' : '' }}>
-                                <label for="{{ $key }}" class="kt-label mb-0">{{ __('main.' . $key) }}</label>
-                                @error('operating_days.' . $key)
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="kt-card-body p-4">
-                    {{-- Facilities --}}
-                    <label for="facilities" class="kt-label mb-2">{{ __('main.facilities') }}</label>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4" id="facilities">
-                        @foreach ($crossing_port_facilities as $key => $item)
-                            <div class="flex items-center gap-2 facility_type" data-facility-type="{{ $key }}">
-                                <input type="hidden" name="" value="0">
-                                <input type="checkbox" name="facilities[{{ $key }}]" id="{{ $key }}"
-                                    class="kt-checkbox" value="{{ $key }}"
-                                    {{ in_array($key, $crossingPort->facilities) ? 'checked' : '' }}>
-                                <label for="{{ $key }}" class="kt-label mb-0">{{ __('main.' . $key) }}</label>
-                                @error('facilities.' . $key)
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="kt-card-body p-4">
-                    {{-- Services --}}
-                    <label for="services" class="kt-label mb-2">{{ __('main.services') }}</label>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4" id="services">
-                        @foreach ($crossing_port_services as $key => $item)
-                            <div class="flex items-center gap-2 service_type" data-service-type="{{ $key }}">
-                                <input type="hidden" name="" value="0">
-                                <input type="checkbox" name="services[{{ $key }}]" id="{{ $key }}"
-                                    class="kt-checkbox" value="{{ $key }}"
-                                    {{ in_array($key, $crossingPort->services) ? 'checked' : '' }}>
-                                <label for="{{ $key }}" class="kt-label mb-0">{{ __('main.' . $key) }}</label>
-                                @error('services.' . $key)
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        @endforeach
                     </div>
                 </div>
             </div>
