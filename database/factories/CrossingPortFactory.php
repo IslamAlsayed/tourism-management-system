@@ -54,7 +54,6 @@ class CrossingPortFactory extends Factory
 
             // Operating information
             'operating_hours' => $operatingHours,
-            'operating_hours_ar' => $operatingHours === '24 Hours' ? '24 ساعة' : $this->faker->randomElement(['06:00 - 22:00', '08:00 - 18:00', '09:00 - 17:00']),
             'is_24_7' => $is24_7,
             'is_active' => $this->faker->boolean(85),
             'is_commercial' => $this->faker->boolean(60),

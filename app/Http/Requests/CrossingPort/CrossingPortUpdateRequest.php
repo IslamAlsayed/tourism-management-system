@@ -47,7 +47,6 @@ class CrossingPortUpdateRequest extends FormRequest
 
             // Operating information
             'operating_hours' => ['nullable', 'string', 'max:255'],
-            'operating_hours_ar' => ['nullable', 'string', 'max:255'],
             'is_24_7' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
             'is_commercial' => ['nullable', 'boolean'],

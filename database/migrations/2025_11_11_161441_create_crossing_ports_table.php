@@ -33,7 +33,6 @@ return new class extends Migration {
 
             // Operating information
             $table->string('operating_hours')->nullable();
-            $table->string('operating_hours_ar')->nullable();
             $table->boolean('is_24_7')->default(false);
             $table->boolean('is_active')->default(true);
             $table->boolean('is_commercial')->default(false);

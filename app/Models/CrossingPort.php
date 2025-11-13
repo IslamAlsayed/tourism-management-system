@@ -25,7 +25,6 @@ class CrossingPort extends Model
         'latitude',
         'longitude',
         'operating_hours',
-        'operating_hours_ar',
         'is_24_7',
         'is_active',
         'is_commercial',
