@@ -49,7 +49,7 @@
                             src="{{ asset('metronic/media/flags/languages/' . getCurrentLocale() . '.svg') }}" />
                     </span>
                 </button>
-                <div class="kt-dropdown-menu w-[180px]" data-kt-dropdown-menu="true">
+                <div class="kt-dropdown-menu w-[180px] languages-dropdown-menu" data-kt-dropdown-menu="true">
                     <ul class="kt-dropdown-menu-sub">
                         @foreach ($system_languages as $key => $language)
                             <li class="{{ getCurrentLocale() == $language->code ? 'active disabled' : '' }}">

@@ -34,6 +34,7 @@ class User extends Authenticatable
         'address',
         'user_code',
         'employee_id',
+        'birth_date',
         'hire_date',
         'department',
         'position',

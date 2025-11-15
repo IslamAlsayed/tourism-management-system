@@ -564,5 +564,5 @@
     @break
 
     @default
-        <td title="_{{ $model->$column }}">{{ limitedText($model->$column ?? '--', 30) }}</td>
+        <td title="{{ $model->$column }}">{{ limitedText($model->$column ?? '--', 30) }}</td>
 @endswitch

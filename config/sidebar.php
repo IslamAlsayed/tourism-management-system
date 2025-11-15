@@ -24,7 +24,7 @@ return [
         [
             'title' => 'user management',
             'icon' => 'ki-outline ki-users',
-            // 'status' => 'done',
+            'status' => 'updated',
             'children' => [
                 [
                     'title' => 'all users',
@@ -475,7 +475,7 @@ return [
         [
             'title' => 'air transport',
             'icon' => 'ki-filled ki-airplane',
-            'status' => 'done',
+            'status' => 'updated',
             'children' => [
                 [
                     'title' => 'all air transports',
@@ -492,30 +492,6 @@ return [
                     'icon' => 'ki-filled ki-upload',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'air-transports'],
-                ],
-                [
-                    'title' => 'airlines',
-                    'icon' => 'ki-filled ki-airplane-square',
-                    'route' => 'air-transports.type',
-                    'parameters' => ['type' => 'airlines'],
-                ],
-                [
-                    'title' => 'charter companies',
-                    'icon' => 'ki-filled ki-airplane',
-                    'route' => 'air-transports.type',
-                    'parameters' => ['type' => 'charter-companies'],
-                ],
-                [
-                    'title' => 'cargo airlines',
-                    'icon' => 'ki-filled ki-delivery',
-                    'route' => 'air-transports.type',
-                    'parameters' => ['type' => 'cargo-airlines'],
-                ],
-                [
-                    'title' => 'aircraft operators',
-                    'icon' => 'ki-filled ki-airplane-take-off',
-                    'route' => 'air-transports.type',
-                    'parameters' => ['type' => 'aircraft-operators'],
                 ],
             ],
         ],
@@ -576,7 +552,6 @@ return [
         [
             'title' => 'crossings & ports',
             'icon' => 'ki-filled ki-pointers',
-            'status' => 'done',
             'children' => [
                 [
                     'title' => 'all crossings ports',

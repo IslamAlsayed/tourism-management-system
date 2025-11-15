@@ -71,7 +71,7 @@
                             </div>
                         </div>
 
-                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
                             <!-- Password -->
                             <div class="">
                                 <label for="password" class="kt-label required mb-2">{{ __('main.password') }}</label>
@@ -150,12 +150,21 @@
                                         @enderror
                                     </div>
 
+                                    <!-- Hire Date -->
+                                    <div class="">
+                                        <label for="hire_date" class="kt-label mb-2">{{ __('main.hire_date') }}</label>
+                                        <input type="date" name="hire_date" id="hire_date" class="kt-input h-[45px]"
+                                            value="{{ old('hire_date') }}">
+                                        @error('hire_date')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                     <!-- Department -->
                                     <div class="">
-                                        <label for="department"
-                                            class="kt-label required mb-2">{{ __('main.department') }}</label>
+                                        <label for="department" class="kt-label mb-2">{{ __('main.department') }}</label>
                                         <select name="department" id="department" class="kt-input h-[45px]"
-                                            special-search required>
+                                            special-search>
                                             <option value="">{{ __('main.select_department') }}</option>
                                             @foreach (config('helpers.departments') as $key => $value)
                                                 <option value="{{ $key }}"
@@ -171,10 +180,8 @@
 
                                     <!-- Position -->
                                     <div class="">
-                                        <label for="position"
-                                            class="kt-label required mb-2">{{ __('main.position') }}</label>
-                                        <select name="position" id="position" class="kt-input h-[45px]" special-search
-                                            required>
+                                        <label for="position" class="kt-label mb-2">{{ __('main.position') }}</label>
+                                        <select name="position" id="position" class="kt-input h-[45px]" special-search>
                                             <option value="">{{ __('main.select_position') }}</option>
                                             @foreach (config('helpers.positions') as $key => $value)
                                                 <option value="{{ $key }}"
@@ -221,26 +228,13 @@
                                                 class="kt-label mb-2">{{ __('main.timezone_field') }}</label>
                                             <select name="timezone" id="timezone" class="kt-select h-[45px]"
                                                 special-search>
-                                                <option value="">{{ __('main.select_timezone') }}</option>
-                                                <option value="UTC" {{ old('timezone') == 'UTC' ? 'selected' : '' }}>
-                                                    UTC
-                                                </option>
-                                                <option value="Asia/Riyadh"
-                                                    {{ old('timezone') == 'Asia/Riyadh' ? 'selected' : '' }}>
-                                                    Asia/Riyadh
-                                                </option>
-                                                <option value="Asia/Dubai"
-                                                    {{ old('timezone') == 'Asia/Dubai' ? 'selected' : '' }}>
-                                                    Asia/Dubai
-                                                </option>
-                                                <option value="Europe/London"
-                                                    {{ old('timezone') == 'Europe/London' ? 'selected' : '' }}>
-                                                    Europe/London
-                                                </option>
-                                                <option value="America/New_York"
-                                                    {{ old('timezone') == 'America/New_York' ? 'selected' : '' }}>
-                                                    America/New_York
-                                                </option>
+                                                <option value="">--</option>
+                                                @foreach (config('helpers.timezones') as $zone)
+                                                    <option value="{{ $zone }}"
+                                                        {{ old('timezone') == $zone ? 'selected' : '' }}>
+                                                        {{ $zone }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                             @error('timezone')
                                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

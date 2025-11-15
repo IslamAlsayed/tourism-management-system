@@ -3,7 +3,7 @@
 @section('title', __('main.edit_profile'))
 
 @section('content')
-    <div style="width: 70% !important; margin: auto">
+    <div class="edit-profile">
         <!-- Container -->
         <div class="kt-container-fixed">
             <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
@@ -31,7 +31,7 @@
             <div class="">
                 <!-- Profile Photo Column -->
                 <div class="col-span-1 xl:col-span-3">
-                    <div class="kt-card min-w-full">
+                    <div class="kt-card min-w-full mb-6">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
                                 {{ __('main.profile_photo') }}
@@ -60,7 +60,7 @@
                                 @error('photo')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
-                                <button type="submit" class="kt-btn kt-btn-primary w-full" id="upload-button" disabled>
+                                <button type="submit" class="kt-btn kt-btn-primary w-[200px]" id="upload-button" disabled>
                                     {{ __('main.update_photo') }}
                                 </button>
                             </form>
@@ -68,7 +68,7 @@
                     </div>
 
                     <!-- Profile Information Column -->
-                    <div class="kt-card min-w-full">
+                    <div class="kt-card min-w-full mb-6">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title">
                                 {{ __('main.profile_information') }}
@@ -132,7 +132,7 @@
                     </div>
 
                     <!-- Delete Account Section -->
-                    <div class="kt-card min-w-full mt-5 lg:mt-7.5">
+                    <div class="kt-card min-w-full lg:mt-7.5">
                         <div class="kt-card-header">
                             <h3 class="kt-card-title text-danger">
                                 {{ __('main.delete_account') }}

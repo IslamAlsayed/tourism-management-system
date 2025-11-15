@@ -121,6 +121,16 @@
                             </div>
                             <div class="kt-card-body p-4">
                                 <div class="grid lg:grid-cols-3 gap-6">
+                                    <!-- Birth Date -->
+                                    <div class="">
+                                        <label for="birth_date" class="kt-label mb-2">{{ __('main.birth_date') }}</label>
+                                        <input type="date" name="birth_date" id="birth_date" class="kt-input h-[45px]"
+                                            value="{{ $user->birth_date }}">
+                                        @error('birth_date')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                     <!-- Hire Date -->
                                     <div class="">
                                         <label for="hire_date" class="kt-label mb-2">{{ __('main.hire_date') }}</label>
@@ -134,8 +144,8 @@
                                     <!-- Department -->
                                     <div class="">
                                         <label for="department" class="kt-label mb-2">{{ __('main.department') }}</label>
-                                        <select name="department" id="department" class="kt-input h-[45px]" special-search
-                                            value="{{ $user->department }}">
+                                        <select name="department" id="department" class="kt-input h-[45px]"
+                                            special-search value="{{ $user->department }}">
                                             <option value="">{{ __('main.select_department') }}</option>
                                             @foreach (config('helpers.departments') as $key => $value)
                                                 <option value="{{ $key }}"

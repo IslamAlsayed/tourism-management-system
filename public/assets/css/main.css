@@ -5,6 +5,19 @@
     }
 }
 
+.kt-dropdown-menu {
+    left: auto !important;
+    top: 60px !important;
+    right: 20px !important;
+    transform: none !important;
+    inset: auto;
+}
+
+.kt-dropdown-menu.languages-dropdown-menu {
+    top: 180px !important;
+    right: 250px !important;
+}
+
 .toggle-loading {
     opacity: 0.5;
     position: relative;
@@ -236,6 +249,11 @@
     }
 }
 
+.edit-profile {
+    width: 70% !important;
+    margin: auto;
+}
+
 @media (max-width: 1280px) {
     #columnsModal {
         width: 400px;
@@ -243,6 +261,10 @@
 }
 
 @media (max-width: 992px) {
+    .search-toggle {
+        display: none !important;
+    }
+
     #columnsModal {
         width: 320px;
         font-size: 12px;
@@ -254,9 +276,17 @@
         left: 50% !important;
         transform: translateX(-50%) !important;
     }
+
+    .edit-profile {
+        width: 100% !important;
+    }
 }
 
 @media (max-width: 600px) {
+    .apps-toggle {
+        display: none !important;
+    }
+
     #columnsModal {
         width: 200px;
         padding: 15px;
@@ -332,6 +362,22 @@
             & .pseudo-checkbox::after {
                 border-radius: 0.7px;
             }
+        }
+    }
+
+    .edit-profile {
+
+        & .kt-container-fixed {
+            padding: 10px !important;
+        }
+
+        & [class*="p-"],
+        & .kt-card-header {
+            padding: 5px !important;
+        }
+
+        #upload-button {
+            width: 100% !important;
         }
     }
 }

@@ -30,6 +30,7 @@ class UserUpdateRequest extends FormRequest
             'mobile' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:255'],
             'birth_date' => ['nullable', 'date'],
+            'hire_date' => ['nullable', 'date'],
             'department' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
             'preferred_language' => ['nullable', 'string', 'max:255'],

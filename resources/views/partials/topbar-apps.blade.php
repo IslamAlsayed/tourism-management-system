@@ -1,6 +1,7 @@
 <!-- Apps -->
-<div data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px" data-kt-dropdown-offset-rtl="-10px, 10px"
-    data-kt-dropdown-placement="bottom-end" data-kt-dropdown-placement-rtl="bottom-start">
+<div class="apps-toggle" data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px"
+    data-kt-dropdown-offset-rtl="-10px, 10px" data-kt-dropdown-placement="bottom-end"
+    data-kt-dropdown-placement-rtl="bottom-start">
     <button
         class="kt-btn kt-btn-ghost kt-btn-icon hover:bg-primary/10 hover:[&_i]:text-primary kt-dropdown-open:bg-primary/10 kt-dropdown-open:[&_i]:text-primary size-9 rounded-full"
         data-kt-dropdown-toggle="true">

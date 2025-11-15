@@ -27,107 +27,93 @@
             @csrf
             @method('PUT')
 
-            {{-- Basic Information --}}
+            {{-- Airport Information --}}
             <div class="kt-card mb-6">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.airport_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                        {{-- Name --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {{-- ICAO Code --}}
                         <div>
-                            <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
-                            <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                value="{{ $airTransport->name }}">
-                            @error('name')
+                            <label for="icao" class="kt-label mb-2">{{ __('main.icao') }}</label>
+                            <input type="text" name="icao" id="icao" maxlength="4" class="kt-input h-[45px]"
+                                value="{{ old('icao', $airTransport->icao) }}" placeholder="e.g., OERK">
+                            @error('icao')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        {{-- Arabic Name --}}
+                        {{-- IATA Code --}}
                         <div>
-                            <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                            <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                value="{{ $airTransport->name_ar }}">
-                            @error('name_ar')
+                            <label for="iata" class="kt-label mb-2">{{ __('main.iata') }}</label>
+                            <input type="text" name="iata" id="iata" maxlength="3" class="kt-input h-[45px]"
+                                value="{{ old('iata', $airTransport->iata) }}" placeholder="e.g., RUH">
+                            @error('iata')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        {{-- Code --}}
+                        {{-- LID --}}
                         <div>
-                            <label for="code" class="kt-label mb-2">{{ __('main.code') }}</label>
-                            <input type="text" name="code" id="code" maxlength="3" class="kt-input h-[45px]"
-                                value="{{ $airTransport->code }}" placeholder="e.g., SV, EK, QR" />
-                            @error('code')
+                            <label for="lid" class="kt-label mb-2">{{ __('main.lid') }}</label>
+                            <input type="text" name="lid" id="lid" maxlength="10" class="kt-input h-[45px]"
+                                value="{{ old('lid', $airTransport->lid) }}" placeholder="Local Identifier">
+                            @error('lid')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        {{-- Type --}}
+                        {{-- Airport Name --}}
                         <div>
-                            <label for="air-transports-type" class="kt-label mb-2">{{ __('main.type') }}</label>
-                            <select name="type" id="air-transports-type" class="kt-input h-[45px]" special-search
-                                data-current-value="{{ $airTransport->type }}" value="{{ $airTransport->type }}">
+                            <label for="airport_name" class="kt-label required mb-2">{{ __('main.airport_name') }}</label>
+                            <input type="text" name="airport_name" id="airport_name" class="kt-input h-[45px]"
+                                value="{{ old('airport_name', $airTransport->airport_name) }}" required>
+                            @error('airport_name')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Airport Name Arabic --}}
+                        <div>
+                            <label for="airport_name_ar" class="kt-label mb-2">{{ __('main.airport_name_ar') }}</label>
+                            <input type="text" name="airport_name_ar" id="airport_name_ar" class="kt-input h-[45px]"
+                                value="{{ old('airport_name_ar', $airTransport->airport_name_ar) }}">
+                            @error('airport_name_ar')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Subdivision/Type --}}
+                        <div>
+                            <label for="subd" class="kt-label mb-2">{{ __('main.subd') }}</label>
+                            <select name="subd" id="subd" class="kt-input h-[45px]" special-search>
                                 <option value="">--</option>
-                                @foreach ($airTransportTypes as $type)
-                                    <option value="{{ $type }}"
-                                        {{ $airTransport->type == $type ? 'selected' : '' }}>
-                                        {{ __('main.' . $type) }}
-                                    </option>
-                                @endforeach
+                                <option value="International"
+                                    {{ old('subd', $airTransport->subd) == 'International' ? 'selected' : '' }}>
+                                    {{ __('main.international') }}
+                                </option>
+                                <option value="Regional"
+                                    {{ old('subd', $airTransport->subd) == 'Regional' ? 'selected' : '' }}>
+                                    {{ __('main.regional') }}
+                                </option>
+                                <option value="Domestic"
+                                    {{ old('subd', $airTransport->subd) == 'Domestic' ? 'selected' : '' }}>
+                                    {{ __('main.domestic') }}
+                                </option>
+                                <option value="Military"
+                                    {{ old('subd', $airTransport->subd) == 'Military' ? 'selected' : '' }}>
+                                    {{ __('main.military') }}
+                                </option>
+                                <option value="Private"
+                                    {{ old('subd', $airTransport->subd) == 'Private' ? 'selected' : '' }}>
+                                    {{ __('main.private') }}
+                                </option>
                             </select>
-                            @error('type')
+                            @error('subd')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        {{-- Service Type --}}
-                        <div>
-                            <label for="service_type" class="kt-label mb-2">{{ __('main.service_type') }}</label>
-                            <select name="service_type" id="service_type" class="kt-input h-[45px]" special-search
-                                data-current-value="{{ $airTransport->service_type }}"
-                                value="{{ $airTransport->service_type }}">
-                                <option value="">--</option>
-                                @foreach ($airTransportServiceTypes as $service_type)
-                                    <option value="{{ $service_type }}"
-                                        {{ $airTransport->service_type == $service_type ? 'selected' : '' }}>
-                                        {{ __('main.' . $service_type) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('service_type')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Status --}}
-                        <div>
-                            <label for="status" class="kt-label mb-2">{{ __('main.status') }}</label>
-                            <select name="status" id="status" class="kt-input h-[45px]" special-search
-                                data-current-value="{{ $airTransport->status }}" value="{{ $airTransport->status }}">
-                                <option value="">--</option>
-                                @foreach ($airTransportStatuses as $status)
-                                    <option value="{{ $status }}"
-                                        {{ $airTransport->status == $status ? 'selected' : '' }}>
-                                        {{ __('main.' . $status) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('status')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    {{-- Description --}}
-                    <div>
-                        <label for="description" class="kt-label mb-2">{{ __('main.description') }}</label>
-                        <input id="description" type="hidden" name="description" value="{{ $airTransport->description }}">
-                        <trix-editor input="description" class="trix-content"></trix-editor>
-                        @error('description')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                        @enderror
                     </div>
                 </div>
             </div>
@@ -138,7 +124,7 @@
                     <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {{-- Regions [region, subregion, country, state, city] --}}
                         @include('components.regions.edit', [
                             'levels' => ['region', 'subregion', 'country', 'state', 'city'],
@@ -146,23 +132,13 @@
                             'record' => $airTransport,
                         ])
 
-                        {{-- Hub Airport --}}
+                        {{-- Elevation --}}
                         <div>
-                            <label for="hub_airport" class="kt-label mb-2">{{ __('main.hub_airport') }}</label>
-                            <input type="text" name="hub_airport" id="hub_airport" maxlength="10"
-                                class="kt-input h-[45px]" value="{{ $airTransport->hub_airport }}"
-                                placeholder="e.g., RUH, DXB, DOH" />
-                            @error('hub_airport')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Established Date --}}
-                        <div>
-                            <label for="established_date" class="kt-label mb-2">{{ __('main.established_date') }}</label>
-                            <input type="date" name="established_date" id="established_date"
-                                class="kt-input h-[45px]" value="{{ $airTransport->established_date }}" />
-                            @error('established_date')
+                            <label for="elevation" class="kt-label mb-2">{{ __('main.elevation') }}</label>
+                            <input type="number" name="elevation" id="elevation" class="kt-input h-[45px]"
+                                value="{{ old('elevation', $airTransport->elevation) }}" step="0.01"
+                                placeholder="meters">
+                            @error('elevation')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
@@ -171,8 +147,8 @@
                         <div>
                             <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
                             <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]"
-                                value="{{ $airTransport->latitude }}" step="any" minlength="-90" maxlength="90"
-                                placeholder="24.9576" />
+                                value="{{ old('latitude', $airTransport->latitude) }}" step="any" min="-90"
+                                max="90" placeholder="24.9576">
                             @error('latitude')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -182,63 +158,19 @@
                         <div>
                             <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
                             <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]"
-                                value="{{ $airTransport->longitude }}" step="any" minlength="-180" maxlength="180"
-                                placeholder="46.6988" />
+                                value="{{ old('longitude', $airTransport->longitude) }}" step="any" min="-180"
+                                max="180" placeholder="46.6988">
                             @error('longitude')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
 
-                    {{-- Address --}}
-                    <div class="">
-                        <label for="address" class="kt-label mb-2">{{ __('main.address') }}</label>
-                        <input id="address" type="hidden" name="address" value="{{ $airTransport->address }}">
-                        <trix-editor input="address"></trix-editor>
-                        @error('address')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            {{-- Fleet Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.fleet')]) }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {{-- Fleet Size --}}
+                        {{-- Time Zone --}}
                         <div>
-                            <label for="fleet_size" class="kt-label mb-2">{{ __('main.fleet_size') }}</label>
-                            <input type="number" name="fleet_size" id="fleet_size" class="kt-input h-[45px]"
-                                value="{{ $airTransport->fleet_size }}" minlength="1"
-                                placeholder="{{ __('main.number_of_aircraft') }}" />
-                            @error('fleet_size')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Passenger Capacity --}}
-                        <div>
-                            <label for="passenger_capacity"
-                                class="kt-label mb-2">{{ __('main.passenger_capacity') }}</label>
-                            <input type="number" name="passenger_capacity" id="passenger_capacity"
-                                class="kt-input h-[45px]" value="{{ $airTransport->passenger_capacity }}" minlength="1"
-                                placeholder="{{ __('main.total_passenger_capacity') }}" />
-                            @error('passenger_capacity')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Cargo Capacity --}}
-                        <div>
-                            <label for="cargo_capacity" class="kt-label mb-2">{{ __('main.cargo_capacity') }}</label>
-                            <input type="number" name="cargo_capacity" id="cargo_capacity" class="kt-input h-[45px]"
-                                value="{{ $airTransport->cargo_capacity }}" minlength="1"
-                                placeholder="{{ __('main.cargo_capacity_tons') }}" />
-                            @error('cargo_capacity')
+                            <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                            <input type="text" name="timezone" id="timezone" class="kt-input h-[45px]"
+                                value="{{ old('timezone', $airTransport->timezone) }}" placeholder="Asia/Riyadh">
+                            @error('timezone')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
@@ -253,43 +185,26 @@
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {{-- Phone --}}
+                        {{-- Local Phone --}}
                         <div>
-                            <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
-                            <input type="text" name="phone" id="phone" class="kt-input h-[45px]"
-                                value="{{ $airTransport->phone }}">
-                            @error('phone')
+                            <label for="local_phone_number"
+                                class="kt-label mb-2">{{ __('main.local_phone_number') }}</label>
+                            <input type="text" name="local_phone_number" id="local_phone_number"
+                                class="kt-input h-[45px]"
+                                value="{{ old('local_phone_number', $airTransport->local_phone_number) }}">
+                            @error('local_phone_number')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        {{-- Booking Phone --}}
+                        {{-- International Phone --}}
                         <div>
-                            <label for="booking_phone" class="kt-label mb-2">{{ __('main.booking_phone') }}</label>
-                            <input type="text" name="booking_phone" id="booking_phone" class="kt-input h-[45px]"
-                                value="{{ $airTransport->booking_phone }}">
-                            @error('booking_phone')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Customer Service Phone --}}
-                        <div>
-                            <label for="customer_service_phone"
-                                class="kt-label mb-2">{{ __('main.customer_service_phone') }}</label>
-                            <input type="text" name="customer_service_phone" id="customer_service_phone"
-                                class="kt-input h-[45px]" value="{{ $airTransport->customer_service_phone }}">
-                            @error('customer_service_phone')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Email --}}
-                        <div>
-                            <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
-                            <input type="email" name="email" id="email" class="kt-input h-[45px]"
-                                value="{{ $airTransport->email }}">
-                            @error('email')
+                            <label for="international_phone_number"
+                                class="kt-label mb-2">{{ __('main.international_phone_number') }}</label>
+                            <input type="text" name="international_phone_number" id="international_phone_number"
+                                class="kt-input h-[45px]"
+                                value="{{ old('international_phone_number', $airTransport->international_phone_number) }}">
+                            @error('international_phone_number')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
@@ -298,120 +213,8 @@
                         <div>
                             <label for="website" class="kt-label mb-2">{{ __('main.website') }}</label>
                             <input type="url" name="website" id="website" class="kt-input h-[45px]"
-                                value="{{ $airTransport->website }}">
+                                value="{{ old('website', $airTransport->website) }}">
                             @error('website')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Safety Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.safety')]) }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {{-- Safety Rating --}}
-                        <div>
-                            <label for="safety_rating" class="kt-label mb-2">{{ __('main.safety_rating') }}</label>
-                            <input type="number" name="safety_rating" id="safety_rating" class="kt-input h-[45px]"
-                                value="{{ $airTransport->safety_rating }}" minlength="1" maxlength="10" step="0.1"
-                                placeholder="7.5" />
-                            @error('safety_rating')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Safety Rating Agency --}}
-                        <div>
-                            <label for="safety_rating_agency"
-                                class="kt-label mb-2">{{ __('main.safety_rating_agency') }}</label>
-                            <input type="text" name="safety_rating_agency" id="safety_rating_agency"
-                                class="kt-input h-[45px]" value="{{ $airTransport->safety_rating_agency }}"
-                                placeholder="Skytrax, AirlineRatings" />
-                            @error('safety_rating_agency')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- On-time Performance --}}
-                        <div>
-                            <label for="on_time_performance"
-                                class="kt-label mb-2">{{ __('main.on_time_performance') }}</label>
-                            <input type="number" name="on_time_performance" id="on_time_performance"
-                                class="kt-input h-[45px]" value="{{ $airTransport->on_time_performance }}"
-                                minlength="0" maxlength="100" step="0.01" placeholder="85.5" />
-                            @error('on_time_performance')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Additional Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.additional_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    {{-- Notes --}}
-                    <div>
-                        <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
-                        <input id="notes" type="hidden" name="notes" value="{{ $airTransport->notes }}">
-                        <trix-editor input="notes" class="trix-content"></trix-editor>
-                        @error('notes')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {{-- Is Active --}}
-                        <div class="flex items-center gap-3">
-                            <input type="hidden" name="" value="0">
-                            <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox" value="1"
-                                {{ $airTransport->is_active == 1 ? 'checked' : '' }}>
-                            <label for="is_active" class="kt-label mb-0">{{ __('main.active') }}</label>
-                            @error('is_active')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Is International --}}
-                        <div class="flex items-center gap-3">
-                            <input type="hidden" name="" value="0">
-                            <input type="checkbox" name="is_international" id="is_international" class="kt-checkbox"
-                                value="1" {{ $airTransport->is_international == 1 ? 'checked' : '' }}>
-                            <label for="is_international" class="kt-label mb-0">{{ __('main.international') }}</label>
-                            @error('is_international')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Is Domestic --}}
-                        <div class="flex items-center gap-3">
-                            <input type="hidden" name="" value="0">
-                            <input type="checkbox" name="is_domestic" id="is_domestic" class="kt-checkbox"
-                                value="1" {{ $airTransport->is_domestic == 1 ? 'checked' : '' }}>
-                            <label for="is_domestic" class="kt-label mb-0">{{ __('main.domestic') }}</label>
-                            @error('is_domestic')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Has Frequent Flyer --}}
-                        <div class="flex items-center gap-3">
-                            <input type="hidden" name="" value="0">
-                            <input type="checkbox" name="has_frequent_flyer" id="has_frequent_flyer" class="kt-checkbox"
-                                value="1" {{ $airTransport->has_frequent_flyer == 1 ? 'checked' : '' }}>
-                            <label for="has_frequent_flyer"
-                                class="kt-label mb-0">{{ __('main.frequent_flyer_program') }}</label>
-                            @error('has_frequent_flyer')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
@@ -438,39 +241,3 @@
 @endpush
 
 @include('components.regions.script-cascading')
-
-{{-- @push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            let airTransportsType = document.getElementById("air-transports-type");
-            let serviceTypeSelect = document.getElementById("service_type");
-
-            airTransportsType.addEventListener('updatedSelect', (e) => {
-                let type = e.detail.value;
-
-                // Clear service type when type changes
-                serviceTypeSelect.value = '';
-
-                // Show/hide fields based on type
-                let passengerCapacityField = document.getElementById("passenger_capacity").closest('.grid')
-                    .querySelector('[id="passenger_capacity"]').closest('div');
-                let cargoCapacityField = document.getElementById("cargo_capacity").closest('div');
-                let frequentFlyerField = document.getElementById("has_frequent_flyer").closest('div');
-
-                if (type === 'cargo_airline') {
-                    passengerCapacityField.style.display = 'none';
-                    cargoCapacityField.style.display = 'block';
-                    frequentFlyerField.style.display = 'none';
-                } else if (type === 'aircraft_manufacturer') {
-                    passengerCapacityField.style.display = 'none';
-                    cargoCapacityField.style.display = 'none';
-                    frequentFlyerField.style.display = 'none';
-                } else {
-                    passengerCapacityField.style.display = 'block';
-                    cargoCapacityField.style.display = 'block';
-                    frequentFlyerField.style.display = 'block';
-                }
-            });
-        });
-    </script>
-@endpush --}}

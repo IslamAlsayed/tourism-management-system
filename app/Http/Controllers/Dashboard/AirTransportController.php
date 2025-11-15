@@ -23,9 +23,6 @@ class AirTransportController extends Controller
      */
     public function create()
     {
-        $airTransportTypes = array_keys(config('helpers.air_transport_types'));
-        $airTransportStatuses = array_keys(config('helpers.air_transport_statuses'));
-        $airTransportServiceTypes = array_keys(config('helpers.air_transport_service_types'));
         $regions = Region::orderBy('name')->get();
         return view('pages.dashboard.air-transports.create', get_defined_vars());
     }
@@ -37,18 +34,6 @@ class AirTransportController extends Controller
     {
         try {
             $data = $request->validated();
-            // Handle JSON fields
-            $jsonFields = ['aircraft_types', 'certifications', 'destinations', 'services', 'cabin_classes', 'partnerships', 'codeshare_agreements'];
-            foreach ($jsonFields as $field) {
-                if (isset($data[$field]) && is_string($data[$field])) {
-                    $data[$field] = explode(',', $data[$field]);
-                    $data[$field] = array_map('trim', $data[$field]);
-                    $data[$field] = array_filter($data[$field]);
-                }
-            }
-
-            // Set created_by
-            $data['created_by'] = auth()->id();
             $airTransport = AirTransport::create($data);
             return redirect()->route('air-transports.index')->withSuccess(__('main.air_transport_created_successfully'));
         } catch (\Exception $e) {
@@ -61,7 +46,7 @@ class AirTransportController extends Controller
      */
     public function show(AirTransport $airTransport)
     {
-        $airTransport->load(['region', 'subregion', 'country', 'state', 'city', 'creator', 'updater']);
+        $airTransport->load(['region', 'subregion', 'country', 'state', 'city']);
         return view('pages.dashboard.air-transports.show', compact('airTransport'));
     }
 
@@ -74,9 +59,6 @@ class AirTransportController extends Controller
         if (!$airTransport) {
             return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.air_transport')]));
         }
-        $airTransportTypes = array_keys(config('helpers.air_transport_types'));
-        $airTransportStatuses = array_keys(config('helpers.air_transport_statuses'));
-        $airTransportServiceTypes = array_keys(config('helpers.air_transport_service_types'));
         $regions = Region::orderBy('name')->get();
         return view('pages.dashboard.air-transports.edit', get_defined_vars());
     }
@@ -88,17 +70,6 @@ class AirTransportController extends Controller
     {
         try {
             $data = $request->validated();
-            // Handle JSON fields
-            $jsonFields = ['aircraft_types', 'certifications', 'destinations', 'services', 'cabin_classes', 'partnerships', 'codeshare_agreements'];
-            foreach ($jsonFields as $field) {
-                if (isset($data[$field]) && is_string($data[$field])) {
-                    $data[$field] = explode(',', $data[$field]);
-                    $data[$field] = array_map('trim', $data[$field]);
-                    $data[$field] = array_filter($data[$field]);
-                }
-            }
-            // Set updated_by
-            $data['updated_by'] = auth()->id();
             $airTransport->update($data);
             return redirect()->route('air-transports.index')->withSuccess(__('main.air_transport_updated_successfully'));
         } catch (\Exception $e) {
@@ -120,20 +91,5 @@ class AirTransportController extends Controller
             return redirect()->back()->withSuccess(__('main.messages.type_deleted', ['type' => __('main.air_transport')]));
         }
         return redirect()->back()->withError(__('main.messages.type_deletion_failed', ['type' => __('main.air_transport')]));
-    }
-
-    /**
-     * Display air transports by type
-     */
-    public function type($type)
-    {
-        $type = singularLowerCaseName($type, '_');
-        $validTypes = config('helpers.air_transport_types');
-        if (!isset($validTypes[$type])) {
-            return redirect()->route('air-transports.index')->withError(__('main.messages.invalid_type'));
-        }
-        $typeValue = $validTypes[$type];
-        $typeLabel = ucfirst(str_replace('_', ' ', $typeValue));
-        return view('pages.dashboard.air-transports.type', get_defined_vars());
     }
 }

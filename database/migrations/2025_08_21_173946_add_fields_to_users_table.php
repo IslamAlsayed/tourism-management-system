@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('address')->nullable();
             $table->string('user_code')->nullable();
             $table->string('employee_id')->nullable();
+            $table->date('birth_date')->nullable();
             $table->date('hire_date')->nullable();
             $table->string('department')->nullable();
             $table->string('position')->nullable();
@@ -55,6 +56,7 @@ return new class extends Migration {
                 'address',
                 'user_code',
                 'employee_id',
+                'birth_date',
                 'hire_date',
                 'department',
                 'position',
