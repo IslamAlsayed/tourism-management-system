@@ -133,11 +133,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // detect all selects
     window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
 
-    // document.addEventListener("updatedPaginate", () => {
-    //     console.log("updatedPaginate");
-    //     setTimeout(() => {
-    //         window.resetDeleteSelection();
-    //        window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
-    //     }, 200);
-    // });
+    document.addEventListener("updatedPaginate", () => {
+        console.log("updatedPaginate");
+        setTimeout(() => {
+            window.resetDeleteSelection();
+            window.specialDelete(
+                "selectAllItems",
+                "input[name='selectedItems[]']",
+            );
+        }, 200);
+    });
 });

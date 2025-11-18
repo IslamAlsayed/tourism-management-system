@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Region;
-use App\Models\subregion;
+use App\Models\Subregion;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subregions\SubregionsCreateRequest;
 use App\Http\Requests\Subregions\SubregionsUpdateRequest;
