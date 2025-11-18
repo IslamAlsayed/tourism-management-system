@@ -1,28 +1,28 @@
 @extends('layouts.master')
 
-@section('title', __('main.create_type', ['type' => __('main.air_transport')]))
+@section('title', __('main.create_type', ['type' => __('main.airline')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.create_type', ['type' => __('main.air_transport')]) }}
+                    {{ __('main.create_type', ['type' => __('main.airline')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.create_type_description', ['type' => __('main.air_transport')]) }}
+                    {{ __('main.create_type_description', ['type' => __('main.airline')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('air-transports.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.air_transports')]) }}
+                <a href="{{ route('airlines.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_types', ['types' => __('main.airlines')]) }}
                 </a>
             </div>
         </div>
     </div>
 
     <div class="kt-container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('air-transports.store') }}" enctype="multipart/form-data">
+        <form class="space-y-6" method="POST" action="{{ route('airlines.store') }}" enctype="multipart/form-data">
             @csrf
 
             {{-- Airport Information --}}
@@ -211,7 +211,7 @@
                 </div>
             </div>
 
-            @include('components.elements.save-submit', ['models' => 'air-transports'])
+            @include('components.elements.save-submit', ['models' => 'airlines'])
         </form>
     </div>
 @endsection

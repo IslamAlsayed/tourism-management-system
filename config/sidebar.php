@@ -230,7 +230,7 @@ return [
         [
             'title' => 'accommodations',
             'icon' => 'ki-filled ki-home-2',
-            // 'status' => 'updating...',
+            'fixed' => 'soon',
             'children' => [
                 [
                     'title' => 'imports',
@@ -292,29 +292,29 @@ return [
         ],
 
         // ================= Type =================
-        [
-            'title' => 'accommodations types',
-            'icon' => 'ki-filled ki-coffee',
-            // 'status' => 'done',
-            'children' => [
-                [
-                    'title' => 'all types',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'types.index'
-                ],
-                [
-                    'title' => 'create type',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'types.create'
-                ],
-                [
-                    'title' => 'import types',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'import.data',
-                    'parameters' => ['models' => 'types'],
-                ],
-            ],
-        ],
+        // [
+        //     'title' => 'accommodations types',
+        //     'icon' => 'ki-filled ki-coffee',
+        //     'fixed' => 'soon',
+        //     'children' => [
+        //         [
+        //             'title' => 'all types',
+        //             'icon' => 'ki-filled ki-home-2',
+        //             'route' => 'types.index'
+        //         ],
+        //         [
+        //             'title' => 'create type',
+        //             'icon' => 'ki-filled ki-home-2',
+        //             'route' => 'types.create'
+        //         ],
+        //         [
+        //             'title' => 'import types',
+        //             'icon' => 'ki-filled ki-home-2',
+        //             'route' => 'import.data',
+        //             'parameters' => ['models' => 'types'],
+        //         ],
+        //     ],
+        // ],
 
         // ================= Food & Beverage =================
         [
@@ -419,7 +419,7 @@ return [
         // ================= Transportation =================
         [
             'title' => 'transportation',
-            'fixed' => '+2',
+            'fixed' => 'soon',
             'icon' => 'ki-filled ki-delivery',
             'children' => [
                 [
@@ -473,25 +473,25 @@ return [
 
         // ================= Air Transport =================
         [
-            'title' => 'air transport',
+            'title' => 'airlines',
             'icon' => 'ki-filled ki-airplane',
             'status' => 'updated',
             'children' => [
                 [
-                    'title' => 'all air transports',
+                    'title' => 'airlines',
                     'icon' => 'ki-filled ki-airplane',
-                    'route' => 'air-transports.index'
+                    'route' => 'airlines.index'
                 ],
                 [
-                    'title' => 'create air transport',
+                    'title' => 'create airline',
                     'icon' => 'ki-filled ki-plus',
-                    'route' => 'air-transports.create'
+                    'route' => 'airlines.create'
                 ],
                 [
-                    'title' => 'import air transports',
+                    'title' => 'import airlines',
                     'icon' => 'ki-filled ki-upload',
                     'route' => 'import.data',
-                    'parameters' => ['models' => 'air-transports'],
+                    'parameters' => ['models' => 'airlines'],
                 ],
             ],
         ],
@@ -683,6 +683,25 @@ return [
                     'title' => 'change password',
                     'icon' => 'ki-filled ki-lock',
                     'route' => 'profile.change_password'
+                ],
+            ],
+        ],
+
+        // ================= Media Files =================
+        [
+            'title' => 'media files',
+            'icon' => 'ki-filled ki-picture',
+            'status' => 'new',
+            'children' => [
+                [
+                    'title' => 'all media files',
+                    'icon' => 'ki-filled ki-gallery',
+                    'route' => 'media-files.index',
+                ],
+                [
+                    'title' => 'upload files',
+                    'icon' => 'ki-filled ki-cloud-add',
+                    'route' => 'media-files.create',
                 ],
             ],
         ],

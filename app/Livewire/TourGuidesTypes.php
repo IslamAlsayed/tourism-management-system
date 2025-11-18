@@ -43,12 +43,12 @@ class TourGuidesTypes extends Component
     {
         $query = TourGuideType::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $this->applySorting($query);
-        $data = $query->paginate(getPaginate());
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         foreach ($data as $tourGuideType) {
             $tourGuideType['states'] = $tourGuideType->states();
             $tourGuideType['cities'] = $tourGuideType->cities();
         }
+        $this->applySorting($query);
         return view('livewire.tour-guides-types', ['data' => $data, 'totalCount' => $this->totalCount ?: TourGuideType::count()]);
     }
 }

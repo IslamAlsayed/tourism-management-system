@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\AirTransport;
+namespace App\Http\Requests\Airline;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AirTransportUpdateRequest extends FormRequest
+class AirlineUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,12 @@ class AirTransportUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $airTransport = $this->route('air_transport');
+        $airline = $this->route('air_transport');
 
         return [
             // Airport Codes
-            'icao' => ['nullable', 'string', 'max:4', 'unique:air_transports,icao,' . $airTransport->id],
-            'iata' => ['nullable', 'string', 'max:3', 'unique:air_transports,iata,' . $airTransport->id],
+            'icao' => ['nullable', 'string', 'max:4', Rule::unique('airlines', 'icao')->ignore($airline->id)],
+            'iata' => ['nullable', 'string', 'max:3', Rule::unique('airlines', 'iata')->ignore($airline->id)],
             'lid' => ['nullable', 'string', 'max:10'],
 
             // Airport Names

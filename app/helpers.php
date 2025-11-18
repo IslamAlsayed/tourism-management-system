@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 if (!function_exists('getActiveUser')) {
     /**
@@ -329,5 +330,17 @@ if (!function_exists('singularLowerCaseName')) {
     function singularLowerCaseName(?string $models, string $type = '-')
     {
         return implode($type, array_map([Str::class, 'lower'], array_map([Str::class, 'singular'], explode('-', $models))));
+    }
+}
+
+// تحقق من وجود ملف في التخزين
+if (!function_exists('checkExistFile')) {
+    function checkExistFile(?string $path = null, string $disk = 'public'): bool
+    {
+        if (empty($path)) {
+            return false;
+        }
+
+        return Storage::disk($disk)->exists($path);
     }
 }

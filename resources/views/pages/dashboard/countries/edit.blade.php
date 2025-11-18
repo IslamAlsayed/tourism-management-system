@@ -76,7 +76,7 @@
                             <!-- Country Code (ISO 2) -->
                             <div class="">
                                 <label for="iso2" class="kt-label mb-2">{{ __('main.country_code_iso2') }}</label>
-                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" max="2"
+                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" maxLength="2"
                                     value="{{ $country->iso2 }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -86,7 +86,7 @@
                             <!-- Country Code (ISO 3) -->
                             <div class="">
                                 <label for="iso3" class="kt-label mb-2">{{ __('main.country_code_iso3') }}</label>
-                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" max="3"
+                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" maxLength="3"
                                     value="{{ $country->iso3 }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -195,8 +195,10 @@
 
                             <!-- Timezone -->
                             <div class="">
-                                <label for="timezone" class="kt-label mb-2">{{ __('main.main_timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
+                                <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $country->human_timezone }}"
+                                    value="{{ $country->human_timezone }}">
                                     <option value="">--</option>
                                     @foreach (config('helpers.timezones') as $zone)
                                         <option value="{{ $zone }}"

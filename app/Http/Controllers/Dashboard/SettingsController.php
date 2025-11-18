@@ -27,9 +27,15 @@ class SettingsController extends Controller
         $validated = $request->validated();
         $validated = $request->safe()->except(['app_light_photo', 'app_dark_photo', 'app_mini_photo']);
 
-        $this->uploadPhoto($request, $setting, 'app_light_photo', "logos");
-        $this->uploadPhoto($request, $setting, 'app_dark_photo', "logos");
-        $this->uploadPhoto($request, $setting, 'app_mini_photo', "logos");
+        if ($request->has('app_light_photo')) {
+            $this->uploadPhoto($request, $setting, 'app_light_photo', "logos");
+        }
+        if ($request->has('app_dark_photo')) {
+            $this->uploadPhoto($request, $setting, 'app_dark_photo', "logos");
+        }
+        if ($request->has('app_mini_photo')) {
+            $this->uploadPhoto($request, $setting, 'app_mini_photo', "logos");
+        }
 
         $updated = $setting->update($validated);
 

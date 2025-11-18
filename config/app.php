@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'paginate_array' => [5, 10, 25, 50, 100, 500],
+    'paginate_array' => ['all', 5, 10, 25, 50, 100, 500],
     'paginate_count' => (int) env('PAGINATE_COUNT', 25),
     'excel_export_format' => env('EXCEL_EXPORT_FORMAT', 'xlsx'),
     'app_theme' => env('APP_THEME', 'system'),

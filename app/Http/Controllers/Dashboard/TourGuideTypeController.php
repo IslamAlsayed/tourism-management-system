@@ -109,10 +109,12 @@ class TourGuideTypeController extends Controller
             if ($request['city_id']) {
                 $data['city_id'] = array_unique($data['city_id']);
             }
-            $data = $request->safe()->except('photo');
+            $data = array_merge($data, $request->safe()->except('photo'));
 
             $tourGuideType->update($data);
-            $this->uploadPhoto($request, $tourGuideType, 'photo', "tourGuidesTypes");
+            if ($request->has('photo')) {
+                $this->uploadPhoto($request, $tourGuideType, 'photo', "tour-guides-types");
+            }
             DB::commit();
             return redirect()->route('tour-guides-types.index')->with('success', __('main.messages.type_updated', ['type' => __('main.tour-guide-type')]));
         } catch (\Throwable $e) {

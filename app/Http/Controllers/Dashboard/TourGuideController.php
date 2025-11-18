@@ -72,10 +72,10 @@ class TourGuideController extends Controller
             $data['state_id'] = !empty($stateIds) ? implode(',', $stateIds) : null;
             $data['city_id'] = !empty($cityIds) ? implode(',', $cityIds) : null;
 
-            $data = $request->safe()->except('photo');
+            $data = array_merge($data, $request->safe()->except('photo'));
             $tourGuide = TourGuide::create($data);
             $tourGuide->languages()->sync($request->languages_ids);
-            $this->uploadPhoto($request, $tourGuide, 'photo', "tour_guides");
+            $this->uploadPhoto($request, $tourGuide, 'photo', "tour-guides");
             DB::commit();
             $message = __('main.messages.type_created', ['type' => __('main.tour-guide')]);
             if ($request->has('save_and_add')) {
@@ -135,12 +135,14 @@ class TourGuideController extends Controller
             if ($request['city_id']) {
                 $data['city_id'] = array_unique($data['city_id']);
             }
-            $data = $request->safe()->except('photo');
+            $data = array_merge($data, $request->safe()->except('photo'));
             $tourGuide->update($data);
             if ($request->has('languages_ids')) {
                 $tourGuide->languages()->sync($request->languages_ids);
             }
-            $this->uploadPhoto($request, $tourGuide, 'photo', "tourGuides");
+            if ($request->has('photo')) {
+                $this->uploadPhoto($request, $tourGuide, 'photo', "tour-guides");
+            }
             DB::commit();
             return redirect()->route('tour-guides.index')->with('success', __('main.messages.type_updated', ['type' => __('main.tour-guide')]));
         } catch (\Throwable $e) {

@@ -1,13 +1,13 @@
 @extends('layouts.master')
 
-@section('title', 'Edit Air Transport Service')
+@section('title', 'Edit Airline Service')
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    Edit Air Transport Service
+                    Edit Airline Service
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
                     Update air transport service information
@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="#" class="kt-btn kt-btn-outline">
-                    Back to Air Transport
+                    Back to Airline
                 </a>
             </div>
         </div>
@@ -23,7 +23,7 @@
 
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
-            <!-- Air Transport Form -->
+            <!-- Airline Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">Basic Information</h3>
@@ -35,8 +35,8 @@
                             <div class="relative inline-block">
                                 <div
                                     class="w-24 h-24 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="air-transport-preview" src="{{ asset('metronic/media/avatars/300-4.png') }}"
-                                        alt="Air Transport Logo" class="w-full h-full object-cover">
+                                    <img id="airline-preview" src="{{ asset('metronic/media/avatars/300-4.png') }}"
+                                        alt="Airline Logo" class="w-full h-full object-cover">
                                 </div>
                                 <label for="logo"
                                     class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark">
@@ -284,7 +284,7 @@
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
                                 <i class="ki-filled ki-check text-sm me-2"></i>
-                                Update Air Transport Service
+                                Update Airline Service
                             </button>
                             <a href="#" class="kt-btn kt-btn-outline">
                                 Cancel
@@ -348,7 +348,7 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('air-transport-preview').src = e.target.result;
+                    document.getElementById('airline-preview').src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             }

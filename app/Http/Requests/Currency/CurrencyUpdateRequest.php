@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Currency;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CurrencyUpdateRequest extends FormRequest
@@ -22,7 +23,7 @@ class CurrencyUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['nullable', 'string', 'max:10', 'unique:currencies,code,' . $this->route('currency') . ',id'],
+            'code' => ['nullable', 'string', 'max:10', Rule::unique('currencies', 'code')->ignore($this->route('currency')->id)],
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
             'symbol' => ['nullable', 'string', 'max:10'],

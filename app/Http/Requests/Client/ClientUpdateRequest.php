@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Client;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ClientUpdateRequest extends FormRequest
@@ -24,7 +25,7 @@ class ClientUpdateRequest extends FormRequest
         $clientId = $this->route('client');
 
         return [
-            'client_code' => ['nullable', 'string', 'max:50', 'unique:clients,client_code,' . $clientId],
+            'client_code' => ['nullable', 'string', 'max:50', Rule::unique('clients', 'client_code')->ignore($clientId)],
 
             // Location information
             'region_id' => ['nullable', 'exists:regions,id'],

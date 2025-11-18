@@ -26,14 +26,14 @@ class NationalitiesCreateRequest extends FormRequest
             'name_ar' => ['required', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
 
-            'region_id' => ['required', 'string', 'exists:regions,id'],
-            'subregion_id' => ['required', 'string', 'exists:subregions,id'],
-            'country_id' => ['required', 'string', 'exists:countries,id'],
+            'region_id' => ['nullable', 'string', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'string', 'exists:countries,id'],
 
-            'state_id' => ['required'],
+            'state_id' => ['nullable'],
             'state_id.*' => ['integer', 'exists:states,id'],
 
-            'city_id' => ['required'],
+            'city_id' => ['nullable'],
             'city_id.*' => ['integer', 'exists:cities,id'],
         ];
     }

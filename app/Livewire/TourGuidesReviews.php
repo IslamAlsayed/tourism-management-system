@@ -38,7 +38,8 @@ class TourGuidesReviews extends Component
     {
         $query = TourGuideReview::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         $this->applySorting($query);
-        return view('livewire.tour-guides-reviews', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: TourGuideReview::count()]);
+        return view('livewire.tour-guides-reviews', ['data' => $data, 'totalCount' => $this->totalCount ?: TourGuideReview::count()]);
     }
 }

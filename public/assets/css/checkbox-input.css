@@ -51,6 +51,10 @@
         background-color: var(--checked);
     }
 
+    &:has(input:checked.indeterminate):after {
+        height: 20% !important;
+    }
+
     input {
         border: 0;
         clip: rect(0 0 0 0);
@@ -60,5 +64,21 @@
         padding: 0;
         position: absolute;
         width: 1px;
+    }
+}
+
+@media (max-width: 425px) {
+    .custom-input {
+        --size: 16px;
+        --gap: 8px;
+        --size: 10px;
+
+        &:before {
+            border-radius: 1.5px;
+        }
+
+        &:after {
+            border-radius: .75px;
+        }
     }
 }

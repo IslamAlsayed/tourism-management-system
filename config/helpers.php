@@ -12,13 +12,13 @@ return [
     ],
 
     'timezones' => [
-        'asia/riyadh' => 'asia/riyadh (+3)',
-        'asia/dubai' => 'asia/dubai (+4)',
-        'asia/kuwait' => 'asia/kuwait (+3)',
-        'asia/baghdad' => 'asia/baghdad (+3)',
-        'africa/cairo' => 'africa/cairo (+2)',
-        'europe/london' => 'europe/london (+0)',
-        'america/new york' => 'america/new york (-5)',
+        'asia/riyadh' => 'asia/riyadh',
+        'asia/dubai' => 'asia/dubai',
+        'asia/kuwait' => 'asia/kuwait',
+        'asia/baghdad' => 'asia/baghdad',
+        'africa/cairo' => 'africa/cairo',
+        'europe/london' => 'europe/london',
+        'america/new_york' => 'america/new_york',
     ],
 
     'positions' => [

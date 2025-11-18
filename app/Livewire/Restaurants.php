@@ -38,12 +38,12 @@ class Restaurants extends Component
     {
         $query = Restaurant::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $this->applySorting($query);
-        $data = $query->paginate(getPaginate());
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         foreach ($data as $restaurant) {
             $restaurant['states'] = $restaurant->states();
             $restaurant['cities'] = $restaurant->cities();
         }
+        $this->applySorting($query);
         return view('livewire.restaurants', ['data' => $data, 'totalCount' => $this->totalCount ?: Restaurant::count()]);
     }
 }

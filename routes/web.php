@@ -16,14 +16,15 @@ use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\MediaFileController;
 use App\Http\Controllers\Dashboard\SubregionController;
 use App\Http\Controllers\Dashboard\TourGuideController;
 use App\Http\Controllers\Admin\SidebarManagerController;
 use App\Http\Controllers\Dashboard\RestaurantController;
 use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\TouristSiteController;
+use App\Http\Controllers\Dashboard\AirlineController;
 use App\Http\Controllers\Dashboard\CrossingPortController;
-use App\Http\Controllers\Dashboard\AirTransportController;
 use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\TourGuideTypeController;
@@ -103,8 +104,12 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('crossings-ports/type/{type}', [CrossingPortController::class, 'type'])->name('crossings-ports.type');
 
     // === AIR TRANSPORT MANAGEMENT ===
-    Route::resource('air-transports', AirTransportController::class)->names('air-transports');
-    Route::get('air-transports/type/{type}', [AirTransportController::class, 'type'])->name('air-transports.type');
+    Route::resource('airlines', AirlineController::class)->names('airlines');
+    Route::get('airlines/type/{type}', [AirlineController::class, 'type'])->name('airlines.type');
+
+    // === MEDIA FILES MANAGEMENT ===
+    Route::resource('media-files', MediaFileController::class)->names('media-files');
+    Route::post('media-files/bulk-delete', [MediaFileController::class, 'bulkDelete'])->name('media-files.bulk-delete');
 
     // === CURRENCY MANAGEMENT ===
     Route::resource('currencies', CurrencyController::class)->names('currencies');

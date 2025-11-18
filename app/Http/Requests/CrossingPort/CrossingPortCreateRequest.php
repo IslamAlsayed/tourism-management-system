@@ -80,63 +80,63 @@ class CrossingPortCreateRequest extends FormRequest
         ];
     }
 
-    // /**
-    //  * Get custom validation messages.
-    //  */
-    // public function messages(): array
-    // {
-    //     return [
-    //         'code.unique' => 'The crossing port code must be unique.',
-    //         'name.required' => 'The crossing port name is required.',
-    //         'type.required' => 'The crossing port type is required.',
-    //         'type.in' => 'The selected crossing port type is invalid.',
-    //         'latitude.between' => 'Latitude must be between -90 and 90.',
-    //         'longitude.between' => 'Longitude must be between -180 and 180.',
-    //         'closing_time.after' => 'Closing time must be after opening time.',
-    //         'capacity.min' => 'Capacity must be at least 1.',
-    //     ];
-    // }
+    /**
+     * Get custom validation messages.
+     */
+    public function messages(): array
+    {
+        return [
+            'code.unique' => __('main.the crossing port code must be unique.'),
+            'name.required' => __('main.the crossing port name is required.'),
+            'type.required' => __('main.the crossing port type is required.'),
+            'type.in' => __('main.the selected crossing port type is invalid.'),
+            'latitude.between' => __('main.latitude must be between -90 and 90.'),
+            'longitude.between' => __('main.longitude must be between -180 and 180.'),
+            'closing_time.after' => __('main.closing time must be after opening time.'),
+            'capacity.min' => __('main.capacity must be at least 1.'),
+        ];
+    }
 
-    // /**
-    //  * Get custom attributes for validator errors.
-    //  */
-    // public function attributes(): array
-    // {
-    //     return [
-    //         'code' => __('main.code'),
-    //         'name' => __('main.name'),
-    //         'name_ar' => __('main.name_ar'),
-    //         'description' => __('main.description'),
-    //         'description_ar' => __('main.description_ar'),
-    //         'region_id' => __('main.region'),
-    //         'subregion_id' => __('main.subregion'),
-    //         'country_id' => __('main.country'),
-    //         'state_id' => __('main.state'),
-    //         'city_id' => __('main.city'),
-    //         'type' => __('main.type'),
-    //         'latitude' => __('main.latitude'),
-    //         'longitude' => __('main.longitude'),
-    //         'elevation' => __('main.elevation'),
-    //         'is_operational' => __('main.operational'),
-    //         'is_24_hours' => __('main.24_hours'),
-    //         'opening_time' => __('main.opening_time'),
-    //         'closing_time' => __('main.closing_time'),
-    //         'operating_days' => __('main.operating_days'),
-    //         'facilities' => __('main.facilities'),
-    //         'services' => __('main.services'),
-    //         'phone' => __('main.phone'),
-    //         'fax' => __('main.fax'),
-    //         'email' => __('main.email'),
-    //         'website' => __('main.website'),
-    //         'address' => __('main.address'),
-    //         'address_ar' => __('main.address_ar'),
-    //         'postal_code' => __('main.postal_code'),
-    //         'capacity' => __('main.capacity'),
-    //         'customs_office' => __('main.customs_office'),
-    //         'immigration_office' => __('main.immigration_office'),
-    //         'status' => __('main.status'),
-    //         'notes' => __('main.notes'),
-    //         'notes_ar' => __('main.notes_ar'),
-    //     ];
-    // }
+    /**
+     * Get custom attributes for validator errors.
+     */
+    public function attributes(): array
+    {
+        return [
+            'code' => __('main.code'),
+            'name' => __('main.name'),
+            'name_ar' => __('main.name_ar'),
+            'description' => __('main.description'),
+            'description_ar' => __('main.description_ar'),
+            'region_id' => __('main.region'),
+            'subregion_id' => __('main.subregion'),
+            'country_id' => __('main.country'),
+            'state_id' => __('main.state'),
+            'city_id' => __('main.city'),
+            'type' => __('main.type'),
+            'latitude' => __('main.latitude'),
+            'longitude' => __('main.longitude'),
+            'elevation' => __('main.elevation'),
+            'is_operational' => __('main.operational'),
+            'is_24_hours' => __('main.24_hours'),
+            'opening_time' => __('main.opening_time'),
+            'closing_time' => __('main.closing_time'),
+            'operating_days' => __('main.operating_days'),
+            'facilities' => __('main.facilities'),
+            'services' => __('main.services'),
+            'phone' => __('main.phone'),
+            'fax' => __('main.fax'),
+            'email' => __('main.email'),
+            'website' => __('main.website'),
+            'address' => __('main.address'),
+            'address_ar' => __('main.address_ar'),
+            'postal_code' => __('main.postal_code'),
+            'capacity' => __('main.capacity'),
+            'customs_office' => __('main.customs_office'),
+            'immigration_office' => __('main.immigration_office'),
+            'status' => __('main.status'),
+            'notes' => __('main.notes'),
+            'notes_ar' => __('main.notes_ar'),
+        ];
+    }
 }

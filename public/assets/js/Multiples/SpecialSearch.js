@@ -41,8 +41,10 @@ window.specialSearch = function (selectElement) {
     let selectedValue = "";
     let selectedLabel = "";
 
-    if (selectElement.value) {
-        searchInput.dataset.id = selectElement.value;
+    let value = selectElement.value || selectElement.dataset.currentValue;
+    if (value) {
+        searchInput.dataset.id = value;
+        // searchInput.value = value;
         searchInput.value = selectElement.selectedOptions[0].textContent.trim();
     }
 

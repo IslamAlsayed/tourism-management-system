@@ -61,7 +61,7 @@
                             <div class="">
                                 <label for="fips_code" class="kt-label mb-2">{{ __('main.fips_code') }}</label>
                                 <input type="text" name="fips_code" id="fips_code" class="kt-input h-[45px]"
-                                    value="{{ $state->fips_code }}">
+                                    maxLength="2" value="{{ $state->fips_code }}">
                                 @error('fips_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -70,7 +70,7 @@
                             <!-- State Code (ISO 2) -->
                             <div class="">
                                 <label for="iso2" class="kt-label mb-2">{{ __('main.code_iso2') }}</label>
-                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" max="2"
+                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" maxLength="2"
                                     value="{{ $state->iso2 }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -80,7 +80,7 @@
                             <!-- State Code (ISO 3) -->
                             <div class="">
                                 <label for="iso3" class="kt-label mb-2">{{ __('main.code_iso3') }}</label>
-                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" max="3"
+                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" maxLength="3"
                                     value="{{ $state->iso3 }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -100,7 +100,7 @@
                             <!-- Level -->
                             <div class="">
                                 <label for="level" class="kt-label mb-2">{{ __('main.level') }}</label>
-                                <input type="text" name="level" id="level" class="kt-input h-[45px]"
+                                <input type="text" name="level" id="level" class="kt-input h-[45px]" minLength="1"
                                     value="{{ $state->level }}">
                                 @error('level')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

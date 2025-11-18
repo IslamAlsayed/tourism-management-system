@@ -59,6 +59,7 @@
     position: fixed;
     top: -10px;
     right: 15px;
+    left: auto;
     gap: 15px;
     display: flex;
     padding-block: 30px 50px;
@@ -549,6 +550,13 @@
 
     100% {
         width: 0;
+    }
+}
+
+html[lang=ar] {
+    & .toasts {
+        left: 15px;
+        right: auto;
     }
 }
 

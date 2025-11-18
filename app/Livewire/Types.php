@@ -38,7 +38,8 @@ class Types extends Component
     {
         $query = Type::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         $this->applySorting($query);
-        return view('livewire.types', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: Type::count()]);
+        return view('livewire.types', ['data' => $data, 'totalCount' => $this->totalCount ?: Type::count()]);
     }
 }

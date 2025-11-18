@@ -38,6 +38,10 @@ class Country extends Model
         'city_id',
     ];
 
+    protected $casts = [
+        'timezone' => 'array',
+    ];
+
     /**
      * Get relationship names for eager loading
      */
@@ -79,6 +83,26 @@ class Country extends Model
         if (!$this->state_id)
             return [];
         return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
+    }
+
+    public function getTimezoneAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function getZoneNameAttribute()
+    {
+        return $this->timezone[0]['zoneName'] ?? null;
+    }
+
+    public function getZoneAbbreviationAttribute()
+    {
+        return $this->timezone[0]['abbreviation'] ?? null;
+    }
+
+    public function getHumanTimezoneAttribute($value)
+    {
+        return $this->timezone[0]['zoneName'] . ' (' . $this->timezone[0]['abbreviation'] . ')' ?? null;
     }
 
     public function getStateListAttribute()

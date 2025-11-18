@@ -19,12 +19,12 @@ window.specialDelete = function (selectAllId, rowCheckboxSelector) {
 
     // Mark as initialized
     newSelectAll.dataset.initialized = "true";
-
     deleteAllBtn?.classList.add("hidden");
 
     // ✅ تحديد الكل
     if (newSelectAll) {
         newSelectAll.addEventListener("change", () => {
+            newSelectAll.classList.remove("indeterminate");
             newCheckboxes.forEach((cb) => (cb.checked = newSelectAll.checked));
             updateDeleteButtonVisibility(rowCheckboxSelector);
         });
@@ -34,8 +34,9 @@ window.specialDelete = function (selectAllId, rowCheckboxSelector) {
     newCheckboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
             if (!checkbox.checked) {
-                newSelectAll.checked = false;
+                newSelectAll.classList.add("indeterminate");
             } else {
+                newSelectAll.classList.remove("indeterminate");
                 const allChecked = newCheckboxes.every((cb) => cb.checked);
                 newSelectAll.checked = allChecked;
             }
@@ -130,13 +131,13 @@ function updateDeleteButtonVisibility(rowCheckboxSelector) {
 
 document.addEventListener("DOMContentLoaded", () => {
     // detect all selects
-    specialDelete("selectAllItems", "input[name='selectedItems[]']");
+    window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
 
     // document.addEventListener("updatedPaginate", () => {
     //     console.log("updatedPaginate");
     //     setTimeout(() => {
     //         window.resetDeleteSelection();
-    //         SpecialDelete("selectAllItems", "input[name='selectedItems[]']");
+    //        window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
     //     }, 200);
     // });
 });

@@ -15,6 +15,9 @@ class ExcelController extends Controller
     public function import($models)
     {
         $modelName = studlySingular($models);
+        if ($models == 'media-files') {
+            $modelName = 'MediaFile';
+        }
         $modelClass = "App\\Models\\$modelName";
         if (!class_exists($modelClass)) {
             return back()->withError("Invalid model: {$models}");

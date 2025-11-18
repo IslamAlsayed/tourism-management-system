@@ -29,10 +29,10 @@ class RestaurantController extends Controller
     public function store(RestaurantCreateRequest $request)
     {
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
-        $restaurant = Restaurant::create($validated);
+        $data = array_merge($validated, $request->safe()->except('photo'));
+        $restaurant = Restaurant::create($data);
         if ($restaurant) {
-            $this->uploadPhoto($request, $restaurant, 'photo', "restaurants");
+            $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
             if ($request->has('save_and_add')) {
                 return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.restaurant')]));
             }
@@ -67,9 +67,11 @@ class RestaurantController extends Controller
             $data['city_id'] = array_unique($data['city_id']);
         }
 
-        $data = $request->safe()->except('photo');
-        $this->uploadPhoto($request, $restaurant, 'photo', "restaurants");
+        $data = array_merge($data, $request->safe()->except('photo'));
         $updated = $restaurant->update($data);
+        if ($request->has('photo')) {
+            $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
+        }
         if ($updated) {
             return redirect()->route('restaurants.index')->with('success', __('main.messages.type_updated', ['type' => __('main.restaurant')]));
         }

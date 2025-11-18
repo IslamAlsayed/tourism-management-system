@@ -91,11 +91,11 @@ class CountryController extends Controller
                 "gmtOffsetName" => $gmtOffsetName,
             ];
 
-            $data['timezone'] = json_encode([$timezoneData]);
+            $data['timezone'] = [$timezoneData];
+            $data = array_merge($data, $request->safe()->except(['photo', 'timezone']));
 
-            $data = $request->safe()->except('photo');
             $country = Country::create($data);
-            $this->uploadPhoto($request, $country, 'photo', "countries");
+            $this->uploadPhoto($request, $country, 'photo', 'countries');
             DB::commit();
             $message = __('main.messages.type_created', ['type' => __('main.country')]);
             if ($request->has('save_and_add')) {
@@ -130,16 +130,41 @@ class CountryController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->validated();
+            $data = array_merge($data, $request->safe()->except(['photo', 'timezone']));
+
             if ($request['state_id']) {
                 $data['state_id'] = array_unique($data['state_id']);
             }
             if ($request['city_id']) {
                 $data['city_id'] = array_unique($data['city_id']);
             }
-            $data = $request->safe()->except('photo');
 
+            if ($request->input('timezone')) {
+                $zone = $request->input('timezone');
+                $zone = trim(preg_replace('/\s*\(.*\)$/', '', $zone));
+                $tz = new \DateTimeZone($zone);
+                $now = new \DateTime("now", $tz);
+
+                $offset = $tz->getOffset($now);
+                $hours = floor($offset / 3600);
+                $minutes = abs(($offset % 3600) / 60);
+                $sign = $offset >= 0 ? '+' : '-';
+                $gmtOffsetName = sprintf('UTC%s%02d:%02d', $sign, abs($hours), $minutes);
+
+                $timezoneData = [
+                    "tzName" => $zone,
+                    "zoneName" => $zone,
+                    "gmtOffset" => $offset,
+                    "abbreviation" => $now->format('T'),
+                    "gmtOffsetName" => $gmtOffsetName,
+                ];
+
+                $data['timezone'] = [$timezoneData];
+            }
             $country->update($data);
-            $this->uploadPhoto($request, $country, 'photo', "countries");
+            if ($request->has('photo')) {
+                $this->uploadPhoto($request, $country, 'photo', 'countries');
+            }
             DB::commit();
             return redirect()->route('countries.index')->with('success', __('main.messages.type_updated', ['type' => __('main.country')]));
         } catch (\Throwable $e) {

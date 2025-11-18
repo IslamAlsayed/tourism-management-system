@@ -38,12 +38,12 @@ class TourGuides extends Component
     {
         $query = TourGuide::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $this->applySorting($query);
-        $data = $query->paginate(getPaginate());
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         foreach ($data as $tourGuides) {
             $tourGuides['states'] = $tourGuides->states();
             $tourGuides['cities'] = $tourGuides->cities();
         }
+        $this->applySorting($query);
         return view('livewire.tour-guides', ['data' => $data, 'totalCount' => $this->totalCount ?: TourGuide::count()]);
     }
 }

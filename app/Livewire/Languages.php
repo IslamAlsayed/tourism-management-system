@@ -17,6 +17,7 @@ class Languages extends Component
     public $totalCount = '';
     public $message = [];
     public $view = 'grid'; // or table
+    public $gridLength = 5;
 
     public function updatingSearch()
     {
@@ -30,6 +31,7 @@ class Languages extends Component
 
         // display view mode [ grid | table ]
         $this->view = session('languages_view', 'grid');
+        $this->gridLength = session('grid_length_languages', 5);
         $this->resetPage();
     }
 
@@ -45,6 +47,11 @@ class Languages extends Component
         session(['languages_view' => $this->view]);
     }
 
+    public function toggleGridLength($length, $models)
+    {
+        session(['grid_length_' . $models => $length ?? 5]);
+    }
+
     public function render()
     {
         $query = Language::query()->orderBy('name');
@@ -57,7 +64,8 @@ class Languages extends Component
                 $query->with($relationsToLoad);
             }
         }
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         $this->applySorting($query);
-        return view('livewire.languages', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: Language::count()]);
+        return view('livewire.languages', ['data' => $data, 'totalCount' => $this->totalCount ?: Language::count()]);
     }
 }

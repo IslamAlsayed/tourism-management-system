@@ -29,11 +29,36 @@
             }
         }
 
+        @media (max-width: 992px) {
+            .search-container {
+                --width: 30px;
+
+                & input {
+                    min-width: 150px;
+                }
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                --width: 30px;
+
+                & label {
+                    height: 25px;
+                }
+
+                & input {
+                    width: 90px;
+                    min-width: 90px;
+                }
+            }
+        }
+
         /* !
-                                                                                * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
-                                                                                * Copyright 2015 Daniel Cardoso <@DanielCardoso>
-                                                                                * Licensed under MIT
-                                                                                */
+                                                                                                    * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
+                                                                                                    * Copyright 2015 Daniel Cardoso <@DanielCardoso>
+                                                                                                    * Licensed under MIT
+                                                                                                    */
         .la-ball-clip-rotate,
         .la-ball-clip-rotate>div {
             position: relative;
@@ -125,8 +150,8 @@
         }
 
         /*
-                                                                                                                                         * Animation
-                                                                                                                                         */
+                                                                                                                                                             * Animation
+                                                                                                                                                             */
         @-webkit-keyframes ball-clip-rotate {
             0% {
                 -webkit-transform: rotate(0deg);

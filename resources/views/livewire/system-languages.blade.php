@@ -13,7 +13,7 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content" id="pageContent">
+    <div class="kt-card-content" id="pageContent" wire:target="search, toggleGridLength" wire:loading.class="loading">
         @if ($view == 'grid')
             <div class="kt-cards p-4" wire:key="{{ $view ? $view : '' }}-view">
                 <div class="inline-flex text-nowrap items-center gap-2 text-center mb-2 cursor-pointer">
@@ -22,12 +22,23 @@
                         'id' => 'selectAllItems',
                         'label' => __('main.select_type', ['type' => __('main.all')]),
                     ])
+
+                    {{-- Grid length --}}
+                    <div>
+                        <select wire:change="toggleGridLength($event.target.value,'system_languages')"
+                            wire:model.live="gridLength" class="kt-select">
+                            @for ($length = 1; $length <= 10; $length++)
+                                <option value="{{ $length }}">{{ $length }}</option>
+                            @endfor
+                        </select>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
+                <div class="flex flex-wrap gap-4 mb-4">
                     @foreach ($data as $language)
-                        <div class="kt-card text-center p-4 rounded-lg shadow-sm {{ getCurrentLocale() == $language->code ? 'bg-gray-100 border-2 border-green-500' : 'hover:bg-gray-100' }}"
-                            wire:key="{{ $language->id }}">
+                        <div wire:key="{{ $language->id }}"
+                            style="width: calc((100% / {{ $gridLength }}) - {{ (($gridLength - 1) * 16) / $gridLength }}px)"
+                            class="kt-card text-center p-4 rounded-lg shadow-sm {{ getCurrentLocale() == $language->code ? 'bg-gray-100 border-2 border-green-500' : 'hover:bg-gray-100' }}">
                             <span class="text-start">
                                 @include('components.elements.checkbox-button', [
                                     'name' => 'selectedItems[]',
@@ -51,7 +62,7 @@
                                         </a>
                                     @endif
                                     @include('components.elements.edit-button', [
-                                        'models' => 'languages',
+                                        'models' => 'system-languages',
                                         'id' => $language->id,
                                     ])
                                     @include('components.elements.delete-button', [

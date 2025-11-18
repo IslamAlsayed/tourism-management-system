@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Event;
+use App\Models\MediaFile;
+use App\Observers\MediaFileObserver;
 use App\Events\ImportExportCompleted;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 use App\Listeners\NotifyUserAfterImport;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
             ImportExportCompleted::class,
             NotifyUserAfterImport::class
         );
+
+        MediaFile::observe(MediaFileObserver::class);
     }
 }

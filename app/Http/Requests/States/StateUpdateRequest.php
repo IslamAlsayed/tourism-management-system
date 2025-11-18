@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\States;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StateUpdateRequest extends FormRequest
@@ -24,12 +25,12 @@ class StateUpdateRequest extends FormRequest
         return [
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
-            'region_id' => ['required', 'string', 'exists:regions,id'],
-            'subregion_id' => ['required', 'string', 'exists:subregions,id'],
-            'country_id' => ['required', 'string', 'exists:countries,id'],
-            'city_id' => ['required', 'string', 'exists:cities,id'],
-            'iso2' => ['nullable', 'string', 'min:2', 'max:2', 'unique:countries,iso2'],
-            'iso3' => ['nullable', 'string', 'min:3', 'max:3', 'unique:countries,iso3'],
+            'region_id' => ['nullable', 'string', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'string', 'exists:countries,id'],
+            'city_id' => ['nullable', 'string', 'exists:cities,id'],
+            'iso2' => ['nullable', 'string', 'min:2', 'max:2', Rule::unique('states', 'iso2')->ignore($this->route('state'))],
+            'iso3' => ['nullable', 'string', 'min:3', 'max:3', Rule::unique('states', 'iso3')->ignore($this->route('state'))],
             'fips_code' => ['nullable', 'string', 'max:2'],
             'type' => ['nullable', 'string', 'max:255'],
             'level' => ['nullable', 'integer'],

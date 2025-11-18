@@ -13,9 +13,9 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content">
+    <div class="kt-card-content" wire:target="search" wire:loading.class="loading">
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
-            <div class="kt-scrollable-x-auto" wire:target="search" wire:loading.class="loading">
+            <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,

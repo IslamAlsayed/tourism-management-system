@@ -2,16 +2,42 @@
 <div class="shrink-0" data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px" data-kt-dropdown-offset-rtl="-20px, 10px"
     data-kt-dropdown-placement="bottom-end" data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
     <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
-        <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
-            class="border-2 border-green-500 rounded-full size-9 shrink-0"
-            src="{{ $activeUser && $activeUser->photo ? asset('storage/' . $activeUser->photo) : asset('metronic/media/avatars/blank.png') }}" />
+        @if ($activeUser && $activeUser->photo && checkExistFile($activeUser->photo))
+            <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
+                class="border-2 border-green-500 rounded-full size-9 shrink-0"
+                src="{{ asset('storage/' . $activeUser->photo) }}" />
+        @else
+            <span class="image-character" style="min-width: 35px; min-height: 35px; font-size: 14px;">
+                <span class="pb-1">
+                    {{ env('CHARACTER_LENGTH', 1) == 2
+                        ? ($activeUser?->name[1]
+                            ? lcfirst($activeUser?->name[0]) . lcfirst($activeUser?->name[1])
+                            : lcfirst($activeUser?->name[0]))
+                        : lcfirst($activeUser?->name[0]) }}
+                </span>
+            </span>
+        @endif
     </div>
-    <div class="kt-dropdown-menu w-[300px]" data-kt-dropdown-menu="true">
+    <div class="kt-dropdown-menu
+            w-[300px]" data-kt-dropdown-menu="true">
         <div class="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
             <div class="flex items-center gap-2">
-                <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
-                    class="border-2 border-green-500 rounded-full size-9 shrink-0"
-                    src="{{ $activeUser && $activeUser->photo ? asset('storage/' . $activeUser->photo) : asset('metronic/media/avatars/blank.png') }}" />
+                @if ($activeUser && $activeUser->photo && checkExistFile($activeUser->photo))
+                    <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
+                        class="border-2 border-green-500 rounded-full size-9 shrink-0"
+                        src="{{ asset('storage/' . $activeUser->photo) }}" />
+                @else
+                    <span class="image-character" style="min-width: 35px; min-height: 35px; font-size: 14px;">
+                        <span class="pb-1">
+                            {{ env('CHARACTER_LENGTH', 1) == 2
+                                ? ($activeUser?->name[1]
+                                    ? lcfirst($activeUser?->name[0]) . lcfirst($activeUser?->name[1])
+                                    : lcfirst($activeUser?->name[0]))
+                                : lcfirst($activeUser?->name[0]) }}
+                        </span>
+                    </span>
+                @endif
+
                 <div class="flex flex-col gap-1.5">
                     <span class="text-sm font-semibold leading-none text-foreground">
                         {{ $activeUser?->name ?? __('main.unknown_user') }}

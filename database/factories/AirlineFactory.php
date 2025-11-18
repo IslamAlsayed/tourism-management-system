@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\AirTransport;
+use App\Models\Airline;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AirTransport>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Airline>
  */
-class AirTransportFactory extends Factory
+class AirlineFactory extends Factory
 {
-    protected $model = AirTransport::class;
+    protected $model = Airline::class;
 
     /**
      * Define the model's default state.

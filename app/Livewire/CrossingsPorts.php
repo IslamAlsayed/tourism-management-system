@@ -53,11 +53,10 @@ class CrossingsPorts extends Component
         $this->safeDestroy($id, 'crossing_port');
     }
 
-    public function resetFilter()
+    public function resetFilters()
     {
-        $this->filterType = '';
-        $this->filterStatus = '';
-        $this->filterOperational = '';
+        $this->reset(['search', 'filterType', 'filterStatus', 'filterOperational']);
+        $this->resetPage();
         $this->dispatch('reset-filters');
     }
 
@@ -75,8 +74,8 @@ class CrossingsPorts extends Component
         if ($this->filterOperational !== '') {
             $query->where('is_operational', $this->filterOperational);
         }
-
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         $this->applySorting($query);
-        return view('livewire.crossings-ports', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: CrossingPort::count()]);
+        return view('livewire.crossings-ports', ['data' => $data, 'totalCount' => $this->totalCount ?: CrossingPort::count()]);
     }
 }

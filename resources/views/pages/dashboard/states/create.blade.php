@@ -60,7 +60,7 @@
                             <div class="">
                                 <label for="fips_code" class="kt-label mb-2">{{ __('main.fips_code') }}</label>
                                 <input type="text" name="fips_code" id="fips_code" class="kt-input h-[45px]"
-                                    value="{{ old('fips_code') }}">
+                                    maxLength="2" value="{{ old('fips_code') }}">
                                 @error('fips_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -70,7 +70,7 @@
                             <div class="">
                                 <label for="iso2" class="kt-label required mb-2">{{ __('main.code_iso2') }}</label>
                                 <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" required
-                                    max="2" value="{{ old('iso2') }}">
+                                    maxLength="2" value="{{ old('iso2') }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -80,7 +80,7 @@
                             <div class="">
                                 <label for="iso3" class="kt-label required mb-2">{{ __('main.code_iso3') }}</label>
                                 <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" required
-                                    max="3" value="{{ old('iso3') }}">
+                                    maxLength="3" value="{{ old('iso3') }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -99,7 +99,7 @@
                             <!-- Level -->
                             <div class="">
                                 <label for="level" class="kt-label mb-2">{{ __('main.level') }}</label>
-                                <input type="text" name="level" id="level" class="kt-input h-[45px]"
+                                <input type="number" name="level" id="level" class="kt-input h-[45px]" minLength="1"
                                     value="{{ old('level') }}">
                                 @error('level')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

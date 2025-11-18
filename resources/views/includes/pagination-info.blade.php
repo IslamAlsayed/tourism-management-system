@@ -1,17 +1,19 @@
 <div class="flex-wrap gap-2 p-2">
     <div class="w-full flex justify-between items-start">
         {{-- Pagination Info --}}
-        <div>
-            <p class="text-sm text-gray-600 p-2">
-                {{ __('main.showing') }} {{ $data->firstItem() ?? 0 }} -
-                <strong class="text-primary">{{ $data->lastItem() ?? 0 }}</strong>
-                {{ __('main.of') }} {{ $data->total() }} {{ $entityName ?? __('main.items') }}
-                @if ($data->hasPages())
-                    <span class="text-blue-600">({{ __('main.page') }} {{ $data->currentPage() }} {{ __('main.of') }}
-                        {{ $data->lastPage() }})</span>
-                @endif
-            </p>
-        </div>
+        @if (isset($data) && getPaginate() != 'all')
+            <div class="pagination-showing">
+                <p class="text-sm text-gray-600 p-2">
+                    {{ __('main.showing') }} {{ $data->firstItem() ?? 0 }} -
+                    <strong class="text-primary">{{ $data->lastItem() ?? 0 }}</strong>
+                    {{ __('main.of') }} {{ $data->total() }} {{ $entityName ?? __('main.items') }}
+                    @if ($data->hasPages())
+                        <span class="text-blue-600">({{ __('main.page') }} {{ $data->currentPage() }} {{ __('main.of') }}
+                            {{ $data->lastPage() }})</span>
+                    @endif
+                </p>
+            </div>
+        @endif
 
         {{-- selected items count --}}
         <div class="flex gap-2">
@@ -63,7 +65,7 @@
     </div>
 
     {{-- Progress bar showing current page position --}}
-    @if ($data->hasPages() && $data->lastPage() > 1)
+    @if (isset($data) && getPaginate() != 'all' && $data->hasPages() && $data->lastPage() > 1)
         <div class="w-full mt-3">
             <div class="flex items-center gap-2 text-xs text-gray-500">
                 <span>{{ __('main.progress') }}:</span>

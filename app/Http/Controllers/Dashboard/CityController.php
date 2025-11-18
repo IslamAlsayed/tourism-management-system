@@ -23,8 +23,14 @@ class CityController extends Controller
 
     public function store(CreateCitiesRequest $request)
     {
-        $validated = $request->validated();
-        $created = City::create($validated);
+        $data = $request->validated();
+        if ($request['state_id']) {
+            $data['state_id'] = array_unique($data['state_id']);
+        }
+        if ($request['city_id']) {
+            $data['city_id'] = array_unique($data['city_id']);
+        }
+        $created = City::create($data);
 
         if ($created) {
             if ($request->has('save_and_add')) {
@@ -52,13 +58,17 @@ class CityController extends Controller
         if (!$city) {
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.city')]));
         }
-        $validated = $request->validated();
-
-        $updated = $city->update($validated);
+        $data = $request->validated();
+        if ($request['state_id']) {
+            $data['state_id'] = array_unique($data['state_id']);
+        }
+        if ($request['city_id']) {
+            $data['city_id'] = array_unique($data['city_id']);
+        }
+        $updated = $city->update($data);
         if ($updated) {
             return redirect()->route('cities.index')->with('success', __('main.messages.type_updated', ['type' => __('main.city')]));
         }
-
         return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.city')]));
     }
 
@@ -72,7 +82,6 @@ class CityController extends Controller
         if ($deleted) {
             return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.city')]));
         }
-
         return redirect()->route('cities.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.city')]));
     }
 }

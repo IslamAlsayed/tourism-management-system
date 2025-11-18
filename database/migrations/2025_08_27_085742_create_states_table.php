@@ -26,6 +26,10 @@ return new class extends Migration {
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
             $table->string('timezone')->nullable();
+            $table->boolean('is_active')->nullable()->default(false);
+            $table->boolean('is_independent')->nullable()->default(false);
+            $table->boolean('is_developed')->nullable()->default(false);
+            $table->boolean('is_landlocked')->nullable()->default(false);
             $table->timestamps();
 
             $table->index(['name', 'name_ar', 'country_id']);

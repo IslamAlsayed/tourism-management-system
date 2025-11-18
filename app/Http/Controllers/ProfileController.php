@@ -82,7 +82,7 @@ class ProfileController extends Controller
     public function updatePhoto(Request $request)
     {
         $request->validate([
-            'photo' => ['required', 'string', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
+            'photo' => ['required', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
         ]);
 
         $user = $request->user();

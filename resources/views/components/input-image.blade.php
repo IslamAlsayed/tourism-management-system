@@ -1,10 +1,38 @@
 <div class="text-center mb-4">
     <div class="inline-block mb-4">
         <div class="relative">
+            @php
+                $classes =
+                    isset($photoUrl) && $photoUrl
+                        ? 'rounded-[9px] bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden'
+                        : 'image-character';
+            @endphp
+
+            <div class="w-[120px] h-[120px] {{ $classes }} photo-preview">
+
+                @if (isset($photoUrl) && $photoUrl)
+                    <img id="{{ $column ?? 'photo' }}" src="{{ $photoUrl }}" class="w-full h-full object-cover">
+                @elseif(isset($modelKey) && $modelKey)
+                    <span class="pb-2">
+                        {{ env('CHARACTER_LENGTH', 1) == 2
+                            ? ($modelKey[1]
+                                ? lcfirst($modelKey[0]) . lcfirst($modelKey[1])
+                                : lcfirst($modelKey[0]))
+                            : lcfirst($modelKey[0]) }}
+                    </span>
+                @else
+                    <img id="{{ $column ?? 'photo' }}" src="{{ asset('metronic/media/avatars/blank.png') }}"
+                        class="w-full h-full object-cover">
+                @endif
+            </div>
+
+            {{-- 
             @if (isset($photoUrl) && $photoUrl)
                 <div
                     class="w-[120px] h-[120px] rounded-[9px] bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden photo-preview">
+
                     <img id="{{ $column ?? 'photo' }}" src="{{ $photoUrl }}" class="w-full h-full object-cover">
+
                 </div>
             @elseif(isset($modelKey) && $modelKey)
                 <div class="w-[120px] h-[120px] image-character">
@@ -13,7 +41,8 @@
                             ? ($modelKey[1]
                                 ? lcfirst($modelKey[0]) . lcfirst($modelKey[1])
                                 : lcfirst($modelKey[0]))
-                            : lcfirst($modelKey[0]) }}</span>
+                            : lcfirst($modelKey[0]) }}
+                    </span>
                 </div>
             @else
                 <div
@@ -21,7 +50,7 @@
                     <img id="{{ $column ?? 'photo' }}" src="{{ asset('metronic/media/avatars/blank.png') }}"
                         class="w-full h-full object-cover">
                 </div>
-            @endif
+            @endif --}}
 
             <label for="photo"
                 class="absolute bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark"
@@ -49,7 +78,12 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.querySelector('.photo-preview img').src = e.target.result;
+                    let photoPreview = document.querySelector('.photo-preview');
+                    photoPreview.classList.remove('image-character');
+                    let img = document.createElement('img');
+                    img.src = e.target.result;
+                    photoPreview.innerHTML = '';
+                    photoPreview.appendChild(img);
                 };
                 reader.readAsDataURL(file);
             }

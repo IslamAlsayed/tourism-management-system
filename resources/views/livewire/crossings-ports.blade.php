@@ -13,9 +13,10 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content">
+    <div class="kt-card-content" wire:target="search,filterType,filterStatus,filterOperational,resetFilter"
+        wire:loading.class="loading">
         <!-- Filters -->
-        <div class="mb-4 ps-4 filterTable" wire:target="search" wire:loading.class="loading">
+        <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
             <div>
                 <label for="type" style="font-size: 14px;">{{ __('main.type') }}</label>
                 <select wire:model.live="filterType" id="type" class="kt-input h-[40px] w-48 max-w-full">
@@ -62,8 +63,7 @@
         </div>
 
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="crossings-ports_table">
-            <div class="kt-scrollable-x-auto" wire:target="search,filterType,filterStatus,filterOperational,resetFilter"
-                wire:loading.class="loading">
+            <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,

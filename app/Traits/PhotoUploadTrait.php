@@ -38,7 +38,7 @@ trait PhotoUploadTrait
         // Check if the photo exists before attempting to delete it
         if (!empty($model->{$photoColumn})) {
             // Delete the photo
-            Storage::disk('public')->delete($model->{$photoColumn});
+            Storage::disk($model->disk ?? 'public')->delete($model->{$photoColumn});
 
             // Delete the folder if it's empty
             $folderPath = dirname($model->{$photoColumn});

@@ -26,8 +26,8 @@ class SystemLanguageController extends Controller
     public function store(SystemLanguageCreateRequest $request)
     {
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
-        $language = SystemLanguage::create($validated);
+        $data = array_merge($validated, $request->safe()->except('photo'));
+        $language = SystemLanguage::create($data);
 
         if ($language) {
             $this->loadActiveLanguages();

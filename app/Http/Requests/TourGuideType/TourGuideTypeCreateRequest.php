@@ -26,9 +26,9 @@ class TourGuideTypeCreateRequest extends FormRequest
             'price' => ['required', 'numeric', 'min:0'],
             'currency_id' => ['required', 'exists:currencies,id'],
 
-            'region_id' => ['required', 'exists:regions,id'],
-            'subregion_id' => ['required', 'exists:subregions,id'],
-            'country_id' => ['required', 'exists:countries,id'],
+            'region_id' => ['nullable', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'exists:countries,id'],
 
             'all_states' => ['nullable', 'in:0,1'],
             'state_id' => ['nullable', 'array'],

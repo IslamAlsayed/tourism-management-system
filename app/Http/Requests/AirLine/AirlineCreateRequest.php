@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\AirTransport;
+namespace App\Http\Requests\Airline;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AirTransportCreateRequest extends FormRequest
+class AirlineCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

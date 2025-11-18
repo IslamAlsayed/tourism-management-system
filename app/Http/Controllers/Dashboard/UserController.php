@@ -39,10 +39,10 @@ class UserController extends Controller
     {
         // dD($request->all());
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
-        $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
+        $data = array_merge($validated, $request->safe()->except('photo'));
+        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
 
-        $created = User::create($validated);
+        $created = User::create($data);
 
         if ($created) {
             $this->uploadPhoto($request, $created, 'photo', "users");
@@ -72,14 +72,12 @@ class UserController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
         }
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
-
-        $validated['name'] = ($validated['first_name'] ?? $user->first_name) . ' ' . ($validated['last_name'] ?? $user->last_name);
-
-        $this->uploadPhoto($request, $user, 'photo', "users");
-
-        $updated = $user->update($validated);
-
+        $data = array_merge($validated, $request->safe()->except('photo'));
+        $data['name'] = ($data['first_name'] ?? $user->first_name) . ' ' . ($data['last_name'] ?? $user->last_name);
+        $updated = $user->update($data);
+        if ($request->has('photo')) {
+            $this->uploadPhoto($request, $user, 'photo', "users");
+        }
         if ($updated) {
             return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
         }

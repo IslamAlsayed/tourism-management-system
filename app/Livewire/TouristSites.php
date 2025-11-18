@@ -84,31 +84,23 @@ class TouristSites extends Component
         if ($this->filterType) {
             $query->where('type', $this->filterType);
         }
-
         if ($this->filterCategory) {
             $query->where('category', $this->filterCategory);
         }
-
         if ($this->filterStatus) {
             $query->where('status', $this->filterStatus);
         }
-
         if ($this->filterFeatured !== '') {
             $query->where('is_featured', $this->filterFeatured);
         }
-
         if ($this->filterFreeEntry !== '') {
             $query->where('is_free_entry', $this->filterFreeEntry);
         }
-
-        // Apply sorting
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
+        $this->totalCount = $data->total();
         $query = $this->applySorting($query);
-
-        $touristSites = $query->paginate(getPaginate());
-        $this->totalCount = $touristSites->total();
-
         return view('livewire.tourist-sites', [
-            'data' => $touristSites,
+            'data' => $data,
             'siteTypes' => TouristSite::getSiteTypes(),
             'categories' => TouristSite::getCategories(),
             'statuses' => TouristSite::getStatuses(),

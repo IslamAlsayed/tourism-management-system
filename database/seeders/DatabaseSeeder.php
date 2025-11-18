@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             TouristSiteSeeder::class,
             CrossingPortSeeder::class,
-            AirTransportSeeder::class,
+            AirlineSeeder::class,
         ]);
     }
 }

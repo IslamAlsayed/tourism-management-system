@@ -39,7 +39,10 @@
                             'modelKey' => $user->name ?? 'U',
                             'column' => 'user',
                             'columnName' => 'photo',
-                            'photoUrl' => $user->photo ? asset('storage/' . $user->photo) : '',
+                            'photoUrl' =>
+                                $user->photo && checkExistFile($user->photo)
+                                    ? asset('storage/' . $user->photo)
+                                    : '',
                         ])
 
                         <div class="grid lg:grid-cols-3 gap-6 mb-4">

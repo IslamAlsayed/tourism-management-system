@@ -4,7 +4,7 @@
 
 @if (isset($levels) && in_array('region', $levels))
     <div class="{{ isset($regions) && count($regions) <= 0 ? 'loading' : '' }}">
-        <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
+        <label for="region_id" class="kt-label mb-2 flex items-center justify-between">
             <div>
                 {{ __('main.region') }}
                 <strong
@@ -35,7 +35,7 @@
 
 @if (isset($levels) && in_array('subregion', $levels))
     <div class="loading">
-        <label for="subregion_id" class="kt-label required mb-2 flex items-center justify-between">
+        <label for="subregion_id" class="kt-label mb-2 flex items-center justify-between">
             <div>
                 {{ __('main.subregion') }}
                 <strong class="dataLength text-primary"></strong>
@@ -58,7 +58,7 @@
 
 @if (isset($levels) && in_array('country', $levels))
     <div class="loading">
-        <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
+        <label for="country_id" class="kt-label mb-2 flex items-center justify-between">
             <div>
                 {{ __('main.country') }}
                 <strong class="dataLength text-primary"></strong>
@@ -81,7 +81,7 @@
 
 @if (isset($levels) && in_array('state', $levels))
     <div class="loading">
-        <label for="all_states" class="kt-label required mb-2 flex items-center justify-between">
+        <label for="all_states" class="kt-label mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
                     @if (isset($multiple) && $multiple)
@@ -117,7 +117,7 @@
 
 @if (isset($levels) && in_array('city', $levels))
     <div class="loading">
-        <label for="all_cities" class="kt-label required mb-2 flex items-center justify-between">
+        <label for="all_cities" class="kt-label mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
                     @if (isset($multiple) && $multiple)

@@ -38,12 +38,12 @@ class Countries extends Component
     {
         $query = Country::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $this->applySorting($query);
-        $data = $query->paginate(getPaginate());
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         foreach ($data as $country) {
             $country->states = $country->states();
             $country->cities = $country->cities();
         }
+        $this->applySorting($query);
         return view('livewire.countries', ['data' => $data, 'totalCount' => $this->totalCount ?: Country::count()]);
     }
 }

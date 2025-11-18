@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\AirTransport;
+use App\Models\Airline;
 use Illuminate\Support\Facades\Schema;
 
-class AirTransportSeeder extends Seeder
+class AirlineSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,10 +14,10 @@ class AirTransportSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        AirTransport::truncate();
+        Airline::truncate();
         Schema::enableForeignKeyConstraints();
 
         // Create 50 airports with realistic data
-        AirTransport::factory()->count(50)->create();
+        Airline::factory()->count(50)->create();
     }
 }

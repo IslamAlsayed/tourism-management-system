@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Setting;
+use App\Models\Notification;
+use App\Models\SystemLanguage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,20 +26,23 @@ class ViewServiceProvider extends ServiceProvider
     {
         view()->composer('*', function ($view) {
             $activeUser = Auth::check() ? Auth::user() : null;
-            $system_languages = \App\Models\SystemLanguage::all();
-            $settings = \App\Models\Setting::first();
+            $system_languages = SystemLanguage::all();
+            $settings = Setting::first();
 
             // Get notifications for authenticated user
             $notifications = collect();
             $unreadNotificationsCount = 0;
 
-            if ($activeUser && class_exists(\App\Models\Notification::class)) {
+            if ($activeUser && class_exists(Notification::class)) {
                 try {
-                    // $notifications = \App\Models\Notification::forUser($activeUser->id)->orderBy('created_at', 'desc')->limit(10)->get();
-                    $notifications = \App\Models\Notification::forUser($activeUser->id)->orderBy('created_at', 'desc')->limit(10)->paginate(getPaginate());
-                    $unreadNotificationsCount = \App\Models\Notification::forUser($activeUser->id)->unread()->count();
+                    $notifications = Notification::forUser($activeUser->id)->orderBy('created_at', 'desc')->limit(10);
+                    $notifications = getPaginate() != 'all' ?
+                        $notifications->limit(10)->paginate(getPaginate()) :
+                        $notifications->get();
+                    $unreadNotificationsCount = Notification::forUser($activeUser->id)->unread()->count();
                 } catch (\Exception $e) {
                     // Handle case where notifications table doesn't exist yet
+                    Log::error('Error fetching notifications: ' . $e->getMessage());
                     $notifications = collect();
                     $unreadNotificationsCount = 0;
                 }

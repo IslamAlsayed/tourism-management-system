@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\AirTransport;
+use App\Models\Airline;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
@@ -10,7 +10,7 @@ use App\Traits\WithSorting;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
-class AirTransports extends Component
+class Airlines extends Component
 {
     use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
 
@@ -26,21 +26,21 @@ class AirTransports extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
-        $this->mountWithCustomColumns(AirTransport::class);
+        $this->mountWithCustomColumns(Airline::class);
         $this->resetPage();
     }
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'air_transport');
+        $this->safeDestroy($id, 'airlines');
     }
 
     public function render()
     {
-        $query = AirTransport::query();
+        $query = Airline::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         $this->applySorting($query);
-        return view('livewire.air-transports', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: AirTransport::count()]);
+        return view('livewire.airlines', ['data' => $data, 'totalCount' => $this->totalCount ?: Airline::count()]);
     }
 }

@@ -3,10 +3,10 @@
 @section('table-content')
     <!-- Container -->
     @include('includes.table-breadcrumb', [
-        'title' => 'Air Transport',
+        'title' => 'Airlines',
         'description' => 'Manage airports and airlines',
         'page_create_url' => '#',
-        'page_create_title' => 'Add New Air Transport',
+        'page_create_title' => 'Add New Airline',
     ])
     <!-- End of Container -->
 
@@ -59,7 +59,7 @@
                         </thead>
                         <tbody>
                             @php
-                                $airTransport = [
+                                $airlines = [
                                     [
                                         'id' => 1,
                                         'name' => 'King Khalid International Airport',
@@ -146,7 +146,7 @@
                                     ],
                                 ];
                             @endphp
-                            @foreach ($airTransport as $service)
+                            @foreach ($airlines as $service)
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">

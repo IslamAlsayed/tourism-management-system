@@ -76,8 +76,10 @@
                                             class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             @if (gettype($item['fixed']) == 'boolean')
                                                 <i class="fas fa-xmark"></i>
-                                            @else
+                                            @elseif (preg_match('/\d/', $item['fixed']))
                                                 {{ $item['fixed'] }}
+                                            @else
+                                                {{ __('sidebar.' . $item['fixed']) }}
                                             @endif
                                         </span>
                                     @endif

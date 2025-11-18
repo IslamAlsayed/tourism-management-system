@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Client;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreClientRequest extends FormRequest
@@ -47,7 +48,7 @@ class StoreClientRequest extends FormRequest
 
             // Emails
             'personal_email' => 'nullable|email|max:255',
-            'email_primary' => 'required|email|max:255|unique:clients,email_primary',
+            'email_primary' => ['required', 'email', 'max:255', Rule::unique('clients', 'email_primary')->ignore($this->route('client'))],
             'work_email' => 'nullable|email|max:255',
             'secondary_email' => 'nullable|email|max:255',
 

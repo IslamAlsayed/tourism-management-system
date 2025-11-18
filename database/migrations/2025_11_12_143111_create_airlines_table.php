@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('air_transports', function (Blueprint $table) {
+        Schema::create('airlines', function (Blueprint $table) {
             $table->id();
 
             // Airport Codes
@@ -59,6 +59,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('air_transports');
+        Schema::dropIfExists('airlines');
     }
 };

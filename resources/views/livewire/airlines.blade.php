@@ -2,8 +2,8 @@
     @component('includes.pagination-info', [
         'data' => $data,
         'columns' => $columns,
-        'title' => __('main.air-transports'),
-        'entityName' => __('main.air-transport'),
+        'title' => __('main.airlines'),
+        'entityName' => __('main.airline'),
         'sortField' => $sortField,
         'searchValue' => $search,
         'showSearch' => true,
@@ -13,14 +13,14 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content">
-        <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="air-transports_table">
-            <div class="kt-scrollable-x-auto" wire:target="search" wire:loading.class="loading">
+    <div class="kt-card-content" wire:target="search" wire:loading.class="loading">
+        <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="airlines_table">
+            <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'air-transports',
+                    'models' => 'airlines',
                 ])
                 @endcomponent
             </div>

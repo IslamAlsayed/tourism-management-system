@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Languages;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LanguageUpdateRequest extends FormRequest
@@ -24,7 +25,7 @@ class LanguageUpdateRequest extends FormRequest
         return [
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
-            'code' => ['nullable', 'string', 'unique:languages,code,' . $this->route('language')],
+            'code' => ['nullable', 'string', Rule::unique('languages', 'code')->ignore($this->route('language')->id)],
         ];
     }
 }

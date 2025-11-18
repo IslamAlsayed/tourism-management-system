@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // detect all selects
     const specialMultiples = document.querySelectorAll("[special-multiple]");
     const specialSearches = document.querySelectorAll("[special-search]");
-    specialMultiples.forEach((select) => specialSelect(select));
-    specialSearches.forEach((select) => specialSearch(select));
-    specialDelete("selectAllItems", "input[name='selectedItems[]']");
+    specialMultiples.forEach((select) => window.specialSelect(select));
+    specialSearches.forEach((select) => window.specialSearch(select));
+    window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
 
     // close dropdowns on outside click
     document.addEventListener("click", function (e) {
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("updatedPaginate", () => {
     setTimeout(() => {
         window.resetDeleteSelection();
-        specialDelete("selectAllItems", "input[name='selectedItems[]']");
+        window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
     }, 200);
 });
 
@@ -34,7 +34,7 @@ document.addEventListener("livewire:initialized", () => {
         ) {
             setTimeout(() => {
                 window.resetDeleteSelection();
-                specialDelete(
+                window.specialDelete(
                     "selectAllItems",
                     "input[name='selectedItems[]']",
                 );
@@ -48,7 +48,7 @@ document.addEventListener("livewire:initialized", () => {
             const selectAll = document.getElementById("selectAllItems");
             if (selectAll && !selectAll.dataset.initialized) {
                 window.resetDeleteSelection();
-                specialDelete(
+                window.specialDelete(
                     "selectAllItems",
                     "input[name='selectedItems[]']",
                 );

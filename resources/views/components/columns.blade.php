@@ -1,14 +1,12 @@
 <div id="parentColumnsModal">
     @if (isset($view) && $view)
-        <div wire:click="toggleView" class="kt-btn kt-btn-outline bg-secondary text-white px-3 h-[45px] cursor-pointer"
-            style="font-size: 16px;">
-            <i class="fas fa-{{ $view == 'grid' ? 'grid' : 'table-list' }}"></i>
+        <div wire:click="toggleView" class="kt-btn kt-btn-outline bg-secondary text-white px-3 h-[45px] cursor-pointer">
+            <i class="fas fa-{{ $view == 'grid' ? 'table-list' : 'grid' }}"></i>
         </div>
     @endif
 
     <div id="columns" data-target-button="#columnsModal"
-        class="columns kt-btn kt-btn-outline bg-secondary text-white px-3 h-[45px] cursor-default"
-        style="font-size: 16px;">
+        class="columns kt-btn kt-btn-outline bg-secondary text-white px-3 h-[45px] cursor-default">
         <i class="fas fa-list"></i>
     </div>
 

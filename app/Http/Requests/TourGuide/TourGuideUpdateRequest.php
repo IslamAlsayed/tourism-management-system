@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\TourGuide;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TourGuideUpdateRequest extends FormRequest
@@ -25,7 +26,7 @@ class TourGuideUpdateRequest extends FormRequest
 
         return [
             'name' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255', 'unique:tour_guides,email,' . $tourGuideId],
+            'email' => ['nullable', 'email', 'max:255', Rule::unique('tour_guides', 'email')->ignore($tourGuideId)],
             'mobile_01' => ['nullable', 'string', 'max:20'],
             'gender' => ['nullable', 'in:male,female'],
             'guide_type_id' => ['nullable', 'exists:tour_guide_types,id'],

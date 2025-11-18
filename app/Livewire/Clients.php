@@ -47,6 +47,13 @@ class Clients extends Component
         $this->safeDestroy($id, 'client');
     }
 
+    public function resetFilters()
+    {
+        $this->reset(['search', 'filterClientGender', 'filterClientStatus']);
+        $this->resetPage();
+        $this->dispatch('reset-filters');
+    }
+
     public function render()
     {
         $query = Client::query();
@@ -55,9 +62,10 @@ class Clients extends Component
             $query->where('gender', $this->filterClientGender);
         }
         if ($this->filterClientStatus) {
-            $query->where('status', $this->filterClientStatus);
+            $query->where('client_status', $this->filterClientStatus);
         }
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         $this->applySorting($query);
-        return view('livewire.clients', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: Client::count()]);
+        return view('livewire.clients', ['data' => $data, 'totalCount' => $this->totalCount ?: Client::count()]);
     }
 }

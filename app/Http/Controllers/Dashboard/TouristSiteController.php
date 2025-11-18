@@ -33,27 +33,27 @@ class TouristSiteController extends Controller
     public function store(TouristSiteCreateRequest $request)
     {
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
+        $data = array_merge($validated, $request->safe()->except('photo'));
 
         // Handle location arrays (if multi-select)
-        if (isset($validated['state_id']) && is_array($validated['state_id'])) {
-            $validated['state_id'] = $validated['state_id'][0] ?? null;
+        if (isset($data['state_id']) && is_array($data['state_id'])) {
+            $data['state_id'] = $data['state_id'][0] ?? null;
         }
-        if (isset($validated['city_id']) && is_array($validated['city_id'])) {
-            $validated['city_id'] = $validated['city_id'][0] ?? null;
+        if (isset($data['city_id']) && is_array($data['city_id'])) {
+            $data['city_id'] = $data['city_id'][0] ?? null;
         }
 
         // Handle JSON fields
         $jsonFields = ['facilities', 'activities', 'services', 'operating_days', 'tags', 'best_visit_time'];
         foreach ($jsonFields as $field) {
-            if (isset($validated[$field]) && is_string($validated[$field])) {
-                $validated[$field] = json_decode($validated[$field], true);
+            if (isset($data[$field]) && is_string($data[$field])) {
+                $data[$field] = json_decode($data[$field], true);
             }
         }
 
         // Set created_by
-        $validated['created_by'] = getActiveUser()->id;
-        $created = TouristSite::create($validated);
+        $data['created_by'] = getActiveUser()->id;
+        $created = TouristSite::create($data);
         if ($created) {
             $this->uploadPhoto($request, $created, 'photo', "tourist-sites");
             if ($request->has('save_and_add')) {
@@ -97,25 +97,27 @@ class TouristSiteController extends Controller
             return redirect()->route('tourist-sites.index')->withError(__('main.messages.not_found_this_type', ['type' => __('main.tourist_site')]));
         }
         $validated = $request->validated();
-        $validated = $request->safe()->except('photo');
+        $data = array_merge($validated, $request->safe()->except('photo'));
         // Handle location arrays (if multi-select)
-        if (isset($validated['state_id']) && is_array($validated['state_id'])) {
-            $validated['state_id'] = $validated['state_id'][0] ?? null;
+        if (isset($data['state_id']) && is_array($data['state_id'])) {
+            $data['state_id'] = $data['state_id'][0] ?? null;
         }
-        if (isset($validated['city_id']) && is_array($validated['city_id'])) {
-            $validated['city_id'] = $validated['city_id'][0] ?? null;
+        if (isset($data['city_id']) && is_array($data['city_id'])) {
+            $data['city_id'] = $data['city_id'][0] ?? null;
         }
         // Handle JSON fields
         $jsonFields = ['facilities', 'activities', 'services', 'operating_days', 'tags', 'best_visit_time'];
         foreach ($jsonFields as $field) {
-            if (isset($validated[$field]) && is_string($validated[$field])) {
-                $validated[$field] = json_decode($validated[$field], true);
+            if (isset($data[$field]) && is_string($data[$field])) {
+                $data[$field] = json_decode($data[$field], true);
             }
         }
         // Set updated_by
-        $validated['updated_by'] = getActiveUser()->id;
-        $this->uploadPhoto($request, $touristSite, 'photo', "tourist-sites");
-        $updated = $touristSite->update($validated);
+        $data['updated_by'] = getActiveUser()->id;
+        $updated = $touristSite->update($data);
+        if ($request->has('photo')) {
+            $this->uploadPhoto($request, $touristSite, 'photo', "tourist-sites");
+        }
         if ($updated) {
             return redirect()->route('tourist-sites.index')->withSuccess(__('main.messages.type_updated', ['type' => __('main.tourist_site')]));
         }

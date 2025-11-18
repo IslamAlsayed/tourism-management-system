@@ -38,7 +38,8 @@ class Currencies extends Component
     {
         $query = Currency::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
         $this->applySorting($query);
-        return view('livewire.currencies', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount ?: Currency::count()]);
+        return view('livewire.currencies', ['data' => $data, 'totalCount' => $this->totalCount ?: Currency::count()]);
     }
 }
