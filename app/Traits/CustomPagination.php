@@ -15,9 +15,10 @@ trait CustomPagination
 
     public function updatedPaginate($value)
     {
-        session(['paginate_count' => $value]);
+        $mainValue = $value == 'all' ? config('app.paginate_max') : $value;
+        session(['paginate_count' => $mainValue]);
         $this->dispatch('updatedPaginate', ['value' => $value]);
-        Setting::updateOrCreate(['id' => 1], ['app_paginate_count' => $value]);
+        Setting::updateOrCreate(['id' => 1], ['app_paginate_count' => $mainValue]);
     }
 
     public function updatingPaginate()

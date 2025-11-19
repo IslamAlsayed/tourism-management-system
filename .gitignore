@@ -25,3 +25,5 @@ Thumbs.db
 *copy.php
 /storage/app/private
 *copy.*
+
+/properties.js

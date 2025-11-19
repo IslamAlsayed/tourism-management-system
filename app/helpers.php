@@ -5,6 +5,7 @@ use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Support\Activity\ActivityMessageFormatter;
 
 if (!function_exists('getActiveUser')) {
     /**
@@ -178,7 +179,7 @@ if (!function_exists('getPaginate')) {
     function getPaginate()
     {
         $settings = Setting::first();
-        return session('paginate_count', $settings->app_paginate_count ?? config('app.paginate_count'));
+        return (int) session('paginate_count', $settings->app_paginate_count ?? config('app.paginate_count'));
     }
 }
 
@@ -342,5 +343,28 @@ if (!function_exists('checkExistFile')) {
         }
 
         return Storage::disk($disk)->exists($path);
+    }
+}
+
+// تلخيص رسالة النشاط
+if (!function_exists('activityMessageSummary')) {
+    function activityMessageSummary($activity)
+    {
+        $activityMessage = $activity ? ActivityMessageFormatter::summary($activity) : false;
+        return $activityMessage;
+    }
+}
+
+if (!function_exists('badgeClasses')) {
+    function badgeClasses($event)
+    {
+        return match ($event) {
+            'created' => 'bg-success/30 text-green-800',
+            'updated' => 'bg-primary/30 text-blue-800',
+            'deleted', 'force_deleted' => 'bg-danger/30 text-red-800',
+            'restored' => 'bg-yellow/30 text-yellow-800',
+            'error' => 'bg-danger/30 text-red-800',
+            default => 'bg-gray/30 text-gray-700',
+        };
     }
 }

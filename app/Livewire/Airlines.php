@@ -39,7 +39,7 @@ class Airlines extends Component
     {
         $query = Airline::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
+        $data = $query->paginate(getPaginate());
         $this->applySorting($query);
         return view('livewire.airlines', ['data' => $data, 'totalCount' => $this->totalCount ?: Airline::count()]);
     }

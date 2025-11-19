@@ -18,7 +18,7 @@
         </div>
 
         {{-- Pagination info and links --}}
-        @if (getPaginate() != 'all')
+        @if (getPaginate() != config('app.paginate_max'))
             <div class="flex items-center gap-4">
                 <div class="text-sm text-gray-600 details_info">
                     {{ $data->firstItem() ?? 0 }} - {{ $data->lastItem() ?? 0 }} {{ __('main.of') }}

@@ -38,7 +38,7 @@ class Countries extends Component
     {
         $query = Country::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
+        $data = $query->paginate(getPaginate());
         foreach ($data as $country) {
             $country->states = $country->states();
             $country->cities = $country->cities();

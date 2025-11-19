@@ -1,14 +1,14 @@
 <div class="kt-card kt-card-grid min-w-full">
     @component('includes.pagination-info', [
         'data' => $data,
-        'columns' => $columns,
+        'columns' => $columns ?? [],
         'title' => __('main.cities'),
         'entityName' => __('main.city'),
-        'sortField' => $sortField,
-        'searchValue' => $search,
+        'sortField' => $sortField ?? null,
+        'searchValue' => $search ?? null,
         'showSearch' => true,
     ])
-        @if (isset($data) && !empty($data) && $data->count() > 0)
+        @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
             @include('components.columns', ['allColumns' => $allColumns ?? []])
         @endif
     @endcomponent

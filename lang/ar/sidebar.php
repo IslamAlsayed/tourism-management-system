@@ -114,6 +114,7 @@ return [
     'location reports' => 'تقارير المواقع',
     'detailed analytics' => 'تحليلات مفصلة',
     'settings' => 'الإعدادات',
+    'activity log' => 'سجل النشاط',
     'system settings' => 'إعدادات النظام',
     'general settings' => 'الإعدادات العامة',
     'security settings' => 'إعدادات الأمان',

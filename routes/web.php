@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Dashboard\CityController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Dashboard\ExcelController;
 use App\Http\Controllers\Dashboard\StateController;
 use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\RegionController;
+use App\Http\Controllers\Dashboard\AirlineController;
 use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\CurrencyController;
@@ -21,9 +23,9 @@ use App\Http\Controllers\Dashboard\SubregionController;
 use App\Http\Controllers\Dashboard\TourGuideController;
 use App\Http\Controllers\Admin\SidebarManagerController;
 use App\Http\Controllers\Dashboard\RestaurantController;
+use App\Http\Controllers\Dashboard\ActivityLogController;
 use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\TouristSiteController;
-use App\Http\Controllers\Dashboard\AirlineController;
 use App\Http\Controllers\Dashboard\CrossingPortController;
 use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
@@ -193,6 +195,34 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::post('settings/backup/create', [SettingsController::class, 'createBackup'])->name('settings.backup.create');
     Route::resource('settings', SettingsController::class)->names('settings');
 
+    // === ACTIVITY LOG ===
+    Route::get('activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
+    
+    // Test route to manually trigger activity broadcast
+    Route::get('test-activity-broadcast', function () {
+        // Get the latest activity or create a test one
+        $activity = \Spatie\Activitylog\Models\Activity::latest()->first();
+        
+        if (!$activity) {
+            // Create a test activity if none exists
+            activity()
+                ->withProperties(['test' => true])
+                ->log('Test activity broadcast');
+            
+            $activity = \Spatie\Activitylog\Models\Activity::latest()->first();
+        }
+        
+        // Manually broadcast the event
+        event(new \App\Events\ActivityCreated($activity));
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Activity broadcast triggered successfully',
+            'activity_id' => $activity->id,
+            'description' => $activity->description
+        ]);
+    })->name('test.activity.broadcast');
+
     // === ADMIN TOOLS ===
     Route::prefix('admin/sidebar')->name('sidebar.')->middleware('admin')->group(function () {
         Route::get('/', [SidebarManagerController::class, 'index'])->name('index');
@@ -221,4 +251,5 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('export/{models}/data/{type?}', [ExcelController::class, 'exportData'])->name('export.data');
 });
 
+// Broadcast::route();
 require __DIR__ . '/auth.php';

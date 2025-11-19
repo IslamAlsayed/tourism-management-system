@@ -146,7 +146,7 @@ class MediaFiles extends Component
 
     public function render()
     {
-        $mediaFiles = $this->paginate != 'all' ? $this->getQuery()->paginate(getPaginate()) : $this->getQuery()->get();
+        $mediaFiles = $this->getQuery()->paginate(getPaginate());
         $collections = MediaFile::select('collection_name')->whereNotNull('collection_name')->distinct()->pluck('collection_name');
         return view('livewire.media-files', ['data' => $mediaFiles, 'collections' => $collections]);
     }

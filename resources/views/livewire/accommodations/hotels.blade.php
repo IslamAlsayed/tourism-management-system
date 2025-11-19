@@ -3,8 +3,8 @@
         'data' => $data,
         'title' => __('main.hotels'),
         'entityName' => __('main.hotel'),
-        'sortField' => $sortField,
-        'searchValue' => $search,
+        'sortField' => $sortField ?? null,
+        'searchValue' => $search ?? null,
         'showSearch' => true,
     ])
     @endcomponent

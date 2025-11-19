@@ -1,5 +1,6 @@
 import "./libs/trix";
 import './bootstrap';
+import './echo';
 import Alpine from 'alpinejs';
 
 // Start Alpine.js

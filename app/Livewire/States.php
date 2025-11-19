@@ -38,7 +38,7 @@ class States extends Component
     {
         $query = State::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
+        $data = $query->paginate(getPaginate());
         foreach ($data as $state) {
             $state['cities'] = $state->cities();
         }

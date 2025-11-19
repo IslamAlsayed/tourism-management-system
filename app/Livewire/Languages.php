@@ -64,7 +64,7 @@ class Languages extends Component
                 $query->with($relationsToLoad);
             }
         }
-        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
+        $data = $query->paginate(getPaginate());
         $this->applySorting($query);
         return view('livewire.languages', ['data' => $data, 'totalCount' => $this->totalCount ?: Language::count()]);
     }

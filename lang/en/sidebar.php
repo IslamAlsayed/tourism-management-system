@@ -114,6 +114,7 @@ return [
     'reports dashboard' => 'Reports Dashboard',
     'location reports' => 'Location Reports',
     'detailed analytics' => 'Detailed Analytics',
+    'activity log' => 'Activity Log',
     'system settings' => 'System Settings',
     'general settings' => 'General Settings',
     'security settings' => 'Security Settings',

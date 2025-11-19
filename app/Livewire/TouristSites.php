@@ -96,7 +96,7 @@ class TouristSites extends Component
         if ($this->filterFreeEntry !== '') {
             $query->where('is_free_entry', $this->filterFreeEntry);
         }
-        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
+        $data = $query->paginate(getPaginate());
         $this->totalCount = $data->total();
         $query = $this->applySorting($query);
         return view('livewire.tourist-sites', [

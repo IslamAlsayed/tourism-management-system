@@ -64,7 +64,7 @@ class Clients extends Component
         if ($this->filterClientStatus) {
             $query->where('client_status', $this->filterClientStatus);
         }
-        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
+        $data = $query->paginate(getPaginate());
         $this->applySorting($query);
         return view('livewire.clients', ['data' => $data, 'totalCount' => $this->totalCount ?: Client::count()]);
     }

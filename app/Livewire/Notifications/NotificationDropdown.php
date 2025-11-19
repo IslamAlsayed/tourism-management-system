@@ -64,7 +64,6 @@ class NotificationDropdown extends Component
                 'read_at' => now()
             ]);
 
-
             if ($updated > 0) {
                 $this->refreshNotifications();
                 $this->dispatch('notification-readed', id: 'all');

@@ -2,12 +2,12 @@
 <script src="{{ asset('metronic/vendors/ktui/ktui.min.js') }}" data-navigate-once></script>
 <script src="{{ asset('metronic/vendors/apexcharts/apexcharts.min.js') }}" data-navigate-once></script>
 <script src="{{ asset('metronic/js/layouts/demo1.js') }}" data-navigate-once></script>
-<script src="{{ asset('assets/js/all.min.js') }}"></script>
 {{-- Bootstrap --}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('assets/plugins/bootstrap@5.3.0/bootstrap.bundle.min.js') }}"></script>
 {{-- Text editor --}}
-<script src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
-{{-- Multiples JS --}}
+<script src="{{ asset('assets/plugins/trix@2.0.0/trix@2.0.0.js') }}"></script>
+{{-- Fontawesome icons pro --}}
+<script src="{{ asset('assets/plugins/fontawesome-icons/js/all.min.js') }}"></script>{{-- Multiples JS --}}
 <script src="{{ asset('assets/js/multiSelectUtils.js') }}"></script>
 <script src="{{ asset('assets/js/multiples/specialSelect.js') }}"></script>
 <script src="{{ asset('assets/js/multiples/specialCheckbox.js') }}"></script>

@@ -55,7 +55,16 @@
     --color-violet-700: oklch(49.1% 0.27 292.581);
     --color-violet-800: oklch(43.2% 0.232 292.759);
     --color-violet-950: oklch(28.3% 0.141 291.089);
+    --color-pink-50: oklch(98.5% 0.024 342.857);
+    --color-pink-100: oklch(95.8% 0.048 343.253);
+    --color-pink-200: oklch(91.2% 0.096 343.729);
+    --color-pink-300: oklch(83.7% 0.156 344.891);
+    --color-pink-400: oklch(72.8% 0.214 346.824);
     --color-pink-500: oklch(65.6% 0.241 354.308);
+    --color-pink-600: oklch(58.9% 0.248 1.899);
+    --color-pink-700: oklch(52.4% 0.228 4.284);
+    --color-pink-800: oklch(45.7% 0.194 4.891);
+    --color-pink-950: oklch(28.9% 0.109 3.766);
     --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
@@ -1350,6 +1359,10 @@
 
   .h-\[22px\] {
     height: 22px;
+  }
+
+  .h-\[26px\] {
+    height: 26px;
   }
 
   .h-\[28px\] {
@@ -3090,8 +3103,32 @@
     background-color: var(--color-gray-200);
   }
 
+  .bg-gray-300 {
+    background-color: var(--color-gray-300);
+  }
+
+  .bg-gray-400 {
+    background-color: var(--color-gray-400);
+  }
+
+  .bg-gray-500 {
+    background-color: var(--color-gray-500);
+  }
+
   .bg-gray-600 {
     background-color: var(--color-gray-600);
+  }
+
+  .bg-gray-700 {
+    background-color: var(--color-gray-700);
+  }
+
+  .bg-gray-800 {
+    background-color: var(--color-gray-800);
+  }
+
+  .bg-gray-900 {
+    background-color: var(--color-gray-900);
   }
 
   .bg-gray-700 {
@@ -3274,6 +3311,34 @@
     }
   }
 
+  .bg-gray {
+    background-color: var(--color-gray-600);
+  }
+
+  .bg-gray\/5 {
+    background-color: var(--color-gray-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-gray-600) 5%, transparent);
+    }
+  }
+
+  .bg-gray\/10 {
+    background-color: var(--color-gray-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-gray-600) 10%, transparent);
+    }
+  }
+
+  .bg-gray\/30 {
+    background-color: var(--color-gray-600);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-gray-600) 30%, transparent);
+    }
+  }
+
   .bg-active,
   .bg-success {
     background-color: var(--color-green-600);
@@ -3419,6 +3484,14 @@
 
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-pink-500) 10%, transparent);
+    }
+  }
+
+  .bg-pink\/30 {
+    background-color: var(--color-pink-500);
+
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-pink-500) 30%, transparent);
     }
   }
 
@@ -4373,12 +4446,32 @@
     color: var(--color-gray-900);
   }
 
+  .text-green-300 {
+    color: var(--color-green-300);
+  }
+
+  .text-green-400 {
+    color: var(--color-green-400);
+  }
+
   .text-green-500 {
     color: var(--color-green-500);
   }
 
   .text-green-600 {
     color: var(--color-green-600);
+  }
+
+  .text-green-700 {
+    color: var(--color-green-700);
+  }
+
+  .text-green-800 {
+    color: var(--color-green-800);
+  }
+
+  .text-green-900 {
+    color: var(--color-green-900);
   }
 
   .text-red-600 {
@@ -4439,6 +4532,26 @@
 
   .text-block {
     color: var(--color-block);
+  }
+
+  .text-pink-500 {
+    color: var(--color-pink-500);
+  }
+
+  .text-pink-600 {
+    color: var(--color-pink-600);
+  }
+
+  .text-pink-700 {
+    color: var(--color-pink-700);
+  }
+
+  .text-pink-800 {
+    color: var(--color-pink-800);
+  }
+
+  .text-pink-900 {
+    color: var(--color-pink-900);
   }
 
   .text-yellow-500 {

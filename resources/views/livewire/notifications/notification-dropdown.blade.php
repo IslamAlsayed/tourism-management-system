@@ -16,88 +16,90 @@
     <div x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform scale-95"
         x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-75"
         x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95"
-        class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg z-50 border border-gray-200 hidden"
+        class="absolute mt-2 w-80 bg-white rounded-md shadow-lg z-50 border border-gray-200 hidden"
         id="notification-dropdown">
 
-        {{-- Header --}}
-        <div class="p-2 border-b border-gray-200 flex items-center justify-between">
-            <span class="font-semibold text-gray-800" style="font-size: 14px">{{ __('main.notifications') }}</span>
-            @if ($unreadNotificationsCount > 0)
-                <button wire:click="markAllAsRead" class="text-blue-600 hover:text-blue-800 cursor-pointer"
-                    style="font-size: 14px">
-                    {{ __('main.mark_all_read') }}
-                </button>
-            @endif
-        </div>
+        @if (count($notifications) > 0)
+            {{-- Header --}}
+            <div class="p-2 border-b border-gray-200 flex items-center justify-between">
+                <span class="font-semibold text-gray-800" style="font-size: 14px">{{ __('main.notifications') }}</span>
+                @if ($unreadNotificationsCount > 0)
+                    <button wire:click="markAllAsRead" class="text-blue-600 hover:text-blue-800 cursor-pointer"
+                        style="font-size: 14px">
+                        {{ __('main.mark_all_read') }}
+                    </button>
+                @endif
+            </div>
 
-        {{-- Notifications List --}}
-        <div class="max-h-96 overflow-y-auto">
-            <div style="overflow-y: scroll; overflow-X: hidden; max-height: 350px;" id="notifications">
-                @forelse($notifications as $notification)
-                    <div wire:key="notification-{{ $notification->id }}"
-                        class="notification p-3 border-gray-100 hover:bg-gray-50 {{ !$notification->is_read ? 'bg-blue-50' : '' }} notification-{{ $notification->id }}">
-                        <div class="flex items-start space-x-3">
-                            <div class="flex-1 min-w-0">
-                                @if ($notification->title)
-                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                        {{ $notification->title }}
+            {{-- Notifications List --}}
+            <div class="max-h-96 overflow-y-auto">
+                <div style="overflow-y: scroll; overflow-X: hidden; max-height: 350px;" id="notifications">
+                    @foreach ($notifications as $notification)
+                        <div wire:key="notification-{{ $notification->id }}"
+                            class="notification p-3 border-gray-100 hover:bg-gray-50 {{ !$notification->is_read ? 'bg-blue-50' : '' }} notification-{{ $notification->id }}">
+                            <div class="flex items-start space-x-3">
+                                <div class="flex-1 min-w-0">
+                                    @if ($notification->title)
+                                        <p class="text-sm font-medium text-gray-900 truncate">
+                                            {{ $notification->title }}
+                                        </p>
+                                    @endif
+                                    <p class="text-sm text-gray-600 {{ !$notification->title ? 'font-medium' : '' }}">
+                                        {{ Str::limit($notification->message, 60) }}
                                     </p>
-                                @endif
-                                <p class="text-sm text-gray-600 {{ !$notification->title ? 'font-medium' : '' }}">
-                                    {{ Str::limit($notification->message, 60) }}
-                                </p>
-                                <p class="text-xs text-gray-400 mt-1">
-                                    {{ $notification->created_at->diffForHumans() }}
-                                </p>
-                            </div>
+                                    <p class="text-xs text-gray-400 mt-1">
+                                        {{ $notification->created_at->diffForHumans() }}
+                                    </p>
+                                </div>
 
-                            <div class="flex-shrink-0 flex space-x-1">
-                                <div class="shrink-0 relative">
-                                    <div class="cursor-pointer shrink-0 notification-actions-toggle"
-                                        data-id="{{ $notification->id }}">
-                                        <i class="fas fa-ellipsis" style="color: #4a5565"></i>
-                                    </div>
+                                <div class="flex-shrink-0 flex space-x-1">
+                                    <div class="shrink-0 relative">
+                                        <div class="cursor-pointer shrink-0 notification-actions-toggle"
+                                            data-id="{{ $notification->id }}">
+                                            <i class="fas fa-ellipsis" style="color: #4a5565"></i>
+                                        </div>
 
-                                    <div data-dropdown="{{ $notification->id }}"
-                                        class="notification-actions absolute mt-2 w-[100px] bg-white rounded-md shadow-lg border border-gray-200 hidden"
-                                        style="z-index: 10; right: 20px; top: -18px; user-select: none;">
-                                        <ul class="p-1">
-                                            @if (!$notification->is_read)
+                                        <div data-dropdown="{{ $notification->id }}"
+                                            class="notification-actions absolute mt-2 w-[100px] bg-white rounded-md shadow-lg border border-gray-200 hidden"
+                                            style="z-index: 10; top: -18px; user-select: none;">
+                                            <ul class="p-1">
+                                                @if (!$notification->is_read)
+                                                    <li>
+                                                        <span wire:click="markAsRead({{ $notification->id }})"
+                                                            style="font-size: 10px; padding: 5px 10px; border-radius: 3px;"
+                                                            class="block text-gray-700 hover:bg-gray-100 cursor-pointer readNotification-{{ $notification->id }}">
+                                                            {{ __('main.mark_read') }}
+                                                        </span>
+                                                    </li>
+                                                @endif
                                                 <li>
-                                                    <span wire:click="markAsRead({{ $notification->id }})"
+                                                    <span wire:click="deleteNotification({{ $notification->id }})"
                                                         style="font-size: 10px; padding: 5px 10px; border-radius: 3px;"
-                                                        class="block text-gray-700 hover:bg-gray-100 cursor-pointer readNotification-{{ $notification->id }}">
-                                                        {{ __('main.mark_read') }}
+                                                        class="block text-red-600 hover:bg-gray-100 cursor-pointer deleteNotification-{{ $notification->id }}">
+                                                        {{ __('main.delete') }}
                                                     </span>
                                                 </li>
-                                            @endif
-                                            <li>
-                                                <span wire:click="deleteNotification({{ $notification->id }})"
-                                                    style="font-size: 10px; padding: 5px 10px; border-radius: 3px;"
-                                                    class="block text-red-600 hover:bg-gray-100 cursor-pointer deleteNotification-{{ $notification->id }}">
-                                                    {{ __('main.delete') }}
-                                                </span>
-                                            </li>
-                                            {{-- <li>
+                                                {{-- <li>
                                                 <a class="block text-gray-700 hover:bg-gray-100 cursor-pointer"
                                                     style="font-size: 10px; padding: 5px 10px;">
                                                     {{ __('main.report') }}
                                                 </a>
                                             </li> --}}
-                                        </ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @empty
-                    <div class="p-6 text-center text-gray-500">
-                        <i class="fas fa-bell-slash text-3xl mb-2"></i>
-                        <p>{{ __('main.no_notifications') }}</p>
-                    </div>
-                @endforelse
+                    @endforeach
+                </div>
             </div>
-        </div>
+        @else
+            <div class="p-6 text-center text-gray-500">
+                <i class="fas fa-bell-slash text-3xl mb-2"></i>
+                <p>{{ __('main.no_notifications') }}</p>
+            </div>
+        @endif
 
         {{-- @if ($notifications->count() > 0)
             Footer
@@ -127,45 +129,48 @@
             const insideDropdown = e.target.closest('#notification-dropdown');
 
             if (toggleBtn) {
-                dropdown.classList.toggle('hidden');
+                dropdown?.classList.toggle('hidden');
                 return;
             }
 
             if (!insideDropdown) {
-                dropdown.classList.add('hidden');
+                dropdown?.classList.add('hidden');
             }
         });
+
+        window.addEventListener('scroll', (e) => {
+            const dropdown = document.getElementById('notification-dropdown');
+            dropdown?.classList.add('hidden');
+        });
+
         // window.addEventListener('scroll', (e) => {
         // document.querySelectorAll('.notification-actions').forEach(dd => dd.classList.add('hidden'));
         // document.getElementById('notification-dropdown').classList.add('hidden');
         // });
         window.addEventListener('notification-readed', (e) => {
-            const notificationId = e.detail.id;
+            let notificationId = e.detail.id;
             if (notificationId != 'all') {
                 document.querySelector('.notification-' + notificationId)?.classList.remove('bg-blue-50');
                 document.querySelector('.readNotification-' + notificationId)?.remove();
                 let notificationCount = document.querySelector('.notification-count');
                 if (notificationCount) {
-                    notificationCount.innerText = notificationCount.innerText == 0 ? parseInt(document
-                            .querySelector(
-                                '.notification-count')?.textContent) -
-                        1 : notificationCount.remove();
+                    notificationCount.innerText = notificationCount.innerText > 1 ?
+                        parseInt(document.querySelector('.notification-count')?.textContent) - 1 :
+                        notificationCount.remove();
                 }
             } else if (notificationId == 'all') {
                 document.querySelectorAll('.notification').forEach(item => {
                     item.classList.remove('bg-blue-50');
                 });
-                document.querySelectorAll('[class*="readNotification-"]').forEach(item => {
-                    item.remove();
-                });
+                document.querySelectorAll('[class*="readNotification-"]').forEach(item => item.remove());
                 document.querySelector('.notification-count')?.remove();
             }
         });
         window.addEventListener('notification-deleted', (e) => {
             const notificationId = e.detail.id;
-            document.querySelector('.notification-' + notificationId).className += ' fade-out loading';
+            document.querySelector('.notification-' + notificationId)?.classList.add('fade-out', 'loading');
             setTimeout(() => {
-                document.querySelector('.notification-' + notificationId)?.remove();
+                // document.querySelector('.notification-' + notificationId)?.remove();
             }, 250);
         });
     </script>

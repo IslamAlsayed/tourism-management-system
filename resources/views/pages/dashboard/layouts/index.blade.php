@@ -18,7 +18,7 @@
 
         dataTargetButton?.addEventListener('click', function(event) {
             event.stopPropagation();
-            dataTargetModel.classList.toggle('hidden');
+            dataTargetModel?.classList.toggle('hidden');
         });
 
         document.addEventListener('click', function(event) {
@@ -49,8 +49,8 @@
         });
 
         dataTargetModel?.addEventListener('wheel', function(event) {
-            const atTop = dataTargetModel.scrollTop === 0;
-            const atBottom = dataTargetModel.scrollTop + dataTargetModel.clientHeight >= dataTargetModel
+            const atTop = dataTargetModel?.scrollTop === 0;
+            const atBottom = dataTargetModel?.scrollTop + dataTargetModel?.clientHeight >= dataTargetModel
                 .scrollHeight;
 
             if (!(atTop && event.deltaY < 0) && !(atBottom && event.deltaY > 0)) {
@@ -65,12 +65,12 @@
             const insideDropdown = e.target.closest('#columnsModal');
 
             if (toggleBtn) {
-                dropdown.classList.toggle('hidden');
+                dropdown?.classList.toggle('hidden');
                 return;
             }
 
             if (!insideDropdown) {
-                dataTargetModel.classList.add('hidden');
+                dataTargetModel?.classList.add('hidden');
             }
         });
     </script>

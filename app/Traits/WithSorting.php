@@ -5,7 +5,7 @@ namespace App\Traits;
 trait WithSorting
 {
     public $sortField = '';
-    public $sortDirection = 'asc';
+    public $sortDirection = '';
 
     /**
      * Sort by a specific column
@@ -16,8 +16,16 @@ trait WithSorting
     public function sortBy($field)
     {
         // If clicking on the same field, toggle direction
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        if ($this->sortField == $field) {
+            // First click: asc -> Second click: desc -> Third click: remove sort (empty)
+            if ($this->sortDirection == 'asc') {
+                $this->sortDirection = 'desc';
+            } elseif ($this->sortDirection == 'desc') {
+                $this->sortField = '';
+                $this->sortDirection = '';
+            } else {
+                $this->sortDirection = 'asc';
+            }
         } else {
             // New field, default to ascending
             $this->sortField = $field;
@@ -33,7 +41,7 @@ trait WithSorting
      */
     protected function applySorting($query)
     {
-        if (!empty($this->sortField)) {
+        if (!empty($this->sortField) && !empty($this->sortDirection)) {
             $query->orderBy($this->sortField, $this->sortDirection);
         }
 
@@ -48,11 +56,11 @@ trait WithSorting
      */
     public function getSortIcon($field)
     {
-        if ($this->sortField !== $field) {
+        if ($this->sortField != $field || empty($this->sortDirection)) {
             return 'fa-sort'; // Default unsorted icon
         }
 
-        return $this->sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+        return $this->sortDirection == 'asc' ? 'fa-sort-up' : 'fa-sort-down';
     }
 
     /**
@@ -63,7 +71,7 @@ trait WithSorting
      */
     public function isSortedBy($field)
     {
-        return $this->sortField === $field;
+        return $this->sortField == $field;
     }
 
     /**
@@ -74,6 +82,6 @@ trait WithSorting
     public function resetSort()
     {
         $this->sortField = '';
-        $this->sortDirection = 'asc';
+        $this->sortDirection = '';
     }
 }

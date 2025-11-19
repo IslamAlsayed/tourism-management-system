@@ -31,6 +31,16 @@
     left: auto !important;
 }
 
+#notification-dropdown {
+    right: 0;
+    left: auto;
+
+    & .notification-actions {
+        right: 20px;
+        left: auto;
+    }
+}
+
 html[lang="ar"] {
     & .kt-dropdown-menu {
         left: 20px !important;
@@ -40,6 +50,16 @@ html[lang="ar"] {
     & .kt-dropdown-menu.languages-dropdown-menu {
         left: 250px !important;
         right: auto !important;
+    }
+
+    & #notification-dropdown {
+        left: 0;
+        right: auto;
+
+        & .notification-actions {
+            right: auto;
+            left: 20px;
+        }
     }
 }
 
@@ -72,6 +92,16 @@ html[lang="ar"] {
     opacity: 0.8;
     cursor: pointer;
     transform: translateY(2px) scale(0.95);
+}
+
+.activity-details-header {
+    position: sticky;
+    top: 80px;
+    right: 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--color-blue-50);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Start datatable loading */
@@ -109,6 +139,10 @@ html[lang="ar"] {
 .kt-scrollable-x-auto.loading::after {
     display: inline-block;
     /* animation: loading 2.4s infinite linear; */
+}
+
+th:has(i, svg) {
+    cursor: pointer !important;
 }
 
 @keyframes loading {
@@ -280,9 +314,37 @@ html[lang="ar"] {
     margin: auto;
 }
 
+#activity-filters-container {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(auto, 1fr));
+}
+
+#activity-breakdown-container div {
+    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+
+    & * {
+        font-size: 12px;
+        text-wrap: nowrap;
+    }
+}
+
 @media (max-width: 1280px) {
     #columnsModal {
         width: 400px;
+    }
+
+    #activity-filters-container {
+        grid-template-columns: repeat(4, minmax(auto, 1fr));
+    }
+
+    #activity-breakdown-container div {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+
+        & * {
+            font-size: 10px;
+        }
     }
 }
 
@@ -294,6 +356,10 @@ html[lang="ar"] {
     #columnsModal {
         width: 320px;
         font-size: 12px;
+    }
+
+    #activity-filters-container {
+        grid-template-columns: repeat(3, minmax(auto, 1fr));
     }
 
     #pagination_links,
@@ -352,6 +418,27 @@ html[lang="ar"] {
         transform: translateX(-50%) !important;
     }
 
+    #activity-filters-container {
+        grid-template-columns: repeat(2, minmax(auto, 1fr));
+
+        & * {
+            font-size: 12px;
+        }
+
+        & input,
+        & select {
+            height: 35px;
+        }
+    }
+
+    #activity-breakdown-container div {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+
+        & * {
+            font-size: 8px;
+        }
+    }
+
     .edit-profile {
         width: 100% !important;
     }
@@ -362,6 +449,11 @@ html[lang="ar"] {
         & * option {
             font-size: 8px;
         }
+    }
+
+    .pagination-showing p {
+        text-wrap: wrap;
+        font-size: 10px;
     }
 }
 
@@ -378,26 +470,6 @@ html[lang="ar"] {
             border-radius: 4px;
         }
     }
-}
-
-/* #columnsModal {
-    width: 200px;
-    padding: 15px;
-    border-radius: 7px;
-
-    &>div {
-        display: flex;
-        flex-direction: column;
-    }
-
-    & input {
-        margin-inline-end: 5px;
-    }
-} */
-
-.pagination-showing p {
-    text-wrap: wrap;
-    font-size: 10px;
 }
 
 @media (max-width: 425px) {
@@ -444,6 +516,40 @@ html[lang="ar"] {
             & .pseudo-checkbox::after {
                 border-radius: 0.7px;
             }
+        }
+    }
+
+    #activity-filters-container {
+        grid-template-columns: repeat(2, minmax(auto, 1fr));
+
+        & * {
+            font-size: 8px;
+        }
+
+        & label {
+            margin-bottom: 3px;
+        }
+
+        & input,
+        & select {
+            height: 25px;
+        }
+    }
+
+    #activity-breakdown-container div {
+        grid-template-columns: repeat(4, minmax(auto, 1fr));
+
+        & li {
+            gap: 4px;
+            border-radius: 3px;
+        }
+
+        & span:nth-child(2) {
+            padding-inline: 4px;
+        }
+
+        & * {
+            font-size: 6px;
         }
     }
 

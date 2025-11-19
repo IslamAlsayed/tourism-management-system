@@ -42,9 +42,10 @@
     href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
     rel="shortcut icon" />
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<link href="{{ asset('assets/plugins/fonts/inter.css') }}" rel="stylesheet" />
+{{-- Fontawesome icons pro --}}
+<link href="{{ asset('assets/plugins/fontawesome-icons/css/all.min.css') }}" rel="stylesheet" />
 
-<link href="{{ asset('assets/css/all.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('metronic/vendors/apexcharts/apexcharts.css') }}" rel="stylesheet" />
 <link href="{{ asset('metronic/vendors/keenicons/styles.bundle.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet" />
@@ -53,11 +54,10 @@
 
 {{-- Multi Select CSS --}}
 <link href="{{ asset('assets/css/multi-select.css') }}" rel="stylesheet">
-
 <link href="{{ asset('metronic/css/styles.css') }}" rel="stylesheet" />
 
 {{-- Text editor --}}
-<link href="https://unpkg.com/trix@2.0.0/dist/trix.css" rel="stylesheet">
+<link href="{{ asset('assets/plugins/trix@2.0.0/trix@2.0.0.css') }}" rel="stylesheet" />
 
 <!-- Compiled App Styles -->
 @vite(['resources/css/app.css'])

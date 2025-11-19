@@ -38,7 +38,7 @@ class Nationalities extends Component
     {
         $query = Nationality::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $data = $this->paginate != 'all' ? $query->paginate(getPaginate()) : $query->get();
+        $data = $query->paginate(getPaginate());
         foreach ($data as $nationality) {
             $nationality['states'] = $nationality->states();
             $nationality['cities'] = $nationality->cities();

@@ -625,6 +625,14 @@ return [
             ],
         ],
 
+        // ================= Activity Log =================
+        [
+            'title' => 'activity log',
+            'icon' => 'ki-filled ki-notification-status',
+            'status' => 'new',
+            'route' => 'activity-log.index',
+        ],
+
         // ================= Languages =================
         [
             'title' => 'languages',

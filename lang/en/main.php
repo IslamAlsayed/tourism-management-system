@@ -40,10 +40,14 @@ return [
     'you_must_add' => 'You must add',
     'first' => 'first',
     'select_type_first' => 'Select :type first',
+    '_models' => 'Models',
+    '_system' => 'System',
+    'unknown' => 'Unknown',
     'created' => 'created',
     'edited' => 'edited',
     'updated' => 'updated',
     'deleted' => 'deleted',
+    'restored' => 'restored',
     'success' => 'success',
     'error' => 'error',
     'info' => 'info',
@@ -1386,6 +1390,12 @@ return [
     'notification_deleted' => 'Notification deleted successfully',
     'unread' => 'Unread',
     'read' => 'Read',
+
+    // activity log
+    '_type_notification' => ':type notification',
+    '_type_Notification' => ':type Notification',
+    '_type_updated_notification' => ':type notification',
+    '_type_updated_Notification' => ':type Notification',
 
     // messages
     'messages' => [
