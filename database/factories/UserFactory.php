@@ -46,7 +46,6 @@ class UserFactory extends Factory
             'preferences' => '',
             'is_admin' => true,
             'photo' => null,
-            'user_status' => false,
             'is_active' => true,
             'is_verified' => true,
             'force_password_change' => false,

@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\UserLoggedEvent;
+use App\Events\ActivityCreated;
 use App\Listeners\HandleUserLogged;
+use App\Listeners\HandleActivityCreated;
 use App\Events\ImportExportCompleted;
 use Illuminate\Support\ServiceProvider;
 use App\Listeners\NotifyUserAfterImport;
@@ -16,6 +18,10 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         UserLoggedEvent::class => [
             HandleUserLogged::class,
+        ],
+
+        ActivityCreated::class => [
+            HandleActivityCreated::class,
         ],
 
         ImportExportCompleted::class => [

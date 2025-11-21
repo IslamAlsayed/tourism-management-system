@@ -33,7 +33,13 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         $user = Auth::user();
         event(new UserLoggedEvent($user, 'online'));
-        \Illuminate\Support\Facades\Log::info('User logged in', ['user_name' => $user->name, 'user_status' => $user->user_status]);
+        if ($user) {
+            activity()->causedBy($user)->performedOn($user)->useLog('models')->event('login')->withProperties([
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'login_time' => now()->toDateTimeString(),
+            ])->log(__('main.user_logged_in', ['name' => $user->name]));
+        }
         showToastSuccessMessage(__('main.messages.welcome_back_name', ['name' => Auth::user()->name ?? 'User']));
         return redirect()->intended(route('dashboard', false));
     }
@@ -43,11 +49,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        event(new UserLoggedEvent(Auth::user(), 'offline'));
+        $user = Auth::user();
+        if ($user) {
+            activity()->causedBy($user)->performedOn($user)->useLog('models')->event('logout')->withProperties([
+                'ip_address' => $request->ip(),
+                'logout_time' => now()->toDateTimeString(),
+            ])->log(__('main.user_logged_out', ['name' => $user->name]));
+            event(new UserLoggedEvent($user, 'offline'));
+        }
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        showToastSuccessMessage(__('main.messages.goodbye_name', ['name' => Auth::user()->name ?? 'User']));
+        showToastSuccessMessage(__('main.messages.goodbye_name', ['name' => $user->name ?? 'User']));
         return redirect('/');
     }
 }

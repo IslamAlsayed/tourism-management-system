@@ -19,11 +19,12 @@ class PasswordController extends Controller
             'current_password' => ['required', 'current_password'],
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
-
-        $request->user()->update([
-            'password' => Hash::make($validated['password']),
-        ]);
-
+        $user = $request->user();
+        $user->update(['password' => Hash::make($validated['password'])]);
+        activity()->causedBy($user)->performedOn($user)->useLog('models')->event('password_update')->withProperties([
+            'ip_address' => $request->ip(),
+            'update_time' => now()->toDateTimeString(),
+        ])->log('Password has been updated');
         return back()->with('status', 'password-updated');
     }
 }

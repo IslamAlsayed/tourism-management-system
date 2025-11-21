@@ -40,14 +40,13 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        // $user->photo = 'uploads/users/' . $user->id . '/2PZQWtpOPQVAp9cIjhQHLWeY6K16Yucwq1HRHD7C.png';
-        // $user->save();
-
         event(new Registered($user));
-
+        activity()->causedBy($user)->performedOn($user)->useLog('models')->event('register')->withProperties([
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'registration_time' => now()->toDateTimeString(),
+        ])->log('New user registered');
         Auth::login($user);
-
         return redirect(route('dashboard', false))->withSuccess(__('main.messages.welcome_back_name', ['name' => Auth::user()->name ?? 'User']));
     }
 }

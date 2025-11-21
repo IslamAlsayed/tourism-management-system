@@ -2,16 +2,16 @@
 
 namespace App\Events;
 
+use App\Models\Notification;
 use Illuminate\Queue\SerializesModels;
-use Spatie\Activitylog\Models\Activity;
 use Illuminate\Foundation\Events\Dispatchable;
 
-class ActivityCreated
+class NotificationCreated
 {
     use Dispatchable, SerializesModels;
 
-    public function __construct(public Activity $activity)
+    public function __construct(public Notification $notification)
     {
-        $this->activity = $activity;
+        $this->notification = $notification;
     }
 }

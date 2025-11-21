@@ -31,4 +31,20 @@ return [
     'clear_selection' => 'إلغاء التحديد',
     'per_page' => 'عدد النتائج',
     'unknown' => 'غير معروف',
+
+    // Auth Activities
+    'auth' => [
+        'login' => 'تسجيل دخول',
+        'logout' => 'تسجيل خروج',
+        'register' => 'تسجيل حساب جديد',
+        'password_reset_request' => 'طلب إعادة تعيين كلمة المرور',
+        'password_reset' => 'إعادة تعيين كلمة المرور',
+        'password_update' => 'تحديث كلمة المرور',
+        'user_logged_in' => 'قام المستخدم :user بتسجيل الدخول',
+        'user_logged_out' => 'قام المستخدم :user بتسجيل الخروج',
+        'user_registered' => 'تم تسجيل مستخدم جديد: :user',
+        'password_reset_requested' => 'طلب :user إعادة تعيين كلمة المرور',
+        'password_has_been_reset' => 'تم إعادة تعيين كلمة مرور :user',
+        'password_has_been_updated' => 'تم تحديث كلمة مرور :user',
+    ],
 ];

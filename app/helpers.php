@@ -364,6 +364,12 @@ if (!function_exists('badgeClasses')) {
             'deleted', 'force_deleted' => 'bg-danger/30 text-red-800',
             'restored' => 'bg-yellow/30 text-yellow-800',
             'error' => 'bg-danger/30 text-red-800',
+            'login' => 'bg-success/30 text-green-800',
+            'register' => 'bg-success/30 text-green-800',
+            'logout' => 'bg-success/30 text-green-800',
+            'password_reset' => 'bg-success/30 text-green-800',
+            'password_update' => 'bg-success/30 text-green-800',
+            'password_reset_request' => 'bg-success/30 text-green-800',
             default => 'bg-gray/30 text-gray-700',
         };
     }

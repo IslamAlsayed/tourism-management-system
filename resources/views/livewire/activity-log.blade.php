@@ -108,13 +108,13 @@
                 @if (isset($dateFrom) || isset($dateTo) || $filterLog != '' || $filterEvent != '' || $filterUser != '')
                     <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}"
                         toggle-button
-                        class="kt-btn kt-btn-outline bg-white px-3 h-[45px] hover:bg-gray-50 transition-colors">
+                        class="kt-btn bg-primary/30 text-blue-600 px-3 h-[45px] hover:bg-gray-50 transition-colors">
                         <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
                         <span class="text-sm">{{ __('main.reset_filters') }}</span>
                     </button>
                 @endif
                 @if ($filterLog != '')
-                    <button type="button" class="kt-btn kt-btn-danger h-[45px]"
+                    <button type="button" class="kt-btn bg-danger h-[45px]"
                         wire:click="clearLog('{{ $filterLog }}')" wire:confirm="{{ __('main.are_you_sure') }}">
                         <i class="ki-filled ki-trash me-1"></i>
                         {{ __('activity.activity_clear_current_log') }}
@@ -288,9 +288,20 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
+                                {{-- <tr>
                                     <td colspan="8" class="px-3 py-6 text-center text-sm text-gray-500">
                                         {{ __('main.no_data_available') }}
+                                    </td>
+                                </tr> --}}
+                                <tr>
+                                    <td colspan="{{ count($filterColumns) + 2 }}"
+                                        class="px-4 py-3 text-center text-gray-500">
+                                        <div class="w-[90px] h-[90px] mx-auto my-4">
+                                            <img src="{{ asset('assets/images/other/no-data.svg') }}" alt="no data">
+                                        </div>
+                                        <p class="text-red-600 font-semibold">
+                                            {{ __('main.messages.no_records_found') }}
+                                        </p>
                                     </td>
                                 </tr>
                             @endforelse
@@ -325,22 +336,13 @@
 
 @push('scripts')
     <script>
-        // Listen for real-time activity updates via Laravel Echo
-        if (typeof Echo !== 'undefined') {
-            Echo.channel('activities')
-                .listen('.activity.created', (e) => {
-                    console.log('New activity created:', e);
-                    // Refresh the Livewire component
-                    @this.dispatch('activityCreated');
-
-                    // Optionally show a toast notification
-                    window.dispatchEvent(new CustomEvent('show-toast', {
-                        detail: {
-                            type: 'info',
-                            message: 'نشاط جديد تم إضافته'
-                        }
-                    }));
-                });
-        }
+        const ably = new Ably.Realtime({
+            key: '{{ env('ABLY_KEY') }}',
+        });
+        const channel = ably.channels.get('activity-created');
+        channel.subscribe('activity.created', (message) => {
+            @this.dispatch('activityCreated');
+            showToast({type: 'success',message: message.data.description});
+        });
     </script>
 @endpush

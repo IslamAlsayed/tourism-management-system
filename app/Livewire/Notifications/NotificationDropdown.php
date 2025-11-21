@@ -4,6 +4,7 @@ namespace App\Livewire\Notifications;
 
 use Livewire\Component;
 use App\Models\Notification;
+use App\Events\NotificationCreated;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +19,7 @@ class NotificationDropdown extends Component
         'notificationMarkedAsRead' => 'refreshNotifications',
         'allNotificationsMarkedAsRead' => 'refreshNotifications',
         'notificationDeleted' => 'refreshNotifications',
+        'notificationCreated' => '$refresh',
     ];
 
     public function mount()
@@ -93,6 +95,7 @@ class NotificationDropdown extends Component
             if ($notification && $notification->user_id == Auth::id()) {
                 $notification->delete();
                 $this->refreshNotifications();
+                event(new NotificationCreated($notification));
 
                 // Emit event to delete notification by id
                 $this->dispatch('notification-deleted', id: $notificationId);

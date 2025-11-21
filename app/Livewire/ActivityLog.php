@@ -202,10 +202,10 @@ class ActivityLog extends Component
             $query->where('causer_id', $this->filterUser);
         }
         if ($this->dateFrom) {
-            $query->whereDate('created_at', '>=', $this->dateFrom);
+            $query->where('created_at', '>=', $this->dateFrom);
         }
         if ($this->dateTo) {
-            $query->whereDate('created_at', '<=', $this->dateTo);
+            $query->where('created_at', '<=', $this->dateTo);
         }
         $this->applySorting($query);
         return $query;

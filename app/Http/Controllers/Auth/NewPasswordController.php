@@ -46,7 +46,10 @@ class NewPasswordController extends Controller
                     'password' => Hash::make($request->password),
                     'remember_token' => Str::random(60),
                 ])->save();
-
+                activity()->causedBy($user)->performedOn($user)->useLog('models')->event('password_reset')->withProperties([
+                    'ip_address' => $request->ip(),
+                    'reset_time' => now()->toDateTimeString(),
+                ])->log('Password has been reset');
                 event(new PasswordReset($user));
             }
         );

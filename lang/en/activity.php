@@ -31,4 +31,20 @@ return [
     'clear_selection' => 'Clear Selection',
     'per_page' => 'Per Page',
     'unknown' => 'Unknown',
+
+    // Auth Activities
+    'auth' => [
+        'login' => 'Login',
+        'logout' => 'Logout',
+        'register' => 'Registration',
+        'password_reset_request' => 'Password Reset Request',
+        'password_reset' => 'Password Reset',
+        'password_update' => 'Password Update',
+        'user_logged_in' => 'User :user logged in',
+        'user_logged_out' => 'User :user logged out',
+        'user_registered' => 'New user registered: :user',
+        'password_reset_requested' => ':user requested password reset',
+        'password_has_been_reset' => ':user password has been reset',
+        'password_has_been_updated' => ':user password has been updated',
+    ],
 ];

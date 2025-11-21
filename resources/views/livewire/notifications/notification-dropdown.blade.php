@@ -145,10 +145,10 @@
             dropdown?.classList.add('hidden');
         });
 
-        // window.addEventListener('scroll', (e) => {
-        // document.querySelectorAll('.notification-actions').forEach(dd => dd.classList.add('hidden'));
-        // document.getElementById('notification-dropdown').classList.add('hidden');
-        // });
+        window.addEventListener('scroll', (e) => {
+            document.querySelectorAll('.notification-actions').forEach(dd => dd.classList.add('hidden'));
+            document.getElementById('notification-dropdown').classList.add('hidden');
+        });
         window.addEventListener('notification-readed', (e) => {
             let notificationId = e.detail.id;
             if (notificationId != 'all') {
@@ -172,8 +172,21 @@
             const notificationId = e.detail.id;
             document.querySelector('.notification-' + notificationId)?.classList.add('fade-out', 'loading');
             setTimeout(() => {
-                // document.querySelector('.notification-' + notificationId)?.remove();
+                document.querySelector('.notification-' + notificationId)?.remove();
             }, 250);
+        });
+    </script>
+@endpush
+
+@push('scripts')
+    <script>
+        const ably = new Ably.Realtime({
+            key: '{{ env('ABLY_KEY') }}',
+        });
+        const channel = ably.channels.get('notification-created');
+        channel.subscribe('notification-created', (message) => {
+            console.log('message', message)
+            @this.dispatch('notificationCreated');
         });
     </script>
 @endpush
