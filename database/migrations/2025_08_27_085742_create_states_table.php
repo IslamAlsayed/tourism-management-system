@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
+            $table->unsignedBigInteger('timezone_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
@@ -25,7 +26,6 @@ return new class extends Migration {
             $table->integer('level')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
-            $table->string('timezone')->nullable();
             $table->boolean('is_active')->nullable()->default(false);
             $table->boolean('is_independent')->nullable()->default(false);
             $table->boolean('is_developed')->nullable()->default(false);

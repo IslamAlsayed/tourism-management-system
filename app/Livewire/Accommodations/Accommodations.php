@@ -49,6 +49,7 @@ class Accommodations extends Component
         $query = Accommodation::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
-        return view('livewire.accommodations.accommodations', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount]);
+        $data = $query->paginate(getPaginate());
+        return view('livewire.accommodations.accommodations', ['data' => $data, 'totalCount' => $this->totalCount]);
     }
 }

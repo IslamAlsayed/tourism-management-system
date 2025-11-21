@@ -36,6 +36,12 @@ class Nationality extends Model
     {
         return ['region_id', 'subregion_id', 'country_id'];
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
     public function region()
     {
         return $this->belongsTo(Region::class);

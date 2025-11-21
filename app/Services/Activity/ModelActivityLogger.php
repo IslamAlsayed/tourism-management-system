@@ -26,6 +26,7 @@ class ModelActivityLogger
             return;
         }
 
+        // Don't log when running seeders
         if (app()->runningInConsole() && !app()->runningUnitTests()) {
             return;
         }
@@ -273,8 +274,21 @@ class ModelActivityLogger
         }
 
         if (is_string($value)) {
-            // Clean UTF-8 encoding
-            $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8//IGNORE');
+            // Clean UTF-8 encoding - check if string is already valid UTF-8
+            if (!mb_check_encoding($value, 'UTF-8')) {
+                // Try to convert from common encodings to UTF-8
+                $encodings = ['Windows-1252', 'ISO-8859-1', 'ISO-8859-15'];
+                foreach ($encodings as $encoding) {
+                    if (mb_check_encoding($value, $encoding)) {
+                        $value = mb_convert_encoding($value, 'UTF-8', $encoding);
+                        break;
+                    }
+                }
+                // If still not valid UTF-8, use iconv with //IGNORE
+                if (!mb_check_encoding($value, 'UTF-8')) {
+                    $value = @iconv('UTF-8', 'UTF-8//IGNORE', $value) ?: $value;
+                }
+            }
 
             // Remove control characters except newlines and tabs
             $value = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $value);

@@ -13,7 +13,7 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content" wire:target="search" wire:loading.class="loading">
+    <div class="kt-card-content" wire:target="search,destroy" wire:loading.class="loading">
         <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="airlines_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [

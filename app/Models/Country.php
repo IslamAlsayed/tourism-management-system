@@ -16,12 +16,13 @@ class Country extends Model
         'name_ar',
         'iso2',
         'iso3',
+        'state_id',
+        'city_id',
         'numeric_code',
         'phone_code',
         'capital',
         'tld',
         'native',
-        'timezone',
         'latitude',
         'longitude',
         'population',
@@ -30,16 +31,13 @@ class Country extends Model
         'is_independent',
         'is_developed',
         'is_landlocked',
+        'timezone_id',
         'language_id',
         'currency_id',
         'region_id',
         'subregion_id',
-        'state_id',
-        'city_id',
-    ];
-
-    protected $casts = [
-        'timezone' => 'array',
+        // 'state_id',
+        // 'city_id',
     ];
 
     /**
@@ -47,7 +45,7 @@ class Country extends Model
      */
     public function getRelationshipNames()
     {
-        return ['language', 'currency', 'region', 'subregion'];
+        return ['timezone', 'language', 'currency', 'region', 'subregion'];
     }
 
     /**
@@ -55,7 +53,12 @@ class Country extends Model
      */
     public function getExcludedColumns()
     {
-        return ['language_id', 'currency_id', 'region_id', 'subregion_id'];
+        return ['timezone_id', 'language_id', 'currency_id', 'region_id', 'subregion_id'];
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     public function language()
@@ -83,26 +86,6 @@ class Country extends Model
         if (!$this->state_id)
             return [];
         return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
-    }
-
-    public function getTimezoneAttribute($value)
-    {
-        return json_decode($value, true);
-    }
-
-    public function getZoneNameAttribute()
-    {
-        return $this->timezone[0]['zoneName'] ?? null;
-    }
-
-    public function getZoneAbbreviationAttribute()
-    {
-        return $this->timezone[0]['abbreviation'] ?? null;
-    }
-
-    public function getHumanTimezoneAttribute($value)
-    {
-        return $this->timezone[0]['zoneName'] . ' (' . $this->timezone[0]['abbreviation'] . ')' ?? null;
     }
 
     public function getStateListAttribute()

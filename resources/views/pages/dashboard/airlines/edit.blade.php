@@ -160,12 +160,20 @@
                             @enderror
                         </div>
 
-                        {{-- Time Zone --}}
-                        <div>
-                            <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                            <input type="text" name="timezone" id="timezone" class="kt-input h-[45px]"
-                                value="{{ old('timezone', $airline->timezone) }}" placeholder="Asia/Riyadh">
-                            @error('timezone')
+                        <!-- Timezone -->
+                        <div class="">
+                            <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                            <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search
+                                data-current-value="{{ $airline->timezone_id }}" value="{{ $airline->timezone_id }}">
+                                <option value="">--</option>
+                                @foreach ($timezones as $zone)
+                                    <option value="{{ $zone['id'] }}"
+                                        {{ $airline->timezone_id == $zone['id'] ? 'selected' : '' }}>
+                                        {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('timezone_id')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>

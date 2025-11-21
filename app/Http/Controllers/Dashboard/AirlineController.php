@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
-use App\Models\Airline;
 use App\Models\Region;
+use App\Models\Airline;
+use App\Models\Timezone;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Airline\AirlineCreateRequest;
 use App\Http\Requests\Airline\AirlineUpdateRequest;
 
@@ -24,6 +25,7 @@ class AirlineController extends Controller
     public function create()
     {
         $regions = Region::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.airlines.create', get_defined_vars());
     }
 
@@ -60,6 +62,7 @@ class AirlineController extends Controller
             return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.airline')]));
         }
         $regions = Region::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.airlines.edit', get_defined_vars());
     }
 

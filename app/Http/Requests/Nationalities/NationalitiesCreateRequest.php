@@ -24,7 +24,7 @@ class NationalitiesCreateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['required', 'string', 'max:255'],
-            'is_active' => ['nullable', 'boolean'],
+            'is_active' => ['boolean'],
 
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],

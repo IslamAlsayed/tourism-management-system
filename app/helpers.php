@@ -374,3 +374,60 @@ if (!function_exists('badgeClasses')) {
         };
     }
 }
+
+if (!function_exists('makeTimezone')) {
+    function makeTimezone($timezone)
+    {
+        $timezoneData = [];
+        if ($timezone) {
+            $timezone = trim(preg_replace('/\s*\(.*\)$/', '', $timezone));
+            $tz = new \DateTimeZone($timezone);
+            $now = new \DateTime("now", $tz);
+
+            $offset = $tz->getOffset($now);
+            $hours = floor($offset / 3600);
+            $minutes = abs(($offset % 3600) / 60);
+            $sign = $offset >= 0 ? '+' : '-';
+            $gmtOffsetName = sprintf('UTC%s%02d:%02d', $sign, abs($hours), $minutes);
+
+            $data = [
+                "tzName" => $timezone,
+                "zoneName" => $timezone,
+                "gmtOffset" => $offset,
+                "abbreviation" => $now->format('T'),
+                "gmtOffsetName" => $gmtOffsetName,
+            ];
+            $timezoneData = [$data];
+        }
+
+        return $timezoneData;
+    }
+}
+
+if (!function_exists('makeTimezone2')) {
+    function makeTimezone2($timezone, $key)
+    {
+        $timezoneData = [];
+        if ($timezone) {
+            $timezone = trim(preg_replace('/\s*\(.*\)$/', '', $timezone));
+            $tz = new \DateTimeZone($timezone);
+            $now = new \DateTime("now", $tz);
+
+            $offset = $tz->getOffset($now);
+            $hours = floor($offset / 3600);
+            $minutes = abs(($offset % 3600) / 60);
+            $sign = $offset >= 0 ? '+' : '-';
+            $gmtOffsetName = sprintf('UTC%s%02d:%02d', $sign, abs($hours), $minutes);
+
+            $timezoneData = [
+                "tzName" => $timezone,
+                "zoneName" => $timezone,
+                "gmtOffset" => $offset,
+                "abbreviation" => $now->format('T'),
+                "gmtOffsetName" => $gmtOffsetName,
+            ];
+        }
+
+        return $timezoneData[$key] ?? null;
+    }
+}

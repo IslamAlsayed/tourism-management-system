@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\User;
 use App\Models\Country;
+use App\Models\Timezone;
 use Illuminate\Http\Request;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
@@ -22,7 +23,8 @@ class UserController extends Controller
     public function create()
     {
         $countries = Country::all();
-        return view('pages.dashboard.users.create', compact('countries'));
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        return view('pages.dashboard.users.create', get_defined_vars());
     }
 
     // public function show($id)
@@ -62,7 +64,8 @@ class UserController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
         }
         $countries = Country::all();
-        return view('pages.dashboard.users.edit', compact('user', 'countries'));
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        return view('pages.dashboard.users.edit', get_defined_vars());
     }
 
     public function update(UserUpdateRequest $request, $id)

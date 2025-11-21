@@ -211,56 +211,65 @@
 
                                     <!-- Timezone -->
                                     <div class="">
-                                        <label for="timezone"
-                                            class="kt-label mb-2">{{ __('main.timezone_field') }}</label>
-                                        <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search
-                                            value="{{ $user->timezone }}">
+                                        <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                        <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]"
+                                            special-search data-current-value="{{ $user->timezone_id }}"
+                                            value="{{ $user->timezone_id }}">
                                             <option value="">--</option>
-                                            @foreach (config('helpers.timezones') as $zone)
-                                                <option value="{{ $zone }}"
-                                                    {{ $user->timezone == $zone ? 'selected' : '' }}>{{ $zone }}
+                                            @foreach ($timezones as $zone)
+                                                <option value="{{ $zone['id'] }}"
+                                                    {{ $user->timezone_id == $zone['id'] ? 'selected' : '' }}>
+                                                    {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('timezone')
+                                        @error('timezone_id')
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <!-- User Flags -->
-                                <div class="grid lg:grid-cols-3 gap-6 mb-4">
+                                <div class="grid lg:grid-cols-2 gap-4">
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_admin" value="0">
-                                        <input type="checkbox" name="is_admin" id="is_admin" class="kt-checkbox"
-                                            value="1" {{ $user->is_admin == 1 ? 'checked' : '' }}>
-                                        <label for="is_admin" class="kt-label mb-0">{{ __('main.is_admin') }}</label>
+                                        @include('components.elements.checkbox-button', [
+                                            'name' => 'is_admin',
+                                            'id' => 'is_admin',
+                                            'value' => '1',
+                                            'checked' => $user->is_admin == 1,
+                                            'label' => __('main.is_admin'),
+                                        ])
                                     </div>
-
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_active" value="0">
-                                        <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                            value="1" {{ $user->is_active == 1 ? 'checked' : '' }}>
-                                        <label for="is_active" class="kt-label mb-0">{{ __('main.is_active') }}</label>
+                                        @include('components.elements.checkbox-button', [
+                                            'name' => 'is_active',
+                                            'id' => 'is_active',
+                                            'value' => '1',
+                                            'checked' => $user->is_active == 1,
+                                            'label' => __('main.is_active'),
+                                        ])
                                     </div>
-
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_verified" value="0">
-                                        <input type="checkbox" name="is_verified" id="is_verified" class="kt-checkbox"
-                                            value="1" {{ $user->is_verified == 1 ? 'checked' : '' }}>
-                                        <label for="is_verified"
-                                            class="kt-label mb-0">{{ __('main.is_verified') }}</label>
+                                        @include('components.elements.checkbox-button', [
+                                            'name' => 'is_verified',
+                                            'id' => 'is_verified',
+                                            'value' => '1',
+                                            'checked' => $user->is_verified == 1,
+                                            'label' => __('main.is_verified'),
+                                        ])
                                     </div>
-                                </div>
-
-                                <div class="grid lg:grid-cols-2 gap-6">
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="force_password_change" value="0">
-                                        <input type="checkbox" name="force_password_change" id="force_password_change"
-                                            class="kt-checkbox" value="1" disabled
-                                            {{ $user->force_password_change == 1 ? 'checked' : '' }}>
-                                        <label for="force_password_change"
-                                            class="kt-label mb-0">{{ __('main.force_password_change') }}</label>
+                                        @include('components.elements.checkbox-button', [
+                                            'name' => 'force_password_change',
+                                            'id' => 'force_password_change',
+                                            'value' => '1',
+                                            'checked' => $user->force_password_change == 1,
+                                            'label' => __('main.force_password_change'),
+                                        ])
                                     </div>
                                 </div>
                             </div>

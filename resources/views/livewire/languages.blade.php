@@ -13,7 +13,8 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content" id="pageContent" wire:target="search, toggleGridLength" wire:loading.class="loading">
+    <div class="kt-card-content" id="pageContent" wire:target="search,destroy, toggleGridLength"
+        wire:loading.class="loading">
         @if ($view == 'grid')
             <div class="kt-cards p-4" wire:key="{{ $view ? $view : '' }}-view">
                 <div class="inline-flex text-nowrap items-center gap-2 text-center mb-2 cursor-pointer">

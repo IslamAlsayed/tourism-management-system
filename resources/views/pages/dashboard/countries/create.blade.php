@@ -62,7 +62,7 @@
                             <div class="">
                                 <label for="phone_code" class="kt-label mb-2">{{ __('main.phone_code') }}</label>
                                 <input type="text" name="phone_code" id="phone_code" class="kt-input h-[45px]"
-                                    value="{{ old('phone_code') }}">
+                                    maxLength="10" value="{{ old('phone_code') }}">
                                 @error('phone_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -135,7 +135,7 @@
                                     @foreach ($languages as $language)
                                         <option value="{{ $language->id }}"
                                             {{ old('language_id') == $language->id ? 'selected' : '' }}>
-                                            {{ $language->name }}{{ $language->name_ar ? '- ' . $language->name_ar : '' }}
+                                            {{ $language->name }}{{ $language->name_ar ? ' - ' . $language->name_ar : '' }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -192,17 +192,17 @@
 
                             <!-- Timezone -->
                             <div class="">
-                                <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search>
+                                <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
-                                    @foreach (config('helpers.timezones') as $zone)
-                                        <option value="{{ $zone }}"
-                                            {{ old('timezone') == $zone ? 'selected' : '' }}>
-                                            {{ __('main.maps.' . $zone) }}
+                                    @foreach ($timezones as $zone)
+                                        <option value="{{ $zone['id'] }}"
+                                            {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
+                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('timezone')
+                                @error('timezone_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

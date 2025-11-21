@@ -8,6 +8,7 @@ use App\Models\Region;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Language;
+use App\Models\Timezone;
 use Illuminate\Http\Request;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,7 @@ class CountryController extends Controller
         $currencies = Currency::orderBy('code')->get();
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.countries.create', get_defined_vars());
     }
 
@@ -45,55 +47,26 @@ class CountryController extends Controller
                 $data['city_id'] = array_unique($data['city_id']);
             }
 
-            // ✅ اجلب قيم IDs الحالية (لو المستخدم اختار يدويًا)
             $stateIds = $data['state_id'] ?? [];
             $cityIds = $data['city_id'] ?? [];
 
-            // ✅ في حالة all_states = 1 → اجلب كل states حسب الدولة المختارة
             if (!empty($data['all_states']) && $data['all_states'] == 1) {
                 $stateIds = State::where('country_id', $data['country_id'])->pluck('id')->toArray();
             }
 
-            // ✅ في حالة all_cities = 1 → اجلب كل المدن بناءً على الدولة أو الـ states
             if (!empty($data['all_cities']) && $data['all_cities'] == 1) {
-                // لو اختار "كل المدن" لكن كمان فعّل "كل المحافظات" → نجيب حسب الدولة فقط
                 if (!empty($data['all_states']) && $data['all_states'] == 1) {
                     $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
                 } else {
-                    // لو اختار بعض المحافظات فقط
                     $cityIds = City::whereIn('state_id', $stateIds)->pluck('id')->toArray();
                 }
             }
 
-            // ✅ خزنها كـ string (comma-separated)
             $data['state_id'] = !empty($stateIds) ? implode(',', $stateIds) : null;
             $data['city_id'] = !empty($cityIds) ? implode(',', $cityIds) : null;
 
-            // ✅ احذف المتغيرات اللي مالهاش لزوم من الـ request
             unset($data['_token'], $data['save_and_add']);
-
-            $zone = $request->input('timezone');
-            $zone = trim(preg_replace('/\s*\(.*\)$/', '', $zone));
-            $tz = new \DateTimeZone($zone);
-            $now = new \DateTime("now", $tz);
-
-            $offset = $tz->getOffset($now);
-            $hours = floor($offset / 3600);
-            $minutes = abs(($offset % 3600) / 60);
-            $sign = $offset >= 0 ? '+' : '-';
-            $gmtOffsetName = sprintf('UTC%s%02d:%02d', $sign, abs($hours), $minutes);
-
-            $timezoneData = [
-                "tzName" => $zone,
-                "zoneName" => $zone,
-                "gmtOffset" => $offset,
-                "abbreviation" => $now->format('T'),
-                "gmtOffsetName" => $gmtOffsetName,
-            ];
-
-            $data['timezone'] = [$timezoneData];
-            $data = array_merge($data, $request->safe()->except(['photo', 'timezone']));
-
+            $data = array_merge($data, $request->safe()->except(['photo']));
             $country = Country::create($data);
             $this->uploadPhoto($request, $country, 'photo', 'countries');
             DB::commit();
@@ -118,6 +91,7 @@ class CountryController extends Controller
         $currencies = Currency::orderBy('code')->get();
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.countries.edit', get_defined_vars());
     }
 
@@ -130,36 +104,13 @@ class CountryController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->validated();
-            $data = array_merge($data, $request->safe()->except(['photo', 'timezone']));
+            $data = array_merge($data, $request->safe()->except(['photo']));
 
             if ($request['state_id']) {
                 $data['state_id'] = array_unique($data['state_id']);
             }
             if ($request['city_id']) {
                 $data['city_id'] = array_unique($data['city_id']);
-            }
-
-            if ($request->input('timezone')) {
-                $zone = $request->input('timezone');
-                $zone = trim(preg_replace('/\s*\(.*\)$/', '', $zone));
-                $tz = new \DateTimeZone($zone);
-                $now = new \DateTime("now", $tz);
-
-                $offset = $tz->getOffset($now);
-                $hours = floor($offset / 3600);
-                $minutes = abs(($offset % 3600) / 60);
-                $sign = $offset >= 0 ? '+' : '-';
-                $gmtOffsetName = sprintf('UTC%s%02d:%02d', $sign, abs($hours), $minutes);
-
-                $timezoneData = [
-                    "tzName" => $zone,
-                    "zoneName" => $zone,
-                    "gmtOffset" => $offset,
-                    "abbreviation" => $now->format('T'),
-                    "gmtOffsetName" => $gmtOffsetName,
-                ];
-
-                $data['timezone'] = [$timezoneData];
             }
             $country->update($data);
             if ($request->has('photo')) {
@@ -203,7 +154,6 @@ class CountryController extends Controller
             case 'delete':
                 $deleted = \App\Models\Country::whereIn('id', $ids)->delete();
                 return redirect()->back()->with('success', __('main.messages.countries_deleted', ['count' => $deleted]));
-            // يمكنك إضافة إجراءات أخرى هنا مثل التفعيل أو التعطيل
             default:
                 return redirect()->back()->with('error', __('main.messages.unknown_action'));
         }

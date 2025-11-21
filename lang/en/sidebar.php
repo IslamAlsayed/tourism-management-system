@@ -263,6 +263,8 @@ return [
     'updated' => 'Updated',
     'updating' => 'Updating',
     'updating...' => 'Updating...',
+    'tested' => 'Tested',
+    'testing' => 'Testing',
     'editing...' => 'Editing...',
     'done' => 'Done',
 ];

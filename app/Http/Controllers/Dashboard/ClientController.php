@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Client;
 use App\Models\Region;
+use App\Models\Timezone;
 use App\Models\Nationality;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
@@ -23,6 +24,7 @@ class ClientController extends Controller
     {
         $regions = Region::orderBy('name')->get();
         $nationalities = Nationality::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.clients.create', get_defined_vars());
     }
 
@@ -73,6 +75,7 @@ class ClientController extends Controller
         }
         $regions = Region::orderBy('name')->get();
         $nationalities = Nationality::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.clients.edit', get_defined_vars());
     }
 

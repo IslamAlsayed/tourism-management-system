@@ -67,7 +67,7 @@
                             <div class="">
                                 <label for="phone_code" class="kt-label mb-2">{{ __('main.phone_code') }}</label>
                                 <input type="text" name="phone_code" id="phone_code" class="kt-input h-[45px]"
-                                    value="{{ $country->phone_code }}">
+                                    maxLength="10" value="{{ $country->phone_code }}">
                                 @error('phone_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -138,7 +138,8 @@
                                     @foreach ($languages as $language)
                                         <option value="{{ $language->id }}"
                                             {{ $country->language_id == $language->id ? 'selected' : '' }}>
-                                            {{ $language->name }}</option>
+                                            {{ $language->name }}{{ $language->name_ar ? ' - ' . $language->name_ar : '' }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('language_id')
@@ -195,19 +196,19 @@
 
                             <!-- Timezone -->
                             <div class="">
-                                <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $country->human_timezone }}"
-                                    value="{{ $country->human_timezone }}">
+                                <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $country->timezone_id }}"
+                                    value="{{ $country->timezone_id }}">
                                     <option value="">--</option>
-                                    @foreach (config('helpers.timezones') as $zone)
-                                        <option value="{{ $zone }}"
-                                            {{ $country->timezone == $zone ? 'selected' : '' }}>
-                                            {{ __('main.maps.' . $zone) }}
+                                    @foreach ($timezones as $zone)
+                                        <option value="{{ $zone['id'] }}"
+                                            {{ $country->timezone_id == $zone['id'] ? 'selected' : '' }}>
+                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('timezone')
+                                @error('timezone_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -220,47 +221,43 @@
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
-                                    @component('components.elements.checkbox-button', [
+                                    @include('components.elements.checkbox-button', [
                                         'name' => 'is_active',
                                         'id' => 'is_active',
-                                        'value' => $country->is_active,
+                                        'value' => '1',
+                                        'checked' => $country->is_active == '1',
                                         'label' => __('main.activate_country'),
                                     ])
-                                        {{ $country->is_active == '1' ? 'checked' : '' }}
-                                    @endcomponent
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_independent" value="0">
-                                    @component('components.elements.checkbox-button', [
+                                    @include('components.elements.checkbox-button', [
                                         'name' => 'is_independent',
                                         'id' => 'is_independent',
-                                        'value' => $country->is_independent,
+                                        'value' => '1',
+                                        'checked' => $country->is_independent == '1',
                                         'label' => __('main.independent_country'),
                                     ])
-                                        {{ $country->is_independent == '1' ? 'checked' : '' }}
-                                    @endcomponent
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_developed" value="0">
-                                    @component('components.elements.checkbox-button', [
+                                    @include('components.elements.checkbox-button', [
                                         'name' => 'is_developed',
                                         'id' => 'is_developed',
-                                        'value' => $country->is_developed,
+                                        'value' => '1',
+                                        'checked' => $country->is_developed == '1',
                                         'label' => __('main.developed_country'),
                                     ])
-                                        {{ $country->is_developed == '1' ? 'checked' : '' }}
-                                    @endcomponent
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_landlocked" value="0">
-                                    @component('components.elements.checkbox-button', [
+                                    @include('components.elements.checkbox-button', [
                                         'name' => 'is_landlocked',
                                         'id' => 'is_landlocked',
-                                        'value' => $country->is_landlocked,
+                                        'value' => '1',
+                                        'checked' => $country->is_landlocked == '1',
                                         'label' => __('main.landlocked_country'),
                                     ])
-                                        {{ $country->is_landlocked == '1' ? 'checked' : '' }}
-                                    @endcomponent
                                 </div>
                             </div>
                         </div>

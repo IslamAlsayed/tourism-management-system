@@ -53,8 +53,8 @@ class SystemLanguages extends Component
     {
         $query = SystemLanguage::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $data = $query->paginate(getPaginate());
         $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         return view('livewire.system-languages', ['data' => $data, 'totalCount' => $this->totalCount ?: SystemLanguage::count()]);
     }
 }

@@ -13,7 +13,7 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content" wire:target="search,resetFilters,filterClientGender,filterClientStatus"
+    <div class="kt-card-content px-2" wire:target="search,destroy,resetFilters,filterClientGender,filterClientStatus"
         wire:loading.class="loading">
         <!-- Filters -->
         <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">

@@ -38,10 +38,6 @@ use App\Http\Controllers\Dashboard\Transportation\CompanyBusTypeController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
 
-Route::get('/dashboard/countries/metronic-table', function () {
-    return view('pages.dashboard.countries.metronic-table');
-})->middleware('auth');
-
 /*
 |----------------------|
 |----- Web Routes -----|

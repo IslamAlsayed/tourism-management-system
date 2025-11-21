@@ -23,7 +23,7 @@
     @case('photo')
         <td title="{{ $model->name }}">
             <div class="relative w-fit">
-                <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
+                <img src="{{ $model->photo && checkExistFile($model->photo) ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
                     alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
                 @if (isset($models) && $models && $models == 'users')
                     <span
@@ -260,6 +260,14 @@
         <td title="{{ optional($model->bus_type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->bus_type)->name ?? '--', 30), $search) !!}</td>
     @break
 
+    @case('timezone')
+        <td title="{{ $model->timezone->name }}">
+            <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText(str_replace('_', ' ', $model->timezone->name) ?? '--', 30), $search) !!}
+            </span>
+        </td>
+    @break
+
     @case('currency')
         <td title="{{ optional($model->currency)->code ?? '--' }}">{!! highlightSearch(limitedText(optional($model->currency)->code ?? '--', 30), $search) !!}</td>
     @break
@@ -419,14 +427,13 @@
         </td>
     @break
 
-    @case('timezone')
+    {{-- @case('timezone')
         <td title="{{ $model->timezone }}">
             <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText(str_replace('_', ' ', $model->timezone) ?? '--', 30), $search) !!}
             </span>
         </td>
-    @break
-
+    @break --}}
     @case('notes')
         <td title="{{ $model->notes }}">
             <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">

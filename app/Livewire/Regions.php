@@ -38,8 +38,8 @@ class Regions extends Component
     {
         $query = Region::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $data = $query->paginate(getPaginate());
         $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         return view('livewire.regions', ['data' => $data, 'totalCount' => $this->totalCount ?: Region::count()]);
     }
 }

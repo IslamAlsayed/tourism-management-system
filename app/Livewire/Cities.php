@@ -39,11 +39,11 @@ class Cities extends Component
     {
         $query = City::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
         $data = $query->paginate(getPaginate());
         foreach ($data as $city) {
             $city['states'] = $city->states();
         }
-        $this->applySorting($query);
         return view('livewire.cities', ['data' => $data, 'totalCount' => $this->totalCount ?: City::count()]);
     }
 }

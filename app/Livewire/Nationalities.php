@@ -38,12 +38,12 @@ class Nationalities extends Component
     {
         $query = Nationality::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        $this->applySorting($query);
         $data = $query->paginate(getPaginate());
         foreach ($data as $nationality) {
             $nationality['states'] = $nationality->states();
             $nationality['cities'] = $nationality->cities();
         }
-        $this->applySorting($query);
         return view('livewire.nationalities', ['data' => $data, 'totalCount' => $this->totalCount ?: Nationality::count()]);
     }
 }

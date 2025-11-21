@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -42,10 +41,11 @@ class UserFactory extends Factory
             'department' => fake()->word(),
             'position' => fake()->jobTitle(),
             'preferred_language' => fake()->randomElement(['en', 'es', 'fr', 'de', 'it', 'pt', 'ar']),
-            'timezone' => fake()->timezone(),
+            'timezone_id' => \App\Models\Timezone::inRandomOrder()->first()?->id,
             'preferences' => '',
             'is_admin' => true,
             'photo' => null,
+            'user_status' => false,
             'is_active' => true,
             'is_verified' => true,
             'force_password_change' => false,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\City;
 use App\Models\Region;
+use App\Models\Timezone;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cities\CreateCitiesRequest;
 use App\Http\Requests\Cities\UpdateCitiesRequest;
@@ -18,6 +19,7 @@ class CityController extends Controller
     public function create()
     {
         $regions = Region::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.cities.create', get_defined_vars());
     }
 
@@ -49,6 +51,7 @@ class CityController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.city')]));
         }
         $regions = Region::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.cities.edit', get_defined_vars());
     }
 

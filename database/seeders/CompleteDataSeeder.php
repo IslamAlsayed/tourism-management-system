@@ -2,13 +2,15 @@
 
 namespace Database\Seeders;
 
+use ZipStream\Time;
 use App\Models\City;
 use App\Models\Type;
 use App\Models\State;
 use App\Models\Region;
 use App\Models\Country;
-use App\Models\Language;
 use App\Models\Currency;
+use App\Models\Language;
+use App\Models\Timezone;
 use App\Models\Subregion;
 use App\Models\TourGuide;
 use App\Models\Restaurant;
@@ -93,7 +95,7 @@ class CompleteDataSeeder extends Seeder
                 'area' => 1001450,
                 'latitude' => 26.8206,
                 'longitude' => 30.8025,
-                'timezone' => [['zoneName' => 'Africa/Cairo', 'gmtOffset' => 7200, 'abbreviation' => 'EET']],
+                'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id,
                 'is_active' => true,
             ],
             [
@@ -112,7 +114,7 @@ class CompleteDataSeeder extends Seeder
                 'area' => 89342,
                 'latitude' => 30.5852,
                 'longitude' => 36.2384,
-                'timezone' => [['zoneName' => 'Asia/Amman', 'gmtOffset' => 7200, 'abbreviation' => 'EET']],
+                'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id,
                 'is_active' => true,
             ],
         ];
@@ -123,10 +125,10 @@ class CompleteDataSeeder extends Seeder
 
         // States
         $states = [
-            ['name' => 'Cairo', 'name_ar' => 'القاهرة', 'iso2' => 'C', 'country_id' => $createdCountries[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id],
-            ['name' => 'Giza', 'name_ar' => 'الجيزة', 'iso2' => 'GZ', 'country_id' => $createdCountries[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id],
-            ['name' => 'Amman', 'name_ar' => 'عمان', 'iso2' => 'AM', 'country_id' => $createdCountries[1]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id],
-            ['name' => 'Aqaba', 'name_ar' => 'العقبة', 'iso2' => 'AQ', 'country_id' => $createdCountries[1]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id],
+            ['name' => 'Cairo', 'name_ar' => 'القاهرة', 'iso2' => 'C', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id],
+            ['name' => 'Giza', 'name_ar' => 'الجيزة', 'iso2' => 'GZ', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id],
+            ['name' => 'Amman', 'name_ar' => 'عمان', 'iso2' => 'AM', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id],
+            ['name' => 'Aqaba', 'name_ar' => 'العقبة', 'iso2' => 'AQ', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id],
         ];
         $createdStates = [];
         foreach ($states as $stateData) {
@@ -135,10 +137,10 @@ class CompleteDataSeeder extends Seeder
 
         // Cities
         $cities = [
-            ['name' => 'Cairo', 'name_ar' => 'القاهرة', 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 9500000, 'latitude' => 30.0444, 'longitude' => 31.2357],
-            ['name' => 'Giza', 'name_ar' => 'الجيزة', 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[1]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 4000000, 'latitude' => 30.0131, 'longitude' => 31.2089],
-            ['name' => 'Amman', 'name_ar' => 'عمان', 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[2]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 4000000, 'latitude' => 31.9454, 'longitude' => 35.9284],
-            ['name' => 'Aqaba', 'name_ar' => 'العقبة', 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[3]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 150000, 'latitude' => 29.5320, 'longitude' => 35.0063],
+            ['name' => 'Cairo', 'name_ar' => 'القاهرة', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 9500000, 'latitude' => 30.0444, 'longitude' => 31.2357],
+            ['name' => 'Giza', 'name_ar' => 'الجيزة', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[1]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 4000000, 'latitude' => 30.0131, 'longitude' => 31.2089],
+            ['name' => 'Amman', 'name_ar' => 'عمان', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[2]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 4000000, 'latitude' => 31.9454, 'longitude' => 35.9284],
+            ['name' => 'Aqaba', 'name_ar' => 'العقبة', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[3]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 150000, 'latitude' => 29.5320, 'longitude' => 35.0063],
         ];
         $createdCities = [];
         foreach ($cities as $cityData) {

@@ -38,6 +38,7 @@ class BusTypes extends Component
     {
         $query = TransportationBusType::query()->with($this->relations)->search($this->search);
         $this->applySorting($query);
-        return view('livewire.transportation.bus-types', ['data' => $query->paginate(getPaginate()), 'totalCount' => TransportationBusType::count()]);
+        $data = $query->paginate(getPaginate());
+        return view('livewire.transportation.bus-types', ['data' => $data, 'totalCount' => TransportationBusType::count()]);
     }
 }

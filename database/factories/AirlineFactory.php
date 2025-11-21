@@ -36,7 +36,7 @@ class AirlineFactory extends Factory
             'elevation' => $this->faker->randomFloat(2, 0, 5000),
             'latitude' => $this->faker->latitude(15, 35),
             'longitude' => $this->faker->longitude(25, 60),
-            'timezone' => $this->faker->randomElement(['Asia/Riyadh', 'Asia/Dubai', 'Asia/Kuwait', 'Asia/Amman', 'Africa/Cairo', 'Asia/Baghdad', 'Asia/Doha']),
+            'timezone_id' => \App\Models\Timezone::inRandomOrder()->first()?->id,
             'local_phone_number' => $this->faker->phoneNumber(),
             'international_phone_number' => $this->faker->numerify('+966-##-###-####'),
             'website' => 'https://www.' . strtolower(str_replace(' ', '', $airportName)) . '.aero',

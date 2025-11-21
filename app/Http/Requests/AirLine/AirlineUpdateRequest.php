@@ -38,6 +38,7 @@ class AirlineUpdateRequest extends FormRequest
             'subd' => ['nullable', 'string', 'max:50'],
 
             // Location Relationships
+            'timezone_id' => ['nullable', 'exists:timezones,id'],
             'region_id' => ['nullable', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'exists:subregions,id'],
             'country_id' => ['nullable', 'exists:countries,id'],
@@ -48,7 +49,6 @@ class AirlineUpdateRequest extends FormRequest
             'elevation' => ['nullable', 'numeric'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'timezone' => ['nullable', 'string', 'max:50'],
 
             // Contact Information
             'local_phone_number' => ['nullable', 'string', 'max:20'],
@@ -57,45 +57,45 @@ class AirlineUpdateRequest extends FormRequest
         ];
     }
 
-    // /**
-    //  * Get custom messages for validator errors.
-    //  */
-    // public function messages(): array
-    // {
-    //     return [
-    //         'icao.unique' => __('validation.unique', ['attribute' => __('main.icao')]),
-    //         'iata.unique' => __('validation.unique', ['attribute' => __('main.iata')]),
-    //         'airport_name.required' => __('validation.required', ['attribute' => __('main.airport_name')]),
-    //         'website.url' => __('validation.url', ['attribute' => __('main.website')]),
-    //         'latitude.between' => __('validation.between.numeric', ['attribute' => __('main.latitude'), 'min' => -90, 'max' => 90]),
-    //         'longitude.between' => __('validation.between.numeric', ['attribute' => __('main.longitude'), 'min' => -180, 'max' => 180]),
-    //     ];
-    // }
+    /**
+     * Get custom messages for validator errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'icao.unique' => __('validation.unique', ['attribute' => __('main.icao')]),
+            'iata.unique' => __('validation.unique', ['attribute' => __('main.iata')]),
+            'airport_name.required' => __('validation.required', ['attribute' => __('main.airport_name')]),
+            'website.url' => __('validation.url', ['attribute' => __('main.website')]),
+            'latitude.between' => __('validation.between.numeric', ['attribute' => __('main.latitude'), 'min' => -90, 'max' => 90]),
+            'longitude.between' => __('validation.between.numeric', ['attribute' => __('main.longitude'), 'min' => -180, 'max' => 180]),
+        ];
+    }
 
-    // /**
-    //  * Get custom attributes for validator errors.
-    //  */
-    // public function attributes(): array
-    // {
-    //     return [
-    //         'icao' => __('main.icao'),
-    //         'iata' => __('main.iata'),
-    //         'lid' => __('main.lid'),
-    //         'airport_name' => __('main.airport_name'),
-    //         'airport_name_ar' => __('main.airport_name_ar'),
-    //         'subd' => __('main.subd'),
-    //         'region_id' => __('main.region'),
-    //         'subregion_id' => __('main.subregion'),
-    //         'country_id' => __('main.country'),
-    //         'state_id' => __('main.state'),
-    //         'city_id' => __('main.city'),
-    //         'elevation' => __('main.elevation'),
-    //         'latitude' => __('main.latitude'),
-    //         'longitude' => __('main.longitude'),
-    //         'timezone' => __('main.timezone'),
-    //         'local_phone_number' => __('main.local_phone_number'),
-    //         'international_phone_number' => __('main.international_phone_number'),
-    //         'website' => __('main.website'),
-    //     ];
-    // }
+    /**
+     * Get custom attributes for validator errors.
+     */
+    public function attributes(): array
+    {
+        return [
+            'icao' => __('main.icao'),
+            'iata' => __('main.iata'),
+            'lid' => __('main.lid'),
+            'airport_name' => __('main.airport_name'),
+            'airport_name_ar' => __('main.airport_name_ar'),
+            'subd' => __('main.subd'),
+            'timezone_id' => __('main.timezone'),
+            'region_id' => __('main.region'),
+            'subregion_id' => __('main.subregion'),
+            'country_id' => __('main.country'),
+            'state_id' => __('main.state'),
+            'city_id' => __('main.city'),
+            'elevation' => __('main.elevation'),
+            'latitude' => __('main.latitude'),
+            'longitude' => __('main.longitude'),
+            'local_phone_number' => __('main.local_phone_number'),
+            'international_phone_number' => __('main.international_phone_number'),
+            'website' => __('main.website'),
+        ];
+    }
 }

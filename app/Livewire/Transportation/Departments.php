@@ -38,6 +38,7 @@ class Departments extends Component
     {
         $query = TransportationCompanyDepartment::query()->with($this->relations)->search($this->search);
         $this->applySorting($query);
-        return view('livewire.transportation.departments', ['data' => $query->paginate(getPaginate()), 'totalCount' => TransportationCompanyDepartment::count()]);
+        $data = $query->paginate(getPaginate());
+        return view('livewire.transportation.departments', ['data' => $data, 'totalCount' => TransportationCompanyDepartment::count()]);
     }
 }

@@ -26,6 +26,7 @@ class UpdateClientRequest extends FormRequest
 
         return [
             // Location
+            'timezone_id' => 'nullable|exists:timezones,id',
             'region_id' => 'nullable|exists:regions,id',
             'subregion_id' => 'nullable|exists:subregions,id',
             'country_id' => 'nullable|exists:countries,id',
@@ -55,13 +56,13 @@ class UpdateClientRequest extends FormRequest
             'secondary_email' => 'nullable|email|max:255',
 
             // Phones
-            'primary_phone' => 'required|string|max:20',
-            'secondary_phone' => 'nullable|string|max:20',
-            'mobile_phone' => 'nullable|string|max:20',
-            'home_phone' => 'nullable|string|max:20',
-            'work_phone' => 'nullable|string|max:20',
+            'primary_phone' => 'required|string|max:10',
+            'secondary_phone' => 'nullable|string|max:10',
+            'mobile_phone' => 'nullable|string|max:10',
+            'home_phone' => 'nullable|string|max:10',
+            'work_phone' => 'nullable|string|max:10',
             'work_phone_ext' => 'nullable|string|max:10',
-            'fax_number' => 'nullable|string|max:20',
+            'fax_number' => 'nullable|string|max:10',
 
             // Company
             'company_name' => 'nullable|string|max:255',
@@ -74,7 +75,7 @@ class UpdateClientRequest extends FormRequest
 
             // Address
             'box' => 'nullable|string|max:50',
-            'postal_code' => 'nullable|string|max:20',
+            'postal_code' => 'nullable|string|max:10',
             'street_address' => 'nullable|string|max:500',
             'address_line_2' => 'nullable|string|max:500',
 
@@ -84,7 +85,6 @@ class UpdateClientRequest extends FormRequest
 
             // Status
             'client_status' => 'nullable|in:active,inactive,pending,blacklisted',
-            'timezone' => 'nullable|string|max:50',
             'notes' => 'nullable|string|max:1000',
         ];
     }
@@ -97,6 +97,7 @@ class UpdateClientRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'timezone_id' => __('main.timezone'),
             'region_id' => __('main.region'),
             'subregion_id' => __('main.subregion'),
             'country_id' => __('main.country'),
@@ -137,9 +138,7 @@ class UpdateClientRequest extends FormRequest
             'website_url' => __('main.website_url'),
             'linkedin_url' => __('main.linkedin_url'),
             'client_status' => __('main.status'),
-            'timezone' => __('main.timezone'),
             'notes' => __('main.notes'),
         ];
     }
 }
-

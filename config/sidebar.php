@@ -24,7 +24,7 @@ return [
         [
             'title' => 'user management',
             'icon' => 'ki-outline ki-users',
-            'status' => 'updated',
+            'status' => 'tested',
             'children' => [
                 [
                     'title' => 'all users',
@@ -49,7 +49,7 @@ return [
         [
             'title' => 'client management',
             'icon' => 'ki-outline ki-users',
-            // 'status' => 'done',
+            'status' => 'tested',
             'children' => [
                 [
                     'title' => 'all clients',
@@ -74,7 +74,7 @@ return [
         [
             'title' => 'currency management',
             'icon' => 'ki-filled ki-dollar',
-            // 'status' => 'done',
+            'status' => 'tested',
             'children' => [
                 [
                     'title' => 'all currencies',
@@ -99,11 +99,12 @@ return [
         [
             'title' => 'location management',
             'icon' => 'ki-filled ki-geolocation',
-            // 'status' => 'done',
+            'status' => 'tested',
             'children' => [
                 [
                     'title' => 'regions',
                     'icon' => 'ki-filled ki-home-2',
+                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all regions',
@@ -124,6 +125,7 @@ return [
                 [
                     'title' => 'subregions',
                     'icon' => 'ki-filled ki-home-2',
+                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all subregions',
@@ -144,6 +146,7 @@ return [
                 [
                     'title' => 'countries',
                     'icon' => 'ki-filled ki-flag',
+                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all countries',
@@ -164,6 +167,7 @@ return [
                 [
                     'title' => 'states',
                     'icon' => 'ki-filled ki-flag',
+                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all states',
@@ -184,6 +188,7 @@ return [
                 [
                     'title' => 'cities',
                     'icon' => 'ki-filled ki-home-2',
+                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all cities',
@@ -206,6 +211,7 @@ return [
                 [
                     'title' => 'nationalities',
                     'icon' => 'ki-filled ki-home-2',
+                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all nationalities',

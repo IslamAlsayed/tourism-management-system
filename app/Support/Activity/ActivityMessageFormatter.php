@@ -16,7 +16,7 @@ class ActivityMessageFormatter
     {
         $message = self::resolveDescription($activity);
 
-        if ($message === '') {
+        if ($message == '') {
             return trans('activity.activity_no_description');
         }
 
@@ -36,7 +36,7 @@ class ActivityMessageFormatter
     {
         $message = self::resolveDescription($activity);
 
-        if ($message === '') {
+        if ($message == '') {
             return trans('activity.activity_no_description');
         }
 

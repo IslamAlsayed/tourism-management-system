@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
+            $table->unsignedBigInteger('timezone_id')->nullable();
             $table->unsignedBigInteger('language_id')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
@@ -27,17 +28,16 @@ return new class extends Migration {
             $table->string('capital')->nullable();
             $table->string('tld')->nullable();
             $table->string('native')->nullable();
-            $table->json('timezone')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
             $table->bigInteger('population')->nullable();
             $table->string('photo')->nullable();
             $table->string('continent')->nullable();
             $table->float('area')->nullable();
-            $table->boolean('is_active')->nullable()->default(true);
-            $table->boolean('is_independent')->nullable()->default(true);
-            $table->boolean('is_developed')->nullable()->default(true);
-            $table->boolean('is_landlocked')->nullable()->default(true);
+            $table->boolean('is_active')->nullable()->default(false);
+            $table->boolean('is_independent')->nullable()->default(false);
+            $table->boolean('is_developed')->nullable()->default(false);
+            $table->boolean('is_landlocked')->nullable()->default(false);
             $table->timestamps();
 
             $table->index(['name', 'name_ar']);

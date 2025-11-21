@@ -25,10 +25,16 @@ class StateUpdateRequest extends FormRequest
         return [
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
+
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
-            'country_id' => ['nullable', 'string', 'exists:countries,id'],
-            'city_id' => ['nullable', 'string', 'exists:cities,id'],
+
+            'state_id' => ['nullable'],
+            'state_id.*' => ['integer', 'exists:states,id'],
+
+            'city_id' => ['nullable'],
+            'city_id.*' => ['integer', 'exists:cities,id'],
+
             'iso2' => ['nullable', 'string', 'min:2', 'max:2', Rule::unique('states', 'iso2')->ignore($this->route('state'))],
             'iso3' => ['nullable', 'string', 'min:3', 'max:3', Rule::unique('states', 'iso3')->ignore($this->route('state'))],
             'fips_code' => ['nullable', 'string', 'max:2'],
@@ -36,8 +42,13 @@ class StateUpdateRequest extends FormRequest
             'level' => ['nullable', 'integer'],
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
-            'timezone' => ['nullable', 'string', 'max:255'],
+            'timezone_id' => ['nullable', 'exists:timezones,id'],
             'parent_id' => ['nullable', 'integer', 'exists:states,id'],
+
+            'is_active' => ['boolean'],
+            'is_independent' => ['boolean'],
+            'is_developed' => ['boolean'],
+            'is_landlocked' => ['boolean'],
         ];
     }
 }

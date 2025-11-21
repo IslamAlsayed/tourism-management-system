@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Country;
 use App\Models\Nationality;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Nationalities\NationalitiesCreateRequest;
@@ -26,14 +25,12 @@ class NationalityController extends Controller
     {
         $validated = $request->validated();
         $created = Nationality::create($validated);
-
         if ($created) {
             if ($request->has('save_and_add')) {
                 return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.nationality')]));
             }
             return redirect()->route('nationalities.index')->with('success', __('main.messages.type_created', ['type' => __('main.nationality')]));
         }
-
         return redirect()->route('nationalities.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.nationality')]));
     }
 
@@ -54,12 +51,10 @@ class NationalityController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.nationality')]));
         }
         $validated = $request->validated();
-
         $updated = $nationality->update($validated);
         if ($updated) {
             return redirect()->route('nationalities.index')->with('success', __('main.messages.type_updated', ['type' => __('main.nationality')]));
         }
-
         return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.nationality')]));
     }
 
@@ -73,7 +68,6 @@ class NationalityController extends Controller
         if ($deleted) {
             return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.nationality')]));
         }
-
         return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.nationality')]));
     }
 }

@@ -14,13 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
+            $table->unsignedBigInteger('timezone_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('state_id')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
-            $table->string('timezone')->nullable();
             $table->string('wiki_data_id')->nullable();
             $table->bigInteger('population')->nullable();
             $table->timestamps();

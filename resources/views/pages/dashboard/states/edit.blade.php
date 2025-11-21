@@ -129,18 +129,18 @@
 
                             <!-- Timezone -->
                             <div class="">
-                                <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search
-                                    value="{{ $state->timezone }}">
+                                <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $state->timezone_id }}" value="{{ $state->timezone_id }}">
                                     <option value="">--</option>
-                                    @foreach (config('helpers.timezones') as $zone)
-                                        <option value="{{ $zone }}"
-                                            {{ $state->timezone == $zone ? 'selected' : '' }}>
-                                            {{ __('main.maps.' . $zone) }}
+                                    @foreach ($timezones as $zone)
+                                        <option value="{{ $zone['id'] }}"
+                                            {{ $state->timezone_id == $zone['id'] ? 'selected' : '' }}>
+                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('timezone')
+                                @error('timezone_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -161,31 +161,43 @@
                             <div class="grid lg:grid-cols-2 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
-                                    <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                        value="1" {{ $state->is_active == 1 ? 'checked' : '' }}>
-                                    <label for="is_active"
-                                        class="kt-label mb-0">{{ __('main.activate_type', ['type' => __('main.state')]) }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_active',
+                                        'id' => 'is_active',
+                                        'value' => '1',
+                                        'checked' => $state->is_active == 1,
+                                        'label' => __('main.is_active'),
+                                    ])
                                 </div>
-
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="is_independent" id="is_independent" class="kt-checkbox"
-                                        value="1" {{ $state->is_independent == 1 ? 'checked' : '' }}>
-                                    <label for="is_independent"
-                                        class="kt-label mb-0">{{ __('main.independent_type', ['type' => __('main.state')]) }}</label>
+                                    <input type="hidden" name="is_independent" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_independent',
+                                        'id' => 'is_independent',
+                                        'value' => '1',
+                                        'checked' => $state->is_independent == 1,
+                                        'label' => __('main.is_independent'),
+                                    ])
                                 </div>
-
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="is_developed" id="is_developed" class="kt-checkbox"
-                                        value="1" {{ $state->is_developed == 1 ? 'checked' : '' }}>
-                                    <label for="is_developed"
-                                        class="kt-label mb-0">{{ __('main.developed_type', ['type' => __('main.state')]) }}</label>
+                                    <input type="hidden" name="is_developed" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_developed',
+                                        'id' => 'is_developed',
+                                        'value' => '1',
+                                        'checked' => $state->is_developed == 1,
+                                        'label' => __('main.is_developed'),
+                                    ])
                                 </div>
-
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="is_landlocked" id="is_landlocked" class="kt-checkbox"
-                                        value="1" {{ $state->is_landlocked == 1 ? 'checked' : '' }}>
-                                    <label for="is_landlocked"
-                                        class="kt-label mb-0">{{ __('main.landlocked_type', ['type' => __('main.state')]) }}</label>
+                                    <input type="hidden" name="is_landlocked" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_landlocked',
+                                        'id' => 'is_landlocked',
+                                        'value' => '1',
+                                        'checked' => $state->is_landlocked == 1,
+                                        'label' => __('main.is_landlocked'),
+                                    ])
                                 </div>
                             </div>
                         </div>

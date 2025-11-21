@@ -86,7 +86,7 @@ class ClientFactory extends Factory
 
             // Status and preferences
             'client_status' => $this->faker->randomElement(['active', 'inactive', 'pending', 'blacklisted']),
-            'timezone' => $this->faker->randomElement(['UTC', 'Asia/Dubai', 'Asia/Riyadh', 'Europe/London', 'America/New_York']),
+            'timezone_id' => \App\Models\Timezone::inRandomOrder()->first()?->id,
             'notes' => $this->faker->optional(0.4)->paragraph(),
 
             // Tracking

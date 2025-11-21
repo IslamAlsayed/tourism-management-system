@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->string('subd', 50)->nullable(); // Subdivision/Type of airport
 
             // Location Relationships
+            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
             $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
             $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
             $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
@@ -36,7 +37,6 @@ return new class extends Migration {
             $table->decimal('elevation', 10, 2)->nullable(); // Elevation in meters
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->string('timezone', 50)->nullable(); // Time zone identifier
 
             // Contact Information
             $table->string('local_phone_number', 20)->nullable();

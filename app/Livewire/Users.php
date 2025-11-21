@@ -38,8 +38,8 @@ class Users extends Component
     {
         $query = User::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $data = $query->paginate(getPaginate());
         $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         return view('livewire.users', ['data' => $data, 'totalCount' => $this->totalCount ?: User::count()]);
     }
 }

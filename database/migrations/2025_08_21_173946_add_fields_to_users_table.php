@@ -24,11 +24,11 @@ return new class extends Migration {
             $table->string('department')->nullable();
             $table->string('position')->nullable();
             $table->string('preferred_language')->nullable();
-            $table->string('timezone')->nullable();
+            $table->unsignedBigInteger('timezone_id')->nullable();
             $table->string('preferences')->nullable();
-            $table->boolean('is_admin')->default(false);
             $table->string('photo')->nullable();
             $table->string('user_status')->nullable()->default('offline');
+            $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->nullable()->default(true);
             $table->boolean('is_verified')->default(false);
             $table->boolean('force_password_change')->default(false);
@@ -62,7 +62,7 @@ return new class extends Migration {
                 'department',
                 'position',
                 'preferred_language',
-                'timezone',
+                'timezone_id',
                 'preferences',
                 'is_admin',
                 'photo',

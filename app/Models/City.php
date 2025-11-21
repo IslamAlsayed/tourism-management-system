@@ -15,9 +15,9 @@ class City extends Model
         'name_ar',
         'latitude',
         'longitude',
-        'timezone',
         'wiki_data_id',
         'population',
+        'timezone_id',
         'region_id',
         'subregion_id',
         'country_id',
@@ -29,7 +29,7 @@ class City extends Model
      */
     public function getRelationshipNames()
     {
-        return ['region', 'subregion', 'country'];
+        return ['timezone', 'region', 'subregion', 'country'];
     }
 
     /**
@@ -37,7 +37,12 @@ class City extends Model
      */
     public function getExcludedColumns()
     {
-        return ['region_id', 'subregion_id', 'country_id'];
+        return ['timezone_id', 'region_id', 'subregion_id', 'country_id'];
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     public function region()

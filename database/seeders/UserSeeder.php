@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Timezone;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -29,7 +30,7 @@ class UserSeeder extends Seeder
             'hire_date' => '2025-09-20',
             'department' => 'Administration',
             'position' => 'HR Manager',
-            'timezone' => 'Asia/Amman',
+            'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id,
             'photo' => 'uploads/users/1/Ak5G29KHP54dNf7PG7syIhE8YUck4yRRPAyJbrNS.png',
         ]);
 
@@ -46,7 +47,7 @@ class UserSeeder extends Seeder
             'hire_date' => '2025-09-20',
             'department' => 'Development',
             'position' => 'Senior Developer',
-            'timezone' => 'Africa/Cairo',
+            'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id,
             'photo' => 'uploads/users/2/2W7uER2vMWn6E8NJgGgYfoYw1eSrV64ZfyM7FC96.png',
         ]);
     }

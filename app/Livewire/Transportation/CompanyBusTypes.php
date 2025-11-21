@@ -38,6 +38,7 @@ class CompanyBusTypes extends Component
     {
         $query = TransportationCompanyBusType::query()->with($this->relations)->search($this->search);
         $this->applySorting($query);
-        return view('livewire.transportation.company-bus-types', ['data' => $query->paginate(getPaginate()), 'totalCount' => TransportationCompanyBusType::count()]);
+        $data = $query->paginate(getPaginate());
+        return view('livewire.transportation.company-bus-types', ['data' => $data, 'totalCount' => TransportationCompanyBusType::count()]);
     }
 }

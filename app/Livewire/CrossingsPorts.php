@@ -74,8 +74,8 @@ class CrossingsPorts extends Component
         if ($this->filterOperational !== '') {
             $query->where('is_operational', $this->filterOperational);
         }
-        $data = $query->paginate(getPaginate());
         $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         return view('livewire.crossings-ports', ['data' => $data, 'totalCount' => $this->totalCount ?: CrossingPort::count()]);
     }
 }

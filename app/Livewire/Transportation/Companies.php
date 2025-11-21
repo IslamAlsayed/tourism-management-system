@@ -38,6 +38,7 @@ class Companies extends Component
     {
         $query = TransportationCompany::query()->with($this->relations)->search($this->search);
         $this->applySorting($query);
-        return view('livewire.transportation.companies', ['data' => $query->paginate(getPaginate()), 'totalCount' => TransportationCompany::count()]);
+        $data = $query->paginate(getPaginate());
+        return view('livewire.transportation.companies', ['data' => $data, 'totalCount' => TransportationCompany::count()]);
     }
 }

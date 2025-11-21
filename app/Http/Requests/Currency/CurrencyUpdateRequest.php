@@ -23,16 +23,11 @@ class CurrencyUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['nullable', 'string', 'max:10', Rule::unique('currencies', 'code')->ignore($this->route('currency')->id)],
+            'code' => ['nullable', 'string', 'max:10', Rule::unique('currencies', 'code')->ignore($this->route('currency'))],
             'name' => ['nullable', 'string', 'max:255'],
-            'name_ar' => ['nullable', 'string', 'max:255'],
             'symbol' => ['nullable', 'string', 'max:10'],
             'is_active' => ['boolean'],
-            // 'exchange_rate' => ['required', 'numeric', 'min:0'],
-            // 'decimal_places' => ['required', 'integer', 'min:0'],
-            // 'is_major_currency' => ['boolean'],
-            // 'is_base_currency' => ['boolean'],
-            // 'sort_order' => ['required', 'integer', 'min:0'],
+            'auto_update_rate' => ['boolean'],
         ];
     }
 }

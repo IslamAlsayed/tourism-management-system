@@ -20,7 +20,11 @@ class State extends Model
         'level',
         'latitude',
         'longitude',
-        'timezone',
+        'is_active',
+        'is_independent',
+        'is_developed',
+        'is_landlocked',
+        'timezone_id',
         'region_id',
         'subregion_id',
         'country_id',
@@ -32,7 +36,7 @@ class State extends Model
      */
     public function getRelationshipNames()
     {
-        return ['region', 'subregion', 'country'];
+        return ['timezone', 'region', 'subregion', 'country'];
     }
 
     /**
@@ -40,7 +44,12 @@ class State extends Model
      */
     public function getExcludedColumns()
     {
-        return ['region_id', 'subregion_id', 'country_id'];
+        return ['timezone_id', 'region_id', 'subregion_id', 'country_id'];
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     public function region()

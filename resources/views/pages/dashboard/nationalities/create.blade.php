@@ -56,7 +56,7 @@
                             {{-- Regions [region, subregion, country, state, city] --}}
                             @include('components.regions.create', [
                                 'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => true,
+                                'multiple' => false,
                             ])
                         </div>
 
@@ -64,9 +64,12 @@
                         <div class="grid lg:grid-cols-3 gap-6 mb-4">
                             <div class="flex items-center gap-3">
                                 <input type="hidden" name="is_active" value="0">
-                                <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox" value="1"
-                                    {{ old('is_active') ? 'checked' : '' }}>
-                                <label for="is_active" class="kt-label mb-0">{{ __('main.is_active') }}</label>
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_active',
+                                    'id' => 'is_active',
+                                    'value' => '1',
+                                    'label' => __('main.is_active'),
+                                ])
                             </div>
                         </div>
 

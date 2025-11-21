@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('client_code')->unique()->nullable();
 
             // Location information
+            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
             $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
             $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
             $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
@@ -73,7 +74,6 @@ return new class extends Migration {
 
             // Status and preferences
             $table->enum('client_status', ['active', 'inactive', 'pending', 'blacklisted'])->default('active');
-            $table->string('timezone')->nullable();
             $table->string('whatsapp')->nullable();
             $table->string('company_phone')->nullable();
             $table->string('company_email')->nullable();

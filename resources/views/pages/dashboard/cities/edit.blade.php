@@ -95,18 +95,18 @@
 
                             <!-- Timezone -->
                             <div class="">
-                                <label for="timezone" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone" id="timezone" class="kt-select h-[45px]" special-search
-                                    value={{ $city->timezone }}>
+                                <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $city->timezone_id }}" value="{{ $city->timezone_id }}">
                                     <option value="">--</option>
-                                    @foreach (config('helpers.timezones') as $zone)
-                                        <option value="{{ $zone }}"
-                                            {{ $city->timezone == $zone ? 'selected' : '' }}>
-                                            {{ __('main.maps.' . $zone) }}
+                                    @foreach ($timezones as $zone)
+                                        <option value="{{ $zone['id'] }}"
+                                            {{ $city->timezone_id == $zone['id'] ? 'selected' : '' }}>
+                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('timezone')
+                                @error('timezone_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

@@ -38,8 +38,8 @@ class Subregions extends Component
     {
         $query = Subregion::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $data = $query->paginate(getPaginate());
         $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         return view('livewire.subregions', ['data' => $data, 'totalCount' => $this->totalCount ?: Subregion::count()]);
     }
 }

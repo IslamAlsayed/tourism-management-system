@@ -51,7 +51,6 @@ class MediaFileSeeder extends Seeder
 
         // Check if 'photo' column exists
         if (!Schema::hasColumn($tableName, 'photo')) {
-            $this->command->warn("Skipped " . class_basename($modelClass) . " - no 'photo' column");
             return;
         }
 
@@ -108,8 +107,6 @@ class MediaFileSeeder extends Seeder
                 'uploaded_at' => $model->created_at ?? now(),
             ]);
         }
-
-        $this->command->info("Stored " . $models->count() . " photos for " . class_basename($modelClass));
     }
 
     /**
@@ -177,7 +174,5 @@ class MediaFileSeeder extends Seeder
 
             $storedCount++;
         }
-
-        $this->command->info("Stored $storedCount additional files from uploads directory");
     }
 }

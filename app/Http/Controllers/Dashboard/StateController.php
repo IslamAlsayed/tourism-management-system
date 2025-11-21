@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Region;
 use App\Models\State;
+use App\Models\Region;
+use App\Models\Timezone;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\States\StateCreateRequest;
 use App\Http\Requests\States\StateUpdateRequest;
@@ -18,6 +19,7 @@ class StateController extends Controller
     public function create()
     {
         $regions = Region::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.states.create', get_defined_vars());
     }
 
@@ -43,6 +45,7 @@ class StateController extends Controller
             return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.state')]));
         }
         $regions = Region::orderBy('name')->get();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.states.edit', get_defined_vars());
     }
 

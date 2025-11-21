@@ -342,7 +342,6 @@
         const channel = ably.channels.get('activity-created');
         channel.subscribe('activity.created', (message) => {
             @this.dispatch('activityCreated');
-            showToast({type: 'success',message: message.data.description});
         });
     </script>
 @endpush

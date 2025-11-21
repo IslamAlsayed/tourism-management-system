@@ -48,6 +48,7 @@ class Hotels extends Component
         $query = Hotel::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
-        return view('livewire.accommodations.hotels', ['data' => $query->paginate(getPaginate()), 'totalCount' => $this->totalCount]);
+        $data = $query->paginate(getPaginate());
+        return view('livewire.accommodations.hotels', ['data' => $data, 'totalCount' => $this->totalCount]);
     }
 }
