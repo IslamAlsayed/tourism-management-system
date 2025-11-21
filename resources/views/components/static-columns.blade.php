@@ -20,18 +20,16 @@
         </td>
     @break
 
-    {{-- @case('photo')
-        <td title="{{ $model->name }}">
-            <div class="flex items-center gap-2.5">
-                <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
-                    alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
-            </div>
-        </td>
-    @break --}}
     @case('photo')
         <td title="{{ $model->name }}">
-            <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
-                alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
+            <div class="relative w-fit">
+                <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
+                    alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
+                @if (isset($models) && $models && $models == 'users')
+                    <span
+                        class="real-active {{ $model->user_status == 'online' ? 'active heartbeat' : '' }} user-heartbeat-{{ $model->id }}"></span>
+                @endif
+            </div>
         </td>
     @break
 
@@ -103,12 +101,44 @@
         <td title="{{ $model->fax_number }}">{!! highlightSearch(limitedText($model->fax_number ?? '--', 30), $search) !!}</td>
     @break
 
+    @case('user_status')
+        <td title="{{ $model->user_status }}">{!! highlightSearch(limitedText($model->user_status ?? '--', 30), $search) !!}</td>
+    @break
+
     @case('birth_date')
         <td title="{{ $model->formatted_birth_date }}">
-            {!! highlightSearch(limitedText($model->formatted_birth_date ?? '--', 30), $search) !!}
-            <strong class="text-primary">
-                {{ $model->formatted_birth_date ? "({$model->age} " . __('main.years') . ')' : '' }}
-            </strong>
+            <div>
+                {!! highlightSearch(limitedText($model->formatted_birth_date ?? '--', 30), $search) !!}
+            </div>
+            @if ($model->formatted_birth_date)
+                <div class="text-xs text-primary font-medium mt-1">
+                    ({{ $model->age }} {{ __('main.years') }})
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('hire_date')
+        <td title="{{ $model->formatted_hire_date }}">
+            <div>
+                {!! highlightSearch(limitedText($model->formatted_hire_date ?? '--', 30), $search) !!}
+            </div>
+            @if ($model->duration)
+                <div class="text-xs text-primary font-medium mt-1">
+                    ({{ $model->duration }})
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('client_type')
+        <td title="{{ __('main.' . $model->client_type == 'individual' ? 'individual' : 'corporate') }}">
+            <span
+                class="inline-block text-white bg-{{ $model->client_type == 'individual' ? 'yellow-400' : 'blue-600' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! $model->client_type == 'individual'
+                    ? highlightSearch(__('main.individual'), $search)
+                    : highlightSearch(__('main.corporate'), $search) !!}
+            </span>
         </td>
     @break
 
@@ -449,11 +479,13 @@
 
     @case('status')
         <td title="{{ $model->is_active == 1 ? __('main.active') : __('main.inactive') }}">
-            <span class="text-{{ $model->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->is_active == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
-            </span>
+            <div class="relative">
+                <span class="text-{{ $model->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
+                    {!! $model->is_active == 1
+                        ? highlightSearch(__('main.active'), $search)
+                        : highlightSearch(__('main.inactive'), $search) !!}
+                </span>
+            </div>
         </td>
     @break
 

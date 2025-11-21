@@ -10,6 +10,8 @@
                 {{ $unreadNotificationsCount > 99 ? '99+' : $unreadNotificationsCount }}
             </span>
         @endif
+
+        <div class="new-notification hidden">new notification</div>
     </button>
 
     {{-- Dropdown Menu --}}

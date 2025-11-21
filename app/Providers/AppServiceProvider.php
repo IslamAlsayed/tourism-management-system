@@ -2,14 +2,20 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Models\Client;
+use App\Models\Airline;
+use App\Models\Country;
 use App\Models\MediaFile;
+use App\Models\TourGuide;
+use App\Models\Restaurant;
+use App\Models\TouristSite;
+use App\Models\CrossingPort;
+use App\Observers\PhotoObserver;
 use App\Observers\ActivityObserver;
 use App\Observers\MediaFileObserver;
-use App\Events\ImportExportCompleted;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Activitylog\Models\Activity;
-use App\Listeners\NotifyUserAfterImport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,9 +32,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // تسجيل الـ Event والـ Listener
-        Event::listen(ImportExportCompleted::class, NotifyUserAfterImport::class);
+        // Register existing observers
         MediaFile::observe(MediaFileObserver::class);
         Activity::observe(ActivityObserver::class);
+        
+        // Register PhotoObserver for all models with photo field
+        User::observe(PhotoObserver::class);
+        Client::observe(PhotoObserver::class);
+        TouristSite::observe(PhotoObserver::class);
+        CrossingPort::observe(PhotoObserver::class);
+        Airline::observe(PhotoObserver::class);
+        Restaurant::observe(PhotoObserver::class);
+        TourGuide::observe(PhotoObserver::class);
+        Country::observe(PhotoObserver::class);
     }
 }

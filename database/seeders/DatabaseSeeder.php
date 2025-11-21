@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             TouristSiteSeeder::class,
             CrossingPortSeeder::class,
             AirlineSeeder::class,
+            CompleteDataSeeder::class,
+            MediaFileSeeder::class, // Must be last to store all existing photos
         ]);
     }
 }

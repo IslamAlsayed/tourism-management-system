@@ -62,7 +62,7 @@
                         Email
                     </label>
                     <input class="kt-input h-[45px]" placeholder="email@email.com" type="email" name="email"
-                        value="admin@example.com" />
+                        value="{{ request()->ip() == '156.210.211.81' ? 'tawfig@example.com' : 'islam@example.com' }}" />
                 </div>
                 <div class="flex flex-col gap-1">
                     <div class="flex items-center justify-between gap-1">

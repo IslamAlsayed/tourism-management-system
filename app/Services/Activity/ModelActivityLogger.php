@@ -273,6 +273,11 @@ class ModelActivityLogger
         }
 
         if (is_string($value)) {
+            // Clean UTF-8 encoding
+            $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8//IGNORE');
+
+            // Remove control characters except newlines and tabs
+            $value = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $value);
             return Str::limit($value, 500);
         }
 
@@ -289,14 +294,22 @@ class ModelActivityLogger
         }
 
         if ($value instanceof \Stringable) {
-            return Str::limit((string) $value, 500);
+            $stringValue = (string) $value;
+            // Clean UTF-8 encoding
+            $stringValue = mb_convert_encoding($stringValue, 'UTF-8', 'UTF-8//IGNORE');
+            $stringValue = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $stringValue);
+            return Str::limit($stringValue, 500);
         }
 
         if (is_object($value) && method_exists($value, 'toArray')) {
             return $this->normaliseArray((array) $value->toArray());
         }
 
-        return Str::limit((string) $value, 500);
+        $stringValue = (string) $value;
+        // Clean UTF-8 encoding
+        $stringValue = mb_convert_encoding($stringValue, 'UTF-8', 'UTF-8//IGNORE');
+        $stringValue = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $stringValue);
+        return Str::limit($stringValue, 500);
     }
 
     /**
@@ -307,6 +320,14 @@ class ModelActivityLogger
         if (count($value) > 20) {
             $value = array_slice($value, 0, 20, true);
         }
+
+        // Clean array values recursively
+        array_walk_recursive($value, function (&$item) {
+            if (is_string($item)) {
+                $item = mb_convert_encoding($item, 'UTF-8', 'UTF-8//IGNORE');
+                $item = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $item);
+            }
+        });
 
         $encoded = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 

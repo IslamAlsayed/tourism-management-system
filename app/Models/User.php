@@ -24,6 +24,7 @@ class User extends Authenticatable
         'photo',
         'name',
         'email',
+        'user_status',
         'email_verified_at',
         'password',
         'bio',
@@ -95,6 +96,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birth_date' => 'datetime',
+            'hire_date' => 'datetime',
         ];
     }
 
@@ -103,6 +106,46 @@ class User extends Authenticatable
         if (!empty($value)) {
             $this->attributes['password'] = Hash::make($value);
         }
+    }
+
+    public function getFormattedBirthDateAttribute()
+    {
+        return $this->birth_date ? $this->birth_date->format('Y-m-d') : null;
+    }
+
+    public function getAgeAttribute()
+    {
+        return $this->birth_date ? $this->birth_date->age : null;
+    }
+
+    public function getFormattedHireDateAttribute()
+    {
+        return $this->hire_date ? $this->hire_date->format('Y-m-d') : null;
+    }
+
+    public function getDurationAttribute()
+    {
+        if (!$this->hire_date) {
+            return null;
+        }
+
+        $diff = $this->hire_date->diff(now());
+
+        $parts = [];
+
+        if ($diff->y > 0) {
+            $parts[] = $diff->y . ' ' . ($diff->y == 1 ? __('main.year') : __('main.years'));
+        }
+
+        if ($diff->m > 0) {
+            $parts[] = $diff->m . ' ' . ($diff->m == 1 ? __('main.month') : __('main.months'));
+        }
+
+        if ($diff->d > 0 && $diff->y == 0) {
+            $parts[] = $diff->d . ' ' . ($diff->d == 1 ? __('main.day') : __('main.days'));
+        }
+
+        return count($parts) ? implode(', ', $parts) : '0 ' . __('main.days');
     }
 
     /**

@@ -48,7 +48,15 @@ return Application::configure(basePath: dirname(__DIR__))
                 'message' => $exception->getMessage(),
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
-                'trace' => collect($exception->getTrace())->take(10)->values()->all(),
+                'trace' => collect($exception->getTrace())
+                    ->map(function ($item) {
+                        return [
+                            'file' => $item['file'] ?? null,
+                            'line' => $item['line'] ?? null,
+                            'function' => $item['function'] ?? null,
+                            'class' => $item['class'] ?? null,
+                        ];
+                    })->take(10)->values()->all(),
             ];
             if ($hasRequest) {
                 $properties['url'] = request()->fullUrl();

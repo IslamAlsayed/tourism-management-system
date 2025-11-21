@@ -14,33 +14,40 @@ class UserSeeder extends Seeder
         User::truncate();
         Schema::enableForeignKeyConstraints();
 
+        // Create users with hardcoded photos
+        // PhotoObserver will automatically create MediaFile records
         User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => '12345678',
+            'name' => 'tawfig',
+            'email' => 'tawfig@example.com',
             'bio' => 'Administrator account',
-            'first_name' => 'Admin',
-            'last_name' => 'User',
-            'phone' => '1234567890',
-            'mobile' => '0987654321',
-            'address' => '123 Admin St, Admin City, Admin Country',
-            'user_code' => 'ADMIN001',
-            'employee_id' => 'EMP001',
-            'hire_date' => '2020-01-01',
+            'first_name' => 'tawfig',
+            'last_name' => 'makhamreh',
+            'phone' => '+962 7 9811 4879',
+            'mobile' => '+962 7 9811 4879',
+            'address' => 'في الأردن أعلى الجبال',
+            'birth_date' => '1984-04-12',
+            'hire_date' => '2025-09-20',
             'department' => 'Administration',
-            'position' => 'Administrator',
-            'preferred_language' => 'en',
-            'timezone' => 'UTC',
-            'preferences' => json_encode(['theme' => 'dark']),
-            'email_verified_at' => null,
-            'is_admin' => true,
-            'photo' => null,
-            'is_active' => true,
-            'is_verified' => true,
-            'force_password_change' => false,
-            'last_login_at' => null,
-            'last_login_ip' => null,
-            'notes' => null,
+            'position' => 'HR Manager',
+            'timezone' => 'Asia/Amman',
+            'photo' => 'uploads/users/1/Ak5G29KHP54dNf7PG7syIhE8YUck4yRRPAyJbrNS.png',
+        ]);
+
+        User::factory()->create([
+            'name' => 'islam',
+            'email' => 'islam@example.com',
+            'bio' => 'developer account',
+            'first_name' => 'islam',
+            'last_name' => 'alsayed',
+            'phone' => '+201065438133',
+            'mobile' => '+201065438133',
+            'address' => 'في مصر على النيل',
+            'birth_date' => '1999-04-29',
+            'hire_date' => '2025-09-20',
+            'department' => 'Development',
+            'position' => 'Senior Developer',
+            'timezone' => 'Africa/Cairo',
+            'photo' => 'uploads/users/2/2W7uER2vMWn6E8NJgGgYfoYw1eSrV64ZfyM7FC96.png',
         ]);
     }
 }

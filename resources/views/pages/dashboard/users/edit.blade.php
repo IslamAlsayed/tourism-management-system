@@ -128,7 +128,7 @@
                                     <div class="">
                                         <label for="birth_date" class="kt-label mb-2">{{ __('main.birth_date') }}</label>
                                         <input type="date" name="birth_date" id="birth_date" class="kt-input h-[45px]"
-                                            value="{{ $user->birth_date }}">
+                                            value="{{ $user->birth_date ? $user->birth_date->format('Y-m-d') : '' }}">
                                         @error('birth_date')
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -138,7 +138,7 @@
                                     <div class="">
                                         <label for="hire_date" class="kt-label mb-2">{{ __('main.hire_date') }}</label>
                                         <input type="date" name="hire_date" id="hire_date" class="kt-input h-[45px]"
-                                            value="{{ $user->hire_date }}">
+                                            value="{{ $user->hire_date ? $user->hire_date->format('Y-m-d') : '' }}">
                                         @error('hire_date')
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror

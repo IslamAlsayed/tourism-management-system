@@ -5,6 +5,7 @@
 @section('content')
     <!-- Container -->
     <div class="kt-container-fixed" id="contentContainer">
+        <button class="kt-btn bg-primary my-4" toggle-button id="trigger-event-btn">Test Login Event</button>
     </div>
     <!-- End of Container -->
 
@@ -381,3 +382,15 @@
     </div>
     <!-- End of Container -->
 @endsection
+
+@push('scripts')
+    <script>
+        let triggerEventBtn = document.getElementById('trigger-event-btn');
+        triggerEventBtn?.addEventListener('click', () => {
+            fetch('/trigger-login-event')
+                .then(res => res.text())
+                .then(console.log)
+                .catch(console.error);
+        });
+    </script>
+@endpush

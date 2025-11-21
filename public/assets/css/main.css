@@ -810,3 +810,143 @@ th:has(i, svg) {
         transform: rotate(360deg);
     }
 }
+
+.notification-toggle {
+    position: relative;
+
+    & .new-notification {
+        padding: 10px 25px;
+        position: absolute;
+        top: 50px;
+        z-index: 15;
+        text-align: center;
+        border-radius: 15px;
+        pointer-events: none;
+        align-content: center;
+        text-transform: capitalize;
+        color: var(--color-blue-500);
+        background: var(--color-blue-100);
+        border: 1px solid var(--color-blue-300);
+        animation: animated-shake 1s forwards linear;
+
+        &::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: -11px;
+            left: 50%;
+            z-index: -1;
+            border: 1px solid var(--color-blue-300);
+            border-left: none;
+            border-bottom: none;
+            background: var(--color-blue-100);
+            transform: translateX(-50%) rotate(-45deg);
+        }
+    }
+}
+
+@keyframes animated-shake {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-8px, 0) rotate(7.5deg);
+    }
+
+    20% {
+        transform: translate(8px, 0) rotate(-7.5deg);
+    }
+
+    30% {
+        transform: translate(-5px, 0) rotate(1deg);
+    }
+
+    40% {
+        transform: translate(5px, 0) rotate(-1deg);
+    }
+
+    50% {
+        transform: translate(-4px, 0) rotate(5deg);
+    }
+
+    60% {
+        transform: translate(4px, 0) rotate(-5deg);
+    }
+
+    70% {
+        transform: translate(-2px, 0) rotate(2.5deg);
+    }
+
+    80% {
+        transform: translate(2px, 0) rotate(-2.5deg);
+    }
+
+    90% {
+        transform: translate(1px, 0) rotate(0.1deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0);
+    }
+}
+
+.notification-count.bounce-in {
+    animation: bounce-in 150ms forwards linear;
+}
+
+@keyframes bounce-in {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-10px) scale(1.5);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+.real-active {
+    width: 15px;
+    height: 15px;
+    position: relative;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 2px solid var(--light-color);
+
+    &::before,
+    &::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        border-radius: 50%;
+        display: inline-block;
+        transform: translate(-50%, -50%);
+        background-color: var(--color-gray-500);
+    }
+
+    &.active::after {
+        background-color: var(--color-green-500);
+    }
+
+    &.active::before {
+        background-color: var(--color-green-600);
+        animation: heartbeat 700ms infinite linear;
+    }
+}
+
+@keyframes heartbeat {
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+    }
+}
