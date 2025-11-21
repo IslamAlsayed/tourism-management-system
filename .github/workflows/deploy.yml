@@ -46,27 +46,32 @@ jobs:
           find . -mindepth 1 -not -name '.git' -not -name '.env' -exec cp -r --parents '{}' \$DST \;
           "
 
-      # Step 3: Run migrations
+      # Step 3: Rollback all migrations
+      - name: 🔄 Rollback Migrations
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan migrate:reset --force"
+
+      # Step 4: Run fresh migrations
       - name: 🗄️ Migrate Database
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan migrate --force"
 
-      # Step 4: Run seeders
+      # Step 5: Run seeders
       - name: 🗄️ Seeders Database
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan db:seed --force"
 
-      # Step 5: Clear caches
+      # Step 6: Clear caches
       - name: 🧹 Clear Cache
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan optimize:clear"
 
-      # Step 6: Optimize
+      # Step 7: Optimize
       - name: ⚡ Optimize
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan optimize"
 
-      # Step 7: Copy public assets to public_html
+      # Step 8: Copy public assets to public_html
       - name: 📁 Copy Assets to Public HTML
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "

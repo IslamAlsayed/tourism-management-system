@@ -197,31 +197,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // === ACTIVITY LOG ===
     Route::get('activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
 
-    // Test route to manually trigger activity broadcast
-    Route::get('test-activity-broadcast', function () {
-        // Get the latest activity or create a test one
-        $activity = \Spatie\Activitylog\Models\Activity::latest()->first();
-
-        if (!$activity) {
-            // Create a test activity if none exists
-            activity()
-                ->withProperties(['test' => true])
-                ->log('Test activity broadcast');
-
-            $activity = \Spatie\Activitylog\Models\Activity::latest()->first();
-        }
-
-        // Manually broadcast the event
-        event(new \App\Events\ActivityCreated($activity));
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Activity broadcast triggered successfully',
-            'activity_id' => $activity->id,
-            'description' => $activity->description
-        ]);
-    })->name('test.activity.broadcast');
-
     // === ADMIN TOOLS ===
     Route::prefix('admin/sidebar')->name('sidebar.')->middleware('admin')->group(function () {
         Route::get('/', [SidebarManagerController::class, 'index'])->name('index');
