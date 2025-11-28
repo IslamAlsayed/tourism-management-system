@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Timezone;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class TimezoneSeeder extends Seeder
 {
@@ -12,6 +13,10 @@ class TimezoneSeeder extends Seeder
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        Timezone::truncate();
+        Schema::enableForeignKeyConstraints();
+        
         $timezones = [
             // Middle East & North Africa
             [
