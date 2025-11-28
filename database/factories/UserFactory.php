@@ -40,7 +40,7 @@ class UserFactory extends Factory
             'hire_date' => fake()->date(),
             'department' => fake()->word(),
             'position' => fake()->jobTitle(),
-            'preferred_language' => fake()->randomElement(array_values(config('app.available_languages'))),
+            'preferred_language' => fake()->randomElement(array_keys(config('languages.system_languages'))),
             'timezone_id' => \App\Models\Timezone::inRandomOrder()->first()?->id,
             'preferences' => '',
             'photo' => null,
