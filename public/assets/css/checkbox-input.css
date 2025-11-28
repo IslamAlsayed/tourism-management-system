@@ -8,6 +8,12 @@
 
     position: relative;
 
+    &.disabled-option {
+        opacity: 0.6;
+        cursor: not-allowed !important;
+        background-color: transparent !important;
+    }
+
     &:before,
     &:after {
         content: "";
@@ -36,7 +42,7 @@
 
     label {
         cursor: pointer;
-        padding: .5rem 0 .5rem calc(var(--size) + var(--gap));
+        padding: 0.5rem 0 0.5rem calc(var(--size) + var(--gap));
         user-select: none;
     }
 
@@ -78,7 +84,7 @@
         }
 
         &:after {
-            border-radius: .75px;
+            border-radius: 0.75px;
         }
     }
 }

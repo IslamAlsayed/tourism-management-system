@@ -111,20 +111,16 @@
 
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Address -->
-                            <div class="mb-4">
-                                <label for="address" class="kt-label mb-2">Address</label>
-                                <input id="address" type="hidden" name="address"
-                                    value="King Khalid International Airport, Riyadh 13413, Saudi Arabia">
-                                <trix-editor input="address"></trix-editor>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'address',
+                                'value' => $user->address,
+                            ])
 
                             <!-- Description -->
-                            <div class="mb-4">
-                                <label for="description" class="kt-label mb-2">Description</label>
-                                <input id="description" type="hidden" name="description"
-                                    value="Major international airport serving Riyadh and central Saudi Arabia, with modern facilities and excellent connectivity.">
-                                <trix-editor input="description"></trix-editor>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'description',
+                                'value' => $user->description,
+                            ])
                         </div>
 
                         <div class="grid lg:grid-cols-3 gap-6">

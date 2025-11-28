@@ -30,11 +30,11 @@
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('states.update', $state->id) }}" enctype="multipart/form-data"
-                        class="space-y-6 p-4">
+                        class="space-y-6 p-6">
                         @csrf
                         @method('PUT')
 
-                        <div class="grid lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- State Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
@@ -158,7 +158,7 @@
                             <h4 class="font-semibold mb-1">
                                 {{ __('main.type_settings', ['type' => __('main.state')]) }}
                             </h4>
-                            <div class="grid lg:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
                                     @include('components.elements.checkbox-button', [

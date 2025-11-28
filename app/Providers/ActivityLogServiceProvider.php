@@ -2,13 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Setting;
 use App\Events\ActivityCreated;
-use App\Services\Activity\ModelActivityLogger;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Activitylog\Models\Activity;
+use App\Services\Activity\ModelActivityLogger;
 
 class ActivityLogServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,12 @@ class ActivityLogServiceProvider extends ServiceProvider
         }
 
         if (!Schema::hasTable(config('activitylog.table_name', 'activity_log'))) {
+            return;
+        }
+
+        // Check if activity log is enabled in settings
+        $settings = Setting::first();
+        if (!$settings || !$settings->app_activity_log_enabled) {
             return;
         }
 

@@ -20,7 +20,7 @@ class CrossingPortController extends Controller
     {
         $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
         $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.crossings-ports.create', get_defined_vars());
+        return view('pages.dashboard.crossings-ports.create', compact('crossing_port_types', 'regions'));
     }
 
     public function store(CrossingPortCreateRequest $request)
@@ -38,18 +38,18 @@ class CrossingPortController extends Controller
         $created = CrossingPort::create($validated);
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('main.messages.type_created', ['type' => __('main.crossing_port')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.crossing_port')]));
             }
-            return redirect()->route('crossings-ports.index')->withSuccess(__('main.messages.type_created', ['type' => __('main.crossing_port')]));
+            return redirect()->route('crossings-ports.index')->withSuccess(__('messages.type_created', ['type' => __('main.crossing_port')]));
         }
-        return redirect()->route('crossings-ports.index')->withError(__('main.messages.type_creation_failed', ['type' => __('main.crossing_port')]));
+        return redirect()->route('crossings-ports.index')->withError(__('messages.type_creation_failed', ['type' => __('main.crossing_port')]));
     }
 
     public function show($id)
     {
         $crossingPort = CrossingPort::with(['region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$crossingPort) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.crossing_port')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         }
         return view('pages.dashboard.crossings-ports.show', compact('crossingPort'));
     }
@@ -58,18 +58,18 @@ class CrossingPortController extends Controller
     {
         $crossingPort = CrossingPort::find($id);
         if (!$crossingPort) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.crossing_port')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         }
         $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
         $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.crossings-ports.edit', get_defined_vars());
+        return view('pages.dashboard.crossings-ports.edit', compact('crossingPort', 'crossing_port_types', 'regions'));
     }
 
     public function update(CrossingPortUpdateRequest $request, $id)
     {
         $crossingPort = CrossingPort::find($id);
         if (!$crossingPort) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.crossing_port')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         }
         $validated = $request->validated();
 
@@ -83,22 +83,22 @@ class CrossingPortController extends Controller
 
         $updated = $crossingPort->update($validated);
         if ($updated) {
-            return redirect()->route('crossings-ports.index')->withSuccess(__('main.messages.type_updated', ['type' => __('main.crossing_port')]));
+            return redirect()->route('crossings-ports.index')->withSuccess(__('messages.type_updated', ['type' => __('main.crossing_port')]));
         }
-        return redirect()->back()->withError(__('main.messages.type_update_failed', ['type' => __('main.crossing_port')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.crossing_port')]));
     }
 
     public function destroy($id)
     {
         $crossingPort = CrossingPort::find($id);
         if (!$crossingPort) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.crossing_port')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         }
         $deleted = $crossingPort->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('main.messages.type_deleted', ['type' => __('main.crossing_port')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.crossing_port')]));
         }
-        return redirect()->back()->withError(__('main.messages.type_deletion_failed', ['type' => __('main.crossing_port')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.crossing_port')]));
     }
 
     /**
@@ -109,10 +109,10 @@ class CrossingPortController extends Controller
         $type = singularLowerCaseName($type, '_');
         $validTypes = config('helpers.crossing_port_types');
         if (!isset($validTypes[$type])) {
-            return redirect()->route('crossings-ports.index')->withError(__('main.messages.invalid_type'));
+            return redirect()->route('crossings-ports.index')->withError(__('messages.invalid_type'));
         }
         $typeValue = $validTypes[$type];
         $typeLabel = ucfirst(str_replace('_', ' ', $typeValue));
-        return view('pages.dashboard.crossings-ports.type', get_defined_vars());
+        return view('pages.dashboard.crossings-ports.type', compact('type', 'typeValue', 'typeLabel'));
     }
 }

@@ -25,7 +25,7 @@ class LanguageUpdateRequest extends FormRequest
         return [
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
-            'code' => ['nullable', 'string', Rule::unique('languages', 'code')->ignore($this->route('language')->id)],
+            'code' => ['nullable', 'string', Rule::unique('languages', 'code')->ignore($this->route('language'))],
         ];
     }
 }

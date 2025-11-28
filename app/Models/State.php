@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
-    use HasSearch;
+    use HasSearch, FiltersByUserRole;
 
     protected $fillable = [
         'id',

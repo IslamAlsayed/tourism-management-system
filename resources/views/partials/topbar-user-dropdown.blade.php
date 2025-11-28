@@ -82,7 +82,7 @@
                                 <a class="kt-dropdown-menu-link"
                                     href="{{ route('system-languages.change', $language->code) }}">
                                     <span class="flex items-center gap-2">
-                                        <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->code . '.svg') : asset('storage/' . $language->flag) }}"
+                                        <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->code . '.svg') : asset('storage/' . $language->photo) }}"
                                             class="inline-block rounded-full size-4">
                                         <span class="kt-menu-title">
                                             {{ __('languages.' . lcfirst($language->name)) ?? '' }}
@@ -114,7 +114,7 @@
                 <input class="kt-switch" data-kt-theme-switch-state="dark" data-kt-theme-switch-toggle="true"
                     name="check" type="checkbox" value="1" />
             </div>
-            <a class="justify-center w-full kt-btn kt-btn-outline">
+            <a class="justify-center w-full kt-btn kt-btn-outline cursor-pointer">
                 <form action="{{ route('logout') }}" method="POST" class="w-full">
                     @csrf
                     <button type="submit" class="w-full text-center">{{ __('main.logout') }}</button>

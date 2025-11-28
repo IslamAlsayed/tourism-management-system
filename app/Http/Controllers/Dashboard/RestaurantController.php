@@ -23,7 +23,7 @@ class RestaurantController extends Controller
     {
         $types = Type::all()->pluck('name', 'id');
         $regions = Region::all();
-        return view('pages.dashboard.restaurants.create', get_defined_vars());
+        return view('pages.dashboard.restaurants.create', compact('types', 'regions'));
     }
 
     public function store(RestaurantCreateRequest $request)
@@ -34,29 +34,29 @@ class RestaurantController extends Controller
         if ($restaurant) {
             $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.restaurant')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.restaurant')]));
             }
-            return redirect()->route('restaurants.index')->with('success', __('main.messages.type_created', ['type' => __('main.restaurant')]));
+            return redirect()->route('restaurants.index')->withSuccess(__('messages.type_created', ['type' => __('main.restaurant')]));
         }
-        return redirect()->route('restaurants.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.restaurant')]));
+        return redirect()->route('restaurants.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
     }
 
     public function edit($id)
     {
         $restaurant = Restaurant::find($id);
         if (!$restaurant) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.restaurant')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
         }
         $types = Type::all()->pluck('name', 'id');
         $regions = Region::all();
-        return view('pages.dashboard.restaurants.edit', get_defined_vars());
+        return view('pages.dashboard.restaurants.edit', compact('restaurant', 'types', 'regions'));
     }
 
     public function update(RestaurantUpdateRequest $request, $id)
     {
         $restaurant = Restaurant::find($id);
         if (!$restaurant) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.restaurant')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
         }
 
         $data = $request->validated();
@@ -73,21 +73,21 @@ class RestaurantController extends Controller
             $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
         }
         if ($updated) {
-            return redirect()->route('restaurants.index')->with('success', __('main.messages.type_updated', ['type' => __('main.restaurant')]));
+            return redirect()->route('restaurants.index')->withSuccess(__('messages.type_updated', ['type' => __('main.restaurant')]));
         }
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.restaurant')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.restaurant')]));
     }
 
     public function destroy($id)
     {
         $restaurant = Restaurant::find($id);
         if (!$restaurant) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.restaurant')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
         }
         $deleted = $restaurant->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.restaurant')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.restaurant')]));
         }
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.restaurant')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.restaurant')]));
     }
 }

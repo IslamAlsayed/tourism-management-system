@@ -115,11 +115,10 @@
                                     <label class="kt-form-label text-mono">
                                         {{ __('main.bio') }}
                                     </label>
-                                    <input id="bio" type="hidden" name="bio" value="{{ $user->bio }}">
-                                    <trix-editor input="bio"></trix-editor>
-                                    @error('bio')
-                                        <span class="text-red-600 text-sm">{{ $message }}</span>
-                                    @enderror
+                                    @include('components.elements.input-text-editor', [
+                                        'column' => 'bio',
+                                        'value' => $user->bio,
+                                    ])
                                 </div>
 
                                 <div class="flex justify-end">

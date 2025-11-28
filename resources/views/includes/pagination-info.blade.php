@@ -1,7 +1,7 @@
 <div class="flex-wrap gap-2 p-2">
     <div class="w-full flex justify-between items-start">
         {{-- Pagination Info --}}
-        @if (isset($data) && getPaginate() != config('app.paginate_max'))
+        @if (isset($data))
             <div class="pagination-showing">
                 <p class="text-sm text-gray-600 p-2">
                     {{ __('main.showing') }} {{ $data->firstItem() ?? 0 }} -

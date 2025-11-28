@@ -21,7 +21,7 @@ class MediaFileController extends Controller
     public function create()
     {
         $availableCollection = MediaFile::getAvailableCollection();
-        return view('pages.dashboard.media-files.create', get_defined_vars());
+        return view('pages.dashboard.media-files.create', compact('availableCollection'));
     }
 
     public function store(MediaFileCreateRequest $request)
@@ -54,14 +54,14 @@ class MediaFileController extends Controller
     public function show(MediaFile $mediaFile)
     {
         $availableCollection = MediaFile::getAvailableCollection();
-        return view('pages.dashboard.media-files.show', get_defined_vars());
+        return view('pages.dashboard.media-files.show', compact('mediaFile', 'availableCollection'));
     }
 
     public function edit($id)
     {
         $mediaFile = MediaFile::findOrFail($id);
         $availableCollection = MediaFile::getAvailableCollection();
-        return view('pages.dashboard.media-files.edit', get_defined_vars());
+        return view('pages.dashboard.media-files.edit', compact('mediaFile', 'availableCollection'));
     }
 
     public function update(MediaFileUpdateRequest $request, MediaFile $mediaFile)

@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
 {
-    use HasSearch, HasFactory;
+    use HasSearch, HasFactory, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',
@@ -171,16 +172,6 @@ class Client extends Model
     public function updater()
     {
         return $this->belongsTo(User::class, 'updated_by');
-    }
-
-    /**
-     * Scopes
-     */
-
-    // Active clients only
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
     }
 
     // Verified clients only

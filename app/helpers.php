@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Support\Activity\ActivityMessageFormatter;
 
@@ -26,6 +27,20 @@ if (!function_exists('getActiveUser')) {
         }
 
         return Auth::user();
+    }
+}
+
+// تحديث حالة المستخدم (متصل/غير متصل)
+if (!function_exists('setUserStatus')) {
+    function setUserStatus($status = 'offline')
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $userDB = User::find($user->id);
+            if ($userDB) {
+                $userDB->update(['user_status' => $status, 'last_login_at' => now(), 'last_login_ip' => request()->ip()]);
+            }
+        }
     }
 }
 
@@ -310,7 +325,7 @@ if (!function_exists('db_connection')) {
     }
 }
 
-// ارجاع الاسم مفرد جمع
+// ارجاع الاسم مفرد => جمع
 if (!function_exists('studlySingular')) {
     function studlySingular(?string $models, string $type = '')
     {
@@ -318,7 +333,7 @@ if (!function_exists('studlySingular')) {
     }
 }
 
-// ارجاع الاسم مفرد جمع مفصول بشرطة
+// ارجاع الاسم مفرد => جمع مفصول بشرطة
 if (!function_exists('studyCapitalCaseName')) {
     function studyCapitalCaseName(?string $models, string $type = '-')
     {
@@ -348,9 +363,9 @@ if (!function_exists('checkExistFile')) {
 
 // تلخيص رسالة النشاط
 if (!function_exists('activityMessageSummary')) {
-    function activityMessageSummary($activity)
+    function activityMessageSummary($activity, $limit = 180)
     {
-        $activityMessage = $activity ? ActivityMessageFormatter::summary($activity) : false;
+        $activityMessage = $activity ? ActivityMessageFormatter::summary($activity, $limit) : false;
         return $activityMessage;
     }
 }
@@ -429,5 +444,44 @@ if (!function_exists('makeTimezone2')) {
         }
 
         return $timezoneData[$key] ?? null;
+    }
+}
+
+if (!function_exists('shouldSendNotification')) {
+    /**
+     * Check if push notifications should be sent based on settings
+     *
+     * @return bool
+     */
+    function shouldSendNotification()
+    {
+        $settings = Setting::first();
+        return $settings && $settings->app_push_notifications == 1;
+    }
+}
+
+if (!function_exists('shouldSendEmail')) {
+    /**
+     * Check if email notifications should be sent based on settings
+     *
+     * @return bool
+     */
+    function shouldSendEmail()
+    {
+        $settings = Setting::first();
+        return $settings && $settings->app_email_notifications == 1;
+    }
+}
+
+if (!function_exists('shouldSendSms')) {
+    /**
+     * Check if SMS notifications should be sent based on settings
+     *
+     * @return bool
+     */
+    function shouldSendSms()
+    {
+        $settings = Setting::first();
+        return $settings && $settings->app_sms_notifications == 1;
     }
 }

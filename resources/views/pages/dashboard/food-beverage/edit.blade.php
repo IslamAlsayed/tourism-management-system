@@ -123,16 +123,18 @@
 
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Address -->
-                            <div class="mb-4">
-                                <label for="address" class="kt-label mb-2">Address</label>
-                                <textarea name="address" id="address" rows="3" class="kt-input">King Fahd Road, Riyadh 12345, Saudi Arabia</textarea>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'address',
+                                'value' => old('address', 'King Fahd Road, Riyadh 12345, Saudi Arabia'),
+                            ])
 
                             <!-- Description -->
-                            <div class="mb-4">
-                                <label for="description" class="kt-label mb-2">Description</label>
-                                <textarea name="description" id="description" rows="3" class="kt-input">Famous for its crispy fried chicken and Arabic cuisine, serving customers for over 40 years.</textarea>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'description',
+                                'value' => old(
+                                    'description',
+                                    'Famous for its crispy fried chicken and Arabic cuisine, serving customers for over 40 years.'),
+                            ])
                         </div>
 
                         <div class="grid lg:grid-cols-3 gap-6">

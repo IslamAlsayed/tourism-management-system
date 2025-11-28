@@ -24,7 +24,7 @@ class ExcelController extends Controller
         }
         $title = __('main.import_types', ['types' => __('main.' . $models)]);
         $description = __('main.import_types_description', ['types' => __('main.' . $models)]);
-        return view("pages.dashboard.$models.import", get_defined_vars());
+        return view("pages.dashboard.$models.import", compact('title', 'description'));
     }
 
     public function importData(Request $request, $models)
@@ -34,7 +34,7 @@ class ExcelController extends Controller
         $models = Str::plural(strtolower($models));
         $modelClass = "App\\Models\\{$modelName}";
         if (!class_exists($modelClass)) {
-            return back()->with('error', "Invalid model: {$modelName}");
+            return back()->withError("Invalid model: {$modelName}");
         }
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
@@ -46,7 +46,7 @@ class ExcelController extends Controller
 
         $modelNameAr = __('main.' . $models);
         event(new ImportExportCompleted(__('main.import_queued', ['model' => $modelNameAr])));
-        return back()->with('success', __('main.import_queued', ['model' => $modelNameAr]));
+        return back()->withSuccess(__('main.import_queued', ['model' => $modelNameAr]));
     }
 
     public function exportData($models, $type = null)

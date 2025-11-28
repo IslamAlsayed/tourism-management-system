@@ -30,19 +30,19 @@ class TypeController extends Controller
 
         if ($type) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.type')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.type')]));
             }
-            return redirect()->route('types.index')->with('success', __('main.messages.type_created', ['type' => __('main.type')]));
+            return redirect()->route('types.index')->withSuccess(__('messages.type_created', ['type' => __('main.type')]));
         }
 
-        return redirect()->route('types.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.type')]));
+        return redirect()->route('types.index')->withError(__('messages.type_creation_failed', ['type' => __('main.type')]));
     }
 
     public function edit($id)
     {
         $type = Type::find($id);
         if (!$type) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.type')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.type')]));
         }
         return view('pages.dashboard.types.edit', compact('type'));
     }
@@ -51,7 +51,7 @@ class TypeController extends Controller
     {
         $type = Type::find($id);
         if (!$type) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.type')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.type')]));
         }
         $validated = $request->validate([
             'name' => 'nullable|string|max:255|unique:types,name,' . $type->id,
@@ -61,23 +61,23 @@ class TypeController extends Controller
         $updated = $type->update($validated);
 
         if ($updated) {
-            return redirect()->route('types.index')->with('success', __('main.messages.type_updated', ['type' => __('main.type')]));
+            return redirect()->route('types.index')->withSuccess(__('messages.type_updated', ['type' => __('main.type')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.type')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.type')]));
     }
 
     public function destroy($id)
     {
         $type = Type::find($id);
         if (!$type) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.type')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.type')]));
         }
         $deleted = $type->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.type')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.type')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.type')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.type')]));
     }
 }

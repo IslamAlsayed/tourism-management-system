@@ -13,7 +13,12 @@ class HandleNotificationCreated
      */
     public function handle(NotificationCreated $event)
     {
-        $ablyKey = env('ABLY_KEY');
+        if (!shouldSendNotification()) {
+            return;
+        }
+
+        $status = $event->status ?? null;
+        $ablyKey = config('app.ably_key');
 
         if (!$ablyKey) {
             Log::warning('ABLY_KEY not configured, skipping Ably broadcast for activity');
@@ -25,8 +30,11 @@ class HandleNotificationCreated
             $notification = $event->notification;
 
             // Broadcast to Ably channel
-            $ably->channel('notification-created')->publish('notification.created', [
-                'id' => $notification->id
+            $ably->channel('notifications')->publish('notification.created', [
+                'notification_id' => $notification->id,
+                'user_id' => $notification->user_id,
+                'message' => $notification->message,
+                'status' => $status
             ]);
 
             if (env('APP_ENV') != 'production') {

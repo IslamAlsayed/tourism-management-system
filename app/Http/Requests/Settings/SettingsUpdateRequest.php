@@ -33,7 +33,7 @@ class SettingsUpdateRequest extends FormRequest
             'app_dark_photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],
             'app_mini_photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg,ico'],
             'app_status' => ['nullable', 'boolean'],
-            'app_password_length' => ['nullable', 'integer'],
+            'app_minimum_password_length' => ['nullable', 'integer', 'min:' . config('app.app_minimum_password_length', 8), 'max:' . config('app.app_minimum_password_length', 8)],
             'app_session_lifetime' => ['nullable', 'integer'],
             'app_password_confirmation' => ['nullable', 'boolean'],
             'app_two_factor_authentication' => ['nullable', 'boolean'],

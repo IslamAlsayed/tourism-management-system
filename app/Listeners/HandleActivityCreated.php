@@ -13,7 +13,7 @@ class HandleActivityCreated
      */
     public function handle(ActivityCreated $event)
     {
-        $ablyKey = env('ABLY_KEY');
+        $ablyKey = config('app.ably_key');
 
         if (!$ablyKey) {
             Log::warning('ABLY_KEY not configured, skipping Ably broadcast for activity');

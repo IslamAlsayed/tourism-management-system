@@ -31,7 +31,7 @@
                     <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         {{-- Name --}}
                         <div>
                             <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
@@ -81,14 +81,10 @@
                     </div>
 
                     {{-- Description --}}
-                    <div>
-                        <label for="description" class="kt-label mb-2">{{ __('main.description') }}</label>
-                        <input id="description" type="hidden" name="description" value="{{ old('description') }}">
-                        <trix-editor input="description" class="trix-content"></trix-editor>
-                        @error('description')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    @include('components.elements.input-text-editor', [
+                        'column' => 'description',
+                        'value' => old('description'),
+                    ])
                 </div>
             </div>
 
@@ -98,7 +94,7 @@
                     <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         {{-- Regions [region, subregion, country, state, city] --}}
                         @include('components.regions.create', [
                             'levels' => ['region', 'subregion', 'country', 'state', 'city'],
@@ -129,14 +125,10 @@
                     </div>
 
                     {{-- Address --}}
-                    <div class="">
-                        <label for="address" class="kt-label mb-2">{{ __('main.address') }}</label>
-                        <input id="address" type="hidden" name="address" value="{{ old('address') }}">
-                        <trix-editor input="address"></trix-editor>
-                        @error('address')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    @include('components.elements.input-text-editor', [
+                        'column' => 'address',
+                        'value' => old('address'),
+                    ])
                 </div>
             </div>
 
@@ -146,7 +138,7 @@
                     <h3 class="kt-card-title">{{ __('main.operating_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         {{-- Opening Time --}}
                         <div>
                             <label for="opening_time" class="kt-label mb-2">{{ __('main.opening_time') }}</label>
@@ -197,7 +189,7 @@
                     <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         {{-- Phone --}}
                         <div>
                             <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
@@ -238,24 +230,25 @@
                 </div>
                 <div class="kt-card-body p-4">
                     {{-- Notes --}}
-                    <div>
-                        <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
-                        <input id="notes" type="hidden" name="notes" value="{{ old('notes') }}">
-                        <trix-editor input="notes" class="trix-content"></trix-editor>
-                        @error('notes')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    @include('components.elements.input-text-editor', [
+                        'column' => 'notes',
+                        'value' => old('notes'),
+                    ])
                 </div>
 
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         {{-- Is Operational --}}
                         <div class="flex items-center gap-3">
-                            <input type="hidden" name="is_operational" value="0">
-                            <input type="checkbox" name="is_operational" id="is_operational" class="kt-checkbox"
-                                value="1" {{ old('is_operational') ? 'checked' : '' }}>
-                            <label for="is_operational" class="kt-label mb-0">{{ __('main.operational') }}</label>
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_operational" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_operational',
+                                    'id' => 'is_operational',
+                                    'value' => '1',
+                                    'label' => __('main.operational'),
+                                ])
+                            </div>
                             @error('is_operational')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -263,12 +256,17 @@
 
                         {{-- Is 24 Hours --}}
                         <div class="flex items-center gap-3">
-                            <input type="hidden" name="is_24_hours" value="0">
-                            <input type="checkbox" name="is_24_hours" id="is_24_hours" class="kt-checkbox"
-                                value="1" {{ old('is_24_hours') ? 'checked' : '' }}>
-                            <label for="is_24_hours" class="kt-label mb-0">{{ __('main.24_hours') }}</label>
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_24_hours" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_24_hours',
+                                    'id' => 'is_24_hours',
+                                    'value' => '1',
+                                    'label' => __('main.is_24_hours'),
+                                ])
+                            </div>
                             @error('is_24_hours')
-                                Add <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>

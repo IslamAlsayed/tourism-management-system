@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Schema;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web([
             \App\Http\Middleware\SetLocale::class,
+            \App\Http\Middleware\SessionExpired::class,
             // \App\Http\Middleware\CheckImportExportMessages::class,
         ]);
 
@@ -42,6 +44,10 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($exception instanceof HttpExceptionInterface && $exception->getStatusCode() === 404) {
                 return;
             }
+            if ($exception instanceof TokenMismatchException) {
+                return;
+            }
+
             $hasRequest = app()->bound('request') && request();
             $properties = [
                 'exception' => get_class($exception),

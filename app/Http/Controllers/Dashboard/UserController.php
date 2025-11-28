@@ -24,14 +24,14 @@ class UserController extends Controller
     {
         $countries = Country::all();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.users.create', get_defined_vars());
+        return view('pages.dashboard.users.create', compact('countries', 'timezones'));
     }
 
     // public function show($id)
     // {
     //     $user = User::find($id);
     //     if (!$user) {
-    //         return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
+    //         return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.user')]));
     //     }
     //     return view('pages.dashboard.users.show', compact('user'));
     // }
@@ -49,57 +49,60 @@ class UserController extends Controller
         if ($created) {
             $this->uploadPhoto($request, $created, 'photo', "users");
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
             }
-            return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+            return redirect()->route('users.index')->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
         }
 
-        return redirect()->route('users.index')->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
+        return redirect()->route('users.index')->withError(__('messages.type_created', ['type' => __('main.user')]));
     }
 
     public function edit($id)
     {
         $user = User::find($id);
         if (!$user) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.user')]));
         }
         $countries = Country::all();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.users.edit', get_defined_vars());
+        return view('pages.dashboard.users.edit', compact('user', 'countries', 'timezones'));
     }
 
     public function update(UserUpdateRequest $request, $id)
     {
         $user = User::find($id);
         if (!$user) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.user')]));
         }
         $validated = $request->validated();
         $data = array_merge($validated, $request->safe()->except('photo'));
         $data['name'] = ($data['first_name'] ?? $user->first_name) . ' ' . ($data['last_name'] ?? $user->last_name);
-        $updated = $user->update($data);
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+        $updated = $user->update($request->all());
         if ($request->has('photo')) {
             $this->uploadPhoto($request, $user, 'photo', "users");
         }
         if ($updated) {
-            return redirect()->route('users.index')->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+            return redirect()->route('users.index')->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_creation_failed', ['type' => __('main.user')]));
+        return redirect()->back()->withError(__('messages.type_creation_failed', ['type' => __('main.user')]));
     }
 
     public function destroy($id)
     {
         $user = User::find($id);
         if (!$user) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.user')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.user')]));
         }
         $deleted = $user->delete();
         if ($deleted) {
             $this->deletePhoto($user, 'photo');
-            return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.user')]));
+            return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_created', ['type' => __('main.user')]));
+        return redirect()->back()->withError(__('messages.type_created', ['type' => __('main.user')]));
     }
 }

@@ -122,7 +122,7 @@ class ActivityLog extends Component
             $this->afterMutation();
             $this->dispatch('show-toast', [
                 'type' => 'success',
-                'message' => __('main.messages.type_deleted', ['type' => __('activity.activity')]),
+                'message' => __('messages.type_deleted', ['type' => __('activity.activity')]),
             ]);
         }
     }
@@ -139,7 +139,7 @@ class ActivityLog extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('main.messages.type_deleted_count', ['type' => __('activity.activity_logs'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('activity.activity_logs'), 'count' => $count]),
         ]);
     }
 

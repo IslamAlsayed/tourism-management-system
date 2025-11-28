@@ -34,7 +34,7 @@
                         class="space-y-6 p-4">
                         @csrf
 
-                        <div class="grid grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Tour Guide -->
                             <div class="">
                                 <label for="tour_guide_id" class="kt-label required mb-2 flex items-center justify-between">
@@ -59,14 +59,10 @@
                         </div>
 
                         <!-- Review -->
-                        <div class="mb-4">
-                            <label for="review" class="kt-label mb-2">{{ __('main.review') }}</label>
-                            <input id="review" type="hidden" name="review" value="{{ old('review') }}">
-                            <trix-editor input="review"></trix-editor>
-                            @error('review')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'review',
+                            'value' => old('review'),
+                        ])
 
                         <div class="space-y-6 mb-4">
                             <!-- Rating -->

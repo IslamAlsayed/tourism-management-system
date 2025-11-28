@@ -481,7 +481,6 @@ return [
         [
             'title' => 'airlines',
             'icon' => 'ki-filled ki-airplane',
-            'status' => 'updated',
             'children' => [
                 [
                     'title' => 'airlines',
@@ -635,8 +634,15 @@ return [
         [
             'title' => 'activity log',
             'icon' => 'ki-filled ki-notification-status',
-            'status' => 'new',
             'route' => 'activity-log.index',
+        ],
+
+        // ================= Notifications =================
+        [
+            'title' => 'notifications',
+            'icon' => 'ki-filled ki-notification-status',
+            'status' => 'new',
+            'route' => 'notifications.index',
         ],
 
         // ================= Languages =================
@@ -705,7 +711,6 @@ return [
         [
             'title' => 'media files',
             'icon' => 'ki-filled ki-picture',
-            'status' => 'new',
             'children' => [
                 [
                     'title' => 'all media files',
@@ -724,24 +729,47 @@ return [
         [
             'title' => 'settings',
             'icon' => 'ki-filled ki-setting-2',
-            // 'status' => 'done',
+            'status' => 'new',
             'children' => [
                 [
-                    'title' => 'general settings',
+                    'title' => 'general',
+                    'status' => 'updated',
                     'route' => 'settings.general'
                 ],
                 [
                     'title' => 'security',
+                    'status' => 'updated',
                     'route' => 'settings.security'
                 ],
-                [
-                    'title' => 'notifications',
-                    'route' => 'settings.notifications'
-                ],
+                // [
+                //     'title' => 'notifications',
+                //     'route' => 'settings.notifications'
+                // ],
                 [
                     'title' => 'backup',
                     'icon' => 'ki-filled ki-cloud-download',
-                    'route' => 'settings.backup'
+                    'fixed' => 'soon',
+                    'route' => '#'
+                    // 'route' => 'settings.backup'
+                ],
+                [
+                    'title' => 'booking',
+                    'icon' => 'ki-filled ki-calendar',
+                    'fixed' => 'soon',
+                    'route' => '#'
+                    // 'route' => 'settings.booking'
+                ],
+                [
+                    'title' => 'integration',
+                    'icon' => 'ki-filled ki-share',
+                    'status' => 'new',
+                    'route' => 'settings.integration'
+                ],
+                [
+                    'title' => 'system',
+                    'icon' => 'ki-filled ki-gear',
+                    'status' => 'new',
+                    'route' => 'settings.system'
                 ],
             ],
         ],

@@ -31,7 +31,7 @@ class CountryController extends Controller
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.countries.create', get_defined_vars());
+        return view('pages.dashboard.countries.create', compact('currencies', 'languages', 'regions', 'timezones'));
     }
 
     public function store(CountryCreateRequest $request)
@@ -70,15 +70,15 @@ class CountryController extends Controller
             $country = Country::create($data);
             $this->uploadPhoto($request, $country, 'photo', 'countries');
             DB::commit();
-            $message = __('main.messages.type_created', ['type' => __('main.country')]);
+            $message = __('messages.type_created', ['type' => __('main.country')]);
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', $message);
+                return redirect()->back()->withSuccess($message);
             }
-            return redirect()->route('countries.index')->with('success', $message);
+            return redirect()->route('countries.index')->withSuccess($message);
         } catch (\Throwable $e) {
             DB::rollBack();
             report($e);
-            return redirect()->route('countries.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.country')]));
+            return redirect()->route('countries.index')->withError(__('messages.type_creation_failed', ['type' => __('main.country')]));
         }
     }
 
@@ -86,20 +86,20 @@ class CountryController extends Controller
     {
         $country = Country::find($id);
         if (!$country) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.country')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
         }
         $currencies = Currency::orderBy('code')->get();
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.countries.edit', get_defined_vars());
+        return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'languages', 'regions', 'timezones'));
     }
 
     public function update(CountryUpdateRequest $request, $id)
     {
         $country = Country::find($id);
         if (!$country) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.country')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
         }
         DB::beginTransaction();
         try {
@@ -117,11 +117,11 @@ class CountryController extends Controller
                 $this->uploadPhoto($request, $country, 'photo', 'countries');
             }
             DB::commit();
-            return redirect()->route('countries.index')->with('success', __('main.messages.type_updated', ['type' => __('main.country')]));
+            return redirect()->route('countries.index')->withSuccess(__('messages.type_updated', ['type' => __('main.country')]));
         } catch (\Throwable $e) {
             DB::rollBack();
             report($e);
-            return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.country')]));
+            return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.country')]));
         }
     }
 
@@ -129,13 +129,13 @@ class CountryController extends Controller
     {
         $country = Country::find($id);
         if (!$country) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.country')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
         }
         $deleted = $country->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.country')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.country')]));
         }
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.country')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.country')]));
     }
 
     /**
@@ -147,15 +147,15 @@ class CountryController extends Controller
         $ids = $request->input('selected_ids', []);
 
         if (empty($ids) || !$action) {
-            return redirect()->back()->with('error', __('main.messages.select_countries_and_action'));
+            return redirect()->back()->withError(__('messages.select_countries_and_action'));
         }
 
         switch ($action) {
             case 'delete':
                 $deleted = \App\Models\Country::whereIn('id', $ids)->delete();
-                return redirect()->back()->with('success', __('main.messages.countries_deleted', ['count' => $deleted]));
+                return redirect()->back()->withSuccess(__('messages.countries_deleted', ['count' => $deleted]));
             default:
-                return redirect()->back()->with('error', __('main.messages.unknown_action'));
+                return redirect()->back()->withError(__('messages.unknown_action'));
         }
     }
 }

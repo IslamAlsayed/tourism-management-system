@@ -22,6 +22,7 @@ class TouristSites extends Component
     public $filterStatus = '';
     public $filterFeatured = '';
     public $filterFreeEntry = '';
+    protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
     {

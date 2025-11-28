@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
-use App\Events\UserLoggedEvent;
+use App\Events\RecordEvent;
 use App\Events\ActivityCreated;
+use App\Events\UserLoggedEvent;
+use App\Listeners\HandleRecord;
 use App\Listeners\HandleUserLogged;
-use App\Listeners\HandleActivityCreated;
 use App\Events\ImportExportCompleted;
 use Illuminate\Support\ServiceProvider;
+use App\Listeners\HandleActivityCreated;
 use App\Listeners\NotifyUserAfterImport;
 
 class EventServiceProvider extends ServiceProvider
@@ -22,6 +24,10 @@ class EventServiceProvider extends ServiceProvider
 
         ActivityCreated::class => [
             HandleActivityCreated::class,
+        ],
+
+        RecordEvent::class => [
+            HandleRecord::class,
         ],
 
         ImportExportCompleted::class => [

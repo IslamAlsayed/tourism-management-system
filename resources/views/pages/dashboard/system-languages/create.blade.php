@@ -39,7 +39,7 @@
                             'columnName' => 'flag',
                         ])
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Language Code -->
                             <div class="">
                                 <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>

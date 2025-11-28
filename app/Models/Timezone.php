@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Timezone extends Model
 {
-    use HasSearch, HasFactory;
+    use HasSearch, HasFactory, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',

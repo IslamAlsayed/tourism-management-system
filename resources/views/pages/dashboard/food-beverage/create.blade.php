@@ -120,16 +120,16 @@
 
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Address -->
-                            <div class="mb-4">
-                                <label for="address" class="kt-label mb-2">Address</label>
-                                <textarea name="address" id="address" rows="3" class="kt-input"></textarea>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'address',
+                                'value' => old('address'),
+                            ])
 
                             <!-- Description -->
-                            <div class="mb-4">
-                                <label for="description" class="kt-label mb-2">Description</label>
-                                <textarea name="description" id="description" rows="3" class="kt-input"></textarea>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'description',
+                                'value' => old('description'),
+                            ])
                         </div>
 
                         <div class="grid lg:grid-cols-3 gap-6">

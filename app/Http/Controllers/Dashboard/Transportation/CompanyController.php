@@ -29,19 +29,19 @@ class CompanyController extends Controller
 
         if ($transportationCompany) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.transportation_company')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.transportation_company')]));
             }
-            return redirect()->route('transportation-companies.index')->with('success', __('main.messages.type_created', ['type' => __('main.transportation_company')]));
+            return redirect()->route('transportation-companies.index')->withSuccess(__('messages.type_created', ['type' => __('main.transportation_company')]));
         }
 
-        return redirect()->route('transportation-companies.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.restaurant')]));
+        return redirect()->route('transportation-companies.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
     }
 
     public function edit($id)
     {
         $transportationCompany = TransportationCompany::find($id);
         if (!$transportationCompany) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_company')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_company')]));
         }
         return view('pages.dashboard.transportation-companies.edit', compact('transportationCompany'));
     }
@@ -50,7 +50,7 @@ class CompanyController extends Controller
     {
         $transportationCompany = TransportationCompany::find($id);
         if (!$transportationCompany) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_company')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_company')]));
         }
 
         $validated = $request->validate([
@@ -61,23 +61,23 @@ class CompanyController extends Controller
         $updated = $transportationCompany->update($validated);
 
         if ($updated) {
-            return redirect()->route('transportation-companies.index')->with('success', __('main.messages.type_updated', ['type' => __('main.transportation_company')]));
+            return redirect()->route('transportation-companies.index')->withSuccess(__('messages.type_updated', ['type' => __('main.transportation_company')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.transportation_company')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.transportation_company')]));
     }
 
     public function destroy($id)
     {
         $transportationCompany = TransportationCompany::find($id);
         if (!$transportationCompany) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_company')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_company')]));
         }
         $deleted = $transportationCompany->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.transportation_company')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_company')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.transportation_company')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_company')]));
     }
 }

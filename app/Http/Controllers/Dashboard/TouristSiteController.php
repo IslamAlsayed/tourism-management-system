@@ -27,7 +27,7 @@ class TouristSiteController extends Controller
         $categories = config('helpers.categories') ?: [];
         $difficultyLevels = TouristSite::getDifficultyLevels();
         $statuses = TouristSite::getStatuses();
-        return view('pages.dashboard.tourist-sites.create', get_defined_vars());
+        return view('pages.dashboard.tourist-sites.create', compact('regions', 'currencies', 'siteTypes', 'categories', 'difficultyLevels', 'statuses'));
     }
 
     public function store(TouristSiteCreateRequest $request)
@@ -57,20 +57,20 @@ class TouristSiteController extends Controller
         if ($created) {
             $this->uploadPhoto($request, $created, 'photo', "tourist-sites");
             if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('main.messages.type_created', ['type' => __('main.tourist_site')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.tourist_site')]));
             }
 
-            return redirect()->route('tourist-sites.index')->withSuccess(__('main.messages.type_created', ['type' => __('main.tourist_site')]));
+            return redirect()->route('tourist-sites.index')->withSuccess(__('messages.type_created', ['type' => __('main.tourist_site')]));
         }
 
-        return redirect()->route('tourist-sites.index')->withError(__('main.messages.type_creation_failed', ['type' => __('main.tourist_site')]));
+        return redirect()->route('tourist-sites.index')->withError(__('messages.type_creation_failed', ['type' => __('main.tourist_site')]));
     }
 
     public function show($id)
     {
         $touristSite = TouristSite::with(['region', 'subregion', 'country', 'state', 'city', 'creator', 'updater'])->find($id);
         if (!$touristSite) {
-            return redirect()->route('tourist-sites.index')->withError(__('main.messages.not_found_this_type', ['type' => __('main.tourist_site')]));
+            return redirect()->route('tourist-sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist_site')]));
         }
         return view('pages.dashboard.tourist-sites.show', compact('touristSite'));
     }
@@ -79,7 +79,7 @@ class TouristSiteController extends Controller
     {
         $touristSite = TouristSite::with(['region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$touristSite) {
-            return redirect()->route('tourist-sites.index')->withError(__('main.messages.not_found_this_type', ['type' => __('main.tourist_site')]));
+            return redirect()->route('tourist-sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist_site')]));
         }
         $regions = Region::orderBy('name')->get();
         $currencies = Currency::orderBy('name')->get();
@@ -87,14 +87,14 @@ class TouristSiteController extends Controller
         $categories = config('helpers.categories') ?: [];
         $difficultyLevels = TouristSite::getDifficultyLevels();
         $statuses = TouristSite::getStatuses();
-        return view('pages.dashboard.tourist-sites.edit', get_defined_vars());
+        return view('pages.dashboard.tourist-sites.edit', compact('touristSite', 'regions', 'currencies', 'siteTypes', 'categories', 'difficultyLevels', 'statuses'));
     }
 
     public function update(TouristSiteUpdateRequest $request, $id)
     {
         $touristSite = TouristSite::find($id);
         if (!$touristSite) {
-            return redirect()->route('tourist-sites.index')->withError(__('main.messages.not_found_this_type', ['type' => __('main.tourist_site')]));
+            return redirect()->route('tourist-sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist_site')]));
         }
         $validated = $request->validated();
         $data = array_merge($validated, $request->safe()->except('photo'));
@@ -119,21 +119,21 @@ class TouristSiteController extends Controller
             $this->uploadPhoto($request, $touristSite, 'photo', "tourist-sites");
         }
         if ($updated) {
-            return redirect()->route('tourist-sites.index')->withSuccess(__('main.messages.type_updated', ['type' => __('main.tourist_site')]));
+            return redirect()->route('tourist-sites.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tourist_site')]));
         }
-        return redirect()->route('tourist-sites.index')->withError(__('main.messages.type_update_failed', ['type' => __('main.tourist_site')]));
+        return redirect()->route('tourist-sites.index')->withError(__('messages.type_update_failed', ['type' => __('main.tourist_site')]));
     }
 
     public function destroy($id)
     {
         $touristSite = TouristSite::find($id);
         if (!$touristSite) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.tourist_site')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tourist_site')]));
         }
         $deleted = $touristSite->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.tourist_site')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.tourist_site')]));
         }
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.tourist_site')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.tourist_site')]));
     }
 }

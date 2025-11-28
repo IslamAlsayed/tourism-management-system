@@ -33,7 +33,7 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Currency Name -->
                             <div class="">
                                 <label for="name" class="kt-label mb-2">{{ __('main.currency_name') }}</label>
@@ -71,16 +71,24 @@
                             <div class="grid lg:grid-cols-1 gap-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
-                                    <input type="checkbox" name="is_active" id="is_active" class="kt-checkbox"
-                                        value="1" {{ $currency->is_active == 1 ? 'checked' : '' }}>
-                                    <label for="is_active" class="kt-label mb-0">{{ __('main.activate_currency') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_active',
+                                        'id' => 'is_active',
+                                        'value' => '1',
+                                        'checked' => $currency->is_active,
+                                        'label' => __('main.activate_currency'),
+                                    ])
                                 </div>
 
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="auto_update_rate" id="auto_update_rate" class="kt-checkbox"
-                                        value="1" {{ $currency->auto_update_rate == 1 ? 'checked' : '' }} disabled>
-                                    <label for="auto_update_rate"
-                                        class="kt-label mb-0">{{ __('main.auto_update_rate') }}</label>
+                                    <input type="hidden" name="auto_update_rate" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'auto_update_rate',
+                                        'id' => 'auto_update_rate',
+                                        'value' => '1',
+                                        'checked' => $currency->auto_update_rate,
+                                        'label' => __('main.auto_update_rate'),
+                                    ])
                                 </div>
                             </div>
 

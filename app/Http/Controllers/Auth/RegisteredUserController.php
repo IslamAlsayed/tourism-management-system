@@ -47,6 +47,6 @@ class RegisteredUserController extends Controller
             'registration_time' => now()->toDateTimeString(),
         ])->log('New user registered');
         Auth::login($user);
-        return redirect(route('dashboard', false))->withSuccess(__('main.messages.welcome_back_name', ['name' => Auth::user()->name ?? 'User']));
+        return redirect(route('dashboard', false))->withSuccess(__('messages.welcome_back_name', ['name' => Auth::user()->name ?? 'User']));
     }
 }

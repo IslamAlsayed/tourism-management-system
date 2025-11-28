@@ -1,5 +1,13 @@
+{{-- Include this component where loading indicator is needed --}}
+{{-- Example Usage: --}}
+{{-- <div class="search-load">
+    <div wire:loading wire:target="search">
+        @include('components.load-data')
+    </div>
+</div> --}}
+
 {{-- <div class="la-ball-clip-rotate la-md" style="width: auto; height: auto;"> --}}
-<div class="la-ball-clip-rotate la-md">
+<div class="la-ball-clip-rotate la-md" style="color: {{ isset($color) && $color ? $color : 'var(--color-primary)' }}">
     <div></div>
 </div>
 
@@ -55,10 +63,10 @@
         }
 
         /* !
-                                                                                                    * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
-                                                                                                    * Copyright 2015 Daniel Cardoso <@DanielCardoso>
-                                                                                                    * Licensed under MIT
-                                                                                                    */
+                                                                                                                                            * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
+                                                                                                                                            * Copyright 2015 Daniel Cardoso <@DanielCardoso>
+                                                                                                                                            * Licensed under MIT
+                                                                                                                                            */
         .la-ball-clip-rotate,
         .la-ball-clip-rotate>div {
             position: relative;
@@ -71,7 +79,6 @@
         .la-ball-clip-rotate {
             display: block;
             font-size: 0;
-            color: var(--color-primary);
         }
 
         .la-ball-clip-rotate.la-dark {
@@ -150,8 +157,8 @@
         }
 
         /*
-                                                                                                                                                             * Animation
-                                                                                                                                                             */
+                                                                                                                                                                                                     * Animation
+                                                                                                                                                                                                     */
         @-webkit-keyframes ball-clip-rotate {
             0% {
                 -webkit-transform: rotate(0deg);

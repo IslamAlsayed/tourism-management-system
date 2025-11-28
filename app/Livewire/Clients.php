@@ -19,6 +19,7 @@ class Clients extends Component
     public $message = [];
     public $filterClientGender = '';
     public $filterClientStatus = '';
+    protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
     {

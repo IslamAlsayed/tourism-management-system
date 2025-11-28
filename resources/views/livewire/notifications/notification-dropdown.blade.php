@@ -50,47 +50,52 @@
                                         {{ Str::limit($notification->message, 60) }}
                                     </p>
                                     <p class="text-xs text-gray-400 mt-1">
-                                        {{ $notification->created_at->diffForHumans() }}
+                                        {{ $notification->human_created_at }}
                                     </p>
                                 </div>
 
-                                <div class="flex-shrink-0 flex space-x-1">
-                                    <div class="shrink-0 relative">
-                                        <div class="cursor-pointer shrink-0 notification-actions-toggle"
-                                            data-id="{{ $notification->id }}">
-                                            <i class="fas fa-ellipsis" style="color: #4a5565"></i>
-                                        </div>
+                                @if (getActiveUser()?->id == $notification->recipient_user_id)
+                                    <div class="flex-shrink-0 flex space-x-1">
+                                        <div class="shrink-0 relative">
+                                            <div class="cursor-pointer shrink-0 notification-actions-toggle"
+                                                data-id="{{ $notification->id }}">
+                                                <i class="fas fa-ellipsis" style="color: #4a5565"></i>
+                                            </div>
 
-                                        <div data-dropdown="{{ $notification->id }}"
-                                            class="notification-actions absolute mt-2 w-[100px] bg-white rounded-md shadow-lg border border-gray-200 hidden"
-                                            style="z-index: 10; top: -18px; user-select: none;">
-                                            <ul class="p-1">
-                                                @if (!$notification->is_read)
+                                            <div data-dropdown="{{ $notification->id }}"
+                                                class="notification-actions absolute mt-2 w-[100px] bg-white rounded-md shadow-lg border border-gray-200 hidden"
+                                                style="z-index: 10; top: -18px; user-select: none;">
+                                                <ul class="p-1">
+                                                    @if (!$notification->is_read)
+                                                        <li>
+                                                            <span wire:click="markAsRead({{ $notification->id }})"
+                                                                style="font-size: 10px; padding: 5px 10px; border-radius: 3px;"
+                                                                class="block text-gray-700 hover:bg-gray-100 cursor-pointer readNotification-{{ $notification->id }}">
+                                                                {{ __('main.mark_read') }}
+                                                            </span>
+                                                        </li>
+                                                    @endif
+                                                    @if (!$notification->is_read)
+                                                        <li>
+                                                            <span wire:click="markAsUnread({{ $notification->id }})"
+                                                                style="font-size: 10px; padding: 5px 10px; border-radius: 3px;"
+                                                                class="block text-gray-700 hover:bg-gray-100 cursor-pointer unreadNotification-{{ $notification->id }}">
+                                                                {{ __('main.mark_unread') }}
+                                                            </span>
+                                                        </li>
+                                                    @endif
                                                     <li>
-                                                        <span wire:click="markAsRead({{ $notification->id }})"
+                                                        <span wire:click="deleteNotification({{ $notification->id }})"
                                                             style="font-size: 10px; padding: 5px 10px; border-radius: 3px;"
-                                                            class="block text-gray-700 hover:bg-gray-100 cursor-pointer readNotification-{{ $notification->id }}">
-                                                            {{ __('main.mark_read') }}
+                                                            class="block text-red-600 hover:bg-gray-100 cursor-pointer deleteNotification-{{ $notification->id }}">
+                                                            {{ __('main.delete') }}
                                                         </span>
                                                     </li>
-                                                @endif
-                                                <li>
-                                                    <span wire:click="deleteNotification({{ $notification->id }})"
-                                                        style="font-size: 10px; padding: 5px 10px; border-radius: 3px;"
-                                                        class="block text-red-600 hover:bg-gray-100 cursor-pointer deleteNotification-{{ $notification->id }}">
-                                                        {{ __('main.delete') }}
-                                                    </span>
-                                                </li>
-                                                {{-- <li>
-                                                <a class="block text-gray-700 hover:bg-gray-100 cursor-pointer"
-                                                    style="font-size: 10px; padding: 5px 10px;">
-                                                    {{ __('main.report') }}
-                                                </a>
-                                            </li> --}}
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -103,52 +108,62 @@
             </div>
         @endif
 
-        {{-- @if ($notifications->count() > 0)
-            Footer
+        @if ($notifications->count() > 0)
+            {{-- Footer --}}
             <div class="p-3 border-t border-gray-200 text-center">
                 <a href="{{ route('notifications.index') }}" class="text-sm text-blue-600 hover:text-blue-800">
                     {{ __('main.view_all_notifications') }}
                 </a>
             </div>
-        @endif --}}
+        @endif
     </div>
 </div>
 
 @push('scripts')
     <script>
+        let wasDropdownOpen = false;
         document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('notification-dropdown');
             if (e.target.closest('.notification-actions-toggle')) {
                 const id = e.target.closest('.notification-actions-toggle').dataset.id;
                 document.querySelectorAll('.notification-actions').forEach(dd => dd.classList.add('hidden'));
-                const dropdown = document.querySelector(`[data-dropdown="${id}"]`);
-                dropdown?.classList.toggle('hidden');
+                const ddDropdown = document.querySelector(`[data-dropdown="${id}"]`);
+                ddDropdown?.classList.toggle('hidden');
             } else {
                 document.querySelectorAll('.notification-actions').forEach(dd => dd.classList.add('hidden'));
             }
 
             const toggleBtn = e.target.closest('.notification-toggle');
-            const dropdown = document.getElementById('notification-dropdown');
             const insideDropdown = e.target.closest('#notification-dropdown');
 
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                wasDropdownOpen = true;
+            } else {
+                wasDropdownOpen = false;
+            }
+
             if (toggleBtn) {
+                @this.markAllAsRead();
                 dropdown?.classList.toggle('hidden');
+                wasDropdownOpen = !dropdown.classList.contains('hidden');
                 return;
             }
 
             if (!insideDropdown) {
                 dropdown?.classList.add('hidden');
+                wasDropdownOpen = false;
             }
         });
 
-        window.addEventListener('scroll', (e) => {
-            const dropdown = document.getElementById('notification-dropdown');
-            dropdown?.classList.add('hidden');
-        });
+        // window.addEventListener('scroll', (e) => {
+        //     const dropdown = document.getElementById('notification-dropdown');
+        //     dropdown?.classList.add('hidden');
+        // });
 
-        window.addEventListener('scroll', (e) => {
-            document.querySelectorAll('.notification-actions').forEach(dd => dd.classList.add('hidden'));
-            document.getElementById('notification-dropdown').classList.add('hidden');
-        });
+        // window.addEventListener('scroll', (e) => {
+        //     document.querySelectorAll('.notification-actions').forEach(dd => dd.classList.add('hidden'));
+        //     document.getElementById('notification-dropdown').classList.add('hidden');
+        // });
         window.addEventListener('notification-readed', (e) => {
             let notificationId = e.detail.id;
             if (notificationId != 'all') {
@@ -174,19 +189,6 @@
             setTimeout(() => {
                 document.querySelector('.notification-' + notificationId)?.remove();
             }, 250);
-        });
-    </script>
-@endpush
-
-@push('scripts')
-    <script>
-        const ably = new Ably.Realtime({
-            key: '{{ env('ABLY_KEY') }}',
-        });
-        const channel = ably.channels.get('notification-created');
-        channel.subscribe('notification-created', (message) => {
-            console.log('message', message)
-            @this.dispatch('notificationCreated');
         });
     </script>
 @endpush

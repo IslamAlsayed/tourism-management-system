@@ -12,7 +12,7 @@ class ActivityMessageFormatter
     /**
      * Render a concise summary for an activity description while de-duplicating noisy segments.
      */
-    public static function summary(Activity $activity, int $limit = 180): string
+    public static function summary(Activity $activity, int $limit): string
     {
         $message = self::resolveDescription($activity);
 

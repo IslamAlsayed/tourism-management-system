@@ -8,6 +8,7 @@ use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\Settings\SettingsUpdateRequest;
+use App\Models\User;
 
 class SettingsController extends Controller
 {
@@ -22,7 +23,7 @@ class SettingsController extends Controller
     {
         $setting = Setting::find($id);
         if (!$setting) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.settings')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.settings')]));
         }
         $validated = $request->validated();
         $validated = $request->safe()->except(['app_light_photo', 'app_dark_photo', 'app_mini_photo']);
@@ -37,13 +38,13 @@ class SettingsController extends Controller
             $this->uploadPhoto($request, $setting, 'app_mini_photo', "logos");
         }
 
-        $updated = $setting->update($validated);
+        $updated = $setting->update($request->all());
 
         if ($updated) {
-            return redirect()->back()->with('success', __('main.messages.type_updated', ['type' => __('main.settings')]));
+            return redirect()->back()->withSuccess(__('messages.type_updated', ['type' => __('main.settings')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.settings')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.settings')]));
     }
 
     public function general()
@@ -67,7 +68,7 @@ class SettingsController extends Controller
     public function backup()
     {
         $backupInfo = [
-            'last_backup' => Cache::get('last_backup_date', __('main.messages.no_backup')),
+            'last_backup' => Cache::get('last_backup_date', __('messages.no_backup')),
             'backup_size' => $this->getBackupSize(),
             'auto_backup_enabled' => Cache::get('auto_backup_enabled', false),
             'backup_frequency' => Cache::get('backup_frequency', 'weekly'),
@@ -75,6 +76,25 @@ class SettingsController extends Controller
 
         $settings = Setting::first();
         return view('pages.settings.backup', compact('settings', 'backupInfo'));
+    }
+
+    public function booking()
+    {
+        $settings = Setting::first();
+        return view('pages.settings.booking', compact('settings'));
+    }
+
+    public function integration()
+    {
+        $settings = Setting::first();
+        $users = User::orderBy('name')->get(['name', 'email', 'id']);
+        return view('pages.settings.integration', compact('settings', 'users'));
+    }
+
+    public function system()
+    {
+        $settings = Setting::first();
+        return view('pages.settings.system', compact('settings'));
     }
 
     public function createBackup()
@@ -85,7 +105,7 @@ class SettingsController extends Controller
         // هنا يمكن إضافة منطق النسخ الاحتياطي الفعلي
         Cache::put('last_backup_date', now()->format('Y-m-d H:i:s'));
 
-        return back()->with('success', 'تم إنشاء النسخة الاحتياطية بنجاح، ولكن تجربة وليس بشكل فعلي!');
+        return back()->withSuccess('تم إنشاء النسخة الاحتياطية بنجاح، ولكن تجربة وليس بشكل فعلي!');
     }
 
     private function getBackupSize()

@@ -22,7 +22,7 @@ class VehicleController extends Controller
         $carRoutesPrice = TransportationCarRoutePrice::all();
         $carRoutes = TransportationCarRoute::all();
         $currencies = Currency::all();
-        return view('pages.dashboard.transportation-vehicles.create', compact('carRoutesPrice', 'carRoutes','currencies'));
+        return view('pages.dashboard.transportation-vehicles.create', compact('carRoutesPrice', 'carRoutes', 'currencies'));
     }
 
     public function store(transportationCarRoutesCreateRequest $request)
@@ -33,12 +33,12 @@ class VehicleController extends Controller
 
         if ($transportationCarRoute && $transportationCarRoutePrice) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.transportation_vehicle')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.transportation_vehicle')]));
             }
-            return redirect()->route('transportation-vehicles.index')->with('success', __('main.messages.type_created', ['type' => __('main.transportation_vehicle')]));
+            return redirect()->route('transportation-vehicles.index')->withSuccess(__('messages.type_created', ['type' => __('main.transportation_vehicle')]));
         }
 
-        return redirect()->route('transportation-vehicles.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.restaurant')]));
+        return redirect()->route('transportation-vehicles.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
     }
 
     public function edit($id)
@@ -48,7 +48,7 @@ class VehicleController extends Controller
         $currencies = Currency::all();
 
         if (!$transportationCarRoute) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_vehicle')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_vehicle')]));
         }
         return view('pages.dashboard.transportation-vehicles.edit', compact('transportationCarRoute', 'carRoutes', 'currencies'));
     }
@@ -59,7 +59,7 @@ class VehicleController extends Controller
         $transportationCarRoutePrice = TransportationCarRoutePrice::find($id);
 
         if (!$transportationCarRoute || !$transportationCarRoutePrice) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_vehicle')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_vehicle')]));
         }
 
         $validated = $request->validated();
@@ -67,23 +67,23 @@ class VehicleController extends Controller
         $updated2 = $transportationCarRoutePrice->update($validated);
 
         if ($updated1 && $updated2) {
-            return redirect()->route('transportation-vehicles.index')->with('success', __('main.messages.type_updated', ['type' => __('main.transportation_vehicle')]));
+            return redirect()->route('transportation-vehicles.index')->withSuccess(__('messages.type_updated', ['type' => __('main.transportation_vehicle')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.transportation_vehicle')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.transportation_vehicle')]));
     }
 
     public function destroy($id)
     {
         $transportationCarRoute = TransportationCarRoute::find($id);
         if (!$transportationCarRoute) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_vehicle')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_vehicle')]));
         }
         $deleted = $transportationCarRoute->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.transportation_vehicle')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_vehicle')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.transportation_vehicle')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_vehicle')]));
     }
 }

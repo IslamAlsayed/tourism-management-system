@@ -83,6 +83,54 @@
                         </a>
                     </div>
                 </div>
+
+                <!-- Booking Settings -->
+                <div class="kt-card hover:shadow-lg transition-shadow">
+                    <div class="kt-card-body text-center p-4">
+                        <div class="bg-primary-light rounded-full mx-auto mb-4 w-fit">
+                            <i class="ki-filled ki-calendar text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">{{ __('main.booking_settings') }}</h3>
+                        <p class="text-sm text-secondary-foreground mb-4">
+                            {{ __('main.configure_booking_payment_settings') }}
+                        </p>
+                        <a href="{{ route('settings.booking') }}" class="kt-btn kt-btn-primary kt-btn-sm">
+                            {{ __('main.manage') }}
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Integration Settings -->
+                <div class="kt-card hover:shadow-lg transition-shadow">
+                    <div class="kt-card-body text-center p-4">
+                        <div class="bg-success-light rounded-full mx-auto mb-4 w-fit">
+                            <i class="ki-filled ki-share text-3xl text-success"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">{{ __('main.integration_settings') }}</h3>
+                        <p class="text-sm text-secondary-foreground mb-4">
+                            {{ __('main.configure_third_party_services') }}
+                        </p>
+                        <a href="{{ route('settings.integration') }}" class="kt-btn kt-btn-success kt-btn-sm">
+                            {{ __('main.manage') }}
+                        </a>
+                    </div>
+                </div>
+
+                <!-- System Settings -->
+                <div class="kt-card hover:shadow-lg transition-shadow">
+                    <div class="kt-card-body text-center p-4">
+                        <div class="bg-warning-light rounded-full mx-auto mb-4 w-fit">
+                            <i class="ki-filled ki-gear text-3xl text-warning"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">{{ __('main.system_settings') }}</h3>
+                        <p class="text-sm text-secondary-foreground mb-4">
+                            {{ __('main.configure_system_logs_maintenance') }}
+                        </p>
+                        <a href="{{ route('settings.system') }}" class="kt-btn kt-btn-warning kt-btn-sm">
+                            {{ __('main.manage') }}
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- Quick Actions -->

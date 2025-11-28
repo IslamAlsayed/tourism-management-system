@@ -117,20 +117,16 @@
 
                         <div class="grid lg:grid-cols-2 gap-6">
                             <!-- Address -->
-                            <div class="mb-4">
-                                <label for="address" class="kt-label mb-2">Address</label>
-                                <input id="address" type="hidden" name="address"
-                                    value="King Fahd Road, Riyadh 12345, Saudi Arabia">
-                                <trix-editor input="address"></trix-editor>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'address',
+                                'value' => $accommodation->address,
+                            ])
 
                             <!-- Description -->
-                            <div class="mb-4">
-                                <label for="description" class="kt-label mb-2">Description</label>
-                                <input id="description" type="hidden" name="description"
-                                    value="Luxury 5-star hotel in the heart of Riyadh with world-class amenities and exceptional service.">
-                                <trix-editor input="description"></trix-editor>
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'description',
+                                'value' => $accommodation->description,
+                            ])
                         </div>
 
                         <div class="grid lg:grid-cols-3 gap-6">
@@ -196,44 +192,84 @@
                             <h4 class="mb-2 font-semibold">{{ __('main.facilities') }}</h4>
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="wifi" class="kt-checkbox"
-                                        value="wifi" checked>
-                                    <label for="wifi" class="kt-label mb-0">Free WiFi</label>
+                                    <input type="hidden" name="facilities[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[]',
+                                        'id' => 'wifi',
+                                        'value' => '1',
+                                        'checked' => in_array('wifi', $accommodation->facilities ?? []),
+                                        'label' => __('main.free_wifi'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="parking" class="kt-checkbox"
-                                        value="parking" checked>
-                                    <label for="parking" class="kt-label mb-0">Parking</label>
+                                    <input type="hidden" name="facilities[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[]',
+                                        'id' => 'parking',
+                                        'value' => '1',
+                                        'checked' => in_array('parking', $accommodation->facilities ?? []),
+                                        'label' => __('main.parking'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="pool" class="kt-checkbox"
-                                        value="pool" checked>
-                                    <label for="pool" class="kt-label mb-0">Swimming Pool</label>
+                                    <input type="hidden" name="facilities[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[]',
+                                        'id' => 'pool',
+                                        'value' => '1',
+                                        'checked' => in_array('pool', $accommodation->facilities ?? []),
+                                        'label' => __('main.swimming_pool'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="gym" class="kt-checkbox"
-                                        value="gym" checked>
-                                    <label for="gym" class="kt-label mb-0">Gym</label>
+                                    <input type="hidden" name="facilities[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[]',
+                                        'id' => 'gym',
+                                        'value' => '1',
+                                        'checked' => in_array('gym', $accommodation->facilities ?? []),
+                                        'label' => __('main.gym'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="restaurant" class="kt-checkbox"
-                                        value="restaurant" checked>
-                                    <label for="restaurant" class="kt-label mb-0">Restaurant</label>
+                                    <input type="hidden" name="facilities[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[]',
+                                        'id' => 'restaurant',
+                                        'value' => '1',
+                                        'checked' => in_array('restaurant', $accommodation->facilities ?? []),
+                                        'label' => __('main.restaurant'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="spa" class="kt-checkbox"
-                                        value="spa" checked>
-                                    <label for="spa" class="kt-label mb-0">Spa</label>
+                                    <input type="hidden" name="facilities[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[]',
+                                        'id' => 'spa',
+                                        'value' => '1',
+                                        'checked' => in_array('spa', $accommodation->facilities ?? []),
+                                        'label' => __('main.spa'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="airport_shuttle" class="kt-checkbox"
-                                        value="airport_shuttle">
-                                    <label for="airport_shuttle" class="kt-label mb-0">Airport Shuttle</label>
+                                    <input type="hidden" name="facilities[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[]',
+                                        'id' => 'airport_shuttle',
+                                        'value' => '1',
+                                        'checked' => in_array('airport_shuttle', $accommodation->facilities ?? []),
+                                        'label' => __('main.airport_shuttle'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="facilities[]" id="pet_friendly" class="kt-checkbox"
-                                        value="pet_friendly">
-                                    <label for="pet_friendly" class="kt-label mb-0">Pet Friendly</label>
+                                    <input type="hidden" name="facilities[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[]',
+                                        'id' => 'pet_friendly',
+                                        'value' => '1',
+                                        'checked' => in_array('pet_friendly', $accommodation->facilities ?? []),
+                                        'label' => __('main.pet_friendly'),
+                                    ])
                                 </div>
                             </div>
                         </div>

@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CrossingPort extends Model
 {
-    use HasSearch, HasFactory;
+    use HasSearch, HasFactory, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',
@@ -118,17 +120,9 @@ class CrossingPort extends Model
         return $this->belongsTo(City::class);
     }
 
-
-
     /**
      * Scopes
      */
-
-    // Active crossing ports only
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
-    }
 
     // Filter by crossing port type
     public function scopeOfType($query, $type)

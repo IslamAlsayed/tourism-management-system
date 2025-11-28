@@ -35,13 +35,13 @@ trait HandlesCrudSafely
             $type = strtolower(implode('-', $parts));
 
             if (!$model) {
-                $this->dispatch('show-toast', ['type' => 'error', 'message' => __('main.messages.type_not_found', ['type' => __('main.' . singularLowerCaseName($type, '-'))]), 'title' => __('main.error'), 'emoji' => '❌']);
+                $this->dispatch('show-toast', ['type' => 'error', 'message' => __('messages.type_not_found', ['type' => __('main.' . singularLowerCaseName($type, '-'))]), 'title' => __('main.error'), 'emoji' => '❌']);
             } elseif ($model->delete()) {
                 if ($showToast) {
-                    $this->dispatch('show-toast', ['type' => 'success', 'message' => __('main.messages.type_deleted', ['type' => __('main.' . singularLowerCaseName($type, '-'))]), 'title' => __('main.deleted')]);
+                    $this->dispatch('show-toast', ['type' => 'success', 'message' => __('messages.type_deleted', ['type' => __('main.' . singularLowerCaseName($type, '-'))]), 'title' => __('main.deleted')]);
                 }
             } else {
-                $this->dispatch('show-toast', ['type' => 'error', 'message' => __('main.messages.type_not_found', ['type' => __('main.' . singularLowerCaseName($type, '-'))]), 'title' => __('main.error'), 'emoji' => '❌']);
+                $this->dispatch('show-toast', ['type' => 'error', 'message' => __('messages.type_not_found', ['type' => __('main.' . singularLowerCaseName($type, '-'))]), 'title' => __('main.error'), 'emoji' => '❌']);
             }
         });
     }

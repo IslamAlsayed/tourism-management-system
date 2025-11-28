@@ -23,8 +23,10 @@ Homestead.yaml
 Thumbs.db
 *.md
 *copy.php
-/storage/app/private
+storage/app/private
 *copy.*
 
 /properties.js
 */trash
+app/Helpers
+/resources/views/pages/dashboard/vehicles

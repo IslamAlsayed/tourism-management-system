@@ -96,7 +96,7 @@
                         'label' => 'Remember me',
                     ])
                 </label>
-                <button class="kt-btn kt-btn-primary flex justify-center grow" type="submit">
+                <button class="kt-btn kt-btn-primary flex justify-center grow" type="submit" toggle-button>
                     Sign In
                 </button>
             </form>
@@ -104,3 +104,14 @@
     </div>
     <!--end::Authentication - Sign-in-->
 @endsection
+
+@push('scripts')
+    @if (session('session_expired'))
+        <script>
+            window.showToast({
+                type: 'info',
+                message: '{{ __('messages.session_expired') }}'
+            });
+        </script>
+    @endif
+@endpush

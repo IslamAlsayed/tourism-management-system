@@ -1,3 +1,14 @@
+@props([
+    'column' => 'image',
+    'columnName' => null,
+    'modelKey' => null,
+    'record' => null,
+])
+
+@php
+    $photoUrl = isset($record) && $record && checkExistFile($record->photo) ? asset('storage/' . $record->photo) : '';
+@endphp
+
 <div class="text-center mb-4">
     <div class="inline-block mb-4">
         <div class="relative">
@@ -10,15 +21,15 @@
 
             <div class="w-[120px] h-[120px] {{ $classes }} photo-preview">
 
-                @if (isset($photoUrl) && $photoUrl)
+                @if ($photoUrl)
                     <img id="{{ $column ?? 'photo' }}" src="{{ $photoUrl }}" class="w-full h-full object-cover">
                 @elseif(isset($modelKey) && $modelKey)
                     <span class="pb-2">
                         {{ env('CHARACTER_LENGTH', 1) == 2
                             ? ($modelKey[1]
-                                ? lcfirst($modelKey[0]) . lcfirst($modelKey[1])
-                                : lcfirst($modelKey[0]))
-                            : lcfirst($modelKey[0]) }}
+                                ? strtoupper($modelKey[0]) . lcfirst($modelKey[1])
+                                : strtoupper($modelKey[0]))
+                            : strtoupper($modelKey[0]) }}
                     </span>
                 @else
                     <img id="{{ $column ?? 'photo' }}" src="{{ asset('metronic/media/avatars/blank.png') }}"

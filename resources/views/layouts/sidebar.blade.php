@@ -77,7 +77,7 @@
                                             @if (gettype($item['fixed']) == 'boolean')
                                                 <i class="fas fa-xmark"></i>
                                             @elseif (preg_match('/\d/', $item['fixed']))
-                                                {{ $item['fixed'] }}
+                                                {{ __('sidebar.' . $item['fixed']) }}
                                             @else
                                                 {{ __('sidebar.' . $item['fixed']) }}
                                             @endif
@@ -142,7 +142,7 @@
                                                             @if (gettype($child['fixed']) == 'boolean')
                                                                 <i class="fas fa-xmark"></i>
                                                             @else
-                                                                {{ $child['fixed'] }}
+                                                                {{ __('sidebar.' . $child['fixed']) }}
                                                             @endif
                                                         </span>
                                                     @endif
@@ -188,7 +188,7 @@
                                                                         @if (gettype($subChild['fixed']) == 'boolean')
                                                                             <i class="fas fa-xmark"></i>
                                                                         @else
-                                                                            {{ $subChild['fixed'] }}
+                                                                            {{ __('sidebar.' . $subChild['fixed']) }}
                                                                         @endif
                                                                     </span>
                                                                 @endif
@@ -225,7 +225,7 @@
                                                             @if (gettype($child['fixed']) == 'boolean')
                                                                 <i class="fas fa-xmark"></i>
                                                             @else
-                                                                {{ $child['fixed'] }}
+                                                                {{ __('sidebar.' . $child['fixed']) }}
                                                             @endif
                                                         </span>
                                                     @endif
@@ -264,7 +264,7 @@
                                             @if (gettype($item['fixed']) == 'boolean')
                                                 <i class="fas fa-xmark"></i>
                                             @else
-                                                {{ $item['fixed'] }}
+                                                {{ __('sidebar.' . $item['fixed']) }}
                                             @endif
                                         </span>
                                     @endif

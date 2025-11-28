@@ -28,6 +28,7 @@
                     @include('components.elements.checkbox-button', [
                         'name' => 'selectedItems[]',
                         'id' => 'selectedItems' . $item->id,
+                        'value' => $item->id,
                     ])
                 </td>
                 @foreach ($columns as $column)
@@ -39,17 +40,26 @@
                     ])
                 @endforeach
                 <td class="px-4 py-2 text-end">
-                    <div>
-                        @if (isset($models))
+                    <div class="flex gap-2 justify-end">
+                        @if (isset($models) && $models != 'notifications')
                             @include('components.elements.edit-button', [
                                 'models' => $models,
                                 'id' => $item->id,
                             ])
                         @endif
 
-                        @include('components.elements.delete-button', [
-                            'id' => $item->id,
-                        ])
+                        @if (isset($models) && $models == 'notifications' && $item->data && isset($item->data['cta_url']))
+                            <a href="{{ $item->data['cta_url'] }}" class="kt-btn kt-btn-sm kt-btn-primary"
+                                target="_blank">
+                                {{ $item->data['cta_text'] ?? __('main.view_action') }}
+                            </a>
+                        @endif
+
+                        @if (isset($models) && getActiveUser()?->is_admin == 1)
+                            @include('components.elements.delete-button', [
+                                'id' => $item->id,
+                            ])
+                        @endif
                     </div>
                 </td>
             </tr>
@@ -59,7 +69,7 @@
                     <div class="w-[90px] h-[90px] mx-auto my-4">
                         <img src="{{ asset('assets/images/other/no-data.svg') }}" alt="no data">
                     </div>
-                    <p class="text-red-600 font-semibold">{{ __('main.messages.no_records_found') }}</p>
+                    <p class="text-red-600 font-semibold">{{ __('messages.no_records_found') }}</p>
                 </td>
             </tr>
         @endforelse

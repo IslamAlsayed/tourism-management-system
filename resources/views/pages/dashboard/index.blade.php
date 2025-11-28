@@ -2,11 +2,29 @@
 
 @section('title', __('main.dashboard'))
 
+@push('styles')
+    <style>
+        .channel-stats-bg {
+            background-image: url('{{ asset('metronic/media/images/2600x1600/bg-3.png') }}');
+        }
+
+        .dark .channel-stats-bg {
+            background-image: url('{{ asset('metronic/media/images/2600x1600/bg-3-dark.png') }}');
+        }
+
+        .entry-callout-bg {
+            background-image: url('{{ asset('metronic/media/images/2600x1600/2.png') }}');
+        }
+
+        .dark .entry-callout-bg {
+            background-image: url('{{ asset('metronic/media/images/2600x1600/2-dark.png') }}');
+        }
+    </style>
+@endpush
+
 @section('content')
     <!-- Container -->
-    <div class="kt-container-fixed" id="contentContainer">
-        <button class="kt-btn bg-primary my-4" toggle-button id="trigger-event-btn">Test Login Event</button>
-    </div>
+    <div class="kt-container-fixed" id="contentContainer"></div>
     <!-- End of Container -->
 
     <!-- Container -->
@@ -36,21 +54,12 @@
             <div class="grid lg:grid-cols-3 gap-y-5 lg:gap-7.5 items-stretch">
                 <div class="lg:col-span-1">
                     <div class="grid grid-cols-2 gap-4 lg:gap-6 h-full items-stretch">
-                        <style>
-                            .channel-stats-bg {
-                                background-image: url('{{ asset('metronic/media/images/2600x1600/bg-3.png') }}');
-                            }
-
-                            .dark .channel-stats-bg {
-                                background-image: url('{{ asset('metronic/media/images/2600x1600/bg-3-dark.png') }}');
-                            }
-                        </style>
                         <div
                             class="kt-card flex-col justify-between gap-6 h-full bg-cover rtl:bg-[left_top_-1.7rem] bg-[right_top_-1.7rem] bg-no-repeat channel-stats-bg">
-                            <i class="ki-filled ki-users text-2xl text-primary mt-4 ms-5"></i>
-                            <div class="flex flex-col gap-1 pb-4 px-5">
-                                <span class="text-3xl font-semibold text-mono">
-                                    {{ number_format($stats['users']) }}
+                            <div class="flex flex-col gap-1 p-4">
+                                <span class="font-semibold text-mono">
+                                    <i class="ki-filled ki-users text-2xl text-primary"></i>
+                                    <span class="text-2xl">{{ number_format($stats['users']) }}</span>
                                 </span>
                                 <span class="text-sm font-normal text-secondary-foreground">
                                     {{ __('main.total_users') }}
@@ -62,10 +71,10 @@
                         </div>
                         <div
                             class="kt-card flex-col justify-between gap-6 h-full bg-cover rtl:bg-[left_top_-1.7rem] bg-[right_top_-1.7rem] bg-no-repeat channel-stats-bg">
-                            <i class="ki-filled ki-geolocation text-2xl text-success mt-4 ms-5"></i>
-                            <div class="flex flex-col gap-1 pb-4 px-5">
-                                <span class="text-3xl font-semibold text-mono">
-                                    {{ number_format($stats['countries']) }}
+                            <div class="flex flex-col gap-1 p-4">
+                                <span class="font-semibold text-mono">
+                                    <i class="ki-filled ki-geolocation text-2xl text-green-500"></i>
+                                    <span class="text-2xl">{{ number_format($stats['countries']) }}</span>
                                 </span>
                                 <span class="text-sm font-normal text-secondary-foreground">
                                     {{ __('main.total_countries') }}
@@ -77,10 +86,10 @@
                         </div>
                         <div
                             class="kt-card flex-col justify-between gap-6 h-full bg-cover rtl:bg-[left_top_-1.7rem] bg-[right_top_-1.7rem] bg-no-repeat channel-stats-bg">
-                            <i class="ki-filled ki-map text-2xl text-info mt-4 ms-5"></i>
-                            <div class="flex flex-col gap-1 pb-4 px-5">
-                                <span class="text-3xl font-semibold text-mono">
-                                    {{ number_format($stats['cities']) }}
+                            <div class="flex flex-col gap-1 p-4">
+                                <span class="font-semibold text-mono">
+                                    <i class="ki-filled ki-map text-2xl text-blue-500"></i>
+                                    <span class="text-2xl">{{ number_format($stats['cities']) }}</span>
                                 </span>
                                 <span class="text-sm font-normal text-secondary-foreground">
                                     {{ __('main.total_cities') }}
@@ -92,10 +101,10 @@
                         </div>
                         <div
                             class="kt-card flex-col justify-between gap-6 h-full bg-cover rtl:bg-[left_top_-1.7rem] bg-[right_top_-1.7rem] bg-no-repeat channel-stats-bg">
-                            <i class="ki-filled ki-dollar text-2xl text-warning mt-4 ms-5"></i>
-                            <div class="flex flex-col gap-1 pb-4 px-5">
-                                <span class="text-3xl font-semibold text-mono">
-                                    {{ number_format($stats['currencies']) }}
+                            <div class="flex flex-col gap-1 p-4">
+                                <span class="font-semibold text-mono">
+                                    <i class="ki-filled ki-dollar text-2xl text-yellow-500"></i>
+                                    <span class="text-2xl">{{ number_format($stats['currencies']) }}</span>
                                 </span>
                                 <span class="text-sm font-normal text-secondary-foreground">
                                     {{ __('main.total_currencies') }}
@@ -108,15 +117,6 @@
                     </div>
                 </div>
                 <div class="lg:col-span-2">
-                    <style>
-                        .entry-callout-bg {
-                            background-image: url('{{ asset('metronic/media/images/2600x1600/2.png') }}');
-                        }
-
-                        .dark .entry-callout-bg {
-                            background-image: url('{{ asset('metronic/media/images/2600x1600/2-dark.png') }}');
-                        }
-                    </style>
                     <div class="kt-card h-full">
                         <div
                             class="kt-card-content p-10 bg-[length:80%] rtl:[background-position:-70%_25%] [background-position:175%_25%] bg-no-repeat entry-callout-bg">
@@ -310,7 +310,7 @@
                             <h3 class="kt-card-title">
                                 {{ __('main.quick_actions') }}
                             </h3>
-                            <div class="flex gap-5">
+                            <div class="flex gap-5 disabled-option p-2 rounded-xs">
                                 <label class="flex items-center gap-2">
                                     <input class="kt-switch" name="check" type="checkbox" value="1" />
                                     <span class="kt-label">{{ __('main.auto_refresh') }}</span>
@@ -319,59 +319,66 @@
                         </div>
                         <div class="kt-card-content p-5 lg:p-7.5">
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-                                <a href="{{ route('users.index') }}"
-                                    class="kt-card kt-card-outline hover:bg-accent/60 p-5">
+                                <div class="kt-card kt-card-outline hover:bg-accent/60 p-5">
                                     <div class="flex flex-col items-center gap-3">
                                         <div class="flex items-center justify-center size-12 rounded-full bg-success/10">
                                             <i class="ki-filled ki-users text-xl text-success"></i>
                                         </div>
                                         <div class="text-center">
-                                            <div class="text-sm font-semibold text-mono">{{ __('main.manage_users') }}
+                                            <div class="text-sm font-semibold text-mono text-primary">
+                                                <a href="{{ route('users.index') }}">{{ __('main.manage_users') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['users'] }}
-                                                {{ __('main.total') }}</div>
+                                                {{ __('main.total') }}
+                                            </div>
                                         </div>
                                     </div>
-                                </a>
-                                <a href="{{ route('countries.index') }}"
-                                    class="kt-card kt-card-outline hover:bg-accent/60 p-5">
+                                </div>
+                                <div class="kt-card kt-card-outline hover:bg-accent/60 p-5">
                                     <div class="flex flex-col items-center gap-3">
                                         <div class="flex items-center justify-center size-12 rounded-full bg-primary/10">
                                             <i class="ki-filled ki-geolocation text-xl text-primary"></i>
                                         </div>
                                         <div class="text-center">
-                                            <div class="text-sm font-semibold text-mono">{{ __('main.countries') }}</div>
+                                            <div class="text-sm font-semibold text-mono text-primary">
+                                                <a href="{{ route('countries.index') }}">{{ __('main.countries') }}</a>
+                                            </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['countries'] }}
-                                                {{ __('main.total') }}</div>
+                                                {{ __('main.total') }}
+                                            </div>
                                         </div>
                                     </div>
-                                </a>
-                                <a href="{{ route('cities.index') }}"
-                                    class="kt-card kt-card-outline hover:bg-accent/60 p-5">
+                                </div>
+                                <div class="kt-card kt-card-outline hover:bg-accent/60 p-5">
                                     <div class="flex flex-col items-center gap-3">
-                                        <div class="flex items-center justify-center size-12 rounded-full bg-info/10">
+                                        <div class="flex items-center justify-center size-12 rounded-full bg-primary/10">
                                             <i class="ki-filled ki-map text-xl text-info"></i>
                                         </div>
                                         <div class="text-center">
-                                            <div class="text-sm font-semibold text-mono">{{ __('main.cities') }}</div>
+                                            <div class="text-sm font-semibold text-mono text-primary">
+                                                <a href="{{ route('cities.index') }}">{{ __('main.cities') }}</a>
+                                            </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['cities'] }}
-                                                {{ __('main.total') }}</div>
+                                                {{ __('main.total') }}
+                                            </div>
                                         </div>
                                     </div>
-                                </a>
-                                <a href="{{ route('currencies.index') }}"
-                                    class="kt-card kt-card-outline hover:bg-accent/60 p-5">
+                                </div>
+                                <div class="kt-card kt-card-outline hover:bg-accent/60 p-5">
                                     <div class="flex flex-col items-center gap-3">
-                                        <div class="flex items-center justify-center size-12 rounded-full bg-warning/10">
+                                        <div class="flex items-center justify-center size-12 rounded-full bg-yellow/10">
                                             <i class="ki-filled ki-dollar text-xl text-warning"></i>
                                         </div>
                                         <div class="text-center">
-                                            <div class="text-sm font-semibold text-mono">{{ __('main.currencies') }}</div>
+                                            <div class="text-sm font-semibold text-mono text-primary">
+                                                <a href="{{ route('currencies.index') }}">{{ __('main.currencies') }}</a>
+                                            </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['currencies'] }}
-                                                {{ __('main.total') }}</div>
+                                                {{ __('main.total') }}
+                                            </div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -382,15 +389,3 @@
     </div>
     <!-- End of Container -->
 @endsection
-
-@push('scripts')
-    <script>
-        let triggerEventBtn = document.getElementById('trigger-event-btn');
-        triggerEventBtn?.addEventListener('click', () => {
-            fetch('/trigger-login-event')
-                .then(res => res.text())
-                .then(console.log)
-                .catch(console.error);
-        });
-    </script>
-@endpush
