@@ -42,10 +42,11 @@ class SettingsUpdateRequest extends FormRequest
             'app_email_notifications' => ['nullable', 'boolean'],
             'app_sms_notifications' => ['nullable', 'boolean'],
             'app_push_notifications' => ['nullable', 'boolean'],
-            'app_notifications_new_user' => ['nullable', 'boolean'],
-            'app_notifications_data_update' => ['nullable', 'boolean'],
-            'app_notifications_system_report' => ['nullable', 'boolean'],
-            'app_notifications_security_update' => ['nullable', 'boolean'],
+            'app_notifications_new_record' => ['nullable', 'boolean'],
+            'app_notifications_data_updates' => ['nullable', 'boolean'],
+            'app_notifications_data_deletes' => ['nullable', 'boolean'],
+            'app_notifications_system_reports' => ['nullable', 'boolean'],
+            'app_notifications_security_updates' => ['nullable', 'boolean'],
         ];
     }
 }

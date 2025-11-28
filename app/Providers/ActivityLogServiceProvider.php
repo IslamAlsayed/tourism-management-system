@@ -27,7 +27,7 @@ class ActivityLogServiceProvider extends ServiceProvider
         }
 
         // Check if activity log is enabled in settings
-        $settings = Setting::first();
+        $settings = Setting::first() ?? null;
         if (!$settings || !$settings->app_activity_log_enabled) {
             return;
         }

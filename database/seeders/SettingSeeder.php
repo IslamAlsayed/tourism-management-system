@@ -19,7 +19,7 @@ class SettingSeeder extends Seeder
             'app_version' => app()->version(),
             'app_php_version' => PHP_VERSION,
             'app_status' => env('APP_STATUS', true),
-            'app_password_length' => env('APP_PASSWORD_LENGTH', 8),
+            'app_minimum_password_length' => env('APP_MINIMUM_PASSWORD_LENGTH', 8),
             'app_session_lifetime' => env('SESSION_LIFETIME', 120),
             'app_password_confirmation' => true,
             'app_two_factor_authentication' => false,
@@ -27,10 +27,11 @@ class SettingSeeder extends Seeder
             'app_email_notifications' => false,
             'app_sms_notifications' => false,
             'app_push_notifications' => false,
-            'app_notifications_new_user' => false,
-            'app_notifications_data_update' => false,
-            'app_notifications_system_report' => false,
-            'app_notifications_security_update' => false,
+            'app_notifications_new_record' => false,
+            'app_notifications_data_updates' => false,
+            'app_notifications_data_deletes' => false,
+            'app_notifications_system_reports' => false,
+            'app_notifications_security_updates' => false,
         ]);
     }
 }

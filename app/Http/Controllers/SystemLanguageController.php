@@ -56,7 +56,7 @@ class SystemLanguageController extends Controller
             App::setLocale($locale);
 
             // Save user's preferred locale to database
-            $user = Auth::user();
+            $user = getActiveUser();
             if ($user) {
                 $user->update(['preferred_language' => $locale]);
             }

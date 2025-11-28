@@ -13,7 +13,10 @@ trait BroadcastsRecordEvents
     protected static function bootBroadcastsRecordEvents(): void
     {
         // Get settings once for performance
-        $settings = Setting::first();
+        $settings = null;
+        if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
+            $settings = Setting::first();
+        }
 
         // Broadcast when a model is created
         static::created(function ($model) use ($settings) {
