@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class TourGuide extends Model
 {
-    use HasSearch;
+    use HasSearch, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',

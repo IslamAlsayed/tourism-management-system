@@ -39,7 +39,7 @@
                             'columnName' => 'photo',
                         ])
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
@@ -255,14 +255,10 @@
                         </div>
 
                         <!-- Notes -->
-                        <div class="mb-4">
-                            <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
-                            <input id="notes" type="hidden" name="notes" value="{{ old('notes') }}">
-                            <trix-editor input="notes"></trix-editor>
-                            @error('notes')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'notes',
+                            'value' => old('notes'),
+                        ])
 
                         <!-- Tour guide Settings -->
                         <div class="space-y-4 mb-4">
@@ -270,12 +266,16 @@
                                 {{ __('main.type_settings', ['type' => __('main.tour-guide')]) }}
                             </h4>
 
-                            <div class="grid lg:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="status" value="0">
-                                    <input type="checkbox" name="status" id="status" class="kt-checkbox"
-                                        value="1" {{ old('status', '1') ? 'checked' : '' }}>
-                                    <label for="status" class="kt-label mb-0">{{ __('main.status') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'status',
+                                        'id' => 'status',
+                                        'value' => '1',
+                                        'checked' => old('status'),
+                                        'label' => __('main.status'),
+                                    ])
                                 </div>
                             </div>
                         </div>

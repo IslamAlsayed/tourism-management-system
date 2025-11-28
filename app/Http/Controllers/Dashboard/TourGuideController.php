@@ -77,15 +77,15 @@ class TourGuideController extends Controller
             $tourGuide->languages()->sync($request->languages_ids);
             $this->uploadPhoto($request, $tourGuide, 'photo', "tour-guides");
             DB::commit();
-            $message = __('main.messages.type_created', ['type' => __('main.tour-guide')]);
+            $message = __('messages.type_created', ['type' => __('main.tour-guide')]);
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', $message);
+                return redirect()->back()->withSuccess($message);
             }
-            return redirect()->route('tour-guides.index')->with('success', $message);
+            return redirect()->route('tour-guides.index')->withSuccess($message);
         } catch (\Throwable $e) {
             DB::rollBack();
             report($e);
-            return redirect()->route('tour-guides.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.tour-guide')]));
+            return redirect()->route('tour-guides.index')->withError(__('messages.type_creation_failed', ['type' => __('main.tour-guide')]));
         }
     }
 
@@ -93,7 +93,7 @@ class TourGuideController extends Controller
     {
         $tourGuide = TourGuide::find($id);
         if (!$tourGuide) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.tour-guide')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide')]));
         }
         $currencies = Currency::all();
         $languages_ids = Language::get(['id', 'name', 'name_ar']);
@@ -117,14 +117,14 @@ class TourGuideController extends Controller
 
         // dd($tourGuide->toArray(), $tour_guide_languages->toArray(), languages_ids);
 
-        return view('pages.dashboard.tour-guides.edit', get_defined_vars());
+        return view('pages.dashboard.tour-guides.edit', compact('currencies', 'languages_ids', 'guideTypes', 'regions', 'tourGuide', 'tour_guide_languages'));
     }
 
     public function update(TourGuideUpdateRequest $request, $id)
     {
         $tourGuide = TourGuide::find($id);
         if (!$tourGuide) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.tour-guide')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide')]));
         }
         DB::beginTransaction();
         try {
@@ -144,12 +144,12 @@ class TourGuideController extends Controller
                 $this->uploadPhoto($request, $tourGuide, 'photo', "tour-guides");
             }
             DB::commit();
-            return redirect()->route('tour-guides.index')->with('success', __('main.messages.type_updated', ['type' => __('main.tour-guide')]));
+            return redirect()->route('tour-guides.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tour-guide')]));
         } catch (\Throwable $e) {
             DB::rollBack();
             report($e);
             Log::error('TourGuide Update Error: ' . $e->getMessage(), ['file' => $e->getFile(), 'line' => $e->getLine()]);
-            return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.tour-guide')]));
+            return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.tour-guide')]));
         }
     }
 
@@ -157,12 +157,12 @@ class TourGuideController extends Controller
     {
         $tourGuide = TourGuide::find($id);
         if (!$tourGuide) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.tour-guide')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide')]));
         }
         $deleted = $tourGuide->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.tour-guide')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guide')]));
         }
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.tour-guide')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.tour-guide')]));
     }
 }

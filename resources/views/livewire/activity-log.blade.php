@@ -268,7 +268,8 @@
                                             <span class="text-xs text-gray-400">—</span>
                                         @endif
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-700">
+                                    <td class="px-3 py-2 text-sm text-gray-700"
+                                        title="{{ activityMessageSummary($activity, 1000) }}">
                                         <div style="text-wrap: wrap;">
                                             {!! highlightSearch(activityMessageSummary($activity), $search) !!}
                                         </div>
@@ -300,7 +301,7 @@
                                             <img src="{{ asset('assets/images/other/no-data.svg') }}" alt="no data">
                                         </div>
                                         <p class="text-red-600 font-semibold">
-                                            {{ __('main.messages.no_records_found') }}
+                                            {{ __('messages.no_records_found') }}
                                         </p>
                                     </td>
                                 </tr>
@@ -336,11 +337,11 @@
 
 @push('scripts')
     <script>
-        const ably = new Ably.Realtime({
-            key: '{{ env('ABLY_KEY') }}',
+        const ably_activity = new Ably.Realtime({
+            key: '{{ config('app.ably_key') }}',
         });
-        const channel = ably.channels.get('activity-created');
-        channel.subscribe('activity.created', (message) => {
+        const activityCreated = ably_activity.channels.get('activity-created');
+        activityCreated.subscribe('activity.created', (message) => {
             @this.dispatch('activityCreated');
         });
     </script>

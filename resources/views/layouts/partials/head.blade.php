@@ -56,11 +56,47 @@
 <link href="{{ asset('assets/css/multi-select.css') }}" rel="stylesheet">
 <link href="{{ asset('metronic/css/styles.css') }}" rel="stylesheet" />
 
+{{-- Dynamic Sidebar Width - Must come after styles.css to override --}}
+@php
+    $sidebarWidth = $settings->app_sidebar_width ?? (config('app.app_sidebar_width') ?? 310);
+    $sidebarWidth = $settings->app_sidebar_width ?? (config('app.app_sidebar_width') ?? 310);
+@endphp
+<style>
+    .demo1 {
+        --sidebar-width: {{ $sidebarWidth }}px;
+        --sidebar-default-width: {{ $sidebarWidth }}px;
+    }
+</style>
+
 {{-- Text editor --}}
 <link href="{{ asset('assets/plugins/trix@2.0.0/trix@2.0.0.css') }}" rel="stylesheet" />
 
 <!-- Compiled App Styles -->
 @vite(['resources/css/app.css'])
+
+{{-- Trix Editor Custom Styles --}}
+<style>
+    trix-editor,
+    trix-toolbar {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    trix-editor {
+        overflow-x: hidden !important;
+        width: 100% !important;
+    }
+
+    trix-toolbar {
+        overflow-x: auto !important;
+        width: 100% !important;
+    }
+
+    trix-toolbar .trix-button-group {
+        flex-wrap: wrap !important;
+    }
+</style>
+
 @yield('styles')
 @stack('styles')
 

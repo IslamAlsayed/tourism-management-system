@@ -18,6 +18,7 @@ class SystemLanguages extends Component
     public $message = [];
     public $view = 'grid'; // or table
     public $gridLength = 5;
+    protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
     {

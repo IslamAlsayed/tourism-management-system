@@ -39,7 +39,7 @@
                             'columnName' => 'photo',
                         ])
 
-                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- First Name -->
                             <div class="">
                                 <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
@@ -71,11 +71,12 @@
                             </div>
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Password -->
                             <div class="">
                                 <label for="password" class="kt-label required mb-2">{{ __('main.password') }}</label>
-                                <input type="password" name="password" id="password" class="kt-input h-[45px]" required>
+                                <input type="password" name="password" id="password" class="kt-input h-[45px]" required
+                                    autocomplete="off">
                                 @error('password')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -86,7 +87,7 @@
                                 <label for="password_confirmation"
                                     class="kt-label required mb-2">{{ __('main.confirm_password') }}</label>
                                 <input type="password" name="password_confirmation" id="password_confirmation"
-                                    class="kt-input h-[45px]" required>
+                                    class="kt-input h-[45px]" required autocomplete="off">
                                 @error('password_confirmation')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -99,7 +100,7 @@
                                 <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
-                                <div class="grid lg:grid-cols-3 gap-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                     <!-- Phone -->
                                     <div class="">
                                         <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
@@ -139,7 +140,7 @@
                                 <h3 class="kt-card-title">{{ __('main.employment_information') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
-                                <div class="grid lg:grid-cols-3 gap-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                     <!-- Birth Date -->
                                     <div class="">
                                         <label for="birth_date" class="kt-label mb-2">{{ __('main.birth_date') }}</label>
@@ -243,7 +244,7 @@
                                     </div>
 
                                     <!-- User Flags -->
-                                    <div class="grid lg:grid-cols-2 gap-4">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                         <div class="flex items-center gap-3">
                                             <input type="hidden" name="is_admin" value="0">
                                             @include('components.elements.checkbox-button', [
@@ -291,27 +292,16 @@
                                 </div>
                                 <div class="kt-card-body p-4">
                                     <!-- Preferences -->
-                                    <div class="mb-4">
-                                        <label for="preferences"
-                                            class="kt-label mb-2">{{ __('main.preferences') }}</label>
-                                        <input id="preferences" type="hidden" name="preferences"
-                                            value="{{ old('preferences') }}">
-                                        <trix-editor input="preferences"></trix-editor>
-                                        @error('preferences')
-                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    @include('components.elements.input-text-editor', [
+                                        'column' => 'preferences',
+                                        'value' => old('preferences'),
+                                    ])
 
                                     <!-- Notes -->
-                                    <div class="mb-4">
-                                        <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
-                                        <input id="notes" type="hidden" name="notes"
-                                            value="{{ old('notes') }}">
-                                        <trix-editor input="notes"></trix-editor>
-                                        @error('notes')
-                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    @include('components.elements.input-text-editor', [
+                                        'column' => 'notes',
+                                        'value' => old('notes'),
+                                    ])
 
                                     <!-- Save Submit Buttons -->
                                     @include('components.elements.save-submit', ['models' => 'users'])

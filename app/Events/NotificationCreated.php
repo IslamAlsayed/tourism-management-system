@@ -10,8 +10,9 @@ class NotificationCreated
 {
     use Dispatchable, SerializesModels;
 
-    public function __construct(public Notification $notification)
+    public function __construct(public Notification $notification, public $status)
     {
         $this->notification = $notification;
+        $this->status = $status;
     }
 }

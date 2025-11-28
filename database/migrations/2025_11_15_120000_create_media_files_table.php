@@ -32,7 +32,6 @@ return new class extends Migration {
             $table->integer('order')->default(0);
             $table->unsignedBigInteger('uploaded_by')->nullable();
             $table->timestamp('uploaded_at')->nullable();
-            $table->json('table_columns')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

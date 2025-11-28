@@ -95,72 +95,73 @@
                         </div>
                     </div>
                 </div>
+            </form>
 
-                <!-- Notification Types -->
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.notification_types') }}</h3>
-                    </div>
-                    <div class="kt-card-body">
-                        <div class="space-y-4 p-4">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-                                <div class="kt-card p-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.new_user') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.when_new_user_registers') }}
-                                            </div>
+            <!-- Notification Types -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.notification_types') }}</h3>
+                </div>
+                <div class="kt-card-body">
+                    <div class="space-y-4 p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                            <div class="kt-card p-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-semibold">{{ __('main.new_user') }}</div>
+                                        <div class="text-sm text-secondary-foreground">
+                                            {{ __('main.when_new_user_registers') }}
                                         </div>
-                                        <input type="checkbox" class="kt-checkbox" checked />
                                     </div>
-                                </div>
-
-                                <div class="kt-card p-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.data_updates') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.when_important_data_updates') }}
-                                            </div>
-                                        </div>
-                                        <input type="checkbox" class="kt-checkbox" checked />
-                                    </div>
-                                </div>
-
-                                <div class="kt-card p-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.system_reports') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.periodic_reports_on_system_status') }}</div>
-                                        </div>
-                                        <input type="checkbox" class="kt-checkbox" />
-                                    </div>
-                                </div>
-
-                                <div class="kt-card p-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.security_updates') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.important_security_notifications') }}</div>
-                                        </div>
-                                        <input type="checkbox" class="kt-checkbox" checked />
-                                    </div>
+                                    <input type="checkbox" class="kt-checkbox" checked />
                                 </div>
                             </div>
 
-                            <!-- Submit Buttons -->
-                            <div class="flex items-center justify-start gap-4">
-                                <button type="submit" class="kt-btn kt-btn-primary">
-                                    <i class="ki-filled ki-check text-sm me-2"></i>
-                                    {{ __('main.save_type', ['type' => __('main.settings')]) }}
-                                </button>
+                            <div class="kt-card p-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-semibold">{{ __('main.data_updates') }}</div>
+                                        <div class="text-sm text-secondary-foreground">
+                                            {{ __('main.when_important_data_updates') }}
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" class="kt-checkbox" checked />
+                                </div>
                             </div>
+
+                            <div class="kt-card p-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-semibold">{{ __('main.system_reports') }}</div>
+                                        <div class="text-sm text-secondary-foreground">
+                                            {{ __('main.periodic_reports_on_system_status') }}</div>
+                                    </div>
+                                    <input type="checkbox" class="kt-checkbox" />
+                                </div>
+                            </div>
+
+                            <div class="kt-card p-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-semibold">{{ __('main.security_updates') }}</div>
+                                        <div class="text-sm text-secondary-foreground">
+                                            {{ __('main.important_security_notifications') }}</div>
+                                    </div>
+                                    <input type="checkbox" class="kt-checkbox" checked />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="flex items-center justify-start gap-4">
+                            <button type="submit" class="kt-btn kt-btn-primary">
+                                <i class="ki-filled ki-check text-sm me-2"></i>
+                                {{ __('main.save_type', ['type' => __('main.settings')]) }}
+                            </button>
                         </div>
                     </div>
                 </div>
+            </div>
             </form>
 
 

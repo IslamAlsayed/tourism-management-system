@@ -36,7 +36,7 @@
                         <!-- Country Photo -->
                         @include('components.input-image', ['column' => 'country', 'columnName' => 'flag'])
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Country Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.country_name_arabic') }}</label>
@@ -211,8 +211,7 @@
                         <!-- Country Settings -->
                         <div class="space-y-4 mb-4">
                             <label class="kt-label mb-2">{{ __('main.country_settings') }}</label>
-
-                            <div class="grid lg:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="is_active" value="0">
                                     @include('components.elements.checkbox-button', [

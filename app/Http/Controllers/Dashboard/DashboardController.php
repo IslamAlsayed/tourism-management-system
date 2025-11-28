@@ -159,13 +159,13 @@ class DashboardController extends Controller
         $modelName = studlySingular($request->input('model'));
         $modelClass = "App\\Models\\$modelName";
         if (!class_exists($modelClass)) {
-            return redirect()->back()->with('error', 'Invalid model specified.');
+            return redirect()->back()->withError(__('messages.invalid_model_specified'));
         }
         $ids = $request->input('selectedItems');
         if (!$ids || !is_array($ids)) {
-            return redirect()->back()->with('error', 'No items selected.');
+            return redirect()->back()->withError(__('messages.no_items_selected'));
         }
         $modelClass::whereIn('id', $ids)->delete();
-        return redirect()->back()->with('success', 'Selected items deleted successfully. ' . count($ids) . ' items removed.');
+        return redirect()->back()->withSuccess(__('messages.selected_items_deleted', ['count' => count($ids)]));
     }
 }

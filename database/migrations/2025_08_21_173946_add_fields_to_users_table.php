@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->date('hire_date')->nullable();
             $table->string('department')->nullable();
             $table->string('position')->nullable();
-            $table->string('preferred_language')->nullable();
+            $table->string('preferred_language', 5)->nullable()->default('en');
             $table->unsignedBigInteger('timezone_id')->nullable();
             $table->string('preferences')->nullable();
             $table->string('photo')->nullable();
@@ -31,6 +31,7 @@ return new class extends Migration {
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->nullable()->default(true);
             $table->boolean('is_verified')->default(false);
+            $table->timestamp('password_changed_at')->nullable();
             $table->boolean('force_password_change')->default(false);
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();

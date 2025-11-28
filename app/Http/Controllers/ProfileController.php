@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\UserUpdateRequest;
-use App\Traits\PhotoUploadTrait;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Traits\PhotoUploadTrait;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\User\UserUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -31,7 +32,7 @@ class ProfileController extends Controller
     /**
      * Display the user's change password form.
      */
-    public function changePassword(Request $request): View
+    public function changePassword(Request $request)
     {
         return view('pages.profile.change-password', ['user' => getActiveUser()]);
     }
@@ -39,7 +40,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(UserUpdateRequest $request): RedirectResponse
+    public function update(UserUpdateRequest $request)
     {
         $validated = $request->validated();
 
@@ -52,27 +53,50 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('user.profile')->with('success', __('main.messages.type_updated', ['type' => __('main.profile')]));
+        return redirect()->route('user.profile')->withSuccess(__('messages.type_updated', ['type' => __('main.profile')]));
+    }
+
+    /**
+     * Update the user's password.
+     */
+    public function updatePassword(Request $request)
+    {
+        $user = User::where('email', $request->user()->email)->first();
+        if (!$user) {
+            return redirect()->back()->withError(__('messages.user_not_found'));
+        }
+        $validated = $request->validate([
+            'email' => 'required',
+            'password' => 'required|confirmed|min:' . config('app.app_minimum_password_length'),
+            'password_changed_at' => now(),
+        ]);
+        $user->fill($validated);
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+        if ($user->isDirty('password')) {
+            $user->password_changed_at = now();
+        }
+        $updated = $user->save();
+        if ($updated) {
+            return redirect()->route('user.profile')->withSuccess(__('messages.type_updated', ['type' => __('main.profile')]));
+        }
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.profile')]));
     }
 
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);
-
         $user = $request->user();
-
         Auth::logout();
-
         $user->delete();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect()->route('login');
     }
 
@@ -84,14 +108,12 @@ class ProfileController extends Controller
         $request->validate([
             'photo' => ['required', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
         ]);
-
         $user = $request->user();
-
         try {
             $this->uploadPhoto($request, $user, 'photo', 'profile-photos');
-            return redirect()->route('user.profile')->with('success', __('main.messages.photo_uploaded_successfully'));
+            return redirect()->route('user.profile')->withSuccess(__('messages.photo_uploaded_successfully'));
         } catch (\Exception $e) {
-            return redirect()->route('user.profile')->with('error', __('main.messages.no_photo_uploaded'));
+            return redirect()->route('user.profile')->withError(__('messages.no_photo_uploaded'));
         }
     }
 

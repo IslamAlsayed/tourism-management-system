@@ -1,6 +1,7 @@
-<div class="custom-input">
+<div class="custom-input {{ isset($disabled) && $disabled ? 'disabled-option' : '' }}">
     <input type="checkbox" name="{{ isset($name) ? $name : '' }}" id="{{ isset($id) ? $id : '' }}"
         value="{{ isset($value) ? $value : '' }}" {{ isset($checked) && $checked ? 'checked' : '' }}
+        {{ isset($disabled) && $disabled ? 'disabled' : '' }} {{ isset($customize) && $customize ? $customize : '' }}
         data-kt-datatable-row-check="true">
     <label for="{{ isset($id) ? $id : '' }}">{{ isset($label) ? $label : '' }}</label>
 </div>

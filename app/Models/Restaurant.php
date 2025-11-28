@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Restaurant extends Model
 {
-    use HasSearch, HasRichText;
+    use HasSearch, HasRichText, FiltersByUserRole;
 
     protected $richTextAttributes = [
         'notes',

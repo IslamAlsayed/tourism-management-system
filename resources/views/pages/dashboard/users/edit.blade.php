@@ -39,13 +39,10 @@
                             'modelKey' => $user->name ?? 'U',
                             'column' => 'user',
                             'columnName' => 'photo',
-                            'photoUrl' =>
-                                $user->photo && checkExistFile($user->photo)
-                                    ? asset('storage/' . $user->photo)
-                                    : '',
+                            'record' => $user,
                         ])
 
-                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- First Name -->
                             <div class="">
                                 <label for="first_name" class="kt-label mb-2">{{ __('main.first_name') }}</label>
@@ -83,7 +80,7 @@
                                 <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
-                                <div class="grid lg:grid-cols-3 gap-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                     <!-- Phone -->
                                     <div class="">
                                         <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
@@ -123,7 +120,7 @@
                                 <h3 class="kt-card-title">{{ __('main.employment_information') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
-                                <div class="grid lg:grid-cols-3 gap-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                     <!-- Birth Date -->
                                     <div class="">
                                         <label for="birth_date" class="kt-label mb-2">{{ __('main.birth_date') }}</label>
@@ -188,7 +185,7 @@
                                 <h3 class="kt-card-title">{{ __('main.system_settings') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
-                                <div class="grid lg:grid-cols-3 gap-6 mb-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                     <!-- Preferred Language -->
                                     <div class="">
                                         <label for="preferred_language"
@@ -230,7 +227,7 @@
                                 </div>
 
                                 <!-- User Flags -->
-                                <div class="grid lg:grid-cols-2 gap-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_admin" value="0">
                                         @include('components.elements.checkbox-button', [
@@ -282,25 +279,16 @@
                             </div>
                             <div class="kt-card-body p-4">
                                 <!-- Preferences -->
-                                <div class="mb-4">
-                                    <label for="preferences" class="kt-label mb-2">{{ __('main.preferences') }}</label>
-                                    <input id="preferences" type="hidden" name="preferences"
-                                        value="{{ $user->preferences }}">
-                                    <trix-editor input="preferences"></trix-editor>
-                                    @error('preferences')
-                                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                @include('components.elements.input-text-editor', [
+                                    'column' => 'preferences',
+                                    'value' => $user->preferences,
+                                ])
 
                                 <!-- Notes -->
-                                <div class="mb-4">
-                                    <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
-                                    <input id="notes" type="hidden" name="notes" value="{{ $user->notes }}">
-                                    <trix-editor input="notes"></trix-editor>
-                                    @error('notes')
-                                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                 @include('components.elements.input-text-editor', [
+                                    'column' => 'notes',
+                                    'value' => $user->notes,
+                                ])
 
                                 <!-- Update Submit Buttons -->
                                 @include('components.elements.update-submit', ['models' => 'users'])

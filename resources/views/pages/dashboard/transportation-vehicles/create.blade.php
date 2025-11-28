@@ -35,24 +35,16 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 items-end mb-4">
                             <!-- Route -->
-                            <div class="">
-                                <label for="route" class="kt-label mb-2">{{ __('main.route') }}</label>
-                                <input id="route" type="hidden" name="route">
-                                <trix-editor input="route"></trix-editor>
-                                @error('route')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'route',
+                                'value' => old('route'),
+                            ])
 
                             <!-- Route ar -->
-                            <div class="">
-                                <label for="route_ar" class="kt-label mb-2">{{ __('main.route_ar') }}</label>
-                                <input id="route_ar" type="hidden" name="route_ar">
-                                <trix-editor input="route_ar"></trix-editor>
-                                @error('route_ar')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'route_ar',
+                                'value' => old('route_ar'),
+                            ])
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">

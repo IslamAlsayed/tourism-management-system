@@ -35,16 +35,15 @@
                     </h3>
                 </div>
                 <div class="kt-card-content p-6">
-                    <form action="{{ route('profile.destroy') }}" method="POST">
+                    <form action="{{ route('profile.update_password') }}" method="POST" autocomplete="off">
                         @csrf
-                        @method('DELETE')
+                        @method('PUT')
 
                         <div class="flex flex-col gap-4">
                             <div class="flex flex-col gap-1">
                                 <label class="kt-form-label font-normal text-mono">{{ __('main.email') }}</label>
-
-                                <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                    <input type="email" name="email" value="{{ $user->email }}" disabled required>
+                                <div class="kt-input h-[45px] disabled opacity-50" data-kt-toggle-password="true">
+                                    <input type="email" name="email" value="{{ $user->email }}">
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="hidden kt-toggle-password-active:block">
@@ -52,38 +51,15 @@
                                         </span>
                                     </button>
                                 </div>
-
-                                @error('password')
-                                    <span class="text-red-600 text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="flex flex-col gap-1">
-                                <label class="kt-form-label font-normal text-mono">{{ __('main.old_password') }}</label>
-
-                                <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                    <input type="password" name="password" required>
-                                    <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
-                                        data-kt-toggle-password-trigger="true" type="button">
-                                        <span class="kt-toggle-password-active:hidden">
-                                            <i class="ki-filled ki-eye text-muted-foreground"></i>
-                                        </span>
-                                        <span class="hidden kt-toggle-password-active:block">
-                                            <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
-                                        </span>
-                                    </button>
-                                </div>
-
-                                @error('password')
+                                @error('email')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="flex flex-col gap-1">
                                 <label class="kt-form-label font-normal text-mono">{{ __('main.new_password') }}</label>
-
                                 <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                    <input type="password" name="confirmation_password" required>
+                                    <input type="password" name="password" required autocomplete="new-password">
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="kt-toggle-password-active:hidden">
@@ -94,13 +70,33 @@
                                         </span>
                                     </button>
                                 </div>
-
-                                @error('confirmation_password')
+                                @error('password')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <button type="submit" class="kt-btn kt-btn-danger w-full sm:w-auto">
+                            <div class="flex flex-col gap-1">
+                                <label
+                                    class="kt-form-label font-normal text-mono">{{ __('main.confirm_password') }}</label>
+                                <div class="kt-input h-[45px]" data-kt-toggle-password="true">
+                                    <input type="password" name="password_confirmation" required
+                                        autocomplete="new-password">
+                                    <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
+                                        data-kt-toggle-password-trigger="true" type="button">
+                                        <span class="kt-toggle-password-active:hidden">
+                                            <i class="ki-filled ki-eye text-muted-foreground"></i>
+                                        </span>
+                                        <span class="hidden kt-toggle-password-active:block">
+                                            <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                                @error('password_confirmation')
+                                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <button type="submit" class="kt-btn kt-btn-danger w-full sm:w-auto" toggle-button>
                                 {{ __('main.update_password') }}
                             </button>
                         </div>

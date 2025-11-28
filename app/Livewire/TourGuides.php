@@ -15,7 +15,7 @@ class TourGuides extends Component
     use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
     public $search = '';
     public $totalCount = '';
-    public $message = [];
+    protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
     {

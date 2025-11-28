@@ -20,7 +20,7 @@ class StateController extends Controller
     {
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.states.create', get_defined_vars());
+        return view('pages.dashboard.states.create', compact('regions', 'timezones'));
     }
 
     public function store(StateCreateRequest $request)
@@ -30,38 +30,38 @@ class StateController extends Controller
 
         if ($state) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.state')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.state')]));
             }
-            return redirect()->route('states.index')->with('success', __('main.messages.type_created', ['type' => __('main.state')]));
+            return redirect()->route('states.index')->withSuccess(__('messages.type_created', ['type' => __('main.state')]));
         }
 
-        return redirect()->route('states.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.state')]));
+        return redirect()->route('states.index')->withError(__('messages.type_creation_failed', ['type' => __('main.state')]));
     }
 
     public function edit($id)
     {
         $state = State::find($id);
         if (!$state) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.state')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         }
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.states.edit', get_defined_vars());
+        return view('pages.dashboard.states.edit', compact('state', 'regions', 'timezones'));
     }
 
     public function update(StateUpdateRequest $request, $id)
     {
         $state = State::find($id);
         if (!$state) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.state')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         }
         $validated = $request->validated();
 
         $updated = $state->update($validated);
         if ($updated) {
-            return redirect()->route('states.index')->with('success', __('main.messages.type_updated', ['type' => __('main.state')]));
+            return redirect()->route('states.index')->withSuccess(__('messages.type_updated', ['type' => __('main.state')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_updated_failed', ['type' => __('main.state')]));
+        return redirect()->back()->withError(__('messages.type_updated_failed', ['type' => __('main.state')]));
     }
 }

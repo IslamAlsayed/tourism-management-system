@@ -25,7 +25,7 @@ class ClientController extends Controller
         $regions = Region::orderBy('name')->get();
         $nationalities = Nationality::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.clients.create', get_defined_vars());
+        return view('pages.dashboard.clients.create', compact('regions', 'nationalities', 'timezones'));
     }
 
     public function store(ClientCreateRequest $request)
@@ -47,13 +47,13 @@ class ClientController extends Controller
 
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('main.messages.type_created', ['type' => __('main.client')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.client')]));
             }
 
-            return redirect()->route('clients.index')->withSuccess(__('main.messages.type_created', ['type' => __('main.client')]));
+            return redirect()->route('clients.index')->withSuccess(__('messages.type_created', ['type' => __('main.client')]));
         }
 
-        return redirect()->route('clients.index')->withError(__('main.messages.type_creation_failed', ['type' => __('main.client')]));
+        return redirect()->route('clients.index')->withError(__('messages.type_creation_failed', ['type' => __('main.client')]));
     }
 
     public function show($id)
@@ -61,7 +61,7 @@ class ClientController extends Controller
         $client = Client::with(['region', 'subregion', 'country', 'state', 'city', 'nationality', 'creator', 'updater'])->find($id);
 
         if (!$client) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.client')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
         }
 
         return view('pages.dashboard.clients.show', compact('client'));
@@ -71,12 +71,12 @@ class ClientController extends Controller
     {
         $client = Client::find($id);
         if (!$client) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.client')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
         }
         $regions = Region::orderBy('name')->get();
         $nationalities = Nationality::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.clients.edit', get_defined_vars());
+        return view('pages.dashboard.clients.edit', compact('client', 'regions', 'nationalities', 'timezones'));
     }
 
     public function update(ClientUpdateRequest $request, $id)
@@ -84,7 +84,7 @@ class ClientController extends Controller
         $client = Client::find($id);
 
         if (!$client) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.client')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
         }
 
         $validated = $request->validated();
@@ -103,22 +103,22 @@ class ClientController extends Controller
         $updated = $client->update($validated);
 
         if ($updated) {
-            return redirect()->route('clients.index')->withSuccess(__('main.messages.type_updated', ['type' => __('main.client')]));
+            return redirect()->route('clients.index')->withSuccess(__('messages.type_updated', ['type' => __('main.client')]));
         }
 
-        return redirect()->back()->withError(__('main.messages.type_update_failed', ['type' => __('main.client')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.client')]));
     }
 
     public function destroy($id)
     {
         $client = Client::find($id);
         if (!$client) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.client')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
         }
         $deleted = $client->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('main.messages.type_deleted', ['type' => __('main.client')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.client')]));
         }
-        return redirect()->back()->withError(__('main.messages.type_deletion_failed', ['type' => __('main.client')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.client')]));
     }
 }

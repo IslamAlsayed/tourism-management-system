@@ -102,7 +102,11 @@
     @break
 
     @case('user_status')
-        <td title="{{ $model->user_status }}">{!! highlightSearch(limitedText($model->user_status ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->user_status }}">
+            <span class="{{ $model->user_status }}">
+                {!! highlightSearch(limitedText($model->user_status ?? '--', 30), $search) !!}
+            </span>
+        </td>
     @break
 
     @case('birth_date')
@@ -230,6 +234,14 @@
 
     @case('symbol')
         <td title="{{ $model->symbol }}">{!! highlightSearch(limitedText($model->symbol ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('user_id')
+        <td title="{{ optional($model->user)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->user)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('recipient_user_id')
+        <td title="{{ optional($model->recipientUser)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->recipientUser)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('route')
@@ -416,6 +428,32 @@
                 </div>
             @endif
         </td>
+    @break
+
+    @case('is_read')
+        <td title="{{ $model->is_read == 1 ? __('main.read') : __('main.unread') }}">
+            @if ($model->is_read == 1)
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    {!! highlightSearch(limitedText($model->is_read == 1 ? __('main.read') : __('main.unread'), 30), $search) !!}
+                </div>
+            @else
+                <div
+                    class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    {!! highlightSearch(limitedText($model->is_read == 1 ? __('main.readed') : __('main.unreaded'), 30), $search) !!}
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('message')
+        <td class="text-wrap" title="{{ $model->message ?? '--' }}">
+            {!! highlightSearch($model->message ?? '--', $search) !!}
+        </td>
+    @break
+
+    @case('read_at')
+        <td title="{{ $model->human_read_at ?? '--' }}">{!! highlightSearch(limitedText($model->human_read_at ?? '--', 30), $search) !!}</td>
     @break
 
     @case('rating')

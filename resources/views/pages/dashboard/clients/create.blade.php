@@ -32,7 +32,7 @@
                         <h3 class="kt-card-title">{{ __('main.personal_information') }}</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- First Name --}}
                             <div>
                                 <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Gender --}}
                             <div>
                                 <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
@@ -127,7 +127,7 @@
                         <h3 class="kt-card-title">{{ __('main.passport_information') }}</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Passport Number --}}
                             <div>
                                 <label for="passport_number" class="kt-label mb-2">{{ __('main.passport_number') }}</label>
@@ -170,7 +170,7 @@
                     </div>
                     <div class="kt-card-body p-4">
                         {{-- Email Addresses --}}
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Primary Email --}}
                             <div>
                                 <label for="email_primary"
@@ -215,7 +215,7 @@
                         </div>
 
                         {{-- Phone Numbers --}}
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Primary Phone --}}
                             <div>
                                 <label for="primary_phone"
@@ -297,7 +297,7 @@
                         <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Regions [region, subregion, country, state, city] --}}
                             @include('components.regions.create', [
                                 'levels' => ['region', 'subregion', 'country', 'state', 'city'],
@@ -305,7 +305,7 @@
                             ])
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Box --}}
                             <div>
                                 <label for="box" class="kt-label mb-2">{{ __('main.box') }}</label>
@@ -329,26 +329,16 @@
 
                         <div class="grid grid-cols-1 gap-4 mb-4">
                             {{-- Street Address --}}
-                            <div>
-                                <label for="street_address" class="kt-label mb-2">{{ __('main.street_address') }}</label>
-                                <input id="street_address" type="hidden" name="street_address"
-                                    value="{{ old('street_address') }}">
-                                <trix-editor input="street_address"></trix-editor>
-                                @error('street_address')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'street_address',
+                                'value' => old('street_address'),
+                            ])
 
                             {{-- Address Line 2 --}}
-                            <div>
-                                <label for="address_line_2" class="kt-label mb-2">{{ __('main.address_line_2') }}</label>
-                                <input id="address_line_2" type="hidden" name="address_line_2"
-                                    value="{{ old('address_line_2') }}">
-                                <trix-editor input="address_line_2"></trix-editor>
-                                @error('address_line_2')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'address_line_2',
+                                'value' => old('address_line_2'),
+                            ])
                         </div>
                     </div>
                 </div>
@@ -359,7 +349,7 @@
                         <h3 class="kt-card-title">{{ __('main.company_information') }}</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Company Name --}}
                             <div>
                                 <label for="company_name" class="kt-label mb-2">{{ __('main.company_name') }}</label>
@@ -441,7 +431,7 @@
                         <h3 class="kt-card-title">{{ __('main.online_presence') }}</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Website URL --}}
                             <div>
                                 <label for="website_url" class="kt-label mb-2">{{ __('main.website_url') }}</label>
@@ -471,7 +461,7 @@
                         <h3 class="kt-card-title">{{ __('main.additional_settings') }}</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Status --}}
                             <div>
                                 <label for="status" class="kt-label mb-2">{{ __('main.status') }}</label>
@@ -515,12 +505,11 @@
 
                         {{-- Notes --}}
                         <div>
-                            <label for="notes" class="kt-label mb-2">{{ __('main.notes') }}</label>
-                            <input id="notes" type="hidden" name="notes" value="{{ old('notes') }}">
-                            <trix-editor input="notes"></trix-editor>
-                            @error('notes')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
+                            {{-- Notes --}}
+                            @include('components.elements.input-text-editor', [
+                                'column' => 'notes',
+                                'value' => old('notes'),
+                            ])
                         </div>
                     </div>
                 </div>

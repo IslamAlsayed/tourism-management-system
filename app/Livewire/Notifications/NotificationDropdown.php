@@ -4,7 +4,6 @@ namespace App\Livewire\Notifications;
 
 use Livewire\Component;
 use App\Models\Notification;
-use App\Events\NotificationCreated;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +18,7 @@ class NotificationDropdown extends Component
         'notificationMarkedAsRead' => 'refreshNotifications',
         'allNotificationsMarkedAsRead' => 'refreshNotifications',
         'notificationDeleted' => 'refreshNotifications',
-        'notificationCreated' => '$refresh',
+        'notificationCreated' => 'newNotificationData',
     ];
 
     public function mount()
@@ -27,11 +26,20 @@ class NotificationDropdown extends Component
         $this->refreshNotifications();
     }
 
+    public function newNotificationData()
+    {
+        $userId = getActiveUser()?->id;
+        $lastNotification = Notification::forUser($userId)->latest()->first();
+        $lastNotification['human_created_at'] = $lastNotification?->human_created_at;
+        $this->dispatch('new-notification-data', notification: $lastNotification);
+    }
+
     public function refreshNotifications()
     {
         if (Auth::check()) {
-            $this->notifications = Notification::forUser(Auth::id())->orderBy('created_at', 'desc')->limit(10)->get();
-            $this->unreadNotificationsCount = Notification::forUser(Auth::id())->unread()->count();
+            $userId = getActiveUser()?->id;
+            $this->notifications = Notification::forUser($userId)->orderBy('created_at', 'desc')->limit(10)->get();
+            $this->unreadNotificationsCount = Notification::forUser($userId)->unread()->count();
         } else {
             $this->notifications = collect();
             $this->unreadNotificationsCount = 0;
@@ -42,26 +50,32 @@ class NotificationDropdown extends Component
     {
         try {
             $notification = Notification::find($notificationId);
-            if ($notification && $notification->user_id == Auth::id()) {
-                $notification->markAsRead();
-                $this->refreshNotifications();
+            if ($notification) {
+                if ($notification->user_id == getActiveUser()?->id) {
+                    $notification->markAsRead();
+                    $this->refreshNotifications();
 
-                // Emit event to update other notification components
-                // $this->dispatch('notificationMarkedAsRead', id: $notificationId);
-
-                $this->dispatch('notification-readed', id: $notificationId);
+                    // Emit event to Read notification by id
+                    $this->dispatch('notification-readed', id: $notificationId);
+                    Log::info(__('main.notification_marked_as_read'));
+                } else {
+                    Log::error('Error reading notification: Unauthorized for ID: ' . $notificationId);
+                    $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Unauthorized for ID: ' . $notificationId]);
+                }
             } else {
-                Log::error('Notification not found or unauthorized for ID: ' . $notificationId);
+                Log::error('Error reading notification: Notification not found');
+                $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Notification not found']);
             }
         } catch (\Exception $e) {
-            Log::error('Error marking notification as read for ID: ' . $notificationId . ' - ' . $e->getMessage());
+            Log::error('Error reading notification: ' . $e->getMessage());
+            $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Error reading notification: ' . $e->getMessage()]);
         }
     }
 
     public function markAllAsRead()
     {
         try {
-            $updated = Notification::forUser(Auth::id())->unread()->update([
+            $updated = Notification::forUser(getActiveUser()?->id)->unread()->update([
                 'is_read' => true,
                 'read_at' => now()
             ]);
@@ -80,8 +94,9 @@ class NotificationDropdown extends Component
     public function markAllAsReadWhenOpened()
     {
         if ($this->unreadNotificationsCount > 0) {
-            Notification::forUser(Auth::id())->unread()->update(['is_read' => true, 'read_at' => now()]);
+            Notification::forUser(getActiveUser()?->id)->unread()->update(['is_read' => true, 'read_at' => now()]);
             $this->refreshNotifications();
+            $this->dispatch('notification-readed', id: 'all');
 
             // Emit event to update other notification components
             // $this->dispatch('allNotificationsMarkedAsRead');
@@ -92,19 +107,25 @@ class NotificationDropdown extends Component
     {
         try {
             $notification = Notification::find($notificationId);
-            if ($notification && $notification->user_id == Auth::id()) {
-                $notification->delete();
-                $this->refreshNotifications();
-                event(new NotificationCreated($notification));
+            if ($notification) {
+                if ($notification->user_id == getActiveUser()?->id) {
+                    $notification->delete();
+                    $this->refreshNotifications();
 
-                // Emit event to delete notification by id
-                $this->dispatch('notification-deleted', id: $notificationId);
-                Log::info(__('main.notification_deleted'));
+                    // Emit event to delete notification by id
+                    $this->dispatch('notification-deleted', id: $notificationId);
+                    Log::info(__('main.notification_deleted'));
+                } else {
+                    Log::error('Error deleting notification: Unauthorized for ID: ' . $notificationId);
+                    $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Unauthorized for ID: ' . $notificationId]);
+                }
             } else {
-                Log::error('Error deleting notification: Notification not found or unauthorized for ID: ' . $notificationId);
+                Log::error('Error deleting notification: Notification not found');
+                $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Notification not found']);
             }
         } catch (\Exception $e) {
             Log::error('Error deleting notification: ' . $e->getMessage());
+            $this->dispatch('show-toast', ['type' => 'error', 'message' => 'Error deleting notification: ' . $e->getMessage()]);
         }
     }
 

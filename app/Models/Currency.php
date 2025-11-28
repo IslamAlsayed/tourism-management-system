@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class Currency extends Model
 {
-    use HasSearch;
+    use HasSearch, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',
@@ -20,9 +22,4 @@ class Currency extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
-
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
-    }
 }

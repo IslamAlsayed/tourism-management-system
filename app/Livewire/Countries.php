@@ -9,6 +9,7 @@ use App\Traits\CustomColumns;
 use App\Traits\WithSorting;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use Illuminate\Support\Facades\Auth;
 
 class Countries extends Component
 {
@@ -16,6 +17,7 @@ class Countries extends Component
     public $search = '';
     public $totalCount = '';
     public $message = [];
+    protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
     {

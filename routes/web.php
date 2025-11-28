@@ -157,6 +157,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
         Route::get('/change_password', [ProfileController::class, 'changePassword'])->name('change_password');
+        Route::put('/update_password', [ProfileController::class, 'updatePassword'])->name('update_password');
         Route::post('/update', [ProfileController::class, 'update'])->name('update');
         Route::post('/photo', [ProfileController::class, 'updatePhoto'])->name('photo');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
@@ -187,6 +188,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('settings/security', [SettingsController::class, 'security'])->name('settings.security');
     Route::get('settings/notifications', [SettingsController::class, 'notifications'])->name('settings.notifications');
     Route::get('settings/backup', [SettingsController::class, 'backup'])->name('settings.backup');
+    Route::get('settings/booking', [SettingsController::class, 'booking'])->name('settings.booking');
+    Route::get('settings/integration', [SettingsController::class, 'integration'])->name('settings.integration');
+    Route::get('settings/system', [SettingsController::class, 'system'])->name('settings.system');
     Route::post('settings/backup/create', [SettingsController::class, 'createBackup'])->name('settings.backup.create');
     Route::resource('settings', SettingsController::class)->names('settings');
 

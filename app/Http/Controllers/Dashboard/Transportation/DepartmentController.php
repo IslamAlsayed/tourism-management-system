@@ -39,12 +39,12 @@ class DepartmentController extends Controller
 
         if ($transportationDepartment) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.transportation_department')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.transportation_department')]));
             }
-            return redirect()->route('transportation-departments.index')->with('success', __('main.messages.type_created', ['type' => __('main.transportation_department')]));
+            return redirect()->route('transportation-departments.index')->withSuccess(__('messages.type_created', ['type' => __('main.transportation_department')]));
         }
 
-        return redirect()->route('transportation-departments.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.restaurant')]));
+        return redirect()->route('transportation-departments.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
     }
 
     public function edit($id)
@@ -58,7 +58,7 @@ class DepartmentController extends Controller
         $subregions = Subregion::all();
 
         if (!$transportationDepartment) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_department')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_department')]));
         }
         return view('pages.dashboard.transportation-departments.edit', compact('transportationDepartment', 'transportationCompanies', 'countries', 'states', 'cities', 'regions', 'subregions'));
     }
@@ -67,30 +67,30 @@ class DepartmentController extends Controller
     {
         $transportationDepartment = TransportationCompanyDepartment::find($id);
         if (!$transportationDepartment) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_department')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_department')]));
         }
 
         $validated = $request->validated();
         $updated = $transportationDepartment->update($validated);
 
         if ($updated) {
-            return redirect()->route('transportation-departments.index')->with('success', __('main.messages.type_updated', ['type' => __('main.transportation_department')]));
+            return redirect()->route('transportation-departments.index')->withSuccess(__('messages.type_updated', ['type' => __('main.transportation_department')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.transportation_department')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.transportation_department')]));
     }
 
     public function destroy($id)
     {
         $transportationDepartment = TransportationCompanyDepartment::find($id);
         if (!$transportationDepartment) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_department')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_department')]));
         }
         $deleted = $transportationDepartment->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.transportation_department')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_department')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.transportation_department')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_department')]));
     }
 }

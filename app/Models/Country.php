@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    use HasSearch;
+    use HasSearch, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',

@@ -35,12 +35,8 @@
 
 @push('scripts')
     <script>
-        const ably = new Ably.Realtime({
-            key: '{{ env('ABLY_KEY') }}',
-        });
-        const channel = ably.channels.get('status-user-logged');
-
-        channel.subscribe('user.logged', (message) => {
+        const statusUserLogged = ably.channels.get('status-user-logged');
+        statusUserLogged.subscribe('user.logged', (message) => {
             if (!message.data) return;
             let userHeart = document.querySelector('.user-heartbeat-' + message.data.id);
             let notificationCount = document.querySelector('.notification-count');

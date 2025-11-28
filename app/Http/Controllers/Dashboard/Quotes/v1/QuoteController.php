@@ -245,7 +245,7 @@ class QuoteController extends Controller
         // }
 
         return redirect()->route('dashboard.v1.quote.step1')
-            ->with('success', 'Quote submitted and email sent successfully.');
+            ->withSuccess('Quote submitted and email sent successfully.');
     }
 
     /**

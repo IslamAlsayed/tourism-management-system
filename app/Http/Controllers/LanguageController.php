@@ -25,19 +25,19 @@ class LanguageController extends Controller
 
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.language')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.language')]));
             }
-            return redirect()->route('languages.index')->with('success', __('main.messages.type_created', ['type' => __('main.language')]));
+            return redirect()->route('languages.index')->withSuccess(__('messages.type_created', ['type' => __('main.language')]));
         }
 
-        return redirect()->route('languages.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.language')]));
+        return redirect()->route('languages.index')->withError(__('messages.type_creation_failed', ['type' => __('main.language')]));
     }
 
     public function edit($id)
     {
         $language = Language::find($id);
         if (!$language) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.language')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.language')]));
         }
         return view('pages.dashboard.languages.edit', compact('language'));
     }
@@ -46,29 +46,29 @@ class LanguageController extends Controller
     {
         $language = Language::find($id);
         if (!$language) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.language')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.language')]));
         }
         $validated = $request->validated();
 
         $updated = $language->update($validated);
         if ($updated) {
-            return redirect()->route('languages.index')->with('success', __('main.messages.type_updated', ['type' => __('main.language')]));
+            return redirect()->route('languages.index')->withSuccess(__('messages.type_updated', ['type' => __('main.language')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.language')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.language')]));
     }
 
     public function destroy($id)
     {
         $language = Language::find($id);
         if (!$language) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.language')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.language')]));
         }
         $deleted = $language->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.language')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.language')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.language')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.language')]));
     }
 }

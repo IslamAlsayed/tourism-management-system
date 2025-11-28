@@ -20,6 +20,7 @@ class CrossingsPorts extends Component
     public $filterType = '';
     public $filterStatus = '';
     public $filterOperational = '';
+    protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
     {

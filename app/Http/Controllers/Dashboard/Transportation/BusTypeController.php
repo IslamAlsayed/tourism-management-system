@@ -28,12 +28,12 @@ class BusTypeController extends Controller
 
         if ($transportationBusTypes) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.transportation_bus_type')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.transportation_bus_type')]));
             }
-            return redirect()->route('transportation-bus-types.index')->with('success', __('main.messages.type_created', ['type' => __('main.transportation_bus_type')]));
+            return redirect()->route('transportation-bus-types.index')->withSuccess(__('messages.type_created', ['type' => __('main.transportation_bus_type')]));
         }
 
-        return redirect()->route('transportation-bus-types.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.restaurant')]));
+        return redirect()->route('transportation-bus-types.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
     }
 
     public function edit($id)
@@ -41,7 +41,7 @@ class BusTypeController extends Controller
         $transportationBusType = TransportationBusType::find($id);
         $transportationCompanies = TransportationCompany::all();
         if (!$transportationBusType) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_bus_type')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_bus_type')]));
         }
         return view('pages.dashboard.transportation-bus-types.edit', compact('transportationBusType', 'transportationCompanies'));
     }
@@ -50,30 +50,30 @@ class BusTypeController extends Controller
     {
         $transportationBusTypes = TransportationBusType::find($id);
         if (!$transportationBusTypes) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_bus_type')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_bus_type')]));
         }
 
         $validated = $request->validated();
         $updated = $transportationBusTypes->update($validated);
 
         if ($updated) {
-            return redirect()->route('transportation-bus-types.index')->with('success', __('main.messages.type_updated', ['type' => __('main.transportation_bus_type')]));
+            return redirect()->route('transportation-bus-types.index')->withSuccess(__('messages.type_updated', ['type' => __('main.transportation_bus_type')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.transportation_bus_type')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.transportation_bus_type')]));
     }
 
     public function destroy($id)
     {
         $transportationBusTypes = TransportationBusType::find($id);
         if (!$transportationBusTypes) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.transportation_bus_type')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_bus_type')]));
         }
         $deleted = $transportationBusTypes->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.transportation_bus_type')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_bus_type')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.transportation_bus_type')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_bus_type')]));
     }
 }

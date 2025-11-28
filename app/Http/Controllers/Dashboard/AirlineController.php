@@ -26,7 +26,7 @@ class AirlineController extends Controller
     {
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.airlines.create', get_defined_vars());
+        return view('pages.dashboard.airlines.create', compact('regions', 'timezones'));
     }
 
     /**
@@ -59,11 +59,11 @@ class AirlineController extends Controller
     {
         $airline = Airline::find($id);
         if (!$airline) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.airline')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
         }
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.airlines.edit', get_defined_vars());
+        return view('pages.dashboard.airlines.edit', compact('airline', 'regions', 'timezones'));
     }
 
     /**
@@ -87,12 +87,12 @@ class AirlineController extends Controller
     {
         $airline = Airline::find($id);
         if (!$airline) {
-            return redirect()->back()->withError(__('main.messages.not_found_this_type', ['type' => __('main.airline')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
         }
         $deleted = $airline->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('main.messages.type_deleted', ['type' => __('main.airline')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.airline')]));
         }
-        return redirect()->back()->withError(__('main.messages.type_deletion_failed', ['type' => __('main.airline')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.airline')]));
     }
 }

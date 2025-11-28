@@ -34,7 +34,7 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Type --}}
                             <div class="">
                                 <label for="type" class="kt-label mb-2">{{ __('main.type') }}</label>

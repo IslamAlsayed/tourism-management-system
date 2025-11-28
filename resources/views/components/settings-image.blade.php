@@ -1,3 +1,12 @@
+@props([
+    'column' => 'image',
+    'photoUrl' => [
+        isset($record) && $record->app_light_photo ? asset('storage/' . $record->app_light_photo) : null,
+        isset($record) && $record->app_dark_photo ? asset('storage/' . $record->app_dark_photo) : null,
+        isset($record) && $record->app_mini_photo ? asset('storage/' . $record->app_mini_photo) : null,
+    ],
+])
+
 <div class="text-center mb-4">
     <div class="flex items-center justify-center gap-7">
         @foreach ($photoUrl as $key => $photo)

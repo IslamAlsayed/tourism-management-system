@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
 
 class Language extends Model
 {
-    use HasSearch;
+    use HasSearch, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',

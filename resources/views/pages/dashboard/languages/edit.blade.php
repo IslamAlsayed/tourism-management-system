@@ -39,10 +39,10 @@
                             'modelKey' => $language->code ?? 'L',
                             'column' => 'language',
                             'columnName' => 'flag',
-                            'photoUrl' => $language->photo ? asset('storage/' . $language->photo) : '',
+                            'record' => $language,
                         ])
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Language Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>

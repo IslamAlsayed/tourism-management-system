@@ -11,7 +11,7 @@
     </div>
 
     <div class="hidden" data-target-model="#columnsModal" id="columnsModal"
-        style="{{ app()->getLocale() == 'ar' ? 'right: auto; left: 0; direction: rtl;' : 'left: auto; right: 0; direction: ltr;' }}">
+        style="{{ app()->getLocale() == 'ar' ? 'right: auto; left: 0; direction: ltr;' : 'left: auto; right: 0; direction: ltr;' }}">
         @if (isset($allColumns) && count($allColumns) > 0)
             <div class="grid grid-cols-2 xl:grid-cols-3 gap-2">
                 @foreach ($allColumns as $column)

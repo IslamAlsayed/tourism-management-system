@@ -1,5 +1,6 @@
 @php
-    $toasts = session()->pull('toasts', []);
+    $toasts = session()->get('toasts', []);
+    session()->forget('toasts'); // clear AFTER consumption
 @endphp
 
 @if (session()->has('success') ||

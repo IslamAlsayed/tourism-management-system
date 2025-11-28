@@ -20,7 +20,7 @@ class CityController extends Controller
     {
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.cities.create', get_defined_vars());
+        return view('pages.dashboard.cities.create', compact('regions', 'timezones'));
     }
 
     public function store(CreateCitiesRequest $request)
@@ -36,30 +36,30 @@ class CityController extends Controller
 
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.city')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.city')]));
             }
-            return redirect()->route('cities.index')->with('success', __('main.messages.type_created', ['type' => __('main.city')]));
+            return redirect()->route('cities.index')->withSuccess(__('messages.type_created', ['type' => __('main.city')]));
         }
 
-        return redirect()->route('cities.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.city')]));
+        return redirect()->route('cities.index')->withError(__('messages.type_creation_failed', ['type' => __('main.city')]));
     }
 
     public function edit($id)
     {
         $city = City::with(['region', 'subregion', 'country'])->find($id);
         if (!$city) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.city')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
         }
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.cities.edit', get_defined_vars());
+        return view('pages.dashboard.cities.edit', compact('city', 'regions', 'timezones'));
     }
 
     public function update(UpdateCitiesRequest $request, $id)
     {
         $city = City::find($id);
         if (!$city) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.city')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
         }
         $data = $request->validated();
         if ($request['state_id']) {
@@ -70,21 +70,21 @@ class CityController extends Controller
         }
         $updated = $city->update($data);
         if ($updated) {
-            return redirect()->route('cities.index')->with('success', __('main.messages.type_updated', ['type' => __('main.city')]));
+            return redirect()->route('cities.index')->withSuccess(__('messages.type_updated', ['type' => __('main.city')]));
         }
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.city')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.city')]));
     }
 
     public function destroy($id)
     {
         $city = City::find($id);
         if (!$city) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.city')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
         }
         $deleted = $city->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.city')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.city')]));
         }
-        return redirect()->route('cities.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.city')]));
+        return redirect()->route('cities.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.city')]));
     }
 }

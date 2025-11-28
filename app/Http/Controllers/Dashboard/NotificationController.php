@@ -14,21 +14,25 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Notification::forUser(Auth::id())->orderBy('created_at', 'desc');
+        $query = Notification::orderBy('created_at', 'desc');
         // Filter by read status
         if ($request->has('filter')) {
             if ($request->get('filter') == 'unread') {
                 $query->unread();
-            } else if ($request->get('filter') === 'read') {
+            } else if ($request->get('filter') == 'read') {
                 $query->read();
             }
         }
         // Filter by type
-        if ($request->has('type') && $request->get('type') !== '') {
+        if ($request->has('type') && $request->get('type') != '') {
             $query->ofType($request->get('type'));
         }
-        $notifications = $query->paginate(20);
-        return view('pages.dashboard.notifications.index', compact('notifications'));
+        $notifications = $query->paginate(50);
+
+        // $notifications = Notification::forUser(Auth::id())->orderBy('created_at', 'desc')->limit(10)->get();
+        $unreadNotificationsCount = Notification::unread()->count();
+
+        return view('pages.dashboard.notifications.index', compact('notifications', 'unreadNotificationsCount'));
         // return response()->json(['notifications' => $notifications, 'unread_count' => Notification::forUser(Auth::id())->unread()->count()]);
     }
 

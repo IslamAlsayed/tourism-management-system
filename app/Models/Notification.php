@@ -2,29 +2,58 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Traits\HasSearch;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Auth;
 
 class Notification extends Model
 {
-    use HasFactory;
+    // Notification type constants
+    public const TYPE_BOOKING = 'booking';
+    public const TYPE_PAYMENT = 'payment';
+    public const TYPE_TRIP = 'trip';
+    public const TYPE_SYSTEM = 'system';
+    public const TYPE_PUSH = 'push';
+
+    use HasSearch, HasFactory, BroadcastsRecordEvents;
 
     protected $fillable = [
+        'id',
         'user_id',
+        'recipient_user_id',
         'type',
+        'notification_type',
         'title',
         'message',
         'is_read',
-        'read_at',
+        'is_global',
         'data',
     ];
+    /**
+     * Scope for notification type
+     */
+    public function scopeOfNotificationType($query, $type)
+    {
+        return $query->where('notification_type', $type);
+    }
 
     protected $casts = [
         'is_read' => 'boolean',
         'read_at' => 'datetime',
         'data' => 'array',
     ];
+
+    /**
+     * Get columns to exclude from search/display
+     */
+    public function getExcludedColumns()
+    {
+        return ['type', 'title', 'data'];
+    }
+
 
     /**
      * Boot method for model events
@@ -36,7 +65,7 @@ class Notification extends Model
         // Auto-set user_id if user is authenticated
         static::creating(function ($notification) {
             if (Auth::check() && !$notification->user_id) {
-                $notification->user_id = Auth::id();
+                $notification->user_id = getActiveUser()?->id;
             }
         });
     }
@@ -47,6 +76,21 @@ class Notification extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function recipientUser()
+    {
+        return $this->belongsTo(User::class, 'recipient_user_id');
+    }
+
+    public function getHumanReadAtAttribute()
+    {
+        return $this->read_at ? \Carbon\Carbon::parse($this->read_at)->diffForHumans() : null;
+    }
+
+    public function getHumanCreatedAtAttribute()
+    {
+        return $this->created_at ? \Carbon\Carbon::parse($this->created_at)->diffForHumans() : null;
     }
 
     /**
@@ -64,7 +108,30 @@ class Notification extends Model
 
     public function scopeForUser($query, $userId)
     {
+        // If admin, return no notifications
+        if (getActiveUser()->is_admin == 1)
+            return $query;
+
+        // Show notifications for this user: sent to him, global (not published by him), or created by him
+        return $query->where(function ($q) use ($userId) {
+            $q->where('recipient_user_id', $userId)
+                ->orWhere(function ($sub) use ($userId) {
+                    $sub->where('is_global', 1)->where('user_id', '!=', $userId);
+                })
+                ->orWhere(function ($sub) use ($userId) {
+                    $sub->where('user_id', $userId)->where('is_global', '!=', 1);
+                });
+        });
+    }
+
+    public function scopeWithMe($query, $userId)
+    {
         return $query->where('user_id', $userId);
+    }
+
+    public function scopeNotMe($query, $userId)
+    {
+        return $query->where('user_id', '!=', $userId);
     }
 
     public function scopeOfType($query, $type)
@@ -77,7 +144,7 @@ class Notification extends Model
      */
     public function markAsRead()
     {
-        $this->update(['is_read' => true, 'read_at' => now()]);
+        $this->update(['is_read' => 1, 'read_at' => now()]);
     }
 
     /**
@@ -97,8 +164,10 @@ class Notification extends Model
     public static function createForUser($type, $message, $title = null, $data = null, $userId = null)
     {
         return static::create([
-            'user_id' => $userId ?? Auth::id(),
+            'performer_id' => Auth::id(),
+            'target_user_id' => $userId ?? Auth::id(),
             'type' => $type,
+            'notification_type' => 'system',
             'title' => $title,
             'message' => $message,
             'data' => $data,
@@ -110,12 +179,14 @@ class Notification extends Model
      */
     public static function createForAllUsers($type, $message, $title = null, $data = null)
     {
-        $users = \App\Models\User::pluck('id');
+        $users = User::pluck('id');
 
         foreach ($users as $userId) {
             static::create([
-                'user_id' => $userId,
+                'performer_id' => Auth::id(),
+                'target_user_id' => $userId,
                 'type' => $type,
+                'notification_type' => 'system',
                 'title' => $title,
                 'message' => $message,
                 'data' => $data,
@@ -124,30 +195,19 @@ class Notification extends Model
     }
 
     /**
-     * Get icon based on type
+     * Create push notification (web push or custom)
      */
-    public function getIconAttribute()
+    public static function createPushNotification($message, $title = null, $data = null, $userId = null, $recipientUserId = null, $isGlobal = false)
     {
-        return match ($this->type) {
-            'success' => 'fas fa-check-circle',
-            'error' => 'fas fa-times-circle',
-            'warning' => 'fas fa-exclamation-triangle',
-            'info' => 'fas fa-info-circle',
-            default => 'fas fa-bell',
-        };
-    }
-
-    /**
-     * Get color class based on type
-     */
-    public function getColorClassAttribute()
-    {
-        return match ($this->type) {
-            'success' => 'text-green-500',
-            'error' => 'text-red-500',
-            'warning' => 'text-yellow-500',
-            'info' => 'text-blue-500',
-            default => 'text-gray-500',
-        };
+        return static::create([
+            'performer_id' => Auth::id(),
+            'target_user_id' => $recipientUserId,
+            'type' => 'push',
+            'notification_type' => 'push',
+            'title' => $title,
+            'message' => $message,
+            'is_global' => $isGlobal,
+            'data' => $data,
+        ]);
     }
 }

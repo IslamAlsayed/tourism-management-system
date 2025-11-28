@@ -26,19 +26,19 @@ class RegionController extends Controller
 
         if ($created) {
             if ($request->has('save_and_add')) {
-                return redirect()->back()->with('success', __('main.messages.type_created', ['type' => __('main.region')]));
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.region')]));
             }
-            return redirect()->route('regions.index')->with('success', __('main.messages.type_created', ['type' => __('main.region')]));
+            return redirect()->route('regions.index')->withSuccess(__('messages.type_created', ['type' => __('main.region')]));
         }
 
-        return redirect()->route('regions.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.region')]));
+        return redirect()->route('regions.index')->withError(__('messages.type_creation_failed', ['type' => __('main.region')]));
     }
 
     public function edit($id)
     {
         $region = Region::find($id);
         if (!$region) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.region')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.region')]));
         }
         return view('pages.dashboard.regions.edit', compact('region'));
     }
@@ -47,29 +47,29 @@ class RegionController extends Controller
     {
         $region = Region::find($id);
         if (!$region) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.region')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.region')]));
         }
         $validated = $request->validated();
 
         $updated = $region->update($validated);
         if ($updated) {
-            return redirect()->route('regions.index')->with('success', __('main.messages.type_updated', ['type' => __('main.region')]));
+            return redirect()->route('regions.index')->withSuccess(__('messages.type_updated', ['type' => __('main.region')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_update_failed', ['type' => __('main.region')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.region')]));
     }
 
     public function destroy($id)
     {
         $region = Region::find($id);
         if (!$region) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.region')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.region')]));
         }
         $deleted = $region->delete();
         if ($deleted) {
-            return redirect()->back()->with('success', __('main.messages.type_deleted', ['type' => __('main.region')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.region')]));
         }
 
-        return redirect()->back()->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.region')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.region')]));
     }
 }

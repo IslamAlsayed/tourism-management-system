@@ -33,7 +33,7 @@
                     <h3 class="kt-card-title">{{ __('main.airport_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         {{-- ICAO Code --}}
                         <div>
                             <label for="icao" class="kt-label mb-2">{{ __('main.icao') }}</label>
@@ -120,7 +120,7 @@
                     <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         {{-- Regions [region, subregion, country, state, city] --}}
                         @include('components.regions.edit', [
                             'levels' => ['region', 'subregion', 'country', 'state', 'city'],
@@ -187,7 +187,7 @@
                     <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         {{-- Local Phone --}}
                         <div>
                             <label for="local_phone_number"

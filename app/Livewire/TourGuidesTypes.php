@@ -16,6 +16,8 @@ class TourGuidesTypes extends Component
     public $search = '';
     public $totalCount = '';
     public $message = [];
+    protected $listeners = ['recordUpdated' => '$refresh'];
+
 
     public function clearMessages()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MediaFile extends Model
 {
-    use HasFactory, HasSearch, SoftDeletes;
+    use HasFactory, HasSearch, SoftDeletes, FiltersByUserRole;
 
     protected $fillable = [
         'id',
@@ -145,14 +146,6 @@ class MediaFile extends Model
     public function scopeImages($query)
     {
         return $query->where('file_type', 'image');
-    }
-
-    /**
-     * Scope: only active files
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
     }
 
     /**

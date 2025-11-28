@@ -35,11 +35,14 @@ class ViewServiceProvider extends ServiceProvider
 
             if ($activeUser && class_exists(Notification::class)) {
                 try {
-                    $notifications = Notification::forUser($activeUser->id)->orderBy('created_at', 'desc')->limit(10);
-                    $notifications = $notifications->limit(10)->paginate(getPaginate());
-                    $unreadNotificationsCount = Notification::forUser($activeUser->id)->unread()->count();
+                        $notifications = Notification::forUser($activeUser->id)
+                            ->orderBy('created_at', 'desc')
+                            ->limit(10)
+                            ->get();
+                        $unreadNotificationsCount = Notification::forUser($activeUser->id)
+                            ->unread()
+                            ->count();
                 } catch (\Exception $e) {
-                    // Handle case where notifications table doesn't exist yet
                     Log::error('Error fetching notifications: ' . $e->getMessage());
                     $notifications = collect();
                     $unreadNotificationsCount = 0;

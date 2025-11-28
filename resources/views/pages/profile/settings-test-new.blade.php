@@ -842,9 +842,10 @@
                                             <div class="row mb-6">
                                                 <label class="col-lg-4 col-form-label fw-semibold fs-6">Bio</label>
                                                 <div class="col-lg-8">
-                                                    <input id="bio" type="hidden" name="bio"
-                                                        value="{{ $user->bio }}">
-                                                    <trix-editor input="bio"></trix-editor>
+                                                    @include('components.elements.input-text-editor', [
+                                                        'column' => 'bio',
+                                                        'value' => old('bio', $user->bio),
+                                                    ])
                                                 </div>
                                             </div>
 

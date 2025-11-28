@@ -148,15 +148,10 @@
                     </div>
 
                     {{-- Description --}}
-                    <div class="mb-4">
-                        <label for="description" class="kt-label">{{ __('main.description') }}</label>
-                        <input id="description" type="hidden" name="description"
-                            value="{{ old('description', $mediaFile->description) }}">
-                        <trix-editor input="description" class="kt-input mt-2"></trix-editor>
-                        @error('description')
-                            <span class="kt-error">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    @include('components.elements.input-text-editor', [
+                        'column' => 'description',
+                        'value' => $mediaFile->description,
+                    ])
 
                     {{-- Replace File (Optional) --}}
                     <div class="mb-4">

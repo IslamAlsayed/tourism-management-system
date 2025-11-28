@@ -28,10 +28,16 @@ return [
     'app_php_version' => env('APP_PHP_VERSION', '8.2.28'),
     'app_columns_length' => env('APP_COLUMNS_LENGTH', 5),
     'app_status' => env('APP_STATUS', true),
-    'app_password_length' => env('APP_PASSWORD_LENGTH', 8),
+    'app_minimum_password_length' => env('APP_MINIMUM_PASSWORD_LENGTH', 8),
     'app_session_lifetime' => env('SESSION_LIFETIME', 120),
     'app_password_confirmation' => env('APP_PASSWORD_CONFIRMATION', true),
     'app_backup_frequency' => env('APP_BACKUP_FREQUENCY', 'weekly'),
+    'app_email_notification' => env('APP_EMAIL_NOTIFICATION', false),
+    'app_push_notification' => env('APP_PUSH_NOTIFICATION', false),
+    'app_sms_notification' => env('APP_SMS_NOTIFICATION', false),
+    'app_sidebar_width' => env('APP_SIDEBAR_WIDTH', 310),
+    'idle_timeout' => env('IDLE_TIMEOUT', 1800000),
+    'ably_key' => env('ABLY_KEY', ''),
 
     /*
     |--------------------------------------------------------------------------

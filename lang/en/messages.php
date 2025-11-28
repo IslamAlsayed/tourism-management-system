@@ -1,0 +1,119 @@
+<?php
+
+return [
+    'please_login_to_continue' => 'Please login to continue.',
+    'welcome_back_name' => 'Welcome back, :name!',
+    'you_logged_in' => 'You logged in successfully.',
+    'user_logged_in' => ':name logged in.',
+    'you_logged_out' => 'You logged out successfully.',
+    'user_logged_out' => ':name logged out.',
+    'user_session_expired' => ':name session expired.',
+    'goodbye_name' => 'Goodbye, :name!',
+    'no_records_found' => 'No records found.',
+    'no_backup' => 'No backup files found.',
+    'Updated Successfully' => 'Updated Successfully',
+    'Failed to update language status. Please try again.' => 'Failed to update language status. Please try again.',
+    'Change Language Successfully' => 'Change Language Successfully',
+    'Change Language Not Successfully' => 'Change Language Not Successfully',
+    'select_at_least_one_notification_type' => 'Select at least one notification type.',
+    'invalid_type' => 'Invalid Type',
+    'session_expired' => 'Session has expired. Please log in again.',
+
+    // Status Messages
+    'profile_updated' => 'Profile Updated',
+    'profile_photo_updated' => 'Profile Photo Updated',
+    'password_updated' => 'Password Updated',
+    'item_created' => 'Item Created',
+    'item_updated' => 'Item Updated',
+    'item_deleted' => 'Item Deleted',
+    'operation_successful' => 'Operation Successful',
+    'operation_failed' => 'Operation Failed',
+    'photo_uploaded_successfully' => 'Photo Uploaded Successfully',
+    'no_photo_uploaded' => 'No Photo Uploaded',
+    'changes_saved' => 'Changes Saved',
+
+    // Error Messages
+    'error_occurred' => 'Error Occurred',
+    'access_denied' => 'Access Denied',
+    'not_found' => 'Not Found',
+    'invalid_credentials' => 'Invalid Credentials',
+    'invalid_input' => 'Invalid Input',
+    'validation_error' => 'Validation Error',
+    'server_error' => 'Server Error',
+
+    // Type Creation
+    'type_created' => ':type Created',
+    'type_created_by' => ':record_name has been added to :type_name by :user_name',
+    'type_creation_failed' => ':type Creation Failed',
+    'type_updated' => ':type Updated',
+    'type_updated_by' => ':record_name from :type_name has been updated by :user_name',
+    'type_updated_count' => ':count :type Updated',
+    'type_update_failed' => ':type Update Failed',
+    'type_deleted' => ':type Deleted',
+    'type_deleted_by' => ':record_name from :type_name has been deleted by :user_name',
+    'type_deleted_count' => ':count :type Deleted',
+    'type_deletion_failed' => ':type Deletion Failed',
+    'type_not_found' => 'Not found :type',
+    'not_found_this_type' => 'Not found this :type',
+    'invalid_model_specified' => 'Invalid model specified.',
+    'no_items_selected' => 'No items selected.',
+    'selected_items_deleted' => 'Selected items deleted successfully. :count items removed.',
+
+    // User Creation
+    'user_created' => 'User Created',
+    'user_creation_failed' => 'User Creation Failed',
+    'user_updated' => 'User Updated',
+    'user_update_failed' => 'User Update Failed',
+    'user_deleted' => 'User Deleted',
+    'user_deletion_failed' => 'User Deletion Failed',
+
+    // Currency Management
+    'currency_created' => 'Currency Created',
+    'currency_creation_failed' => 'Currency Creation Failed',
+    'currency_updated' => 'Currency Updated',
+    'currency_update_failed' => 'Currency Update Failed',
+    'currency_deleted' => 'Currency Deleted',
+    'currency_deletion_failed' => 'Currency Deletion Failed',
+
+    // Country Management
+    'country_created' => 'Country Created',
+    'country_creation_failed' => 'Country Creation Failed',
+    'country_updated' => 'Country Updated',
+    'country_update_failed' => 'Country Update Failed',
+    'country_deleted' => 'Country Deleted',
+    'country_deletion_failed' => 'Country Deletion Failed',
+
+    // City Management
+    'city_created' => 'City Created',
+    'city_creation_failed' => 'City Creation Failed',
+    'city_updated' => 'City Updated',
+    'city_update_failed' => 'City Update Failed',
+    'city_deleted' => 'City Deleted',
+    'city_deletion_failed' => 'City Deletion Failed',
+
+    // Language Management
+    'created_language_successfully' => 'Language created successfully.',
+    'created_not_language_successfully' => 'Language not created successfully.',
+    'change_language_successfully' => 'Language changed successfully.',
+    'change_language_not_successfully' => 'Language change not successful.',
+    'language_deleted_successfully' => 'Language deleted successfully.',
+    'language_deletion_failed' => 'Language deletion failed.',
+
+    // Restaurant Management
+    'restaurant_created' => 'Restaurant Created',
+    'restaurant_creation_failed' => 'Restaurant Creation Failed',
+    'restaurant_updated' => 'Restaurant Updated',
+    'restaurant_update_failed' => 'Restaurant Update Failed',
+    'restaurant_deleted' => 'Restaurant Deleted',
+    'restaurant_deletion_failed' => 'Restaurant Deletion Failed',
+    'general_error' => 'An error occurred. Please try again.',
+
+    'the crossing port code must be unique.' => 'The Crossing/Port code must be unique.',
+    'the crossing port name is required.' => 'The Crossing/Port name is required.',
+    'the crossing port type is required.' => 'The Crossing/Port type is required.',
+    'the selected crossing port type is invalid.' => 'The selected Crossing/Port type is invalid.',
+    'latitude must be between -90 and 90.' => 'Latitude must be between -90 and 90.',
+    'longitude must be between -180 and 180.' => 'Longitude must be between -180 and 180.',
+    'closing time must be after opening time.' => 'Closing time must be after opening time.',
+    'capacity must be at least 1.' => 'Capacity must be at least 1.',
+];

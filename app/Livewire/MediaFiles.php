@@ -91,7 +91,7 @@ class MediaFiles extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('main.messages.type_deleted_count', ['type' => __('main.files'), 'count' => count($files)]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.files'), 'count' => count($files)]),
         ]);
         $this->dispatch('refreshComponent');
     }

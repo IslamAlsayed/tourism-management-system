@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SystemLanguage;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use App\Http\Requests\SystemLanguageCreateRequest;
 
@@ -32,17 +33,17 @@ class SystemLanguageController extends Controller
         if ($language) {
             $this->loadActiveLanguages();
             $this->uploadPhoto($request, $language, 'photo', "languages");
-            return redirect()->route('languages.index')->with('success', __('main.messages.type_created', ['type' => __('main.language')]));
+            return redirect()->route('languages.index')->withSuccess(__('messages.type_created', ['type' => __('main.language')]));
         }
 
-        return redirect()->route('nationalities.index')->with('error', __('main.messages.type_creation_failed', ['type' => __('main.language')]));
+        return redirect()->route('nationalities.index')->withError(__('messages.type_creation_failed', ['type' => __('main.language')]));
     }
 
     public function edit($id)
     {
         $language = SystemLanguage::find($id);
         if (!$language) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.language')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.language')]));
         }
         return view('pages.dashboard.system-languages.edit', compact('language'));
     }
@@ -53,17 +54,24 @@ class SystemLanguageController extends Controller
             $this->loadActiveLanguages();
             session()->put('locale', $locale);
             App::setLocale($locale);
-            return redirect()->back()->withSuccess(__('main.messages.change_language_successfully'));
+
+            // Save user's preferred locale to database
+            $user = Auth::user();
+            if ($user) {
+                $user->update(['preferred_language' => $locale]);
+            }
+
+            return redirect()->back()->withSuccess(__('messages.change_language_successfully'));
         }
 
-        return redirect()->back()->withError(__('main.messages.change_language_not_successfully'));
+        return redirect()->back()->withError(__('messages.change_language_not_successfully'));
     }
 
     public function destroy($id)
     {
         $language = SystemLanguage::find($id);
         if (!$language) {
-            return redirect()->back()->with('error', __('main.messages.not_found_this_type', ['type' => __('main.language')]));
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.language')]));
         }
         if ($language->code == app()->getLocale()) {
             $this->locale(array_rand(config('languages.system_languages')));
@@ -71,10 +79,10 @@ class SystemLanguageController extends Controller
         $deleted = $language->delete();
         if ($deleted) {
             $this->deletePhoto($language, 'flag');
-            return redirect()->route('system-languages.index')->with('success', __('main.messages.type_deleted', ['type' => __('main.language')]));
+            return redirect()->route('system-languages.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.language')]));
         }
 
-        return redirect()->route('system-languages.index')->with('error', __('main.messages.type_deletion_failed', ['type' => __('main.language')]));
+        return redirect()->route('system-languages.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.language')]));
     }
 
     public function loadActiveLanguages()
@@ -83,7 +91,7 @@ class SystemLanguageController extends Controller
         Config::set('languages.system_languages', $languages);
     }
 
-    public static function isActiveLocale($locale): bool
+    public static function isActiveLocale($locale)
     {
         return array_key_exists($locale, config('languages.system_languages'));
     }

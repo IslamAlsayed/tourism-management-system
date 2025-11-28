@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +14,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasSearch, HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasSearch, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasSearch, HasFactory, Notifiable, FiltersByUserRole;
 
     /**
      * The attributes that are mass assignable.
@@ -45,6 +48,7 @@ class User extends Authenticatable
         'is_admin',
         'is_active',
         'is_verified',
+        'password_changed_at',
         'force_password_change',
         'last_login_at',
         'last_login_ip',
@@ -101,6 +105,21 @@ class User extends Authenticatable
         ];
     }
 
+    public function scopeIsAdmin($query)
+    {
+        return $query->where('is_admin', true);
+    }
+
+    public function scopeIsNotAdmin($query)
+    {
+        return $query->where('is_admin', 0);
+    }
+
+    public function scopeWithNotMe($query)
+    {
+        return $query->where('id', '!=', getActiveUser()?->id);
+    }
+
     public function setPasswordAttribute($value)
     {
         if (!empty($value)) {
@@ -146,6 +165,16 @@ class User extends Authenticatable
         }
 
         return count($parts) ? implode(', ', $parts) : '0 ' . __('main.days');
+    }
+
+    public function getHumanLastLoginAtAttribute()
+    {
+        return $this->last_login_at ? \Carbon\Carbon::parse($this->last_login_at)->diffForHumans() : null;
+    }
+
+    public function getHumanPasswordChangedAtAttribute()
+    {
+        return $this->password_changed_at ? \Carbon\Carbon::parse($this->password_changed_at)->diffForHumans() : null;
     }
 
     /**

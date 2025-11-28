@@ -39,7 +39,7 @@
                             'columnName' => 'photo',
                         ])
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Site Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
@@ -120,7 +120,7 @@
                             ])
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Phone -->
                             <div class="">
                                 <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
@@ -232,160 +232,219 @@
 
                         <!-- Facilities -->
                         <div class="mb-4">
-                            <h4 class="mb-2 font-semibold">{{ __('main.facilities') }}</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <h3 class="mb-2 font-semibold">{{ __('main.facilities') }}</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="facilities[wheelchair_accessible]"
-                                        id="wheelchair_accessible" class="kt-checkbox" value="wheelchair_accessible">
-                                    <label for="wheelchair_accessible"
-                                        class="kt-label mb-0">{{ __('main.wheelchair_accessible') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[wheelchair_accessible]',
+                                        'id' => 'facilities[wheelchair_accessible]',
+                                        'value' => '1',
+                                        'label' => __('main.wheelchair_accessible'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="facilities[free_wifi]" id="free_wifi"
-                                        class="kt-checkbox" value="free_wifi">
-                                    <label for="free_wifi" class="kt-label mb-0">{{ __('main.free_wifi') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[free_wifi]',
+                                        'id' => 'facilities[free_wifi]',
+                                        'value' => '1',
+                                        'label' => __('main.free_wifi'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="facilities[parking]" id="parking" class="kt-checkbox"
-                                        value="parking">
-                                    <label for="parking" class="kt-label mb-0">{{ __('main.parking') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[parking]',
+                                        'id' => 'facilities[parking]',
+                                        'value' => '1',
+                                        'label' => __('main.parking'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="facilities[restrooms]" id="restrooms"
-                                        class="kt-checkbox" value="restrooms">
-                                    <label for="restrooms" class="kt-label mb-0">{{ __('main.restrooms') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[restrooms]',
+                                        'id' => 'facilities[restrooms]',
+                                        'value' => '1',
+                                        'label' => __('main.restrooms'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="facilities[restaurants]" id="restaurants"
-                                        class="kt-checkbox" value="restaurants">
-                                    <label for="restaurants" class="kt-label mb-0">{{ __('main.restaurants') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[restaurants]',
+                                        'id' => 'facilities[restaurants]',
+                                        'value' => '1',
+                                        'label' => __('main.restaurants'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="facilities[gift_shop]" id="gift_shop"
-                                        class="kt-checkbox" value="gift_shop">
-                                    <label for="gift_shop" class="kt-label mb-0">{{ __('main.gift_shop') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[gift_shop]',
+                                        'id' => 'facilities[gift_shop]',
+                                        'value' => '1',
+                                        'label' => __('main.gift_shop'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="facilities[guided_tours]" id="guided_tours"
-                                        class="kt-checkbox" value="guided_tours">
-                                    <label for="guided_tours" class="kt-label mb-0">{{ __('main.guided_tours') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[guided_tours]',
+                                        'id' => 'facilities[guided_tours]',
+                                        'value' => '1',
+                                        'label' => __('main.guided_tours'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="facilities[audio_guide]" id="audio_guide"
-                                        class="kt-checkbox" value="audio_guide">
-                                    <label for="audio_guide" class="kt-label mb-0">{{ __('main.audio_guide') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'facilities[audio_guide]',
+                                        'id' => 'facilities[audio_guide]',
+                                        'value' => '1',
+                                        'label' => __('main.audio_guide'),
+                                    ])
                                 </div>
                             </div>
                         </div>
 
                         <!-- Activities -->
                         <div class="mb-4">
-                            <h4 class="mb-2 font-semibold">{{ __('main.activities') }}</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <h3 class="mb-2 font-semibold">{{ __('main.activities') }}</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="activities[photography]" id="photography"
-                                        class="kt-checkbox" value="photography">
-                                    <label for="photography" class="kt-label mb-0">{{ __('main.photography') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'activities[photography]',
+                                        'id' => 'activities[photography]',
+                                        'value' => '1',
+                                        'label' => __('main.photography'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="activities[hiking]" id="hiking" class="kt-checkbox"
-                                        value="hiking">
-                                    <label for="hiking" class="kt-label mb-0">{{ __('main.hiking') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'activities[hiking]',
+                                        'id' => 'activities[hiking]',
+                                        'value' => '1',
+                                        'label' => __('main.hiking'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="activities[swimming]" id="swimming"
-                                        class="kt-checkbox" value="swimming">
-                                    <label for="swimming" class="kt-label mb-0">{{ __('main.swimming') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'activities[swimming]',
+                                        'id' => 'activities[swimming]',
+                                        'value' => '1',
+                                        'label' => __('main.swimming'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="activities[camping]" id="camping" class="kt-checkbox"
-                                        value="camping">
-                                    <label for="camping" class="kt-label mb-0">{{ __('main.camping') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'activities[camping]',
+                                        'id' => 'activities[camping]',
+                                        'value' => '1',
+                                        'label' => __('main.camping'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="activities[shopping]" id="shopping"
-                                        class="kt-checkbox" value="shopping">
-                                    <label for="shopping" class="kt-label mb-0">{{ __('main.shopping') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'activities[shopping]',
+                                        'id' => 'activities[shopping]',
+                                        'value' => '1',
+                                        'label' => __('main.shopping'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="activities[dining]" id="dining" class="kt-checkbox"
-                                        value="dining">
-                                    <label for="dining" class="kt-label mb-0">{{ __('main.dining') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'activities[dining]',
+                                        'id' => 'activities[dining]',
+                                        'value' => '1',
+                                        'label' => __('main.dining'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="activities[entertainment]" id="entertainment"
-                                        class="kt-checkbox" value="entertainment">
-                                    <label for="entertainment"
-                                        class="kt-label mb-0">{{ __('main.entertainment') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'activities[entertainment]',
+                                        'id' => 'activities[entertainment]',
+                                        'value' => '1',
+                                        'label' => __('main.entertainment'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="activities[educational_tours]" id="educational_tours"
-                                        class="kt-checkbox" value="educational_tours">
-                                    <label for="educational_tours"
-                                        class="kt-label mb-0">{{ __('main.educational_tours') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'activities[educational_tours]',
+                                        'id' => 'activities[educational_tours]',
+                                        'value' => '1',
+                                        'label' => __('main.educational_tours'),
+                                    ])
                                 </div>
                             </div>
                         </div>
 
                         <!-- Services -->
                         <div class="mb-4">
-                            <h4 class="mb-2 font-semibold">{{ __('main.services') }}</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <h3 class="mb-2 font-semibold">{{ __('main.services') }}</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="services[translation]" id="translation"
-                                        class="kt-checkbox" value="translation">
-                                    <label for="translation" class="kt-label mb-0">{{ __('main.translation') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'services[translation]',
+                                        'id' => 'services[translation]',
+                                        'value' => '1',
+                                        'label' => __('main.translation'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="services[special_events]" id="special_events"
-                                        class="kt-checkbox" value="special_events">
-                                    <label for="special_events"
-                                        class="kt-label mb-0">{{ __('main.special_events') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'services[special_events]',
+                                        'id' => 'services[special_events]',
+                                        'value' => '1',
+                                        'label' => __('main.special_events'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="services[group_bookings]" id="group_bookings"
-                                        class="kt-checkbox" value="group_bookings">
-                                    <label for="group_bookings"
-                                        class="kt-label mb-0">{{ __('main.group_bookings') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'services[group_bookings]',
+                                        'id' => 'services[group_bookings]',
+                                        'value' => '1',
+                                        'label' => __('main.group_bookings'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="services[online_booking]" id="online_booking"
-                                        class="kt-checkbox" value="online_booking">
-                                    <label for="online_booking"
-                                        class="kt-label mb-0">{{ __('main.online_booking') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'services[online_booking]',
+                                        'id' => 'services[online_booking]',
+                                        'value' => '1',
+                                        'label' => __('main.online_booking'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="services[mobile_app]" id="mobile_app"
-                                        class="kt-checkbox" value="mobile_app">
-                                    <label for="mobile_app" class="kt-label mb-0">{{ __('main.mobile_app') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'services[mobile_app]',
+                                        'id' => 'services[mobile_app]',
+                                        'value' => '1',
+                                        'label' => __('main.mobile_app'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
-                                    <input type="checkbox" name="services[virtual_tours]" id="virtual_tours"
-                                        class="kt-checkbox" value="virtual_tours">
-                                    <label for="virtual_tours"
-                                        class="kt-label mb-0">{{ __('main.virtual_tours') }}</label>
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'services[virtual_tours]',
+                                        'id' => 'services[virtual_tours]',
+                                        'value' => '1',
+                                        'label' => __('main.virtual_tours'),
+                                    ])
                                 </div>
                             </div>
                         </div>

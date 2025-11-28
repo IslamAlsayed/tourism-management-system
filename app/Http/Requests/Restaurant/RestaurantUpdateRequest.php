@@ -47,7 +47,7 @@ class RestaurantUpdateRequest extends FormRequest
             'email_01' => ['nullable', 'email', 'max:255'],
             'email_02' => ['nullable', 'email', 'max:255'],
             'box' => ['nullable', 'string', 'max:255'],
-            'postal_code' => ['nullable', 'string', 'max:50', Rule::unique('restaurants', 'postal_code')->ignore($this->route('restaurant')->id)],
+            'postal_code' => ['nullable', 'string', 'max:50', Rule::unique('restaurants', 'postal_code')->ignore($this->route('restaurant'))],
             'street' => ['nullable', 'string', 'max:255'],
             'mobile' => ['nullable', 'string', 'max:20'],
             'website' => ['nullable', 'string', 'max:255'],

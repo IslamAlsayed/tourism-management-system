@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
-@section('title', 'Create New Vehicle')
+@section('title', __('main.create_type', ['type' => __('main.vehicle')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    Create New Vehicle
+                    {{ __('main.create_type', ['type' => __('main.vehicle')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    Add a new vehicle to the system
+                    {{ __('main.create_type_description', ['type' => __('main.vehicle')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="#" class="kt-btn kt-btn-outline">
-                    Back to Vehicles
+                <a href="{{ route('subregions.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_types', ['types' => __('main.subregions')]) }}
                 </a>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <!-- Vehicle Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">Basic Information</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.subregion')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form class="space-y-6 p-4">
@@ -211,54 +211,85 @@
                             <h4 class="mb-2 font-semibold">{{ __('main.features') }}</h4>
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="air_conditioning" class="kt-checkbox"
-                                        value="air_conditioning">
-                                    <label for="air_conditioning" class="kt-label mb-0">Air Conditioning</label>
+                                    <input type="hidden" name="features[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'features[]',
+                                        'id' => 'air_conditioning',
+                                        'value' => '1',
+                                        'label' => __('main.air_conditioning'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="wifi" class="kt-checkbox"
-                                        value="wifi">
-                                    <label for="wifi" class="kt-label mb-0">WiFi</label>
+                                    <input type="hidden" name="features[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'features[]',
+                                        'id' => 'wifi',
+                                        'value' => '1',
+                                        'label' => __('main.free_wifi'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="entertainment" class="kt-checkbox"
-                                        value="entertainment">
-                                    <label for="entertainment" class="kt-label mb-0">Entertainment System</label>
+                                    <input type="hidden" name="features[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'features[]',
+                                        'id' => 'entertainment',
+                                        'value' => '1',
+                                        'label' => __('main.entertainment'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="usb_ports" class="kt-checkbox"
-                                        value="usb_ports">
-                                    <label for="usb_ports" class="kt-label mb-0">USB Ports</label>
+                                    <input type="hidden" name="features[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'features[]',
+                                        'id' => 'usb_ports',
+                                        'value' => '1',
+                                        'label' => __('main.usb_ports'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="gps" class="kt-checkbox"
-                                        value="gps">
-                                    <label for="gps" class="kt-label mb-0">GPS Navigation</label>
+                                    <input type="hidden" name="features[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'features[]',
+                                        'id' => 'gps',
+                                        'value' => '1',
+                                        'label' => __('main.gps'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="camera" class="kt-checkbox"
-                                        value="camera">
-                                    <label for="camera" class="kt-label mb-0">Backup Camera</label>
+                                    <input type="hidden" name="features[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'features[]',
+                                        'id' => 'camera',
+                                        'value' => '1',
+                                        'label' => __('main.camera'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="safety" class="kt-checkbox"
-                                        value="safety">
-                                    <label for="safety" class="kt-label mb-0">Safety Equipment</label>
+                                    <input type="hidden" name="features[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'features[]',
+                                        'id' => 'safety',
+                                        'value' => '1',
+                                        'label' => __('main.safety'),
+                                    ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="features[]" id="wheelchair" class="kt-checkbox"
-                                        value="wheelchair">
-                                    <label for="wheelchair" class="kt-label mb-0">Wheelchair Accessible</label>
+                                    <input type="hidden" name="features[]" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'features[]',
+                                        'id' => 'wheelchair',
+                                        'value' => '1',
+                                        'label' => __('main.wheelchair'),
+                                    ])
                                 </div>
                             </div>
                         </div>
 
                         <!-- Notes -->
-                        <div class="mb-4">
-                            <label for="notes" class="kt-label mb-2">Notes</label>
-                            <input id="notes" type="hidden" name="notes" value="{{ old('notes') }}">
-                            <trix-editor input="notes"></trix-editor>
-                        </div>
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'notes',
+                            'value' => old('notes'),
+                        ])
 
                         <!-- Submit Buttons -->
                         <div class="flex items-center gap-4 pt-4">
