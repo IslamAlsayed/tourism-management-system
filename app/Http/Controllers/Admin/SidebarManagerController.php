@@ -116,12 +116,12 @@ class SidebarManagerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'تم تحديث ترتيب القائمة بنجاح'
+                'message' => __('messages.sidebar_order_updated')
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'حدث خطأ في تحديث الترتيب: ' . $e->getMessage()
+                'message' => __('messages.sidebar_order_update_error', ['error' => $e->getMessage()])
             ], 500);
         }
     }
@@ -153,12 +153,12 @@ class SidebarManagerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $request->is_visible ? 'تم إظهار العنصر' : 'تم إخفاء العنصر'
+                'message' => $request->is_visible ? __('messages.sidebar_item_shown') : __('messages.sidebar_item_hidden')
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'حدث خطأ: ' . $e->getMessage()
+                'message' => __('messages.error_occurred') . ': ' . $e->getMessage()
             ], 500);
         }
     }
@@ -174,12 +174,12 @@ class SidebarManagerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'تم إعادة تعيين القائمة للترتيب الافتراضي'
+                'message' => __('messages.sidebar_reset_default')
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'حدث خطأ في إعادة التعيين: ' . $e->getMessage()
+                'message' => __('messages.sidebar_reset_error', ['error' => $e->getMessage()])
             ], 500);
         }
     }
@@ -200,11 +200,11 @@ class SidebarManagerController extends Controller
             ];
 
             return response()->json($exportData)
-                          ->header('Content-Disposition', 'attachment; filename="sidebar-config-' . date('Y-m-d-H-i-s') . '.json"');
+                ->header('Content-Disposition', 'attachment; filename="sidebar-config-' . date('Y-m-d-H-i-s') . '.json"');
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'حدث خطأ في التصدير: ' . $e->getMessage()
+                'message' => __('messages.sidebar_export_error', ['error' => $e->getMessage()])
             ], 500);
         }
     }

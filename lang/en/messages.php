@@ -23,6 +23,7 @@ return [
     'profile_updated' => 'Profile Updated',
     'profile_photo_updated' => 'Profile Photo Updated',
     'password_updated' => 'Password Updated',
+    'verification_link_sent' => 'Verification link sent to your email.',
     'item_created' => 'Item Created',
     'item_updated' => 'Item Updated',
     'item_deleted' => 'Item Deleted',
@@ -56,6 +57,7 @@ return [
     'type_not_found' => 'Not found :type',
     'not_found_this_type' => 'Not found this :type',
     'invalid_model_specified' => 'Invalid model specified.',
+    'ably_key_not_configured' => 'Ably key not configured, skipping Ably broadcast.',
     'no_items_selected' => 'No items selected.',
     'selected_items_deleted' => 'Selected items deleted successfully. :count items removed.',
 
@@ -108,6 +110,15 @@ return [
     'restaurant_deletion_failed' => 'Restaurant Deletion Failed',
     'general_error' => 'An error occurred. Please try again.',
 
+    // Sidebar management
+    'sidebar_order_updated' => 'Sidebar order updated successfully.',
+    'sidebar_order_update_error' => 'Error updating sidebar order: :error',
+    'sidebar_item_shown' => 'Menu item shown.',
+    'sidebar_item_hidden' => 'Menu item hidden.',
+    'sidebar_reset_default' => 'Sidebar reset to default order.',
+    'sidebar_reset_error' => 'Error resetting sidebar: :error',
+    'sidebar_export_error' => 'Error exporting sidebar config: :error',
+
     'the crossing port code must be unique.' => 'The Crossing/Port code must be unique.',
     'the crossing port name is required.' => 'The Crossing/Port name is required.',
     'the crossing port type is required.' => 'The Crossing/Port type is required.',
@@ -116,4 +127,10 @@ return [
     'longitude must be between -180 and 180.' => 'Longitude must be between -180 and 180.',
     'closing time must be after opening time.' => 'Closing time must be after opening time.',
     'capacity must be at least 1.' => 'Capacity must be at least 1.',
+    // Notification messages
+    'notification_marked_read' => 'Notification marked as read.',
+    'notification_marked_unread' => 'Notification marked as unread.',
+    'all_notifications_marked_read' => 'All notifications marked as read.',
+    'notification_deleted' => 'Notification deleted.',
+    'backup_created_test' => 'Backup created successfully (test mode).',
 ];

@@ -47,7 +47,7 @@ class MediaFileController extends Controller
             }
         }
 
-        return redirect()->route('media-files.index')->withSuccess(__('main..messages.type_updated_count', ['type' => __('main.files'), 'count' => count($uploadedFiles)]));
+        return redirect()->route('media-files.index')->withSuccess(__('messages.type_updated_count', ['type' => __('main.files'), 'count' => count($uploadedFiles)]));
     }
 
 

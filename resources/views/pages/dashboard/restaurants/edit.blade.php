@@ -355,10 +355,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
+                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
+                filterByForeignId("subregion_id", "country", "country_id", "edit");
+                filterByForeignId("country_id", "state", "state_id", "edit");
+                filterByForeignId("state_id", "city", "city_id", "edit");
             }, 500);
         });
     </script>

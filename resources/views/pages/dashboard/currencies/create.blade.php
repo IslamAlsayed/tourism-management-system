@@ -59,7 +59,7 @@
                             <div class="mb-3">
                                 <label for="symbol"
                                     class="kt-label required mb-2">{{ __('main.currency_symbol') }}</label>
-                                <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]" max="5"
+                                <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]" maxLength="5"
                                     required value="{{ old('symbol') }}">
                                 @error('symbol')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

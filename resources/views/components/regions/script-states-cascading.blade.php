@@ -7,12 +7,6 @@
             const getSelect = (id) => document.getElementById(id);
             const getInput = (key) => document.querySelector(`[data-for='${key}'] .tag-input`);
 
-            const getSelectedIds = (name) => {
-                return [...document.querySelectorAll(`input[name='${name}']`)]
-                    .map(input => input.value)
-                    .filter(v => v !== "");
-            };
-
             const loadData = async (fromId, model, toId, value, append = false) => {
                 const ref = filterByForeignId(fromId, model, toId);
                 if (ref && typeof ref.loadReferenceData === "function") {

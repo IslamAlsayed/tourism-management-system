@@ -26,15 +26,19 @@ class StateController extends Controller
     public function store(StateCreateRequest $request)
     {
         $validated = $request->validated();
+        if ($request['state_id']) {
+            $validated['state_id'] = array_unique($validated['state_id']);
+        }
+        if ($request['city_id']) {
+            $validated['city_id'] = array_unique($validated['city_id']);
+        }
         $state = State::create($validated);
-
         if ($state) {
             if ($request->has('save_and_add')) {
                 return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.state')]));
             }
             return redirect()->route('states.index')->withSuccess(__('messages.type_created', ['type' => __('main.state')]));
         }
-
         return redirect()->route('states.index')->withError(__('messages.type_creation_failed', ['type' => __('main.state')]));
     }
 
@@ -56,12 +60,16 @@ class StateController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         }
         $validated = $request->validated();
-
+        if ($request['state_id']) {
+            $validated['state_id'] = array_unique($validated['state_id']);
+        }
+        if ($request['city_id']) {
+            $validated['city_id'] = array_unique($validated['city_id']);
+        }
         $updated = $state->update($validated);
         if ($updated) {
             return redirect()->route('states.index')->withSuccess(__('messages.type_updated', ['type' => __('main.state')]));
         }
-
-        return redirect()->back()->withError(__('messages.type_updated_failed', ['type' => __('main.state')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.state')]));
     }
 }

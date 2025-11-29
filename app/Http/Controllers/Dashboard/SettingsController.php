@@ -105,7 +105,7 @@ class SettingsController extends Controller
         // هنا يمكن إضافة منطق النسخ الاحتياطي الفعلي
         Cache::put('last_backup_date', now()->format('Y-m-d H:i:s'));
 
-        return back()->withSuccess('تم إنشاء النسخة الاحتياطية بنجاح، ولكن تجربة وليس بشكل فعلي!');
+        return back()->withSuccess(__('messages.backup_created_test'));
     }
 
     private function getBackupSize()

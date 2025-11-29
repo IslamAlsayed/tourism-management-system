@@ -25,6 +25,6 @@ class PasswordController extends Controller
             'ip_address' => $request->ip(),
             'update_time' => now()->toDateTimeString(),
         ])->log('Password has been updated');
-        return back()->with('status', 'password-updated');
+        return back()->with('status', __('messages.password_updated'));
     }
 }

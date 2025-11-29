@@ -249,8 +249,90 @@
                 </div>
             </form>
 
+
+            <!-- Notification Channels -->
+            <form method="POST" action="{{ route('settings.update', $settings->id) }}" id="notification-channels-form">
+                @csrf
+                @method('PUT')
+
+                <div class="kt-card mb-4">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.notification_channels') }}</h3>
+                    </div>
+                    <div class="kt-card-body">
+                        <div class="space-y-4 p-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                                <div class="kt-card p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="font-semibold">{{ __('main.email_notifications') }}</div>
+                                            <div class="text-sm text-secondary-foreground">
+                                                {{ __('main.receive_notifications_via_email') }}
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="app_email_notifications" value="0" />
+                                        @include('components.elements.checkbox-button', [
+                                            'name' => 'app_email_notifications',
+                                            'id' => 'app_email_notifications',
+                                            'value' => 1,
+                                            'checked' => $settings->app_email_notifications == 1,
+                                        ])
+                                    </div>
+                                </div>
+
+                                <div class="kt-card p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="font-semibold">{{ __('main.push_notifications') }}</div>
+                                            <div class="text-sm text-secondary-foreground">
+                                                {{ __('main.instant_browser_notifications') }}
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="app_push_notifications" value="0" />
+                                        @include('components.elements.checkbox-button', [
+                                            'name' => 'app_push_notifications',
+                                            'id' => 'app_push_notifications',
+                                            'value' => 1,
+                                            'checked' => $settings->app_push_notifications == 1,
+                                        ])
+                                    </div>
+                                </div>
+
+                                <div class="kt-card disabled p-4"
+                                    style="background: var(--color-{{ $settings->app_sms_notifications == 1 ? '' : 'yellow' }}-100);">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="font-semibold">{{ __('main.sms_notifications') }}</div>
+                                            <div class="text-sm text-secondary-foreground">
+                                                {{ __('main.receive_notifications_via_sms') }}
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="app_sms_notifications" value="0" />
+                                        @include('components.elements.checkbox-button', [
+                                            'name' => 'app_sms_notifications',
+                                            'id' => 'app_sms_notifications',
+                                            'value' => 1,
+                                            'checked' => $settings->app_sms_notifications == 1,
+                                        ])
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex items-center justify-start gap-4 px-6 pb-6">
+                        <button type="submit" form="notification-channels-form" class="kt-btn kt-btn-primary">
+                            <i class="fas fa-check text-sm me-2"></i>
+                            {{ __('main.save') }}
+                        </button>
+                    </div>
+                </div>
+            </form>
+
             {{-- Notification Types --}}
-            <form method="POST" action="{{ route('settings.update', $settings->id) }}" id="notification-types-form">
+            <form method="POST" action="{{ route('settings.update', $settings->id) }}" id="notification-types-form"
+                class="disabled-option">
                 @csrf
                 @method('PUT')
 
@@ -359,86 +441,6 @@
                     <!-- Submit Button -->
                     <div class="flex items-center justify-start gap-4 px-6 pb-6">
                         <button type="submit" form="notification-types-form" class="kt-btn kt-btn-primary">
-                            <i class="fas fa-check text-sm me-2"></i>
-                            {{ __('main.save') }}
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-            <!-- Notification Channels -->
-            <form method="POST" action="{{ route('settings.update', $settings->id) }}" id="notification-channels-form">
-                @csrf
-                @method('PUT')
-
-                <div class="kt-card mb-4">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.notification_channels') }}</h3>
-                    </div>
-                    <div class="kt-card-body">
-                        <div class="space-y-4 p-4">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-                                <div class="kt-card p-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.email_notifications') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.receive_notifications_via_email') }}
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="app_email_notifications" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'app_email_notifications',
-                                            'id' => 'app_email_notifications',
-                                            'value' => 1,
-                                            'checked' => $settings->app_email_notifications == 1,
-                                        ])
-                                    </div>
-                                </div>
-
-                                <div class="kt-card p-4">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.push_notifications') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.instant_browser_notifications') }}
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="app_push_notifications" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'app_push_notifications',
-                                            'id' => 'app_push_notifications',
-                                            'value' => 1,
-                                            'checked' => $settings->app_push_notifications == 1,
-                                        ])
-                                    </div>
-                                </div>
-
-                                <div class="kt-card disabled p-4"
-                                    style="background: var(--color-{{ $settings->app_sms_notifications == 1 ? '' : 'yellow' }}-100);">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.sms_notifications') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.receive_notifications_via_sms') }}
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="app_sms_notifications" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'app_sms_notifications',
-                                            'id' => 'app_sms_notifications',
-                                            'value' => 1,
-                                            'checked' => $settings->app_sms_notifications == 1,
-                                        ])
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="flex items-center justify-start gap-4 px-6 pb-6">
-                        <button type="submit" form="notification-channels-form" class="kt-btn kt-btn-primary">
                             <i class="fas fa-check text-sm me-2"></i>
                             {{ __('main.save') }}
                         </button>

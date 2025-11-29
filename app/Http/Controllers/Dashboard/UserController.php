@@ -54,7 +54,7 @@ class UserController extends Controller
             return redirect()->route('users.index')->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
         }
 
-        return redirect()->route('users.index')->withError(__('messages.type_created', ['type' => __('main.user')]));
+        return redirect()->route('users.index')->withError(__('messages.type_creation_failed', ['type' => __('main.user')]));
     }
 
     public function edit($id)
@@ -85,10 +85,10 @@ class UserController extends Controller
             $this->uploadPhoto($request, $user, 'photo', "users");
         }
         if ($updated) {
-            return redirect()->route('users.index')->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
+            return redirect()->route('users.index')->withSuccess(__('messages.type_updated', ['type' => __('main.user')]));
         }
 
-        return redirect()->back()->withError(__('messages.type_creation_failed', ['type' => __('main.user')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.user')]));
     }
 
     public function destroy($id)
@@ -100,9 +100,9 @@ class UserController extends Controller
         $deleted = $user->delete();
         if ($deleted) {
             $this->deletePhoto($user, 'photo');
-            return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.user')]));
         }
 
-        return redirect()->back()->withError(__('messages.type_created', ['type' => __('main.user')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.user')]));
     }
 }

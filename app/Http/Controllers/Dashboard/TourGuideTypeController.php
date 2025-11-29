@@ -132,8 +132,8 @@ class TourGuideTypeController extends Controller
         }
         $deleted = $tourGuideType->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guides-type')]));
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guide-type')]));
         }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.tour-guides-type')]));
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.tour-guide-type')]));
     }
 }

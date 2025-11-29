@@ -46,7 +46,7 @@ class Notifications extends Component
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(ModelsNotification::class);
 
-        $this->typeUsers = ModelsNotification::forUser(getActiveUser()?->id)->select('user_id')->distinct()->with([
+        $this->typeUsers = ModelsNotification::targetMe(getActiveUser()->id)->select('user_id')->distinct()->with([
             'user' => fn($query) => $query->select('id', 'name'),
         ])->get()->map(function ($notification) {
             return [
@@ -58,9 +58,9 @@ class Notifications extends Component
 
     public function refreshNotifications()
     {
-        $this->allCount = ModelsNotification::forUser(getActiveUser()?->id)->count();
-        $this->unreadCount = ModelsNotification::forUser(getActiveUser()?->id)->unread()->count();
-        $this->readCount = ModelsNotification::forUser(getActiveUser()?->id)->read()->count();
+        $this->allCount = ModelsNotification::targetMe(getActiveUser()->id)->count();
+        $this->unreadCount = ModelsNotification::targetMe(getActiveUser()->id)->unread()->count();
+        $this->readCount = ModelsNotification::targetMe(getActiveUser()->id)->read()->count();
     }
 
     public function setFilter($filter)
@@ -107,7 +107,7 @@ class Notifications extends Component
 
     public function markAllAsRead()
     {
-        ModelsNotification::forUser(getActiveUser()?->id)->unread()->update([
+        ModelsNotification::targetMe(getActiveUser()->id)->unread()->update([
             'is_read' => true,
             'read_at' => now()
         ]);
@@ -152,7 +152,7 @@ class Notifications extends Component
 
     public function getNotificationsProperty()
     {
-        $query = ModelsNotification::forUser(getActiveUser()?->id)->with([
+        $query = ModelsNotification::targetMe(getActiveUser()->id)->with([
             'user' => fn($query) => $query->select('id', 'name'),
         ])->orderBy('created_at', 'desc');
 

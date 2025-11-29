@@ -19,8 +19,10 @@ class DashboardController extends Controller
     // For testing: Get references for a given model based on foreign key and its value(s)
     public function getReferencesForTest(Request $request)
     {
-        $request['model'] = 'city';
-        $request['foreignKey'] = 'state_id';
+        // $request['model'] = 'city';
+        $request['model'] = 'subregion';
+        // $request['foreignKey'] = 'state_id';
+        $request['foreignKey'] = 'region_id';
         $request['foreignKeyValue'] = [2];
 
         $validated = $request->validate([
@@ -33,7 +35,7 @@ class DashboardController extends Controller
         $modelClass = "App\\Models\\$modelName";
 
         if (!class_exists($modelClass)) {
-            return response()->json(['error' => 'Invalid model specified.'], 400);
+            return response()->json(['error' => __('messages.invalid_model_specified')], 400);
         }
 
         $query = $modelClass::query()->select('id', 'name')->orderBy('name');
@@ -71,7 +73,7 @@ class DashboardController extends Controller
         $modelClass = "App\\Models\\$modelName";
 
         if (!class_exists($modelClass)) {
-            return response()->json(['error' => 'Invalid model specified.'], 400);
+            return response()->json(['error' => __('messages.invalid_model_specified')], 400);
         }
 
         $query = $modelClass::query()->select('id', 'name')->orderBy('name');
@@ -169,7 +171,7 @@ class DashboardController extends Controller
             $ablyKey = config('app.ably_key');
             if (!$ablyKey) {
                 Log::warning('ABLY_KEY not configured, skipping Ably broadcast');
-                return response()->json(['message' => 'ABLY_KEY not configured, skipping Ably broadcast'], 500);
+                return response()->json(['message' => __('messages.ably_key_not_configured')], 500);
             }
 
             // Create notification: global or targeted

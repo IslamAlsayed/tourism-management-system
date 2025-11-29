@@ -40,11 +40,17 @@ window.specialSearch = function (selectElement) {
     // ========================================
     let selectedValue = "";
     let selectedLabel = "";
-
     let value = selectElement.value || selectElement.dataset.currentValue;
     if (value) {
+        if (selectElement.id == "country_id") {
+            // console.log(
+            //     "options",
+            //     selectElement,
+            //     selectElement.selectedOptions[0],
+            //     selectElement.selectedOptions[0].textContent,
+            // );
+        }
         searchInput.dataset.id = value;
-        // searchInput.value = value;
         searchInput.value = selectElement.selectedOptions[0].textContent.trim();
     }
 
@@ -167,7 +173,7 @@ window.specialSearch = function (selectElement) {
         const event = new CustomEvent("updatedSelect", {
             detail: { value, label },
         });
-        selectElement.dispatchEvent(event);
+        selectElement?.dispatchEvent(event);
     });
 
     function clearDependents(fromId) {

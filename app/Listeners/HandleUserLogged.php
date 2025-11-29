@@ -4,8 +4,9 @@ namespace App\Listeners;
 
 use Ably\AblyRest;
 use App\Models\User;
-use App\Events\UserLoggedEvent;
+use App\Models\Setting;
 use App\Models\Notification;
+use App\Events\UserLoggedEvent;
 use Illuminate\Support\Facades\Log;
 use Spatie\Activitylog\Models\Activity;
 
@@ -53,33 +54,73 @@ class HandleUserLogged
                 $message = __('messages.user_logged_out', ['name' => $event->user->name]);
             }
 
-            // Create notification for all users except the one who logged in/out
-            // Send global notification to all users except actor
-            if (!empty($message)) {
-                Notification::create([
-                    'user_id' => $event->user->id, // sender
-                    'type' => 'success',
-                    'message' => $message,
-                    'is_read' => 0,
-                    'is_global' => 1,
-                    'data' => json_encode(['source' => 'toast', 'messageMode' => true])
-                ]);
+            // Send notifications only to admins (create per-admin notification and publish targeted Ably message)
+            $admins = User::where('is_admin', 1)->get();
+            if ($admins->isEmpty()) {
+                try {
+                    $admins = User::whereHas('roles', function ($q) {
+                        $q->where('name', 'admin');
+                    })->get();
+                } catch (\Exception $e) {
+                    $admins = collect();
+                }
             }
 
-            // Broadcast unified data on status-record channel
-            $data = [
-                'status' => 'user_' . $status,
-                'record_name' => $event->user->name,
-                'type' => 'user',
-                'user_name' => $event->user->name,
-                'message' => $message,
-                'performer_id' => $event->user->id,
-                'activities_logs_count' => Activity::count() ?? 0,
-                'users_count' => User::count() ?? 0,
-                'notification_count' => Notification::forUser(getActiveUser()->id)->count() ?? 0,
-                'unread_notifications_count' => Notification::forUser(getActiveUser()->id)->unread->count() ?? 0,
-            ];
-            $ably->channel('status-record')->publish('record.updated', $data);
+            foreach ($admins as $admin) {
+                try {
+                    $notify = Notification::create([
+                        'performer_id' => getActiveUser()->id,
+                        'target_user_id' => $admin->id,
+                        'type' => 'info',
+                        'notification_type' => 'system',
+                        'title' => __('main.user_status'),
+                        'message' => $message,
+                        'is_read' => false,
+                        'data' => json_encode(['source' => 'status', 'messageMode' => true]),
+                        'is_global' => false,
+                    ]);
+
+                    $notify['human_created_at'] = $notify?->human_created_at;
+                } catch (\Exception $e) {
+                    Log::error('Failed to create Notification: ' . $e->getMessage());
+                    continue;
+                }
+
+                $settings = Setting::first();
+                if (!$settings)
+                    return;
+
+                // إرسال عبر Ably إذا مفعّل
+                if ($settings->app_ably_key && $settings->app_push_notifications) {
+                    try {
+                        $notification_count = Notification::targetMe($admin->id)->read()->count() ?? 0;
+                        $unread_notifications_count = Notification::targetMe($admin->id)->unread()->count() ?? 0;
+
+                        if ($unread_notifications_count > 0) {
+                            $ably = new AblyRest($settings->app_ably_key);
+                            $data = [
+                                'status' => 'user_' . $status,
+                                'record_name' => $event->user->name,
+                                'type' => 'user',
+                                'user_name' => $event->user->name,
+                                'message' => $message,
+                                'performer_id' => getActiveUser()->id,
+                                'notification_id' => $notify->id,
+                                'target_user_id' => $admin->id,
+                                'is_global' => false,
+                                'activities_logs_count' => Activity::count() ?? 0,
+                                'users_count' => User::count() ?? 0,
+                                'notification_count' => $notification_count,
+                                'unread_notifications_count' => $unread_notifications_count,
+                                'notification' => $notify ?? null,
+                            ];
+                            $ably->channel('web.push.notifications')->publish('web.push.notifications', $data);
+                        }
+                    } catch (\Exception $e) {
+                        Log::error('Failed to create/broadcast admin status notification: ' . $e->getMessage());
+                    }
+                }
+            }
 
             if (env('APP_ENV') != 'production') {
                 Log::info("Broadcasted user status via Ably", ['user_id' => $event->user->id, 'status' => $status]);

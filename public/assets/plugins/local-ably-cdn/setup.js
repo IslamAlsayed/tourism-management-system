@@ -4,9 +4,7 @@
 // });
 
 const channels = {
-    statusRecord: ably.channels.get("status-record"),
-    webPush: ably.channels.get("web-push-notifications"),
-    notifications: ably.channels.get("notifications"),
+    webPush: ably.channels.get("web.push.notifications"),
 };
 
 const currentUserId = window.USERID;
@@ -69,11 +67,6 @@ const updateDashboardCounts = (data) => {
 const handleIncoming = (data, showToast = false) => {
     if (!data) return;
 
-    // Livewire updates
-    if (window.Livewire) {
-        Livewire.dispatch("notificationCreated");
-    }
-
     // Toast (only if showToast is explicitly true and not sender)
     if (showToast && currentUserId != data.performer_id) {
         window.showToast({
@@ -85,7 +78,9 @@ const handleIncoming = (data, showToast = false) => {
 
     // Notification count (only update for non-senders)
     if (currentUserId != data.performer_id) {
-        if (data.unread_notifications_count !== undefined) {
+        // Prefer unread count when available. If unread count is not present, do not update badge
+        // to avoid briefly showing total counts (which may arrive in earlier payloads).
+        if (typeof data.unread_notifications_count !== "undefined") {
             ensureBadge(".notification-count", data.unread_notifications_count);
             showIndicator(".new-notification");
         }
@@ -97,75 +92,63 @@ const handleIncoming = (data, showToast = false) => {
 // ====== Ably Subscriptions ======
 
 let isInitialized = false; // Prevent duplicate subscriptions
+// Track inserted notification IDs to avoid duplicates across messages
+const insertedNotifications = new Set();
 
 const initListeners = () => {
-    if (isInitialized) return; // Don't initialize twice
+    if (isInitialized) return;
     isInitialized = true;
-
-    channels.statusRecord.subscribe("record.updated", async (msg) => {
-        if (!msg.data) return;
-
-        if (window.Livewire) {
-            Livewire.dispatch("recordUpdated");
-        }
-
-        // Translate and show toast only for non-performers
-        if (currentUserId != msg.data.performer_id) {
-            const response = await fetch("/api/translate-record-event", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": document.querySelector(
-                        'meta[name="csrf-token"]',
-                    ).content,
-                },
-                body: JSON.stringify(msg.data),
-            });
-
-            const result = await response.json();
-            if (result) {
-                // window.showToast({
-                //     type: "info",
-                //     message: result.message,
-                // });
-            }
-        }
-
-        handleIncoming(msg.data, false); // Don't show toast again, already shown above
-    });
 
     channels.webPush.subscribe("web.push.notifications", (msg) => {
         if (!msg.data) return;
+        if (window.settings && !window.settings.app_push_notifications) {
+            return;
+        }
         if (window.Livewire) {
-            // Livewire.dispatch("notificationCreated", { silent: true });
-            window.addEventListener("new-notification-data", (e) => {
-                const n = e.detail.notification;
-                if (!n) return;
-                const html = createNotification(n);
-                const container = document.querySelector("#notifications");
-                container.insertAdjacentHTML("afterbegin", html);
-            });
-        }
-        if (currentUserId != msg.data.performer_id) {
-            // window.showToast({
-            //     type: "success",
-            //     title: msg.data.subject || "",
-            //     message: msg.data.message,
-            // });
-            handleIncoming(msg.data, false); // Pass false to prevent duplicate toast
-        }
-    });
+            // If payload contains a notification object, try to insert it for the recipient
+            const notify = msg.data.notification;
+            const recipientId =
+                notify?.target_user_id ??
+                notify?.recipient_user_id ??
+                msg.data.target_user_id ??
+                null;
 
-    channels.notifications.subscribe("notification.created", (msg) => {
-        if (!msg.data) return;
-        if (currentUserId != msg.data.performer_id) {
-            handleIncoming(msg.data, false); // Only update counts, no toast
+            if (notify) {
+                // Only insert or update UI for notifications intended for this user
+                if (recipientId == currentUserId) {
+                    const container = document.querySelector("#notifications");
+                    if (container) {
+                        // avoid duplicate insertion using both DOM check and Set
+                        if (
+                            !insertedNotifications.has(notify.id) &&
+                            !container.querySelector(
+                                `.notification-${notify.id}`,
+                            )
+                        ) {
+                            const html = createNotification(notify);
+                            container.insertAdjacentHTML("afterbegin", html);
+                            insertedNotifications.add(notify.id);
+                        }
+                    } else {
+                        console.warn(
+                            "Notifications container '#notifications' not found. Skipping insertion.",
+                        );
+                    }
+
+                    // Update counts, show toast and animation for recipient
+                    handleIncoming(msg.data, false);
+                }
+                // If notify exists but it's for someone else, ignore entirely.
+            } else {
+                // No per-recipient notification in payload — treat as a global/dashboard update
+                if (currentUserId != msg.data.performer_id) {
+                    handleIncoming(msg.data, false);
+                }
+            }
         }
     });
 };
-
 document.addEventListener("DOMContentLoaded", initListeners);
-// Removed livewire:navigated to prevent duplicate initialization
 
 function createNotification(notification) {
     const isUnread = !notification.is_read;
@@ -195,7 +178,7 @@ function createNotification(notification) {
             </p>
         </div>
         ${
-            window.USERID == notification.recipient_user_id
+            currentUserId == notification.target_user_id
                 ? `
         <div class="flex-shrink-0 flex space-x-1">
             <div class="shrink-0 relative">

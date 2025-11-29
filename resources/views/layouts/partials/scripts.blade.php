@@ -26,6 +26,7 @@
     const ably = new Ably.Realtime({
         key: "{{ config('app.ably_key') }}",
     });
+    window.settings = @json(App\Models\Setting::first());
 </script>
 <script src="{{ asset('assets/plugins/local-ably-cdn/setup.js') }}"></script>
 

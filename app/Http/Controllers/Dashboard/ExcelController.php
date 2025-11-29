@@ -20,7 +20,7 @@ class ExcelController extends Controller
         }
         $modelClass = "App\\Models\\$modelName";
         if (!class_exists($modelClass)) {
-            return back()->withError("Invalid model: {$models}");
+            return back()->withError(__('messages.invalid_model_specified'));
         }
         $title = __('main.import_types', ['types' => __('main.' . $models)]);
         $description = __('main.import_types_description', ['types' => __('main.' . $models)]);
@@ -34,7 +34,7 @@ class ExcelController extends Controller
         $models = Str::plural(strtolower($models));
         $modelClass = "App\\Models\\{$modelName}";
         if (!class_exists($modelClass)) {
-            return back()->withError("Invalid model: {$modelName}");
+            return back()->withError(__('messages.invalid_model_specified'));
         }
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
@@ -61,6 +61,6 @@ class ExcelController extends Controller
         $modelClass = "App\\Models\\{$modelName}";
         $filename = generateUniqueFilename($models) . '.' . config('app.excel_export_format', 'xlsx');
         ExportDataJob::dispatchSync($modelClass, $filename);
-        return back()->with('status', 'Export job has been queued successfully.');
+        return back()->with('status', __('messages.operation_successful'));
     }
 }

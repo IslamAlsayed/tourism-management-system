@@ -18,7 +18,6 @@ class NotificationDropdown extends Component
         'notificationMarkedAsRead' => 'refreshNotifications',
         'allNotificationsMarkedAsRead' => 'refreshNotifications',
         'notificationDeleted' => 'refreshNotifications',
-        'notificationCreated' => 'newNotificationData',
     ];
 
     public function mount()
@@ -26,20 +25,11 @@ class NotificationDropdown extends Component
         $this->refreshNotifications();
     }
 
-    public function newNotificationData()
-    {
-        $userId = getActiveUser()?->id;
-        $lastNotification = Notification::forUser($userId)->latest()->first();
-        $lastNotification['human_created_at'] = $lastNotification?->human_created_at;
-        $this->dispatch('new-notification-data', notification: $lastNotification);
-    }
-
     public function refreshNotifications()
     {
         if (Auth::check()) {
-            $userId = getActiveUser()?->id;
-            $this->notifications = Notification::forUser($userId)->orderBy('created_at', 'desc')->limit(10)->get();
-            $this->unreadNotificationsCount = Notification::forUser($userId)->unread()->count();
+            $this->notifications = Notification::targetMe(getActiveUser()->id)->orderBy('created_at', 'desc')->limit(10)->get();
+            $this->unreadNotificationsCount = Notification::targetMe(getActiveUser()->id)->unread()->count();
         } else {
             $this->notifications = collect();
             $this->unreadNotificationsCount = 0;
@@ -75,7 +65,7 @@ class NotificationDropdown extends Component
     public function markAllAsRead()
     {
         try {
-            $updated = Notification::forUser(getActiveUser()?->id)->unread()->update([
+            $updated = Notification::targetMe(getActiveUser()->id)->unread()->update([
                 'is_read' => true,
                 'read_at' => now()
             ]);
@@ -94,7 +84,7 @@ class NotificationDropdown extends Component
     public function markAllAsReadWhenOpened()
     {
         if ($this->unreadNotificationsCount > 0) {
-            Notification::forUser(getActiveUser()?->id)->unread()->update(['is_read' => true, 'read_at' => now()]);
+            Notification::targetMe(getActiveUser()->id)->unread()->update(['is_read' => true, 'read_at' => now()]);
             $this->refreshNotifications();
             $this->dispatch('notification-readed', id: 'all');
 

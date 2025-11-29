@@ -313,3 +313,10 @@ window.getSelectedIds = function (name) {
         .map((input) => input.value)
         .filter((v) => v !== "");
 };
+
+window.getVal = function (id) {
+    return (
+        document.querySelector(`#${id}`)?.dataset.currentValue ||
+        document.querySelector(`#${id}`)?.value
+    );
+};

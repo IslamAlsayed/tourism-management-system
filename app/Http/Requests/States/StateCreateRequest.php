@@ -27,6 +27,7 @@ class StateCreateRequest extends FormRequest
 
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'string', 'exists:countries,id'],
 
             'state_id' => ['nullable'],
             'state_id.*' => ['integer', 'exists:states,id'],

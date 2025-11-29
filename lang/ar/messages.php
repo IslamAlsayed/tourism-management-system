@@ -23,6 +23,7 @@ return [
     'profile_updated' => 'تم تحديث الملف الشخصي',
     'profile_photo_updated' => 'تم تحديث صورة الملف الشخصي',
     'password_updated' => 'تم تحديث كلمة المرور',
+    'verification_link_sent' => 'تم إرسال رابط التحقق إلى بريدك الإلكتروني.',
     'item_created' => 'تم إنشاء العنصر',
     'item_updated' => 'تم تحديث العنصر',
     'item_deleted' => 'تم حذف العنصر',
@@ -56,6 +57,7 @@ return [
     'type_not_found' => 'لا يوجد :type',
     'not_found_this_type' => 'لا يوجد هذا :type',
     'invalid_model_specified' => 'نموذج غير صالح محدد.',
+    'ably_key_not_configured' => 'مفتاح Ably غير مضبوط، تم تجاوز إرسال البث',
     'no_items_selected' => 'لم يتم اختيار أي عناصر.',
     'selected_items_deleted' => 'تم حذف العناصر المحددة بنجاح. تم إزالة :count عنصر.',
 
@@ -108,6 +110,15 @@ return [
     'restaurant_deletion_failed' => 'فشل حذف المطعم',
     'general_error' => 'حدث خطأ عام. يرجى المحاولة مرة أخرى.',
 
+    // Sidebar management
+    'sidebar_order_updated' => 'تم تحديث ترتيب القائمة بنجاح',
+    'sidebar_order_update_error' => 'حدث خطأ في تحديث الترتيب: :error',
+    'sidebar_item_shown' => 'تم إظهار العنصر',
+    'sidebar_item_hidden' => 'تم إخفاء العنصر',
+    'sidebar_reset_default' => 'تم إعادة تعيين القائمة للترتيب الافتراضي',
+    'sidebar_reset_error' => 'حدث خطأ في إعادة التعيين: :error',
+    'sidebar_export_error' => 'حدث خطأ في التصدير: :error',
+
     // Crossing Port Validation Messages
     'the crossing port code must be unique.' => 'يجب أن يكون رمز المعبر/الميناء فريداً.',
     'the crossing port name is required.' => 'اسم المعبر/الميناء مطلوب.',
@@ -117,4 +128,10 @@ return [
     'longitude must be between -180 and 180.' => 'يجب أن يكون خط الطول بين -180 و 180.',
     'closing time must be after opening time.' => 'يجب أن يكون وقت الإغلاق بعد وقت الافتتاح.',
     'capacity must be at least 1.' => 'يجب أن تكون السعة 1 على الأقل.',
+    // Notification messages
+    'notification_marked_read' => 'تم وضع الإشعار كمقروء.',
+    'notification_marked_unread' => 'تم وضع الإشعار كغير مقروء.',
+    'all_notifications_marked_read' => 'تم وضع كل الإشعارات كمقروءة.',
+    'notification_deleted' => 'تم حذف الإشعار.',
+    'backup_created_test' => 'تم إنشاء النسخة الاحتياطية بنجاح (وضع تجريبي).',
 ];

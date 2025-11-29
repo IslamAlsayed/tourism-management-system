@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Notification extends Model
 {
+    use HasSearch, HasFactory, BroadcastsRecordEvents;
+
     // Notification type constants
     public const TYPE_BOOKING = 'booking';
     public const TYPE_PAYMENT = 'payment';
@@ -18,20 +20,22 @@ class Notification extends Model
     public const TYPE_SYSTEM = 'system';
     public const TYPE_PUSH = 'push';
 
-    use HasSearch, HasFactory, BroadcastsRecordEvents;
-
     protected $fillable = [
         'id',
         'user_id',
+        'performer_id',
+        'target_user_id',
         'recipient_user_id',
         'type',
         'notification_type',
         'title',
         'message',
         'is_read',
+        'read_at',
         'is_global',
         'data',
     ];
+
     /**
      * Scope for notification type
      */
@@ -98,30 +102,17 @@ class Notification extends Model
      */
     public function scopeUnread($query)
     {
-        return $query->where('is_read', false);
+        return $query->where('is_read', false)->orWhereNull('read_at');
     }
 
     public function scopeRead($query)
     {
-        return $query->where('is_read', true);
+        return $query->where('is_read', true)->whereNotNull('read_at');
     }
 
-    public function scopeForUser($query, $userId)
+    public function scopeTargetMe($query, $userId)
     {
-        // If admin, return no notifications
-        if (getActiveUser()->is_admin == 1)
-            return $query;
-
-        // Show notifications for this user: sent to him, global (not published by him), or created by him
-        return $query->where(function ($q) use ($userId) {
-            $q->where('recipient_user_id', $userId)
-                ->orWhere(function ($sub) use ($userId) {
-                    $sub->where('is_global', 1)->where('user_id', '!=', $userId);
-                })
-                ->orWhere(function ($sub) use ($userId) {
-                    $sub->where('user_id', $userId)->where('is_global', '!=', 1);
-                });
-        });
+        return $query->where('target_user_id', $userId);
     }
 
     public function scopeWithMe($query, $userId)

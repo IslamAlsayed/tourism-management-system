@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Setting;
 use App\Events\RecordEvent;
+use Illuminate\Support\Facades\Schema;
 
 trait BroadcastsRecordEvents
 {
@@ -12,64 +13,49 @@ trait BroadcastsRecordEvents
      */
     protected static function bootBroadcastsRecordEvents(): void
     {
-        // Get settings once for performance
-        $settings = null;
-        if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
-            $settings = Setting::first();
-        }
+        // Trait responsibilities: only fire RecordEvent for model lifecycle events.
+        // Unified notification creation & broadcasting lives in the HandleRecord listener.
 
         // Broadcast when a model is created
-        static::created(function ($model) use ($settings) {
-            if (!$settings || !$settings->app_notifications_new_record) {
-                return;
-            }
-
-            $user = getActiveUser();
-            if ($user && !app()->runningInConsole()) {
-                $modelType = strtolower(class_basename($model));
-                event(new RecordEvent($user, 'created', $model, $modelType));
+        static::created(function ($model) {
+            if (Schema::hasTable('settings')) {
+                $settings = Setting::first();
+                if ($settings && $settings->app_notifications_new_record == 1) {
+                    $user = getActiveUser();
+                    if ($user && !app()->runningInConsole()) {
+                        $modelType = strtolower(class_basename($model));
+                        event(new RecordEvent('created', $model, $modelType));
+                    }
+                }
             }
         });
 
         // Broadcast when a model is updated
-        static::updated(function ($model) use ($settings) {
-            if (!$settings || !$settings->app_notifications_data_updates) {
-                return;
-            }
-
-            $user = getActiveUser();
-            if ($user && !app()->runningInConsole()) {
-                $modelType = strtolower(class_basename($model));
-                event(new RecordEvent($user, 'updated', $model, $modelType));
+        static::updated(function ($model) {
+            if (Schema::hasTable('settings')) {
+                $settings = Setting::first();
+                if ($settings && $settings->app_notifications_data_updates == 1) {
+                    $user = getActiveUser();
+                    if ($user && !app()->runningInConsole()) {
+                        $modelType = strtolower(class_basename($model));
+                        event(new RecordEvent('updated', $model, $modelType));
+                    }
+                }
             }
         });
 
         // Broadcast when a model is deleted
-        static::deleted(function ($model) use ($settings) {
-            if (!$settings || !$settings->app_notifications_data_deletes) {
-                return;
-            }
-
-            $user = getActiveUser();
-            if ($user && !app()->runningInConsole()) {
-                $modelType = strtolower(class_basename($model));
-                event(new RecordEvent($user, 'deleted', $model, $modelType));
+        static::deleted(function ($model) {
+            if (Schema::hasTable('settings')) {
+                $settings = Setting::first();
+                if ($settings && $settings->app_notifications_data_deletes == 1) {
+                    $user = getActiveUser();
+                    if ($user && !app()->runningInConsole()) {
+                        $modelType = strtolower(class_basename($model));
+                        event(new RecordEvent('deleted', $model, $modelType));
+                    }
+                }
             }
         });
-
-        // Broadcast when a model is restored (soft delete)
-        // if (method_exists(static::class, 'restored')) {
-        //     static::restored(function ($model) use ($settings) {
-        //         if (!$settings || !$settings->data_updates) {
-        //             return;
-        //         }
-
-        //         $user = getActiveUser();
-        //         if ($user && !app()->runningInConsole()) {
-        //             $modelType = strtolower(class_basename($model));
-        //             event(new RecordEvent($user, 'restored', $model, $modelType));
-        //         }
-        //     });
-        // }
     }
 }

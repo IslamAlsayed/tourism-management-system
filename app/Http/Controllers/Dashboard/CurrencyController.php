@@ -59,7 +59,7 @@ class CurrencyController extends Controller
             return redirect()->route('currencies.index')->withSuccess(__('messages.type_updated', ['type' => __('main.currency')]));
         }
 
-        return redirect()->back()->withError(__('messages.type_updated_failed', ['type' => __('main.currency')]));
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.currency')]));
     }
 
     public function destroy($id)
