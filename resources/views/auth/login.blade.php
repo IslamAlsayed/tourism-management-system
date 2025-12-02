@@ -74,7 +74,8 @@
                         </a>
                     </div>
                     <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                        <input name="password" placeholder="Enter Password" type="password" value="12345678" />
+                        <input name="password" placeholder="Enter Password" type="password" value="12345678"
+                            autocomplete="off" />
                         <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                             data-kt-toggle-password-trigger="true" type="button">
                             <span class="kt-toggle-password-active:hidden">

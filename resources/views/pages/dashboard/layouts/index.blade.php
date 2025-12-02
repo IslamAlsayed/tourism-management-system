@@ -75,3 +75,39 @@
         });
     </script>
 @endpush
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let selectAll = document.getElementById("selectPage");
+            if (!selectAll) return;
+            let newSelectAll = selectAll?.cloneNode(true);
+            let checkboxes = document.querySelectorAll(".custom-input input[name='selectItem[]']");
+            selectAll.addEventListener("change", () => {
+                newSelectAll.checked = selectAll.checked;
+                checkboxes.forEach((cb) => (cb.checked = newSelectAll.checked));
+            });
+        });
+
+        window.addEventListener('reset-checkout-boxes', () => {
+            let selectAll = document.getElementById("selectPage");
+            if (!selectAll) return;
+            selectAll.checked = false;
+            let newSelectAll = selectAll?.cloneNode(false);
+            let checkboxes = document.querySelectorAll(".custom-input input[name='selectItem[]']");
+            checkboxes.forEach((cb) => (cb.checked = false));
+        });
+    </script>
+@endpush
+
+@push('scripts')
+    <script>
+        window.addEventListener('reset-filters', () => {
+            let filterTables = document.querySelectorAll('.filterTable');
+            filterTables.forEach(table => {
+                let selects = table.querySelectorAll('select');
+                selects.forEach(select => select.value = '');
+            });
+        });
+    </script>
+@endpush

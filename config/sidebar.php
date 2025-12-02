@@ -24,7 +24,6 @@ return [
         [
             'title' => 'user management',
             'icon' => 'ki-outline ki-users',
-            'status' => 'tested',
             'children' => [
                 [
                     'title' => 'all users',
@@ -49,7 +48,6 @@ return [
         [
             'title' => 'client management',
             'icon' => 'ki-outline ki-users',
-            'status' => 'tested',
             'children' => [
                 [
                     'title' => 'all clients',
@@ -74,7 +72,6 @@ return [
         [
             'title' => 'currency management',
             'icon' => 'ki-filled ki-dollar',
-            'status' => 'tested',
             'children' => [
                 [
                     'title' => 'all currencies',
@@ -99,12 +96,10 @@ return [
         [
             'title' => 'location management',
             'icon' => 'ki-filled ki-geolocation',
-            'status' => 'tested',
             'children' => [
                 [
                     'title' => 'regions',
                     'icon' => 'ki-filled ki-home-2',
-                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all regions',
@@ -125,7 +120,6 @@ return [
                 [
                     'title' => 'subregions',
                     'icon' => 'ki-filled ki-home-2',
-                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all subregions',
@@ -146,7 +140,6 @@ return [
                 [
                     'title' => 'countries',
                     'icon' => 'ki-filled ki-flag',
-                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all countries',
@@ -167,7 +160,6 @@ return [
                 [
                     'title' => 'states',
                     'icon' => 'ki-filled ki-flag',
-                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all states',
@@ -188,7 +180,6 @@ return [
                 [
                     'title' => 'cities',
                     'icon' => 'ki-filled ki-home-2',
-                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all cities',
@@ -211,7 +202,6 @@ return [
                 [
                     'title' => 'nationalities',
                     'icon' => 'ki-filled ki-home-2',
-                    'status' => 'tested',
                     'children' => [
                         [
                             'title' => 'all nationalities',
@@ -729,16 +719,13 @@ return [
         [
             'title' => 'settings',
             'icon' => 'ki-filled ki-setting-2',
-            'status' => 'new',
             'children' => [
                 [
                     'title' => 'general',
-                    'status' => 'updated',
                     'route' => 'settings.general'
                 ],
                 [
                     'title' => 'security',
-                    'status' => 'updated',
                     'route' => 'settings.security'
                 ],
                 // [
@@ -762,13 +749,11 @@ return [
                 [
                     'title' => 'integration',
                     'icon' => 'ki-filled ki-share',
-                    'status' => 'new',
                     'route' => 'settings.integration'
                 ],
                 [
                     'title' => 'system',
                     'icon' => 'ki-filled ki-gear',
-                    'status' => 'new',
                     'route' => 'settings.system'
                 ],
             ],

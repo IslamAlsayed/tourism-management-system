@@ -9,10 +9,11 @@ use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\ExportsData;
 
 class Restaurants extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -35,6 +36,58 @@ class Restaurants extends Component
         $this->safeDestroy($id, 'restaurant');
     }
 
+    public function updatedSelectPage($value)
+    {
+        $this->selectedIds = $value ? $this->currentPageDataIds()->toArray() : [];
+    }
+
+    public function updatedSelectedIds()
+    {
+        $this->selectPage = count($this->selectedIds) === $this->currentPageDataIds()->count();
+    }
+
+    protected function currentPageDataIds()
+    {
+        $paginator = Restaurant::paginate(getPaginate());
+        return $paginator->getCollection()->pluck('id');
+    }
+
+    public function deleteSelected()
+    {
+        if (empty($this->selectedIds)) {
+            return;
+        }
+
+        Restaurant::whereIn('id', $this->selectedIds)->delete();
+        $count = count($this->selectedIds);
+        $this->selectedIds = [];
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => __('messages.type_deleted_count', ['type' => __('restaurant.restaurants'), 'count' => $count]),
+        ]);
+    }
+
+    public function exportSelectedPDF()
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Restaurant::class, $cols, 'restaurants');
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
+    }
+
+    public function exportSelectedExcel($extension)
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Restaurant::class, $cols, 'restaurants', $extension);
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
+    }
+
     public function render()
     {
         $query = Restaurant::query();
@@ -45,6 +98,6 @@ class Restaurants extends Component
             $restaurant['states'] = $restaurant->states();
             $restaurant['cities'] = $restaurant->cities();
         }
-        return view('livewire.restaurants', ['data' => $data, 'totalCount' => $this->totalCount ?: Restaurant::count()]);
+        return view('livewire.restaurants', ['data' => $data, 'totalCount' => $this->totalCount ?: Restaurant::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

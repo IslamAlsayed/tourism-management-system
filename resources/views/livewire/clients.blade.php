@@ -9,17 +9,20 @@
         'showSearch' => true,
     ])
         @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
-            @include('components.columns', ['allColumns' => $allColumns ?? []])
+            @include('components.columns', [
+                'allColumns' => $allColumns ?? [],
+                'selectedIds' => $selectedIds ?? [],
+            ])
         @endif
     @endcomponent
 
-    <div class="kt-card-content px-2" wire:target="search,destroy,resetFilters,filterClientGender,filterClientStatus"
-        wire:loading.class="loading">
+    <div class="kt-card-content px-2" wire:loading.class="loading"
+        wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterClientGender,filterClientStatus">
         <!-- Filters -->
         <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
             <div>
-                <label for="gender" style="font-size: 14px;">{{ __('main.gender') }}</label>
-                <select wire:model.live="filterClientGender" id="gender" class="kt-input h-[40px] w-48 max-w-full">
+                <select wire:model.live="filterClientGender" class="kt-select h-[40px] w-48 max-w-full"
+                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.gender') }}">
                     <option value="">--</option>
                     <option value="male">{{ __('main.male') }}</option>
                     <option value="female">{{ __('main.female') }}</option>
@@ -27,8 +30,9 @@
             </div>
 
             <div>
-                <label for="client_status" style="font-size: 14px;">{{ __('main.status') }}</label>
-                <select wire:model.live="filterClientStatus" id="client_status" class="kt-input h-[40px] w-48">
+                <select wire:model.live="filterClientStatus" id="client_status"
+                    class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
+                    data-kt-select-placeholder="{{ __('main.status') }}">
                     <option value="">--</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
@@ -48,33 +52,21 @@
             @endif
         </div>
 
-        <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="clients_table">
+        <div data-kt-datatable-state-save="false" id="clients_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
                     'models' => 'clients',
+                    'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent
             </div>
 
             @if (isset($data) && !empty($data) && $data->count() > 0)
-                {{-- Enhanced Pagination Controls --}}
                 @include('includes.pagination', ['data' => $data])
             @endif
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        window.addEventListener('reset-filters', () => {
-            let filterTables = document.querySelectorAll('.filterTable');
-            filterTables.forEach(table => {
-                let selects = table.querySelectorAll('select');
-                selects.forEach(select => select.value = '');
-            });
-        });
-    </script>
-@endpush

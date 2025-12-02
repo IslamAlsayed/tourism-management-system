@@ -76,7 +76,7 @@ class Client extends Model
         // Status and preferences
         // 'status',
         'client_status',
-        'timezone',
+        'timezone_id',
         'notes',
 
         // Tracking
@@ -89,7 +89,7 @@ class Client extends Model
      */
     public function getRelationshipNames()
     {
-        return ['region', 'subregion', 'country', 'state', 'city'];
+        return ['region', 'subregion', 'country', 'state', 'city', 'timezone'];
     }
 
     /**
@@ -104,6 +104,7 @@ class Client extends Model
             'state_id',
             'city_id',
             'nationality_id',
+            'timezone_id',
         ];
     }
 
@@ -160,6 +161,11 @@ class Client extends Model
     public function nationality()
     {
         return $this->belongsTo(Nationality::class);
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     // Creator relationship

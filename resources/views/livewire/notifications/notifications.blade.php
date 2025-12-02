@@ -9,11 +9,15 @@
         'showSearch' => true,
     ])
         @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
-            @include('components.columns', ['allColumns' => $allColumns ?? []])
+            @include('components.columns', [
+                'allColumns' => $allColumns ?? [],
+                'selectedIds' => $selectedIds ?? [],
+            ])
         @endif
     @endcomponent
 
-    <div class="kt-card-content px-2" wire:target="search,destroy,setFilter,filterTypeUserId" wire:loading.class="loading">
+    <div class="kt-card-content px-2" wire:loading.class="loading"
+        wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,paginate,setFilter,filterTypeUserId">
         <!-- Filters -->
         <div class="flex flex-wrap gap-2 mb-6 filterTable">
             <button wire:click="setFilter('all')"
@@ -35,9 +39,9 @@
             </button>
 
             <div>
-                <label for="type_users" style="font-size: 14px;">{{ __('main.users') }}</label>
-                <select wire:model.live="filterTypeUserId" id="type_users" class="kt-input h-[40px] w-48 max-w-full">
-                    <option value="">{{ __('main.all_types') }}</option>
+                <select wire:model.live="filterTypeUserId" class="kt-select h-[40px] w-48 max-w-full"
+                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.users') }}">
+                    <option value="">--</option>
                     @foreach ($typeUsers as $user)
                         <option value="{{ $user['id'] }}">{{ $user['name'] }}</option>
                     @endforeach
@@ -45,9 +49,9 @@
             </div>
 
             <div>
-                <label for="type_filter" style="font-size: 14px;">{{ __('main.notification_type') }}</label>
-                <select wire:model.live="notificationType" id="type_filter" class="kt-input h-[40px] w-48 max-w-full">
-                    <option value="">{{ __('main.all_types') }}</option>
+                <select wire:model.live="notificationType" class="kt-select h-[40px] w-48 max-w-full"
+                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.notification_type') }}">
+                    <option value="">--</option>
                     <option value="system">{{ __('main.system') }}</option>
                     <option value="push">{{ __('main.push') }}</option>
                     <option value="custom">{{ __('main.custom') }}</option>
@@ -55,9 +59,9 @@
             </div>
 
             <div>
-                <label for="type_type" style="font-size: 14px;">{{ __('main.type') }}</label>
-                <select wire:model.live="type" id="type_type" class="kt-input h-[40px] w-48 max-w-full">
-                    <option value="">{{ __('main.all_types') }}</option>
+                <select wire:model.live="type" class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
+                    data-kt-select-placeholder="{{ __('main.type') }}">
+                    <option value="">--</option>
                     <option value="booking">{{ __('main.booking') }}</option>
                     <option value="payment">{{ __('main.payment') }}</option>
                     <option value="trip">{{ __('main.trip') }}</option>
@@ -78,21 +82,24 @@
             @endif
         </div>
 
-        <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="notifications_table">
-            <div class="kt-scrollable-x-auto">
-                @component('components.data-table', [
-                    'data' => $data,
-                    'columns' => $columns,
-                    'search' => $search,
-                    'models' => 'notifications',
-                ])
-                @endcomponent
-            </div>
+        <div class="kt-card-content" wire:loading.class="loading"
+            wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,paginate">
+            <div data-kt-datatable-state-save="false" id="notifications_table">
+                <div class="kt-scrollable-x-auto">
+                    @component('components.data-table', [
+                        'data' => $data,
+                        'columns' => $columns,
+                        'search' => $search,
+                        'models' => 'notifications',
+                        'selectedIds' => $selectedIds ?? [],
+                    ])
+                    @endcomponent
+                </div>
 
-            @if (isset($data) && !empty($data) && $data->count() > 0)
-                {{-- Enhanced Pagination Controls --}}
-                @include('includes.pagination', ['data' => $data])
-            @endif
+                @if (isset($data) && !empty($data) && $data->count() > 0)
+                    @include('includes.pagination', ['data' => $data])
+                @endif
+            </div>
         </div>
     </div>
 </div>

@@ -9,24 +9,30 @@
         'showSearch' => true,
     ])
         @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
-            @include('components.columns', ['allColumns' => $allColumns ?? []])
+            @include('components.columns', [
+                'allColumns' => $allColumns ?? [],
+                'selectedIds' => $selectedIds ?? [],
+            ])
         @endif
     @endcomponent
 
+
+
     <div class="kt-card-content">
-        <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
-            <div class="kt-scrollable-x-auto" wire:target="search,destroy" wire:loading.class="loading">
+        <div data-kt-datatable-state-save="false" id="transportation_bus_types_table">
+            <div class="kt-scrollable-x-auto" wire:loading.class="loading"
+                wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
                     'models' => 'transportation-bus-types',
+                    'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent
             </div>
 
             @if (isset($data) && !empty($data) && $data->count() > 0)
-                {{-- Enhanced Pagination Controls --}}
                 @include('includes.pagination', ['data' => $data])
             @endif
         </div>

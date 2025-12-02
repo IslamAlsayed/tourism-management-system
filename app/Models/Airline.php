@@ -27,7 +27,7 @@ class Airline extends Model
         'elevation',
         'latitude',
         'longitude',
-        'timezone',
+        'timezone_id',
         'local_phone_number',
         'international_phone_number',
         'website',
@@ -50,6 +50,7 @@ class Airline extends Model
             'country',
             'state',
             'city',
+            'timezone',
         ];
     }
 
@@ -64,6 +65,7 @@ class Airline extends Model
             'country_id',
             'state_id',
             'city_id',
+            'timezone_id',
             'created_at',
             'updated_at',
         ];
@@ -107,6 +109,11 @@ class Airline extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     /**

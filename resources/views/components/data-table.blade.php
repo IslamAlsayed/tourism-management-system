@@ -1,11 +1,11 @@
-<table class="kt-table table-auto text-nowrap">
+<table class="kt-table table-auto text-nowrap" id="data_table">
     <thead>
         <tr>
             <th class="w-[60px] px-4 py-3 text-center" style="padding-inline-start: 21px">
                 @if (isset($data) && !empty($data) && $data->count() > 0)
                     @include('components.elements.all-checkbox-button', [
-                        'name' => 'selectAllItems',
-                        'id' => 'selectAllItems',
+                        'name' => 'selectPage',
+                        'id' => 'selectPage',
                     ])
                 @endif
             </th>
@@ -21,14 +21,15 @@
             <th class="px-4 py-3"></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="data_table_tbody">
         @forelse ($data as $item)
             <tr wire:key="{{ $item->id }}" class="hover:bg-gray-100">
                 <td class="text-center">
                     @include('components.elements.checkbox-button', [
-                        'name' => 'selectedItems[]',
-                        'id' => 'selectedItems' . $item->id,
+                        'name' => 'selectItem[]',
+                        'id' => 'selectItem' . $item->id,
                         'value' => $item->id,
+                        'checked' => in_array($item->id, $selectedIds),
                     ])
                 </td>
                 @foreach ($columns as $column)

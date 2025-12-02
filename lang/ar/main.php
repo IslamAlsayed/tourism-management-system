@@ -152,6 +152,7 @@ return [
     'avatar' => 'صورة المستخدم',
     'avatar_url' => 'رابط الصورة الشخصية',
     'avatar_url_placeholder' => 'أدخل رابط الصورة الشخصية',
+    'password_changed_at' => 'تم تغيير كلمة المرور في',
     'force_password_change' => 'إجبار تغيير كلمة المرور',
     'last_login_at' => 'آخر تسجيل دخول',
     'last_login_ip' => 'آخر عنوان IP',
@@ -1512,12 +1513,14 @@ return [
     'is_read' => 'مقروء',
     'is_global' => 'عالمي',
     'recipient_user_id' => 'المستخدم المستلم',
+    'performer_id' => 'المستخدم المنفذ',
+    'target_user_id' => 'المستخدم المستهدف',
     'push' => 'إرسال',
     'custom' => 'مخصص',
     'booking' => 'حجز',
     'payment' => 'دفع',
     'trip' => 'رحلة',
-    
+
     // activity log
     '_type_notification' => 'إشعار :type',
     '_type_Notification' => 'إشعار :type',

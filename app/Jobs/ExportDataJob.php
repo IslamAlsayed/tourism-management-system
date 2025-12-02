@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
 use App\Events\ImportExportCompleted;
+use App\Events\DataStorageMessage;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
@@ -53,16 +54,41 @@ class ExportDataJob implements ShouldQueue
         $filePath = "{$directory}/{$this->filename}";
         $absolutePath = Storage::disk('public')->path($filePath);
         $writer = SimpleExcelWriter::create($absolutePath)->addHeader($columns);
-        $this->modelClass::query()->chunk($this->chunkSize, function ($records) use ($columns, $writer) {
-            foreach ($records as $record) {
-                $row = [];
-                foreach ($columns as $column) {
-                    $row[$column] = $record->$column ?? null;
+
+        // notify start of storage
+        try {
+            event(new DataStorageMessage('سيتم تخزين البيانات'));
+        } catch (\Throwable $e) {
+            Log::debug('Failed to dispatch data-storage start message: ' . $e->getMessage());
+        }
+
+        try {
+            $this->modelClass::query()->chunk($this->chunkSize, function ($records) use ($columns, $writer) {
+                foreach ($records as $record) {
+                    $row = [];
+                    foreach ($columns as $column) {
+                        $row[$column] = $record->$column ?? null;
+                    }
+                    $writer->addRow($row);
                 }
-                $writer->addRow($row);
+            });
+            $writer->close();
+
+            // successful storage
+            try {
+                event(new DataStorageMessage('تم التخزين'));
+            } catch (\Throwable $e) {
+                Log::debug('Failed to dispatch data-storage success message: ' . $e->getMessage());
             }
-        });
-        $writer->close();
-        event(new ImportExportCompleted("Export completed for {$this->modelClass}. File saved to: {$filePath}"));
+
+            event(new ImportExportCompleted("Export completed for {$this->modelClass}. File saved to: {$filePath}"));
+        } catch (\Throwable $e) {
+            Log::error('Export failed: ' . $e->getMessage());
+            try {
+                event(new DataStorageMessage('حدث خطأ أثناء التخزين', $e->getMessage()));
+            } catch (\Throwable $_) {
+                Log::debug('Failed to dispatch data-storage error message: ' . $_->getMessage());
+            }
+        }
     }
 }

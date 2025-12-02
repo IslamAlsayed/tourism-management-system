@@ -9,17 +9,20 @@
         'showSearch' => true,
     ])
         @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
-            @include('components.columns', ['allColumns' => $allColumns ?? []])
+            @include('components.columns', [
+                'allColumns' => $allColumns ?? [],
+                'selectedIds' => $selectedIds ?? [],
+            ])
         @endif
     @endcomponent
 
-    <div class="kt-card-content" wire:target="search,destroy,filterType,filterStatus,filterOperational,resetFilter"
-        wire:loading.class="loading">
+    <div class="kt-card-content" wire:loading.class="loading"
+        wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,filterType,filterStatus,filterOperational,resetFilter">
         <!-- Filters -->
         <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
             <div>
-                <label for="type" style="font-size: 14px;">{{ __('main.type') }}</label>
-                <select wire:model.live="filterType" id="type" class="kt-input h-[40px] w-48 max-w-full">
+                <select wire:model.live="filterType" id="type" class="kt-select h-[40px] w-48 max-w-full"
+                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.type') }}">
                     <option value="">--</option>
                     <option value="land_crossing">{{ __('main.land_crossing') }}</option>
                     <option value="international_airport">{{ __('main.international_airport') }}</option>
@@ -31,8 +34,8 @@
             </div>
 
             <div>
-                <label for="status" style="font-size: 14px;">{{ __('main.status') }}</label>
-                <select wire:model.live="filterStatus" id="status" class="kt-input h-[40px] w-48">
+                <select wire:model.live="filterStatus" class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
+                    data-kt-select-placeholder="{{ __('main.status') }}">
                     <option value="">--</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
@@ -42,8 +45,8 @@
             </div>
 
             <div>
-                <label for="operational" style="font-size: 14px;">{{ __('main.operational') }}</label>
-                <select wire:model.live="filterOperational" id="operational" class="kt-input h-[40px] w-48">
+                <select wire:model.live="filterOperational" class="kt-select h-[40px] w-48 max-w-full"
+                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.operational') }}">
                     <option value="">--</option>
                     <option value="1">{{ __('main.yes') }}</option>
                     <option value="0">{{ __('main.no') }}</option>
@@ -62,7 +65,7 @@
             @endif
         </div>
 
-        <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="crossings-ports_table">
+        <div data-kt-datatable-state-save="false" id="crossings-ports_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
                     'data' => $data,
@@ -74,21 +77,8 @@
             </div>
 
             @if (isset($data) && !empty($data) && $data->count() > 0)
-                {{-- Enhanced Pagination Controls --}}
                 @include('includes.pagination', ['data' => $data])
             @endif
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        window.addEventListener('reset-filters', () => {
-            let filterTables = document.querySelectorAll('.filterTable');
-            filterTables.forEach(table => {
-                let selects = table.querySelectorAll('select');
-                selects.forEach(select => select.value = '');
-            });
-        });
-    </script>
-@endpush

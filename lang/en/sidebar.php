@@ -267,6 +267,7 @@ return [
     'updated' => 'Updated',
     'updating' => 'Updating',
     'updating...' => 'Updating...',
+    'under_maintenance' => 'Under Maintenance',
     'tested' => 'Tested',
     'testing' => 'Testing',
     'editing...' => 'Editing...',

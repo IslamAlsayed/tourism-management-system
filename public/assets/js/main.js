@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const specialSearches = document.querySelectorAll("[special-search]");
     specialMultiples.forEach((select) => window.specialSelect(select));
     specialSearches.forEach((select) => window.specialSearch(select));
-    window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
+    // window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
 
     // close dropdowns on outside click
     document.addEventListener("click", function (e) {
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("updatedPaginate", () => {
     setTimeout(() => {
         window.resetDeleteSelection();
-        window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
+        // window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
     }, 200);
 });
 
@@ -34,10 +34,10 @@ document.addEventListener("livewire:initialized", () => {
         ) {
             setTimeout(() => {
                 window.resetDeleteSelection();
-                window.specialDelete(
-                    "selectAllItems",
-                    "input[name='selectedItems[]']",
-                );
+                // window.specialDelete(
+                //     "selectAllItems",
+                //     "input[name='selectedItems[]']",
+                // );
             }, 150);
         }
     });
@@ -48,10 +48,10 @@ document.addEventListener("livewire:initialized", () => {
             const selectAll = document.getElementById("selectAllItems");
             if (selectAll && !selectAll.dataset.initialized) {
                 window.resetDeleteSelection();
-                window.specialDelete(
-                    "selectAllItems",
-                    "input[name='selectedItems[]']",
-                );
+                // window.specialDelete(
+                //     "selectAllItems",
+                //     "input[name='selectedItems[]']",
+                // );
             }
         }, 200);
     });

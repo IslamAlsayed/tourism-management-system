@@ -8,7 +8,6 @@
             'label' => __('main.countries_'),
         ],
     ]">
-
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}

@@ -42,7 +42,7 @@ class User extends Authenticatable
         'department',
         'position',
         'preferred_language',
-        'timezone',
+        'timezone_id',
         'preferences',
         'is_admin',
         'is_active',
@@ -55,6 +55,14 @@ class User extends Authenticatable
         'created_by',
         'updated_by',
     ];
+
+    /**
+     * Get relationship names for eager loading
+     */
+    public function getRelationshipNames()
+    {
+        return ['timezone'];
+    }
 
     /**
      * Get columns to exclude from search/display
@@ -70,6 +78,7 @@ class User extends Authenticatable
             'email_verified_at',
             'force_password_change',
             'preferred_language',
+            'timezone_id',
             'preferences',
             'last_login_at',
             'last_login_ip',
@@ -102,6 +111,11 @@ class User extends Authenticatable
             'birth_date' => 'datetime',
             'hire_date' => 'datetime',
         ];
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     public function scopeIsAdmin($query)

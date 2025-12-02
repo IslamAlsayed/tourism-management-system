@@ -8,7 +8,10 @@
         'showSearch' => true,
     ])
         @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
-            @include('components.columns', ['allColumns' => $allColumns ?? []])
+                        @include('components.columns', [
+                'allColumns' => $allColumns ?? [],
+                'selectedIds' => $selectedIds ?? [],
+            ])
         @endif
     @endcomponent
 
@@ -329,7 +332,6 @@
         @endif
 
         @if (isset($data) && !empty($data) && $data->count() > 0)
-            {{-- Enhanced Pagination Controls --}}
             @include('includes.pagination', ['data' => $data])
         @endif
     </div>

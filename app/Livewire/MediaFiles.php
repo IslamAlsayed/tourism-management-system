@@ -9,10 +9,11 @@ use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\ExportsData;
 
 class MediaFiles extends Component
 {
-    use WithPagination, CustomColumns, WithSorting, CustomPagination, HandlesCrudSafely;
+    use WithPagination, CustomColumns, WithSorting, CustomPagination, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $filterType = '';
@@ -71,6 +72,22 @@ class MediaFiles extends Component
     public function destroy($id)
     {
         $this->safeDestroy($id, 'media_file');
+    }
+
+    public function updatedSelectPage($value)
+    {
+        $this->selectedIds = $value ? $this->currentPageDataIds()->toArray() : [];
+    }
+
+    public function updatedSelectedIds()
+    {
+        $this->selectPage = count($this->selectedIds) === $this->currentPageDataIds()->count();
+    }
+
+    protected function currentPageDataIds()
+    {
+        $paginator = MediaFile::paginate(getPaginate());
+        return $paginator->getCollection()->pluck('id');
     }
 
     public function deleteSelected()

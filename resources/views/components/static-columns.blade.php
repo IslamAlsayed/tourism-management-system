@@ -244,6 +244,14 @@
         <td title="{{ optional($model->recipientUser)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->recipientUser)->name ?? '--', 30), $search) !!}</td>
     @break
 
+    @case('performer_id')
+        <td title="{{ optional($model->performer)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->performer)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('target_user_id')
+        <td title="{{ optional($model->targetUser)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->targetUser)->name ?? '--', 30), $search) !!}</td>
+    @break
+
     @case('route')
         <td title="{{ optional($model->car_route)->route }}">{!! highlightSearch(limitedText(optional($model->car_route)->route ?? '--', 30), $search) !!}</td>
     @break
@@ -272,14 +280,6 @@
         <td title="{{ optional($model->bus_type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->bus_type)->name ?? '--', 30), $search) !!}</td>
     @break
 
-    @case('timezone')
-        <td title="{{ $model->timezone->name }}">
-            <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! highlightSearch(limitedText(str_replace('_', ' ', $model->timezone->name) ?? '--', 30), $search) !!}
-            </span>
-        </td>
-    @break
-
     @case('currency')
         <td title="{{ optional($model->currency)->code ?? '--' }}">{!! highlightSearch(limitedText(optional($model->currency)->code ?? '--', 30), $search) !!}</td>
     @break
@@ -290,6 +290,14 @@
 
     @case('updater')
         <td title="{{ optional($model->updater)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->updater)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+        @case('timezone')
+        <td title="{{ $model->timezone->name }}">
+            <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText(str_replace('_', ' ', $model->timezone->name) ?? '--', 30), $search) !!}
+            </span>
+        </td>
     @break
 
     @case('company')
@@ -384,7 +392,8 @@
                             </div>
                         @endif
                     @else
-                        <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        <div
+                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                             ...
                         </div>
                     @endif
@@ -430,17 +439,33 @@
         </td>
     @break
 
-    @case('is_read')
-        <td title="{{ $model->is_read == 1 ? __('main.read') : __('main.unread') }}">
-            @if ($model->is_read == 1)
+    @case('is_global')
+        <td title="{{ $model->is_global == 1 ? __('main.yes') : __('main.no') }}">
+            @if ($model->is_global == 1)
                 <div
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
-                    {!! highlightSearch(limitedText($model->is_read == 1 ? __('main.read') : __('main.unread'), 30), $search) !!}
+                    {!! highlightSearch(limitedText($model->is_global == 1 ? __('main.yes') : __('main.no'), 30), $search) !!}
                 </div>
             @else
                 <div
                     class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    {!! highlightSearch(limitedText($model->is_global == 1 ? __('main.yes') : __('main.no'), 30), $search) !!}
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('is_read')
+        <td title="{{ $model->is_read == 1 ? __('main.read') : __('main.unread') }}">
+            @if ($model->is_read == 1 && $model->read_at)
+                <div
+                    class="inline-block bg-gray/10 text-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     {!! highlightSearch(limitedText($model->is_read == 1 ? __('main.readed') : __('main.unreaded'), 30), $search) !!}
+                </div>
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    {!! highlightSearch(limitedText($model->is_read == 1 ? __('main.read') : __('main.unread'), 30), $search) !!}
                 </div>
             @endif
         </td>

@@ -3,11 +3,17 @@
 //     key: "{{ config('app.ably_key') }}",
 // });
 
+const currentUserId = window.USERID;
+
 const channels = {
     webPush: ably.channels.get("web.push.notifications"),
 };
 
-const currentUserId = window.USERID;
+// import notifications channels (public + per-user private)
+channels.importPublic = ably.channels.get("import-channel");
+channels.importPrivate = ably.channels.get(
+    `private-import-channel-${currentUserId}`,
+);
 
 // ====== Helpers ======
 
@@ -126,6 +132,16 @@ const initListeners = () => {
                             )
                         ) {
                             const html = createNotification(notify);
+                            // Dispatch a DOM event so other parts of the app (e.g., Livewire) can react
+                            try {
+                                window.dispatchEvent(
+                                    new CustomEvent("import-completed", {
+                                        detail: data,
+                                    }),
+                                );
+                            } catch (e) {
+                                // ignore if CustomEvent not supported
+                            }
                             container.insertAdjacentHTML("afterbegin", html);
                             insertedNotifications.add(notify.id);
                         }
@@ -147,6 +163,44 @@ const initListeners = () => {
             }
         }
     });
+
+    // Listen for import/export completion messages (public channel)
+    try {
+        channels.importPublic.subscribe((msg) => {
+            if (!msg?.data) return;
+            console.log("msg", msg.data);
+            const data = msg.data;
+            // event payload uses { message, type }
+            if (data.message) {
+                window.showToast({
+                    type: data.type || "success",
+                    title: "",
+                    message: data.message,
+                });
+            }
+        });
+    } catch (e) {
+        console.warn("Failed to subscribe to import public channel", e);
+    }
+
+    // Listen for user-targeted import messages on private channel
+    try {
+        channels.importPrivate.subscribe((msg) => {
+            if (!msg?.data) return;
+            console.log("msg", msg.data);
+            const data = msg.data;
+            if (data.message) {
+                window.showToast({
+                    type: data.type || "success",
+                    title: "",
+                    message: data.message,
+                });
+            }
+        });
+    } catch (e) {
+        // private channel may require auth — ignore if unavailable
+        // console.debug('Private import channel not available or requires auth', e);
+    }
 };
 document.addEventListener("DOMContentLoaded", initListeners);
 
@@ -159,6 +213,14 @@ function createNotification(notification) {
             </p>`
         : "";
 
+    // Dispatch DOM event for Livewire or other listeners
+    try {
+        window.dispatchEvent(
+            new CustomEvent("import-completed", { detail: data }),
+        );
+    } catch (e) {
+        // ignore
+    }
     const messageClass = notification.title ? "" : "font-medium";
 
     return `

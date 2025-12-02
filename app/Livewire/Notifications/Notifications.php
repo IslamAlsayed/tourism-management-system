@@ -9,13 +9,13 @@ use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\ExportsData;
 use Illuminate\Support\Facades\Log;
 use App\Models\Notification as ModelsNotification;
-use Maatwebsite\Excel\Concerns\ToArray;
 
 class Notifications extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $filter = 'all'; // all, unread, read
@@ -143,6 +143,58 @@ class Notifications extends Component
 
             session()->flash('success', __('main.notification_deleted'));
         }
+    }
+
+    public function updatedSelectPage($value)
+    {
+        $this->selectedIds = $value ? $this->currentPageDataIds()->toArray() : [];
+    }
+
+    public function updatedSelectedIds()
+    {
+        $this->selectPage = count($this->selectedIds) === $this->currentPageDataIds()->count();
+    }
+
+    protected function currentPageDataIds()
+    {
+        $paginator = ModelsNotification::paginate(getPaginate());
+        return $paginator->getCollection()->pluck('id');
+    }
+
+    public function deleteSelected()
+    {
+        if (empty($this->selectedIds)) {
+            return;
+        }
+
+        ModelsNotification::whereIn('id', $this->selectedIds)->delete();
+        $count = count($this->selectedIds);
+        $this->selectedIds = [];
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => __('messages.type_deleted_count', ['type' => __('notification.notifications'), 'count' => $count]),
+        ]);
+    }
+
+    public function exportSelectedPDF()
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], ModelsNotification::class, $cols, 'notifications');
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
+    }
+
+    public function exportSelectedExcel($extension)
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], ModelsNotification::class, $cols, 'notifications', $extension);
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
     }
 
     public function destroy($id)

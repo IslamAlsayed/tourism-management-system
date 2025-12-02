@@ -9,10 +9,11 @@ use App\Traits\WithSorting;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\ExportsData;
 
 class SystemLanguages extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -39,6 +40,58 @@ class SystemLanguages extends Component
         $this->safeDestroy($id, 'system_language');
     }
 
+    public function updatedSelectPage($value)
+    {
+        $this->selectedIds = $value ? $this->currentPageDataIds()->toArray() : [];
+    }
+
+    public function updatedSelectedIds()
+    {
+        $this->selectPage = count($this->selectedIds) === $this->currentPageDataIds()->count();
+    }
+
+    protected function currentPageDataIds()
+    {
+        $paginator = SystemLanguage::paginate(getPaginate());
+        return $paginator->getCollection()->pluck('id');
+    }
+
+    public function deleteSelected()
+    {
+        if (empty($this->selectedIds)) {
+            return;
+        }
+
+        SystemLanguage::whereIn('id', $this->selectedIds)->delete();
+        $count = count($this->selectedIds);
+        $this->selectedIds = [];
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => __('messages.type_deleted_count', ['type' => __('system_language.system_languages'), 'count' => $count]),
+        ]);
+    }
+
+    public function exportSelectedPDF()
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], SystemLanguage::class, $cols, 'system_languages');
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
+    }
+
+    public function exportSelectedExcel($extension)
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], SystemLanguage::class, $cols, 'system_languages', $extension);
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
+    }
+
     public function toggleView()
     {
         $this->view = $this->view === 'table' ? 'grid' : 'table';
@@ -56,6 +109,6 @@ class SystemLanguages extends Component
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
-        return view('livewire.system-languages', ['data' => $data, 'totalCount' => $this->totalCount ?: SystemLanguage::count()]);
+        return view('livewire.system-languages', ['data' => $data, 'totalCount' => $this->totalCount ?: SystemLanguage::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

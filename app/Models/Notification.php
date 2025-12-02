@@ -22,17 +22,17 @@ class Notification extends Model
 
     protected $fillable = [
         'id',
-        'user_id',
         'performer_id',
         'target_user_id',
-        'recipient_user_id',
         'type',
-        'notification_type',
         'title',
         'message',
         'is_read',
-        'read_at',
         'is_global',
+        'read_at',
+        'notification_type',
+        'user_id',
+        'recipient_user_id',
         'data',
     ];
 
@@ -85,6 +85,16 @@ class Notification extends Model
     public function recipientUser()
     {
         return $this->belongsTo(User::class, 'recipient_user_id');
+    }
+
+    public function performer()
+    {
+        return $this->belongsTo(User::class, 'performer_id');
+    }
+
+    public function targetUser()
+    {
+        return $this->belongsTo(User::class, 'target_user_id');
     }
 
     public function getHumanReadAtAttribute()

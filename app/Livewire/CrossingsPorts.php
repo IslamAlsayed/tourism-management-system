@@ -9,10 +9,11 @@ use App\Traits\CustomColumns;
 use App\Traits\WithSorting;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\ExportsData;
 
 class CrossingsPorts extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely;
+    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $totalCount = '';
@@ -54,6 +55,58 @@ class CrossingsPorts extends Component
         $this->safeDestroy($id, 'crossing_port');
     }
 
+    public function updatedSelectPage($value)
+    {
+        $this->selectedIds = $value ? $this->currentPageDataIds()->toArray() : [];
+    }
+
+    public function updatedSelectedIds()
+    {
+        $this->selectPage = count($this->selectedIds) === $this->currentPageDataIds()->count();
+    }
+
+    protected function currentPageDataIds()
+    {
+        $paginator = CrossingPort::paginate(getPaginate());
+        return $paginator->getCollection()->pluck('id');
+    }
+
+    public function deleteSelected()
+    {
+        if (empty($this->selectedIds)) {
+            return;
+        }
+
+        CrossingPort::whereIn('id', $this->selectedIds)->delete();
+        $count = count($this->selectedIds);
+        $this->selectedIds = [];
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => __('messages.type_deleted_count', ['type' => __('crossing_port.crossings_ports'), 'count' => $count]),
+        ]);
+    }
+
+    public function exportSelectedPDF()
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], CrossingPort::class, $cols, 'crossings_ports');
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
+    }
+
+    public function exportSelectedExcel($extension)
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], CrossingPort::class, $cols, 'crossings_ports', $extension);
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
+    }
+
     public function resetFilters()
     {
         $this->reset(['search', 'filterType', 'filterStatus', 'filterOperational']);
@@ -77,6 +130,6 @@ class CrossingsPorts extends Component
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
-        return view('livewire.crossings-ports', ['data' => $data, 'totalCount' => $this->totalCount ?: CrossingPort::count()]);
+        return view('livewire.crossings-ports', ['data' => $data, 'totalCount' => $this->totalCount ?: CrossingPort::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

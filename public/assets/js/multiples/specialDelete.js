@@ -3,6 +3,7 @@ window.specialDelete = function (selectAllId, rowCheckboxSelector) {
     const selectAll = document.getElementById(selectAllId);
     const checkboxes = document.querySelectorAll(rowCheckboxSelector);
     const deleteAllBtn = document.getElementById("deleteAllBtn");
+    const exportMenu = document.getElementById("exportMenu");
 
     if (!selectAll || checkboxes.length === 0 || !deleteAllBtn) return;
 
@@ -20,6 +21,7 @@ window.specialDelete = function (selectAllId, rowCheckboxSelector) {
     // Mark as initialized
     newSelectAll.dataset.initialized = "true";
     deleteAllBtn?.classList.add("hidden");
+    exportMenu?.classList.add("hidden");
 
     // ✅ تحديد الكل
     if (newSelectAll) {
@@ -120,11 +122,13 @@ function updateDeleteButtonVisibility(rowCheckboxSelector) {
     );
     if (selected.length != 0) {
         deleteAllBtn?.classList.remove("hidden");
+        exportMenu?.classList.remove("hidden");
         document.getElementById("selectedCount").innerHTML =
             `<strong class="text-primary">${selected.length}</strong> items selected` ||
             "";
     } else {
         deleteAllBtn?.classList.add("hidden");
+        exportMenu?.classList.add("hidden");
         document.getElementById("selectedCount").innerHTML = "";
     }
 }
