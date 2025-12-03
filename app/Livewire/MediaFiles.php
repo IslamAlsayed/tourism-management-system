@@ -4,12 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\MediaFile;
+use App\Traits\ExportsData;
 use App\Traits\WithSorting;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
-use App\Traits\ExportsData;
 
 class MediaFiles extends Component
 {
@@ -19,11 +19,9 @@ class MediaFiles extends Component
     public $filterType = '';
     public $filterCollection = '';
     public $filterActive = '';
-    public $selectedIds = [];
     public $selectAll = false;
     public $view = 'grid'; // or table
     public $gridLength = 5;
-
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function updatingSearch()
@@ -64,14 +62,14 @@ class MediaFiles extends Component
         $this->dispatch('reset-filters');
     }
 
-    public function updatedSelectAll($value)
-    {
-        $this->selectedIds = $value ? $this->getQuery()->pluck('id')->toArray() : [];
-    }
-
     public function destroy($id)
     {
         $this->safeDestroy($id, 'media_file');
+    }
+
+    public function updatedSelectAll($value)
+    {
+        $this->selectedIds = $value ? $this->getQuery()->pluck('id')->toArray() : [];
     }
 
     public function updatedSelectPage($value)
@@ -111,6 +109,26 @@ class MediaFiles extends Component
             'message' => __('messages.type_deleted_count', ['type' => __('main.files'), 'count' => count($files)]),
         ]);
         $this->dispatch('refreshComponent');
+    }
+
+    public function exportSelectedPDF()
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], MediaFile::class, $cols, 'media_files');
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
+    }
+
+    public function exportSelectedExcel($extension)
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], MediaFile::class, $cols, 'media_files', $extension);
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+        return $result;
     }
 
     private function getQuery()
@@ -165,6 +183,6 @@ class MediaFiles extends Component
     {
         $mediaFiles = $this->getQuery()->paginate(getPaginate());
         $collections = MediaFile::select('collection_name')->whereNotNull('collection_name')->distinct()->pluck('collection_name');
-        return view('livewire.media-files', ['data' => $mediaFiles, 'collections' => $collections]);
+        return view('livewire.media-files', ['data' => $mediaFiles, 'collections' => $collections, 'selectedIds' => $this->selectedIds]);
     }
 }

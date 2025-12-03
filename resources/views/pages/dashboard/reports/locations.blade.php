@@ -61,7 +61,7 @@
                     <div class="kt-card-body">
                         <div class="flex items-center justify-center gap-2">
                             <span class="text-3xl font-bold text-primary">
-                                {{ number_format($locationStats['avg_cities_per_country']) }}
+                                {{ number_format($locationStats['countries_without_cities']) }}
                             </span>
                             <span class="text-sm text-secondary-foreground">
                                 {{ __('main.avg_cities_per_country') }}
@@ -75,7 +75,7 @@
                     <div class="kt-card-body">
                         <div class="flex items-center justify-center gap-2">
                             <span class="text-3xl font-bold text-primary">
-                                {{ number_format($locationStats['countries_with_cities']) }}
+                                {{ number_format($locationStats['avg_cities_per_country']) }}
                             </span>
                             <span class="text-sm text-secondary-foreground">
                                 {{ __('main.countries_with_cities') }}

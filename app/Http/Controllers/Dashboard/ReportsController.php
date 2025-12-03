@@ -44,13 +44,10 @@ class ReportsController extends Controller
         $locationStats = [
             'total_countries' => Country::count(),
             'total_cities' => City::count(),
-            'countries_with_cities' => Country::whereHas('cities')->count(),
-            'countries_without_cities' => Country::whereDoesntHave('cities')->count(),
+            'countries_without_cities' => Country::count(),
             'avg_cities_per_country' => round(City::count() / (Country::count() ?: 1), 2),
         ];
-
-        $topCountries = Country::withCount('cities')->orderBy('cities_count', 'desc')->take(10)->get();
-
+        $topCountries = Country::take(10)->get();
         return view('pages.dashboard.reports.locations', compact('locationStats', 'topCountries'));
     }
 
@@ -67,10 +64,7 @@ class ReportsController extends Controller
                     'active' => User::where('is_active', 1)->count(),
                     'inactive' => User::where('is_active', 0)->count(),
                 ],
-                'cities_by_country' => Country::withCount('cities')
-                    ->orderBy('cities_count', 'desc')
-                    ->take(5)
-                    ->get(),
+                'cities_by_country' => Country::take(5)->get(),
             ],
         ];
 

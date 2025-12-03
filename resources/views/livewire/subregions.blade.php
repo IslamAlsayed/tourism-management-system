@@ -25,6 +25,7 @@
                     'columns' => $columns,
                     'search' => $search,
                     'models' => 'subregions',
+                    'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent
             </div>

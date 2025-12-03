@@ -4,12 +4,12 @@ namespace App\Livewire;
 
 use App\Models\Region;
 use Livewire\Component;
-use Livewire\WithPagination;
+use App\Traits\ExportsData;
 use App\Traits\WithSorting;
+use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
-use App\Traits\ExportsData;
 
 class Regions extends Component
 {

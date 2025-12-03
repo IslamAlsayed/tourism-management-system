@@ -72,6 +72,7 @@
                     'columns' => $columns,
                     'search' => $search,
                     'models' => 'crossings-ports',
+                    'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent
             </div>

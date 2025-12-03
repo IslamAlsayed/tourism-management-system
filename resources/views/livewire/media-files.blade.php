@@ -198,6 +198,7 @@
                             'columns' => $columns,
                             'search' => $search,
                             'models' => 'media-files',
+                            'selectedIds' => $selectedIds ?? [],
                         ])
                         @endcomponent
                     </div>

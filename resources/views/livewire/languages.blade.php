@@ -81,6 +81,7 @@
                         'columns' => $columns,
                         'search' => $search,
                         'models' => 'languages',
+                        'selectedIds' => $selectedIds ?? [],
                     ])
                     @endcomponent
                 </div>
