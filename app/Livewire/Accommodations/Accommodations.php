@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 use App\Models\Accommodation;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
-use App\Models\AccommodationType;
+use App\Models\Type;
 use App\Traits\HandlesCrudSafely;
 
 class Accommodations extends Component
@@ -41,7 +41,7 @@ class Accommodations extends Component
     {
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Accommodation::class);
-        $this->types = AccommodationType::pluck('name', 'id')->toArray();
+        $this->types = Type::pluck('name', 'id')->toArray();
         $this->resetPage();
     }
 

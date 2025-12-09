@@ -7,10 +7,10 @@
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    Edit New Accommodation
+                    Edit Accommodation
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    Add a new accommodation to the system
+                    Update the accommodation details
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -30,14 +30,14 @@
                 <!-- Basic Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">Basic Information</h3>
+                        <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
                     </div>
                     <div class="kt-card-body p-4 pb-0">
                         <div class="grid lg:grid-cols-2 gap-6 mb-4">
                             <!-- Name -->
                             <div class="">
-                                <label for="name" class="kt-label mb-2">Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
                                     value="{{ $accommodation->name }}" placeholder="Enter accommodation name">
                                 @error('name')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -46,8 +46,8 @@
 
                             <!-- Name Arabic -->
                             <div class="">
-                                <label for="name_ar" class="kt-label mb-2">Name (Arabic)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
                                     value="{{ $accommodation->name_ar }}" placeholder="أدخل اسم الإقامة">
                                 @error('name_ar')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -58,31 +58,29 @@
                         <div class="grid lg:grid-cols-3 gap-6 mb-4">
                             <!-- Accommodation Type -->
                             <div class="">
-                                <label for="accommodation_type_id" class="kt-label mb-2 flex items-center justify-between">
-                                    <div>Accommodation Type</div>
-                                    <a href="{{ route('accommodations.create.type') }}"
+                                <label for="type_id" class="kt-label mb-2 flex items-center justify-between">
+                                    <div>{{ __('main.type') }}</div>
+                                    <a href="{{ route('types.create') }}"
                                         class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
                                 </label>
 
-                                <select name="accommodation_type_id" id="accommodation_type_id" class="kt-select"
-                                    special-search data-current-value="{{ $accommodation->accommodation_type_id }}"
-                                    value="{{ $accommodation->accommodation_type_id }}">
-                                    <option value="">-- Select Type --</option>
-                                    @foreach ($accommodationTypes as $type)
+                                <select name="type_id" id="type_id" class="kt-select" required special-search>
+                                    <option value="">--</option>
+                                    @foreach ($types as $type)
                                         <option value="{{ $type->id }}"
-                                            {{ $accommodation->accommodation_type_id == $type->id ? 'selected' : '' }}>
+                                            {{ $accommodation->type_id == $type->id ? 'selected' : '' }}>
                                             {{ $type->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('accommodation_type_id')
+                                @error('type_id')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Classification -->
                             <div class="">
-                                <label for="classification" class="kt-label mb-2">Classification</label>
+                                <label for="classification" class="kt-label mb-2">{{ __('main.classification') }}</label>
                                 <input type="text" name="classification" id="classification" class="kt-input h-[45px]"
                                     value="{{ $accommodation->classification }}" placeholder="e.g., 5 Stars, Luxury">
                                 @error('classification')
@@ -92,20 +90,14 @@
 
                             <!-- Stars Rating -->
                             <div class="">
-                                <label for="stars" class="kt-label mb-2">Star Rating</label>
-                                <select name="stars" id="stars" class="kt-select" special-search
-                                    data-current-value="{{ $accommodation->stars }}" value="{{ $accommodation->stars }}">
-                                    <option value="">-- Select Rating --</option>
-                                    <option value="1" {{ $accommodation->stars == 1 ? 'selected' : '' }}>1 Star
-                                    </option>
-                                    <option value="2" {{ $accommodation->stars == 2 ? 'selected' : '' }}>2 Stars
-                                    </option>
-                                    <option value="3" {{ $accommodation->stars == 3 ? 'selected' : '' }}>3 Stars
-                                    </option>
-                                    <option value="4" {{ $accommodation->stars == 4 ? 'selected' : '' }}>4 Stars
-                                    </option>
-                                    <option value="5" {{ $accommodation->stars == 5 ? 'selected' : '' }}>5 Stars
-                                    </option>
+                                <label for="stars" class="kt-label mb-2">{{ __('main.star_rating') }}</label>
+                                <select name="stars" id="stars" class="kt-select" special-search>
+                                    <option value="">--</option>
+                                    <option value="1" {{ $accommodation->stars == 1 ? 'selected' : '' }}>1 Star</option>
+                                    <option value="2" {{ $accommodation->stars == 2 ? 'selected' : '' }}>2 Stars</option>
+                                    <option value="3" {{ $accommodation->stars == 3 ? 'selected' : '' }}>3 Stars</option>
+                                    <option value="4" {{ $accommodation->stars == 4 ? 'selected' : '' }}>4 Stars</option>
+                                    <option value="5" {{ $accommodation->stars == 5 ? 'selected' : '' }}>5 Stars</option>
                                 </select>
                                 @error('stars')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -116,14 +108,12 @@
                         <div class="grid lg:grid-cols-3 gap-6 mb-4">
                             <!-- Season -->
                             <div class="">
-                                <label for="season_id" class="kt-label mb-2">Season</label>
-                                <select name="season_id" id="season_id" class="kt-select" special-search
-                                    data-current-value="{{ $accommodation->season_id }}"
-                                    value="{{ $accommodation->season_id }}">
-                                    <option value="">-- Select Season --</option>
+                                <label for="season_id" class="kt-label mb-2">{{ __('main.season') }}</label>
+                                <select name="season_id" id="season_id" class="kt-select" special-search>
+                                    <option value="">--</option>
                                     @foreach ($seasons as $season)
                                         <option value="{{ $season->id }}"
-                                            {{ ($accommodation->season_id ?? '') == $season->id ? 'selected' : '' }}>
+                                            {{ $accommodation->season_id == $season->id ? 'selected' : '' }}>
                                             {{ $season->name }}
                                         </option>
                                     @endforeach
@@ -133,40 +123,36 @@
                                 @enderror
                             </div>
 
-                            <!-- Room Type -->
+                            <!-- Room -->
                             <div class="">
-                                <label for="room_type_id" class="kt-label mb-2">Default Room Type</label>
-                                <select name="room_type_id" id="room_type_id" class="kt-select" special-search
-                                    data-current-value="{{ $accommodation->room_type_id }}"
-                                    value="{{ $accommodation->room_type_id }}">
-                                    <option value="">-- Select Room Type --</option>
-                                    @foreach ($roomTypes as $roomType)
-                                        <option value="{{ $roomType->id }}"
-                                            {{ ($accommodation->room_type_id ?? '') == $roomType->id ? 'selected' : '' }}>
-                                            {{ $roomType->name }}
+                                <label for="room_id" class="kt-label mb-2">{{ __('main.room') }}</label>
+                                <select name="room_id" id="room_id" class="kt-select" special-search>
+                                    <option value="">--</option>
+                                    @foreach ($rooms as $room)
+                                        <option value="{{ $room->id }}"
+                                            {{ $accommodation->room_id == $room->id ? 'selected' : '' }}>
+                                            {{ $room->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('room_type_id')
+                                @error('room_id')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Meal Type -->
+                            <!-- Meal -->
                             <div class="">
-                                <label for="meal_type_id" class="kt-label mb-2">Default Meal Type</label>
-                                <select name="meal_type_id" id="meal_type_id" class="kt-select" special-search
-                                    data-current-value="{{ $accommodation->meal_type_id }}"
-                                    value="{{ $accommodation->meal_type_id }}">
-                                    <option value="">-- Select Meal Type --</option>
-                                    @foreach ($mealTypes as $mealType)
-                                        <option value="{{ $mealType->id }}"
-                                            {{ ($accommodation->meal_type_id ?? '') == $mealType->id ? 'selected' : '' }}>
-                                            {{ $mealType->name }}
+                                <label for="meal_id" class="kt-label mb-2">{{ __('main.meal') }}</label>
+                                <select name="meal_id" id="meal_id" class="kt-select" special-search>
+                                    <option value="">--</option>
+                                    @foreach ($meals as $meal)
+                                        <option value="{{ $meal->id }}"
+                                            {{ $accommodation->meal_id == $meal->id ? 'selected' : '' }}>
+                                            {{ $meal->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('meal_type_id')
+                                @error('meal_id')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -195,9 +181,7 @@
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $accommodation->currency_id }}"
-                                    value="{{ $accommodation->currency_id }}">
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -253,9 +237,7 @@
                             <!-- Timezone -->
                             <div class="">
                                 <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $accommodation->timezone_id }}"
-                                    value="{{ $accommodation->timezone_id }}">
+                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search>
                                     <option value="">--</option>
                                     @foreach ($timezones as $zone)
                                         <option value="{{ $zone['id'] }}"
@@ -358,8 +340,7 @@
                                 <div class="">
                                     <label for="contact_email" class="kt-label mb-2">Contact Email</label>
                                     <input type="email" name="contact_email" id="contact_email" class="kt-input"
-                                        value="{{ $accommodation->contact_email }}"
-                                        placeholder="manager@accommodation.com">
+                                        value="{{ $accommodation->contact_email }}" placeholder="manager@accommodation.com">
                                     @error('contact_email')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
@@ -382,93 +363,27 @@
                                 'id' => 'is_active',
                                 'value' => '1',
                                 'checked' => $accommodation->is_active,
-                                'label' => __('main.activate_accommodation'),
+                                'label' => __('main.active'),
                             ])
                         </div>
                     </div>
                 </div>
 
-                {{-- Submit Buttons --}}
+                {{-- Update Buttons --}}
                 @include('components.elements.update-submit', ['models' => 'accommodations'])
             </div>
         </form>
     </div>
-
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Handle country change to filter cities
-                const countrySelect = document.getElementById('country_id');
-                const citySelect = document.getElementById('city_id');
-
-                if (countrySelect) {
-                    countrySelect.addEventListener('change', function() {
-                        const countryId = this.value;
-
-                        // Clear city options
-                        citySelect.innerHTML = '<option value="">-- Select City --</option>';
-
-                        if (countryId) {
-                            // Fetch cities for selected country
-                            fetch(`/api/countries/${countryId}/cities`)
-                                .then(response => response.json())
-                                .then(cities => {
-                                    cities.forEach(city => {
-                                        const option = document.createElement('option');
-                                        option.value = city.id;
-                                        option.textContent = city.name;
-                                        citySelect.appendChild(option);
-                                    });
-                                })
-                                .catch(error => {
-                                    console.error('Error fetching cities:', error);
-                                });
-                        }
-                    });
-                }
-
-                // Handle region change to filter subregions
-                const regionSelect = document.getElementById('region_id');
-                const subregionSelect = document.getElementById('subregion_id');
-
-                if (regionSelect) {
-                    regionSelect.addEventListener('change', function() {
-                        const regionId = this.value;
-
-                        // Clear subregion options
-                        subregionSelect.innerHTML = '<option value="">-- Select Subregion --</option>';
-
-                        if (regionId) {
-                            // Fetch subregions for selected region
-                            fetch(`/api/regions/${regionId}/subregions`)
-                                .then(response => response.json())
-                                .then(subregions => {
-                                    subregions.forEach(subregion => {
-                                        const option = document.createElement('option');
-                                        option.value = subregion.id;
-                                        option.textContent = subregion.name;
-                                        subregionSelect.appendChild(option);
-                                    });
-                                })
-                                .catch(error => {
-                                    console.error('Error fetching subregions:', error);
-                                });
-                        }
-                    });
-                }
-            });
-        </script>
-    @endpush
 @endsection
 
 @push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
-                filterByForeignId("subregion_id", "country", "country_id", "edit");
-                filterByForeignId("country_id", "state", "state_id", "edit");
-                filterByForeignId("state_id", "city", "city_id", "edit");
+                filterByForeignId("region_id", "subregion", "subregion_id","edit");
+                filterByForeignId("subregion_id", "country", "country_id","edit");
+                filterByForeignId("country_id", "state", "state_id","edit");
+                filterByForeignId("state_id", "city", "city_id","edit");
             }, 500);
         });
     </script>

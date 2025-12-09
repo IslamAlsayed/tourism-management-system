@@ -9,7 +9,7 @@ use App\Models\Currency;
 use App\Models\Timezone;
 use App\Models\Subregion;
 use App\Models\Accommodation;
-use App\Models\AccommodationType;
+use App\Models\Type;
 use App\Models\Season;
 use App\Models\Room;
 use App\Models\Meal;
@@ -21,15 +21,15 @@ class AccommodationController extends Controller
 {
     public function index()
     {
-        $accommodations = Accommodation::with(['accommodation_type', 'country', 'city'])->paginate(getPaginate());
+        $accommodations = Accommodation::with(['type', 'country', 'city'])->paginate(getPaginate());
         $total = Accommodation::count();
         return view('pages.dashboard.accommodations.index', compact('accommodations', 'total'));
     }
 
     public function getResultType($type)
     {
-        $typeModel = AccommodationType::where('name', 'like', '%' . $type . '%')->first();
-        $data = Accommodation::with('type')->where('accommodation_type_id', $typeModel?->id ?? 0)->paginate(getPaginate());
+        $typeModel = Type::where('name', 'like', '%' . $type . '%')->first();
+        $data = Accommodation::with('type')->where('type_id', $typeModel?->id ?? 0)->paginate(getPaginate());
         $total = $data->total();
         return view('pages.dashboard.accommodations.types', compact('data', 'total', 'type'));
     }
@@ -42,28 +42,28 @@ class AccommodationController extends Controller
     public function getCreateType($type)
     {
         // Get the accommodation type
-        $accommodationType = AccommodationType::where('name', 'like', '%' . $type . '%')->orWhere('name_ar', 'like', '%' . $type . '%')->first();
-        if (!$accommodationType) {
+        $type = Type::where('name', 'like', '%' . $type . '%')->orWhere('name_ar', 'like', '%' . $type . '%')->first();
+        if (!$type) {
             return redirect()->route('accommodations.create')->with('warning', 'نوع الإقامة غير موجود، يرجى اختيار نوع من القائمة.');
         }
-        $accommodationTypes = AccommodationType::get();
+        $types = Type::get();
         $countries = Country::get();
         $cities = City::get();
         $regions = Region::get();
         $subregions = Subregion::get();
-        return view('pages.dashboard.accommodations.create-flexible', compact('accommodationTypes', 'countries', 'cities', 'regions', 'subregions', 'accommodationType'));
+        return view('pages.dashboard.accommodations.create-flexible', compact('types', 'countries', 'cities', 'regions', 'subregions', 'type'));
     }
 
     public function create()
     {
-        $accommodationTypes = AccommodationType::orderBy('name')->get();
+        $types = Type::orderBy('name')->get();
         $seasons = Season::orderBy('name')->get();
         $rooms = Room::orderBy('name')->get();
         $meals = Meal::orderBy('name')->get();
         $currencies = Currency::orderBy('code')->get();
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.accommodations.create-flexible', compact('accommodationTypes', 'seasons', 'rooms', 'meals', 'currencies', 'regions', 'timezones'));
+        return view('pages.dashboard.accommodations.create', compact('types', 'seasons', 'rooms', 'meals', 'currencies', 'regions', 'timezones'));
     }
 
     /**
@@ -80,7 +80,7 @@ class AccommodationController extends Controller
      */
     public function show($id)
     {
-        $accommodation = Accommodation::with(['currency', 'accommodation_type', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
+        $accommodation = Accommodation::with(['currency', 'type', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$accommodation) {
             return redirect()->route('accommodations.index')->with('error', 'الإقامة غير موجودة.');
         }
@@ -96,14 +96,14 @@ class AccommodationController extends Controller
         if (!$accommodation) {
             return redirect()->route('accommodations.index')->with('error', 'الإقامة غير موجودة!');
         }
-        $accommodationTypes = AccommodationType::orderBy('name')->get();
+        $types = Type::orderBy('name')->get();
         $seasons = Season::orderBy('name')->get();
         $rooms = Room::orderBy('name')->get();
         $meals = Meal::orderBy('name')->get();
         $currencies = Currency::orderBy('code')->get();
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.accommodations.edit-flexible', compact('accommodation', 'accommodationTypes', 'seasons', 'rooms', 'meals', 'currencies', 'regions', 'timezones'));
+        return view('pages.dashboard.accommodations.edit-flexible', compact('accommodation', 'types', 'seasons', 'rooms', 'meals', 'currencies', 'regions', 'timezones'));
     }
 
     /**
