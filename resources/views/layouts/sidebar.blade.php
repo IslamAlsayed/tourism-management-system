@@ -66,7 +66,7 @@
                                     {{ __('sidebar.' . $item['title']) }}
                                     @if (isset($item['status']) && env('DB_MODE') != 'production')
                                         <span
-                                            class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            class="inline-block {{ $item['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                             {{ __('sidebar.' . $item['status']) }}
                                         </span>
                                     @endif
@@ -114,7 +114,7 @@
 
                                     @if ($childHasChildren)
                                         {{-- Nested submenu --}}
-                                        <div class="kt-menu-item {{ $childHasActiveChild ? 'kt-menu-item-show show' : '' }}"
+                                        <div class="kt-menu-item {{ $childHasActiveChild ? 'kt-menu-item-show show' : '' }} px-2"
                                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                                             <div
                                                 class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $childHasActiveChild ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg">
@@ -131,7 +131,7 @@
                                                     {{ __('sidebar.' . $child['title']) }}
                                                     @if (isset($child['status']) && env('DB_MODE') != 'production')
                                                         <span
-                                                            class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            class="inline-block {{ $child['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif
@@ -163,12 +163,18 @@
                                                 class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border">
                                                 @foreach ($child['children'] as $subChild)
                                                     @php $subChildIsActive = isActive($subChild['route'] ?? null, $subChild['parameters'] ?? [], $currentRoute, $currentParameters); @endphp
-                                                    <div class="kt-menu-item">
+                                                    <div class="kt-menu-item px-2">
                                                         <a class="kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
                                                             href="{{ isset($subChild['route']) && $subChild['route'] !== '#' ? route($subChild['route'], isset($subChild['parameters']) ? $subChild['parameters'] : []) : 'javascript:void(0)' }}"
                                                             {{ ($subChild['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
-                                                            <span
+                                                            {{-- <span
                                                                 class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $subChildIsActive ? 'before:bg-primary' : '' }}">
+                                                            </span> --}}
+
+                                                            <span
+                                                                class="kt-menu-icon items-start text-muted-foreground w-[10px]">
+                                                                <i
+                                                                    class="{{ $subChild['icon'] ?? 'ki-filled ki-folder' }} text-sm {{ $subChildIsActive ? 'text-primary' : '' }}"></i>
                                                             </span>
 
                                                             <span
@@ -177,7 +183,7 @@
 
                                                                 @if (isset($subChild['status']) && env('DB_MODE') != 'production')
                                                                     <span
-                                                                        class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                                        class="inline-block {{ $subChild['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                                         {{ __('sidebar.' . $subChild['status']) }}
                                                                     </span>
                                                                 @endif
@@ -200,12 +206,17 @@
                                         </div>
                                     @else
                                         {{-- Simple child --}}
-                                        <div class="kt-menu-item">
+                                        <div class="kt-menu-item px-2">
                                             <a class="kt-menu-link border border-transparent items-center grow {{ $childIsActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
                                                 href="{{ isset($child['route']) && $child['route'] !== '#' ? route($child['route'], isset($child['parameters']) ? $child['parameters'] : []) : 'javascript:void(0)' }}"
                                                 {{ ($child['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
-                                                <span
+                                                {{-- <span
                                                     class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $childIsActive ? 'before:bg-primary' : '' }}">
+                                                </span> --}}
+
+                                                <span class="kt-menu-icon items-start text-muted-foreground w-[10px]">
+                                                    <i
+                                                        class="{{ $child['icon'] ?? 'ki-filled ki-folder' }} text-sm {{ $childIsActive ? 'text-primary' : '' }}"></i>
                                                 </span>
 
                                                 <span
@@ -214,7 +225,7 @@
 
                                                     @if (isset($child['status']) && env('DB_MODE') != 'production')
                                                         <span
-                                                            class="inline-block {{ $item['title'] == 'accommodations' ? 'bg-danger text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            class="inline-block {{ $child['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                                             {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif

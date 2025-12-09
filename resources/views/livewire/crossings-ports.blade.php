@@ -17,13 +17,13 @@
     @endcomponent
 
     <div class="kt-card-content" wire:loading.class="loading"
-        wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,filterType,filterStatus,filterOperational,resetFilter">
+        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,filterType,filterStatus,filterOperational,resetFilter">
         <!-- Filters -->
         <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
             <div>
                 <select wire:model.live="filterType" id="type" class="kt-select h-[40px] w-48 max-w-full"
                     data-kt-select="true" data-kt-select-placeholder="{{ __('main.type') }}">
-                    <option value="">--</option>
+                    <option value="all">{{ __('main.all') }}</option>
                     <option value="land_crossing">{{ __('main.land_crossing') }}</option>
                     <option value="international_airport">{{ __('main.international_airport') }}</option>
                     <option value="domestic_airport">{{ __('main.domestic_airport') }}</option>
@@ -36,18 +36,18 @@
             <div>
                 <select wire:model.live="filterStatus" class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
                     data-kt-select-placeholder="{{ __('main.status') }}">
-                    <option value="">--</option>
+                    <option value="all">{{ __('main.all') }}</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
-                    <option value="under_construction">{{ __('main.under_construction') }}</option>
-                    <option value="maintenance">{{ __('main.maintenance') }}</option>
+                    {{-- <option value="under_construction">{{ __('main.under_construction') }}</option> --}}
+                    {{-- <option value="maintenance">{{ __('main.maintenance') }}</option> --}}
                 </select>
             </div>
 
             <div>
                 <select wire:model.live="filterOperational" class="kt-select h-[40px] w-48 max-w-full"
                     data-kt-select="true" data-kt-select-placeholder="{{ __('main.operational') }}">
-                    <option value="">--</option>
+                    <option value="all">{{ __('main.all') }}</option>
                     <option value="1">{{ __('main.yes') }}</option>
                     <option value="0">{{ __('main.no') }}</option>
                 </select>

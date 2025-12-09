@@ -2,17 +2,22 @@
 
 namespace App\Models;
 
-use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MediaFile extends Model
 {
-    use HasFactory, HasSearch, SoftDeletes, FiltersByUserRole;
+    use HasFactory, HasSearch, HasRichText, SoftDeletes, FiltersByUserRole;
+
+    protected $richTextAttributes = [
+        'description',
+    ];
 
     protected $fillable = [
         'id',

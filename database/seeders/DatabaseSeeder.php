@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\AccommodationTypeSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
             AirlineSeeder::class,
             CompleteDataSeeder::class,
             MediaFileSeeder::class, // Must be last to store all existing photos
+            AccommodationSeeder::class,
         ]);
     }
 }

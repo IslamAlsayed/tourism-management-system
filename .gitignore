@@ -30,3 +30,4 @@ storage/app/private
 */trash
 app/Helpers
 /resources/views/pages/dashboard/vehicles
+SYSTEM_READY.txt

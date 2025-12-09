@@ -7,14 +7,14 @@
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    Edit Accommodation
+                    Edit New Accommodation
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    Update accommodation information
+                    Add a new accommodation to the system
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="#" class="kt-btn kt-btn-outline">
+                <a href="{{ route('accommodations.index') }}" class="kt-btn kt-btn-outline">
                     Back to Accommodations
                 </a>
             </div>
@@ -22,330 +22,456 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-4 lg:gap-6">
-            <!-- Accommodation Form -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">Basic Information</h3>
-                </div>
-                <div class="kt-card-body">
-                    <form class="space-y-6 p-4">
-                        <!-- Accommodation Photo -->
-                        <div class="text-center">
-                            <div class="relative inline-block">
-                                <div
-                                    class="w-24 h-24 rounded-full bg-secondary-light border-4 border-white shadow-lg mx-auto mb-4 overflow-hidden">
-                                    <img id="accommodation-preview" src="{{ asset('metronic/media/avatars/300-1.png') }}"
-                                        alt="Accommodation Image" class="w-full h-full object-cover">
-                                </div>
-                                <label for="photo"
-                                    class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark">
-                                    <i class="ki-filled ki-camera text-sm"></i>
-                                </label>
-                                <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
-                            </div>
-                            <div class="text-sm text-secondary-foreground">Upload accommodation photo</div>
-                        </div>
+        <form action="{{ route('accommodations.update', $accommodation->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="grid gap-4 lg:gap-6">
 
-                        <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Basic Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">Basic Information</h3>
+                    </div>
+                    <div class="kt-card-body p-4 pb-0">
+                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
                             <!-- Name -->
-                            <div class="mb-4">
-                                <label for="name" class="kt-label required mb-2">Name (English)</label>
-                                <input type="text" name="name" id="name" class="kt-input" required
-                                    value="Grand Plaza Hotel">
+                            <div class="">
+                                <label for="name" class="kt-label mb-2">Name (English)</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $accommodation->name }}" placeholder="Enter accommodation name">
+                                @error('name')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <!-- Name Arabic -->
-                            <div class="mb-4">
-                                <label for="name_ar" class="kt-label required mb-2">Name (Arabic)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input" required
-                                    value="فندق جراند بلازا">
+                            <div class="">
+                                <label for="name_ar" class="kt-label mb-2">Name (Arabic)</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $accommodation->name_ar }}" placeholder="أدخل اسم الإقامة">
+                                @error('name_ar')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Type -->
-                            <div class="mb-4">
-                                <label for="type" class="kt-label required mb-2">Accommodation Type</label>
-                                <select name="type" id="type" class="kt-select" special-search required>
-                                    <option value="">--</option>
-                                    <option value="Hotel" selected>Hotel</option>
-                                    <option value="Resort">Resort</option>
-                                    <option value="Camp">Tourist Camp</option>
-                                    <option value="Hostel">Hostel</option>
-                                    <option value="Lodge">Lodge</option>
-                                    <option value="Apartment">Hotel Apartment</option>
+                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
+                            <!-- Accommodation Type -->
+                            <div class="">
+                                <label for="accommodation_type_id" class="kt-label mb-2 flex items-center justify-between">
+                                    <div>Accommodation Type</div>
+                                    <a href="{{ route('accommodations.create.type') }}"
+                                        class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+                                </label>
+
+                                <select name="accommodation_type_id" id="accommodation_type_id" class="kt-select"
+                                    special-search data-current-value="{{ $accommodation->accommodation_type_id }}"
+                                    value="{{ $accommodation->accommodation_type_id }}">
+                                    <option value="">-- Select Type --</option>
+                                    @foreach ($accommodationTypes as $type)
+                                        <option value="{{ $type->id }}"
+                                            {{ $accommodation->accommodation_type_id == $type->id ? 'selected' : '' }}>
+                                            {{ $type->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                @error('accommodation_type_id')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <!-- Rating -->
-                            <div class="mb-4">
-                                <label for="rating" class="kt-label required mb-2">Star Rating</label>
-                                <select name="rating" id="rating" class="kt-select" special-search required>
-                                    <option value="">--</option>
-                                    <option value="1">1 Star</option>
-                                    <option value="2">2 Stars</option>
-                                    <option value="3">3 Stars</option>
-                                    <option value="4">4 Stars</option>
-                                    <option value="5" selected>5 Stars</option>
+                            <!-- Classification -->
+                            <div class="">
+                                <label for="classification" class="kt-label mb-2">Classification</label>
+                                <input type="text" name="classification" id="classification" class="kt-input h-[45px]"
+                                    value="{{ $accommodation->classification }}" placeholder="e.g., 5 Stars, Luxury">
+                                @error('classification')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Stars Rating -->
+                            <div class="">
+                                <label for="stars" class="kt-label mb-2">Star Rating</label>
+                                <select name="stars" id="stars" class="kt-select" special-search
+                                    data-current-value="{{ $accommodation->stars }}" value="{{ $accommodation->stars }}">
+                                    <option value="">-- Select Rating --</option>
+                                    <option value="1" {{ $accommodation->stars == 1 ? 'selected' : '' }}>1 Star
+                                    </option>
+                                    <option value="2" {{ $accommodation->stars == 2 ? 'selected' : '' }}>2 Stars
+                                    </option>
+                                    <option value="3" {{ $accommodation->stars == 3 ? 'selected' : '' }}>3 Stars
+                                    </option>
+                                    <option value="4" {{ $accommodation->stars == 4 ? 'selected' : '' }}>4 Stars
+                                    </option>
+                                    <option value="5" {{ $accommodation->stars == 5 ? 'selected' : '' }}>5 Stars
+                                    </option>
                                 </select>
+                                @error('stars')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Country -->
-                            <div class="mb-4">
-                                <label for="country" class="kt-label required mb-2">Country</label>
-                                <select name="country" id="country" class="kt-select" special-search required>
-                                    <option value="">--</option>
-                                    <option value="Saudi Arabia" selected>Saudi Arabia</option>
-                                    <option value="UAE">United Arab Emirates</option>
-                                    <option value="Qatar">Qatar</option>
-                                    <option value="Kuwait">Kuwait</option>
-                                    <option value="Bahrain">Bahrain</option>
-                                    <option value="Oman">Oman</option>
+                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
+                            <!-- Season -->
+                            <div class="">
+                                <label for="season_id" class="kt-label mb-2">Season</label>
+                                <select name="season_id" id="season_id" class="kt-select" special-search
+                                    data-current-value="{{ $accommodation->season_id }}"
+                                    value="{{ $accommodation->season_id }}">
+                                    <option value="">-- Select Season --</option>
+                                    @foreach ($seasons as $season)
+                                        <option value="{{ $season->id }}"
+                                            {{ ($accommodation->season_id ?? '') == $season->id ? 'selected' : '' }}>
+                                            {{ $season->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                @error('season_id')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <!-- City -->
-                            <div class="mb-4">
-                                <label for="city" class="kt-label required mb-2">City</label>
-                                <input type="text" name="city" id="city" class="kt-input" required
-                                    value="Riyadh">
+                            <!-- Room Type -->
+                            <div class="">
+                                <label for="room_type_id" class="kt-label mb-2">Default Room Type</label>
+                                <select name="room_type_id" id="room_type_id" class="kt-select" special-search
+                                    data-current-value="{{ $accommodation->room_type_id }}"
+                                    value="{{ $accommodation->room_type_id }}">
+                                    <option value="">-- Select Room Type --</option>
+                                    @foreach ($roomTypes as $roomType)
+                                        <option value="{{ $roomType->id }}"
+                                            {{ ($accommodation->room_type_id ?? '') == $roomType->id ? 'selected' : '' }}>
+                                            {{ $roomType->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('room_type_id')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Meal Type -->
+                            <div class="">
+                                <label for="meal_type_id" class="kt-label mb-2">Default Meal Type</label>
+                                <select name="meal_type_id" id="meal_type_id" class="kt-select" special-search
+                                    data-current-value="{{ $accommodation->meal_type_id }}"
+                                    value="{{ $accommodation->meal_type_id }}">
+                                    <option value="">-- Select Meal Type --</option>
+                                    @foreach ($mealTypes as $mealType)
+                                        <option value="{{ $mealType->id }}"
+                                            {{ ($accommodation->meal_type_id ?? '') == $mealType->id ? 'selected' : '' }}>
+                                            {{ $mealType->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('meal_type_id')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Address -->
-                            @include('components.elements.input-text-editor', [
-                                'column' => 'address',
-                                'value' => $accommodation->address,
-                            ])
+                        {{-- Description --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'description',
+                            'value' => $accommodation->description,
+                        ])
+                    </div>
+                </div>
 
-                            <!-- Description -->
-                            @include('components.elements.input-text-editor', [
-                                'column' => 'description',
-                                'value' => $accommodation->description,
+                <!-- Location Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">Location Information</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            <!-- Currency -->
+                            <div class="">
+                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
+                                    {{ __('main.currency') }}
+                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $accommodation->currency_id }}"
+                                    value="{{ $accommodation->currency_id }}">
+                                    <option value="">--</option>
+                                    @foreach ($currencies as $currency)
+                                        <option value="{{ $currency->id }}"
+                                            {{ $accommodation->currency_id == $currency->id ? 'selected' : '' }}>
+                                            {{ $currency->code }} - {{ $currency->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('currency_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Regions [region, subregion, country, state, city] --}}
+                            @include('components.regions.edit', [
+                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                                'multiple' => false,
+                                'record' => $accommodation,
                             ])
                         </div>
 
                         <div class="grid lg:grid-cols-3 gap-6">
-                            <!-- Phone -->
-                            <div class="mb-4">
-                                <label for="phone" class="kt-label mb-2">Phone</label>
-                                <input type="tel" name="phone" id="phone" class="kt-input"
-                                    value="+966 11 123 4567">
+                            <!-- Street Address -->
+                            <div class="">
+                                <label for="street" class="kt-label mb-2">Street Address</label>
+                                <input type="text" name="street" id="street" class="kt-input"
+                                    value="{{ $accommodation->street }}" placeholder="Enter street address">
+                                @error('street')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <!-- Email -->
-                            <div class="mb-4">
-                                <label for="email" class="kt-label mb-2">Email</label>
-                                <input type="email" name="email" id="email" class="kt-input"
-                                    value="info@grandplaza.com">
+                            <!-- Latitude -->
+                            <div class="">
+                                <label for="latitude" class="kt-label mb-2">Latitude</label>
+                                <input type="number" name="latitude" id="latitude" step="0.0000001" class="kt-input"
+                                    value="{{ $accommodation->latitude }}" placeholder="e.g., 31.2001">
+                                @error('latitude')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <!-- Website -->
-                            <div class="mb-4">
-                                <label for="website" class="kt-label mb-2">Website</label>
-                                <input type="url" name="website" id="website" class="kt-input"
-                                    value="www.grandplaza.com">
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Number of Rooms -->
-                            <div class="mb-4">
-                                <label for="rooms" class="kt-label required mb-2">Number of Rooms</label>
-                                <input type="number" name="rooms" id="rooms" class="kt-input" required
-                                    value="250">
+                            <!-- Longitude -->
+                            <div class="">
+                                <label for="longitude" class="kt-label mb-2">Longitude</label>
+                                <input type="number" name="longitude" id="longitude" step="0.0000001" class="kt-input"
+                                    value="{{ $accommodation->longitude }}" placeholder="e.g., 29.9187">
+                                @error('longitude')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <!-- Check-in Time -->
-                            <div class="mb-4">
-                                <label for="checkin_time" class="kt-label mb-2">Check-in Time</label>
-                                <input type="time" name="checkin_time" id="checkin_time" class="kt-input"
-                                    value="15:00">
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-2 gap-6">
-                            <!-- Check-out Time -->
-                            <div class="mb-4">
-                                <label for="checkout_time" class="kt-label mb-2">Check-out Time</label>
-                                <input type="time" name="checkout_time" id="checkout_time" class="kt-input"
-                                    value="12:00">
-                            </div>
-
-                            <!-- Status -->
-                            <div class="mb-4">
-                                <label for="status" class="kt-label required mb-2">Status</label>
-                                <select name="status" id="status" class="kt-select" special-search required>
-                                    <option value="active" selected>Active</option>
-                                    <option value="inactive">Inactive</option>
-                                    <option value="maintenance">Under Maintenance</option>
+                            <!-- Timezone -->
+                            <div class="">
+                                <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search
+                                    data-current-value="{{ $accommodation->timezone_id }}"
+                                    value="{{ $accommodation->timezone_id }}">
+                                    <option value="">--</option>
+                                    @foreach ($timezones as $zone)
+                                        <option value="{{ $zone['id'] }}"
+                                            {{ $accommodation->timezone_id == $zone['id'] ? 'selected' : '' }}>
+                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
+                                        </option>
+                                    @endforeach
                                 </select>
-                            </div>
-                        </div>
-
-                        <!-- Facilities -->
-                        <div class="mb-4">
-                            <h4 class="mb-2 font-semibold">{{ __('main.facilities') }}</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="facilities[]" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[]',
-                                        'id' => 'wifi',
-                                        'value' => '1',
-                                        'checked' => in_array('wifi', $accommodation->facilities ?? []),
-                                        'label' => __('main.free_wifi'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="facilities[]" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[]',
-                                        'id' => 'parking',
-                                        'value' => '1',
-                                        'checked' => in_array('parking', $accommodation->facilities ?? []),
-                                        'label' => __('main.parking'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="facilities[]" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[]',
-                                        'id' => 'pool',
-                                        'value' => '1',
-                                        'checked' => in_array('pool', $accommodation->facilities ?? []),
-                                        'label' => __('main.swimming_pool'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="facilities[]" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[]',
-                                        'id' => 'gym',
-                                        'value' => '1',
-                                        'checked' => in_array('gym', $accommodation->facilities ?? []),
-                                        'label' => __('main.gym'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="facilities[]" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[]',
-                                        'id' => 'restaurant',
-                                        'value' => '1',
-                                        'checked' => in_array('restaurant', $accommodation->facilities ?? []),
-                                        'label' => __('main.restaurant'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="facilities[]" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[]',
-                                        'id' => 'spa',
-                                        'value' => '1',
-                                        'checked' => in_array('spa', $accommodation->facilities ?? []),
-                                        'label' => __('main.spa'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="facilities[]" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[]',
-                                        'id' => 'airport_shuttle',
-                                        'value' => '1',
-                                        'checked' => in_array('airport_shuttle', $accommodation->facilities ?? []),
-                                        'label' => __('main.airport_shuttle'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="facilities[]" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[]',
-                                        'id' => 'pet_friendly',
-                                        'value' => '1',
-                                        'checked' => in_array('pet_friendly', $accommodation->facilities ?? []),
-                                        'label' => __('main.pet_friendly'),
-                                    ])
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Submit Buttons -->
-                        <div class="flex items-center gap-4 pt-4">
-                            <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
-                                Update Accommodation
-                            </button>
-                            <a href="#" class="kt-btn kt-btn-outline">
-                                Cancel
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Tips -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">Update Tips</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-success"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">Keep Information Updated</div>
-                                <div class="text-sm text-secondary-foreground">Regularly update your accommodation
-                                    information to maintain accuracy</div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-camera text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">Refresh Photos</div>
-                                <div class="text-sm text-secondary-foreground">Update photos to reflect current conditions
-                                    and improvements</div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-star text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">Monitor Reviews</div>
-                                <div class="text-sm text-secondary-foreground">Keep track of guest feedback to improve your
-                                    services</div>
+                                @error('timezone_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Contact Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">Contact Information</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                            <!-- General Mobile -->
+                            <div class="">
+                                <label for="general_mobile" class="kt-label mb-2">General Mobile</label>
+                                <input type="tel" name="general_mobile" id="general_mobile" class="kt-input"
+                                    value="{{ $accommodation->general_mobile }}" placeholder="+1234567890">
+                                @error('general_mobile')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- General Email -->
+                            <div class="">
+                                <label for="general_email" class="kt-label mb-2">General Email</label>
+                                <input type="email" name="general_email" id="general_email" class="kt-input"
+                                    value="{{ $accommodation->general_email }}" placeholder="info@accommodation.com">
+                                @error('general_email')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                            <!-- Phone -->
+                            <div class="">
+                                <label for="phone" class="kt-label mb-2">Phone</label>
+                                <input type="tel" name="phone" id="phone" class="kt-input"
+                                    value="{{ $accommodation->phone }}" placeholder="+1234567890">
+                                @error('phone')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Website -->
+                            <div class="">
+                                <label for="website" class="kt-label mb-2">Website</label>
+                                <input type="url" name="website" id="website" class="kt-input"
+                                    value="{{ $accommodation->website }}" placeholder="https://www.accommodation.com">
+                                @error('website')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Contact Person Details -->
+                        <div class="border-t pt-4 mt-4">
+                            <h4 class="text-lg font-medium mb-4">Contact Person</h4>
+                            <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                                <div class="">
+                                    <label for="contact_person" class="kt-label mb-2">Contact Person Name</label>
+                                    <input type="text" name="contact_person" id="contact_person" class="kt-input"
+                                        value="{{ $accommodation->contact_person }}" placeholder="John Doe">
+                                    @error('contact_person')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="">
+                                    <label for="contact_position" class="kt-label mb-2">Position</label>
+                                    <input type="text" name="contact_position" id="contact_position" class="kt-input"
+                                        value="{{ $accommodation->contact_position }}" placeholder="Manager">
+                                    @error('contact_position')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="grid lg:grid-cols-2 gap-6">
+                                <div class="">
+                                    <label for="contact_mobile" class="kt-label mb-2">Contact Mobile</label>
+                                    <input type="tel" name="contact_mobile" id="contact_mobile" class="kt-input"
+                                        value="{{ $accommodation->contact_mobile }}" placeholder="+1234567890">
+                                    @error('contact_mobile')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="">
+                                    <label for="contact_email" class="kt-label mb-2">Contact Email</label>
+                                    <input type="email" name="contact_email" id="contact_email" class="kt-input"
+                                        value="{{ $accommodation->contact_email }}"
+                                        placeholder="manager@accommodation.com">
+                                    @error('contact_email')
+                                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Settings -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">Additional Settings</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 p-4">
+                        <div class="flex items-center gap-3">
+                            <input type="hidden" name="is_active" value="0">
+                            @include('components.elements.checkbox-button', [
+                                'name' => 'is_active',
+                                'id' => 'is_active',
+                                'value' => '1',
+                                'checked' => $accommodation->is_active,
+                                'label' => __('main.activate_accommodation'),
+                            ])
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Submit Buttons --}}
+                @include('components.elements.update-submit', ['models' => 'accommodations'])
             </div>
-        </div>
+        </form>
     </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Handle country change to filter cities
+                const countrySelect = document.getElementById('country_id');
+                const citySelect = document.getElementById('city_id');
+
+                if (countrySelect) {
+                    countrySelect.addEventListener('change', function() {
+                        const countryId = this.value;
+
+                        // Clear city options
+                        citySelect.innerHTML = '<option value="">-- Select City --</option>';
+
+                        if (countryId) {
+                            // Fetch cities for selected country
+                            fetch(`/api/countries/${countryId}/cities`)
+                                .then(response => response.json())
+                                .then(cities => {
+                                    cities.forEach(city => {
+                                        const option = document.createElement('option');
+                                        option.value = city.id;
+                                        option.textContent = city.name;
+                                        citySelect.appendChild(option);
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching cities:', error);
+                                });
+                        }
+                    });
+                }
+
+                // Handle region change to filter subregions
+                const regionSelect = document.getElementById('region_id');
+                const subregionSelect = document.getElementById('subregion_id');
+
+                if (regionSelect) {
+                    regionSelect.addEventListener('change', function() {
+                        const regionId = this.value;
+
+                        // Clear subregion options
+                        subregionSelect.innerHTML = '<option value="">-- Select Subregion --</option>';
+
+                        if (regionId) {
+                            // Fetch subregions for selected region
+                            fetch(`/api/regions/${regionId}/subregions`)
+                                .then(response => response.json())
+                                .then(subregions => {
+                                    subregions.forEach(subregion => {
+                                        const option = document.createElement('option');
+                                        option.value = subregion.id;
+                                        option.textContent = subregion.name;
+                                        subregionSelect.appendChild(option);
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching subregions:', error);
+                                });
+                        }
+                    });
+                }
+            });
+        </script>
+    @endpush
 @endsection
 
 @push('scripts')
     <script>
-        // Photo preview
-        document.getElementById('photo').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('accommodation-preview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
+                filterByForeignId("subregion_id", "country", "country_id", "edit");
+                filterByForeignId("country_id", "state", "state_id", "edit");
+                filterByForeignId("state_id", "city", "city_id", "edit");
+            }, 500);
         });
     </script>
 @endpush
+
+@include('components.regions.script-cascading')

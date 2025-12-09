@@ -12,7 +12,7 @@
     <div class="kt-card-content">
         <div data-kt-datatable-state-save="false" id="hotels_table">
             <div class="kt-scrollable-x-auto" wire:loading.class="loading"
-                wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
+                wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,

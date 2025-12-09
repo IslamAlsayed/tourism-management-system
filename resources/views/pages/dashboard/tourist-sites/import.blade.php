@@ -35,9 +35,9 @@
         </div>
 
         @if (env('DB_MODE') != 'production')
-            <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
+            <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">name</th>
                         <th class="border px-2">name_ar</th>
@@ -64,7 +64,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">description_ar</th>
                         <th class="border px-2">subregion_id</th>
@@ -95,7 +95,7 @@
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">opening_time</th>
                         <th class="border px-2">closing_time</th>

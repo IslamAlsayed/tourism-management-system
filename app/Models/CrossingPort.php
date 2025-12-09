@@ -6,11 +6,18 @@ use App\Traits\BroadcastsRecordEvents;
 use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CrossingPort extends Model
 {
-    use HasSearch, HasFactory, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasSearch, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents;
+
+    protected $richTextAttributes = [
+        'description',
+        'address',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',
@@ -49,7 +56,7 @@ class CrossingPort extends Model
         'visa_application_url',
         'visa_policy_source',
         'visa_last_update',
-        'note',
+        'notes',
     ];
 
     /**

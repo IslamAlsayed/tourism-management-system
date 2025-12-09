@@ -76,7 +76,7 @@ class CrossingPortCreateRequest extends FormRequest
             'visa_last_update' => ['nullable', 'date'],
 
             // Additional notes
-            'note' => ['nullable', 'string', 'max:1000'],
+            'notes' => ['nullable', 'string', 'max:1000'],
         ];
     }
 

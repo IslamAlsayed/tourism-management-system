@@ -33,7 +33,6 @@ class Restaurant extends Model
         'street',
         'mobile',
         'website',
-        'notes',
         'is_active',
         'wheelchair_accessible',
         'free_wifi',
@@ -44,6 +43,7 @@ class Restaurant extends Model
         'outdoor',
         'spa',
         'rating',
+        'notes',
         'type_id',
         'region_id',
         'subregion_id',
@@ -70,7 +70,7 @@ class Restaurant extends Model
 
     public function type()
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(AccommodationType::class);
     }
 
     public function region()

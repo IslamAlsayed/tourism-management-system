@@ -40,9 +40,9 @@
         </div>
 
         @if (env('DB_MODE') != 'production')
-            <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
+            <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
             <table class="border min-w-half divide-y text-center divide-gray-200">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">first_name</th>
                         <th class="border px-2">last_name</th>
@@ -63,7 +63,7 @@
             <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }} -
                 {{ __('main.personal_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">gender</th>
                         <th class="border px-2">nationality</th>
@@ -81,7 +81,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.passport_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">passport_number</th>
                         <th class="border px-2">passport_issue_date</th>
@@ -99,7 +99,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.contact_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">personal_email</th>
                         <th class="border px-2">work_email</th>
@@ -120,7 +120,7 @@
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">home_phone</th>
                         <th class="border px-2">work_phone</th>
@@ -140,7 +140,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.location_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">region_id</th>
                         <th class="border px-2">subregion_id</th>
@@ -161,7 +161,7 @@
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">box</th>
                         <th class="border px-2">postal_code</th>
@@ -181,7 +181,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.company_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">company_name</th>
                         <th class="border px-2">job_title</th>
@@ -202,7 +202,7 @@
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">business_registration_number</th>
                         <th class="border px-2">tax_id</th>
@@ -218,7 +218,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.online_presence') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">website_url</th>
                         <th class="border px-2">linkedin_url</th>
@@ -234,7 +234,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.additional_settings') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">status</th>
                         <th class="border px-2">timezone</th>

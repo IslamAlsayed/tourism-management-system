@@ -504,13 +504,10 @@
                         </div>
 
                         {{-- Notes --}}
-                        <div>
-                            {{-- Notes --}}
-                            @include('components.elements.input-text-editor', [
-                                'column' => 'notes',
-                                'value' => old('notes'),
-                            ])
-                        </div>
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'notes',
+                            'value' => old('notes'),
+                        ])
                     </div>
                 </div>
 

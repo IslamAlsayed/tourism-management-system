@@ -16,4 +16,8 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/user-status/offline', [DashboardController::class, 'userOfflineStatus'])->name('user.status.offline');
     Route::post('/translate-record-event', [DashboardController::class, 'translateRecordEvent'])->name('api.translate-record-event');
     Route::post('/web-push-notifications', [DashboardController::class, 'webPushNotifications'])->name('web-push-notifications');
+
+    // Location APIs for accommodations
+    Route::get('/countries/{countryId}/cities', [\App\Http\Controllers\Api\LocationController::class, 'getCitiesByCountry']);
+    Route::get('/regions/{regionId}/subregions', [\App\Http\Controllers\Api\LocationController::class, 'getSubregionsByRegion']);
 });

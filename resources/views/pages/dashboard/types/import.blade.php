@@ -9,18 +9,24 @@
         </div>
 
         @if (env('DB_MODE') != 'production')
-            <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
-            <table class="border min-w-half divide-y text-center divide-gray-200">
-                <thead style="background-color: #ffea00;">
+            <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
+            <table class="border min-w-half divide-y text-center divide-gray-200 mt-2">
+                <thead>
                     <tr>
-                        <th class="border px-2">name</th>
-                        <th class="border px-2">name_ar</th>
+                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                            name <span class="text-red-600">*</span>
+                        </th>
+                        <th class="border px-2" title="{{ __('main.required') }}">name_ar</th>
+                        <th class="border px-2" title="{{ __('main.required') }}">description</th>
+                        <th class="border px-2" title="{{ __('main.required') }}">is_active</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">Hotel</td>
-                        <td class="border px-2">فندق</td>
+                        <td class="border px-2">Hotel Example</td>
+                        <td class="border px-2">فندق المثال</td>
+                        <td class="border px-2">Luxury hotel in city center</td>
+                        <td class="border px-2">1</td>
                     </tr>
                 </tbody>
             </table>

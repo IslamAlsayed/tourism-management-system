@@ -15,7 +15,7 @@
                 {{ __('main.import_csv') }}
             </a>
         @endif
-        @if (isset($page_create_title))
+        @if (isset($page_create_title) && isset($page_create_url))
             <a class="kt-btn kt-btn-primary" href="{{ isset($page_create_url) ? $page_create_url : '#' }}">
                 {{ isset($page_create_title) ? $page_create_title : '' }}
             </a>

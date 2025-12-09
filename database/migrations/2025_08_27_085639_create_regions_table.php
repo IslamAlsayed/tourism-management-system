@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->string('wiki_data_id')->nullable();
+            $table->boolean('is_active')->nullable()->default(false);
             $table->timestamps();
         });
     }

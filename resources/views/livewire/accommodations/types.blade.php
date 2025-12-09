@@ -2,8 +2,8 @@
     @component('includes.pagination-info', [
         'data' => $data,
         'columns' => $columns ?? [],
-        'title' => __('main.types'),
-        'entityName' => __('main.type'),
+        'title' => __('main.accommodation-types'),
+        'entityName' => __('main.accommodation-type'),
         'sortField' => $sortField ?? null,
         'searchValue' => $search ?? null,
         'showSearch' => true,
@@ -16,12 +16,33 @@
         @endif
     @endcomponent
 
+    <div class="kt-card-content" wire:loading.class="loading"
+        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterStatus">
+        <!-- Filters -->
+        <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 px-4 filterTable">
+            <div>
+                <select wire:model.live="filterStatus" class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
+                    data-kt-select-placeholder="{{ __('main.status') }}">
+                    <option value="all">{{ __('main.all') }}</option>
+                    <option value="active">{{ __('main.active') }}</option>
+                    <option value="inactive">{{ __('main.inactive') }}</option>
+                </select>
+            </div>
 
+            {{-- Reset Sort Button --}}
+            @if ($filterStatus)
+                <div>
+                    <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}"
+                        toggle-button class="kt-btn kt-btn-outline bg-white px-3 hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
+                        <span class="text-sm">{{ __('main.reset_sort') }}</span>
+                    </button>
+                </div>
+            @endif
+        </div>
 
-    <div class="kt-card-content">
-        <div data-kt-datatable-state-save="false" id="types_table">
-            <div class="kt-scrollable-x-auto" wire:loading.class="loading"
-                wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
+        <div data-kt-datatable-state-save="false" id="accommodation-types_table">
+            <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,

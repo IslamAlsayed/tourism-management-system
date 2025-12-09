@@ -16,7 +16,7 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content px-3" wire:target="search,resetFilters,filterType,filterCollection,filterActive"
+    <div class="kt-card-content px-3" wire:target="search,resetFilters,filterType,filterCollection,filterStatus"
         wire:loading.class="loading">
         <!-- Filters -->
         <div class="grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
@@ -24,7 +24,7 @@
             <div>
                 <label for="filterType">{{ __('main.all_types') }}</label>
                 <select wire:model.live="filterType" id="filterType" class="kt-select">
-                    <option value="">--</option>
+                    <option value="all">{{ __('main.all') }}</option>
                     <option value="image">{{ __('main.images') }}</option>
                     <option value="video">{{ __('main.videos') }}</option>
                     <option value="document">{{ __('main.documents') }}</option>
@@ -37,7 +37,7 @@
             <div>
                 <label for="filterCollection">{{ __('main.all_collections') }}</label>
                 <select wire:model.live="filterCollection" id="filterCollection" class="kt-select">
-                    <option value="">--</option>
+                    <option value="all">{{ __('main.all') }}</option>
                     @foreach ($collections as $collection)
                         <option value="{{ $collection }}">{{ ucfirst($collection) }}</option>
                     @endforeach
@@ -46,16 +46,16 @@
 
             {{-- Filter by Status --}}
             <div>
-                <label for="filterActive">{{ __('main.all_status') }}</label>
-                <select wire:model.live="filterActive" id="filterActive" class="kt-select">
-                    <option value="">--</option>
-                    <option value="1">{{ __('main.active') }}</option>
-                    <option value="0">{{ __('main.inactive') }}</option>
+                <label for="filterStatus">{{ __('main.all_status') }}</label>
+                <select wire:model.live="filterStatus" id="filterStatus" class="kt-select">
+                    <option value="all">{{ __('main.all') }}</option>
+                    <option value="active">{{ __('main.active') }}</option>
+                    <option value="inactive">{{ __('main.inactive') }}</option>
                 </select>
             </div>
 
             {{-- Reset Sort Button --}}
-            @if ($filterType || $filterCollection || $filterActive)
+            @if ($filterType || $filterCollection || $filterStatus)
                 <div>
                     <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}"
                         toggle-button class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">

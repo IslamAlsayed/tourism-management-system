@@ -45,8 +45,55 @@
         <td title="{{ $model->name }}">{!! highlightSearch(limitedText($model->name ?? '--', 30), $search) !!}</td>
     @break
 
+    @case('name_ar')
+        <td title="{{ $model->name_ar }}">{!! highlightSearch(limitedText($model->name_ar ?? '--', 30), $search) !!}</td>
+    @break
+
     @case('email')
         <td title="{{ $model->email }}">{!! highlightSearch(limitedText($model->email ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('description')
+        <td title="{{ strip_tags($model->description ?? '--') }}">
+            @if (isset($model->description) && !empty($model->description))
+                {!! highlightSearch(limitedText(strip_tags($model->description ?? '--'), 30), $search) !!}
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('description_ar')
+        <td title="{{ strip_tags($model->description_ar ?? '--') }}">
+            {!! highlightSearch(limitedText(strip_tags($model->description_ar ?? '--'), 30), $search) !!}
+        </td>
+    @break
+
+    @case('address')
+        <td title="{{ strip_tags($model->address ?? '--') }}">
+            {!! highlightSearch(limitedText(strip_tags($model->address ?? '--'), 30), $search) !!}
+        </td>
+    @break
+
+    @case('address_ar')
+        <td title="{{ strip_tags($model->address_ar ?? '--') }}">
+            {!! highlightSearch(limitedText(strip_tags($model->address_ar ?? '--'), 30), $search) !!}
+        </td>
+    @break
+
+    @case('notes')
+        <td title="{{ strip_tags($model->notes ?? '--') }}">
+            {!! highlightSearch(limitedText(strip_tags($model->notes ?? '--'), 30), $search) !!}
+        </td>
+    @break
+
+    @case('notes_ar')
+        <td title="{{ strip_tags($model->notes_ar ?? '--') }}">
+            {!! highlightSearch(limitedText(strip_tags($model->notes_ar ?? '--'), 30), $search) !!}
+        </td>
     @break
 
     @case('personal_email')
@@ -106,6 +153,18 @@
             <span class="{{ $model->user_status }}">
                 {!! highlightSearch(limitedText($model->user_status ?? '--', 30), $search) !!}
             </span>
+        </td>
+    @break
+
+    @case('season_from')
+        <td title="{{ $model->formatted_season_from }}">
+            <div>{!! highlightSearch(limitedText($model->formatted_season_from ?? '--', 30), $search) !!}</div>
+        </td>
+    @break
+
+    @case('season_to')
+        <td title="{{ $model->formatted_season_to }}">
+            <div>{!! highlightSearch(limitedText($model->formatted_season_to ?? '--', 30), $search) !!}</div>
         </td>
     @break
 
@@ -292,7 +351,27 @@
         <td title="{{ optional($model->updater)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->updater)->name ?? '--', 30), $search) !!}</td>
     @break
 
-        @case('timezone')
+    @case('accommodation')
+        <td title="{{ optional($model->accommodation)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->accommodation)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('season')
+        <td title="{{ optional($model->season)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->season)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('room')
+        <td title="{{ optional($model->room)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->room)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('meal')
+        <td title="{{ optional($model->meal)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->meal)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('accommodation_type')
+        <td title="{{ optional($model->accommodation_type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->accommodation_type)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('timezone')
         <td title="{{ $model->timezone->name }}">
             <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText(str_replace('_', ' ', $model->timezone->name) ?? '--', 30), $search) !!}
@@ -366,7 +445,8 @@
                             </div>
                         @endif
                     @else
-                        <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        <div
+                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                             ...
                         </div>
                     @endif
@@ -497,14 +577,6 @@
             </span>
         </td>
     @break --}}
-    @case('notes')
-        <td title="{{ $model->notes }}">
-            <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! highlightSearch(limitedText($model->notes ?? '--', 30), $search) !!}
-            </span>
-        </td>
-    @break
-
     @case('client_type')
         <td title="{{ __('main.' . $model->client_type == 'individual' ? 'individual' : 'corporate') }}">
             <span
@@ -559,96 +631,103 @@
         </td>
     @break
 
+    @case('is_supplement')
+        <td title="{{ ($model->is_supplement == 1) == 1 ? __('main.yes') : __('main.no') }}">
+            <span class="text-{{ $model->is_supplement == 1 ? 'green' : 'red' }}-600 font-semibold">
+                {!! $model->is_supplement == 1
+                    ? highlightSearch(__('main.yes'), $search)
+                    : highlightSearch(__('main.no'), $search) !!}
+            </span>
+        </td>
+    @break
+
     @case('is_active')
-        <td title="{{ $model->is_active == 1 ? __('main.active') : __('main.inactive') }}">
+        <td title="{{ $model->is_active == 1 ? __('main.yes') : __('main.no') }}">
             <span class="text-{{ $model->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->is_active == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
+                {!! $model->is_active == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
+            </span>
+        </td>
+    @break
+
+    @case('is_included')
+        <td title="{{ $model->is_included == 1 ? __('main.yes') : __('main.no') }}">
+            <span class="text-{{ $model->is_included == 1 ? 'green' : 'red' }}-600 font-semibold">
+                {!! $model->is_included == 1
+                    ? highlightSearch(__('main.yes'), $search)
+                    : highlightSearch(__('main.no'), $search) !!}
             </span>
         </td>
     @break
 
     @case('wheelchair_accessible')
-        <td title="{{ $model->wheelchair_accessible == 1 ? __('main.active') : __('main.inactive') }}">
+        <td title="{{ $model->wheelchair_accessible == 1 ? __('main.yes') : __('main.no') }}">
             <span class="text-{{ $model->wheelchair_accessible == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->wheelchair_accessible == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
+                    ? highlightSearch(__('main.yes'), $search)
+                    : highlightSearch(__('main.no'), $search) !!}
             </span>
         </td>
     @break
 
     @case('free_wifi')
-        <td title="{{ $model->free_wifi == 1 ? __('main.active') : __('main.inactive') }}">
+        <td title="{{ $model->free_wifi == 1 ? __('main.yes') : __('main.no') }}">
             <span class="text-{{ $model->free_wifi == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->free_wifi == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
+                {!! $model->free_wifi == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
             </span>
         </td>
     @break
 
     @case('parking')
-        <td title="{{ $model->parking == 1 ? __('main.active') : __('main.inactive') }}">
+        <td title="{{ $model->parking == 1 ? __('main.yes') : __('main.no') }}">
             <span class="text-{{ $model->parking == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->parking == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
+                {!! $model->parking == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
             </span>
         </td>
     @break
 
     @case('swimming_pool')
-        <td title="{{ $model->swimming_pool == 1 ? __('main.active') : __('main.inactive') }}">
+        <td title="{{ $model->swimming_pool == 1 ? __('main.yes') : __('main.no') }}">
             <span class="text-{{ $model->swimming_pool == 1 ? 'green' : 'red' }}-600 font-semibold">
                 {!! $model->swimming_pool == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
+                    ? highlightSearch(__('main.yes'), $search)
+                    : highlightSearch(__('main.no'), $search) !!}
             </span>
         </td>
     @break
 
     @case('gym')
-        <td title="{{ $model->gym == 1 ? __('main.active') : __('main.inactive') }}">
+        <td title="{{ $model->gym == 1 ? __('main.yes') : __('main.no') }}">
             <span class="text-{{ $model->gym == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->gym == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
+                {!! $model->gym == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
             </span>
         </td>
     @break
 
     @case('indoor')
-        <td title="{{ $model->indoor == 1 ? __('main.active') : __('main.inactive') }}">
+        <td title="{{ $model->indoor == 1 ? __('main.yes') : __('main.no') }}">
             <span class="text-{{ $model->indoor == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->indoor == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
+                {!! $model->indoor == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
             </span>
         </td>
     @break
 
     @case('outdoor')
-        <td title="{{ $model->outdoor == 1 ? __('main.active') : __('main.inactive') }}">
+        <td title="{{ $model->outdoor == 1 ? __('main.yes') : __('main.no') }}">
             <span class="text-{{ $model->outdoor == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->outdoor == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
+                {!! $model->outdoor == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
             </span>
         </td>
     @break
 
     @case('spa')
-        <td title="{{ $model->spa == 1 ? __('main.active') : __('main.inactive') }}">
+        <td title="{{ $model->spa == 1 ? __('main.yes') : __('main.no') }}">
             <span class="text-{{ $model->spa == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->spa == 1
-                    ? highlightSearch(__('main.active'), $search)
-                    : highlightSearch(__('main.inactive'), $search) !!}
+                {!! $model->spa == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
             </span>
         </td>
     @break
 
+    w
     @case('code')
         <td title="{{ $model->code }}">
             <span class="text-{{ $model->code == getCurrentLocale() ? 'green' : 'red' }}-600 font-semibold">

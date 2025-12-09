@@ -18,7 +18,7 @@ class MediaFiles extends Component
     public $search = '';
     public $filterType = '';
     public $filterCollection = '';
-    public $filterActive = '';
+    public $filterStatus = '';
     public $selectAll = false;
     public $view = 'grid'; // or table
     public $gridLength = 5;
@@ -50,14 +50,14 @@ class MediaFiles extends Component
         $this->resetPage();
     }
 
-    public function updatingFilterActive()
+    public function updatingfilterStatus()
     {
         $this->resetPage();
     }
 
     public function resetFilters()
     {
-        $this->reset(['search', 'filterType', 'filterCollection', 'filterActive']);
+        $this->reset(['search', 'filterType', 'filterCollection', 'filterStatus']);
         $this->resetPage();
         $this->dispatch('reset-filters');
     }
@@ -146,18 +146,18 @@ class MediaFiles extends Component
         }
 
         // Filter by type
-        if ($this->filterType) {
+        if ($this->filterType && $this->filterType !== 'all') {
             $query->where('file_type', $this->filterType);
         }
 
         // Filter by collection
-        if ($this->filterCollection) {
+        if ($this->filterCollection && $this->filterCollection !== 'all') {
             $query->where('collection_name', $this->filterCollection);
         }
 
         // Filter by active status
-        if ($this->filterActive !== '') {
-            $query->where('is_active', $this->filterActive);
+        if ($this->filterStatus && $this->filterStatus !== 'all') {
+            $query->where('is_active', $this->filterStatus === 'active' ? true : false);
         }
 
         // Sorting

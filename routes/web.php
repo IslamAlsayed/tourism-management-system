@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Dashboard\CityController;
+use App\Http\Controllers\Dashboard\MealController;
+use App\Http\Controllers\Dashboard\RoomController;
 use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\SystemLanguageController;
@@ -11,11 +13,13 @@ use App\Http\Controllers\Dashboard\ExcelController;
 use App\Http\Controllers\Dashboard\StateController;
 use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\RegionController;
+use App\Http\Controllers\Dashboard\SeasonController;
 use App\Http\Controllers\Dashboard\AirlineController;
 use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\SettingsController;
+use App\Http\Controllers\AccommodationImportController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\MediaFileController;
 use App\Http\Controllers\Dashboard\SubregionController;
@@ -30,13 +34,20 @@ use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\TourGuideTypeController;
 use App\Http\Controllers\Dashboard\TourGuideReviewController;
+use App\Http\Controllers\Dashboard\AccommodationRateController;
+use App\Http\Controllers\Dashboard\Accommodations\RateController;
 use App\Http\Controllers\Dashboard\Transportation\BusTypeController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyController;
 use App\Http\Controllers\Dashboard\Transportation\VehicleController;
+use App\Http\Controllers\Dashboard\Accommodations\MealTypeController;
+use App\Http\Controllers\Dashboard\Accommodations\RoomTypeController;
 use App\Http\Controllers\Dashboard\Transportation\DepartmentController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyBusTypeController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
+use App\Http\Controllers\Dashboard\Accommodations\TypeController as AccommodationTypeController;
+use App\Http\Controllers\Dashboard\Accommodations\SeasonController as AccommodationSeasonController;
+use App\Http\Controllers\Dashboard\Accommodations\AccommodationController as ModularAccommodationController;
 
 /*
 |----------------------|
@@ -148,9 +159,24 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('tourist-sites', TouristSiteController::class)->names('tourist-sites');
 
     // === ACCOMMODATIONS MANAGEMENT ===
-    Route::resource('types', TypeController::class)->names('types');
     Route::resource('accommodations', AccommodationController::class)->names('accommodations');
-    Route::get('accommodations/{type}/type', [AccommodationController::class, 'getResultType'])->name('accommodations.type');
+    Route::resource('types', TypeController::class)->names('types');
+    Route::resource('seasons', SeasonController::class)->names('seasons');
+    Route::resource('rooms', RoomController::class)->names('rooms');
+    Route::resource('meals', MealController::class)->names('meals');
+
+    Route::prefix('accommodations-rates')->name('accommodations-rates.')->group(function () {
+        Route::get('/', [AccommodationRateController::class, 'index'])->name('index');
+        Route::get('/create-room', [AccommodationRateController::class, 'createRoomRate'])->name('create-room');
+        Route::post('/store-room', [AccommodationRateController::class, 'storeRoomRate'])->name('store-room');
+        Route::get('/edit-room/{id}', [AccommodationRateController::class, 'editRoomRate'])->name('room.edit');
+        Route::put('/update-room/{id}', [AccommodationRateController::class, 'updateRoomRate'])->name('update-room');
+
+        Route::get('/create-meal', [AccommodationRateController::class, 'createMealRate'])->name('create-meal');
+        Route::post('/store-meal', [AccommodationRateController::class, 'storeMealRate'])->name('store-meal');
+        Route::get('/edit-meal/{id}', [AccommodationRateController::class, 'editMealRate'])->name('meal.edit');
+        Route::put('/update-meal/{id}', [AccommodationRateController::class, 'updateMealRate'])->name('update-meal');
+    });
 
     // === PROFILE MANAGEMENT ===
     Route::prefix('profile')->name('profile.')->group(function () {

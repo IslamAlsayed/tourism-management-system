@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
-use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
+use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TourGuide extends Model
 {
-    use HasSearch, BroadcastsRecordEvents;
+    use HasSearch, HasRichText, BroadcastsRecordEvents;
+
+    protected $richTextAttributes = [
+        'notes',
+    ];
 
     protected $fillable = [
         'id',

@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->decimal('longitude', 10, 6)->nullable();
             $table->string('wiki_data_id')->nullable();
             $table->bigInteger('population')->nullable();
+            $table->boolean('is_active')->nullable()->default(false);
             $table->timestamps();
         });
     }

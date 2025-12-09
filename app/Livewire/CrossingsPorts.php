@@ -33,7 +33,7 @@ class CrossingsPorts extends Component
         $this->resetPage();
     }
 
-    public function updatingFilterStatus()
+    public function updatingfilterStatus()
     {
         $this->resetPage();
     }
@@ -119,13 +119,13 @@ class CrossingsPorts extends Component
         $query = CrossingPort::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
 
-        if ($this->filterType) {
+        if ($this->filterType && $this->filterType !== 'all') {
             $query->where('type', $this->filterType);
         }
-        if ($this->filterStatus) {
-            $query->where('status', $this->filterStatus);
+        if ($this->filterStatus && $this->filterStatus !== 'all') {
+            $query->where('is_active', $this->filterStatus === 'active' ? true : false);
         }
-        if ($this->filterOperational !== '') {
+        if ($this->filterOperational && $this->filterOperational !== 'all') {
             $query->where('is_operational', $this->filterOperational);
         }
         $this->applySorting($query);

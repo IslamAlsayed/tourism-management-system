@@ -4,7 +4,7 @@ return [
     'menu' => [
         [
             'title' => 'dashboard',
-            'icon' => 'ki-filled ki-element-11',
+            'icon' => 'fa-solid fa-gauge',
             'route' => 'dashboard',
         ],
         // [
@@ -23,21 +23,21 @@ return [
         // ================= Users =================
         [
             'title' => 'user management',
-            'icon' => 'ki-outline ki-users',
+            'icon' => 'fa-solid fa-users-gear',
             'children' => [
                 [
                     'title' => 'all users',
-                    'icon' => 'ki-filled ki-people',
+                    'icon' => 'fa-solid fa-users',
                     'route' => 'users.index',
                 ],
                 [
                     'title' => 'create user',
-                    'icon' => 'ki-filled ki-people',
+                    'icon' => 'fa-solid fa-user-plus',
                     'route' => 'users.create',
                 ],
                 [
                     'title' => 'import users',
-                    'icon' => 'ki-filled ki-plus',
+                    'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'users'],
                 ]
@@ -47,21 +47,21 @@ return [
         // ================= Clients =================
         [
             'title' => 'client management',
-            'icon' => 'ki-outline ki-users',
+            'icon' => 'fa-solid fa-user-group',
             'children' => [
                 [
                     'title' => 'all clients',
-                    'icon' => 'ki-filled ki-people',
+                    'icon' => 'fa-solid fa-user-group',
                     'route' => 'clients.index',
                 ],
                 [
                     'title' => 'create client',
-                    'icon' => 'ki-filled ki-people',
+                    'icon' => 'fa-solid fa-user-plus',
                     'route' => 'clients.create',
                 ],
                 [
                     'title' => 'import clients',
-                    'icon' => 'ki-filled ki-plus',
+                    'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'clients'],
                 ]
@@ -71,21 +71,21 @@ return [
         // ================= Currencies =================
         [
             'title' => 'currency management',
-            'icon' => 'ki-filled ki-dollar',
+            'icon' => 'fa-solid fa-dollar-sign',
             'children' => [
                 [
                     'title' => 'all currencies',
-                    'icon' => 'ki-filled ki-bill',
+                    'icon' => 'fa-solid fa-coins',
                     'route' => 'currencies.index',
                 ],
                 [
                     'title' => 'create currency',
-                    'icon' => 'ki-filled ki-people',
+                    'icon' => 'fa-solid fa-square-plus',
                     'route' => 'currencies.create',
                 ],
                 [
                     'title' => 'import currencies',
-                    'icon' => 'ki-filled ki-plus',
+                    'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'currencies'],
                 ],
@@ -95,11 +95,11 @@ return [
         // ================= Locations =================
         [
             'title' => 'location management',
-            'icon' => 'ki-filled ki-geolocation',
+            'icon' => 'fa-solid fa-location-dot',
             'children' => [
                 [
                     'title' => 'regions',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-map',
                     'children' => [
                         [
                             'title' => 'all regions',
@@ -107,7 +107,7 @@ return [
                         ],
                         [
                             'title' => 'create region',
-                            'icon' => 'ki-filled ki-people',
+                            'icon' => 'fa-solid fa-square-plus',
                             'route' => 'regions.create',
                         ],
                         [
@@ -119,7 +119,7 @@ return [
                 ],
                 [
                     'title' => 'subregions',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-map',
                     'children' => [
                         [
                             'title' => 'all subregions',
@@ -127,7 +127,7 @@ return [
                         ],
                         [
                             'title' => 'create subregion',
-                            'icon' => 'ki-filled ki-people',
+                            'icon' => 'fa-solid fa-square-plus',
                             'route' => 'subregions.create',
                         ],
                         [
@@ -139,7 +139,7 @@ return [
                 ],
                 [
                     'title' => 'countries',
-                    'icon' => 'ki-filled ki-flag',
+                    'icon' => 'fa-solid fa-flag',
                     'children' => [
                         [
                             'title' => 'all countries',
@@ -147,7 +147,7 @@ return [
                         ],
                         [
                             'title' => 'create country',
-                            'icon' => 'ki-filled ki-people',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'countries.create',
                         ],
                         [
@@ -159,7 +159,7 @@ return [
                 ],
                 [
                     'title' => 'states',
-                    'icon' => 'ki-filled ki-flag',
+                    'icon' => 'fa-solid fa-flag',
                     'children' => [
                         [
                             'title' => 'all states',
@@ -167,7 +167,7 @@ return [
                         ],
                         [
                             'title' => 'create state',
-                            'icon' => 'ki-filled ki-people',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'states.create',
                         ],
                         [
@@ -179,7 +179,7 @@ return [
                 ],
                 [
                     'title' => 'cities',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-city',
                     'children' => [
                         [
                             'title' => 'all cities',
@@ -187,12 +187,12 @@ return [
                         ],
                         [
                             'title' => 'create city',
-                            'icon' => 'ki-filled ki-people',
+                            'icon' => 'fa-solid fa-square-plus',
                             'route' => 'cities.create',
                         ],
                         [
                             'title' => 'import cities',
-                            'icon' => 'ki-filled ki-people',
+                            'icon' => 'fa-solid fa-square-plus',
                             'route' => 'import.data',
                             'parameters' => ['models' => 'cities'],
                         ],
@@ -201,7 +201,7 @@ return [
 
                 [
                     'title' => 'nationalities',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-id-card',
                     'children' => [
                         [
                             'title' => 'all nationalities',
@@ -209,7 +209,7 @@ return [
                         ],
                         [
                             'title' => 'create nationality',
-                            'icon' => 'ki-filled ki-people',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'nationalities.create',
                         ],
                         [
@@ -225,112 +225,161 @@ return [
         // ================= Accommodations =================
         [
             'title' => 'accommodations',
-            'icon' => 'ki-filled ki-home-2',
-            'fixed' => 'soon',
+            'icon' => 'fa-solid fa-hotel',
+            'status' => 'done',
             'children' => [
                 [
-                    'title' => 'imports',
-                    'icon' => 'ki-filled ki-chart-line-up',
-                    // 'status' => 'updating...',
+                    'title' => 'all accommodations',
+                    'icon' => 'fa-solid fa-list-ul',
+                    'route' => 'accommodations.index',
+                ],
+                [
+                    'title' => 'create accommodation',
+                    'icon' => 'fa-solid fa-square-plus',
+                    'route' => 'accommodations.create',
+                ],
+                [
+                    'title' => 'import accommodations',
+                    'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'accommodations'],
                 ],
                 [
-                    'title' => 'hotels',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'accommodations.type',
-                    'parameters' => ['type' => 'hotel'],
-                    // 'status' => 'updating...',
-                ],
-                [
-                    'title' => 'resorts',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'accommodations.type',
-                    'parameters' => ['type' => 'resort'],
-                    // 'status' => 'updating...',
-                ],
-                [
-                    'title' => 'campings',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'accommodations.type',
-                    'parameters' => ['type' => 'camping'],
-                    // 'status' => 'updating...',
-                ],
-                [
-                    'title' => 'hostels',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'accommodations.type',
-                    'parameters' => ['type' => 'hostel'],
-                    // 'status' => 'updating...',
-                ],
-                [
-                    'title' => 'lodges',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'accommodations.type',
-                    'parameters' => ['type' => 'lodge'],
-                    // 'status' => 'updating...',
-                ],
-                [
-                    'title' => 'rooms types',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'accommodations.type',
-                    'parameters' => ['type' => 'rooms-types'],
-                    // 'status' => 'updating...',
+                    'title' => 'types',
+                    'icon' => 'fa-solid fa-layer-group',
+                    'children' => [
+                        [
+                            'title' => 'all types',
+                            'icon' => 'fa-solid fa-list-ul',
+                            'route' => 'types.index',
+                        ],
+                        [
+                            'title' => 'create type',
+                            'icon' => 'fa-solid fa-square-plus',
+                            'route' => 'types.create',
+                        ],
+                        [
+                            'title' => 'import types',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'types'],
+                        ],
+                    ],
                 ],
                 [
                     'title' => 'seasons',
-                    'icon' => 'ki-filled ki-home-2',
-                    'route' => 'accommodations.type',
-                    'parameters' => ['type' => 'season'],
-                    // 'status' => 'updating...',
-                ]
+                    'icon' => 'fa-solid fa-calendar-days',
+                    'children' => [
+                        [
+                            'title' => 'all seasons',
+                            'icon' => 'fa-solid fa-calendar-check',
+                            'route' => 'seasons.index',
+                        ],
+                        [
+                            'title' => 'create season',
+                            'icon' => 'fa-solid fa-calendar-plus',
+                            'route' => 'seasons.create',
+                        ],
+                        [
+                            'title' => 'import seasons',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'seasons'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'rooms',
+                    'icon' => 'fa-solid fa-door-closed',
+                    'children' => [
+                        [
+                            'title' => 'all rooms',
+                            'icon' => 'fa-solid fa-door-closed',
+                            'route' => 'rooms.index',
+                        ],
+                        [
+                            'title' => 'create room',
+                            'icon' => 'fa-solid fa-square-plus',
+                            'route' => 'rooms.create',
+                        ],
+                        [
+                            'title' => 'import rooms',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'rooms'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'meals',
+                    'icon' => 'fa-solid fa-utensils',
+                    'children' => [
+                        [
+                            'title' => 'all meals',
+                            'icon' => 'fa-solid fa-bowl-food',
+                            'route' => 'meals.index',
+                        ],
+                        [
+                            'title' => 'create meal',
+                            'icon' => 'fa-solid fa-square-plus',
+                            'route' => 'meals.create',
+                        ],
+                        [
+                            'title' => 'import meals',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'meals'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'rates',
+                    'icon' => 'fa-solid fa-dollar-sign',
+                    'children' => [
+                        [
+                            'title' => 'all rates',
+                            'icon' => 'fa-solid fa-chart-line',
+                            'route' => 'accommodations-rates.index',
+                        ],
+                        [
+                            'title' => 'create room rate',
+                            'icon' => 'fa-solid fa-bed',
+                            'route' => 'accommodations-rates.create-room',
+                        ],
+                        [
+                            'title' => 'create meal rate',
+                            'icon' => 'fa-solid fa-utensils',
+                            'route' => 'accommodations-rates.create-meal',
+                        ],
+                        [
+                            'title' => 'import rates',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'accommodations-rates'],
+                        ],
+                    ],
+                ],
             ],
         ],
-
-        // ================= Type =================
-        // [
-        //     'title' => 'accommodations types',
-        //     'icon' => 'ki-filled ki-coffee',
-        //     'fixed' => 'soon',
-        //     'children' => [
-        //         [
-        //             'title' => 'all types',
-        //             'icon' => 'ki-filled ki-home-2',
-        //             'route' => 'types.index'
-        //         ],
-        //         [
-        //             'title' => 'create type',
-        //             'icon' => 'ki-filled ki-home-2',
-        //             'route' => 'types.create'
-        //         ],
-        //         [
-        //             'title' => 'import types',
-        //             'icon' => 'ki-filled ki-home-2',
-        //             'route' => 'import.data',
-        //             'parameters' => ['models' => 'types'],
-        //         ],
-        //     ],
-        // ],
 
         // ================= Food & Beverage =================
         [
             'title' => 'food & beverage',
-            'icon' => 'ki-filled ki-coffee',
-            // 'status' => 'done',
+            'icon' => 'fa-solid fa-mug-hot',
             'children' => [
                 [
                     'title' => 'all restaurants',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-burger',
                     'route' => 'restaurants.index'
                 ],
                 [
                     'title' => 'create restaurant',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-square-plus',
                     'route' => 'restaurants.create'
                 ],
                 [
                     'title' => 'import restaurants',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'restaurants'],
                 ],
@@ -340,26 +389,25 @@ return [
         // ================= Tour Guides =================
         [
             'title' => 'tour guides',
-            // 'status' => 'done',
-            'icon' => 'ki-filled ki-coffee',
+            'icon' => 'fa-solid fa-person-hiking',
             'children' => [
                 [
                     'title' => 'tour guides',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-person-hiking',
                     'children' => [
                         [
                             'title' => 'all guides',
-                            'icon' => 'ki-filled ki-home-2',
+                            'icon' => 'fa-solid fa-people-group',
                             'route' => 'tour-guides.index'
                         ],
                         [
                             'title' => 'create guide',
-                            'icon' => 'ki-filled ki-home-2',
+                            'icon' => 'fa-solid fa-square-plus',
                             'route' => 'tour-guides.create'
                         ],
                         [
                             'title' => 'import guides',
-                            'icon' => 'ki-filled ki-home-2',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['models' => 'tour-guides'],
                         ],
@@ -367,21 +415,21 @@ return [
                 ],
                 [
                     'title' => 'guides types',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-tags',
                     'children' => [
                         [
                             'title' => 'all guides types',
-                            'icon' => 'ki-filled ki-home-2',
+                            'icon' => 'fa-solid fa-list',
                             'route' => 'tour-guides-types.index'
                         ],
                         [
                             'title' => 'create guide type',
-                            'icon' => 'ki-filled ki-home-2',
+                            'icon' => 'fa-solid fa-square-plus',
                             'route' => 'tour-guides-types.create'
                         ],
                         [
                             'title' => 'import guides types',
-                            'icon' => 'ki-filled ki-home-2',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['models' => 'tour-guides-types'],
                         ],
@@ -389,21 +437,21 @@ return [
                 ],
                 [
                     'title' => 'guides reviews',
-                    'icon' => 'ki-filled ki-home-2',
+                    'icon' => 'fa-solid fa-star',
                     'children' => [
                         [
                             'title' => 'all guides reviews',
-                            'icon' => 'ki-filled ki-home-2',
+                            'icon' => 'fa-solid fa-clipboard-list',
                             'route' => 'tour-guides-reviews.index'
                         ],
                         [
                             'title' => 'create guide review',
-                            'icon' => 'ki-filled ki-home-2',
+                            'icon' => 'fa-solid fa-square-plus',
                             'route' => 'tour-guides-reviews.create'
                         ],
                         [
                             'title' => 'import guides reviews',
-                            'icon' => 'ki-filled ki-home-2',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['models' => 'tour-guides-reviews'],
                         ],
@@ -416,50 +464,47 @@ return [
         [
             'title' => 'transportation',
             'fixed' => 'soon',
-            'icon' => 'ki-filled ki-delivery',
+            'icon' => 'fa-solid fa-truck-fast',
             'children' => [
                 [
                     'title' => 'companies',
-                    'icon' => 'ki-filled ki-bus',
-                    // 'status' => 'done',
+                    'icon' => 'fa-solid fa-building',
                     'route' => 'transportation-companies.index'
                 ],
                 [
                     'title' => 'departments',
-                    'icon' => 'ki-filled ki-bus',
-                    // 'status' => 'done',
+                    'icon' => 'fa-solid fa-sitemap',
                     'route' => 'transportation-departments.index'
                 ],
                 [
                     'title' => 'car rental',
                     'fixed' => false,
-                    'icon' => 'ki-filled ki-car',
+                    'icon' => 'fa-solid fa-car',
                     'route' => '#'
                 ],
                 [
                     'title' => 'limousine transfers',
                     'fixed' => false,
-                    'icon' => 'ki-filled ki-delivery-2',
+                    'icon' => 'fa-solid fa-taxi',
                     'route' => '#'
                 ],
                 [
                     'title' => 'vehicles',
-                    'icon' => 'ki-filled ki-car',
-                    // 'status' => 'done',
+                    'icon' => 'fa-solid fa-warehouse',
                     'children' => [
                         [
                             'title' => 'bus types',
-                            'icon' => 'ki-filled ki-bus',
+                            'icon' => 'fa-solid fa-bus',
                             'route' => 'transportation-bus-types.index'
                         ],
                         [
                             'title' => 'company bus types',
-                            'icon' => 'ki-filled ki-bus',
+                            'icon' => 'fa-solid fa-bus-simple',
                             'route' => 'transportation-company-bus-types.index'
                         ],
                         [
                             'title' => '4x4 vehicles',
-                            'icon' => 'ki-filled ki-car',
+                            'icon' => 'fa-solid fa-car-side',
                             'route' => 'transportation-vehicles.index'
                         ],
                     ],
@@ -470,21 +515,21 @@ return [
         // ================= Air Transport =================
         [
             'title' => 'airlines',
-            'icon' => 'ki-filled ki-airplane',
+            'icon' => 'fa-solid fa-plane',
             'children' => [
                 [
                     'title' => 'airlines',
-                    'icon' => 'ki-filled ki-airplane',
+                    'icon' => 'fa-solid fa-plane',
                     'route' => 'airlines.index'
                 ],
                 [
                     'title' => 'create airline',
-                    'icon' => 'ki-filled ki-plus',
+                    'icon' => 'fa-solid fa-square-plus',
                     'route' => 'airlines.create'
                 ],
                 [
                     'title' => 'import airlines',
-                    'icon' => 'ki-filled ki-upload',
+                    'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'airlines'],
                 ],
@@ -522,21 +567,21 @@ return [
         // ================= Tourist Sites =================
         [
             'title' => 'tourist sites',
-            'icon' => 'ki-filled ki-geolocation',
+            'icon' => 'fa-solid fa-map-location-dot',
             'children' => [
                 [
                     'title' => 'all tourist sites',
-                    'icon' => 'ki-filled ki-geolocation',
+                    'icon' => 'fa-solid fa-map-location-dot',
                     'route' => 'tourist-sites.index'
                 ],
                 [
                     'title' => 'create tourist site',
-                    'icon' => 'ki-filled ki-plus',
+                    'icon' => 'fa-solid fa-square-plus',
                     'route' => 'tourist-sites.create'
                 ],
                 [
                     'title' => 'import tourist sites',
-                    'icon' => 'ki-filled ki-upload',
+                    'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'tourist-sites'],
                 ],
@@ -546,37 +591,37 @@ return [
         // ================= Crossings & Ports =================
         [
             'title' => 'crossings & ports',
-            'icon' => 'ki-filled ki-pointers',
+            'icon' => 'fa-solid fa-map-signs',
             'children' => [
                 [
                     'title' => 'all crossings ports',
-                    'icon' => 'ki-filled ki-pointers',
+                    'icon' => 'fa-solid fa-anchor',
                     'route' => 'crossings-ports.index'
                 ],
                 [
                     'title' => 'create crossing port',
-                    'icon' => 'ki-filled ki-plus',
+                    'icon' => 'fa-solid fa-square-plus',
                     'route' => 'crossings-ports.create'
                 ],
                 [
                     'title' => 'import crossings ports',
-                    'icon' => 'ki-filled ki-upload',
+                    'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
                     'parameters' => ['models' => 'crossings-ports'],
                 ],
                 [
                     'title' => 'airports',
-                    'icon' => 'ki-filled ki-airplane-square',
+                    'icon' => 'fa-solid fa-plane-departure',
                     'children' => [
                         [
                             'title' => 'international airports',
-                            'icon' => 'ki-solid ki-airplane-square',
+                            'icon' => 'fa-solid fa-earth-europe',
                             'route' => 'crossings-ports.type',
                             'parameters' => ['type' => 'international-airports'],
                         ],
                         [
                             'title' => 'domestic airports',
-                            'icon' => 'ki-duotone ki-airplane',
+                            'icon' => 'fa-solid fa-plane-arrival',
                             'route' => 'crossings-ports.type',
                             'parameters' => ['type' => 'domestic-airports'],
                         ],
@@ -584,7 +629,7 @@ return [
                 ],
                 [
                     'title' => 'seaports',
-                    'icon' => 'ki-filled ki-ship',
+                    'icon' => 'fa-solid fa-ship',
                     'route' => 'crossings-ports.type',
                     'parameters' => ['type' => 'seaports'],
                 ],
@@ -594,27 +639,26 @@ return [
         // ================= Reports =================
         [
             'title' => 'reports & analytics',
-            'icon' => 'ki-filled ki-chart-simple',
-            // 'status' => 'done',
+            'icon' => 'fa-solid fa-chart-pie',
             'children' => [
                 [
                     'title' => 'reports dashboard',
-                    'icon' => 'ki-filled ki-element-11',
+                    'icon' => 'fa-solid fa-gauge-high',
                     'route' => 'reports.index'
                 ],
                 [
                     'title' => 'user reports',
-                    'icon' => 'ki-filled ki-people',
+                    'icon' => 'fa-solid fa-users',
                     'route' => 'reports.users'
                 ],
                 [
                     'title' => 'location reports',
-                    'icon' => 'ki-filled ki-geolocation',
+                    'icon' => 'fa-solid fa-map',
                     'route' => 'reports.locations'
                 ],
                 [
                     'title' => 'detailed analytics',
-                    'icon' => 'ki-filled ki-chart-line-up',
+                    'icon' => 'fa-solid fa-chart-line',
                     'route' => 'reports.analytics'
                 ],
             ],
@@ -623,32 +667,30 @@ return [
         // ================= Activity Log =================
         [
             'title' => 'activity log',
-            'icon' => 'ki-filled ki-notification-status',
+            'icon' => 'fa-solid fa-clipboard-list',
             'route' => 'activity-log.index',
         ],
 
         // ================= Notifications =================
         [
             'title' => 'notifications',
-            'icon' => 'ki-filled ki-notification-status',
-            'status' => 'new',
+            'icon' => 'fa-solid fa-bell',
             'route' => 'notifications.index',
         ],
 
         // ================= Languages =================
         [
             'title' => 'languages',
-            'icon' => 'fas fa-globe',
-            // 'status' => 'done',
+            'icon' => 'fa-solid fa-language',
             'children' => [
                 [
                     'title' => 'all languages',
-                    'icon' => 'ki-filled ki-global',
+                    'icon' => 'fa-solid fa-language',
                     'route' => 'languages.index'
                 ],
                 [
                     'title' => 'create language',
-                    'icon' => 'ki-filled ki-plus',
+                    'icon' => 'fa-solid fa-square-plus',
                     'route' => 'languages.create'
                 ]
             ],
@@ -657,17 +699,16 @@ return [
         // ================= System Languages =================
         [
             'title' => 'system languages',
-            'icon' => 'fas fa-globe',
-            // 'status' => 'done',
+            'icon' => 'fa-solid fa-language',
             'children' => [
                 [
                     'title' => 'all languages',
-                    'icon' => 'ki-filled ki-global',
+                    'icon' => 'fa-solid fa-language',
                     'route' => 'system-languages.index'
                 ],
                 [
                     'title' => 'create language',
-                    'icon' => 'ki-filled ki-plus',
+                    'icon' => 'fa-solid fa-square-plus',
                     'route' => 'system-languages.create'
                 ]
             ],
@@ -676,22 +717,21 @@ return [
         // ================= Profile =================
         [
             'title' => 'profile management',
-            'icon' => 'ki-filled ki-profile-circle',
-            // 'status' => 'done',
+            'icon' => 'fa-solid fa-id-badge',
             'children' => [
                 [
                     'title' => 'view profile',
-                    'icon' => 'ki-filled ki-user',
+                    'icon' => 'fa-solid fa-user',
                     'route' => 'profile.index'
                 ],
                 [
                     'title' => 'edit profile',
-                    'icon' => 'ki-filled ki-pencil',
+                    'icon' => 'fa-solid fa-user-pen',
                     'route' => 'profile.edit'
                 ],
                 [
                     'title' => 'change password',
-                    'icon' => 'ki-filled ki-lock',
+                    'icon' => 'fa-solid fa-lock',
                     'route' => 'profile.change_password'
                 ],
             ],
@@ -700,16 +740,16 @@ return [
         // ================= Media Files =================
         [
             'title' => 'media files',
-            'icon' => 'ki-filled ki-picture',
+            'icon' => 'fa-solid fa-photo-film',
             'children' => [
                 [
                     'title' => 'all media files',
-                    'icon' => 'ki-filled ki-gallery',
+                    'icon' => 'fa-solid fa-images',
                     'route' => 'media-files.index',
                 ],
                 [
                     'title' => 'upload files',
-                    'icon' => 'ki-filled ki-cloud-add',
+                    'icon' => 'fa-solid fa-cloud-arrow-up',
                     'route' => 'media-files.create',
                 ],
             ],
@@ -718,7 +758,7 @@ return [
         // ================= Settings =================
         [
             'title' => 'settings',
-            'icon' => 'ki-filled ki-setting-2',
+            'icon' => 'fa-solid fa-gear',
             'children' => [
                 [
                     'title' => 'general',
@@ -734,26 +774,26 @@ return [
                 // ],
                 [
                     'title' => 'backup',
-                    'icon' => 'ki-filled ki-cloud-download',
+                    'icon' => 'fa-solid fa-cloud-arrow-down',
                     'fixed' => 'soon',
                     'route' => '#'
                     // 'route' => 'settings.backup'
                 ],
                 [
                     'title' => 'booking',
-                    'icon' => 'ki-filled ki-calendar',
+                    'icon' => 'fa-solid fa-calendar-days',
                     'fixed' => 'soon',
                     'route' => '#'
                     // 'route' => 'settings.booking'
                 ],
                 [
                     'title' => 'integration',
-                    'icon' => 'ki-filled ki-share',
+                    'icon' => 'fa-solid fa-share-nodes',
                     'route' => 'settings.integration'
                 ],
                 [
                     'title' => 'system',
-                    'icon' => 'ki-filled ki-gear',
+                    'icon' => 'fa-solid fa-gears',
                     'route' => 'settings.system'
                 ],
             ],

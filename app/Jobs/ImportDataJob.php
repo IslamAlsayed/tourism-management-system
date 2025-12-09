@@ -93,8 +93,11 @@ class ImportDataJob implements ShouldQueue
         $buffer = [];
         $counter = 0;
         $headerMap = null; // map normalized header -> actual header key
+        $totalRows = 0; // track total rows read
 
         foreach ($rows as $rowIndex => $row) {
+            $totalRows++;
+
             // Row keys may be the header names (associative). Normalize on first row.
             if ($headerMap === null) {
                 $headerMap = [];
@@ -104,6 +107,9 @@ class ImportDataJob implements ShouldQueue
                     $norm = preg_replace('/[\s\.]+/', '_', (string) $norm);
                     $headerMap[$norm] = $originalKey;
                 }
+
+                // Log detected headers
+                Log::debug('ImportDataJob detected headers: ' . json_encode($headerMap));
 
                 // create reverse lookup from fillable -> header key if possible
                 $fillableLookup = [];
@@ -123,6 +129,9 @@ class ImportDataJob implements ShouldQueue
                     }
                     // fallback: leave unmapped for now
                 }
+
+                // Log the fillable lookup mapping
+                Log::debug('ImportDataJob fillable lookup: ' . json_encode($fillableLookup));
             }
 
             // تنظيف القيم: trim/null
@@ -154,6 +163,41 @@ class ImportDataJob implements ShouldQueue
                     }
                     $prepared[$col] = $found ? ($cleaned[$found] ?? null) : null;
                 }
+            }
+
+            // Set default values for common boolean columns if they are null
+            if (isset($prepared['is_active']) && $prepared['is_active'] === null) {
+                $prepared['is_active'] = true;
+            }
+            if (isset($prepared['is_included']) && $prepared['is_included'] === null) {
+                $prepared['is_included'] = false;
+            }
+
+            // Handle max_occupancy conversion for Room model (e.g., "2A+1C" -> occupancy_details + numeric max_occupancy)
+            if (isset($prepared['max_occupancy']) && is_string($prepared['max_occupancy'])) {
+                $occupancyStr = trim($prepared['max_occupancy']);
+
+                // Check if it contains letters (A for Adults, C for Children)
+                if (preg_match('/[A-Za-z]/', $occupancyStr)) {
+                    // Save original string to occupancy_details if that column exists in fillable
+                    if (in_array('occupancy_details', $fillable)) {
+                        $prepared['occupancy_details'] = $occupancyStr;
+                    }
+
+                    // Calculate total numeric value
+                    $total = 0;
+                    if (preg_match_all('/(\d+)[ACac]/', $occupancyStr, $matches)) {
+                        $total = array_sum(array_map('intval', $matches[1]));
+                    }
+
+                    // Replace max_occupancy with numeric total
+                    $prepared['max_occupancy'] = $total > 0 ? $total : 1;
+                }
+            }
+
+            // Log first prepared row as sample
+            if ($rowIndex === 0 || $totalRows === 1) {
+                Log::debug('ImportDataJob sample prepared row: ' . json_encode($prepared));
             }
 
             // Coerce date-like columns (excel serial numbers or unparsable strings)
@@ -273,6 +317,7 @@ class ImportDataJob implements ShouldQueue
                     // debug: log the columns we will insert for verification
                     if (!empty($sanitized)) {
                         Log::debug('Inserting chunk columns: ' . implode(',', array_keys((array) $sanitized[0])));
+                        Log::debug('Allowed columns for insert: ' . implode(',', $allowed));
                         // Build final rows using only allowed columns (prevent any unexpected keys)
                         $finalRows = [];
                         foreach ($sanitized as $sr) {
@@ -291,6 +336,10 @@ class ImportDataJob implements ShouldQueue
                                 }
                             }
                             $finalRows[] = $rowBuilt;
+                        }
+                        Log::debug('Final rows count before insert: ' . count($finalRows));
+                        if (!empty($finalRows)) {
+                            Log::debug('Sample final row: ' . json_encode($finalRows[0]));
                         }
                     } else {
                         $finalRows = [];
@@ -448,6 +497,9 @@ class ImportDataJob implements ShouldQueue
                 }
             }
         }
+
+        // Log summary
+        Log::debug("ImportDataJob completed: Total rows read: {$totalRows}, Records inserted: {$counter}");
 
         // استخراج اسم الموديل بشكل أنظف
         $modelName = class_basename($this->modelClass);

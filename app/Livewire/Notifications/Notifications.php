@@ -208,7 +208,7 @@ class Notifications extends Component
             'user' => fn($query) => $query->select('id', 'name'),
         ])->orderBy('created_at', 'desc');
 
-        if ($this->filterTypeUserId) {
+        if ($this->filterTypeUserId && $this->filterTypeUserId !== 'all') {
             $query->where('target_user_id', (int) $this->filterTypeUserId);
         }
 
@@ -220,11 +220,11 @@ class Notifications extends Component
         }
 
         // Filter by type
-        if (!empty($this->type)) {
+        if (!empty($this->type) && $this->type !== 'all') {
             $query->ofType($this->type);
         }
         // Filter by notification_type (system, push, ...)
-        if (!empty($this->notificationType)) {
+        if (!empty($this->notificationType) && $this->notificationType !== 'all') {
             $query->ofNotificationType($this->notificationType);
         }
 

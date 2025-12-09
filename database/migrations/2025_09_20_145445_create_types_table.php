@@ -12,10 +12,11 @@ return new class extends Migration {
     {
         Schema::create('types', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable(); // e.g., hotel, transport, tour, other
+            $table->string('name')->unique(); // e.g., hotel, transport, tour, other
             $table->string('name_ar')->nullable(); // e.g., فندق، نقل، جولة، أخرى
-            // $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
-            // $table->unsignedBigInteger('accommodation_id')->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('is_active')->nullable()->default(true);
+            $table->index('name');
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class City extends Model
 {

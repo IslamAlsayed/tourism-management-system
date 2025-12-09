@@ -1,34 +1,21 @@
 @extends('pages.dashboard.layouts.index')
 
 @section('table-content')
-    <div class="p-6">
-        <div class="flex flex-col gap-4">
-            <!-- Container -->
-            @include('includes.table-breadcrumb', [
-                'title' => __('main.accommodations'),
-                'description' => __('main.manage_system_types', ['types' => __('main.accommodations')]),
-                'import_url' => route('import.data', ['models' => 'accommodations']),
-                'page_create_url' => route('accommodations.create'),
-                'page_create_title' => __('main.create_type', ['type' => __('main.accommodation')]),
-            ])
-            <!-- End of Container -->
+    <!-- Container -->
+    @include('includes.table-breadcrumb', [
+        'title' => __('main.accommodations'),
+        'description' => __('main.manage_system_types', ['types' => __('main.accommodations')]),
+        'import_url' => route('import.data', ['models' => 'accommodations']),
+        'page_create_url' => route('accommodations.create'),
+        'page_create_title' => __('main.create_type', ['type' => __('main.accommodation')]),
+    ])
+    <!-- End of Container -->
 
-            <!-- Container -->
-            <div class="grid gap-4 lg:gap-6">
-                <div class="kt-card kt-card-grid min-w-full">
-                    @component('includes.pagination-info', [
-                        'data' => $data,
-                        'title' => __('main.reviews'),
-                        'entityName' => __('main.review'),
-                        'searchValue' => $search,
-                        'showSearch' => true,
-                    ])
-                    @endcomponent
-
-                    <livewire:accommodations.accommodations :accommodations="$accommodations" />
-                </div>
-            </div>
-            <!-- End of Container -->
+    <!-- Container -->
+    <div class="grid gap-4 lg:gap-6">
+        <div class="kt-card kt-card-grid min-w-full">
+            <livewire:accommodations.accommodations />
         </div>
     </div>
+    <!-- End of Container -->
 @endsection

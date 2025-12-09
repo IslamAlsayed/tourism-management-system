@@ -16,24 +16,23 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content px-2" wire:loading.class="loading"
-        wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterClientGender,filterClientStatus">
+    <div class="kt-card-content" wire:loading.class="loading"
+        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterClientGender,filterClientStatus">
         <!-- Filters -->
-        <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
+        <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 px-4 filterTable">
             <div>
                 <select wire:model.live="filterClientGender" class="kt-select h-[40px] w-48 max-w-full"
                     data-kt-select="true" data-kt-select-placeholder="{{ __('main.gender') }}">
-                    <option value="">--</option>
+                    <option value="male">--</option>
                     <option value="male">{{ __('main.male') }}</option>
                     <option value="female">{{ __('main.female') }}</option>
                 </select>
             </div>
 
             <div>
-                <select wire:model.live="filterClientStatus" id="client_status"
-                    class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
-                    data-kt-select-placeholder="{{ __('main.status') }}">
-                    <option value="">--</option>
+                <select wire:model.live="filterClientStatus" class="kt-select h-[40px] w-48 max-w-full"
+                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.status') }}">
+                    <option value="all">{{ __('main.all') }}</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
                     <option value="blacklisted">{{ __('main.blacklisted') }}</option>

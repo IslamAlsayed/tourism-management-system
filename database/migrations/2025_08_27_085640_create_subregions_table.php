@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('name_ar')->nullable();
             $table->string('wiki_data_id')->nullable();
             $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
+            $table->boolean('is_active')->nullable()->default(false);
             $table->timestamps();
         });
     }

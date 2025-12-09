@@ -43,7 +43,7 @@
                             'record' => $settings,
                         ])
 
-                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.name') }}</label>
                                 <input type="text" name="app_name" class="kt-input h-[45px]"

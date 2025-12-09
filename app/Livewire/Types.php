@@ -17,9 +17,15 @@ class Types extends Component
     public $search = '';
     public $totalCount = '';
     public $message = [];
+    public $filterStatus = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterStatus()
     {
         $this->resetPage();
     }
@@ -88,10 +94,20 @@ class Types extends Component
         return $result;
     }
 
+    public function resetFilters(): void
+    {
+        $this->reset(['search', 'filterStatus']);
+        $this->resetPage();
+        $this->dispatch('reset-filters');
+    }
+
     public function render()
     {
         $query = Type::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        if ($this->filterStatus && $this->filterStatus !== 'all') {
+            $query->where('is_active', $this->filterStatus === 'active' ? true : false);
+        }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
         return view('livewire.types', ['data' => $data, 'totalCount' => $this->totalCount ?: Type::count(), 'selectedIds' => $this->selectedIds]);

@@ -35,9 +35,9 @@
         </div>
 
         @if (env('DB_MODE') != 'production')
-            <strong class="block mt-6 mb-2">{{ __('main.required_fields') }}</strong>
+            <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
             <table class="border min-w-half divide-y text-center divide-gray-200">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">name</th>
                         <th class="border px-2">code</th>
@@ -56,7 +56,7 @@
             <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }} -
                 {{ __('main.basic_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">name_ar</th>
                         <th class="border px-2">description</th>
@@ -76,7 +76,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.fleet_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">fleet_size</th>
                         <th class="border px-2">aircraft_types</th>
@@ -96,7 +96,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.contact_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">phone</th>
                         <th class="border px-2">booking_phone</th>
@@ -118,7 +118,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.location_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">region_id</th>
                         <th class="border px-2">country_id</th>
@@ -139,7 +139,7 @@
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">address</th>
                         <th class="border px-2">postal_code</th>
@@ -159,7 +159,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.operational_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">established_date</th>
                         <th class="border px-2">is_active</th>
@@ -181,7 +181,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.safety_performance') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">safety_rating</th>
                         <th class="border px-2">safety_rating_agency</th>
@@ -201,7 +201,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.business_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">license_number</th>
                         <th class="border px-2">tax_number</th>
@@ -221,7 +221,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.services_alliances') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">alliance</th>
                         <th class="border px-2">partnerships</th>
@@ -240,7 +240,7 @@
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">certifications</th>
                         <th class="border px-2">destinations</th>
@@ -260,7 +260,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.additional_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead style="background-color: #ffea00;">
+                <thead class="bg-yellow-200">
                     <tr>
                         <th class="border px-2">notes</th>
                         <th class="border px-2">notes_ar</th>

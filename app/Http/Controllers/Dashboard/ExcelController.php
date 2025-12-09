@@ -15,25 +15,63 @@ class ExcelController extends Controller
 {
     public function import($models)
     {
-        $modelName = studlySingular($models);
+        $modelClass = "App\\Models\\" . studlySingular($models);
+        // Special case for media-files
         if ($models == 'media-files') {
             $modelName = 'MediaFile';
         }
-        $modelClass = "App\\Models\\$modelName";
-        if (!class_exists($modelClass)) {
-            return back()->withError(__('messages.invalid_model_specified'));
+        // Handle accommodations sub-models
+        $modelView = '';
+        if (str_contains($models, 'accommodation')) {
+            $modelView = studyCapitalCaseName($models, '/');
+        }
+        if ($models == 'accommodations-seasons') {
+            // $models = 'seasons';
+            $modelClass = "App\\Models\\" . studlySingular('seasons');
+            $modelView = 'Accommodations/Seasons';
         }
         $title = __('main.import_types', ['types' => __('main.' . $models)]);
         $description = __('main.import_types_description', ['types' => __('main.' . $models)]);
+        // Handle rates imports
+        if ($models == 'accommodations-rates') {
+            $rates = [
+                'rooms' => [
+                    'models' => 'AccommodationRoomRate',
+                    'model' => 'accommodations-rates',
+                    'title' => __('main.import_types', ['types' => __('main.room_rates')]),
+                    'description' => __('main.import_types_description', ['types' => __('main.room_rates')]),
+                ],
+                'meals' => [
+                    'models' => 'AccommodationMealRate',
+                    'model' => 'accommodations-rates',
+                    'title' => __('main.import_types', ['types' => __('main.meal_rates')]),
+                    'description' => __('main.import_types_description', ['types' => __('main.meal_rates')]),
+                ],
+            ];
+            return view("pages.dashboard.accommodations-rates.import", compact('rates', 'models'));
+        }
+        // Validate model existence
+        if (!class_exists($modelClass)) {
+            return back()->withError(__('messages.invalid_model_specified'));
+        }
+        if (view()->exists("pages.dashboard.$modelView.import")) {
+            return view("pages.dashboard.$modelView.import", compact('models', 'title', 'description'));
+        }
         return view("pages.dashboard.$models.import", compact('models', 'title', 'description'));
     }
 
     public function importData(Request $request, $models)
     {
         $request->validate(['file' => 'required|file|mimes:csv,xlsx']);
-        $modelName = studlySingular($models);
-        $models = Str::plural(strtolower($models));
-        $modelClass = "App\\Models\\{$modelName}";
+        // $models = Str::plural(strtolower($models));
+        $modelClass = "App\\Models\\" . studlySingular($models);
+
+        // Handle accommodations sub-models
+        if ($models == 'accommodations-rates') {
+            $models = $request->input('model');
+            $modelClass = "App\\Models\\" . $request->input('model');
+        }
+
         if (!class_exists($modelClass)) {
             return back()->withError(__('messages.invalid_model_specified'));
         }
@@ -43,10 +81,13 @@ class ExcelController extends Controller
         $folder = "excels/imports/" . Str::plural(strtolower($models));
         $filePath = $file->storeAs($folder, $filename, 'public');
         $absolutePath = Storage::disk('public')->path($filePath);
+        if (!file_exists($absolutePath)) {
+            return back()->withError(__('messages.operation_failed'));
+        }
         // attach the current user id to the job so broadcasts can target the correct private channel
         $userId = function_exists('getActiveUser') && getActiveUser() ? getActiveUser()->id : null;
+        // dd($request->all(), get_defined_vars());
         ImportDataJob::dispatch($modelClass, $absolutePath, 1000, $userId);
-
         $modelNameAr = __('main.' . $models);
         // Broadcast immediate queued notification (so the user gets realtime feedback)
         try {

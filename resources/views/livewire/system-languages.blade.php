@@ -17,7 +17,7 @@
     @endcomponent
 
     <div class="kt-card-content" id="pageContent" wire:loading.class="loading"
-        wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,toggleGridLength">
+        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,toggleGridLength">
         @if ($view == 'grid')
             <div class="kt-cards p-4" wire:key="{{ $view ? $view : '' }}-view">
                 <div class="inline-flex text-nowrap items-center gap-2 text-center mb-2 cursor-pointer">
@@ -82,7 +82,7 @@
             <div wire:key="{{ $view ? $view : '' }}-view" data-kt-datatable="true" data-kt-datatable-state-save="false"
                 id="team_crew_table">
                 <div class="kt-scrollable-x-auto" wire:loading.class="loading"
-                    wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
+                    wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
                     <table class="kt-table table-auto text-nowrap">
                         <thead>
                             <tr>

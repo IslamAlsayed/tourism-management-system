@@ -65,7 +65,7 @@ return new class extends Migration {
             $table->timestamp('visa_last_update')->nullable();
 
             // Additional notes
-            $table->text('note')->nullable();
+            $table->text('notes')->nullable();
 
             $table->timestamps();
 

@@ -1,6 +1,7 @@
-<div id="parentColumnsModal"
-    wire:target="deleteSelected,exportSelectedPDF,exportSelectedExcel,toggleAll,resetColumns,applyColumns"
-    wire:loading.class="loading">
+<div id="parentColumnsModal">
+    {{-- wire:target="deleteSelected,exportSelectedPDF,exportSelectedExcel,toggleAll,resetColumns,applyColumns"
+    wire:loading.class="loading" --}}
+
     @if (isset($view) && $view)
         <div wire:click="toggleView" class="kt-btn kt-btn-outline bg-secondary text-white px-3 h-[45px] cursor-pointer">
             <i class="fas fa-{{ $view == 'grid' ? 'table-list' : 'grid' }}"></i>

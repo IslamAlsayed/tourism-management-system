@@ -17,7 +17,7 @@
     @endcomponent
 
     <div class="kt-card-content pb-4" wire:loading.class="loading"
-        wire:target="search,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
+        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
         <div data-kt-datatable-state-save="false" id="tour_guides_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [

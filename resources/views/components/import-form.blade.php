@@ -13,14 +13,15 @@
 
 @php
     $formRoute = $route ?? route('import.data.post', ['models' => $models]);
+    $models = str_replace('.', '-', $models);
     $backRoute = $cancelRoute ?? route("$models.index");
 @endphp
 
-<div class="container mx-auto px-6 py-8">
+<div class="container mx-auto px-4 py-8">
     <div class="flex flex-col">
-        <div class="-mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 p-4">
-            <div class="align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 pt-0">
+        <div class="-mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="align-middle inline-block min-w-full lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg pt-0">
                     <h1 class="text-xl font-semibold">{{ $title }}</h1>
                     <p class="mb-3">{{ $description }}</p>
 
@@ -90,10 +91,11 @@
                     @endif
 
                     <!-- Import Form -->
-                    <form action="{{ $formRoute }}" method="POST" enctype="multipart/form-data"
-                        class="w-half disabled p-2 rounded-sm"
-                        style="background: var(--color-yellow-100); user-select: none;">
+                    <form action="{{ $formRoute }}" method="POST" enctype="multipart/form-data" class="w-half">
+                        {{-- class="w-half disabled p-2 rounded-sm"
+                        style="background: var(--color-yellow-100); user-select: none;" --}}
                         @csrf
+                        {{ $customLogic ?? '' }}
 
                         <div class="mb-4">
                             <label for="file" class="inline-block text-gray-700 text-sm font-bold mb-2">
@@ -124,7 +126,8 @@
                         </div>
 
                         <div class="flex items-center gap-4">
-                            <button type="submit" class="kt-btn kt-btn-primary" id="submit-button" disabled>
+                            <button type="submit" class="kt-btn kt-btn-primary" id="submit-button">
+                                {{-- disabled --}}
                                 {{ __('main.upload_and_import') }}
                             </button>
                             <a href="{{ $backRoute }}" class="kt-btn kt-btn-outline ml-4">
@@ -142,7 +145,6 @@
 </div>
 
 @push('scripts')
-    <!-- SheetJS for .xlsx parsing -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script>
         function renderPreview(rows) {
@@ -218,16 +220,16 @@
 
         function handleFileChange() {
             const fileInput = document.getElementById('file');
-            const submitButton = document.getElementById('submit-button');
+            // const submitButton = document.getElementById('submit-button');
             const hasOptions = {{ $hasOptions ? 'true' : 'false' }};
 
             // manage submit enabling
-            if (hasOptions) {
-                const selectedOption = document.querySelector('input[name="{{ $optionName }}"]:checked');
-                submitButton.disabled = !fileInput.files.length || !selectedOption;
-            } else {
-                submitButton.disabled = !fileInput.files.length;
-            }
+            // if (hasOptions) {
+            //     const selectedOption = document.querySelector('input[name="{{ $optionName }}"]:checked');
+            //     submitButton.disabled = !fileInput.files.length || !selectedOption;
+            // } else {
+            //     submitButton.disabled = !fileInput.files.length;
+            // }
 
             const preview = document.getElementById('file-preview');
             const table = document.getElementById('preview-table');
@@ -276,7 +278,7 @@
                 const optionInputs = document.querySelectorAll('input[name="{{ $optionName }}"]');
                 const importError = document.getElementById('importError');
                 const fileInput = document.getElementById('file');
-                const submitButton = document.getElementById('submit-button');
+                // const submitButton = document.getElementById('submit-button');
 
                 optionInputs.forEach(input => {
                     input.addEventListener('change', function() {
@@ -288,18 +290,18 @@
                 });
 
                 // Show error if trying to submit without selection
-                if (submitButton) {
-                    submitButton.addEventListener('click', function(e) {
-                        const selectedOption = document.querySelector(
-                            'input[name="{{ $optionName }}"]:checked');
-                        if (!selectedOption) {
-                            e.preventDefault();
-                            if (importError) {
-                                importError.style.display = 'block';
-                            }
-                        }
-                    });
-                }
+                // if (submitButton) {
+                //     submitButton.addEventListener('click', function(e) {
+                //         const selectedOption = document.querySelector(
+                //             'input[name="{{ $optionName }}"]:checked');
+                //         if (!selectedOption) {
+                //             e.preventDefault();
+                //             if (importError) {
+                //                 importError.style.display = 'block';
+                //             }
+                //         }
+                //     });
+                // }
             });
         @endif
     </script>

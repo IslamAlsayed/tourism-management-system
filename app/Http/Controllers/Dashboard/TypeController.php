@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Type;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Type\StoreRequest;
+use App\Http\Requests\Type\UpdateRequest;
 
 class TypeController extends Controller
 {
-
     public function index()
     {
         return view('pages.dashboard.types.index');
@@ -19,22 +19,16 @@ class TypeController extends Controller
         return view('pages.dashboard.types.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:types,name',
-            'name_ar' => 'required|string|max:255',
-        ]);
-
+        $validated = $request->validated();
         $type = Type::create($validated);
-
         if ($type) {
             if ($request->has('save_and_add')) {
                 return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.type')]));
             }
             return redirect()->route('types.index')->withSuccess(__('messages.type_created', ['type' => __('main.type')]));
         }
-
         return redirect()->route('types.index')->withError(__('messages.type_creation_failed', ['type' => __('main.type')]));
     }
 
@@ -47,23 +41,17 @@ class TypeController extends Controller
         return view('pages.dashboard.types.edit', compact('type'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $type = Type::find($id);
         if (!$type) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.type')]));
         }
-        $validated = $request->validate([
-            'name' => 'nullable|string|max:255|unique:types,name,' . $type->id,
-            'name_ar' => 'nullable|string|max:255',
-        ]);
-
+        $validated = $request->validated();
         $updated = $type->update($validated);
-
         if ($updated) {
             return redirect()->route('types.index')->withSuccess(__('messages.type_updated', ['type' => __('main.type')]));
         }
-
         return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.type')]));
     }
 
@@ -77,7 +65,6 @@ class TypeController extends Controller
         if ($deleted) {
             return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.type')]));
         }
-
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.type')]));
     }
 }
