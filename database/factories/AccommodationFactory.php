@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\AccommodationType;
 use App\Models\Currency;
 use App\Models\Country;
 use App\Models\State;
@@ -48,7 +47,6 @@ class AccommodationFactory extends Factory
             'contract_file_path' => null,
             'is_active' => fake()->boolean(80),
             'currency_id' => Currency::inRandomOrder()->first()?->id ?? Currency::factory(),
-            'accommodation_type_id' => AccommodationType::inRandomOrder()->first()?->id ?? AccommodationType::factory(),
             'region_id' => Region::inRandomOrder()->first()?->id ?? null,
             'subregion_id' => Subregion::inRandomOrder()->first()?->id ?? null,
             'country_id' => Country::inRandomOrder()->first()?->id ?? Country::factory(),

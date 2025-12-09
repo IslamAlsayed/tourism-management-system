@@ -11,8 +11,8 @@ use App\Models\Subregion;
 use App\Models\Accommodation;
 use App\Models\AccommodationType;
 use App\Models\Season;
-use App\Models\RoomType;
-use App\Models\MealType;
+use App\Models\Room;
+use App\Models\Meal;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Accommodations\StoreAccommodationRequest;
 use App\Http\Requests\Accommodations\UpdateAccommodationRequest;
@@ -58,12 +58,12 @@ class AccommodationController extends Controller
     {
         $accommodationTypes = AccommodationType::orderBy('name')->get();
         $seasons = Season::orderBy('name')->get();
-        $roomTypes = RoomType::orderBy('name')->get();
-        $mealTypes = MealType::orderBy('name')->get();
+        $rooms = Room::orderBy('name')->get();
+        $meals = Meal::orderBy('name')->get();
         $currencies = Currency::orderBy('code')->get();
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.accommodations.create-flexible', compact('accommodationTypes', 'seasons', 'roomTypes', 'mealTypes', 'currencies', 'regions', 'timezones'));
+        return view('pages.dashboard.accommodations.create-flexible', compact('accommodationTypes', 'seasons', 'rooms', 'meals', 'currencies', 'regions', 'timezones'));
     }
 
     /**
@@ -98,12 +98,12 @@ class AccommodationController extends Controller
         }
         $accommodationTypes = AccommodationType::orderBy('name')->get();
         $seasons = Season::orderBy('name')->get();
-        $roomTypes = RoomType::orderBy('name')->get();
-        $mealTypes = MealType::orderBy('name')->get();
+        $rooms = Room::orderBy('name')->get();
+        $meals = Meal::orderBy('name')->get();
         $currencies = Currency::orderBy('code')->get();
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.accommodations.edit-flexible', compact('accommodation', 'accommodationTypes', 'seasons', 'roomTypes', 'mealTypes', 'currencies', 'regions', 'timezones'));
+        return view('pages.dashboard.accommodations.edit-flexible', compact('accommodation', 'accommodationTypes', 'seasons', 'rooms', 'meals', 'currencies', 'regions', 'timezones'));
     }
 
     /**

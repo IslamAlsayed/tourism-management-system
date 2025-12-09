@@ -86,7 +86,7 @@ class CrossingPortFactory extends Factory
             'visa_last_update' => $this->faker->optional(0.7)->dateTimeBetween('-1 year', 'now'),
 
             // Additional notes
-            'note' => $this->faker->optional(0.4)->paragraph(),
+            'notes' => $this->faker->optional(0.4)->paragraph(),
         ];
     }
 

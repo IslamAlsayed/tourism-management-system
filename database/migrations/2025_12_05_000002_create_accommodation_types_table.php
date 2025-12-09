@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->unique(['accommodation_id', 'type_id']);
-
         });
     }
 

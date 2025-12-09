@@ -41,10 +41,10 @@ class Accommodation extends Model
         'contract_file_path',
         'is_active',
         'currency_id',
-        'accommodation_type_id',
-        'accommodation_season_id',
-        'room_type_id',
-        'meal_type_id',
+        'type_id',
+        'season_id',
+        'room_id',
+        'meal_id',
         'region_id',
         'subregion_id',
         'country_id',
@@ -61,12 +61,12 @@ class Accommodation extends Model
 
     public function getRelationshipNames()
     {
-        return ['currency', 'accommodation_type', 'accommodation_season', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['currency', 'type', 'season', 'room', 'meal', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'accommodation_type_id', 'accommodation_season_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['currency_id', 'season_id', 'room_id', 'meal_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
     public function currency()
@@ -74,14 +74,9 @@ class Accommodation extends Model
         return $this->belongsTo(Currency::class);
     }
 
-    public function accommodation_type()
+    public function type()
     {
-        return $this->belongsTo(AccommodationType::class, 'accommodation_type_id');
-    }
-
-    public function accommodation_season()
-    {
-        return $this->belongsTo(AccommodationSeason::class, 'accommodation_season_id');
+        return $this->belongsTo(Type::class, 'type_id');
     }
 
     public function season()
@@ -89,14 +84,14 @@ class Accommodation extends Model
         return $this->belongsTo(Season::class);
     }
 
-    public function roomType()
+    public function room()
     {
-        return $this->belongsTo(RoomType::class);
+        return $this->belongsTo(Room::class, 'room_id');
     }
 
-    public function mealType()
+    public function meal()
     {
-        return $this->belongsTo(MealType::class);
+        return $this->belongsTo(Meal::class, 'meal_id');
     }
 
     public function region()
@@ -127,6 +122,14 @@ class Accommodation extends Model
     public function seasons()
     {
         return $this->belongsToMany(Season::class, 'accommodation_seasons')->withTimestamps()->withPivot('notes');
+    }
+
+    public function types()
+    {
+        return $this->belongsToMany(Type::class, 'accommodation_types', 'accommodation_id', 'type_id', 'id', 'id')
+            ->using(AccommodationType::class)
+            ->withTimestamps()
+            ->withPivot('notes');
     }
 
     public function roomRates()

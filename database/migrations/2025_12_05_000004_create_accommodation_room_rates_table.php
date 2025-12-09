@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('accommodation_id')->constrained()->cascadeOnDelete();
             $table->foreignId('season_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('room_type_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('room_id')->constrained()->cascadeOnDelete();
             $table->foreignId('currency_id')->constrained()->cascadeOnDelete();
 
             // Prices
@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->text('notes')->nullable();
             $table->timestamps();
 
-            $table->unique(['accommodation_id', 'season_id', 'room_type_id'], 'acc_season_room_unique');
+            $table->unique(['accommodation_id', 'season_id', 'room_id'], 'acc_season_room_unique');
             $table->index(['accommodation_id', 'season_id'], 'acc_season_idx');
         });
     }

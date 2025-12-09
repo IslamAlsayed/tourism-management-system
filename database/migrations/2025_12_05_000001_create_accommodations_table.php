@@ -38,10 +38,9 @@ return new class extends Migration {
 
             // Foreign Keys
             $table->unsignedBigInteger('currency_id')->nullable();
-            $table->unsignedBigInteger('accommodation_type_id')->nullable();
             $table->unsignedBigInteger('season_id')->nullable(); // Default season
-            $table->unsignedBigInteger('room_id')->nullable(); // Default room type
-            $table->unsignedBigInteger('meal_id')->nullable(); // Default meal type
+            $table->unsignedBigInteger('room_id')->nullable(); // Default room
+            $table->unsignedBigInteger('meal_id')->nullable(); // Default meal
 
             // Location
             $table->unsignedBigInteger('region_id')->nullable();
@@ -61,17 +60,15 @@ return new class extends Migration {
 
             // Indexes
             $table->index('name');
-            $table->index('accommodation_type_id');
             $table->index('season_id');
-            $table->index('room_type_id');
-            $table->index('meal_type_id');
+            $table->index('room_id');
+            $table->index('meal_id');
 
             // Foreign Keys
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
-            $table->foreign('accommodation_type_id')->references('id')->on('accommodation_types')->onDelete('set null');
             $table->foreign('season_id')->references('id')->on('seasons')->onDelete('set null');
-            $table->foreign('room_type_id')->references('id')->on('room_types')->onDelete('set null');
-            $table->foreign('meal_type_id')->references('id')->on('meal_types')->onDelete('set null');
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('set null');
+            $table->foreign('meal_id')->references('id')->on('meals')->onDelete('set null');
             $table->foreign('region_id')->references('id')->on('regions')->onDelete('set null');
             $table->foreign('subregion_id')->references('id')->on('subregions')->onDelete('set null');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');

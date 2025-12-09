@@ -2,29 +2,21 @@
 
 namespace App\Models;
 
-use App\Traits\BroadcastsRecordEvents;
-use App\Traits\HasSearch;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class AccommodationType extends Model
+class AccommodationType extends Pivot
 {
-    use HasFactory, HasSearch, HasRichText, BroadcastsRecordEvents;
+    protected $table = 'accommodation_types';
+    public $timestamps = true;
+    protected $fillable = ['accommodation_id', 'type_id', 'notes'];
 
-    protected $richTextAttributes = [
-        'notes',
-    ];
-
-    protected $fillable = [
-        'id',
-        'accommodation_id',
-        'type_id',
-        'notes',
-    ];
-
-    public function accommodations()
+    public function accommodation()
     {
-        return $this->hasMany(Accommodation::class);
+        return $this->belongsTo(Accommodation::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
     }
 }
