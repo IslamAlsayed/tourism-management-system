@@ -10,39 +10,39 @@
 
         @if (env('DB_MODE') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
-            <table class="border min-w-half divide-y text-center divide-gray-200">
+            <table class="border-custom min-w-half divide-y text-center divide-gray-200">
                 <thead>
                     <tr>
-                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                        <th class="border-custom px-2 bg-yellow-200" title="{{ __('main.required') }}">
                             name <span class="text-red-600">*</span>
                         </th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">name_ar</th>
-                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                        <th class="border-custom px-2 bg-blue-100" title="{{ __('main.optional') }}">name_ar</th>
+                        <th class="border-custom px-2 bg-yellow-200" title="{{ __('main.required') }}">
                             season_from <span class="text-red-600">*</span>
                         </th>
-                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                        <th class="border-custom px-2 bg-yellow-200" title="{{ __('main.required') }}">
                             season_to <span class="text-red-600">*</span>
                         </th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">description</th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">is_active</th>
+                        <th class="border-custom px-2 bg-blue-100" title="{{ __('main.optional') }}">description</th>
+                        <th class="border-custom px-2 bg-blue-100" title="{{ __('main.optional') }}">is_active</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">Summer Season</td>
-                        <td class="border px-2">موسم الصيف</td>
-                        <td class="border px-2">2025-06-01</td>
-                        <td class="border px-2">2025-08-31</td>
-                        <td class="border px-2">High demand period</td>
-                        <td class="border px-2">1</td>
+                        <td class="border-custom px-2">Summer Season</td>
+                        <td class="border-custom px-2">موسم الصيف</td>
+                        <td class="border-custom px-2">2025-06-01</td>
+                        <td class="border-custom px-2">2025-08-31</td>
+                        <td class="border-custom px-2">High demand period</td>
+                        <td class="border-custom px-2">1</td>
                     </tr>
                     <tr>
-                        <td class="border px-2">Winter Season</td>
-                        <td class="border px-2">موسم الشتاء</td>
-                        <td class="border px-2">2025-12-01</td>
-                        <td class="border px-2">2026-02-28</td>
-                        <td class="border px-2">Low demand period</td>
-                        <td class="border px-2">0</td>
+                        <td class="border-custom px-2">Winter Season</td>
+                        <td class="border-custom px-2">موسم الشتاء</td>
+                        <td class="border-custom px-2">2025-12-01</td>
+                        <td class="border-custom px-2">2026-02-28</td>
+                        <td class="border-custom px-2">Low demand period</td>
+                        <td class="border-custom px-2">0</td>
                     </tr>
                 </tbody>
             </table>

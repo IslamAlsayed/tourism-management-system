@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name'); // e.g., Breakfast, Lunch, Dinner, Full Board, Half Board
             $table->string('name_ar')->nullable();
             $table->text('description')->nullable();

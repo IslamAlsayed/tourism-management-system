@@ -14,8 +14,8 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('accommodations.rates.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.rates')]) }}
+                <a href="{{ route('accommodations-rates.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_types', replace: ['types' => __('main.rates')]) }}
                 </a>
             </div>
         </div>
@@ -24,19 +24,22 @@
     <div class="kt-container-fixed">
         <div class="kt-card p-4">
             <div class="kt-card-body">
-                <form action="{{ route('accommodations.rates.update-meal', $meal->id) }}" method="POST">
+                <form action="{{ route('accommodations-rates.update-meal', $mealRate->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         <div class="">
-                            <label for="accommodation_id" class="kt-label required">{{ __('main.accommodation') }}</label>
-                            <select class="kt-select @error('accommodation_id') is-invalid @enderror" id="accommodation_id"
-                                name="accommodation_id" required>
-                                <option value="">--</option>
+                            <label for="accommodation_id" class="kt-label mb-2 flex items-center justify-between">
+                                {{ __('main.accommodations') }}
+                                <a href="{{ route('accommodations.create') }}" class="text-blue-600 text-2sm">
+                                    {{ __('main.add') }}
+                                </a>
+                            </label>
+                            <select name="accommodation_id" id="accommodation_id" class="kt-select basic-single">
                                 @foreach ($accommodations as $accommodation)
                                     <option value="{{ $accommodation->id }}"
-                                        {{ $meal->accommodation_id == $accommodation->id ? 'selected' : '' }}>
+                                        {{ $mealRate->accommodation_id == $accommodation->id ? 'selected' : '' }}>
                                         {{ $accommodation->name }}
                                     </option>
                                 @endforeach
@@ -47,13 +50,16 @@
                         </div>
 
                         <div class="">
-                            <label for="season_id" class="kt-label required">{{ __('main.season') }}</label>
-                            <select class="kt-select @error('season_id') is-invalid @enderror" id="season_id"
-                                name="season_id" required>
-                                <option value="">--</option>
+                            <label for="season_id" class="kt-label mb-2 flex items-center justify-between">
+                                {{ __('main.seasons') }}
+                                <a href="{{ route('seasons.create') }}" class="text-blue-600 text-2sm">
+                                    {{ __('main.add') }}
+                                </a>
+                            </label>
+                            <select name="season_id" id="season_id" class="kt-select basic-single">
                                 @foreach ($seasons as $season)
                                     <option value="{{ $season->id }}"
-                                        {{ $meal->season_id == $season->id ? 'selected' : '' }}>
+                                        {{ $mealRate->season_id == $season->id ? 'selected' : '' }}>
                                         {{ $season->name }}
                                     </option>
                                 @endforeach
@@ -64,13 +70,16 @@
                         </div>
 
                         <div class="">
-                            <label for="meal_id" class="kt-label required">{{ __('main.meal') }}</label>
-                            <select class="kt-select @error('meal_id') is-invalid @enderror" id="meal_id" name="meal_id"
-                                required>
-                                <option value="">--</option>
+                            <label for="meal_id" class="kt-label mb-2 flex items-center justify-between">
+                                {{ __('main.meals') }}
+                                <a href="{{ route('meals.create') }}" class="text-blue-600 text-2sm">
+                                    {{ __('main.add') }}
+                                </a>
+                            </label>
+                            <select id="meal_id" name="meal_id" class="kt-select basic-single">
                                 @foreach ($meals as $meal)
                                     <option value="{{ $meal->id }}"
-                                        {{ $meal->meal_id == $meal->id ? 'selected' : '' }}>
+                                        {{ $mealRate->meal_id == $meal->id ? 'selected' : '' }}>
                                         {{ $meal->name }}
                                     </option>
                                 @endforeach
@@ -81,37 +90,41 @@
                         </div>
                     </div>
 
-                    <p class="mb-2 font-semibold text-2xl">{{ __('main.rates') }}</p>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <label for="price" class="kt-label required">{{ __('main.price') }}</label>
-                            <input type="number" step="0.01"
-                                class="kt-input h-[45px] @error('price') is-invalid @enderror" id="price" name="price"
-                                value="{{ $meal->price }}" min="0" required>
+                            <label for="price" class="kt-label">{{ __('main.price') }}</label>
+                            <input type="number" step="0.01" class="kt-input h-[45px]" id="price" name="price"
+                                value="{{ $mealRate->price }}" min="0">
                             @error('price')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <div>
-                            <label for="currency" class="kt-label">{{ __('main.currency') }}</label>
-                            <input type="text" maxlength="3"
-                                class="kt-input h-[45px] @error('currency') is-invalid @enderror" id="currency"
-                                name="currency" value="{{ $meal->currency }}" placeholder="USD">
-                            @error('currency')
+                        <div class="">
+                            <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
+                                {{ __('main.currencies') }}
+                                <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                    {{ __('main.add') }}
+                                </a>
+                            </label>
+                            <select name="currency_id" class="kt-select basic-single" id="currency_id">
+                                @foreach ($currencies as $currency)
+                                    <option value="{{ $currency->id }}"
+                                        {{ $mealRate->currency_id == $currency->id ? 'selected' : '' }}>
+                                        {{ $currency->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('currency_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="notes" class="kt-label">{{ __('main.notes') }}</label>
-                        @include('components.elements.input-text-editor', [
-                            'name' => 'notes',
-                            'value' => $meal->notes,
-                        ])
-                    </div>
+                    @include('components.elements.input-text-editor', [
+                        'name' => 'notes',
+                        'value' => $mealRate->notes,
+                    ])
 
                     <div class="mb-4">
                         <div class="flex items-center gap-3">
@@ -120,7 +133,7 @@
                                 'name' => 'is_supplement',
                                 'id' => 'is_supplement',
                                 'value' => '1',
-                                'checked' => $meal->is_supplement,
+                                'checked' => $mealRate->is_supplement,
                                 'label' => __('main.is_supplement'),
                             ])
                         </div>
@@ -133,14 +146,14 @@
                                 'name' => 'is_active',
                                 'id' => 'is_active',
                                 'value' => '1',
-                                'checked' => $meal->is_active,
+                                'checked' => $mealRate->is_active,
                                 'label' => __('main.is_active'),
                             ])
                         </div>
                     </div>
 
                     {{-- Update Submit --}}
-                    @include('components.elements.update-submit', ['models' => 'accommodations.rates'])
+                    @include('components.elements.update-submit', ['models' => 'accommodations-rates'])
                 </form>
             </div>
         </div>

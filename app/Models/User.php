@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use App\Traits\FiltersByUserRole;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -14,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasSearch, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasFactory, Notifiable, HasSearch, HasUuid, FiltersByUserRole, BroadcastsRecordEvents;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +24,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'id',
+        'uuid',
         'photo',
         'name',
         'email',

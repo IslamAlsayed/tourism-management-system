@@ -19,7 +19,6 @@ use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\SettingsController;
-use App\Http\Controllers\AccommodationImportController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\MediaFileController;
 use App\Http\Controllers\Dashboard\SubregionController;
@@ -35,19 +34,13 @@ use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\TourGuideTypeController;
 use App\Http\Controllers\Dashboard\TourGuideReviewController;
 use App\Http\Controllers\Dashboard\AccommodationRateController;
-use App\Http\Controllers\Dashboard\Accommodations\RateController;
 use App\Http\Controllers\Dashboard\Transportation\BusTypeController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyController;
 use App\Http\Controllers\Dashboard\Transportation\VehicleController;
-use App\Http\Controllers\Dashboard\Accommodations\MealTypeController;
-use App\Http\Controllers\Dashboard\Accommodations\RoomTypeController;
 use App\Http\Controllers\Dashboard\Transportation\DepartmentController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyBusTypeController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
-use App\Http\Controllers\Dashboard\Accommodations\TypeController as AccommodationTypeController;
-use App\Http\Controllers\Dashboard\Accommodations\SeasonController as AccommodationSeasonController;
-use App\Http\Controllers\Dashboard\Accommodations\AccommodationController as ModularAccommodationController;
 
 /*
 |----------------------|

@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class TransportationCarRoutePrice extends Model
 {
-    use HasSearch;
+    use HasSearch, HasUuid;
 
     protected $fillable = [
+        'uuid',
         'car_route_id',
         'seats',
         'currency_id',

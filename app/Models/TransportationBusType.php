@@ -3,32 +3,18 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class TransportationBusType extends Model
 {
-    use HasSearch;
+    use HasSearch, HasUuid;
 
     protected $fillable = [
         'id',
+        'uuid',
         'name',
         'name_ar',
         'category',
     ];
-
-    /**
-     * Get relationship names for eager loading
-     */
-    public function getRelationshipNames()
-    {
-        return [];
-    }
-
-    /**
-     * Get columns to exclude from search/display
-     */
-    public function getExcludedColumns()
-    {
-        return [];
-    }
 }

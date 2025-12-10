@@ -134,4 +134,5 @@ return [
     'all_notifications_marked_read' => 'تم وضع كل الإشعارات كمقروءة.',
     'notification_deleted' => 'تم حذف الإشعار.',
     'backup_created_test' => 'تم إنشاء النسخة الاحتياطية بنجاح (وضع تجريبي).',
+    'accommodation_rates_records_info' => 'سيتم إنشاء سجلات الأسعار تلقائياً لكل تركيبة (موسم × غرفة) و (موسم × وجبة) بقيم افتراضية (0). يمكنك تعديل الأسعار لاحقاً من قسم <a href=":link" class="font-semibold underline" style="color: var(--color-blue-900) !important">أسعار الإقامات</a>.',
 ];

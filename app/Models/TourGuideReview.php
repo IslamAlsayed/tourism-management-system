@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class TourGuideReview extends Model
 {
-    use HasSearch;
+    use HasSearch, HasUuid;
 
     protected $fillable = [
         'id',
+        'uuid',
         'tour_guide_id',
         'rating',
         'review',
@@ -29,9 +31,7 @@ class TourGuideReview extends Model
      */
     public function getExcludedColumns()
     {
-        return [
-            'tour_guide_id',
-        ];
+        return ['tour_guide_id'];
     }
 
     public function tour_guide()

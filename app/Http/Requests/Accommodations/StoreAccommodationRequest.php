@@ -24,15 +24,26 @@ class StoreAccommodationRequest extends FormRequest
         return [
             // Basic Information
             'name' => 'required|string|max:255|unique:accommodations,name',
-            'name_ar' => 'required|string|max:255',
+            'name_ar' => 'nullable|string|max:255',
             'classification' => 'nullable|string|max:255',
             'stars' => 'nullable|integer|min:1|max:5',
             'description' => 'nullable|string|max:5000',
-            'is_active' => 'boolean',
 
             // Type & Currency
-            'accommodation_type_id' => 'required|exists:accommodation_types,id',
+            'type_id' => 'nullable|exists:types,id',
             'currency_id' => 'nullable|exists:currencies,id',
+
+            // Seasons (Many-to-Many)
+            'season_ids' => 'nullable|array',
+            'season_ids.*' => 'exists:seasons,id',
+
+            // Rooms (Many-to-Many)
+            'room_ids' => 'nullable|array',
+            'room_ids.*' => 'exists:rooms,id',
+
+            // Meals (Many-to-Many)
+            'meal_ids' => 'nullable|array',
+            'meal_ids.*' => 'exists:meals,id',
 
             // Contact Information
             'general_mobile' => 'nullable|string|max:20',
@@ -50,9 +61,9 @@ class StoreAccommodationRequest extends FormRequest
             'contact_email' => 'nullable|email|max:255',
 
             // Location
-            'country_id' => 'required|exists:countries,id',
+            'country_id' => 'nullable|exists:countries,id',
             'state_id' => 'nullable|exists:states,id',
-            'city_id' => 'required|exists:cities,id',
+            'city_id' => 'nullable|exists:cities,id',
             'region_id' => 'nullable|exists:regions,id',
             'subregion_id' => 'nullable|exists:subregions,id',
             'street' => 'nullable|string|max:500',
@@ -63,92 +74,7 @@ class StoreAccommodationRequest extends FormRequest
 
             // Contract
             'contract_file_path' => 'nullable|string|max:500',
+            'is_active' => 'boolean',
         ];
-    }
-
-    /**
-     * Get custom attributes for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function attributes(): array
-    {
-        return [
-            'name' => __('main.name'),
-            'name_ar' => __('main.name_ar'),
-            'classification' => __('main.classification'),
-            'stars' => __('main.stars'),
-            'description' => __('main.description'),
-            'is_active' => __('main.status'),
-            'accommodation_type_id' => __('main.accommodation_type'),
-            'currency_id' => __('main.currency'),
-            'general_mobile' => __('main.general_mobile'),
-            'general_email' => __('main.general_email'),
-            'email' => __('main.email'),
-            'website' => __('main.website'),
-            'phone' => __('main.phone'),
-            'phone_ext' => __('main.phone_ext'),
-            'fax' => __('main.fax'),
-            'contact_person' => __('main.contact_person'),
-            'contact_position' => __('main.contact_position'),
-            'contact_mobile' => __('main.contact_mobile'),
-            'contact_email' => __('main.contact_email'),
-            'country_id' => __('main.country'),
-            'state_id' => __('main.state'),
-            'city_id' => __('main.city'),
-            'region_id' => __('main.region'),
-            'subregion_id' => __('main.subregion'),
-            'street' => __('main.street'),
-            'box' => __('main.box'),
-            'postal_code' => __('main.postal_code'),
-            'latitude' => __('main.latitude'),
-            'longitude' => __('main.longitude'),
-            'contract_file_path' => __('main.contract_file'),
-        ];
-    }
-
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'اسم الإقامة مطلوب.',
-            'name.unique' => 'اسم الإقامة موجود مسبقاً، يرجى اختيار اسم آخر.',
-            'name_ar.required' => 'الاسم بالعربية مطلوب.',
-            'accommodation_type_id.required' => 'نوع الإقامة مطلوب.',
-            'accommodation_type_id.exists' => 'نوع الإقامة المحدد غير موجود.',
-            'country_id.required' => 'البلد مطلوب.',
-            'country_id.exists' => 'البلد المحدد غير موجود.',
-            'city_id.required' => 'المدينة مطلوبة.',
-            'city_id.exists' => 'المدينة المحددة غير موجودة.',
-            'stars.min' => 'عدد النجوم يجب أن يكون على الأقل 1.',
-            'stars.max' => 'عدد النجوم يجب ألا يزيد عن 5.',
-            'general_email.email' => 'يرجى إدخال بريد إلكتروني صحيح.',
-            'email.email' => 'يرجى إدخال بريد إلكتروني صحيح.',
-            'contact_email.email' => 'يرجى إدخال بريد إلكتروني صحيح.',
-            'website.url' => 'يرجى إدخال رابط موقع صحيح.',
-            'latitude.between' => 'خط العرض يجب أن يكون بين -90 و 90.',
-            'longitude.between' => 'خط الطول يجب أن يكون بين -180 و 180.',
-        ];
-    }
-
-    /**
-     * Prepare the data for validation.
-     */
-    protected function prepareForValidation(): void
-    {
-        // تحويل is_active إلى boolean إذا كان موجود
-        if ($this->has('is_active')) {
-            $this->merge([
-                'is_active' => filter_var($this->is_active, FILTER_VALIDATE_BOOLEAN),
-            ]);
-        } else {
-            $this->merge([
-                'is_active' => true, // القيمة الافتراضية
-            ]);
-        }
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Accommodation Details')
+@section('title', __('main.accommodation_details'))
 
 @section('content')
     <div class="kt-container-fixed">
@@ -17,10 +17,10 @@
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('accommodations.edit', $accommodation->id) }}" class="kt-btn kt-btn-primary">
                     <i class="ki-filled ki-pencil text-sm me-2"></i>
-                    Edit
+                    {{ __('main.edit') }}
                 </a>
                 <a href="{{ route('accommodations.index') }}" class="kt-btn kt-btn-outline">
-                    Back to List
+                    {{ __('main.back_to_accommodations') }}
                 </a>
             </div>
         </div>
@@ -32,31 +32,52 @@
             <!-- Basic Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">Basic Information</h3>
+                    <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-6">
                         <div>
-                            <label class="kt-label mb-1">Name (English)</label>
-                            <p class="text-sm text-secondary-foreground">{{ $accommodation->name ?: 'N/A' }}</p>
+                            <label class="kt-label mb-1">{{ __('main.name_en') }}</label>
+                            <p class="text-sm text-secondary-foreground">{{ $accommodation->name ?: __('main.na') }}</p>
                         </div>
                         <div>
-                            <label class="kt-label mb-1">Name (Arabic)</label>
+                            <label class="kt-label mb-1">{{ __('main.name_ar') }}</label>
                             <p class="text-sm text-secondary-foreground" dir="rtl">
-                                {{ $accommodation->name_ar ?: 'N/A' }}</p>
+                                {{ $accommodation->name_ar ?: __('main.na') }}</p>
                         </div>
+                        
+                        <!-- Types (Many-to-Many) -->
+                        <div class="lg:col-span-2">
+                            <label class="kt-label mb-1">{{ __('main.types') }}</label>
+                            <div class="flex flex-wrap gap-2">
+                                @forelse($accommodation->types as $type)
+                                    <span class="kt-badge kt-badge-primary">{{ $type->type->name }}</span>
+                                @empty
+                                    <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                                @endforelse
+                            </div>
+                        </div>
+                        
+                        <!-- Seasons (Many-to-Many) -->
+                        <div class="lg:col-span-2">
+                            <label class="kt-label mb-1">{{ __('main.seasons') }}</label>
+                            <div class="flex flex-wrap gap-2">
+                                @forelse($accommodation->seasons as $season)
+                                    <span class="kt-badge kt-badge-info">{{ $season->season->name }}</span>
+                                @empty
+                                    <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                                @endforelse
+                            </div>
+                        </div>
+                        
                         <div>
-                            <label class="kt-label mb-1">Accommodation Type</label>
+                            <label class="kt-label mb-1">{{ __('main.classification') }}</label>
                             <p class="text-sm text-secondary-foreground">
-                                {{ $accommodation->accommodation_type?->name ?: 'N/A' }}</p>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">Classification</label>
-                            <p class="text-sm text-secondary-foreground">{{ $accommodation->classification ?: 'N/A' }}</p>
+                                {{ $accommodation->classification ?: __('main.na') }}</p>
                         </div>
                         @if ($accommodation->stars)
                             <div>
-                                <label class="kt-label mb-1">Star Rating</label>
+                                <label class="kt-label mb-1">{{ __('main.star_rating') }}</label>
                                 <div class="flex items-center gap-1">
                                     @for ($i = 1; $i <= 5; $i++)
                                         @if ($i <= $accommodation->stars)
@@ -66,24 +87,24 @@
                                         @endif
                                     @endfor
                                     <span class="text-sm text-secondary-foreground ml-2">{{ $accommodation->stars }}
-                                        Stars</span>
+                                        {{ __('main.stars') }}</span>
                                 </div>
                             </div>
                         @endif
                         <div>
-                            <label class="kt-label mb-1">Status</label>
+                            <label class="kt-label mb-1">{{ __('main.status') }}</label>
                             <div class="flex items-center gap-2">
                                 @if ($accommodation->is_active)
-                                    <span class="kt-badge kt-badge-success">Active</span>
+                                    <span class="kt-badge kt-badge-success">{{ __('main.active') }}</span>
                                 @else
-                                    <span class="kt-badge kt-badge-danger">Inactive</span>
+                                    <span class="kt-badge kt-badge-danger">{{ __('main.inactive') }}</span>
                                 @endif
                             </div>
                         </div>
                     </div>
                     {{-- @if ($accommodation->description) --}}
                     <div class="mt-6">
-                        <label class="kt-label mb-1">Description</label>
+                        <label class="kt-label mb-1">{{ __('main.description') }}</label>
                         <div class="text-sm text-secondary-foreground prose max-w-none">
                             {!! $accommodation->description !!}
                         </div>
@@ -95,47 +116,49 @@
             <!-- Location Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">Location Information</h3>
+                    <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-6">
                         <div>
-                            <label class="kt-label mb-1">Country</label>
-                            <p class="text-sm text-secondary-foreground">{{ $accommodation->country?->name ?: 'N/A' }}</p>
+                            <label class="kt-label mb-1">{{ __('main.country') }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $accommodation->country?->name ?: __('main.na') }}</p>
                         </div>
                         <div>
-                            <label class="kt-label mb-1">City</label>
-                            <p class="text-sm text-secondary-foreground">{{ $accommodation->city?->name ?: 'N/A' }}</p>
+                            <label class="kt-label mb-1">{{ __('main.city') }}</label>
+                            <p class="text-sm text-secondary-foreground">{{ $accommodation->city?->name ?: __('main.na') }}
+                            </p>
                         </div>
                         @if ($accommodation->region)
                             <div>
-                                <label class="kt-label mb-1">Region</label>
+                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
                                 <p class="text-sm text-secondary-foreground">{{ $accommodation->region->name }}</p>
                             </div>
                         @endif
                         @if ($accommodation->subregion)
                             <div>
-                                <label class="kt-label mb-1">Subregion</label>
+                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
                                 <p class="text-sm text-secondary-foreground">{{ $accommodation->subregion->name }}</p>
                             </div>
                         @endif
                         @if ($accommodation->street)
                             <div class="lg:col-span-2">
-                                <label class="kt-label mb-1">Street Address</label>
+                                <label class="kt-label mb-1">{{ __('main.street_address') }}</label>
                                 <p class="text-sm text-secondary-foreground">{{ $accommodation->street }}</p>
                             </div>
                         @endif
                         @if ($accommodation->latitude && $accommodation->longitude)
                             <div>
-                                <label class="kt-label mb-1">Coordinates</label>
+                                <label class="kt-label mb-1">{{ __('main.coordinates') }}</label>
                                 <p class="text-sm text-secondary-foreground">{{ $accommodation->latitude }},
                                     {{ $accommodation->longitude }}</p>
                             </div>
                             <div>
-                                <label class="kt-label mb-1">Map</label>
+                                <label class="kt-label mb-1">{{ __('main.map') }}</label>
                                 <a href="https://maps.google.com?q={{ $accommodation->latitude }},{{ $accommodation->longitude }}"
                                     target="_blank" class="text-sm text-primary hover:underline">
-                                    View on Google Maps
+                                    {{ __('main.view_on_google_maps') }}
                                 </a>
                             </div>
                         @endif
@@ -146,13 +169,13 @@
             <!-- Contact Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">Contact Information</h3>
+                    <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-6">
                         @if ($accommodation->general_mobile)
                             <div>
-                                <label class="kt-label mb-1">General Mobile</label>
+                                <label class="kt-label mb-1">{{ __('main.general_mobile') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     <a href="tel:{{ $accommodation->general_mobile }}"
                                         class="text-primary hover:underline">
@@ -163,7 +186,7 @@
                         @endif
                         @if ($accommodation->general_email)
                             <div>
-                                <label class="kt-label mb-1">General Email</label>
+                                <label class="kt-label mb-1">{{ __('main.general_email') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     <a href="mailto:{{ $accommodation->general_email }}"
                                         class="text-primary hover:underline">
@@ -174,7 +197,7 @@
                         @endif
                         @if ($accommodation->phone)
                             <div>
-                                <label class="kt-label mb-1">Phone</label>
+                                <label class="kt-label mb-1">{{ __('main.phone') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     <a href="tel:{{ $accommodation->phone }}" class="text-primary hover:underline">
                                         {{ $accommodation->phone }}
@@ -184,7 +207,7 @@
                         @endif
                         @if ($accommodation->website)
                             <div>
-                                <label class="kt-label mb-1">Website</label>
+                                <label class="kt-label mb-1">{{ __('main.website') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     <a href="{{ $accommodation->website }}" target="_blank"
                                         class="text-primary hover:underline">
@@ -201,25 +224,25 @@
                             $accommodation->contact_mobile ||
                             $accommodation->contact_email)
                         <div class="border-t pt-4 mt-4">
-                            <h4 class="text-lg font-medium mb-4">Contact Person</h4>
+                            <h4 class="text-lg font-medium mb-4">{{ __('main.contact_person') }}</h4>
                             <div class="grid lg:grid-cols-2 gap-6">
                                 @if ($accommodation->contact_person)
                                     <div>
-                                        <label class="kt-label mb-1">Name</label>
+                                        <label class="kt-label mb-1">{{ __('main.name') }}</label>
                                         <p class="text-sm text-secondary-foreground">{{ $accommodation->contact_person }}
                                         </p>
                                     </div>
                                 @endif
                                 @if ($accommodation->contact_position)
                                     <div>
-                                        <label class="kt-label mb-1">Position</label>
+                                        <label class="kt-label mb-1">{{ __('main.position') }}</label>
                                         <p class="text-sm text-secondary-foreground">{{ $accommodation->contact_position }}
                                         </p>
                                     </div>
                                 @endif
                                 @if ($accommodation->contact_mobile)
                                     <div>
-                                        <label class="kt-label mb-1">Mobile</label>
+                                        <label class="kt-label mb-1">{{ __('main.mobile') }}</label>
                                         <p class="text-sm text-secondary-foreground">
                                             <a href="tel:{{ $accommodation->contact_mobile }}"
                                                 class="text-primary hover:underline">
@@ -230,7 +253,7 @@
                                 @endif
                                 @if ($accommodation->contact_email)
                                     <div>
-                                        <label class="kt-label mb-1">Email</label>
+                                        <label class="kt-label mb-1">{{ __('main.email') }}</label>
                                         <p class="text-sm text-secondary-foreground">
                                             <a href="mailto:{{ $accommodation->contact_email }}"
                                                 class="text-primary hover:underline">
@@ -248,24 +271,24 @@
             <!-- Additional Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">Additional Information</h3>
+                    <h3 class="kt-card-title">{{ __('main.additional_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-6">
                         @if ($accommodation->default_currency)
                             <div>
-                                <label class="kt-label mb-1">Default Currency</label>
+                                <label class="kt-label mb-1">{{ __('main.default_currency') }}</label>
                                 <p class="text-sm text-secondary-foreground">{{ $accommodation->default_currency }}</p>
                             </div>
                         @endif
                         <div>
-                            <label class="kt-label mb-1">Created At</label>
+                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
                             <p class="text-sm text-secondary-foreground">
                                 {{ $accommodation->created_at->format('d M Y, H:i') }}</p>
                         </div>
                         @if ($accommodation->updated_at != $accommodation->created_at)
                             <div>
-                                <label class="kt-label mb-1">Last Updated</label>
+                                <label class="kt-label mb-1">{{ __('main.last_updated') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     {{ $accommodation->updated_at->format('d M Y, H:i') }}</p>
                             </div>
@@ -278,19 +301,19 @@
             <div class="flex items-center gap-4">
                 <a href="{{ route('accommodations.edit', $accommodation->id) }}" class="kt-btn kt-btn-primary">
                     <i class="ki-filled ki-pencil text-sm me-2"></i>
-                    Edit Accommodation
+                    {{ __('main.edit_accommodation') }}
                 </a>
                 <form action="{{ route('accommodations.destroy', $accommodation->id) }}" method="POST"
-                    onsubmit="return confirm('Are you sure you want to delete this accommodation?')" class="inline">
+                    onsubmit="return confirm('{{ __('main.confirm_delete_message') }}')" class="inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="kt-btn kt-btn-danger">
                         <i class="ki-filled ki-trash text-sm me-2"></i>
-                        Delete
+                        {{ __('main.delete') }}
                     </button>
                 </form>
                 <a href="{{ route('accommodations.index') }}" class="kt-btn kt-btn-outline">
-                    Back to Accommodations
+                    {{ __('main.back_to_accommodations') }}
                 </a>
             </div>
         </div>

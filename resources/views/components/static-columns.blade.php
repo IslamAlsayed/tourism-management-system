@@ -352,7 +352,11 @@
     @break
 
     @case('accommodation')
-        <td title="{{ optional($model->accommodation)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->accommodation)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->accommodation->id . ' - ' . optional($model->accommodation)->name ?? '--' }}">
+            {!! $model->accommodation->id .
+                ' - ' .
+                highlightSearch(limitedText(optional($model->accommodation)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('season')
@@ -365,6 +369,75 @@
 
     @case('meal')
         <td title="{{ optional($model->meal)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->meal)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('seasons')
+        <td title="{{ implode(', ', $model->seasons()->pluck('name')->toArray()) }}">
+            @php $seasons = $model->seasons()->get(); @endphp
+            @if ($seasons->count() > 0)
+                @foreach ($seasons->take(3) as $season)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($season->name ?? '--', 30), $search) !!}
+                    </div>
+                @endforeach
+                @if ($seasons->count() > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        ...
+                    </div>
+                @endif
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('roomRates')
+        <td title="{{ implode(', ', $model->roomRates()->pluck('name')->toArray()) }}">
+            @php $roomRates = $model->roomRates()->get(); @endphp
+            @if ($roomRates->count() > 0)
+                @foreach ($roomRates->take(3) as $roomRate)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($roomRate->name ?? '--', 30), $search) !!}
+                    </div>
+                @endforeach
+                @if ($roomRates->count() > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        ...
+                    </div>
+                @endif
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('mealRates')
+        <td title="{{ implode(', ', $model->mealRates()->pluck('name')->toArray()) }}">
+            @php $mealRates = $model->mealRates()->get(); @endphp
+            @if ($mealRates->count() > 0)
+                @foreach ($mealRates->take(3) as $mealRate)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($mealRate->name ?? '--', 30), $search) !!}
+                    </div>
+                @endforeach
+                @if ($mealRates->count() > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        ...
+                    </div>
+                @endif
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
     @break
 
     @case('accommodation_type')
@@ -435,22 +508,18 @@
 
     @case('state_id')
         <td>
-            @if (!empty($model->states()))
-                @foreach ($model->states() as $key => $state)
-                    @if ($key <= 2)
-                        @if ($state)
-                            <div
-                                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                                {{ $state['name'] ?? '--' }}
-                            </div>
-                        @endif
-                    @else
-                        <div
-                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                            ...
-                        </div>
-                    @endif
+            @php $states = $model->states(); @endphp
+            @if ($states->count() > 0)
+                @foreach ($states->take(3) as $state)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($state->name ?? '--', 30), $search) !!}
+                    </div>
                 @endforeach
+                @if ($states->count() > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        ...
+                    </div>
+                @endif
             @else
                 <div
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
@@ -462,22 +531,18 @@
 
     @case('city_id')
         <td>
-            @if (!empty($model->cities()))
-                @foreach ($model->cities() as $key => $city)
-                    @if ($key <= 2)
-                        @if ($city)
-                            <div
-                                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                                {{ $city['name'] ?? '--' }}
-                            </div>
-                        @endif
-                    @else
-                        <div
-                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                            ...
-                        </div>
-                    @endif
+            @php $cities = $model->cities(); @endphp
+            @if ($cities->count() > 0)
+                @foreach ($cities->take(3) as $city)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($city->name ?? '--', 30), $search) !!}
+                    </div>
                 @endforeach
+                @if ($cities->count() > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        ...
+                    </div>
+                @endif
             @else
                 <div
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TouristSite extends Model
 {
-    use HasSearch, HasRichText, HasFactory;
+    use HasSearch, HasUuid, HasRichText, HasFactory;
 
     protected $richTextAttributes = [
         'description',
@@ -20,6 +21,7 @@ class TouristSite extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'photo',
         'site_code',
 

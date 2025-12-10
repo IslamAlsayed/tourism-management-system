@@ -4,14 +4,16 @@ namespace App\Models;
 
 use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
-    use HasSearch, FiltersByUserRole;
+    use HasSearch, HasUuid, FiltersByUserRole;
 
     protected $fillable = [
         'id',
+        'uuid',
         'name',
         'name_ar',
         'iso2',

@@ -112,10 +112,10 @@ class Clients extends Component
     {
         $query = Client::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        if ($this->filterClientGender && $this->filterClientGender !== 'all') {
+        if ($this->filterClientGender && $this->filterClientGender['payload']['value'] !== 'all') {
             $query->where('gender', $this->filterClientGender);
         }
-        if ($this->filterClientStatus && $this->filterClientStatus !== 'all') {
+        if ($this->filterClientStatus && $this->filterClientStatus['payload']['value'] !== 'all') {
             $query->where('client_status', $this->filterClientStatus);
         }
         $this->applySorting($query);

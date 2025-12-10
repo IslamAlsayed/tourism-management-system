@@ -35,7 +35,7 @@ class AccommodationsRates extends Component
     {
         $this->filter = $filter;
         $this->resetPage();
-        
+
         // Re-initialize custom columns for the new model
         $modelClass = $this->filter === 'rooms' ? AccommodationRoomRate::class : AccommodationMealRate::class;
         $this->mountWithCustomColumns($modelClass);
@@ -135,17 +135,61 @@ class AccommodationsRates extends Component
         if ($this->filter === 'rooms') {
             $query = AccommodationRoomRate::with(['accommodation', 'season', 'room', 'currency']);
             $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations ?? []);
-            $this->applySorting($query);
+            $this->applySortingWithJoins($query, 'room');
             $data = $query->paginate(getPaginate());
             $totalCount = $this->totalCount ?: AccommodationRoomRate::count();
         } else {
             $query = AccommodationMealRate::with(['accommodation', 'season', 'meal', 'currency']);
             $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations ?? []);
-            $this->applySorting($query);
+            $this->applySortingWithJoins($query, 'meal');
             $data = $query->paginate(getPaginate());
             $totalCount = $this->totalCount ?: AccommodationMealRate::count();
         }
 
         return view('livewire.accommodations-rates', ['data' => $data, 'totalCount' => $totalCount, 'selectedIds' => $this->selectedIds]);
+    }
+
+    private function applySortingWithJoins($query, $rateType)
+    {
+        if (empty($this->sortField)) {
+            return;
+        }
+
+        $sortField = $this->sortField;
+        $sortDirection = $this->sortDirection ?? 'asc';
+        $mainTable = $rateType === 'room' ? 'accommodation_room_rates' : 'accommodation_meal_rates';
+
+        // Handle sorting by related tables
+        switch ($sortField) {
+            case 'accommodation':
+                $query->leftJoin('accommodations', "{$mainTable}.accommodation_id", '=', 'accommodations.id')
+                    ->select("{$mainTable}.*")
+                    ->orderBy('accommodations.name', $sortDirection);
+                break;
+            case 'season':
+                $query->leftJoin('seasons', "{$mainTable}.season_id", '=', 'seasons.id')
+                    ->select("{$mainTable}.*")
+                    ->orderBy('seasons.name', $sortDirection);
+                break;
+            case 'room':
+                $query->leftJoin('rooms', "{$mainTable}.room_id", '=', 'rooms.id')
+                    ->select("{$mainTable}.*")
+                    ->orderBy('rooms.name', $sortDirection);
+                break;
+            case 'meal':
+                $query->leftJoin('meals', "{$mainTable}.meal_id", '=', 'meals.id')
+                    ->select("{$mainTable}.*")
+                    ->orderBy('meals.name', $sortDirection);
+                break;
+            case 'currency':
+                $query->leftJoin('currencies', "{$mainTable}.currency_id", '=', 'currencies.id')
+                    ->select("{$mainTable}.*")
+                    ->orderBy('currencies.code', $sortDirection);
+                break;
+            default:
+                // Direct column sorting
+                $this->applySorting($query);
+                break;
+        }
     }
 }

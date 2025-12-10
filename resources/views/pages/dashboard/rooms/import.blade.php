@@ -10,29 +10,29 @@
 
         @if (env('DB_MODE') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
-            <table class="border min-w-half divide-y text-center divide-gray-200">
+            <table class="border-custom min-w-half divide-y text-center divide-gray-200">
                 <thead>
                     <tr>
-                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                        <th class="border-custom px-2 bg-yellow-200" title="{{ __('main.required') }}">
                             name <span class="text-red-600">*</span>
                         </th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">name_ar</th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">description</th>
-                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                        <th class="border-custom px-2 bg-blue-100" title="{{ __('main.optional') }}">name_ar</th>
+                        <th class="border-custom px-2 bg-blue-100" title="{{ __('main.optional') }}">description</th>
+                        <th class="border-custom px-2 bg-yellow-200" title="{{ __('main.required') }}">
                             max_occupancy <span class="text-red-600">*</span>
                         </th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">occupancy_details</th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">is_active</th>
+                        <th class="border-custom px-2 bg-blue-100" title="{{ __('main.optional') }}">occupancy_details</th>
+                        <th class="border-custom px-2 bg-blue-100" title="{{ __('main.optional') }}">is_active</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">Hotel Example</td>
-                        <td class="border px-2">فندق المثال</td>
-                        <td class="border px-2">Luxury hotel in city center</td>
-                        <td class="border px-2">4</td>
-                        <td class="border px-2">2A+2C</td>
-                        <td class="border px-2">1</td>
+                        <td class="border-custom px-2">Hotel Example</td>
+                        <td class="border-custom px-2">فندق المثال</td>
+                        <td class="border-custom px-2">Luxury hotel in city center</td>
+                        <td class="border-custom px-2">4</td>
+                        <td class="border-custom px-2">2A+2C</td>
+                        <td class="border-custom px-2">1</td>
                     </tr>
                 </tbody>
             </table>

@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TourGuide extends Model
 {
-    use HasSearch, HasRichText, BroadcastsRecordEvents;
+    use HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
         'notes',
@@ -17,6 +18,7 @@ class TourGuide extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'photo',
         'name',
         'name_ar',

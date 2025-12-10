@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use App\Traits\FiltersByUserRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MediaFile extends Model
 {
-    use HasFactory, HasSearch, HasRichText, SoftDeletes, FiltersByUserRole;
+    use HasFactory, HasSearch, HasUuid, HasRichText, SoftDeletes, FiltersByUserRole;
 
     protected $richTextAttributes = [
         'description',
@@ -21,6 +22,7 @@ class MediaFile extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'file_name',
         'file_path',
         'file_type',

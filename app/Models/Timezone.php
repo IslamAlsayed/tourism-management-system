@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use App\Traits\FiltersByUserRole;
 use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Timezone extends Model
 {
-    use HasSearch, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
         'description',
@@ -19,6 +20,7 @@ class Timezone extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'name',
         'name_ar',
         'abbreviation',

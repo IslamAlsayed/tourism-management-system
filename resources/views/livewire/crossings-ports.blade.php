@@ -19,7 +19,7 @@
     <div class="kt-card-content" wire:loading.class="loading"
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,filterType,filterStatus,filterOperational,resetFilter">
         <!-- Filters -->
-        <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
+        <div class="mb-4 px-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable" wire:ignore>
             <div>
                 <select wire:model.live="filterType" id="type" class="kt-select h-[40px] w-48 max-w-full"
                     data-kt-select="true" data-kt-select-placeholder="{{ __('main.type') }}">

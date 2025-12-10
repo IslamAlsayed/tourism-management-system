@@ -30,10 +30,13 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         <div class="">
-                            <label for="accommodation_id" class="kt-label required">{{ __('main.accommodation') }}</label>
-                            <select class="kt-select @error('accommodation_id') is-invalid @enderror" id="accommodation_id"
-                                name="accommodation_id" special-search required>
-                                <option value="">--</option>
+                            <label for="accommodation_id" class="kt-label mb-2 flex items-center justify-between">
+                                {{ __('main.accommodations') }}
+                                <a href="{{ route('accommodations.create') }}" class="text-blue-600 text-2sm">
+                                    {{ __('main.add') }}
+                                </a>
+                            </label>
+                            <select name="accommodation_id" class="kt-select basic-single" id="accommodation_id">
                                 @foreach ($accommodations as $accommodation)
                                     <option value="{{ $accommodation->id }}"
                                         {{ $roomRate->accommodation_id == $accommodation->id ? 'selected' : '' }}>
@@ -47,10 +50,13 @@
                         </div>
 
                         <div class="">
-                            <label for="season_id" class="kt-label required">{{ __('main.season') }}</label>
-                            <select class="kt-select @error('season_id') is-invalid @enderror" id="season_id"
-                                name="season_id" special-search required>
-                                <option value="">--</option>
+                            <label for="season_id" class="kt-label mb-2 flex items-center justify-between">
+                                {{ __('main.seasons') }}
+                                <a href="{{ route('seasons.create') }}" class="text-blue-600 text-2sm">
+                                    {{ __('main.add') }}
+                                </a>
+                            </label>
+                            <select name="season_id" class="kt-select basic-single" id="season_id">
                                 @foreach ($seasons as $season)
                                     <option value="{{ $season->id }}"
                                         {{ $roomRate->season_id == $season->id ? 'selected' : '' }}>
@@ -64,10 +70,13 @@
                         </div>
 
                         <div class="">
-                            <label for="room_id" class="kt-label required">{{ __('main.room') }}</label>
-                            <select class="kt-select @error('room_id') is-invalid @enderror" id="room_id" name="room_id"
-                                special-search required>
-                                <option value="">--</option>
+                            <label for="room_id" class="kt-label mb-2 flex items-center justify-between">
+                                {{ __('main.rooms') }}
+                                <a href="{{ route('rooms.create') }}" class="text-blue-600 text-2sm">
+                                    {{ __('main.add') }}
+                                </a>
+                            </label>
+                            <select name="room_id" class="kt-select basic-single" id="room_id">
                                 @foreach ($rooms as $room)
                                     <option value="{{ $room->id }}"
                                         {{ $roomRate->room_id == $room->id ? 'selected' : '' }}>
@@ -81,10 +90,13 @@
                         </div>
 
                         <div class="">
-                            <label for="currency_id" class="kt-label required">{{ __('main.currency') }}</label>
-                            <select class="kt-select @error('currency_id') is-invalid @enderror" id="currency_id"
-                                name="currency_id" special-search required>
-                                <option value="">--</option>
+                            <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
+                                {{ __('main.currencies') }}
+                                <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                    {{ __('main.add') }}
+                                </a>
+                            </label>
+                            <select name="currency_id" id="currency_id" class="kt-select basic-single">
                                 @foreach ($currencies as $currency)
                                     <option value="{{ $currency->id }}"
                                         {{ $roomRate->currency_id == $currency->id ? 'selected' : '' }}>
@@ -98,16 +110,13 @@
                         </div>
                     </div>
 
-                    <p class="mb-2 font-semibold text-2xl">{{ __('main.rates') }}</p>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         <div>
                             <label for="price_per_person_double"
-                                class="kt-label required">{{ __('main.price_per_person_double') }}</label>
-                            <input type="number" step="0.01"
-                                class="kt-input h-[45px] @error('price_per_person_double') is-invalid @enderror"
-                                id="price_per_person_double" name="price_per_person_double"
-                                value="{{ $roomRate->price_per_person_double }}" min="0" required>
+                                class="kt-label">{{ __('main.price_per_person_double') }}</label>
+                            <input type="number" step="0.01" class="kt-input h-[45px]" id="price_per_person_double"
+                                name="price_per_person_double" value="{{ $roomRate->price_per_person_double }}"
+                                min="0">
                             @error('price_per_person_double')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -116,10 +125,9 @@
                         <div>
                             <label for="single_room_supplement"
                                 class="kt-label">{{ __('main.single_room_supplement') }}</label>
-                            <input type="number" step="0.01"
-                                class="kt-input h-[45px] @error('single_room_supplement') is-invalid @enderror"
-                                id="single_room_supplement" name="single_room_supplement"
-                                value="{{ $roomRate->single_room_supplement }}" min="0">
+                            <input type="number" step="0.01" class="kt-input h-[45px]" id="single_room_supplement"
+                                name="single_room_supplement" value="{{ $roomRate->single_room_supplement }}"
+                                min="0">
                             @error('single_room_supplement')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -128,10 +136,8 @@
                         <div>
                             <label for="triple_room_discount"
                                 class="kt-label">{{ __('main.triple_room_discount') }}</label>
-                            <input type="number" step="0.01"
-                                class="kt-input h-[45px] @error('triple_room_discount') is-invalid @enderror"
-                                id="triple_room_discount" name="triple_room_discount"
-                                value="{{ $roomRate->triple_room_discount }}" min="0">
+                            <input type="number" step="0.01" class="kt-input h-[45px]" id="triple_room_discount"
+                                name="triple_room_discount" value="{{ $roomRate->triple_room_discount }}" min="0">
                             @error('triple_room_discount')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -139,10 +145,8 @@
 
                         <div>
                             <label for="third_person_price" class="kt-label">{{ __('main.third_person_price') }}</label>
-                            <input type="number" step="0.01"
-                                class="kt-input h-[45px] @error('third_person_price') is-invalid @enderror"
-                                id="third_person_price" name="third_person_price"
-                                value="{{ $roomRate->third_person_price }}" min="0">
+                            <input type="number" step="0.01" class="kt-input h-[45px]" id="third_person_price"
+                                name="third_person_price" value="{{ $roomRate->third_person_price }}" min="0">
                             @error('third_person_price')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -150,10 +154,8 @@
 
                         <div>
                             <label for="extra_bed_price" class="kt-label">{{ __('main.extra_bed_price') }}</label>
-                            <input type="number" step="0.01"
-                                class="kt-input h-[45px] @error('extra_bed_price') is-invalid @enderror"
-                                id="extra_bed_price" name="extra_bed_price" value="{{ $roomRate->extra_bed_price }}"
-                                min="0">
+                            <input type="number" step="0.01" class="kt-input h-[45px]" id="extra_bed_price"
+                                name="extra_bed_price" value="{{ $roomRate->extra_bed_price }}" min="0">
                             @error('extra_bed_price')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -162,10 +164,8 @@
                         <div>
                             <label for="sea_view_supplement"
                                 class="kt-label">{{ __('main.sea_view_supplement') }}</label>
-                            <input type="number" step="0.01"
-                                class="kt-input h-[45px] @error('sea_view_supplement') is-invalid @enderror"
-                                id="sea_view_supplement" name="sea_view_supplement"
-                                value="{{ $roomRate->sea_view_supplement }}" min="0">
+                            <input type="number" step="0.01" class="kt-input h-[45px]" id="sea_view_supplement"
+                                name="sea_view_supplement" value="{{ $roomRate->sea_view_supplement }}" min="0">
                             @error('sea_view_supplement')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

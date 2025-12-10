@@ -154,6 +154,10 @@
 </script> --}}
 <script src="{{ asset('metronic/vendors/apexcharts/apexcharts.min.js') }}" data-navigate-once></script>
 <script src="{{ asset('metronic/js/layouts/demo1.js') }}" data-navigate-once></script>
+{{-- jquery-3.7.1 --}}
+<script src="{{ asset('assets/plugins/jquery@3.7.1/jquery-3.7.1.min.js') }}"></script>
+{{-- Multiple select plugin --}}
+<script src="{{ asset('assets/plugins/select2@4.1.0-rc.0/js/select2.min.js') }}"></script>
 {{-- Bootstrap --}}
 <script src="{{ asset('assets/plugins/bootstrap@5.3.0/bootstrap.bundle.min.js') }}"></script>
 {{-- Text editor --}}

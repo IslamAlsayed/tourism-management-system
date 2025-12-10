@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('transportation_company_departments', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('department')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();

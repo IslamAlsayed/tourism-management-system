@@ -133,4 +133,5 @@ return [
     'all_notifications_marked_read' => 'All notifications marked as read.',
     'notification_deleted' => 'Notification deleted.',
     'backup_created_test' => 'Backup created successfully (test mode).',
+    'accommodation_rates_records_info' => "Accommodation price records will be automatically created for each combination (season × room) and (season × meal) with default values (0). You can modify the prices later in the <a href=\":link\" class=\"font-semibold underline\" style=\"color: var(--color-blue-900) !important\">Accommodation Rates</a> section.",
 ];

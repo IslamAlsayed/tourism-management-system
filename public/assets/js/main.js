@@ -15,6 +15,25 @@ document.addEventListener("DOMContentLoaded", () => {
             closeAllDropdowns();
         }
     });
+
+    let multiples = [
+        document.querySelectorAll(".basic-multiple"),
+        document.querySelectorAll(".basic-single"),
+    ];
+    multiples.forEach((multiple) => {
+        multiple.forEach((select) => {
+            $(document).ready(function () {
+                $(select).select2();
+            });
+        });
+    });
+
+    // let basicSingles = document.querySelectorAll(".basic-single");
+    // basicSingles.forEach((select) => {
+    //     $(document).ready(function () {
+    //         $(select).select2();
+    //     });
+    // });
 });
 
 document.addEventListener("updatedPaginate", () => {

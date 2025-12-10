@@ -4,15 +4,17 @@ namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
 {
-    use HasSearch, HasFactory, BroadcastsRecordEvents;
+    use HasSearch, HasUuid, HasFactory, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',
+        'uuid',
 
         // Personal name information
         'first_name',

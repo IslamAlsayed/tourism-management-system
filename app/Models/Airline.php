@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 
 class Airline extends Model
 {
-    use HasFactory, HasSearch, BroadcastsRecordEvents;
+    use HasFactory, HasSearch, HasUuid, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',
+        'uuid',
         'lid',
         'icao',
         'iata',

@@ -19,7 +19,7 @@
     <div class="kt-card-content px-3" wire:target="search,resetFilters,filterType,filterCollection,filterStatus"
         wire:loading.class="loading">
         <!-- Filters -->
-        <div class="grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
+        <div class="grid grid-cols-1 md-grid-cols-2 gap-4 filterTable" wire:ignore>
             {{-- Filter by Type --}}
             <div>
                 <label for="filterType">{{ __('main.all_types') }}</label>

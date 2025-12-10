@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('media_files', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('file_name')->unique();
             $table->string('file_path')->nullable();
             $table->string('file_type')->nullable(); // image, document, video, etc.

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Notification extends Model
 {
-    use HasSearch, HasFactory, BroadcastsRecordEvents;
+    use HasSearch, HasUuid, HasFactory, BroadcastsRecordEvents;
 
     // Notification type constants
     public const TYPE_BOOKING = 'booking';
@@ -22,6 +23,7 @@ class Notification extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'performer_id',
         'target_user_id',
         'type',

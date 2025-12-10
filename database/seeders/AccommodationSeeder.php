@@ -11,7 +11,6 @@ use App\Models\Accommodation;
 use App\Models\AccommodationSeason;
 use App\Models\AccommodationRoomRate;
 use App\Models\AccommodationMealRate;
-use App\Models\AccommodationType;
 
 class AccommodationSeeder extends Seeder
 {
@@ -21,7 +20,6 @@ class AccommodationSeeder extends Seeder
     public function run(): void
     {
         // Delete existing data (using delete() instead of truncate() to handle rich_texts)
-        AccommodationType::query()->delete();
         AccommodationMealRate::query()->delete();
         AccommodationRoomRate::query()->delete();
         AccommodationSeason::query()->delete();
@@ -59,13 +57,13 @@ class AccommodationSeeder extends Seeder
             ['name' => 'Heritage House', 'name_ar' => 'بيت شعبي تراثي'],
         ];
 
-        $types = collect();
+        // $types = collect();
         foreach ($typeNames as $type) {
-            $typeModel = Type::firstOrCreate(
+            $typeModel = Type::updateOrCreate(
                 ['name' => $type['name']],
                 ['name_ar' => $type['name_ar'], 'is_active' => true]
             );
-            $types->push($typeModel);
+            // $types->push($typeModel);
         }
 
         // Create 5 Seasons
@@ -78,14 +76,14 @@ class AccommodationSeeder extends Seeder
         $meals = Meal::factory(5)->create();
 
         // Create 5 Accommodations and link rates
-        Accommodation::factory(5)->create()->each(function ($accommodation) use ($seasons, $rooms, $meals, $types) {
+        Accommodation::factory(5)->create()->each(function ($accommodation) use ($seasons, $rooms, $meals) {
             // Link accommodation with 2-3 random types via accommodation_types pivot
-            $linkedTypes = $types->random(rand(2, 3));
-            foreach ($linkedTypes as $type) {
-                $accommodation->types()->attach($type->id, [
-                    'notes' => 'Featured as a ' . $type->name,
-                ]);
-            }
+            // $linkedTypes = $types->random(rand(2, 3));
+            // foreach ($linkedTypes as $type) {
+            //     $accommodation->types()->attach($type->id, [
+            //         'notes' => 'Featured as a ' . $type->name,
+            //     ]);
+            // }
 
             // Link accommodation with random seasons (2-3 seasons per accommodation)
             $linkedSeasons = $seasons->random(rand(2, 3));

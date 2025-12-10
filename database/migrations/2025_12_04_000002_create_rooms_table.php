@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name'); // e.g., Single, Double, Triple, Suite, Quad
             $table->string('name_ar')->nullable();
             $table->text('description')->nullable();

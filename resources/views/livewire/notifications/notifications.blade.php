@@ -19,7 +19,7 @@
     <div class="kt-card-content px-2" wire:loading.class="loading"
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,paginate,setFilter,filterTypeUserId">
         <!-- Filters -->
-        <div class="flex flex-wrap gap-2 mb-6 filterTable">
+        <div class="flex flex-wrap gap-2 mb-6 filterTable" wire:ignore>
             <button wire:click="setFilter('all')"
                 class="kt-btn btn-sm {{ $filter == 'all' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
                 toggle-button>

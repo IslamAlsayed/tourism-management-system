@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HasUuid;
+use App\Traits\FiltersByUserRole;
+use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Accommodation extends Model
 {
-    use HasFactory, HasSearch, HasRichText;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
         'description',
@@ -17,6 +20,7 @@ class Accommodation extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'name',
         'name_ar',
         'classification',
@@ -42,9 +46,6 @@ class Accommodation extends Model
         'is_active',
         'currency_id',
         'type_id',
-        'season_id',
-        'room_id',
-        'meal_id',
         'region_id',
         'subregion_id',
         'country_id',
@@ -61,12 +62,12 @@ class Accommodation extends Model
 
     public function getRelationshipNames()
     {
-        return ['currency', 'type', 'season', 'room', 'meal', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['currency', 'type', 'seasons', 'roomRates', 'mealRates', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'season_id', 'room_id', 'meal_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['currency_id', 'type_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
     public function currency()
@@ -76,23 +77,31 @@ class Accommodation extends Model
 
     public function type()
     {
-        return $this->belongsTo(Type::class, 'type_id');
+        return $this->belongsTo(Type::class);
     }
 
-    public function season()
+    // Many-to-Many: accommodation يمكن أن يكون له عدة seasons عبر جدول accommodation_seasons
+    public function seasons()
     {
-        return $this->belongsTo(Season::class);
+        return $this->belongsToMany(Season::class, 'accommodation_seasons')->withTimestamps()->withPivot('notes');
     }
 
-    public function room()
+    // One-to-Many: جدول accommodation_room_rates يحتوي على أسعار الغرف لكل موسم
+    public function roomRates()
     {
-        return $this->belongsTo(Room::class, 'room_id');
+        return $this->belongsToMany(Room::class, 'accommodation_room_rates')->withTimestamps()->withPivot('notes');
     }
 
-    public function meal()
+    // One-to-Many: جدول accommodation_meal_rates يحتوي على أسعار الوجبات لكل موسم
+    public function mealRates()
     {
-        return $this->belongsTo(Meal::class, 'meal_id');
+        return $this->belongsToMany(Meal::class, 'accommodation_meal_rates')->withTimestamps()->withPivot('notes');
     }
+
+    // public function nationalityRates()
+    // {
+    //     return $this->hasMany(AccommodationNationalityRate::class);
+    // }
 
     public function region()
     {
@@ -117,33 +126,5 @@ class Accommodation extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
-    }
-
-    public function seasons()
-    {
-        return $this->belongsToMany(Season::class, 'accommodation_seasons')->withTimestamps()->withPivot('notes');
-    }
-
-    public function types()
-    {
-        return $this->belongsToMany(Type::class, 'accommodation_types', 'accommodation_id', 'type_id', 'id', 'id')
-            ->using(AccommodationType::class)
-            ->withTimestamps()
-            ->withPivot('notes');
-    }
-
-    public function roomRates()
-    {
-        return $this->hasMany(AccommodationRoomRate::class);
-    }
-
-    public function mealRates()
-    {
-        return $this->hasMany(AccommodationMealRate::class);
-    }
-
-    public function nationalityRates()
-    {
-        return $this->hasMany(AccommodationNationalityRate::class);
     }
 }

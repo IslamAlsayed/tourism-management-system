@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('timezones', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name')->unique()->comment('e.g., America/New_York');
             $table->string('name_ar')->nullable()->comment('Arabic name');
             $table->string('abbreviation')->nullable()->comment('e.g., EST, PST');

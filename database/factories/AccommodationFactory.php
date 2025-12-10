@@ -2,12 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Currency;
-use App\Models\Country;
-use App\Models\State;
-use App\Models\City;
-use App\Models\Region;
-use App\Models\Subregion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -46,12 +40,13 @@ class AccommodationFactory extends Factory
             'longitude' => fake()->longitude(),
             'contract_file_path' => null,
             'is_active' => fake()->boolean(80),
-            'currency_id' => Currency::inRandomOrder()->first()?->id ?? Currency::factory(),
-            'region_id' => Region::inRandomOrder()->first()?->id ?? null,
-            'subregion_id' => Subregion::inRandomOrder()->first()?->id ?? null,
-            'country_id' => Country::inRandomOrder()->first()?->id ?? Country::factory(),
-            'state_id' => State::inRandomOrder()->first()?->id ?? null,
-            'city_id' => City::inRandomOrder()->first()?->id ?? null,
+            'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? \App\Models\Currency::factory(),
+            'type_id' => \App\Models\Type::inRandomOrder()->first()?->id ?? null,
+            'region_id' => \App\Models\Region::inRandomOrder()->first()?->id ?? null,
+            'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id ?? null,
+            'country_id' => \App\Models\Country::inRandomOrder()->first()?->id ?? \App\Models\Country::factory(),
+            'state_id' => \App\Models\State::inRandomOrder()->first()?->id ?? null,
+            'city_id' => \App\Models\City::inRandomOrder()->first()?->id ?? null,
         ];
     }
 }

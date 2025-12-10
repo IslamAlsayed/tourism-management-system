@@ -27,20 +27,26 @@
                 <form action="{{ route('meals.store') }}" method="POST">
                     @csrf
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <label for="name" class="kt-label required">{{ __('main.name') }}</label>
-                            <input type="text" class="kt-input h-[45px] @error('name') is-invalid @enderror"
-                                id="name" name="name" value="{{ old('name') }}" required>
+                            <label for="name" class="kt-label required">
+                                {{ __('main.name') }}
+                                <span class="text-red-600 text-2xl">*</span>
+                            </label>
+                            <input type="text" class="kt-input h-[45px]" id="name" name="name"
+                                value="{{ old('name') }}" required>
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="name_ar" class="kt-label required">{{ __('main.name_ar') }}</label>
-                            <input type="text" class="kt-input h-[45px] @error('name_ar') is-invalid @enderror"
-                                id="name_ar" name="name_ar" value="{{ old('name_ar') }}" required>
+                            <label for="name_ar" class="kt-label"></label>
+                            {{ __('main.name_ar') }}
+                            <span class="text-red-600 text-2xl">*</span>
+                            </label>
+                            <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
+                                value="{{ old('name_ar') }}">
                             @error('name_ar')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

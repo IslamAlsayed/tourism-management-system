@@ -105,8 +105,8 @@ class Types extends Component
     {
         $query = Type::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        if ($this->filterStatus && $this->filterStatus !== 'all') {
-            $query->where('is_active', $this->filterStatus === 'active' ? true : false);
+        if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
+            $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

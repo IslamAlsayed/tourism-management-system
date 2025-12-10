@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('transportation_car_routes', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('route')->nullable();
             $table->string('route_ar')->nullable();
             $table->string('duration')->nullable();

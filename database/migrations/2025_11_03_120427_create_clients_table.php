@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('client_code')->unique()->nullable();
 
             // Location information

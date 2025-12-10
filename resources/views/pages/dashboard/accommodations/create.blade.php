@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
-@section('title', 'Create Accommodation')
+@section('title', __('main.create_type', ['type' => __('main.accommodation')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    Create New Accommodation
+                    {{ __('main.create_type', ['type' => __('main.accommodation')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    Add a new accommodation to the system
+                    {{ __('main.create_type_description', ['type' => __('main.accommodation')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('accommodations.index') }}" class="kt-btn kt-btn-outline">
-                    Back to Accommodations
+                    {{ __('main.back_to_types', ['types' => __('main.accommodations')]) }}
                 </a>
             </div>
         </div>
@@ -35,7 +35,10 @@
                         <div class="grid lg:grid-cols-2 gap-6 mb-4">
                             <!-- Name -->
                             <div class="">
-                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
+                                <label for="name" class="kt-label required mb-2">
+                                    {{ __('main.name') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]" required
                                     value="{{ old('name') }}" placeholder="Enter accommodation name">
                                 @error('name')
@@ -45,8 +48,8 @@
 
                             <!-- Name Arabic -->
                             <div class="">
-                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ old('name_ar') }}" placeholder="أدخل اسم الإقامة">
                                 @error('name_ar')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -63,8 +66,7 @@
                                         class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
                                 </label>
 
-                                <select name="type_id" id="type_id" class="kt-select" required special-search>
-                                    <option value="">--</option>
+                                <select name="type_id" id="type_id" class="kt-select basic-single">
                                     @foreach ($types as $type)
                                         <option value="{{ $type->id }}"
                                             {{ old('type_id') == $type->id ? 'selected' : '' }}>
@@ -90,8 +92,7 @@
                             <!-- Stars Rating -->
                             <div class="">
                                 <label for="stars" class="kt-label mb-2">{{ __('main.star_rating') }}</label>
-                                <select name="stars" id="stars" class="kt-select" special-search>
-                                    <option value="">--</option>
+                                <select name="stars" id="stars" class="kt-select basic-single">
                                     <option value="1" {{ old('stars') == 1 ? 'selected' : '' }}>1 Star</option>
                                     <option value="2" {{ old('stars') == 2 ? 'selected' : '' }}>2 Stars</option>
                                     <option value="3" {{ old('stars') == 3 ? 'selected' : '' }}>3 Stars</option>
@@ -105,56 +106,80 @@
                         </div>
 
                         <div class="grid lg:grid-cols-3 gap-6 mb-4">
-                            <!-- Season -->
+                            <!-- Seasons (Multiple Selection) -->
                             <div class="">
-                                <label for="season_id" class="kt-label mb-2">{{ __('main.season') }}</label>
-                                <select name="season_id" id="season_id" class="kt-select" special-search>
-                                    <option value="">--</option>
+                                <label for="season_ids" class="kt-label mb-2 flex items-center justify-between">
+                                    {{ __('main.seasons') }}
+                                    <a href="{{ route('seasons.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="season_ids[]" id="season_ids" class="kt-select basic-multiple"
+                                    multiple="multiple">
                                     @foreach ($seasons as $season)
                                         <option value="{{ $season->id }}"
-                                            {{ old('season_id') == $season->id ? 'selected' : '' }}>
+                                            {{ in_array($season->id, old('season_ids', [])) ? 'selected' : '' }}>
                                             {{ $season->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('season_id')
+                                @error('season_ids')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Room -->
                             <div class="">
-                                <label for="room_id" class="kt-label mb-2">{{ __('main.room') }}</label>
-                                <select name="room_id" id="room_id" class="kt-select" special-search>
-                                    <option value="">--</option>
+                                <label for="room_ids" class="kt-label mb-2 flex items-center justify-between">
+                                    {{ __('main.rooms') }}
+                                    <a href="{{ route('rooms.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="room_ids[]" id="room_ids" class="kt-select basic-multiple"
+                                    multiple="multiple">
                                     @foreach ($rooms as $room)
                                         <option value="{{ $room->id }}"
-                                            {{ old('room_id') == $room->id ? 'selected' : '' }}>
+                                            {{ in_array($room->id, old('room_ids', [])) ? 'selected' : '' }}>
                                             {{ $room->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('room_id')
+                                @error('room_ids')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Meal -->
                             <div class="">
-                                <label for="meal_id" class="kt-label mb-2">{{ __('main.meal') }}</label>
-                                <select name="meal_id" id="meal_id" class="kt-select" special-search>
-                                    <option value="">--</option>
+                                <label for="meal_ids" class="kt-label mb-2 flex items-center justify-between">
+                                    {{ __('main.meals') }}
+                                    <a href="{{ route('meals.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="meal_ids[]" id="meal_ids" class="kt-select basic-multiple"
+                                    multiple="multiple">
                                     @foreach ($meals as $meal)
                                         <option value="{{ $meal->id }}"
-                                            {{ old('meal_id') == $meal->id ? 'selected' : '' }}>
+                                            {{ in_array($meal->id, old('meal_ids', [])) ? 'selected' : '' }}>
                                             {{ $meal->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('meal_type_id')
+                                @error('meal_ids')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
+
+                        <!-- Info Note -->
+                        <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p class="text-sm text-blue-700">
+                                <i class="ki-filled ki-information-2 text-blue-700 me-1"></i>
+                                <strong>{{ __('main.note') }}:</strong>
+                                {!! __('messages.accommodation_rates_records_info', ['link' => route('accommodations-rates.index')]) !!}
+                            </p>
                         </div>
 
                         {{-- Description --}}
@@ -180,8 +205,7 @@
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
-                                    <option value="">--</option>
+                                <select name="currency_id" id="currency_id" class="kt-select basic-single">
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
                                             {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
@@ -205,7 +229,7 @@
                             <!-- Street Address -->
                             <div class="">
                                 <label for="street" class="kt-label mb-2">Street Address</label>
-                                <input type="text" name="street" id="street" class="kt-input"
+                                <input type="text" name="street" id="street" class="kt-input h-[45px]"
                                     value="{{ old('street') }}" placeholder="Enter street address">
                                 @error('street')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -215,8 +239,8 @@
                             <!-- Latitude -->
                             <div class="">
                                 <label for="latitude" class="kt-label mb-2">Latitude</label>
-                                <input type="number" name="latitude" id="latitude" step="0.0000001" class="kt-input"
-                                    value="{{ old('latitude') }}" placeholder="e.g., 31.2001">
+                                <input type="number" name="latitude" id="latitude" step="0.0000001"
+                                    class="kt-input h-[45px]" value="{{ old('latitude') }}" placeholder="e.g., 31.2001">
                                 @error('latitude')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -225,8 +249,9 @@
                             <!-- Longitude -->
                             <div class="">
                                 <label for="longitude" class="kt-label mb-2">Longitude</label>
-                                <input type="number" name="longitude" id="longitude" step="0.0000001" class="kt-input"
-                                    value="{{ old('longitude') }}" placeholder="e.g., 29.9187">
+                                <input type="number" name="longitude" id="longitude" step="0.0000001"
+                                    class="kt-input h-[45px]" value="{{ old('longitude') }}"
+                                    placeholder="e.g., 29.9187">
                                 @error('longitude')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -235,8 +260,7 @@
                             <!-- Timezone -->
                             <div class="">
                                 <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search>
-                                    <option value="">--</option>
+                                <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
                                     @foreach ($timezones as $zone)
                                         <option value="{{ $zone['id'] }}"
                                             {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
@@ -262,8 +286,9 @@
                             <!-- General Mobile -->
                             <div class="">
                                 <label for="general_mobile" class="kt-label mb-2">General Mobile</label>
-                                <input type="tel" name="general_mobile" id="general_mobile" class="kt-input"
-                                    value="{{ old('general_mobile') }}" placeholder="+1234567890">
+                                <input type="tel" name="general_mobile" id="general_mobile"
+                                    class="kt-input h-[45px]" value="{{ old('general_mobile') }}"
+                                    placeholder="+1234567890">
                                 @error('general_mobile')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -272,7 +297,7 @@
                             <!-- General Email -->
                             <div class="">
                                 <label for="general_email" class="kt-label mb-2">General Email</label>
-                                <input type="email" name="general_email" id="general_email" class="kt-input"
+                                <input type="email" name="general_email" id="general_email" class="kt-input h-[45px]"
                                     value="{{ old('general_email') }}" placeholder="info@accommodation.com">
                                 @error('general_email')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -284,7 +309,7 @@
                             <!-- Phone -->
                             <div class="">
                                 <label for="phone" class="kt-label mb-2">Phone</label>
-                                <input type="tel" name="phone" id="phone" class="kt-input"
+                                <input type="tel" name="phone" id="phone" class="kt-input h-[45px]"
                                     value="{{ old('phone') }}" placeholder="+1234567890">
                                 @error('phone')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -294,7 +319,7 @@
                             <!-- Website -->
                             <div class="">
                                 <label for="website" class="kt-label mb-2">Website</label>
-                                <input type="url" name="website" id="website" class="kt-input"
+                                <input type="url" name="website" id="website" class="kt-input h-[45px]"
                                     value="{{ old('website') }}" placeholder="https://www.accommodation.com">
                                 @error('website')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -308,8 +333,9 @@
                             <div class="grid lg:grid-cols-2 gap-6 mb-4">
                                 <div class="">
                                     <label for="contact_person" class="kt-label mb-2">Contact Person Name</label>
-                                    <input type="text" name="contact_person" id="contact_person" class="kt-input"
-                                        value="{{ old('contact_person') }}" placeholder="John Doe">
+                                    <input type="text" name="contact_person" id="contact_person"
+                                        class="kt-input h-[45px]" value="{{ old('contact_person') }}"
+                                        placeholder="John Doe">
                                     @error('contact_person')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
@@ -317,8 +343,9 @@
 
                                 <div class="">
                                     <label for="contact_position" class="kt-label mb-2">Position</label>
-                                    <input type="text" name="contact_position" id="contact_position" class="kt-input"
-                                        value="{{ old('contact_position') }}" placeholder="Manager">
+                                    <input type="text" name="contact_position" id="contact_position"
+                                        class="kt-input h-[45px]" value="{{ old('contact_position') }}"
+                                        placeholder="Manager">
                                     @error('contact_position')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
@@ -328,8 +355,9 @@
                             <div class="grid lg:grid-cols-2 gap-6">
                                 <div class="">
                                     <label for="contact_mobile" class="kt-label mb-2">Contact Mobile</label>
-                                    <input type="tel" name="contact_mobile" id="contact_mobile" class="kt-input"
-                                        value="{{ old('contact_mobile') }}" placeholder="+1234567890">
+                                    <input type="tel" name="contact_mobile" id="contact_mobile"
+                                        class="kt-input h-[45px]" value="{{ old('contact_mobile') }}"
+                                        placeholder="+1234567890">
                                     @error('contact_mobile')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
@@ -337,8 +365,9 @@
 
                                 <div class="">
                                     <label for="contact_email" class="kt-label mb-2">Contact Email</label>
-                                    <input type="email" name="contact_email" id="contact_email" class="kt-input"
-                                        value="{{ old('contact_email') }}" placeholder="manager@accommodation.com">
+                                    <input type="email" name="contact_email" id="contact_email"
+                                        class="kt-input h-[45px]" value="{{ old('contact_email') }}"
+                                        placeholder="manager@accommodation.com">
                                     @error('contact_email')
                                         <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                     @enderror
@@ -360,7 +389,7 @@
                                 'name' => 'is_active',
                                 'id' => 'is_active',
                                 'value' => '1',
-                                'label' => __('main.activate_country'),
+                                'label' => __('main.active'),
                             ])
                         </div>
                     </div>

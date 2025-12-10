@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Room extends Model
 {
-    use HasFactory, HasSearch, HasRichText, BroadcastsRecordEvents;
+    use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
         'description',
@@ -18,6 +19,7 @@ class Room extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'name',
         'name_ar',
         'description',

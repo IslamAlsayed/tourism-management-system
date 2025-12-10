@@ -4,12 +4,13 @@ namespace App\Models;
 
 use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Restaurant extends Model
 {
-    use HasSearch, HasRichText, FiltersByUserRole;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole;
 
     protected $richTextAttributes = [
         'notes',
@@ -17,6 +18,7 @@ class Restaurant extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'photo',
         'name',
         'name_ar',
@@ -70,7 +72,7 @@ class Restaurant extends Model
 
     public function type()
     {
-        return $this->belongsTo(AccommodationType::class);
+        return $this->belongsTo(Type::class);
     }
 
     public function region()

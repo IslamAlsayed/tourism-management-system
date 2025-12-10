@@ -5,14 +5,16 @@ namespace App\Models;
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class Nationality extends Model
 {
-    use HasSearch, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasSearch, HasUuid, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $fillable = [
         'id',
+        'uuid',
         'name',
         'name_ar',
         'is_active',

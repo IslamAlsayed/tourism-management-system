@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('transportation_bus_types', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->string('name_ar')->nullable();
             $table->string('category')->nullable(); // Bus, Van, Car ..etc

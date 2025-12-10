@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('nationalities', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();

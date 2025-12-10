@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('types', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name')->unique(); // e.g., hotel, transport, tour, other
             $table->string('name_ar')->nullable(); // e.g., فندق، نقل، جولة، أخرى
             $table->text('description')->nullable();

@@ -248,7 +248,7 @@
                         <!-- Facilities -->
                         <div class="mb-4">
                             <h3 class="mb-2 font-semibold">{{ __('main.facilities') }}</h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4 ps-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
                                     @include('components.elements.checkbox-button', [
@@ -335,7 +335,7 @@
                         <!-- Activities -->
                         <div class="mb-4">
                             <h3 class="mb-2 font-semibold">{{ __('main.activities') }}</h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4 ps-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
                                     @include('components.elements.checkbox-button', [
@@ -422,7 +422,7 @@
                         <!-- Services -->
                         <div class="mb-4">
                             <h3 class="mb-2 font-semibold">{{ __('main.services') }}</h3>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4 ps-4">
                                 <div class="flex items-center gap-3">
                                     <input type="hidden" name="" value="0">
                                     @include('components.elements.checkbox-button', [

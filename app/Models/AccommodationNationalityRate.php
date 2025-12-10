@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AccommodationNationalityRate extends Model
 {
-    use HasRichText;
+    use HasRichText, HasUuid;
 
     protected $richTextAttributes = [
         'notes',
@@ -16,6 +17,7 @@ class AccommodationNationalityRate extends Model
 
     protected $fillable = [
         'id',
+        'uuid',
         'accommodation_id',
         'season_id',
         'nationality_id',

@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('tourist_sites', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('site_code')->unique()->nullable();
 
             // Basic Information

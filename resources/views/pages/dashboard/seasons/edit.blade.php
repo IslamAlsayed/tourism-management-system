@@ -36,9 +36,9 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
                             {{-- Name (English) --}}
                             <div>
-                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
+                                <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ old('name', $season->name) }}" required>
+                                    value="{{ old('name', $season->name) }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -46,9 +46,9 @@
 
                             {{-- Name (Arabic) --}}
                             <div>
-                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.name_ar') }}</label>
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar', $season->name_ar) }}" required>
+                                    value="{{ old('name_ar', $season->name_ar) }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -58,10 +58,9 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
                             {{-- Season From --}}
                             <div>
-                                <label for="season_from"
-                                    class="kt-label required mb-2">{{ __('main.season_from') }}</label>
+                                <label for="season_from" class="kt-label mb-2">{{ __('main.season_from') }}</label>
                                 <input type="date" name="season_from" id="season_from" class="kt-input h-[45px]"
-                                    value="{{ old('season_from', $season->season_from?->format('Y-m-d')) }}" required>
+                                    value="{{ old('season_from', $season->season_from?->format('Y-m-d')) }}">
                                 @error('season_from')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -69,9 +68,9 @@
 
                             {{-- Season To --}}
                             <div>
-                                <label for="season_to" class="kt-label required mb-2">{{ __('main.season_to') }}</label>
+                                <label for="season_to" class="kt-label mb-2">{{ __('main.season_to') }}</label>
                                 <input type="date" name="season_to" id="season_to" class="kt-input h-[45px]"
-                                    value="{{ old('season_to', $season->season_to?->format('Y-m-d')) }}" required>
+                                    value="{{ old('season_to', $season->season_to?->format('Y-m-d')) }}">
                                 @error('season_to')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

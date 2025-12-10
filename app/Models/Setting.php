@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    use HasSearch;
+    use HasSearch, HasUuid;
 
     protected $fillable = [
         'id',
+        'uuid',
         'app_name',
         'app_url',
         'app_timezone',

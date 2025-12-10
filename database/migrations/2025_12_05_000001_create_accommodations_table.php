@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('accommodations', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
 
             // Basic info
             $table->string('name')->nullable(); // e.g., Hilton Cairo, Bedouin Camp, other
@@ -37,10 +38,8 @@ return new class extends Migration {
             $table->string('contact_email')->nullable();
 
             // Foreign Keys
+            $table->unsignedBigInteger('type_id')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
-            $table->unsignedBigInteger('season_id')->nullable(); // Default season
-            $table->unsignedBigInteger('room_id')->nullable(); // Default room
-            $table->unsignedBigInteger('meal_id')->nullable(); // Default meal
 
             // Location
             $table->unsignedBigInteger('region_id')->nullable();
@@ -60,15 +59,10 @@ return new class extends Migration {
 
             // Indexes
             $table->index('name');
-            $table->index('season_id');
-            $table->index('room_id');
-            $table->index('meal_id');
 
             // Foreign Keys
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
-            $table->foreign('season_id')->references('id')->on('seasons')->onDelete('set null');
-            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('set null');
-            $table->foreign('meal_id')->references('id')->on('meals')->onDelete('set null');
             $table->foreign('region_id')->references('id')->on('regions')->onDelete('set null');
             $table->foreign('subregion_id')->references('id')->on('subregions')->onDelete('set null');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');

@@ -319,10 +319,12 @@ th:has(i, svg) {
     display: grid;
     grid-template-columns: repeat(3, minmax(auto, 1fr));
 }
-#system-settings-grid > div:first-child {
+
+#system-settings-grid>div:first-child {
     grid-column: span 1;
 }
-#system-settings-grid > div:nth-child(2) {
+
+#system-settings-grid>div:nth-child(2) {
     grid-column: span 2;
 }
 
@@ -332,6 +334,7 @@ th:has(i, svg) {
         flex-direction: column;
     }
 }
+
 @media (max-width: 768px) {
     #system-settings-grid {
         display: flex;
@@ -343,10 +346,11 @@ th:has(i, svg) {
     gap: 15px;
     display: flex;
     align-items: end;
-    & > div,
+
+    &>div,
     & select {
         width: auto;
-        min-width: 120px;
+        min-width: 150px;
     }
 }
 
@@ -423,7 +427,7 @@ th:has(i, svg) {
             font-size: 10px;
         }
 
-        & > div,
+        &>div,
         & select {
             width: 100%;
             min-width: auto;
@@ -442,12 +446,12 @@ th:has(i, svg) {
     }
 }
 
-#parentColumnsModal > div.kt-btn {
+#parentColumnsModal>div.kt-btn {
     font-size: 16px;
 }
 
 @media (max-width: 768px) {
-    #parentColumnsModal > div.kt-btn {
+    #parentColumnsModal>div.kt-btn {
         height: fit-content;
         padding: 7px;
         font-size: 12px;
@@ -485,6 +489,7 @@ th:has(i, svg) {
     }
 
     .filterTable {
+
         &,
         & * option {
             font-size: 8px;
@@ -519,7 +524,7 @@ th:has(i, svg) {
         border-radius: 3px;
         font-size: 9px;
 
-        & > div:not(.actions-buttons) {
+        &>div:not(.actions-buttons) {
             gap: 3px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -532,7 +537,7 @@ th:has(i, svg) {
             margin-inline-end: 5px;
         }
 
-        & .actions-buttons > div {
+        & .actions-buttons>div {
             /* display: flex; */
             width: fit-content;
             font-size: 9px;
@@ -594,7 +599,8 @@ th:has(i, svg) {
     }
 
     .filterTable {
-        & > div,
+
+        &>div,
         & select {
             height: 25px;
         }
@@ -624,7 +630,7 @@ th:has(i, svg) {
             font-size: 8px !important;
         }
 
-        & .aspect-square + div {
+        & .aspect-square+div {
             padding: 7px;
         }
 
@@ -683,7 +689,7 @@ th:has(i, svg) {
                                                                                 * Licensed under MIT
                                                                                 */
 .la-ball-clip-rotate,
-.la-ball-clip-rotate > div {
+.la-ball-clip-rotate>div {
     position: relative;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -701,7 +707,7 @@ th:has(i, svg) {
     color: #333;
 }
 
-.la-ball-clip-rotate > div {
+.la-ball-clip-rotate>div {
     display: inline-block;
     float: none;
     background-color: currentColor;
@@ -715,7 +721,7 @@ th:has(i, svg) {
     align-content: center;
 }
 
-.la-ball-clip-rotate > div {
+.la-ball-clip-rotate>div {
     width: 32px;
     height: 32px;
     background: transparent;
@@ -733,7 +739,7 @@ th:has(i, svg) {
     height: 16px;
 }
 
-.la-ball-clip-rotate.la-sm > div {
+.la-ball-clip-rotate.la-sm>div {
     width: 16px;
     height: 16px;
     border-width: 1px;
@@ -744,7 +750,7 @@ th:has(i, svg) {
     height: 24px;
 }
 
-.la-ball-clip-rotate.la-md > div {
+.la-ball-clip-rotate.la-md>div {
     width: 24px;
     height: 24px;
     border-width: 2px;
@@ -755,7 +761,7 @@ th:has(i, svg) {
     height: 64px;
 }
 
-.la-ball-clip-rotate.la-2x > div {
+.la-ball-clip-rotate.la-2x>div {
     width: 64px;
     height: 64px;
     border-width: 4px;
@@ -766,7 +772,7 @@ th:has(i, svg) {
     height: 96px;
 }
 
-.la-ball-clip-rotate.la-3x > div {
+.la-ball-clip-rotate.la-3x>div {
     width: 96px;
     height: 96px;
     border-width: 6px;

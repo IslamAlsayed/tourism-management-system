@@ -30,28 +30,27 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                         <div>
-                            <label for="name" class="kt-label required">{{ __('main.name') }}</label>
-                            <input type="text" class="kt-input h-[45px] @error('name') is-invalid @enderror"
-                                id="name" name="name" value="{{ $room->name }}" required>
+                            <label for="name" class="kt-label">{{ __('main.name') }}</label>
+                            <input type="text" class="kt-input h-[45px]" id="name" name="name"
+                                value="{{ $room->name }}">
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="name_ar" class="kt-label required">{{ __('main.name_ar') }}</label>
-                            <input type="text" class="kt-input h-[45px] @error('name_ar') is-invalid @enderror"
-                                id="name_ar" name="name_ar" value="{{ $room->name_ar }}" required>
+                            <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
+                            <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
+                                value="{{ $room->name_ar }}">
                             @error('name_ar')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="max_occupancy" class="kt-label required">{{ __('main.max_occupancy') }}</label>
-                            <input type="number" class="kt-input h-[45px] @error('max_occupancy') is-invalid @enderror"
-                                id="max_occupancy" name="max_occupancy" value="{{ $room->max_occupancy }}" minLength="1"
-                                maxLength="20" required>
+                            <label for="max_occupancy" class="kt-label">{{ __('main.max_occupancy') }}</label>
+                            <input type="number" class="kt-input h-[45px]" id="max_occupancy" name="max_occupancy"
+                                value="{{ $room->max_occupancy }}" minLength="1" maxLength="20">
                             @error('max_occupancy')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

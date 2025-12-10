@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('accommodation_seasons', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->foreignId('accommodation_id')->constrained()->cascadeOnDelete();
             $table->foreignId('season_id')->constrained()->cascadeOnDelete();
             $table->text('notes')->nullable();

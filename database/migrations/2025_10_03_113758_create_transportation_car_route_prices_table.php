@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('transportation_car_route_prices', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->foreignId('car_route_id')->constrained('transportation_car_routes')->cascadeOnDelete();
             $table->unsignedInteger('seats')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
