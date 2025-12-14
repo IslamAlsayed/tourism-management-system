@@ -79,6 +79,7 @@ class Client extends Model
         // 'status',
         'client_status',
         'timezone_id',
+        'is_active',
         'notes',
 
         // Tracking
@@ -120,6 +121,11 @@ class Client extends Model
         'passport_issue_date' => 'datetime',
         'passport_expiry_date' => 'datetime',
     ];
+
+    public function getNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 
     public function getFormattedBirthDateAttribute()
     {
@@ -170,13 +176,11 @@ class Client extends Model
         return $this->belongsTo(Timezone::class);
     }
 
-    // Creator relationship
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    // Updater relationship
     public function updater()
     {
         return $this->belongsTo(User::class, 'updated_by');

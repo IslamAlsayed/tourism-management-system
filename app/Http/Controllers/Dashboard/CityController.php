@@ -40,8 +40,16 @@ class CityController extends Controller
             }
             return redirect()->route('cities.index')->withSuccess(__('messages.type_created', ['type' => __('main.city')]));
         }
-
         return redirect()->route('cities.index')->withError(__('messages.type_creation_failed', ['type' => __('main.city')]));
+    }
+
+    public function show($id)
+    {
+        $city = City::with(['region', 'subregion', 'country', 'state', 'timezone'])->find($id);
+        if (!$city) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
+        }
+        return view('pages.dashboard.cities.show', compact('city'));
     }
 
     public function edit($id)

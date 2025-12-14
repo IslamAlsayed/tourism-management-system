@@ -35,9 +35,10 @@ return new class extends Migration {
             $table->boolean('force_password_change')->default(false);
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
+            $table->enum('button_display_mode', ['icon', 'text'])->default('text');
             $table->text('notes')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable()->default(2);
 
             $table->index('phone');
         });

@@ -28,7 +28,7 @@
                     @csrf
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        <div>
+                        <div class="align-self-end">
                             <label for="name" class="kt-label required">
                                 {{ __('main.name') }}
                                 <span class="text-red-600 text-2xl">*</span>
@@ -40,7 +40,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
                             <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
                                 value="{{ old('name_ar') }}">
@@ -49,7 +49,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 align-self-end">
                             <label for="max_occupancy" class="kt-label required">
                                 {{ __('main.max_occupancy') }}
                                 <span class="text-red-600 text-2xl">*</span>
@@ -75,6 +75,7 @@
                                 'name' => 'is_active',
                                 'id' => 'is_active',
                                 'value' => '1',
+                                'checked' => 1,
                                 'label' => __('main.is_active'),
                             ])
                         </div>

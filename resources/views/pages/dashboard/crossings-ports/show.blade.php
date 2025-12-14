@@ -17,7 +17,7 @@
                 <a href="{{ route('crossings-ports.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.crossing_ports')]) }}
                 </a>
-                <a href="{{ route('crossings-ports.edit', $crossingPort->id) }}" class="kt-btn kt-btn-primary">
+                <a href="{{ route('crossings-ports.edit', $crossingPort->id) }}" class="kt-btn kt-btn-primary md:hidden">
                     {{ __('main.edit') }}
                 </a>
             </div>
@@ -40,7 +40,7 @@
 
                         <div>
                             <label class="font-medium text-gray-700">{{ __('main.name_ar') }}</label>
-                            <p class="mt-1 text-gray-900" dir="rtl">{{ $crossingPort->name_ar ?? '-' }}</p>
+                            <p class="mt-1 text-gray-900">{{ $crossingPort->name_ar ?? '-' }}</p>
                         </div>
 
                         <div>
@@ -87,7 +87,7 @@
                             @if ($crossingPort->description_ar)
                                 <div>
                                     <label class="font-medium text-gray-700">{{ __('main.description_ar') }}</label>
-                                    <p class="mt-1 text-gray-900" dir="rtl">{{ $crossingPort->description_ar }}</p>
+                                    <p class="mt-1 text-gray-900">{{ $crossingPort->description_ar }}</p>
                                 </div>
                             @endif
                         </div>
@@ -147,7 +147,7 @@
                             @if ($crossingPort->address_ar)
                                 <div>
                                     <label class="font-medium text-gray-700">{{ __('main.address_ar') }}</label>
-                                    <p class="mt-1 text-gray-900" dir="rtl">{{ $crossingPort->address_ar }}</p>
+                                    <p class="mt-1 text-gray-900">{{ $crossingPort->address_ar }}</p>
                                 </div>
                             @endif
                         </div>
@@ -307,7 +307,7 @@
                             @if ($crossingPort->notes_ar)
                                 <div>
                                     <label class="font-medium text-gray-700">{{ __('main.notes_ar') }}</label>
-                                    <p class="mt-1 text-gray-900" dir="rtl">{{ $crossingPort->notes_ar }}</p>
+                                    <p class="mt-1 text-gray-900">{{ $crossingPort->notes_ar }}</p>
                                 </div>
                             @endif
                         </div>

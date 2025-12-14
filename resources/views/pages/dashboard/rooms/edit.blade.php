@@ -29,7 +29,7 @@
                     @method('PUT')
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        <div>
+                        <div class="align-self-end">
                             <label for="name" class="kt-label">{{ __('main.name') }}</label>
                             <input type="text" class="kt-input h-[45px]" id="name" name="name"
                                 value="{{ $room->name }}">
@@ -38,7 +38,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
                             <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
                                 value="{{ $room->name_ar }}">
@@ -47,7 +47,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 align-self-end">
                             <label for="max_occupancy" class="kt-label">{{ __('main.max_occupancy') }}</label>
                             <input type="number" class="kt-input h-[45px]" id="max_occupancy" name="max_occupancy"
                                 value="{{ $room->max_occupancy }}" minLength="1" maxLength="20">

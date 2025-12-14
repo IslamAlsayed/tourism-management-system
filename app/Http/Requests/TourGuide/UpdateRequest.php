@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\TourGuide;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TourGuideCreateRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,13 +22,15 @@ class TourGuideCreateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $tourGuideId = $this->route('tour_guide'); // Get ID from route
+
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:tour_guides,email'],
-            'mobile_01' => ['required', 'string', 'max:20'],
-            'gender' => ['required', 'in:male,female'],
-            'guide_type_id' => ['required', 'exists:tour_guide_types,id'],
-            'country_id' => ['required', 'exists:countries,id'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255', Rule::unique('tour_guides', 'email')->ignore($tourGuideId)],
+            'mobile_01' => ['nullable', 'string', 'max:20'],
+            'gender' => ['nullable', 'in:male,female'],
+            'guide_type_id' => ['nullable', 'exists:tour_guide_types,id'],
+            'country_id' => ['nullable', 'exists:countries,id'],
 
             'name_ar' => ['nullable', 'string', 'max:255'],
             'mobile_02' => ['nullable', 'string', 'max:20'],
@@ -53,7 +56,7 @@ class TourGuideCreateRequest extends FormRequest
             'hd_day_fees' => ['nullable', 'numeric', 'min:0'],
             'extra_fees_1' => ['nullable', 'numeric', 'min:0'],
             'extra_fees_2' => ['nullable', 'numeric', 'min:0'],
-            'status' => ['nullable', 'boolean'],
+            'is_active' => ['nullable', 'boolean'],
             'notes' => ['nullable', 'string', 'max:1000']
         ];
     }

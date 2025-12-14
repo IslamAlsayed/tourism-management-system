@@ -11,7 +11,8 @@ return [
     'goodbye_name' => 'Goodbye, :name!',
     'no_records_found' => 'No records found.',
     'no_backup' => 'No backup files found.',
-    'Updated Successfully' => 'Updated Successfully',
+    'updated_successfully' => 'Updated Successfully',
+    'update_not_successfully' => 'Update Not Successfully',
     'Failed to update language status. Please try again.' => 'Failed to update language status. Please try again.',
     'Change Language Successfully' => 'Change Language Successfully',
     'Change Language Not Successfully' => 'Change Language Not Successfully',
@@ -134,4 +135,10 @@ return [
     'notification_deleted' => 'Notification deleted.',
     'backup_created_test' => 'Backup created successfully (test mode).',
     'accommodation_rates_records_info' => "Accommodation price records will be automatically created for each combination (season × room) and (season × meal) with default values (0). You can modify the prices later in the <a href=\":link\" class=\"font-semibold underline\" style=\"color: var(--color-blue-900) !important\">Accommodation Rates</a> section.",
+
+    // Toggle Messages
+    'model_not_found' => 'Model not found.',
+    'record_not_found' => 'Record not found.',
+    'field_updated_successfully' => ':field has been :status successfully.',
+    'field_deleted_successfully' => ':field has been :status successfully.',
 ];

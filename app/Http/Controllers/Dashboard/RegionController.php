@@ -34,6 +34,15 @@ class RegionController extends Controller
         return redirect()->route('regions.index')->withError(__('messages.type_creation_failed', ['type' => __('main.region')]));
     }
 
+    public function show($id)
+    {
+        $region = Region::find($id);
+        if (!$region) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.region')]));
+        }
+        return view('pages.dashboard.regions.show', compact('region'));
+    }
+
     public function edit($id)
     {
         $region = Region::find($id);

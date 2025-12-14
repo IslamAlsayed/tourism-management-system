@@ -11,7 +11,8 @@ return [
     'goodbye_name' => 'وداعاً، :name!',
     'no_records_found' => 'لم يتم العثور على سجلات.',
     'no_backup' => 'لم يتم إنشاء نسخة احتياطية بعد',
-    'Updated Successfully' => 'تم التحديث بنجاح',
+    'updated_successfully' => 'تم التحديث بنجاح',
+    'update_not_successfully' => 'لم يتم التحديث بنجاح',
     'Failed to update language status. Please try again.' => 'فشل تحديث حالة اللغة. يرجى المحاولة مرة أخرى.',
     'Change Language Successfully' => 'تم تغيير اللغة بنجاح',
     'Change Language Not Successfully' => 'فشل تغيير اللغة',
@@ -135,4 +136,10 @@ return [
     'notification_deleted' => 'تم حذف الإشعار.',
     'backup_created_test' => 'تم إنشاء النسخة الاحتياطية بنجاح (وضع تجريبي).',
     'accommodation_rates_records_info' => 'سيتم إنشاء سجلات الأسعار تلقائياً لكل تركيبة (موسم × غرفة) و (موسم × وجبة) بقيم افتراضية (0). يمكنك تعديل الأسعار لاحقاً من قسم <a href=":link" class="font-semibold underline" style="color: var(--color-blue-900) !important">أسعار الإقامات</a>.',
+
+    // Toggle Messages
+    'model_not_found' => 'النموذج غير موجود.',
+    'record_not_found' => 'السجل غير موجود.',
+    'field_updated_successfully' => 'تم :status :field بنجاح.',
+    'field_deketed_successfully' => 'تم :status :field بنجاح.',
 ];

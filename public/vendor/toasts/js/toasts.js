@@ -44,6 +44,8 @@ document.addEventListener("click", function (e) {
         const title = target.dataset.title || type;
         const message =
             target.dataset.message || configToast.default_message || null;
+        const position =
+            target.dataset.position || configToast.default_position || "top";
         const duration = target.dataset.duration || null;
         const pin = target.dataset.pin || null;
         const emoji = target.dataset.emoji || null;
@@ -54,6 +56,7 @@ document.addEventListener("click", function (e) {
             type: type,
             title: title,
             message: message,
+            position: position,
             duration: duration,
             emoji: emoji,
             icon: icon,

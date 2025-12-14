@@ -32,6 +32,15 @@ class TypeController extends Controller
         return redirect()->route('types.index')->withError(__('messages.type_creation_failed', ['type' => __('main.type')]));
     }
 
+    public function show($id)
+    {
+        $type = Type::with(['accommodations'])->find($id);
+        if (!$type) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.type')]));
+        }
+        return view('pages.dashboard.types.show', compact('type'));
+    }
+
     public function edit($id)
     {
         $type = Type::find($id);

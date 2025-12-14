@@ -226,7 +226,7 @@ return [
         [
             'title' => 'accommodations',
             'icon' => 'fa-solid fa-hotel',
-            'status' => 'done',
+            'status' => 'updated',
             'children' => [
                 [
                     'title' => 'all accommodations',
@@ -359,6 +359,29 @@ return [
                         ],
                     ],
                 ],
+                [
+                    'title' => 'supplements',
+                    'icon' => 'fa-solid fa-utensils',
+                    'status' => 'new',
+                    'children' => [
+                        [
+                            'title' => 'all supplements',
+                            'icon' => 'fa-solid fa-bowl-food',
+                            'route' => 'accommodations-supplements.index',
+                        ],
+                        [
+                            'title' => 'create supplement',
+                            'icon' => 'fa-solid fa-square-plus',
+                            'route' => 'accommodations-supplements.create',
+                        ],
+                        [
+                            'title' => 'import supplements',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'supplements'],
+                        ],
+                    ],
+                ],
             ],
         ],
 
@@ -416,6 +439,7 @@ return [
                 [
                     'title' => 'guides types',
                     'icon' => 'fa-solid fa-tags',
+                    'status' => 'updating',
                     'children' => [
                         [
                             'title' => 'all guides types',
@@ -438,6 +462,7 @@ return [
                 [
                     'title' => 'guides reviews',
                     'icon' => 'fa-solid fa-star',
+                    'status' => 'updating',
                     'children' => [
                         [
                             'title' => 'all guides reviews',
@@ -516,6 +541,7 @@ return [
         [
             'title' => 'airlines',
             'icon' => 'fa-solid fa-plane',
+            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'airlines',
@@ -568,6 +594,7 @@ return [
         [
             'title' => 'tourist sites',
             'icon' => 'fa-solid fa-map-location-dot',
+            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'all tourist sites',
@@ -592,6 +619,7 @@ return [
         [
             'title' => 'crossings & ports',
             'icon' => 'fa-solid fa-map-signs',
+            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'all crossings ports',
@@ -640,6 +668,7 @@ return [
         [
             'title' => 'reports & analytics',
             'icon' => 'fa-solid fa-chart-pie',
+            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'reports dashboard',
@@ -682,6 +711,7 @@ return [
         [
             'title' => 'languages',
             'icon' => 'fa-solid fa-language',
+            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'all languages',
@@ -700,6 +730,7 @@ return [
         [
             'title' => 'system languages',
             'icon' => 'fa-solid fa-language',
+            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'all languages',

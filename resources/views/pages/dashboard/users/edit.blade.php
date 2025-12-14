@@ -144,9 +144,8 @@
                                     <!-- Department -->
                                     <div class="">
                                         <label for="department" class="kt-label mb-2">{{ __('main.department') }}</label>
-                                        <select name="department" id="department" class="kt-input h-[45px]"
-                                            special-search value="{{ $user->department }}">
-                                            <option value="">{{ __('main.select_department') }}</option>
+                                        <select name="department" id="department" class="kt-input basic-single">
+                                            <option value="" disabled selected></option>
                                             @foreach (config('helpers.departments') as $key => $value)
                                                 <option value="{{ $key }}"
                                                     {{ $user->department == $key ? 'selected' : '' }}>
@@ -162,9 +161,8 @@
                                     <!-- Position -->
                                     <div class="">
                                         <label for="position" class="kt-label mb-2">{{ __('main.position') }}</label>
-                                        <select name="position" id="position" class="kt-input h-[45px]" special-search
-                                            value="{{ $user->position }}">
-                                            <option value="">{{ __('main.select_position') }}</option>
+                                        <select name="position" id="position" class="kt-input basic-single">
+                                            <option value="" disabled selected></option>
                                             @foreach (config('helpers.positions') as $key => $value)
                                                 <option value="{{ $key }}"
                                                     {{ $user->position == $key ? 'selected' : '' }}>{{ ucfirst($value) }}
@@ -191,9 +189,8 @@
                                         <label for="preferred_language"
                                             class="kt-label mb-2">{{ __('main.preferred_language') }}</label>
                                         <select name="preferred_language" id="preferred_language"
-                                            class="kt-select h-[45px]" special-search
-                                            value="{{ $user->preferred_language }}">
-                                            <option value="">--</option>
+                                            class="kt-select basic-single">
+                                            <option value="" disabled selected></option>
                                             <option value="en"
                                                 {{ $user->preferred_language == 'en' ? 'selected' : '' }}>
                                                 {{ __('main.english') }}</option>
@@ -209,10 +206,8 @@
                                     <!-- Timezone -->
                                     <div class="">
                                         <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                        <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]"
-                                            special-search data-current-value="{{ $user->timezone_id }}"
-                                            value="{{ $user->timezone_id }}">
-                                            <option value="">--</option>
+                                        <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
+                                            <option value="" disabled selected></option>
                                             @foreach ($timezones as $zone)
                                                 <option value="{{ $zone['id'] }}"
                                                     {{ $user->timezone_id == $zone['id'] ? 'selected' : '' }}>
@@ -285,7 +280,7 @@
                                 ])
 
                                 <!-- Notes -->
-                                 @include('components.elements.input-text-editor', [
+                                @include('components.elements.input-text-editor', [
                                     'column' => 'notes',
                                     'value' => $user->notes,
                                 ])

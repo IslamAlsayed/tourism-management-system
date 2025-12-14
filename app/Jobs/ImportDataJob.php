@@ -173,6 +173,11 @@ class ImportDataJob implements ShouldQueue
                 $prepared['is_included'] = false;
             }
 
+            // Generate UUID if column exists in fillable and value is empty/null
+            if (in_array('uuid', $fillable) && empty($prepared['uuid'])) {
+                $prepared['uuid'] = (string) Str::uuid();
+            }
+
             // Handle max_occupancy conversion for Room model (e.g., "2A+1C" -> occupancy_details + numeric max_occupancy)
             if (isset($prepared['max_occupancy']) && is_string($prepared['max_occupancy'])) {
                 $occupancyStr = trim($prepared['max_occupancy']);

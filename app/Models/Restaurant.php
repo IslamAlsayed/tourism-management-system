@@ -59,7 +59,7 @@ class Restaurant extends Model
      */
     public function getRelationshipNames()
     {
-        return ['type', 'region', 'subregion', 'country'];
+        return ['type', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     /**
@@ -67,7 +67,7 @@ class Restaurant extends Model
      */
     public function getExcludedColumns()
     {
-        return ['type_id', 'region_id', 'subregion_id', 'country_id'];
+        return ['type_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
     public function type()
@@ -90,51 +90,13 @@ class Restaurant extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function states()
+    public function state()
     {
-        if (!$this->state_id)
-            return [];
-        return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
+        return $this->belongsTo(State::class);
     }
 
-    public function getStateListAttribute()
+    public function city()
     {
-        if (!$this->state_id)
-            return [];
-        return State::whereIn('id', explode(',', $this->state_id))->get(['id', 'name'])->toArray();
-    }
-
-    public function getStateIdAttribute($value)
-    {
-        return $value ?: "";
-    }
-
-    public function setStateIdAttribute($value)
-    {
-        $this->attributes['state_id'] = is_array($value) ? implode(',', $value) : $value;
-    }
-
-    public function cities()
-    {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
-    }
-
-    public function getCityListAttribute()
-    {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
-    }
-
-    public function getCityIdAttribute($value)
-    {
-        return $value ?: "";
-    }
-
-    public function setCityIdAttribute($value)
-    {
-        $this->attributes['city_id'] = is_array($value) ? implode(',', $value) : $value;
+        return $this->belongsTo(City::class);
     }
 }

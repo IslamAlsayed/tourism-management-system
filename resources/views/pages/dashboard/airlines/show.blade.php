@@ -17,7 +17,7 @@
                 <a href="{{ route('airlines.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.airlines')]) }}
                 </a>
-                <a href="{{ route('airlines.edit', $airline->id) }}" class="kt-btn kt-btn-primary">
+                <a href="{{ route('airlines.edit', $airline->id) }}" class="kt-btn kt-btn-primary md:hidden">
                     {{ __('main.edit') }}
                 </a>
             </div>
@@ -40,7 +40,7 @@
 
                         <div>
                             <label class="font-medium text-gray-700">{{ __('main.name_ar') }}</label>
-                            <p class="mt-1 text-gray-900" dir="rtl">{{ $airline->name_ar ?? '-' }}</p>
+                            <p class="mt-1 text-gray-900">{{ $airline->name_ar ?? '-' }}</p>
                         </div>
 
                         <div>

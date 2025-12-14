@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('accommodation_room_rates', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
             $table->foreignId('accommodation_id')->constrained()->cascadeOnDelete();
             $table->foreignId('season_id')->constrained()->cascadeOnDelete();
             $table->foreignId('room_id')->constrained()->cascadeOnDelete();

@@ -42,6 +42,15 @@ class StateController extends Controller
         return redirect()->route('states.index')->withError(__('messages.type_creation_failed', ['type' => __('main.state')]));
     }
 
+    public function show($id)
+    {
+        $state = State::with(['region', 'subregion', 'country', 'timezone'])->find($id);
+        if (!$state) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
+        }
+        return view('pages.dashboard.states.show', compact('state'));
+    }
+
     public function edit($id)
     {
         $state = State::find($id);

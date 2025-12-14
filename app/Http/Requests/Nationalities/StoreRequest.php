@@ -4,7 +4,7 @@ namespace App\Http\Requests\Nationalities;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NationalitiesUpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,19 +22,19 @@ class NationalitiesUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string', 'max:255'],
-            'name_ar' => ['nullable', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'name_ar' => ['required', 'string', 'max:255'],
             'is_active' => ['boolean'],
 
-            'region_id' => ['nullable', 'string', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
+            // 'region_id' => ['nullable', 'string', 'exists:regions,id'],
+            // 'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
 
-            'state_id' => ['nullable'],
-            'state_id.*' => ['integer', 'exists:states,id'],
+            // 'state_id' => ['nullable'],
+            // 'state_id.*' => ['integer', 'exists:states,id'],
 
-            'city_id' => ['nullable'],
-            'city_id.*' => ['integer', 'exists:cities,id'],
+            // 'city_id' => ['nullable'],
+            // 'city_id.*' => ['integer', 'exists:cities,id'],
         ];
     }
 }

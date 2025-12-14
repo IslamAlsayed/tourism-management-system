@@ -3,6 +3,12 @@
         <td title="{{ $model->id }}">{!! highlightSearch($model->id, $search) !!}</td>
     @break
 
+    @case('uuid')
+        @if ($settings->app_show_uuid_column != 0)
+            <td title="{{ $model->uuid }}">{!! highlightSearch($model->uuid, $search) !!}</td>
+        @endif
+    @break
+
     @case('user')
         <td title="{{ $model->name }}">
             <div class="flex items-center gap-2.5">
@@ -68,31 +74,66 @@
 
     @case('description_ar')
         <td title="{{ strip_tags($model->description_ar ?? '--') }}">
-            {!! highlightSearch(limitedText(strip_tags($model->description_ar ?? '--'), 30), $search) !!}
+            @if (isset($model->description_ar) && !empty($model->description_ar))
+                {!! highlightSearch(limitedText(strip_tags($model->description_ar ?? '--'), 30), $search) !!}
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
         </td>
     @break
 
     @case('address')
         <td title="{{ strip_tags($model->address ?? '--') }}">
-            {!! highlightSearch(limitedText(strip_tags($model->address ?? '--'), 30), $search) !!}
+            @if (isset($model->address) && !empty($model->address))
+                {!! highlightSearch(limitedText(strip_tags($model->address ?? '--'), 30), $search) !!}
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
         </td>
     @break
 
     @case('address_ar')
         <td title="{{ strip_tags($model->address_ar ?? '--') }}">
-            {!! highlightSearch(limitedText(strip_tags($model->address_ar ?? '--'), 30), $search) !!}
+            @if (isset($model->address_ar) && !empty($model->address_ar))
+                {!! highlightSearch(limitedText(strip_tags($model->address_ar ?? '--'), 30), $search) !!}
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
         </td>
     @break
 
     @case('notes')
         <td title="{{ strip_tags($model->notes ?? '--') }}">
-            {!! highlightSearch(limitedText(strip_tags($model->notes ?? '--'), 30), $search) !!}
+            @if (isset($model->notes) && !empty($model->notes))
+                {!! highlightSearch(limitedText(strip_tags($model->notes ?? '--'), 30), $search) !!}
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
         </td>
     @break
 
     @case('notes_ar')
         <td title="{{ strip_tags($model->notes_ar ?? '--') }}">
-            {!! highlightSearch(limitedText(strip_tags($model->notes_ar ?? '--'), 30), $search) !!}
+            @if (isset($model->notes_ar) && !empty($model->notes_ar))
+                {!! highlightSearch(limitedText(strip_tags($model->notes_ar ?? '--'), 30), $search) !!}
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
         </td>
     @break
 
@@ -332,7 +373,7 @@
     @break
 
     @case('price')
-        <td title="{{ optional($model)->price }}">{!! highlightSearch(limitedText(optional($model)->price ?? '--', 30), $search) !!} {{ __('main.km') }}</td>
+        <td title="{{ optional($model)->price }}">{!! highlightSearch(limitedText(optional($model)->price ?? '--', 30), $search) !!} {{ $settings->app_default_currency }}</td>
     @break
 
     @case('bus_type')
@@ -372,12 +413,15 @@
     @break
 
     @case('seasons')
-        <td title="{{ implode(', ', $model->seasons()->pluck('name')->toArray()) }}">
-            @php $seasons = $model->seasons()->get(); @endphp
+        @php
+            $seasons = $model->seasons()->with('season')->get();
+            $roomNames = $seasons->pluck('season.name')->filter()->implode(', ');
+        @endphp
+        <td title="{{ $roomNames }}">
             @if ($seasons->count() > 0)
                 @foreach ($seasons->take(3) as $season)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        {!! highlightSearch(limitedText($season->name ?? '--', 30), $search) !!}
+                        {!! highlightSearch(limitedText($season->season->name ?? '--', 30), $search) !!}
                     </div>
                 @endforeach
                 @if ($seasons->count() > 3)
@@ -394,16 +438,19 @@
         </td>
     @break
 
-    @case('roomRates')
-        <td title="{{ implode(', ', $model->roomRates()->pluck('name')->toArray()) }}">
-            @php $roomRates = $model->roomRates()->get(); @endphp
-            @if ($roomRates->count() > 0)
-                @foreach ($roomRates->take(3) as $roomRate)
+    @case('rooms')
+        @php
+            $rooms = $model->rooms()->with('room')->get();
+            $roomNames = $rooms->pluck('room.name')->filter()->implode(', ');
+        @endphp
+        <td title="{{ $roomNames }}">
+            @if ($rooms->count() > 0)
+                @foreach ($rooms->take(3) as $room)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        {!! highlightSearch(limitedText($roomRate->name ?? '--', 30), $search) !!}
+                        {!! highlightSearch(limitedText($room->room->name ?? '--', 30), $search) !!}
                     </div>
                 @endforeach
-                @if ($roomRates->count() > 3)
+                @if ($rooms->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         ...
                     </div>
@@ -417,16 +464,19 @@
         </td>
     @break
 
-    @case('mealRates')
-        <td title="{{ implode(', ', $model->mealRates()->pluck('name')->toArray()) }}">
-            @php $mealRates = $model->mealRates()->get(); @endphp
-            @if ($mealRates->count() > 0)
-                @foreach ($mealRates->take(3) as $mealRate)
+    @case('meals')
+        @php
+            $meals = $model->meals()->with('meal')->get();
+            $mealNames = $meals->pluck('meal.name')->filter()->implode(', ');
+        @endphp
+        <td title="{{ $mealNames }}">
+            @if ($meals->count() > 0)
+                @foreach ($meals->take(3) as $meal)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        {!! highlightSearch(limitedText($mealRate->name ?? '--', 30), $search) !!}
+                        {!! highlightSearch(limitedText($meal->meal->name ?? '--', 30), $search) !!}
                     </div>
                 @endforeach
-                @if ($mealRates->count() > 3)
+                @if ($meals->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         ...
                     </div>
@@ -506,10 +556,10 @@
         </td>
     @break
 
-    @case('state_id')
+    {{-- @case('state_id')
         <td>
             @php $states = $model->states(); @endphp
-            @if ($states->count() > 0)
+            @if (count($states))
                 @foreach ($states->take(3) as $state)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($state->name ?? '--', 30), $search) !!}
@@ -532,7 +582,7 @@
     @case('city_id')
         <td>
             @php $cities = $model->cities(); @endphp
-            @if ($cities->count() > 0)
+            @if (count($cities))
                 @foreach ($cities->take(3) as $city)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($city->name ?? '--', 30), $search) !!}
@@ -550,8 +600,7 @@
                 </div>
             @endif
         </td>
-    @break
-
+    @break --}}
     @case('all_states')
         <td title="{{ $model->all_states == 1 ? 'all' : '--' }}">
             @if ($model->all_states == 1)
@@ -635,6 +684,15 @@
         </td>
     @break
 
+    @case('stars')
+        <td title="{{ $model->stars }}">
+            <div>
+                {!! highlightSearch($model->stars ?? '--', $search) !!}/5
+                <i class="fas fa-star" style="color: #ffdd00"></i>
+            </div>
+        </td>
+    @break
+
     {{-- @case('timezone')
         <td title="{{ $model->timezone }}">
             <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
@@ -684,6 +742,16 @@
         </td>
     @break
 
+    @case('is_admin')
+        <td title="{{ $model->is_admin == 1 ? __('main.yes') : __('main.no') }}">
+            <div class="relative">
+                <span class="text-{{ $model->is_admin == 1 ? 'green' : 'red' }}-600 font-semibold">
+                    {!! $model->is_admin == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
+                </span>
+            </div>
+        </td>
+    @break
+
     @case('status')
         <td title="{{ $model->is_active == 1 ? __('main.active') : __('main.inactive') }}">
             <div class="relative">
@@ -697,98 +765,274 @@
     @break
 
     @case('is_supplement')
-        <td title="{{ ($model->is_supplement == 1) == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->is_supplement == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->is_supplement == 1
-                    ? highlightSearch(__('main.yes'), $search)
-                    : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ ($model->is_supplement == 1) == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_supplement',
+                    'value' => (bool) $model->is_supplement,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_supplement')
+            )
+        </td>
+    @break
+
+    @case('is_per_person')
+        <td title="{{ ($model->is_per_person == 1) == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_per_person',
+                    'value' => (bool) $model->is_per_person,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_per_person')
+            )
+        </td>
+    @break
+
+    @case('is_mandatory')
+        <td title="{{ ($model->is_mandatory == 1) == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_mandatory',
+                    'value' => (bool) $model->is_mandatory,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_mandatory')
+            )
         </td>
     @break
 
     @case('is_active')
-        <td title="{{ $model->is_active == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->is_active == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->is_active == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_active',
+                    'value' => (bool) $model->is_active,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_active')
+            )
+        </td>
+    @break
+
+    @case('is_verified')
+        <td title="{{ $model->is_verified == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_verified',
+                    'value' => (bool) $model->is_verified,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_verified')
+            )
+        </td>
+    @break
+
+    @case('is_independent')
+        <td title="{{ $model->is_independent == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_independent',
+                    'value' => (bool) $model->is_independent,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_independent')
+            )
+        </td>
+    @break
+
+    @case('is_developed')
+        <td title="{{ $model->is_developed == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_developed',
+                    'value' => (bool) $model->is_developed,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_developed')
+            )
+        </td>
+    @break
+
+    @case('is_landlocked')
+        <td title="{{ $model->is_landlocked == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_landlocked',
+                    'value' => (bool) $model->is_landlocked,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_landlocked')
+            )
         </td>
     @break
 
     @case('is_included')
-        <td title="{{ $model->is_included == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->is_included == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->is_included == 1
-                    ? highlightSearch(__('main.yes'), $search)
-                    : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->is_included == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_included',
+                    'value' => (bool) $model->is_included,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_included')
+            )
         </td>
     @break
 
     @case('wheelchair_accessible')
-        <td title="{{ $model->wheelchair_accessible == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->wheelchair_accessible == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->wheelchair_accessible == 1
-                    ? highlightSearch(__('main.yes'), $search)
-                    : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->wheelchair_accessible == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'wheelchair_accessible',
+                    'value' => (bool) $model->wheelchair_accessible,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-wheelchair_accessible')
+            )
         </td>
     @break
 
     @case('free_wifi')
-        <td title="{{ $model->free_wifi == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->free_wifi == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->free_wifi == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->free_wifi == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'free_wifi',
+                    'value' => (bool) $model->free_wifi,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-free_wifi')
+            )
         </td>
     @break
 
     @case('parking')
-        <td title="{{ $model->parking == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->parking == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->parking == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->parking == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'parking',
+                    'value' => (bool) $model->parking,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-parking')
+            )
         </td>
     @break
 
     @case('swimming_pool')
-        <td title="{{ $model->swimming_pool == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->swimming_pool == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->swimming_pool == 1
-                    ? highlightSearch(__('main.yes'), $search)
-                    : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->swimming_pool == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'swimming_pool',
+                    'value' => (bool) $model->swimming_pool,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-swimming_pool')
+            )
         </td>
     @break
 
     @case('gym')
-        <td title="{{ $model->gym == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->gym == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->gym == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->gym == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'gym',
+                    'value' => (bool) $model->gym,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-gym')
+            )
         </td>
     @break
 
     @case('indoor')
-        <td title="{{ $model->indoor == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->indoor == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->indoor == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->indoor == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'indoor',
+                    'value' => (bool) $model->indoor,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-indoor')
+            )
         </td>
     @break
 
     @case('outdoor')
-        <td title="{{ $model->outdoor == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->outdoor == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->outdoor == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->outdoor == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'outdoor',
+                    'value' => (bool) $model->outdoor,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-outdoor')
+            )
         </td>
     @break
 
     @case('spa')
-        <td title="{{ $model->spa == 1 ? __('main.yes') : __('main.no') }}">
-            <span class="text-{{ $model->spa == 1 ? 'green' : 'red' }}-600 font-semibold">
-                {!! $model->spa == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
-            </span>
+        <td title="{{ $model->spa == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'spa',
+                    'value' => (bool) $model->spa,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-spa')
+            )
         </td>
     @break
 

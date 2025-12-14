@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('tour_guides', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
@@ -35,7 +35,7 @@ return new class extends Migration {
             $table->decimal('hd_day_fees', 10, 2)->nullable(); // Half day
             $table->decimal('extra_fees_1', 10, 2)->nullable();
             $table->decimal('extra_fees_2', 10, 2)->nullable();
-            $table->string('status')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->text('notes')->nullable();
             $table->timestamps();
         });

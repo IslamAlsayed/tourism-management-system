@@ -87,6 +87,36 @@
                                 <input type="number" name="app_sidebar_width" class="kt-input h-[45px]"
                                     value="{{ $settings->app_sidebar_width }}" />
                             </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.button_display_mode') }}</label>
+                                <select name="button_display_mode" id="button_display_mode" class="kt-input h-[45px]"
+                                    data-kt-select="true"
+                                    data-kt-select-placeholder="{{ __('main.button_display_mode') }}">
+                                    <option value="text"
+                                        {{ getActiveUser()->button_display_mode == 'text' ? 'selected' : '' }}>
+                                        {{ __('main.text') }}
+                                    </option>
+                                    <option value="icon"
+                                        {{ getActiveUser()->button_display_mode == 'icon' ? 'selected' : '' }}>
+                                        {{ __('main.icon') }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Checkboxes -->
+                        <div class="flex gap-6 mb-4">
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="app_show_uuid_column" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'app_show_uuid_column',
+                                    'id' => 'app_show_uuid_column',
+                                    'value' => '1',
+                                    'checked' => $settings->app_show_uuid_column,
+                                    'label' => __('main.app_show_uuid_column'),
+                                ])
+                            </div>
                         </div>
 
                         <!-- Submit Buttons -->

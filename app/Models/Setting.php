@@ -68,5 +68,6 @@ class Setting extends Model
         'app_smtp_username',
         'app_smtp_password',
         'app_sidebar_width',
+        'app_show_uuid_column',
     ];
 }

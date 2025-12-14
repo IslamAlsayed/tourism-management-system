@@ -284,3 +284,12 @@ function createNotification(notification) {
 </div>
     `;
 }
+
+window.addEventListener("record-deleted", (e) => {
+    let id = e.detail.id;
+    if (!id) return;
+    document
+        .querySelector(".record-" + id)
+        ?.classList.add("fade-up", "loading");
+    setTimeout(() => document.querySelector(".record-" + id)?.remove(), 100);
+});

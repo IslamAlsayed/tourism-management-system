@@ -29,8 +29,8 @@
                     @method('PUT')
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        <div class="">
-                            <label for="accommodation_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="accommodation_id" class="kt-label flex items-center justify-between mb-2">
                                 {{ __('main.accommodations') }}
                                 <a href="{{ route('accommodations.create') }}" class="text-blue-600 text-2sm">
                                     {{ __('main.add') }}
@@ -49,8 +49,8 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="season_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="season_id" class="kt-label flex items-center justify-between mb-2">
                                 {{ __('main.seasons') }}
                                 <a href="{{ route('seasons.create') }}" class="text-blue-600 text-2sm">
                                     {{ __('main.add') }}
@@ -69,8 +69,8 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="meal_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="meal_id" class="kt-label flex items-center justify-between mb-2">
                                 {{ __('main.meals') }}
                                 <a href="{{ route('meals.create') }}" class="text-blue-600 text-2sm">
                                     {{ __('main.add') }}
@@ -100,8 +100,8 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="currency_id" class="kt-label flex items-center justify-between mb-2">
                                 {{ __('main.currencies') }}
                                 <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
                                     {{ __('main.add') }}

@@ -85,6 +85,7 @@ class UpdateClientRequest extends FormRequest
 
             // Status
             'client_status' => 'nullable|in:active,inactive,pending,blacklisted',
+            'is_active' => 'nullable|boolean',
             'notes' => 'nullable|string|max:1000',
         ];
     }

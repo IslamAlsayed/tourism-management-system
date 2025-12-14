@@ -8,8 +8,8 @@ use App\Models\Timezone;
 use App\Models\Nationality;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Client\ClientCreateRequest;
-use App\Http\Requests\Client\ClientUpdateRequest;
+use App\Http\Requests\Client\StoreRequest;
+use App\Http\Requests\Client\UpdateRequest;
 
 class ClientController extends Controller
 {
@@ -28,7 +28,7 @@ class ClientController extends Controller
         return view('pages.dashboard.clients.create', compact('regions', 'nationalities', 'timezones'));
     }
 
-    public function store(ClientCreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $validated = $request->validated();
 
@@ -79,7 +79,7 @@ class ClientController extends Controller
         return view('pages.dashboard.clients.edit', compact('client', 'regions', 'nationalities', 'timezones'));
     }
 
-    public function update(ClientUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $client = Client::find($id);
 

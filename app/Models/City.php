@@ -6,7 +6,6 @@ use App\Traits\BroadcastsRecordEvents;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
-use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class City extends Model
 {
@@ -33,7 +32,7 @@ class City extends Model
      */
     public function getRelationshipNames()
     {
-        return ['timezone', 'region', 'subregion', 'country'];
+        return ['timezone', 'region', 'subregion', 'country', 'state'];
     }
 
     /**
@@ -41,7 +40,7 @@ class City extends Model
      */
     public function getExcludedColumns()
     {
-        return ['timezone_id', 'region_id', 'subregion_id', 'country_id'];
+        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id'];
     }
 
     public function timezone()
@@ -64,27 +63,8 @@ class City extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function states()
+    public function state()
     {
-        if (!$this->state_id)
-            return [];
-        return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
-    }
-
-    public function getStateListAttribute()
-    {
-        if (!$this->state_id)
-            return [];
-        return State::whereIn('id', explode(',', $this->state_id))->get(['id', 'name'])->toArray();
-    }
-
-    public function getStateIdAttribute($value)
-    {
-        return $value ?: "";
-    }
-
-    public function setStateIdAttribute($value)
-    {
-        $this->attributes['state_id'] = is_array($value) ? implode(',', $value) : $value;
+        return $this->belongsTo(State::class);
     }
 }

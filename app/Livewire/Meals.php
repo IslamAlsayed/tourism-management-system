@@ -112,11 +112,11 @@ class Meals extends Component
     {
         $query = Meal::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        if ($this->filterStatus) {
-            $query->where('is_active', $this->filterStatus === 'active' ? 1 : 0);
+        if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
+            $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }
-        if ($this->filterIsIncluded !== '') {
-            $query->where('is_included', $this->filterIsIncluded === 'yes' ? 1 : 0);
+        if ($this->filterIsIncluded && $this->filterIsIncluded['payload']['value'] !== 'all') {
+            $query->where('is_included', $this->filterIsIncluded['payload']['value'] === 'yes' ? true : false);
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

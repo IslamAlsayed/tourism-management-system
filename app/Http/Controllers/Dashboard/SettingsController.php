@@ -40,6 +40,13 @@ class SettingsController extends Controller
 
         $updated = $setting->update($request->all());
 
+        // Update user preferences if button_display_mode is sent
+        if ($request->has('button_display_mode')) {
+            $user = getActiveUser();
+            $user->button_display_mode = $request->button_display_mode;
+            $user->save();
+        }
+
         if ($updated) {
             return redirect()->back()->withSuccess(__('messages.type_updated', ['type' => __('main.settings')]));
         }

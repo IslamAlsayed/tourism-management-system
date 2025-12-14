@@ -21,6 +21,15 @@ class CurrencyController extends Controller
         return view('pages.dashboard.currencies.create', compact('countries'));
     }
 
+    public function show($id)
+    {
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.currency')]));
+        }
+        return view('pages.dashboard.currencies.show', compact('currency'));
+    }
+
     public function edit($id)
     {
         $currency = Currency::find($id);

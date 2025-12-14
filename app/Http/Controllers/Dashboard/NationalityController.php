@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Country;
 use App\Models\Nationality;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Nationalities\NationalitiesCreateRequest;
-use App\Http\Requests\Nationalities\NationalitiesUpdateRequest;
-use App\Models\Region;
+use App\Http\Requests\Nationalities\StoreRequest;
+use App\Http\Requests\Nationalities\UpdateRequest;
 
 class NationalityController extends Controller
 {
@@ -17,11 +17,11 @@ class NationalityController extends Controller
 
     public function create()
     {
-        $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.nationalities.create', compact('regions'));
+        $countries = Country::orderBy('name')->get();
+        return view('pages.dashboard.nationalities.create', compact('countries'));
     }
 
-    public function store(NationalitiesCreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $validated = $request->validated();
         $created = Nationality::create($validated);
@@ -34,17 +34,26 @@ class NationalityController extends Controller
         return redirect()->route('nationalities.index')->withError(__('messages.type_creation_failed', ['type' => __('main.nationality')]));
     }
 
+    public function show($id)
+    {
+        $nationality = Nationality::with('country')->find($id);
+        if (!$nationality) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.nationality')]));
+        }
+        return view('pages.dashboard.nationalities.show', compact('nationality'));
+    }
+
     public function edit($id)
     {
         $nationality = Nationality::find($id);
         if (!$nationality) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.nationality')]));
         }
-        $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.nationalities.edit', compact('nationality', 'regions'));
+        $countries = Country::orderBy('name')->get();
+        return view('pages.dashboard.nationalities.edit', compact('nationality', 'countries'));
     }
 
-    public function update(NationalitiesUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $nationality = Nationality::find($id);
         if (!$nationality) {

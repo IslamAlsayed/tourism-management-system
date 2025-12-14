@@ -22,14 +22,23 @@ class RoomController extends Controller
     public function store(StoreRequest $request)
     {
         Room::create($request->validated());
-        return redirect()->route('rooms.index')->with('success', 'تم إنشاء نوع الغرفة بنجاح!');
+        return redirect()->route('rooms.index')->withSuccess(__('messages.type_created', ['type' => __('main.room')]));
+    }
+
+    public function show($id)
+    {
+        $room = Room::with('roomRates')->find($id);
+        if (!$room) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room')]));
+        }
+        return view('pages.dashboard.rooms.show', compact('room'));
     }
 
     public function edit($id)
     {
         $room = Room::find($id);
         if (!$room) {
-            return redirect()->route('rooms.index')->with('error', 'نوع الغرفة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room')]));
         }
         return view('pages.dashboard.rooms.edit', compact('room'));
     }
@@ -38,24 +47,22 @@ class RoomController extends Controller
     {
         $room = Room::find($id);
         if (!$room) {
-            return redirect()->route('rooms.index')->with('error', 'نوع الغرفة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room')]));
         }
         $room->update($request->validated());
-        return redirect()->route('rooms.index')->with('success', 'تم تحديث نوع الغرفة بنجاح!');
+        return redirect()->route('rooms.index')->withSuccess(__('messages.type_updated', ['type' => __('main.room')]));
     }
 
     public function destroy($id)
     {
         $room = Room::find($id);
         if (!$room) {
-            return redirect()->route('rooms.index')->with('error', 'نوع الغرفة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room')]));
         }
-        $room->delete();
-        return redirect()->route('rooms.index')->with('success', 'تم حذف نوع الغرفة بنجاح!');
-    }
-
-    public function importForm()
-    {
-        return view('pages.dashboard.rooms.import');
+        $deleted = $room->delete();
+        if ($deleted) {
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.room')]));
+        }
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.room')]));
     }
 }

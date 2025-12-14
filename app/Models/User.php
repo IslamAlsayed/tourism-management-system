@@ -53,6 +53,7 @@ class User extends Authenticatable
         'force_password_change',
         'last_login_at',
         'last_login_ip',
+        'button_display_mode',
         'notes',
         'created_by',
         'updated_by',
@@ -63,7 +64,7 @@ class User extends Authenticatable
      */
     public function getRelationshipNames()
     {
-        return ['timezone'];
+        return ['timezone', 'createdBy', 'updatedBy'];
     }
 
     /**
@@ -80,6 +81,7 @@ class User extends Authenticatable
             'email_verified_at',
             'force_password_change',
             'preferred_language',
+            'user_status',
             'timezone_id',
             'preferences',
             'last_login_at',
@@ -118,6 +120,16 @@ class User extends Authenticatable
     public function timezone()
     {
         return $this->belongsTo(Timezone::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 
     public function scopeIsAdmin($query)

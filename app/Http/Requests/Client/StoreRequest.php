@@ -4,7 +4,7 @@ namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientCreateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -88,6 +88,7 @@ class ClientCreateRequest extends FormRequest
 
             // Status and preferences
             'status' => ['nullable', 'in:active,inactive,pending,blacklisted'],
+            'is_active' => 'nullable|boolean',
             'notes' => ['nullable', 'string', 'max:1400'],
         ];
     }

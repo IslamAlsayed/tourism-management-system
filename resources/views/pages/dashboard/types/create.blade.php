@@ -33,7 +33,7 @@
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
                         {{-- Name (English) --}}
-                        <div>
+                        <div class="align-self-end">
                             <label for="name" class="kt-label required mb-2">
                                 {{ __('main.name') }}
                                 <span class="text-red-600 text-2xl">*</span>
@@ -69,6 +69,7 @@
                                 'name' => 'is_active',
                                 'id' => 'is_active',
                                 'value' => '1',
+                                'checked' => 1,
                                 'label' => __('main.active'),
                             ])
                         </div>

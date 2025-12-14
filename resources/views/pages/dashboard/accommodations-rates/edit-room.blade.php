@@ -29,7 +29,7 @@
                     @method('PUT')
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        <div class="">
+                        <div class="align-self-end">
                             <label for="accommodation_id" class="kt-label mb-2 flex items-center justify-between">
                                 {{ __('main.accommodations') }}
                                 <a href="{{ route('accommodations.create') }}" class="text-blue-600 text-2sm">
@@ -49,7 +49,7 @@
                             @enderror
                         </div>
 
-                        <div class="">
+                        <div class="align-self-end">
                             <label for="season_id" class="kt-label mb-2 flex items-center justify-between">
                                 {{ __('main.seasons') }}
                                 <a href="{{ route('seasons.create') }}" class="text-blue-600 text-2sm">
@@ -69,7 +69,7 @@
                             @enderror
                         </div>
 
-                        <div class="">
+                        <div class="align-self-end">
                             <label for="room_id" class="kt-label mb-2 flex items-center justify-between">
                                 {{ __('main.rooms') }}
                                 <a href="{{ route('rooms.create') }}" class="text-blue-600 text-2sm">
@@ -89,8 +89,8 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="currency_id" class="kt-label flex items-center justify-between mb-2">
                                 {{ __('main.currencies') }}
                                 <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
                                     {{ __('main.add') }}
@@ -111,7 +111,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        <div>
+                        <div class="align-self-end">
                             <label for="price_per_person_double"
                                 class="kt-label">{{ __('main.price_per_person_double') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="price_per_person_double"
@@ -122,7 +122,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="single_room_supplement"
                                 class="kt-label">{{ __('main.single_room_supplement') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="single_room_supplement"
@@ -133,7 +133,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="triple_room_discount"
                                 class="kt-label">{{ __('main.triple_room_discount') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="triple_room_discount"
@@ -143,7 +143,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="third_person_price" class="kt-label">{{ __('main.third_person_price') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="third_person_price"
                                 name="third_person_price" value="{{ $roomRate->third_person_price }}" min="0">
@@ -152,7 +152,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="extra_bed_price" class="kt-label">{{ __('main.extra_bed_price') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="extra_bed_price"
                                 name="extra_bed_price" value="{{ $roomRate->extra_bed_price }}" min="0">
@@ -161,7 +161,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="sea_view_supplement"
                                 class="kt-label">{{ __('main.sea_view_supplement') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="sea_view_supplement"

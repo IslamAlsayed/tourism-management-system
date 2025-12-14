@@ -28,8 +28,8 @@
                     @csrf
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        <div class="">
-                            <label for="accommodation_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="accommodation_id" class="kt-label flex items-center justify-between mb-2">
                                 <span class="flex items-center gap-2">
                                     <span>{{ __('main.accommodations') }}</span>
                                     <span class="text-red-600 pt-2 text-2xl">*</span>
@@ -39,6 +39,7 @@
                                 </a>
                             </label>
                             <select name="accommodation_id" id="accommodation_id" class="kt-select basic-single" required>
+                                <option value="" disabled selected></option>
                                 @foreach ($accommodations as $accommodation)
                                     <option value="{{ $accommodation->id }}"
                                         {{ old('accommodation_id') == $accommodation->id ? 'selected' : '' }}>
@@ -51,8 +52,8 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="season_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="season_id" class="kt-label flex items-center justify-between mb-2">
                                 <span class="flex items-center gap-2">
                                     <span>{{ __('main.seasons') }}</span>
                                     <span class="text-red-600 pt-2 text-2xl">*</span>
@@ -60,7 +61,9 @@
                                 <a href="{{ route('seasons.create') }}" class="text-blue-600 text-2sm">
                                     {{ __('main.add') }}
                                 </a>
-                            </label> <select name="season_id" id="season_id" class="kt-select basic-single" required>
+                            </label>
+                            <select name="season_id" id="season_id" class="kt-select basic-single" required>
+                                <option value="" disabled selected></option>
                                 @foreach ($seasons as $season)
                                     <option value="{{ $season->id }}"
                                         {{ old('season_id') == $season->id ? 'selected' : '' }}>
@@ -73,8 +76,8 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="meal_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="meal_id" class="kt-label flex items-center justify-between mb-2">
                                 <span class="flex items-center gap-2">
                                     <span>{{ __('main.meals') }}</span>
                                     <span class="text-red-600 pt-2 text-2xl">*</span>
@@ -84,6 +87,7 @@
                                 </a>
                             </label>
                             <select name="meal_id" id="meal_id" class="kt-select basic-single" required>
+                                <option value="" disabled selected></option>
                                 @foreach ($meals as $meal)
                                     <option value="{{ $meal->id }}"
                                         {{ old('meal_id') == $meal->id ? 'selected' : '' }}>
@@ -96,14 +100,15 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="currency_id" class="kt-label flex items-center justify-between mb-2">
                                 {{ __('main.currencies') }}
                                 <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
                                     {{ __('main.add') }}
                                 </a>
                             </label>
                             <select name="currency_id" id="currency_id" class="kt-select basic-single" required>
+                                <option value="" disabled selected></option>
                                 @foreach ($currencies as $currency)
                                     <option value="{{ $currency->id }}"
                                         {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
@@ -118,7 +123,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
-                        <div>
+                        <div class="align-self-end">
                             <label for="price" class="kt-label required">
                                 {{ __('main.price') }}
                                 <span class="text-red-600 pt-2 text-2xl">*</span>
@@ -156,7 +161,7 @@
                                 'name' => 'is_active',
                                 'id' => 'is_active',
                                 'value' => '1',
-                                'checked' => old('is_active', true),
+                                'checked' => 1,
                                 'label' => __('main.is_active'),
                             ])
                         </div>

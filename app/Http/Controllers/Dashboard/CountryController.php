@@ -82,6 +82,15 @@ class CountryController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $country = Country::with(['currency', 'language', 'region', 'timezone'])->find($id);
+        if (!$country) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
+        }
+        return view('pages.dashboard.countries.show', compact('country'));
+    }
+
     public function edit($id)
     {
         $country = Country::find($id);

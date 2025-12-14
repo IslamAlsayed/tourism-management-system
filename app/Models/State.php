@@ -31,7 +31,6 @@ class State extends Model
         'region_id',
         'subregion_id',
         'country_id',
-        'city_id',
     ];
 
     /**
@@ -70,27 +69,9 @@ class State extends Model
         return $this->belongsTo(Country::class);
     }
 
+    // One-to-Many: State has many Cities
     public function cities()
     {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
-    }
-
-    public function getCityListAttribute()
-    {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
-    }
-
-    public function getCityIdAttribute($value)
-    {
-        return $value ?: "";
-    }
-
-    public function setCityIdAttribute($value)
-    {
-        $this->attributes['city_id'] = is_array($value) ? implode(',', $value) : $value;
+        return $this->hasMany(City::class);
     }
 }

@@ -36,6 +36,15 @@ class BusTypeController extends Controller
         return redirect()->route('transportation-bus-types.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
     }
 
+    public function show($id)
+    {
+        $transportationBusType = TransportationBusType::with(['transportationCompany'])->find($id);
+        if (!$transportationBusType) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_bus_type')]));
+        }
+        return view('pages.dashboard.transportation-bus-types.show', compact('transportationBusType'));
+    }
+
     public function edit($id)
     {
         $transportationBusType = TransportationBusType::find($id);

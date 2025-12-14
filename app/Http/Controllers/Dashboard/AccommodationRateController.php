@@ -6,7 +6,6 @@ use App\Models\Meal;
 use App\Models\Room;
 use App\Models\Season;
 use App\Models\Currency;
-use Illuminate\Http\Request;
 use App\Models\Accommodation;
 use App\Http\Controllers\Controller;
 use App\Models\AccommodationMealRate;
@@ -34,15 +33,22 @@ class AccommodationRateController extends Controller
 
     public function storeRoomRate(StoreRoomRequest $request)
     {
-        AccommodationRoomRate::create($request->validated());
-        return redirect()->route('accommodations-rates.index')->with('success', 'تم إنشاء سعر الغرفة بنجاح!');
+        $validated = $request->all();
+        $accommodation_room_rate = AccommodationRoomRate::create($validated);
+        if ($accommodation_room_rate) {
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.room_rate')]));
+            }
+            return redirect()->route('accommodations-rates.index')->withSuccess(__('messages.type_created', ['type' => __('main.room_rate')]));
+        }
+        return redirect()->route('accommodations-rates.index')->withError(__('messages.type_creation_failed', ['type' => __('main.room_rate')]));
     }
 
     public function editRoomRate($id)
     {
         $roomRate = AccommodationRoomRate::find($id);
         if (!$roomRate) {
-            return redirect()->route('accommodations-rates.index')->with('error', 'سعر الغرفة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room_rate')]));
         }
         $accommodations = Accommodation::orderBy('name')->get();
         $seasons = Season::orderBy('name')->get();
@@ -55,10 +61,13 @@ class AccommodationRateController extends Controller
     {
         $roomRate = AccommodationRoomRate::find($id);
         if (!$roomRate) {
-            return redirect()->route('accommodations-rates.index')->with('error', 'سعر الغرفة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room_rate')]));
         }
-        $roomRate->update($request->validated());
-        return redirect()->route('accommodations-rates.index')->with('success', 'تم تحديث سعر الغرفة بنجاح!');
+        $updated = $roomRate->update($request->all());
+        if ($updated) {
+            return redirect()->back()->withSuccess(__('messages.type_updated', ['type' => __('main.room_rate')]));
+        }
+        return redirect()->route('accommodations-rates.index')->withSuccess(__('messages.type_updated', ['type' => __('main.room_rate')]));
     }
 
     public function createMealRate()
@@ -72,15 +81,22 @@ class AccommodationRateController extends Controller
 
     public function storeMealRate(StoreMealRequest $request)
     {
-        AccommodationMealRate::create($request->validated());
-        return redirect()->route('accommodations-rates.index')->with('success', 'تم إنشاء سعر الوجبة بنجاح!');
+        $validated = $request->all();
+        $accommodation_meal_rate = AccommodationMealRate::create($validated);
+        if ($accommodation_meal_rate) {
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.meal_rate')]));
+            }
+            return redirect()->route('accommodations-rates.index')->withSuccess(__('messages.type_created', ['type' => __('main.meal_rate')]));
+        }
+        return redirect()->route('accommodations-rates.index')->withError(__('messages.type_creation_failed', ['type' => __('main.meal_rate')]));
     }
 
     public function editMealRate($id)
     {
         $mealRate = AccommodationMealRate::find($id);
         if (!$mealRate) {
-            return redirect()->route('accommodations-rates.index')->with('error', 'سعر الوجبة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal_rate')]));
         }
         $accommodations = Accommodation::orderBy('name')->get();
         $seasons = Season::orderBy('name')->get();
@@ -93,34 +109,38 @@ class AccommodationRateController extends Controller
     {
         $mealRate = AccommodationMealRate::find($id);
         if (!$mealRate) {
-            return redirect()->route('accommodations-rates.index')->with('error', 'سعر الوجبة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal_rate')]));
         }
-        $mealRate->update($request->validated());
-        return redirect()->route('accommodations-rates.index')->with('success', 'تم تحديث سعر الوجبة بنجاح!');
-    }
-
-    public function importForm()
-    {
-        return view('pages.dashboard.accommodations-rates.import');
+        $updated = $mealRate->update($request->all());
+        if ($updated) {
+            return redirect()->back()->withSuccess(__('messages.type_updated', ['type' => __('main.meal_rate')]));
+        }
+        return redirect()->route('accommodations-rates.index')->withSuccess(__('messages.type_updated', ['type' => __('main.meal_rate')]));
     }
 
     public function destroyRoomRate($id)
     {
         $rate = AccommodationRoomRate::find($id);
         if (!$rate) {
-            return redirect()->route('accommodations-rates.index')->with('error', 'سعر الغرفة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room_rate')]));
         }
-        $rate->delete();
-        return redirect()->route('accommodations-rates.index')->with('success', 'تم حذف سعر الغرفة بنجاح!');
+        $deleted = $rate->delete();
+        if ($deleted) {
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.room_rate')]));
+        }
+        return redirect()->route('accommodations-rates.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.room_rate')]));
     }
 
     public function destroyMealRate($id)
     {
         $rate = AccommodationMealRate::find($id);
         if (!$rate) {
-            return redirect()->route('accommodations-rates.index')->with('error', 'سعر الوجبة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal_rate')]));
         }
-        $rate->delete();
-        return redirect()->route('accommodations-rates.index')->with('success', 'تم حذف سعر الوجبة بنجاح!');
+        $deleted = $rate->delete();
+        if ($deleted) {
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.meal_rate')]));
+        }
+        return redirect()->route('accommodations-rates.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.meal_rate')]));
     }
 }

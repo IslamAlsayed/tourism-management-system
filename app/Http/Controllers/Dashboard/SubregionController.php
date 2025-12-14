@@ -36,6 +36,15 @@ class SubregionController extends Controller
         return redirect()->route('subregions.index')->withError(__('messages.type_creation_failed', ['type' => __('main.subregion')]));
     }
 
+    public function show($id)
+    {
+        $subregion = Subregion::with('region')->find($id);
+        if (!$subregion) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregion')]));
+        }
+        return view('pages.dashboard.subregions.show', compact('subregion'));
+    }
+
     public function edit($id)
     {
         $subregion = Subregion::find($id);

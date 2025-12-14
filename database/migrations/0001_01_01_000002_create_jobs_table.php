@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->default(\Illuminate\Support\Str::uuid());
             $table->string('queue')->index();
             $table->longText('payload');
             $table->unsignedTinyInteger('attempts');

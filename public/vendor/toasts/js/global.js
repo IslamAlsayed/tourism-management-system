@@ -333,6 +333,7 @@ export function showToast({
     type,
     message,
     title,
+    position,
     duration,
     emoji,
     icon,
@@ -349,7 +350,7 @@ export function showToast({
         toastInner.className = "toast-inner";
 
         const toast = document.createElement("div");
-        toast.className = `toast toast-${type} top`;
+        toast.className = `toast toast-${type} ${position || configToast.default_position}`;
 
         if (configToast.move != "enable" || pin == "pin") {
             const pin = document.createElement("i");

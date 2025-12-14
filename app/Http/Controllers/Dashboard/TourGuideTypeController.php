@@ -83,6 +83,15 @@ class TourGuideTypeController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $tourGuideType = TourGuideType::with(['currency', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
+        if (!$tourGuideType) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide-type')]));
+        }
+        return view('pages.dashboard.tour-guides-types.show', compact('tourGuideType'));
+    }
+
     public function edit($id)
     {
         $tourGuideType = TourGuideType::find($id);

@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('accommodations', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
 
             // Basic info
             $table->string('name')->nullable(); // e.g., Hilton Cairo, Bedouin Camp, other

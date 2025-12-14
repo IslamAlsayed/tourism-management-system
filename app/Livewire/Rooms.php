@@ -106,8 +106,8 @@ class Rooms extends Component
     {
         $query = Room::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        if ($this->filterStatus) {
-            $query->where('is_active', $this->filterStatus === 'active' ? 1 : 0);
+        if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
+            $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

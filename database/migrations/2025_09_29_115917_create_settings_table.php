@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
 
             // General Settings
             $table->string('app_name')->default('laravel');
@@ -85,6 +85,7 @@ return new class extends Migration {
             $table->string('app_smtp_username')->nullable();
             $table->string('app_smtp_password')->nullable();
             $table->integer('app_sidebar_width')->nullable()->default(310);
+            $table->boolean('app_show_uuid_column')->nullable()->default(1);
             $table->timestamps();
         });
     }

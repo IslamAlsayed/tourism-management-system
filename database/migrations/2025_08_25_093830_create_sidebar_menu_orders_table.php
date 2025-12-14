@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('sidebar_menu_orders', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
             $table->string('menu_key')->unique(); // unique identifier for menu item
             $table->integer('order')->default(0); // sort order
             $table->string('parent_key')->nullable(); // parent menu key for nested items

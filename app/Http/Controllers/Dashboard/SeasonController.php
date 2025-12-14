@@ -21,15 +21,31 @@ class SeasonController extends Controller
 
     public function store(StoreRequest $request)
     {
-        Season::create($request->validated());
-        return redirect()->route('seasons.index')->with('success', 'تم إنشاء الموسم بنجاح!');
+        $validated = $request->validated();
+        $season = Season::create($validated);
+        if ($season) {
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.season')]));
+            }
+            return redirect()->route('seasons.index')->withSuccess(__('messages.type_created', ['type' => __('main.season')]));
+        }
+        return redirect()->route('seasons.index')->withError(__('messages.type_creation_failed', ['type' => __('main.season')]));
+    }
+
+    public function show($id)
+    {
+        $season = Season::with('accommodations')->find($id);
+        if (!$season) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
+        }
+        return view('pages.dashboard.seasons.show', compact('season'));
     }
 
     public function edit($id)
     {
         $season = Season::find($id);
         if (!$season) {
-            return redirect()->route('seasons.index')->with('error', 'الموسم غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
         }
         return view('pages.dashboard.seasons.edit', compact('season'));
     }
@@ -38,24 +54,26 @@ class SeasonController extends Controller
     {
         $season = Season::find($id);
         if (!$season) {
-            return redirect()->route('seasons.index')->with('error', 'الموسم غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.type')]));
         }
-        $season->update($request->validated());
-        return redirect()->route('seasons.index')->with('success', 'تم تحديث الموسم بنجاح!');
+        $validated = $request->validated();
+        $updated = $season->update($validated);
+        if ($updated) {
+            return redirect()->route('seasons.index')->withSuccess(__('messages.type_updated', ['type' => __('main.season')]));
+        }
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.season')]));
     }
 
     public function destroy($id)
     {
         $season = Season::find($id);
         if (!$season) {
-            return redirect()->route('seasons.index')->with('error', 'الموسم غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
         }
-        $season->delete();
-        return redirect()->route('seasons.index')->with('success', 'تم حذف الموسم بنجاح!');
-    }
-
-    public function importForm()
-    {
-        return view('pages.dashboard.seasons.import');
+        $deleted = $season->delete();
+        if ($deleted) {
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.season')]));
+        }
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.season')]));
     }
 }

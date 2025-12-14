@@ -55,8 +55,11 @@
     <div class="hidden" data-target-model="#columnsModal" id="columnsModal"
         style="{{ app()->getLocale() == 'ar' ? 'right: auto; left: 0; direction: ltr;' : 'left: auto; right: 0; direction: ltr;' }}">
         @if (isset($allColumns) && count($allColumns) > 0)
-            <div class="grid grid-cols-2 xl:grid-cols-3 gap-2">
+            <div class="grid grid-cols-2 xl:grid-cols-3 gap-2 pt-1">
                 @foreach ($allColumns as $column)
+                    @if ($column == 'uuid' && $settings->app_show_uuid_column == 0)
+                        @continue
+                    @endif
                     <div class="custom-input" title="{{ __('main.' . $column) }}"
                         wire:key="col-{{ $column }}-{{ in_array($column, $pendingColumns) ? '1' : '0' }}">
                         <input type="checkbox" name="remember" wire:model="pendingColumns" value="{{ $column }}"

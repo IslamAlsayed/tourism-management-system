@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\City;
 use App\Models\Region;
-use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Timezone;
-use App\Models\Subregion;
 use App\Models\Accommodation;
 use App\Models\Type;
 use App\Models\Season;
@@ -23,34 +20,6 @@ class AccommodationController extends Controller
     {
         return view('pages.dashboard.accommodations.index');
     }
-
-    // public function getResultType($type)
-    // {
-    //     $typeModel = Type::where('name', 'like', '%' . $type . '%')->first();
-    //     $data = Accommodation::with('type')->where('type_id', $typeModel?->id ?? 0)->paginate(getPaginate());
-    //     $total = $data->total();
-    //     return view('pages.dashboard.accommodations.types', compact('data', 'total', 'type'));
-    // }
-
-    // public function createType()
-    // {
-    //     dd('accommodations create type');
-    // }
-
-    // public function getCreateType($type)
-    // {
-    //     // Get the accommodation type
-    //     $type = Type::where('name', 'like', '%' . $type . '%')->orWhere('name_ar', 'like', '%' . $type . '%')->first();
-    //     if (!$type) {
-    //         return redirect()->route('accommodations.create')->with('warning', 'نوع الإقامة غير موجود، يرجى اختيار نوع من القائمة.');
-    //     }
-    //     $types = Type::get();
-    //     $countries = Country::get();
-    //     $cities = City::get();
-    //     $regions = Region::get();
-    //     $subregions = Subregion::get();
-    //     return view('pages.dashboard.accommodations.create', compact('types', 'countries', 'cities', 'regions', 'subregions', 'type'));
-    // }
 
     public function create()
     {
@@ -107,14 +76,14 @@ class AccommodationController extends Controller
             }
         }
 
-        return redirect()->route('accommodations.index')->with('success', 'تم إنشاء الإقامة بنجاح!');
+        return redirect()->route('accommodations.index')->withSuccess('تم إنشاء الإقامة بنجاح!');
     }
 
     public function show($id)
     {
-        $accommodation = Accommodation::with(['currency', 'types', 'seasons', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
+        $accommodation = Accommodation::with(['supplements', 'currency', 'type', 'seasons', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$accommodation) {
-            return redirect()->route('accommodations.index')->with('error', 'الإقامة غير موجودة.');
+            return redirect()->route('accommodations.index')->withError('الإقامة غير موجودة.');
         }
         return view('pages.dashboard.accommodations.show', compact('accommodation'));
     }
@@ -123,7 +92,7 @@ class AccommodationController extends Controller
     {
         $accommodation = Accommodation::with(['currency', 'type', 'seasons', 'roomRates.room', 'mealRates.meal', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$accommodation) {
-            return redirect()->route('accommodations.index')->with('error', 'الإقامة غير موجودة!');
+            return redirect()->route('accommodations.index')->withError('الإقامة غير موجودة!');
         }
         $types = Type::orderBy('name')->get();
 
@@ -152,7 +121,7 @@ class AccommodationController extends Controller
     {
         $accommodation = Accommodation::find($id);
         if (!$accommodation) {
-            return redirect()->route('accommodations.index')->with('error', 'الإقامة غير موجودة!');
+            return redirect()->route('accommodations.index')->withError('الإقامة غير موجودة!');
         }
 
         $data = $request->validated();
@@ -207,16 +176,16 @@ class AccommodationController extends Controller
             }
         }
 
-        return redirect()->route('accommodations.index')->with('success', 'تم تحديث الإقامة بنجاح!');
+        return redirect()->route('accommodations.index')->withSuccess('تم تحديث الإقامة بنجاح!');
     }
 
     public function destroy($id)
     {
         $accommodation = Accommodation::find($id);
         if (!$accommodation) {
-            return redirect()->route('accommodations.index')->with('error', 'الإقامة غير موجودة!');
+            return redirect()->route('accommodations.index')->withError('الإقامة غير موجودة!');
         }
         $accommodation->delete();
-        return redirect()->route('accommodations.index')->with('success', 'تم حذف الإقامة بنجاح!');
+        return redirect()->route('accommodations.index')->withSuccess('تم حذف الإقامة بنجاح!');
     }
 }

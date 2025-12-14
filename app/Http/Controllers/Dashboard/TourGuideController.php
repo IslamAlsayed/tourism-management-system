@@ -13,8 +13,8 @@ use App\Traits\PhotoUploadTrait;
 use App\Models\TourGuideLanguage;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TourGuide\TourGuideCreateRequest;
-use App\Http\Requests\TourGuide\TourGuideUpdateRequest;
+use App\Http\Requests\TourGuide\StoreRequest;
+use App\Http\Requests\TourGuide\UpdateRequest;
 use Illuminate\Support\Facades\Log;
 
 class TourGuideController extends Controller
@@ -35,7 +35,7 @@ class TourGuideController extends Controller
         return view('pages.dashboard.tour-guides.create', compact('currencies', 'languages_ids', 'guideTypes', 'regions'));
     }
 
-    public function store(TourGuideCreateRequest $request)
+    public function store(StoreRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -89,6 +89,15 @@ class TourGuideController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $tourGuide = TourGuide::with(['currency', 'guide_type', 'tourGuideLanguages', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
+        if (!$tourGuide) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide')]));
+        }
+        return view('pages.dashboard.tour-guides.show', compact('tourGuide'));
+    }
+
     public function edit($id)
     {
         $tourGuide = TourGuide::find($id);
@@ -120,7 +129,7 @@ class TourGuideController extends Controller
         return view('pages.dashboard.tour-guides.edit', compact('currencies', 'languages_ids', 'guideTypes', 'regions', 'tourGuide', 'tour_guide_languages'));
     }
 
-    public function update(TourGuideUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $tourGuide = TourGuide::find($id);
         if (!$tourGuide) {

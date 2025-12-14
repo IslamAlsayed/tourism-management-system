@@ -14,7 +14,7 @@ class Meal extends Model
     use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
-        'description',
+        'notes',
     ];
 
     protected $fillable = [
@@ -22,7 +22,7 @@ class Meal extends Model
         'uuid',
         'name',
         'name_ar',
-        'description',
+        'notes',
         'is_included',
         'is_active',
     ];

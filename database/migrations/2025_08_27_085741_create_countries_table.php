@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->unsignedBigInteger('timezone_id')->nullable();
@@ -20,8 +20,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
-            $table->text('state_id')->nullable();
-            $table->text('city_id')->nullable();
             $table->string('iso2', 2)->nullable();
             $table->string('iso3', 3)->nullable();
             $table->integer('numeric_code')->nullable();

@@ -57,12 +57,26 @@
                                 @enderror
                             </div>
 
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.edit', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                                'record' => $nationality,
-                            ])
+                            <div class="align-self-end">
+                                <label for="country_id" class="kt-label flex items-center justify-between mb-2">
+                                    {{ __('main.countries') }}
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-select basic-single">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ $nationality->country_id == $country->id ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                         </div>
 
                         <!-- Is active -->
@@ -131,18 +145,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
-                filterByForeignId("subregion_id", "country", "country_id", "edit");
-                filterByForeignId("country_id", "state", "state_id", "edit");
-                filterByForeignId("state_id", "city", "city_id", "edit");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

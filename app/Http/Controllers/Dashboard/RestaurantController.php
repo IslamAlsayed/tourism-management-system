@@ -41,6 +41,15 @@ class RestaurantController extends Controller
         return redirect()->route('restaurants.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
     }
 
+    public function show($id)
+    {
+        $restaurant = Restaurant::with(['type', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
+        if (!$restaurant) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
+        }
+        return view('pages.dashboard.restaurants.show', compact('restaurant'));
+    }
+
     public function edit($id)
     {
         $restaurant = Restaurant::find($id);

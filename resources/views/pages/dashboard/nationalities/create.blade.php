@@ -53,11 +53,26 @@
                                 @enderror
                             </div>
 
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.create', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                            ])
+                            <div class="align-self-end">
+                                <label for="country_id" class="kt-label flex items-center justify-between mb-2">
+                                    {{ __('main.countries') }}
+                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-select basic-single">
+                                    <option value="" disabled selected></option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ old('country_id') == $country->id ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <!-- Is active -->
@@ -68,6 +83,7 @@
                                     'name' => 'is_active',
                                     'id' => 'is_active',
                                     'value' => '1',
+                                    'checked' => 1,
                                     'label' => __('main.is_active'),
                                 ])
                             </div>
@@ -125,18 +141,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

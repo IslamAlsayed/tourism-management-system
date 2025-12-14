@@ -5,7 +5,7 @@ namespace App\Http\Requests\Client;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientUpdateRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -91,6 +91,7 @@ class ClientUpdateRequest extends FormRequest
 
             // Status and preferences
             'status' => ['nullable', 'in:active,inactive,pending,blacklisted'],
+            'is_active' => 'nullable|boolean',
             'notes' => ['nullable', 'string', 'max:1700'],
         ];
     }

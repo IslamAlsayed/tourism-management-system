@@ -164,9 +164,8 @@
                                     <!-- Department -->
                                     <div class="">
                                         <label for="department" class="kt-label mb-2">{{ __('main.department') }}</label>
-                                        <select name="department" id="department" class="kt-input h-[45px]"
-                                            special-search>
-                                            <option value="">{{ __('main.select_department') }}</option>
+                                        <select name="department" id="department" class="kt-input basic-single">
+                                            <option value="" disabled selected></option>
                                             @foreach (config('helpers.departments') as $key => $value)
                                                 <option value="{{ $key }}"
                                                     {{ old('department') == $key ? 'selected' : '' }}>
@@ -182,8 +181,8 @@
                                     <!-- Position -->
                                     <div class="">
                                         <label for="position" class="kt-label mb-2">{{ __('main.position') }}</label>
-                                        <select name="position" id="position" class="kt-input h-[45px]" special-search>
-                                            <option value="">{{ __('main.select_position') }}</option>
+                                        <select name="position" id="position" class="kt-input basic-single">
+                                            <option value="" disabled selected></option>
                                             @foreach (config('helpers.positions') as $key => $value)
                                                 <option value="{{ $key }}"
                                                     {{ old('position') == $key ? 'selected' : '' }}>{{ ucfirst($value) }}
@@ -227,9 +226,8 @@
                                         <div class="">
                                             <label for="timezone_id"
                                                 class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                            <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]"
-                                                special-search>
-                                                <option value="">--</option>
+                                            <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
+                                                <option value="" disabled selected></option>
                                                 @foreach ($timezones as $zone)
                                                     <option value="{{ $zone['id'] }}"
                                                         {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
@@ -244,7 +242,8 @@
                                     </div>
 
                                     <!-- User Flags -->
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                                    {{-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-4"> --}}
+                                    <div class="flex items-center flex-wrap gap-6">
                                         <div class="flex items-center gap-3">
                                             <input type="hidden" name="is_admin" value="0">
                                             @include('components.elements.checkbox-button', [
@@ -260,6 +259,7 @@
                                                 'name' => 'is_active',
                                                 'id' => 'is_active',
                                                 'value' => '1',
+                                                'checked' => 1,
                                                 'label' => __('main.is_active'),
                                             ])
                                         </div>

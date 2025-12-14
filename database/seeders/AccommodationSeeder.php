@@ -11,6 +11,7 @@ use App\Models\Accommodation;
 use App\Models\AccommodationSeason;
 use App\Models\AccommodationRoomRate;
 use App\Models\AccommodationMealRate;
+use App\Models\AccommodationSupplement;
 
 class AccommodationSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class AccommodationSeeder extends Seeder
     public function run(): void
     {
         // Delete existing data (using delete() instead of truncate() to handle rich_texts)
+        AccommodationSupplement::query()->delete();
         AccommodationMealRate::query()->delete();
         AccommodationRoomRate::query()->delete();
         AccommodationSeason::query()->delete();
@@ -77,14 +79,6 @@ class AccommodationSeeder extends Seeder
 
         // Create 5 Accommodations and link rates
         Accommodation::factory(5)->create()->each(function ($accommodation) use ($seasons, $rooms, $meals) {
-            // Link accommodation with 2-3 random types via accommodation_types pivot
-            // $linkedTypes = $types->random(rand(2, 3));
-            // foreach ($linkedTypes as $type) {
-            //     $accommodation->types()->attach($type->id, [
-            //         'notes' => 'Featured as a ' . $type->name,
-            //     ]);
-            // }
-
             // Link accommodation with random seasons (2-3 seasons per accommodation)
             $linkedSeasons = $seasons->random(rand(2, 3));
             foreach ($linkedSeasons as $season) {
@@ -116,11 +110,47 @@ class AccommodationSeeder extends Seeder
                     ]);
                 });
             });
+
+
+            // Create 2-4 supplements for each accommodation
+            $supplementNames = [
+                'Lunch Supplement',
+                'New Year Gala Dinner',
+                'Lunch Supplement',
+                'Sea View Supplement',
+                'Pool view Supplement',
+                'Meal Supplement',
+                'Breakfast meal Supplement',
+
+                'Sea View Upgrade',
+                'Airport Transfer',
+                'Late Check-out',
+                'Extra Bed',
+                'Breakfast Upgrade',
+                'Spa Package',
+                'City Tour',
+                'Welcome Drink',
+            ];
+
+            foreach ($supplementNames as $supplementName) {
+                AccommodationSupplement::create([
+                    'accommodation_id' => $accommodation->id,
+                    'name' => $supplementName,
+                    'name_ar' => $supplementName, // For simplicity, using same name for Arabic
+                    'price' => rand(10, 100),
+                    'is_per_person' => true,
+                    'is_mandatory' => true,
+                    'applicable_date' => now()->addDays(rand(1, 30)),
+                    'is_active' => true,
+                    'notes' => 'Supplement for ' . $accommodation->name,
+                ]);
+            }
         });
 
         $accommodationSeasonCount = AccommodationSeason::count();
+        $supplementsCount = AccommodationSupplement::count();
 
         $this->command->info('Accommodation data seeded successfully!');
-        $this->command->info("Created: " . count($typeNames) . " Types, 5 Seasons, 5 Room Types, 5 Meal Types, 5 Accommodations, {$accommodationSeasonCount} Accommodation-Season Links, Accommodation-Type Links, 5 Room Rates, 5 Meal Rates");
+        $this->command->info("Created: " . count($typeNames) . " Types, 5 Seasons, 5 Room Types, 5 Meal Types, 5 Accommodations, {$accommodationSeasonCount} Accommodation-Season Links, Accommodation-Type Links, 5 Room Rates, 5 Meal Rates, {$supplementsCount} Supplements");
     }
 }

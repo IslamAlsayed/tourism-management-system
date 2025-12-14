@@ -10,6 +10,9 @@
                 @endif
             </th>
             @foreach ($columns as $column)
+                @if ($column == 'uuid' && $settings->app_show_uuid_column == 0)
+                    @continue
+                @endif
                 <th wire:click="sortBy('{{ $column }}')"
                     title="{{ __('main.sort_by') }} {{ __('main.' . $column) }}"
                     class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 transition-colors">
@@ -34,6 +37,7 @@
                 </td>
                 @foreach ($columns as $column)
                     @include('components.static-columns', [
+                        'table' => 'users',
                         'column' => $column,
                         'model' => $item,
                         'search' => $search,
@@ -42,6 +46,11 @@
                 @endforeach
                 <td class="px-4 py-2 text-end">
                     <div class="flex gap-2 justify-end">
+                        @include('components.elements.show-button', [
+                            'models' => $models,
+                            'id' => $item->id,
+                        ])
+
                         @if (isset($models) && $models != 'notifications')
                             @include('components.elements.edit-button', [
                                 'models' => $models,

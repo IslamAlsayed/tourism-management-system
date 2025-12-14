@@ -93,10 +93,10 @@ class TourGuides extends Component
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
-        foreach ($data as $tourGuides) {
-            $tourGuides['states'] = $tourGuides->states();
-            $tourGuides['cities'] = $tourGuides->cities();
-        }
+        // foreach ($data as $tourGuides) {
+        //     $tourGuides['states'] = $tourGuides->states();
+        //     $tourGuides['cities'] = $tourGuides->cities();
+        // }
         return view('livewire.tour-guides', ['data' => $data, 'totalCount' => $this->totalCount ?: TourGuide::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

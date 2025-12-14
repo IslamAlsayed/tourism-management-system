@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('airlines', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
 
             // Airport Codes
             $table->string('icao', 4)->unique()->nullable(); // ICAO code (4 letters)

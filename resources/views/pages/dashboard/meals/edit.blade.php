@@ -29,7 +29,7 @@
                     @method('PUT')
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
-                        <div>
+                        <div class="align-self-end">
                             <label for="name" class="kt-label">{{ __('main.name') }}</label>
                             <input type="text" class="kt-input h-[45px]" id="name" name="name"
                                 value="{{ $meal->name }}">
@@ -38,7 +38,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
                             <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
                                 value="{{ $meal->name_ar }}">

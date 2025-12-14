@@ -127,6 +127,7 @@
                                     'name' => 'is_active',
                                     'id' => 'is_active',
                                     'value' => '1',
+                                    'checked' => 1,
                                     'label' => __('main.yes'),
                                 ])
                             </div>

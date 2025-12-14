@@ -37,6 +37,7 @@ use App\Http\Controllers\Dashboard\AccommodationRateController;
 use App\Http\Controllers\Dashboard\Transportation\BusTypeController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyController;
 use App\Http\Controllers\Dashboard\Transportation\VehicleController;
+use App\Http\Controllers\Dashboard\AccommodationSupplementController;
 use App\Http\Controllers\Dashboard\Transportation\DepartmentController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyBusTypeController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
@@ -157,6 +158,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('seasons', SeasonController::class)->names('seasons');
     Route::resource('rooms', RoomController::class)->names('rooms');
     Route::resource('meals', MealController::class)->names('meals');
+    Route::resource('accommodations-supplements', AccommodationSupplementController::class)->names('accommodations-supplements');
 
     Route::prefix('accommodations-rates')->name('accommodations-rates.')->group(function () {
         Route::get('/', [AccommodationRateController::class, 'index'])->name('index');
@@ -164,7 +166,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::post('/store-room', [AccommodationRateController::class, 'storeRoomRate'])->name('store-room');
         Route::get('/edit-room/{id}', [AccommodationRateController::class, 'editRoomRate'])->name('room.edit');
         Route::put('/update-room/{id}', [AccommodationRateController::class, 'updateRoomRate'])->name('update-room');
-
         Route::get('/create-meal', [AccommodationRateController::class, 'createMealRate'])->name('create-meal');
         Route::post('/store-meal', [AccommodationRateController::class, 'storeMealRate'])->name('store-meal');
         Route::get('/edit-meal/{id}', [AccommodationRateController::class, 'editMealRate'])->name('meal.edit');
@@ -202,15 +203,17 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::get('/analytics', [ReportsController::class, 'analytics'])->name('analytics');
     });
 
-    // === SYSTEM SETTINGS ===
-    Route::get('settings/general', [SettingsController::class, 'general'])->name('settings.general');
-    Route::get('settings/security', [SettingsController::class, 'security'])->name('settings.security');
-    Route::get('settings/notifications', [SettingsController::class, 'notifications'])->name('settings.notifications');
-    Route::get('settings/backup', [SettingsController::class, 'backup'])->name('settings.backup');
-    Route::get('settings/booking', [SettingsController::class, 'booking'])->name('settings.booking');
-    Route::get('settings/integration', [SettingsController::class, 'integration'])->name('settings.integration');
-    Route::get('settings/system', [SettingsController::class, 'system'])->name('settings.system');
-    Route::post('settings/backup/create', [SettingsController::class, 'createBackup'])->name('settings.backup.create');
+    // === SYSTEM SETTINGS ===    
+    Route::prefix('settings')->name('settings.')->group(function () {
+        Route::get('general', [SettingsController::class, 'general'])->name('general');
+        Route::get('security', [SettingsController::class, 'security'])->name('security');
+        Route::get('notifications', [SettingsController::class, 'notifications'])->name('notifications');
+        Route::get('backup', [SettingsController::class, 'backup'])->name('backup');
+        Route::get('booking', [SettingsController::class, 'booking'])->name('booking');
+        Route::get('integration', [SettingsController::class, 'integration'])->name('integration');
+        Route::get('system', [SettingsController::class, 'system'])->name('system');
+        Route::post('backup/create', [SettingsController::class, 'createBackup'])->name('backup.create');
+    });
     Route::resource('settings', SettingsController::class)->names('settings');
 
     // === ACTIVITY LOG ===

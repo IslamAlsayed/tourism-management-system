@@ -12,10 +12,10 @@ return new class extends Migration {
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
             $table->string('name'); // e.g., Breakfast, Lunch, Dinner, Full Board, Half Board
             $table->string('name_ar')->nullable();
-            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
             $table->boolean('is_included')->default(false); // هل مشمولة في السعر الأساسي
             $table->boolean('is_active')->default(true);
             $table->timestamps();

@@ -28,8 +28,8 @@
                     @csrf
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        <div class="">
-                            <label for="accommodation_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="accommodation_id" class="kt-label flex items-center justify-between mb-2">
                                 <span class="flex items-center gap-2">
                                     <span>{{ __('main.accommodations') }}</span>
                                     <span class="text-red-600 pt-2 text-2xl">*</span>
@@ -39,6 +39,7 @@
                                 </a>
                             </label>
                             <select name="accommodation_id" id="accommodation_id" class="kt-select basic-single" required>
+                                <option value="" disabled selected></option>
                                 @foreach ($accommodations as $accommodation)
                                     <option value="{{ $accommodation->id }}"
                                         {{ old('accommodation_id') == $accommodation->id ? 'selected' : '' }}>
@@ -51,8 +52,8 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="season_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="season_id" class="kt-label flex items-center justify-between mb-2">
                                 <span class="flex items-center gap-2">
                                     <span>{{ __('main.seasons') }}</span>
                                     <span class="text-red-600 pt-2 text-2xl">*</span>
@@ -62,6 +63,7 @@
                                 </a>
                             </label>
                             <select name="season_id" id="season_id" class="kt-select basic-single" required>
+                                <option value="" disabled selected></option>
                                 @foreach ($seasons as $season)
                                     <option value="{{ $season->id }}"
                                         {{ old('season_id') == $season->id ? 'selected' : '' }}>
@@ -74,8 +76,8 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="room_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="room_id" class="kt-label flex items-center justify-between mb-2">
                                 <span class="flex items-center gap-2">
                                     <span>{{ __('main.rooms') }}</span>
                                     <span class="text-red-600 pt-2 text-2xl">*</span>
@@ -85,6 +87,7 @@
                                 </a>
                             </label>
                             <select name="room_id" id="room_id" class="kt-select basic-single" required>
+                                <option value="" disabled selected></option>
                                 @foreach ($rooms as $room)
                                     <option value="{{ $room->id }}"
                                         {{ old('room_id') == $room->id ? 'selected' : '' }}>
@@ -97,14 +100,15 @@
                             @enderror
                         </div>
 
-                        <div class="">
-                            <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
+                        <div class="align-self-end">
+                            <label for="currency_id" class="kt-label flex items-center justify-between mb-2">
                                 {{ __('main.currencies') }}
                                 <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
                                     {{ __('main.add') }}
                                 </a>
                             </label>
                             <select name="currency_id" id="currency_id" class="kt-select basic-single">
+                                <option value="" disabled selected></option>
                                 @foreach ($currencies as $currency)
                                     <option value="{{ $currency->id }}"
                                         {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
@@ -120,7 +124,7 @@
 
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        <div>
+                        <div class="align-self-end">
                             <label for="price_per_person_double" class="kt-label required">
                                 {{ __('main.price_per_person_double') }}
                                 <span class="text-red-600 pt-2 text-2xl">*</span>
@@ -133,7 +137,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="single_room_supplement"
                                 class="kt-label">{{ __('main.single_room_supplement') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="single_room_supplement"
@@ -144,7 +148,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="triple_room_discount"
                                 class="kt-label">{{ __('main.triple_room_discount') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="triple_room_discount"
@@ -154,7 +158,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="third_person_price" class="kt-label">{{ __('main.third_person_price') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="third_person_price"
                                 name="third_person_price" value="{{ old('third_person_price', 0) }}" min="0">
@@ -163,7 +167,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="extra_bed_price" class="kt-label">{{ __('main.extra_bed_price') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="extra_bed_price"
                                 name="extra_bed_price" value="{{ old('extra_bed_price', 0) }}" min="0">
@@ -172,7 +176,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="sea_view_supplement"
                                 class="kt-label">{{ __('main.sea_view_supplement') }}</label>
                             <input type="number" step="0.01" class="kt-input h-[45px]" id="sea_view_supplement"
@@ -195,7 +199,7 @@
                                 'name' => 'is_active',
                                 'id' => 'is_active',
                                 'value' => '1',
-                                'checked' => old('is_active', true),
+                                'checked' => 1,
                                 'label' => __('main.is_active'),
                             ])
                         </div>

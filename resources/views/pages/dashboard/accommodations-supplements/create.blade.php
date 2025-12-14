@@ -1,0 +1,155 @@
+@extends('layouts.master')
+
+@section('title', __('main.create_type', ['type' => __('main.supplement')]))
+
+@section('content')
+    <div class="kt-container-fixed">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
+            <div class="flex flex-col justify-center gap-2">
+                <h1 class="text-xl font-medium leading-none text-mono">
+                    {{ __('main.create_type', ['type' => __('main.supplement')]) }}
+                </h1>
+                <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
+                    {{ __('main.create_type_description', ['type' => __('main.supplement')]) }}
+                </div>
+            </div>
+            <div class="flex items-center gap-2.5">
+                <a href="{{ route('accommodations-supplements.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_types', ['types' => __('main.supplements')]) }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-container-fixed">
+        <form action="{{ route('accommodations-supplements.store') }}" method="POST">
+            @csrf
+            <div class="grid gap-4 lg:gap-6">
+
+                <!-- Basic Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4 pb-0">
+                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                            <!-- Accommodation -->
+                            <div class="align-self-end">
+                                <label for="accommodation_id" class="kt-label required">
+                                    {{ __('main.accommodation') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <select name="accommodation_id" id="accommodation_id" class="kt-select basic-single"
+                                    required>
+                                    <option value="" disabled selected></option>
+                                    @foreach ($accommodations as $accommodation)
+                                        <option value="{{ $accommodation->id }}"
+                                            {{ old('accommodation_id') == $accommodation->id ? 'selected' : '' }}>
+                                            {{ $accommodation->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('accommodation_id')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Price -->
+                            <div class="align-self-end">
+                                <label for="price" class="kt-label required">
+                                    {{ __('main.price') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <input type="number" name="price" id="price" class="kt-input h-[45px]" required
+                                    step="0.01" value="{{ old('price') }}" placeholder="0.00">
+                                @error('price')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                            <!-- Name -->
+                            <div class="align-self-end">
+                                <label for="name" class="kt-label required">
+                                    {{ __('main.name') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ old('name') }}" placeholder="Enter supplement name">
+                                @error('name')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Name Arabic -->
+                            <div class="align-self-end">
+                                <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}" placeholder="أدخل اسم الإضافة">
+                                @error('name_ar')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                            <!-- Applicable Date -->
+                            <div class="align-self-end">
+                                <label for="applicable_date" class="kt-label">
+                                    {{ __('main.applicable_date') }}
+                                </label>
+                                <input type="date" name="applicable_date" id="applicable_date" class="kt-input h-[45px]"
+                                    value="{{ old('applicable_date') }}">
+                                @error('applicable_date')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Checkboxes -->
+                        <div class="flex gap-6 mb-4">
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_active" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_active',
+                                    'id' => 'is_active',
+                                    'value' => '1',
+                                    'checked' => 1,
+                                    'label' => __('main.is_active'),
+                                ])
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_per_person" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_per_person',
+                                    'id' => 'is_per_person',
+                                    'value' => '1',
+                                    'label' => __('main.is_per_person'),
+                                ])
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_mandatory" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_mandatory',
+                                    'id' => 'is_mandatory',
+                                    'value' => '1',
+                                    'label' => __('main.is_mandatory'),
+                                ])
+                            </div>
+                        </div>
+
+                        {{-- Notes --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'notes',
+                            'value' => old('notes'),
+                        ])
+                    </div>
+                </div>
+
+                <!-- Save Submit Buttons -->
+                @include('components.elements.save-submit', ['models' => 'accommodations-supplements'])
+            </div>
+        </form>
+    </div>
+@endsection

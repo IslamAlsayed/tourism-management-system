@@ -20,8 +20,6 @@ class Country extends Model
         'name_ar',
         'iso2',
         'iso3',
-        'state_id',
-        'city_id',
         'numeric_code',
         'phone_code',
         'capital',
@@ -40,8 +38,6 @@ class Country extends Model
         'currency_id',
         'region_id',
         'subregion_id',
-        // 'state_id',
-        // 'city_id',
     ];
 
     /**
@@ -85,51 +81,15 @@ class Country extends Model
         return $this->belongsTo(Subregion::class);
     }
 
+    // One-to-Many: Country has many States
     public function states()
     {
-        if (!$this->state_id)
-            return [];
-        return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
+        return $this->hasMany(State::class);
     }
 
-    public function getStateListAttribute()
-    {
-        if (!$this->state_id)
-            return [];
-        return State::whereIn('id', explode(',', $this->state_id))->get(['id', 'name'])->toArray();
-    }
-
-    public function getStateIdAttribute($value)
-    {
-        return $value ?: "";
-    }
-
-    public function setStateIdAttribute($value)
-    {
-        $this->attributes['state_id'] = is_array($value) ? implode(',', $value) : $value;
-    }
-
+    // One-to-Many: Country has many Cities
     public function cities()
     {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
-    }
-
-    public function getCityListAttribute()
-    {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
-    }
-
-    public function getCityIdAttribute($value)
-    {
-        return $value ?: "";
-    }
-
-    public function setCityIdAttribute($value)
-    {
-        $this->attributes['city_id'] = is_array($value) ? implode(',', $value) : $value;
+        return $this->hasMany(City::class);
     }
 }

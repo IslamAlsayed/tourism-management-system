@@ -12,14 +12,13 @@ return new class extends Migration {
     {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->unsignedBigInteger('timezone_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
-            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('iso2')->nullable();
             $table->string('iso3')->nullable();
             $table->string('fips_code')->nullable();

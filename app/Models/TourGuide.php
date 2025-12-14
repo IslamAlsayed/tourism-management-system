@@ -19,7 +19,6 @@ class TourGuide extends Model
     protected $fillable = [
         'id',
         'uuid',
-        'photo',
         'name',
         'name_ar',
         'email',
@@ -27,6 +26,7 @@ class TourGuide extends Model
         'mobile_02',
         'home_city',
         'birth_year',
+        'photo',
         'gender',
         'national_guide_id',
         'tourism_ministry_code',
@@ -34,8 +34,9 @@ class TourGuide extends Model
         'hd_day_fees',
         'extra_fees_1',
         'extra_fees_2',
-        'status',
+        'is_active',
         'notes',
+        'currency_id',
         'guide_type_id',
         'region_id',
         'subregion_id',
@@ -49,7 +50,7 @@ class TourGuide extends Model
      */
     public function getRelationshipNames()
     {
-        return ['guide_type', 'region', 'subregion', 'country'];
+        return ['currency', 'guide_type', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     /**
@@ -57,7 +58,12 @@ class TourGuide extends Model
      */
     public function getExcludedColumns()
     {
-        return ['guide_type_id', 'region_id', 'subregion_id', 'country_id'];
+        return ['currency_id', 'guide_type_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class, 'currency_id');
     }
 
     public function guide_type()
@@ -65,9 +71,9 @@ class TourGuide extends Model
         return $this->belongsTo(TourGuideType::class, 'guide_type_id');
     }
 
-    public function tour_guide_languages()
+    public function tourGuideLanguages()
     {
-        return $this->belongsToMany(TourGuideLanguage::class, 'tour_guide_languages', 'tour_guide_id', 'language_id');
+        return $this->hasMany(TourGuideLanguage::class, 'tour_guide_id');
     }
 
     public function region()
@@ -85,51 +91,61 @@ class TourGuide extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function states()
+    public function state()
     {
-        if (!$this->state_id)
-            return [];
-        return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
+        return $this->belongsTo(State::class);
     }
 
-    public function getStateListAttribute()
+    public function city()
     {
-        if (!$this->state_id)
-            return [];
-        return State::whereIn('id', explode(',', $this->state_id))->get(['id', 'name'])->toArray();
+        return $this->belongsTo(City::class);
     }
 
-    public function getStateIdAttribute($value)
-    {
-        return $value ?: "";
-    }
+    // public function states()
+    // {
+    //     if (!$this->state_id)
+    //         return [];
+    //     return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
+    // }
 
-    public function setStateIdAttribute($value)
-    {
-        $this->attributes['state_id'] = is_array($value) ? implode(',', $value) : $value;
-    }
+    // public function getStateListAttribute()
+    // {
+    //     if (!$this->state_id)
+    //         return [];
+    //     return State::whereIn('id', explode(',', $this->state_id))->get(['id', 'name'])->toArray();
+    // }
 
-    public function cities()
-    {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
-    }
+    // public function getStateIdAttribute($value)
+    // {
+    //     return $value ?: "";
+    // }
 
-    public function getCityListAttribute()
-    {
-        if (!$this->city_id)
-            return [];
-        return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
-    }
+    // public function setStateIdAttribute($value)
+    // {
+    //     $this->attributes['state_id'] = is_array($value) ? implode(',', $value) : $value;
+    // }
 
-    public function getCityIdAttribute($value)
-    {
-        return $value ?: "";
-    }
+    // public function cities()
+    // {
+    //     if (!$this->city_id)
+    //         return [];
+    //     return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
+    // }
 
-    public function setCityIdAttribute($value)
-    {
-        $this->attributes['city_id'] = is_array($value) ? implode(',', $value) : $value;
-    }
+    // public function getCityListAttribute()
+    // {
+    //     if (!$this->city_id)
+    //         return [];
+    //     return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
+    // }
+
+    // public function getCityIdAttribute($value)
+    // {
+    //     return $value ?: "";
+    // }
+
+    // public function setCityIdAttribute($value)
+    // {
+    //     $this->attributes['city_id'] = is_array($value) ? implode(',', $value) : $value;
+    // }
 }

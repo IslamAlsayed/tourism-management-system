@@ -62,7 +62,7 @@ class Accommodation extends Model
 
     public function getRelationshipNames()
     {
-        return ['currency', 'type', 'seasons', 'roomRates', 'mealRates', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['currency', 'type', 'seasons', 'rooms', 'meals', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
@@ -83,19 +83,28 @@ class Accommodation extends Model
     // Many-to-Many: accommodation يمكن أن يكون له عدة seasons عبر جدول accommodation_seasons
     public function seasons()
     {
-        return $this->belongsToMany(Season::class, 'accommodation_seasons')->withTimestamps()->withPivot('notes');
+        // return $this->belongsToMany(Season::class, 'accommodation_seasons')->withTimestamps()->withPivot('notes');
+        return $this->hasMany(AccommodationSeason::class);
     }
 
     // One-to-Many: جدول accommodation_room_rates يحتوي على أسعار الغرف لكل موسم
-    public function roomRates()
+    public function rooms()
     {
-        return $this->belongsToMany(Room::class, 'accommodation_room_rates')->withTimestamps()->withPivot('notes');
+        // return $this->belongsToMany(Room::class, 'accommodation_room_rates')->withTimestamps()->withPivot('notes');
+        return $this->hasMany(AccommodationRoomRate::class);
     }
 
     // One-to-Many: جدول accommodation_meal_rates يحتوي على أسعار الوجبات لكل موسم
-    public function mealRates()
+    public function meals()
     {
-        return $this->belongsToMany(Meal::class, 'accommodation_meal_rates')->withTimestamps()->withPivot('notes');
+        // return $this->belongsToMany(Meal::class, 'accommodation_meal_rates')->withTimestamps()->withPivot('notes');
+        return $this->hasMany(AccommodationMealRate::class);
+    }
+
+    // One-to-Many: Accommodation has many supplements
+    public function supplements()
+    {
+        return $this->hasMany(AccommodationSupplement::class);
     }
 
     // public function nationalityRates()

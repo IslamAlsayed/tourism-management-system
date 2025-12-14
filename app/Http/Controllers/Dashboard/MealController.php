@@ -21,15 +21,31 @@ class MealController extends Controller
 
     public function store(StoreRequest $request)
     {
-        Meal::create($request->validated());
-        return redirect()->route('meals.index')->with('success', 'تم إنشاء نوع الوجبة بنجاح!');
+        $validated = $request->validated();
+        $meal = Meal::create($validated);
+        if ($meal) {
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.meal')]));
+            }
+            return redirect()->route('meals.index')->withSuccess(__('messages.type_created', ['type' => __('main.meal')]));
+        }
+        return redirect()->route('meals.index')->withError(__('messages.type_creation_failed', ['type' => __('main.meal')]));
+    }
+
+    public function show($id)
+    {
+        $meal = Meal::with(['mealRates'])->find($id);
+        if (!$meal) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal')]));
+        }
+        return view('pages.dashboard.meals.show', compact('meal'));
     }
 
     public function edit($id)
     {
         $meal = Meal::find($id);
         if (!$meal) {
-            return redirect()->route('meals.index')->with('error', 'نوع الوجبة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal')]));
         }
         return view('pages.dashboard.meals.edit', compact('meal'));
     }
@@ -38,24 +54,26 @@ class MealController extends Controller
     {
         $meal = Meal::find($id);
         if (!$meal) {
-            return redirect()->route('meals.index')->with('error', 'نوع الوجبة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal')]));
         }
-        $meal->update($request->validated());
-        return redirect()->route('meals.index')->with('success', 'تم تحديث نوع الوجبة بنجاح!');
+        $validated = $request->validated();
+        $updated = $meal->update($validated);
+        if ($updated) {
+            return redirect()->route('meals.index')->withSuccess(__('messages.type_updated', ['type' => __('main.meal')]));
+        }
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.meal')]));
     }
 
     public function destroy($id)
     {
         $meal = Meal::find($id);
         if (!$meal) {
-            return redirect()->route('meals.index')->with('error', 'نوع الوجبة غير موجود!');
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal')]));
         }
-        $meal->delete();
-        return redirect()->route('meals.index')->with('success', 'تم حذف نوع الوجبة بنجاح!');
-    }
-
-    public function importForm()
-    {
-        return view('pages.dashboard.meals.import');
+        $deleted = $meal->delete();
+        if ($deleted) {
+            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.meal')]));
+        }
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.meal')]));
     }
 }

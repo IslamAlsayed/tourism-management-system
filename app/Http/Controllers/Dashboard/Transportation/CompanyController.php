@@ -37,6 +37,15 @@ class CompanyController extends Controller
         return redirect()->route('transportation-companies.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
     }
 
+    public function show($id)
+    {
+        $transportationCompany = TransportationCompany::with(['creator', 'updater'])->find($id);
+        if (!$transportationCompany) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_company')]));
+        }
+        return view('pages.dashboard.transportation-companies.show', compact('transportationCompany'));
+    }
+
     public function edit($id)
     {
         $transportationCompany = TransportationCompany::find($id);

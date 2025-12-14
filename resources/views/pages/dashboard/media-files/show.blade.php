@@ -9,7 +9,7 @@
                 <p class="text-gray-600 mt-1">{{ $mediaFile->file_name }}</p>
             </div>
             <div class="flex items-center gap-3">
-                <a href="{{ route('media-files.edit', $mediaFile->id) }}" class="kt-btn kt-btn-primary">
+                <a href="{{ route('media-files.edit', $mediaFile->id) }}" class="kt-btn kt-btn-primary md:hidden">
                     <i class="ki-filled ki-pencil"></i>
                     {{ __('main.edit') }}
                 </a>

@@ -28,7 +28,7 @@
                     @csrf
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
-                        <div>
+                        <div class="align-self-end">
                             <label for="name" class="kt-label required">
                                 {{ __('main.name') }}
                                 <span class="text-red-600 text-2xl">*</span>
@@ -40,7 +40,7 @@
                             @enderror
                         </div>
 
-                        <div>
+                        <div class="align-self-end">
                             <label for="name_ar" class="kt-label"></label>
                             {{ __('main.name_ar') }}
                             <span class="text-red-600 text-2xl">*</span>
@@ -75,6 +75,7 @@
                                 'name' => 'is_active',
                                 'id' => 'is_active',
                                 'value' => '1',
+                                'checked' => 1,
                                 'label' => __('main.is_active'),
                             ])
                         </div>

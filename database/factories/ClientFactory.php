@@ -91,7 +91,7 @@ class ClientFactory extends Factory
 
             // Tracking
             'created_by' => User::inRandomOrder()->first()?->id ?? 1,
-            'updated_by' => null,
+            'updated_by' => 2,
             'created_at' => $this->faker->dateTimeBetween('-2 years', 'now'),
             'updated_at' => now(),
         ];

@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->string('wiki_data_id')->nullable();

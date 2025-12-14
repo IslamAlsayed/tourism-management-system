@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
             $table->string('name')->nullable();
             $table->string('code')->nullable();
             $table->string('symbol')->nullable();
