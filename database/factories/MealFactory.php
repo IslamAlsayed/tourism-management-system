@@ -30,7 +30,7 @@ class MealFactory extends Factory
             'name' => $type['name'],
             'name_ar' => $type['name_ar'],
             'is_included' => $type['included'],
-            'description' => fake()->paragraph(2),
+            'notes' => fake()->paragraph(2),
             'is_active' => fake()->boolean(90),
         ];
     }

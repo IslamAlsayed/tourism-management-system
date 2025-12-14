@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
             $table->string('wiki_data_id')->nullable();
