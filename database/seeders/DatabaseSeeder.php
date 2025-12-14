@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             CompleteDataSeeder::class,
             MediaFileSeeder::class, // Must be last to store all existing photos
             AccommodationSeeder::class,
+            TourGuideLanguageSeeder::class,
         ]);
     }
 }
