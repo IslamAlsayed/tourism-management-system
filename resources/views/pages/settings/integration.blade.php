@@ -35,7 +35,7 @@
                             </span>
                         </h3>
                     </div>
-                    <div class="kt-card-body">
+                    <div class="kt-card-body disabled">
                         <div class="space-y-6 p-4">
                             <div class="flex items-center justify-between gap-3">
                                 <div class="p-4 ps-0 rounded bg-info-light">
