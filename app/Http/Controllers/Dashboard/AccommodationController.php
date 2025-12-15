@@ -90,7 +90,7 @@ class AccommodationController extends Controller
 
     public function edit($id)
     {
-        $accommodation = Accommodation::with(['currency', 'type', 'seasons', 'roomRates.room', 'mealRates.meal', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
+        $accommodation = Accommodation::with(['currency', 'type', 'seasons', 'rooms', 'meals', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$accommodation) {
             return redirect()->route('accommodations.index')->withError('الإقامة غير موجودة!');
         }
@@ -102,13 +102,13 @@ class AccommodationController extends Controller
         })->toArray();
 
         $rooms = Room::orderBy('name')->get();
-        $roomsSelected = $accommodation->roomRates->map(function ($roomRate) {
-            return ['id' => $roomRate->room->id, 'name' => $roomRate->room->name];
+        $roomsSelected = $accommodation->rooms->map(function ($room) {
+            return ['id' => $room->id, 'name' => $room->name];
         })->toArray();
 
         $meals = Meal::orderBy('name')->get();
-        $mealsSelected = $accommodation->mealRates->map(function ($mealRate) {
-            return ['id' => $mealRate->meal->id, 'name' => $mealRate->meal->name];
+        $mealsSelected = $accommodation->meals->map(function ($meal) {
+            return ['id' => $meal->id, 'name' => $meal->name];
         })->toArray();
 
         $currencies = Currency::orderBy('code')->get();

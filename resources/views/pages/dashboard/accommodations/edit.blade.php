@@ -181,7 +181,7 @@
                             <p class="text-sm text-blue-800">
                                 <i class="ki-filled ki-information-2 text-blue-600 me-1"></i>
                                 <strong>{{ __('main.note') }}:</strong>
-                                {!! __('messages.accommodation_rates_records_info', ['link' => route('accommodation-rates.index')]) !!}
+                                {!! __('messages.accommodation_rates_records_info', ['link' => route('accommodations-rates.index')]) !!}
                             </p>
                         </div>
 
