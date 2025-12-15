@@ -2,8 +2,8 @@
     @component('includes.pagination-info', [
         'data' => $data,
         'columns' => $columns ?? [],
-        'title' => $filter == 'rooms' ? __('main.room_rates') : __('main.meal_rates'),
-        'entityName' => $filter == 'rooms' ? __('main.room_rate') : __('main.meal_rate'),
+        'title' => $filter == 'roomRate' ? __('main.room_rates') : __('main.meal_rates'),
+        'entityName' => $filter == 'roomRate' ? __('main.room_rate') : __('main.meal_rate'),
         'sortField' => $sortField ?? null,
         'searchValue' => $search ?? null,
         'showSearch' => true,
@@ -20,15 +20,15 @@
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,setFilter">
         <!-- Filters -->
         <div class="flex flex-wrap gap-2 mb-6 px-2 filterTable">
-            <button wire:click="setFilter('rooms')"
-                class="kt-btn btn-sm {{ $filter == 'rooms' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
+            <button wire:click="setFilter('roomRate')"
+                class="kt-btn btn-sm {{ $filter == 'roomRate' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
                 toggle-button style="user-select: none">
-                {{ __('main.room_rates') }} ({{ $roomsCount }})
+                {{ __('main.room_rates') }} ({{ $roomRatesCount }})
             </button>
-            <button wire:click="setFilter('meals')"
-                class="kt-btn btn-sm {{ $filter == 'meals' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
+            <button wire:click="setFilter('mealRate')"
+                class="kt-btn btn-sm {{ $filter == 'mealRate' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
                 toggle-button style="user-select: none">
-                {{ __('main.meal_rates') }} ({{ $mealsCount }})
+                {{ __('main.meal_rates') }} ({{ $mealRatesCount }})
             </button>
         </div>
 
@@ -38,7 +38,7 @@
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => $filter == 'rooms' ? 'rooms' : 'meals',
+                    'models' => $filter == 'roomRate' ? 'accommodations-rates.room' : 'accommodations-rates.meal',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent

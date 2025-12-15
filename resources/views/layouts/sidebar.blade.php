@@ -26,7 +26,7 @@
     </div>
 
     {{-- Sidebar Content --}}
-    <div class="kt-sidebar-content flex grow shrink-0 py-5 pe-2" id="sidebar_content">
+    <div class="kt-sidebar-content flex grow shrink-0 py-5" id="sidebar_content">
         <div class="kt-scrollable-y-hover grow shrink-0 flex ps-2 lg:ps-5 pe-1 lg:pe-3" style="padding-inline-end: 0"
             data-kt-scrollable="true" data-kt-scrollable-dependencies="#sidebar_header" data-kt-scrollable-height="auto"
             data-kt-scrollable-offset="0px" data-kt-scrollable-wrappers="#sidebar_content" id="sidebar_scrollable">
