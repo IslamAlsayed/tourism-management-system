@@ -290,25 +290,6 @@ class TouristSite extends Model
         return $query->whereJsonContains('facilities', $facility);
     }
 
-    /**
-     * Accessors & Mutators
-     */
-
-    public function getFacilitiesAttribute()
-    {
-        return $this->attributes['facilities'] ? json_decode($this->attributes['facilities'], true) : [];
-    }
-
-    public function getActivitiesAttribute()
-    {
-        return $this->attributes['activities'] ? json_decode($this->attributes['activities'], true) : [];
-    }
-
-    public function getServicesAttribute()
-    {
-        return $this->attributes['services'] ? json_decode($this->attributes['services'], true) : [];
-    }
-
     // Get display name (with Arabic if available)
     public function getDisplayNameAttribute()
     {

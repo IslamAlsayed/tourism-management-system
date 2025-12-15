@@ -94,10 +94,10 @@ class Restaurants extends Component
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
-        foreach ($data as $restaurant) {
-            $restaurant['states'] = $restaurant->states();
-            $restaurant['cities'] = $restaurant->cities();
-        }
+        // foreach ($data as $restaurant) {
+        //     $restaurant['states'] = $restaurant->states();
+        //     $restaurant['cities'] = $restaurant->cities();
+        // }
         return view('livewire.restaurants', ['data' => $data, 'totalCount' => $this->totalCount ?: Restaurant::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

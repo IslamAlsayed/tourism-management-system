@@ -404,6 +404,50 @@ return [
                     'route' => 'import.data',
                     'parameters' => ['models' => 'restaurants'],
                 ],
+                [
+                    'title' => 'meals',
+                    'icon' => 'fa-solid fa-utensils',
+                    'children' => [
+                        [
+                            'title' => 'all meals',
+                            'icon' => 'fa-solid fa-bowl-food',
+                            'route' => '#',
+                        ],
+                        [
+                            'title' => 'create meal',
+                            'icon' => 'fa-solid fa-square-plus',
+                            'route' => '#',
+                        ],
+                        [
+                            'title' => 'import meals',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => '#',
+                            'parameters' => ['models' => 'meals'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'meals rates',
+                    'icon' => 'fa-solid fa-dollar-sign',
+                    'children' => [
+                        [
+                            'title' => 'all meals rates',
+                            'icon' => 'fa-solid fa-chart-line',
+                            'route' => '#',
+                        ],
+                        [
+                            'title' => 'create meal rate',
+                            'icon' => 'fa-solid fa-utensils',
+                            'route' => '#',
+                        ],
+                        [
+                            'title' => 'import meals rates',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => '#',
+                            'parameters' => ['models' => 'meals-rates'],
+                        ],
+                    ],
+                ],
             ],
         ],
 

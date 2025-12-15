@@ -254,7 +254,7 @@
                                         'name' => 'wheelchair_accessible',
                                         'id' => 'wheelchair_accessible',
                                         'value' => '1',
-                                        'checked' => in_array('wheelchair_accessible', $touristSite->facilities),
+                                        'checked' => $touristSite->wheelchair_accessible,
                                         'label' => __('main.wheelchair_accessible'),
                                     ])
                                 </div>
@@ -264,7 +264,7 @@
                                         'name' => 'free_wifi',
                                         'id' => 'free_wifi',
                                         'value' => '1',
-                                        'checked' => in_array('free_wifi', $touristSite->facilities),
+                                        'checked' => $touristSite->free_wifi,
                                         'label' => __('main.free_wifi'),
                                     ])
                                 </div>
@@ -274,7 +274,7 @@
                                         'name' => 'parking',
                                         'id' => 'parking',
                                         'value' => '1',
-                                        'checked' => in_array('parking', $touristSite->facilities),
+                                        'checked' => $touristSite->parking,
                                         'label' => __('main.parking'),
                                     ])
                                 </div>
@@ -284,7 +284,7 @@
                                         'name' => 'restrooms',
                                         'id' => 'restrooms',
                                         'value' => '1',
-                                        'checked' => in_array('restrooms', $touristSite->facilities),
+                                        'checked' => $touristSite->restrooms,
                                         'label' => __('main.restrooms'),
                                     ])
                                 </div>
@@ -294,7 +294,7 @@
                                         'name' => 'restaurants',
                                         'id' => 'restaurants',
                                         'value' => '1',
-                                        'checked' => in_array('restaurants', $touristSite->facilities),
+                                        'checked' => $touristSite->restaurants,
                                         'label' => __('main.restaurants'),
                                     ])
                                 </div>
@@ -304,7 +304,7 @@
                                         'name' => 'gift_shop',
                                         'id' => 'gift_shop',
                                         'value' => '1',
-                                        'checked' => in_array('gift_shop', $touristSite->facilities),
+                                        'checked' => $touristSite->gift_shop,
                                         'label' => __('main.gift_shop'),
                                     ])
                                 </div>
@@ -314,7 +314,7 @@
                                         'name' => 'guided_tours',
                                         'id' => 'guided_tours',
                                         'value' => '1',
-                                        'checked' => in_array('guided_tours', $touristSite->facilities),
+                                        'checked' => $touristSite->guided_tours,
                                         'label' => __('main.guided_tours'),
                                     ])
                                 </div>
@@ -324,7 +324,7 @@
                                         'name' => 'audio_guide',
                                         'id' => 'audio_guide',
                                         'value' => '1',
-                                        'checked' => in_array('audio_guide', $touristSite->facilities),
+                                        'checked' => $touristSite->audio_guide,
                                         'label' => __('main.audio_guide'),
                                     ])
                                 </div>
@@ -341,7 +341,7 @@
                                         'name' => 'photography',
                                         'id' => 'photography',
                                         'value' => '1',
-                                        'checked' => in_array('photography', $touristSite->activities),
+                                        'checked' => $touristSite->photography,
                                         'label' => __('main.photography'),
                                     ])
                                 </div>
@@ -351,7 +351,7 @@
                                         'name' => 'hiking',
                                         'id' => 'hiking',
                                         'value' => '1',
-                                        'checked' => in_array('hiking', $touristSite->activities),
+                                        'checked' => $touristSite->hiking,
                                         'label' => __('main.hiking'),
                                     ])
                                 </div>
@@ -361,7 +361,7 @@
                                         'name' => 'swimming',
                                         'id' => 'swimming',
                                         'value' => '1',
-                                        'checked' => in_array('swimming', $touristSite->activities),
+                                        'checked' => $touristSite->swimming,
                                         'label' => __('main.swimming'),
                                     ])
                                 </div>
@@ -371,7 +371,7 @@
                                         'name' => 'camping',
                                         'id' => 'camping',
                                         'value' => '1',
-                                        'checked' => in_array('camping', $touristSite->activities),
+                                        'checked' => $touristSite->camping,
                                         'label' => __('main.camping'),
                                     ])
                                 </div>
@@ -381,7 +381,7 @@
                                         'name' => 'shopping',
                                         'id' => 'shopping',
                                         'value' => '1',
-                                        'checked' => in_array('shopping', $touristSite->activities),
+                                        'checked' => $touristSite->shopping,
                                         'label' => __('main.shopping'),
                                     ])
                                 </div>
@@ -391,7 +391,7 @@
                                         'name' => 'dining',
                                         'id' => 'dining',
                                         'value' => '1',
-                                        'checked' => in_array('dining', $touristSite->activities),
+                                        'checked' => $touristSite->dining,
                                         'label' => __('main.dining'),
                                     ])
                                 </div>
@@ -401,7 +401,7 @@
                                         'name' => 'entertainment',
                                         'id' => 'entertainment',
                                         'value' => '1',
-                                        'checked' => in_array('entertainment', $touristSite->activities),
+                                        'checked' => $touristSite->entertainment,
                                         'label' => __('main.entertainment'),
                                     ])
                                 </div>
@@ -411,7 +411,7 @@
                                         'name' => 'educational_tours',
                                         'id' => 'educational_tours',
                                         'value' => '1',
-                                        'checked' => in_array('educational_tours', $touristSite->activities),
+                                        'checked' => $touristSite->educational_tours,
                                         'label' => __('main.educational_tours'),
                                     ])
                                 </div>
@@ -428,7 +428,7 @@
                                         'name' => 'translation',
                                         'id' => 'translation',
                                         'value' => '1',
-                                        'checked' => in_array('translation', $touristSite->services),
+                                        'checked' => $touristSite->translation,
                                         'label' => __('main.translation'),
                                     ])
                                 </div>
@@ -438,7 +438,7 @@
                                         'name' => 'special_events',
                                         'id' => 'special_events',
                                         'value' => '1',
-                                        'checked' => in_array('special_events', $touristSite->services),
+                                        'checked' => $touristSite->special_events,
                                         'label' => __('main.special_events'),
                                     ])
                                 </div>
@@ -448,7 +448,7 @@
                                         'name' => 'group_bookings',
                                         'id' => 'group_bookings',
                                         'value' => '1',
-                                        'checked' => in_array('group_bookings', $touristSite->services),
+                                        'checked' => $touristSite->group_bookings,
                                         'label' => __('main.group_bookings'),
                                     ])
                                 </div>
@@ -458,7 +458,7 @@
                                         'name' => 'online_booking',
                                         'id' => 'online_booking',
                                         'value' => '1',
-                                        'checked' => in_array('online_booking', $touristSite->services),
+                                        'checked' => $touristSite->online_booking,
                                         'label' => __('main.online_booking'),
                                     ])
                                 </div>
@@ -468,7 +468,7 @@
                                         'name' => 'mobile_app',
                                         'id' => 'mobile_app',
                                         'value' => '1',
-                                        'checked' => in_array('mobile_app', $touristSite->services),
+                                        'checked' => $touristSite->mobile_app,
                                         'label' => __('main.mobile_app'),
                                     ])
                                 </div>
@@ -478,7 +478,7 @@
                                         'name' => 'virtual_tours',
                                         'id' => 'virtual_tours',
                                         'value' => '1',
-                                        'checked' => in_array('virtual_tours', $touristSite->services),
+                                        'checked' => $touristSite->virtual_tours,
                                         'label' => __('main.virtual_tours'),
                                     ])
                                 </div>
