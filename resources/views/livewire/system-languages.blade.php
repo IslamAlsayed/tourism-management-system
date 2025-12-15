@@ -127,8 +127,9 @@
                                                     {{ __('main.active') }}
                                                 </a>
                                             @else
-                                                <span style="padding-inline: 17px">
-                                                    <i class="fas fa-circle-check text-green-600"></i>
+                                                <span style="padding-inline: 17px"
+                                                    class="kt-btn kt-btn-sm bg-yellow-500 text-white">
+                                                    {{ __('main.currently') }}
                                                 </span>
                                             @endif
                                             @include('components.elements.edit-button', [

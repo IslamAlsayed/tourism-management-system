@@ -71,15 +71,33 @@ class TouristSite extends Model
         'instagram_url',
         'twitter_url',
 
-        // Facilities & Activities & Services
-        'facilities',
-        'activities',
-        'services',
-        'has_parking',
-        'has_restaurant',
-        'has_gift_shop',
-        'has_restrooms',
+        // Facilities
         'wheelchair_accessible',
+        'free_wifi',
+        'parking',
+        'restrooms',
+        'restaurants',
+        'gift_shop',
+        'guided_tours',
+        'audio_guide',
+
+        // Activities
+        'photography',
+        'hiking',
+        'swimming',
+        'camping',
+        'shopping',
+        'dining',
+        'entertainment',
+        'educational_tours',
+
+        // Services
+        'translation',
+        'special_events',
+        'group_bookings',
+        'online_booking',
+        'mobile_app',
+        'virtual_tours',
 
         // Media & Resources
         'phone',

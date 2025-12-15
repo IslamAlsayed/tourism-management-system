@@ -25,12 +25,12 @@ class SettingSeeder extends Seeder
             'app_two_factor_authentication' => false,
             'app_backup_frequency' => 'weekly',
             'app_ably_key' => 'YfoutQ.0ANKLQ:l9mrZvEjJGo07yZsKnU8XU33MkgnlX9k7JfmsQUKJe4', // islam's key
-            'app_email_notifications' => false,
+            'app_email_notifications' => true,
             'app_sms_notifications' => false,
-            'app_push_notifications' => false,
-            'app_notifications_new_record' => false,
-            'app_notifications_data_updates' => false,
-            'app_notifications_data_deletes' => false,
+            'app_push_notifications' => true,
+            'app_notifications_new_record' => true,
+            'app_notifications_data_updates' => true,
+            'app_notifications_data_deletes' => true,
             'app_notifications_system_reports' => false,
             'app_notifications_security_updates' => false,
         ]);

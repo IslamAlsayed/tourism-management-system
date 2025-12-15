@@ -55,7 +55,7 @@
                         <div class="kt-menu-item {{ $hasActiveChild ? 'show' : '' }}"
                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                             <div
-                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $hasActiveChild ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg">
+                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[15px] py-[6px] {{ $hasActiveChild ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px]">
                                 <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
                                     <i
                                         class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} text-lg {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
@@ -117,7 +117,7 @@
                                         <div class="kt-menu-item {{ $childHasActiveChild ? 'kt-menu-item-show show' : '' }} px-2"
                                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                                             <div
-                                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $childHasActiveChild ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg">
+                                                class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[15px] py-[6px] {{ $childHasActiveChild ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px]">
                                                 @if (isset($child['icon']))
                                                     <span
                                                         class="kt-menu-icon items-start text-muted-foreground w-[20px]">
@@ -164,7 +164,7 @@
                                                 @foreach ($child['children'] as $subChild)
                                                     @php $subChildIsActive = isActive($subChild['route'] ?? null, $subChild['parameters'] ?? [], $currentRoute, $currentParameters); @endphp
                                                     <div class="kt-menu-item px-2">
-                                                        <a class="kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
+                                                        <a class="kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px] gap-[14px] ps-[10px] pe-[10px] py-[8px]"
                                                             href="{{ isset($subChild['route']) && $subChild['route'] !== '#' ? route($subChild['route'], isset($subChild['parameters']) ? $subChild['parameters'] : []) : 'javascript:void(0)' }}"
                                                             {{ ($subChild['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                                             {{-- <span
@@ -207,7 +207,7 @@
                                     @else
                                         {{-- Simple child --}}
                                         <div class="kt-menu-item px-2">
-                                            <a class="kt-menu-link border border-transparent items-center grow {{ $childIsActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg gap-[14px] ps-[10px] pe-[10px] py-[8px]"
+                                            <a class="kt-menu-link border border-transparent items-center grow {{ $childIsActive ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px] gap-[14px] ps-[10px] pe-[10px] py-[8px]"
                                                 href="{{ isset($child['route']) && $child['route'] !== '#' ? route($child['route'], isset($child['parameters']) ? $child['parameters'] : []) : 'javascript:void(0)' }}"
                                                 {{ ($child['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                                 {{-- <span
@@ -250,7 +250,7 @@
                     @else
                         {{-- Simple Menu Item --}}
                         <div class="kt-menu-item">
-                            <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $isActive ? 'bg-accent/60 rounded-lg' : '' }} hover:bg-accent/60 hover:rounded-lg"
+                            <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[15px] py-[6px] {{ $isActive ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px]"
                                 href="{{ isset($item['route']) && $item['route'] !== '#' ? route($item['route'], isset($item['parameters']) ? $item['parameters'] : []) : 'javascript:void(0)' }}"
                                 {{ ($item['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                 <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">

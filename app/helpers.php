@@ -181,6 +181,57 @@ if (!function_exists('hasActiveChild')) {
     }
 }
 
+if (!function_exists('routeExists')) {
+    /**
+     * Check if a named route exists.
+     *
+     * @param string $routeName
+     * @return bool
+     */
+    function routeExists(string $routeName): bool
+    {
+        return app('router')->has($routeName);
+    }
+}
+
+if (!function_exists('showRouteExists')) {
+    /**
+     * Check if a 'show' route exists for a given resource.
+     *
+     * @param string $resource
+     * @return bool
+     */
+    function showRouteExists(string $resource): bool
+    {
+        return routeExists($resource . '.show');
+    }
+}
+
+if (!function_exists('showFunctionExists')) {
+    /**
+     * Check if a 'show' method exists in the controller for a given resource.
+     *
+     * @param string $resource
+     * @return bool
+     */
+    function showFunctionExists(string $resource)
+    {
+        try {
+            // Convert resource name to controller name (e.g., 'tour-guides' => 'TourGuidesController')
+            $controllerName = singularLowerCaseName($resource, '') . 'Controller';
+            $controllerClass = 'App\\Http\\Controllers\\' . $controllerName;
+            $controllerClassDashboard = 'App\\Http\\Controllers\\Dashboard\\' . $controllerName;
+
+            if (!class_exists($controllerClass) && !class_exists($controllerClassDashboard)) {
+                return false;
+            }
+
+            return method_exists($controllerClass, 'show') || method_exists($controllerClassDashboard, 'show');
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+}
 
 if (!function_exists('generateUniqueFilename')) {
     function generateUniqueFilename($prefix = 'data')

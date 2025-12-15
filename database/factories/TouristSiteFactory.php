@@ -99,16 +99,39 @@ class TouristSiteFactory extends Factory
             'instagram_url' => $this->faker->optional(0.3)->url(),
             'twitter_url' => $this->faker->optional(0.2)->url(),
 
-            // Facilities & Activities & Services
-            'facilities' => $this->faker->randomElements(['wheelchair_accessible', 'free_wifi', 'parking', 'restrooms', 'restaurants', 'gift_shop', 'guided_tours', 'audio_guide'], $this->faker->numberBetween(1, 8)),
-            'activities' => $this->faker->randomElements(['photography', 'hiking', 'swimming', 'camping', 'shopping', 'dining', 'entertainment', 'educational_tours'], $this->faker->numberBetween(1, 8)),
-            'services' => $this->faker->randomElements(['translation', 'special_events', 'group_bookings', 'online_booking', 'mobile_app', 'virtual_tours'], $this->faker->numberBetween(1, 6)),
+            // Facilities
+            'wheelchair_accessible' => $this->faker->boolean(70),
+            'free_wifi' => $this->faker->boolean(70),
+            'parking' => $this->faker->boolean(70),
+            'restrooms' => $this->faker->boolean(70),
+            'restaurants' => $this->faker->boolean(70),
+            'gift_shop' => $this->faker->boolean(70),
+            'guided_tours' => $this->faker->boolean(70),
+            'audio_guide' => $this->faker->boolean(70),
 
+            // Activities
+            'photography' => $this->faker->boolean(70),
+            'hiking' => $this->faker->boolean(70),
+            'swimming' => $this->faker->boolean(70),
+            'camping' => $this->faker->boolean(70),
+            'shopping' => $this->faker->boolean(70),
+            'dining' => $this->faker->boolean(70),
+            'entertainment' => $this->faker->boolean(70),
+            'educational_tours' => $this->faker->boolean(70),
+
+            // Services
+            'translation' => $this->faker->boolean(70),
+            'special_events' => $this->faker->boolean(70),
+            'group_bookings' => $this->faker->boolean(70),
+            'online_booking' => $this->faker->boolean(70),
+            'mobile_app' => $this->faker->boolean(70),
+            'virtual_tours' => $this->faker->boolean(70),
+
+            // Accessibility & Amenities
             'has_parking' => $this->faker->boolean(70),
             'has_restaurant' => $this->faker->boolean(50),
             'has_gift_shop' => $this->faker->boolean(60),
             'has_restrooms' => $this->faker->boolean(90),
-            'wheelchair_accessible' => $this->faker->boolean(40),
 
             // Media & Resources
             'main_image' => $this->faker->optional(0.8)->imageUrl(800, 600, 'nature'),

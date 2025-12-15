@@ -20,8 +20,8 @@ return new class extends Migration {
             $table->string('lid', 10)->nullable(); // Local identifier
 
             // Airport Names
-            $table->string('airport_name'); // English name
-            $table->string('airport_name_ar')->nullable(); // Arabic name
+            $table->string('name'); // English name
+            $table->string('name_ar')->nullable(); // Arabic name
 
             // Airport Type/Subdivision
             $table->string('subd', 50)->nullable(); // Subdivision/Type of airport
@@ -49,7 +49,7 @@ return new class extends Migration {
             // Indexes for better performance
             $table->index('icao');
             $table->index('iata');
-            $table->index('airport_name');
+            $table->index('name');
             $table->index(['country_id', 'state_id', 'city_id']);
             $table->index(['latitude', 'longitude']);
         });

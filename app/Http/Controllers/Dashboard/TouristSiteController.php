@@ -7,8 +7,8 @@ use App\Models\Region;
 use App\Models\Currency;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TouristSite\TouristSiteCreateRequest;
-use App\Http\Requests\TouristSite\TouristSiteUpdateRequest;
+use App\Http\Requests\TouristSite\StoreRequest;
+use App\Http\Requests\TouristSite\UpdateRequest;
 
 class TouristSiteController extends Controller
 {
@@ -27,10 +27,10 @@ class TouristSiteController extends Controller
         $categories = config('helpers.categories') ?: [];
         $difficultyLevels = TouristSite::getDifficultyLevels();
         $statuses = TouristSite::getStatuses();
-        return view('pages.dashboard.tourist-sites.create', compact('regions', 'currencies', 'siteTypes', 'categories', 'difficultyLevels', 'statuses'));
+        return view('pages.dashboard.tourist-sites.create', get_defined_vars());
     }
 
-    public function store(TouristSiteCreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $validated = $request->validated();
         $data = array_merge($validated, $request->safe()->except('photo'));
@@ -87,10 +87,10 @@ class TouristSiteController extends Controller
         $categories = config('helpers.categories') ?: [];
         $difficultyLevels = TouristSite::getDifficultyLevels();
         $statuses = TouristSite::getStatuses();
-        return view('pages.dashboard.tourist-sites.edit', compact('touristSite', 'regions', 'currencies', 'siteTypes', 'categories', 'difficultyLevels', 'statuses'));
+        return view('pages.dashboard.tourist-sites.edit', get_defined_vars());
     }
 
-    public function update(TouristSiteUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $touristSite = TouristSite::find($id);
         if (!$touristSite) {

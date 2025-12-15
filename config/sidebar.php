@@ -226,7 +226,6 @@ return [
         [
             'title' => 'accommodations',
             'icon' => 'fa-solid fa-hotel',
-            'status' => 'updated',
             'children' => [
                 [
                     'title' => 'all accommodations',
@@ -362,7 +361,6 @@ return [
                 [
                     'title' => 'supplements',
                     'icon' => 'fa-solid fa-utensils',
-                    'status' => 'new',
                     'children' => [
                         [
                             'title' => 'all supplements',
@@ -439,7 +437,6 @@ return [
                 [
                     'title' => 'guides types',
                     'icon' => 'fa-solid fa-tags',
-                    'status' => 'updating',
                     'children' => [
                         [
                             'title' => 'all guides types',
@@ -541,7 +538,6 @@ return [
         [
             'title' => 'airlines',
             'icon' => 'fa-solid fa-plane',
-            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'airlines',
@@ -594,7 +590,6 @@ return [
         [
             'title' => 'tourist sites',
             'icon' => 'fa-solid fa-map-location-dot',
-            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'all tourist sites',
@@ -619,7 +614,6 @@ return [
         [
             'title' => 'crossings & ports',
             'icon' => 'fa-solid fa-map-signs',
-            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'all crossings ports',
@@ -668,7 +662,6 @@ return [
         [
             'title' => 'reports & analytics',
             'icon' => 'fa-solid fa-chart-pie',
-            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'reports dashboard',
@@ -711,7 +704,6 @@ return [
         [
             'title' => 'languages',
             'icon' => 'fa-solid fa-language',
-            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'all languages',
@@ -730,7 +722,6 @@ return [
         [
             'title' => 'system languages',
             'icon' => 'fa-solid fa-language',
-            'status' => 'updating',
             'children' => [
                 [
                     'title' => 'all languages',

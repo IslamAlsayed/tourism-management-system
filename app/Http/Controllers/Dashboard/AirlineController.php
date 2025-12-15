@@ -6,22 +6,16 @@ use App\Models\Region;
 use App\Models\Airline;
 use App\Models\Timezone;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Airline\AirlineCreateRequest;
-use App\Http\Requests\Airline\AirlineUpdateRequest;
+use App\Http\Requests\Airline\StoreRequest;
+use App\Http\Requests\Airline\UpdateRequest;
 
 class AirlineController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('pages.dashboard.airlines.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $regions = Region::orderBy('name')->get();
@@ -29,32 +23,40 @@ class AirlineController extends Controller
         return view('pages.dashboard.airlines.create', compact('regions', 'timezones'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(AirlineCreateRequest $request)
+    public function store(StoreRequest $request)
     {
-        try {
-            $data = $request->validated();
-            $airline = Airline::create($data);
-            return redirect()->route('airlines.index')->withSuccess(__('main.airline_created_successfully'));
-        } catch (\Exception $e) {
-            return back()->withError(__('main.error_occurred'))->withInput();
+        $validated = $request->validated();
+        $airline = Airline::create($validated);
+        if ($airline) {
+            if ($request->has('save_and_add')) {
+                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.airline')]));
+            }
+            return redirect()->route('airlines.index')->withSuccess(__('messages.type_created', ['type' => __('main.airline')]));
         }
+        return redirect()->route('airlines.index')->withError(__('messages.type_creation_failed', ['type' => __('main.airline')]));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Airline $airline)
+    // public function store(StoreRequest $request)
+    // {
+    //     try {
+    //         $data = $request->validated();
+    //         $airline = Airline::create($data);
+    //         return redirect()->route('airlines.index')->withSuccess(__('main.airline_created_successfully'));
+    //     } catch (\Exception $e) {
+    //         return back()->withError(__('main.error_occurred'))->withInput();
+    //     }
+    // }
+
+    // public function show(Airline $airline)
+    public function show($id)
     {
-        $airline->load(['region', 'subregion', 'country', 'state', 'city']);
+        $airline = Airline::with(['region', 'subregion', 'country', 'state', 'city'])->find($id);
+        if (!$airline) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
+        }
         return view('pages.dashboard.airlines.show', compact('airline'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $airline = Airline::find($id);
@@ -66,23 +68,31 @@ class AirlineController extends Controller
         return view('pages.dashboard.airlines.edit', compact('airline', 'regions', 'timezones'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(AirlineUpdateRequest $request, Airline $airline)
+    public function update(UpdateRequest $request, $id)
     {
-        try {
-            $data = $request->validated();
-            $airline->update($data);
-            return redirect()->route('airlines.index')->withSuccess(__('main.airline_updated_successfully'));
-        } catch (\Exception $e) {
-            return back()->withError(__('main.error_occurred'))->withInput();
+        $airline = Airline::find($id);
+        if (!$airline) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
         }
+        $validated = $request->validated();
+        $updated = $airline->update($validated);
+        if ($updated) {
+            return redirect()->route('airlines.index')->withSuccess(__('messages.type_updated', ['type' => __('main.airline')]));
+        }
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.airline')]));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // public function update(UpdateRequest $request, Airline $airline)
+    // {
+    //     try {
+    //         $data = $request->validated();
+    //         $airline->update($data);
+    //         return redirect()->route('airlines.index')->withSuccess(__('main.airline_updated_successfully'));
+    //     } catch (\Exception $e) {
+    //         return back()->withError(__('main.error_occurred'))->withInput();
+    //     }
+    // }
+
     public function destroy($id)
     {
         $airline = Airline::find($id);

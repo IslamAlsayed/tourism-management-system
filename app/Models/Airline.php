@@ -18,8 +18,8 @@ class Airline extends Model
         'lid',
         'icao',
         'iata',
-        'airport_name',
-        'airport_name_ar',
+        'name',
+        'name_ar',
         'subd',
         'region_id',
         'subregion_id',
@@ -33,12 +33,15 @@ class Airline extends Model
         'local_phone_number',
         'international_phone_number',
         'website',
+        'is_active',
+        'notes',
     ];
 
     protected $casts = [
         'elevation' => 'decimal:2',
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
+        'is_active' => 'boolean',
     ];
 
     /**
@@ -46,14 +49,7 @@ class Airline extends Model
      */
     public function getRelationshipNames(): array
     {
-        return [
-            'region',
-            'subregion',
-            'country',
-            'state',
-            'city',
-            'timezone',
-        ];
+        return ['region', 'subregion', 'country', 'state', 'city', 'timezone'];
     }
 
     /**
@@ -73,41 +69,26 @@ class Airline extends Model
         ];
     }
 
-    /**
-     * Relationship with Region
-     */
     public function region()
     {
         return $this->belongsTo(Region::class);
     }
 
-    /**
-     * Relationship with Subregion
-     */
     public function subregion()
     {
         return $this->belongsTo(Subregion::class);
     }
 
-    /**
-     * Relationship with Country
-     */
     public function country()
     {
         return $this->belongsTo(Country::class);
     }
 
-    /**
-     * Relationship with State
-     */
     public function state()
     {
         return $this->belongsTo(State::class);
     }
 
-    /**
-     * Relationship with City
-     */
     public function city()
     {
         return $this->belongsTo(City::class);
@@ -123,9 +104,7 @@ class Airline extends Model
      */
     public function getDisplayNameAttribute()
     {
-        return app()->getLocale() === 'ar' && $this->airport_name_ar
-            ? $this->airport_name_ar
-            : $this->airport_name;
+        return app()->getLocale() === 'ar' && $this->name_ar ? $this->name_ar : $this->name;
     }
 
     /**

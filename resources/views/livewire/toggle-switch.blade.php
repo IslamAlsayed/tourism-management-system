@@ -1,5 +1,5 @@
 <div wire:key="toggle-{{ isset($modelId) && $modelId ? $modelId : '' }}-{{ isset($field) && $field ? $field : '' }}"
-    class="toggle-hold" wire:loading.class="opacity-50" wire:ignore>
+    class="toggle-hold mt-1" wire:loading.class="opacity-50" wire:ignore>
     <input type="checkbox"
         id="toggle-{{ isset($modelId) && $modelId ? $modelId : '' }}-{{ isset($field) && $field ? $field : '' }}"
         class="toggle-input" {{ isset($value) && $value ? 'checked' : '' }} wire:click="toggleHold"

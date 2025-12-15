@@ -62,6 +62,14 @@
                                 <p class="kt-badge kt-badge-info">{{ $touristSite->difficulty_level }}</p>
                             </div>
                         @endif
+                        @if ($touristSite->tags)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.tags') }}</label><br />
+                                @foreach ($touristSite->tags as $tag)
+                                    <span class="kt-badge kt-badge-info">{{ ucfirst($tag) }}</span>
+                                @endforeach
+                            </div>
+                        @endif
                         @if ($touristSite->duration)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.duration') }}</label>
@@ -97,6 +105,303 @@
                             </div>
                         </div>
                     @endif
+                </div>
+            </div>
+
+            <!-- facilities -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.facilities') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.wheelchair_accessible') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'wheelchair_accessible',
+                                    'value' => (bool) $touristSite->wheelchair_accessible,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.free_wifi') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'free_wifi',
+                                    'value' => (bool) $touristSite->free_wifi,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.parking') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'parking',
+                                    'value' => (bool) $touristSite->parking,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.restrooms') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'restrooms',
+                                    'value' => (bool) $touristSite->restrooms,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.restaurants') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'restaurants',
+                                    'value' => (bool) $touristSite->restaurants,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.gift_shop') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'gift_shop',
+                                    'value' => (bool) $touristSite->gift_shop,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.guided_tours') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'guided_tours',
+                                    'value' => (bool) $touristSite->guided_tours,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.audio_guide') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'audio_guide',
+                                    'value' => (bool) $touristSite->audio_guide,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- activities -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.activities') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.photography') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'photography',
+                                    'value' => (bool) $touristSite->photography,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.hiking') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'hiking',
+                                    'value' => (bool) $touristSite->hiking,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.swimming') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'swimming',
+                                    'value' => (bool) $touristSite->swimming,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.camping') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'camping',
+                                    'value' => (bool) $touristSite->camping,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.shopping') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'shopping',
+                                    'value' => (bool) $touristSite->shopping,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.dining') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'dining',
+                                    'value' => (bool) $touristSite->dining,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.entertainment') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'entertainment',
+                                    'value' => (bool) $touristSite->entertainment,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.educational_tours') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'educational_tours',
+                                    'value' => (bool) $touristSite->educational_tours,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- services -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.services') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.translation') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'translation',
+                                    'value' => (bool) $touristSite->translation,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.special_events') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'special_events',
+                                    'value' => (bool) $touristSite->special_events,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.group_bookings') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'group_bookings',
+                                    'value' => (bool) $touristSite->group_bookings,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.online_booking') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'online_booking',
+                                    'value' => (bool) $touristSite->online_booking,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.mobile_app') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'mobile_app',
+                                    'value' => (bool) $touristSite->mobile_app,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.virtual_tours') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'virtual_tours',
+                                    'value' => (bool) $touristSite->virtual_tours,
+                                    'table' => 'touristSites',
+                                ])
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -189,7 +494,7 @@
                     <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
                         @if ($touristSite->creator)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.created_by') }}</label>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\SystemLanguage;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use App\Http\Requests\SystemLanguageCreateRequest;
 
@@ -15,8 +14,7 @@ class SystemLanguageController extends Controller
 
     public function index()
     {
-        $data = SystemLanguage::paginate(getPaginate());
-        return view('pages.dashboard.system-languages.index', compact('data'));
+        return view('pages.dashboard.system-languages.index');
     }
 
     public function create()

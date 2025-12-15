@@ -235,73 +235,73 @@
                             <h3 class="mb-2 font-semibold">{{ __('main.facilities') }}</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4 ps-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="wheelchair_accessible" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[wheelchair_accessible]',
-                                        'id' => 'facilities[wheelchair_accessible]',
+                                        'name' => 'wheelchair_accessible',
+                                        'id' => 'wheelchair_accessible',
                                         'value' => '1',
                                         'label' => __('main.wheelchair_accessible'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="free_wifi" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[free_wifi]',
-                                        'id' => 'facilities[free_wifi]',
+                                        'name' => 'free_wifi',
+                                        'id' => 'free_wifi',
                                         'value' => '1',
                                         'label' => __('main.free_wifi'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="parking" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[parking]',
-                                        'id' => 'facilities[parking]',
+                                        'name' => 'parking',
+                                        'id' => 'parking',
                                         'value' => '1',
                                         'label' => __('main.parking'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="restrooms" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[restrooms]',
-                                        'id' => 'facilities[restrooms]',
+                                        'name' => 'restrooms',
+                                        'id' => 'restrooms',
                                         'value' => '1',
                                         'label' => __('main.restrooms'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="restaurants" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[restaurants]',
-                                        'id' => 'facilities[restaurants]',
+                                        'name' => 'restaurants',
+                                        'id' => 'restaurants',
                                         'value' => '1',
                                         'label' => __('main.restaurants'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="gift_shop" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[gift_shop]',
-                                        'id' => 'facilities[gift_shop]',
+                                        'name' => 'gift_shop',
+                                        'id' => 'gift_shop',
                                         'value' => '1',
                                         'label' => __('main.gift_shop'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="guided_tours" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[guided_tours]',
-                                        'id' => 'facilities[guided_tours]',
+                                        'name' => 'guided_tours',
+                                        'id' => 'guided_tours',
                                         'value' => '1',
                                         'label' => __('main.guided_tours'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="audio_guide" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'facilities[audio_guide]',
-                                        'id' => 'facilities[audio_guide]',
+                                        'name' => 'audio_guide',
+                                        'id' => 'audio_guide',
                                         'value' => '1',
                                         'label' => __('main.audio_guide'),
                                     ])
@@ -314,73 +314,73 @@
                             <h3 class="mb-2 font-semibold">{{ __('main.activities') }}</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4 ps-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="photography" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'activities[photography]',
-                                        'id' => 'activities[photography]',
+                                        'name' => 'photography',
+                                        'id' => 'photography',
                                         'value' => '1',
                                         'label' => __('main.photography'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="hiking" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'activities[hiking]',
-                                        'id' => 'activities[hiking]',
+                                        'name' => 'hiking',
+                                        'id' => 'hiking',
                                         'value' => '1',
                                         'label' => __('main.hiking'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="swimming" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'activities[swimming]',
-                                        'id' => 'activities[swimming]',
+                                        'name' => 'swimming',
+                                        'id' => 'swimming',
                                         'value' => '1',
                                         'label' => __('main.swimming'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="camping" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'activities[camping]',
-                                        'id' => 'activities[camping]',
+                                        'name' => 'camping',
+                                        'id' => 'camping',
                                         'value' => '1',
                                         'label' => __('main.camping'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="shopping" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'activities[shopping]',
-                                        'id' => 'activities[shopping]',
+                                        'name' => 'shopping',
+                                        'id' => 'shopping',
                                         'value' => '1',
                                         'label' => __('main.shopping'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="dining" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'activities[dining]',
-                                        'id' => 'activities[dining]',
+                                        'name' => 'dining',
+                                        'id' => 'dining',
                                         'value' => '1',
                                         'label' => __('main.dining'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="entertainment" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'activities[entertainment]',
-                                        'id' => 'activities[entertainment]',
+                                        'name' => 'entertainment',
+                                        'id' => 'entertainment',
                                         'value' => '1',
                                         'label' => __('main.entertainment'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="educational_tours" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'activities[educational_tours]',
-                                        'id' => 'activities[educational_tours]',
+                                        'name' => 'educational_tours',
+                                        'id' => 'educational_tours',
                                         'value' => '1',
                                         'label' => __('main.educational_tours'),
                                     ])
@@ -393,55 +393,55 @@
                             <h3 class="mb-2 font-semibold">{{ __('main.services') }}</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 mb-4 ps-4">
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="translation" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'services[translation]',
-                                        'id' => 'services[translation]',
+                                        'name' => 'translation',
+                                        'id' => 'translation',
                                         'value' => '1',
                                         'label' => __('main.translation'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="special_events" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'services[special_events]',
-                                        'id' => 'services[special_events]',
+                                        'name' => 'special_events',
+                                        'id' => 'special_events',
                                         'value' => '1',
                                         'label' => __('main.special_events'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="group_bookings" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'services[group_bookings]',
-                                        'id' => 'services[group_bookings]',
+                                        'name' => 'group_bookings',
+                                        'id' => 'group_bookings',
                                         'value' => '1',
                                         'label' => __('main.group_bookings'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="online_booking" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'services[online_booking]',
-                                        'id' => 'services[online_booking]',
+                                        'name' => 'online_booking',
+                                        'id' => 'online_booking',
                                         'value' => '1',
                                         'label' => __('main.online_booking'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="mobile_app" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'services[mobile_app]',
-                                        'id' => 'services[mobile_app]',
+                                        'name' => 'mobile_app',
+                                        'id' => 'mobile_app',
                                         'value' => '1',
                                         'label' => __('main.mobile_app'),
                                     ])
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="hidden" name="" value="0">
+                                    <input type="hidden" name="virtual_tours" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'services[virtual_tours]',
-                                        'id' => 'services[virtual_tours]',
+                                        'name' => 'virtual_tours',
+                                        'id' => 'virtual_tours',
                                         'value' => '1',
                                         'label' => __('main.virtual_tours'),
                                     ])

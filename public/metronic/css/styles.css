@@ -4351,6 +4351,10 @@
         padding-block: 8px;
     }
 
+    .py-\[15px\] {
+        padding-block: 15px;
+    }
+
     .ps-0 {
         padding-inline-start: calc(var(--spacing) * 0);
     }
@@ -4425,6 +4429,10 @@
 
     .ps-\[10px\] {
         padding-inline-start: 10px;
+    }
+
+    .ps-\[15px\] {
+        padding-inline-start: 15px;
     }
 
     .ps-\[14\.5px\] {
@@ -4509,6 +4517,10 @@
 
     .pe-\[10px\] {
         padding-inline-end: 10px;
+    }
+
+    .pe-\[15px\] {
+        padding-inline-end: 15px;
     }
 
     .pt-\(--header-height\) {

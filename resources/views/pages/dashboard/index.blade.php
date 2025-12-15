@@ -310,8 +310,8 @@
                             <h3 class="kt-card-title">
                                 {{ __('main.quick_actions') }}
                             </h3>
-                            <div class="flex gap-5 disabled-option p-2 rounded-xs">
-                                <label class="flex items-center gap-2">
+                            <div class="flex gap-5 p-2 rounded-xs bg-yellow-200">
+                                <label class="flex items-center gap-2 disabled">
                                     <input class="kt-switch" name="check" type="checkbox" value="1" />
                                     <span class="kt-label">{{ __('main.auto_refresh') }}</span>
                                 </label>

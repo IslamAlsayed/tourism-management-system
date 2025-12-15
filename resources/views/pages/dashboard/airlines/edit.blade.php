@@ -66,20 +66,20 @@
 
                         {{-- Airport Name --}}
                         <div>
-                            <label for="airport_name" class="kt-label required mb-2">{{ __('main.airport_name') }}</label>
-                            <input type="text" name="airport_name" id="airport_name" class="kt-input h-[45px]"
-                                value="{{ old('airport_name', $airline->airport_name) }}" required>
-                            @error('airport_name')
+                            <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
+                            <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                value="{{ old('name', $airline->name) }}" required>
+                            @error('name')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
                         {{-- Airport Name Arabic --}}
                         <div>
-                            <label for="airport_name_ar" class="kt-label mb-2">{{ __('main.airport_name_ar') }}</label>
-                            <input type="text" name="airport_name_ar" id="airport_name_ar" class="kt-input h-[45px]"
-                                value="{{ old('airport_name_ar', $airline->airport_name_ar) }}">
-                            @error('airport_name_ar')
+                            <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                            <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                value="{{ old('name_ar', $airline->name_ar) }}">
+                            @error('name_ar')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>

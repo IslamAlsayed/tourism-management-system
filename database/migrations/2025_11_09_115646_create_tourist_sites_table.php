@@ -62,15 +62,39 @@ return new class extends Migration {
             $table->string('instagram_url')->nullable();
             $table->string('twitter_url')->nullable();
 
-            // Facilities & Services
-            $table->json('facilities')->nullable(); // parking, free_wifi, wheelchair_accessible, etc.
-            $table->json('activities')->nullable(); // photography, swimming, shopping, etc.
-            $table->json('services')->nullable(); // guided_tours, photography_service, mobile_app, etc.
-            $table->boolean('has_parking')->default(false);
-            $table->boolean('has_restaurant')->default(false);
-            $table->boolean('has_gift_shop')->default(false);
-            $table->boolean('has_restrooms')->default(false);
-            $table->boolean('wheelchair_accessible')->default(false);
+            // Facilities
+            $table->boolean('wheelchair_accessible')->default(true);
+            $table->boolean('free_wifi')->default(true);
+            $table->boolean('parking')->default(true);
+            $table->boolean('restrooms')->default(true);
+            $table->boolean('restaurants')->default(true);
+            $table->boolean('gift_shop')->default(true);
+            $table->boolean('guided_tours')->default(true);
+            $table->boolean('audio_guide')->default(true);
+
+            // Activities
+            $table->boolean('photography')->default(true);
+            $table->boolean('hiking')->default(true);
+            $table->boolean('swimming')->default(true);
+            $table->boolean('camping')->default(true);
+            $table->boolean('shopping')->default(true);
+            $table->boolean('dining')->default(true);
+            $table->boolean('entertainment')->default(true);
+            $table->boolean('educational_tours')->default(true);
+
+            // Services
+            $table->boolean('translation')->default(true);
+            $table->boolean('special_events')->default(true);
+            $table->boolean('group_bookings')->default(true);
+            $table->boolean('online_booking')->default(true);
+            $table->boolean('mobile_app')->default(true);
+            $table->boolean('virtual_tours')->default(true);
+
+            // Accessibility & Amenities
+            $table->boolean('has_parking')->default(true);
+            $table->boolean('has_restaurant')->default(true);
+            $table->boolean('has_gift_shop')->default(true);
+            $table->boolean('has_restrooms')->default(true);
 
             // Media & Resources
             $table->string('photo')->nullable();

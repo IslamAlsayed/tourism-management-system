@@ -97,6 +97,7 @@ return [
     'close' => 'Close',
     'send' => 'Send',
     'sent' => 'Sent',
+    'currently' => 'Currently',
     'select_all_users_or_email' => 'Please select "All Users" or enter a recipient email',
     'message_cannot_be_empty' => 'Message cannot be empty',
     'select_at_least_one_notification_type' => 'Please select at least one notification type',
@@ -557,6 +558,7 @@ return [
 
     'add_type' => 'Add :type',
     'create_type' => 'Create :type',
+    'view_type' => 'View :type',
     'save_type' => 'Save :type',
     'edit_type' => 'Edit :type',
     'update_type' => 'Update :type',
@@ -570,7 +572,10 @@ return [
     'upload_type' => 'Upload :type',
     'add_type_description' => 'Add a new :type to the system',
     'create_type_description' => 'Create a new :type to the system',
+    'view_type_description' => 'View an existing :type in the system',
     'edit_type_description' => 'Edit an existing :type in the system',
+
+    'view_on_map' => 'View on Map',
 
     'activate_type' => 'Activate :type',
     'independent_type' => 'Independent :type',
@@ -938,6 +943,7 @@ return [
     'theme' => 'Theme',
     'light' => 'Light',
     'dark' => 'Dark',
+    'mini' => 'Mini',
     'language' => 'Language',
     'english' => 'English',
     'arabic' => 'Arabic',
@@ -1543,6 +1549,7 @@ return [
     'contact_phone' => 'Contact Phone',
     'sort_order' => 'Sort Order',
     'is_major' => 'Is Major',
+    'visa' => 'Visa',
     'visa_required' => 'Visa Required',
     'visa_fee' => 'Visa Fee',
     'visa_fee_currency' => 'Visa Fee Currency',
@@ -1719,6 +1726,7 @@ return [
     'delete_selected' => 'Delete Selected',
     'banners' => 'Banners',
     'logos' => 'Logos',
+    'app_logo' => 'App Logo',
 
     // Accommodation Related
     'edit_accommodation' => 'Edit Accommodation',

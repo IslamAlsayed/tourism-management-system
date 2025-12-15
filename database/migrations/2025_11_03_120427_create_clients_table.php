@@ -78,7 +78,7 @@ return new class extends Migration {
             $table->string('whatsapp')->nullable();
             $table->string('company_phone')->nullable();
             $table->string('company_email')->nullable();
-
+            $table->boolean('is_active')->default(true);
             $table->text('notes')->nullable();
 
             // Tracking

@@ -5,7 +5,7 @@ namespace App\Http\Requests\Airline;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AirlineCreateRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,17 @@ class AirlineCreateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $airline = $this->route('air_transport');
+
         return [
             // Airport Codes
-            'icao' => ['nullable', 'string', 'max:4', 'unique:air_transports,icao'],
-            'iata' => ['nullable', 'string', 'max:3', 'unique:air_transports,iata'],
+            'icao' => ['nullable', 'string', 'max:4', Rule::unique('airlines', 'icao')->ignore($airline->id)],
+            'iata' => ['nullable', 'string', 'max:3', Rule::unique('airlines', 'iata')->ignore($airline->id)],
             'lid' => ['nullable', 'string', 'max:10'],
 
             // Airport Names
-            'airport_name' => ['required', 'string', 'max:255'],
-            'airport_name_ar' => ['nullable', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
 
             // Airport Type
             'subd' => ['nullable', 'string', 'max:50'],
@@ -63,7 +65,7 @@ class AirlineCreateRequest extends FormRequest
         return [
             'icao.unique' => __('validation.unique', ['attribute' => __('main.icao')]),
             'iata.unique' => __('validation.unique', ['attribute' => __('main.iata')]),
-            'airport_name.required' => __('validation.required', ['attribute' => __('main.airport_name')]),
+            'name.required' => __('validation.required', ['attribute' => __('main.name')]),
             'website.url' => __('validation.url', ['attribute' => __('main.website')]),
             'latitude.between' => __('validation.between.numeric', ['attribute' => __('main.latitude'), 'min' => -90, 'max' => 90]),
             'longitude.between' => __('validation.between.numeric', ['attribute' => __('main.longitude'), 'min' => -180, 'max' => 180]),
@@ -79,8 +81,8 @@ class AirlineCreateRequest extends FormRequest
             'icao' => __('main.icao'),
             'iata' => __('main.iata'),
             'lid' => __('main.lid'),
-            'airport_name' => __('main.airport_name'),
-            'airport_name_ar' => __('main.airport_name_ar'),
+            'name' => __('main.name'),
+            'name_ar' => __('main.name_ar'),
             'subd' => __('main.subd'),
             'timezone_id' => __('main.timezone'),
             'region_id' => __('main.region'),

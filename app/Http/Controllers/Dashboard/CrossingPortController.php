@@ -7,7 +7,6 @@ use App\Models\CrossingPort;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CrossingPort\CrossingPortCreateRequest;
 use App\Http\Requests\CrossingPort\CrossingPortUpdateRequest;
-use App\Models\Currency;
 
 class CrossingPortController extends Controller
 {

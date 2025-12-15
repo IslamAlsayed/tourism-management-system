@@ -46,10 +46,12 @@
                 @endforeach
                 <td class="px-4 py-2 text-end">
                     <div class="flex gap-2 justify-end">
-                        @include('components.elements.show-button', [
-                            'models' => $models,
-                            'id' => $item->id,
-                        ])
+                        @if (isset($models) && showRouteExists($models) && showFunctionExists($models))
+                            @include('components.elements.show-button', [
+                                'models' => $models,
+                                'id' => $item->id,
+                            ])
+                        @endif
 
                         @if (isset($models) && $models != 'notifications')
                             @include('components.elements.edit-button', [

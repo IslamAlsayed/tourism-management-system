@@ -3,9 +3,8 @@
 namespace App\Http\Requests\TouristSite;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class TouristSiteUpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,18 +21,16 @@ class TouristSiteUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $touristSiteId = $this->route('tourist_site') ?? $this->route('id');
-
         return [
-            'site_code' => ['nullable', 'string', 'max:50', Rule::unique('tourist_sites', 'site_code')->ignore($touristSiteId)],
+            'site_code' => ['nullable', 'string', 'max:50', 'unique:tourist_sites,site_code'],
 
             // Basic Information
-            'name' => ['nullable', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'description_ar' => ['nullable', 'string'],
-            'site_type' => ['nullable', 'string', 'in:' . implode(',', array_keys(config('helpers.site_types') ?? []))],
-            'category' => ['nullable', 'string', 'in:' . implode(',', array_keys(config('helpers.categories') ?? []))],
+            'site_type' => ['required', 'string', 'in:' . implode(',', array_keys(config('helpers.site_types') ?? []))],
+            'category' => ['required', 'string', 'in:' . implode(',', array_keys(config('helpers.categories') ?? []))],
 
             // Location Information
             'region_id' => ['nullable', 'exists:regions,id'],
@@ -75,18 +72,33 @@ class TouristSiteUpdateRequest extends FormRequest
             'instagram_url' => ['nullable', 'url', 'max:500'],
             'twitter_url' => ['nullable', 'url', 'max:500'],
 
-            // Facilities & Activities & Services
-            'facilities' => ['nullable', 'array'],
-            'facilities.*' => ['string', 'max:100'],
-            'activities' => ['nullable', 'array'],
-            'activities.*' => ['string', 'max:100'],
-            'services' => ['nullable', 'array'],
-            'services.*' => ['string', 'max:100'],
-            'has_parking' => ['nullable', 'boolean'],
-            'has_restaurant' => ['nullable', 'boolean'],
-            'has_gift_shop' => ['nullable', 'boolean'],
-            'has_restrooms' => ['nullable', 'boolean'],
+            // Facilities
             'wheelchair_accessible' => ['nullable', 'boolean'],
+            'free_wifi' => ['nullable', 'boolean'],
+            'parking' => ['nullable', 'boolean'],
+            'restrooms' => ['nullable', 'boolean'],
+            'restaurants' => ['nullable', 'boolean'],
+            'gift_shop' => ['nullable', 'boolean'],
+            'guided_tours' => ['nullable', 'boolean'],
+            'audio_guide' => ['nullable', 'boolean'],
+
+            // Activities
+            'photography' => ['nullable', 'boolean'],
+            'hiking' => ['nullable', 'boolean'],
+            'swimming' => ['nullable', 'boolean'],
+            'camping' => ['nullable', 'boolean'],
+            'shopping' => ['nullable', 'boolean'],
+            'dining' => ['nullable', 'boolean'],
+            'entertainment' => ['nullable', 'boolean'],
+            'educational_tours' => ['nullable', 'boolean'],
+
+            // Services
+            'translation' => ['nullable', 'boolean'],
+            'special_events' => ['nullable', 'boolean'],
+            'group_bookings' => ['nullable', 'boolean'],
+            'online_booking' => ['nullable', 'boolean'],
+            'mobile_app' => ['nullable', 'boolean'],
+            'virtual_tours' => ['nullable', 'boolean'],
 
             // Media & Resources
             'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
@@ -109,7 +121,7 @@ class TouristSiteUpdateRequest extends FormRequest
             'best_visit_time.*' => ['string', 'max:50'],
 
             // Administrative
-            'status' => ['nullable', 'string', 'in:active,inactive,maintenance,permanently_closed'],
+            'status' => ['nullable', 'string', 'in:active,inactive,maintenance,permanently_closed,under_renovation,seasonal'],
             'is_featured' => ['nullable', 'boolean'],
             'is_verified' => ['nullable', 'boolean'],
             'notes' => ['nullable', 'string'],
@@ -124,9 +136,9 @@ class TouristSiteUpdateRequest extends FormRequest
     // public function messages(): array
     // {
     //     return [
-    //         'name.nullable' => __('main.validation.nullable'),
-    //         'type.nullable' => __('main.validation.nullable'),
-    //         'category.nullable' => __('main.validation.nullable'),
+    //         'name.required' => __('main.validation.name_required'),
+    //         'type.required' => __('main.validation.type_required'),
+    //         'category.required' => __('main.validation.category_required'),
     //         'latitude.between' => __('main.validation.latitude_range'),
     //         'longitude.between' => __('main.validation.longitude_range'),
     //         'main_image.image' => __('main.validation.main_image_format'),

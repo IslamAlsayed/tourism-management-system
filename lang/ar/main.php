@@ -97,6 +97,7 @@ return [
     'close' => 'إغلاق',
     'send' => 'إرسال',
     'sent' => 'تم الإرسال',
+    'currently' => 'حالياً',
     'select_all_users_or_email' => 'يرجى تحديد "جميع المستخدمين" أو إدخال بريد المستلم',
     'message_cannot_be_empty' => 'لا يمكن أن تكون الرسالة فارغة',
     'select_at_least_one_notification_type' => 'يرجى اختيار نوع إشعار واحد على الأقل',
@@ -557,6 +558,7 @@ return [
 
     'add_type' => 'إضافة :type',
     'create_type' => 'إنشاء :type',
+    'view_type' => 'عرض :type',
     'save_type' => 'حفظ :type',
     'edit_type' => 'تعديل :type',
     'update_type' => 'تحديث :type',
@@ -569,7 +571,10 @@ return [
     'upload_type' => 'رفع :type',
     'add_type_description' => 'إضافة :type جديدة إلى النظام',
     'create_type_description' => 'إنشاء :type جديدة إلى النظام',
+    'view_type_description' => 'عرض :type موجود في النظام',
     'edit_type_description' => 'تعديل :type موجود في النظام',
+
+    'view_on_map' => 'عرض على الخريطة',
 
     'activate_type' => 'تفعيل :type',
     'independent_type' => 'استقلال :type',
@@ -938,6 +943,7 @@ return [
     'theme' => 'المظهر',
     'light' => 'فاتح',
     'dark' => 'داكن',
+    'mini' => 'صغير',
     'language' => 'اللغة',
     'english' => 'الإنجليزية',
     'arabic' => 'العربية',
@@ -1527,6 +1533,7 @@ return [
     'contact_phone' => 'هاتف الاتصال',
     'sort_order' => 'ترتيب الفرز',
     'is_major' => 'رئيسي',
+    'visa' => 'تأشيرة',
     'visa_required' => 'تأشيرة مطلوبة',
     'visa_fee' => 'رسوم التأشيرة',
     'visa_fee_currency' => 'عملة رسوم التأشيرة',
@@ -1703,6 +1710,7 @@ return [
     'delete_selected' => 'حذف المحدد',
     'banners' => 'البانرات',
     'logos' => 'الشعارات',
+    'app_logo' => 'شعار التطبيق',
 
     // Accommodation Related
     'edit_accommodation' => 'تحرير الإقامة',
