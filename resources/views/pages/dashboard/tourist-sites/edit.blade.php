@@ -158,12 +158,69 @@
                                 @enderror
                             </div>
 
-                            <!-- Entrance Fee -->
+                            
+                            <!-- entry_fee_adult -->
                             <div class="">
-                                <label for="entrance_fee" class="kt-label mb-2">{{ __('main.entrance_fee') }}</label>
-                                <input type="text" name="entrance_fee" id="entrance_fee" class="kt-input h-[45px]"
-                                    value="{{ $touristSite->entrance_fee }}">
-                                @error('entrance_fee')
+                                <label for="entry_fee_adult"
+                                    class="kt-label mb-2">{{ __('main.entry_fee_adult') }}</label>
+                                <input type="text" name="entry_fee_adult" id="entry_fee_adult" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->entry_fee_adult }}">
+                                @error('entry_fee_adult')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
+                            <!-- entry_fee_child -->
+                            <div class="">
+                                <label for="entry_fee_child"
+                                    class="kt-label mb-2">{{ __('main.entry_fee_child') }}</label>
+                                <input type="text" name="entry_fee_child" id="entry_fee_child" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->entry_fee_child }}">
+                                @error('entry_fee_child')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
+                            <!-- entry_fee_student -->
+                            <div class="">
+                                <label for="entry_fee_student"
+                                    class="kt-label mb-2">{{ __('main.entry_fee_student') }}</label>
+                                <input type="text" name="entry_fee_student" id="entry_fee_student"
+                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_student }}">
+                                @error('entry_fee_student')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
+                            <!-- entry_fee_senior -->
+                            <div class="">
+                                <label for="entry_fee_senior"
+                                    class="kt-label mb-2">{{ __('main.entry_fee_senior') }}</label>
+                                <input type="text" name="entry_fee_senior" id="entry_fee_senior"
+                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_senior }}">
+                                @error('entry_fee_senior')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
+                            <!-- entry_fee_group -->
+                            <div class="">
+                                <label for="entry_fee_group"
+                                    class="kt-label mb-2">{{ __('main.entry_fee_group') }}</label>
+                                <input type="text" name="entry_fee_group" id="entry_fee_group" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->entry_fee_group }}">
+                                @error('entry_fee_group')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
+                            <!-- is_free_entry -->
+                            <div class="">
+                                <label for="is_free_entry"
+                                    class="kt-label mb-2">{{ __('main.is_free_entry') }}</label>
+                                <input type="text" name="is_free_entry" id="is_free_entry" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->is_free_entry }}">
+                                @error('is_free_entry')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

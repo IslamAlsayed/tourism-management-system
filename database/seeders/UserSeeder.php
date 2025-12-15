@@ -18,10 +18,10 @@ class UserSeeder extends Seeder
         // Create users with hardcoded photos
         // PhotoObserver will automatically create MediaFile records
         User::factory()->create([
-            'name' => 'tawfig',
-            'email' => 'tawfig@example.com',
+            'name' => 'tawfiq',
+            'email' => 'tawfiq@example.com',
             'bio' => 'Administrator account',
-            'first_name' => 'tawfig',
+            'first_name' => 'tawfiq',
             'last_name' => 'makhamreh',
             'phone' => '+962 7 9811 4879',
             'mobile' => '+962 7 9811 4879',
