@@ -43,6 +43,16 @@
                         ])
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            <!-- Name -->
+                            <div class="">
+                                <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $user->name }}">
+                                @error('name')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- First Name -->
                             <div class="">
                                 <label for="first_name" class="kt-label mb-2">{{ __('main.first_name') }}</label>
@@ -74,6 +84,12 @@
                             </div>
                         </div>
 
+                        <!-- Bio -->
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'bio',
+                            'value' => $user->bio,
+                        ])
+
                         <!-- Contact Information -->
                         <div class="kt-card mb-4">
                             <div class="kt-card-header">
@@ -100,27 +116,33 @@
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    <!-- Address -->
-                                    <div class="">
-                                        <label for="address" class="kt-label mb-2">{{ __('main.address') }}</label>
-                                        <input type="text" name="address" id="address" class="kt-input h-[45px]"
-                                            value="{{ $user->address }}">
-                                        @error('address')
-                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
                                 </div>
+
+                                <!-- Address -->
+                                @include('components.elements.input-text-editor', [
+                                    'column' => 'address',
+                                    'value' => $user->address,
+                                ])
                             </div>
                         </div>
 
                         <!-- Employment Information -->
-                        <div class="kt-card">
+                        <div class="kt-card mb-4">
                             <div class="kt-card-header">
                                 <h3 class="kt-card-title">{{ __('main.employment_information') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                                    <!-- Employee ID -->
+                                    <div class="">
+                                        <label for="employee_id" class="kt-label mb-2">{{ __('main.employee_id') }}</label>
+                                        <input type="text" name="employee_id" id="employee_id" class="kt-input h-[45px]"
+                                            value="{{ $user->employee_id }}">
+                                        @error('employee_id')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                     <!-- Birth Date -->
                                     <div class="">
                                         <label for="birth_date" class="kt-label mb-2">{{ __('main.birth_date') }}</label>
@@ -165,7 +187,8 @@
                                             <option value="" disabled selected></option>
                                             @foreach (config('helpers.positions') as $key => $value)
                                                 <option value="{{ $key }}"
-                                                    {{ $user->position == $key ? 'selected' : '' }}>{{ ucfirst($value) }}
+                                                    {{ $user->position == $key ? 'selected' : '' }}>
+                                                    {{ ucfirst($value) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -219,10 +242,35 @@
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+                                    <!-- Button Display Mode -->
+                                    <div class="">
+                                        <label for="button_display_mode"
+                                            class="kt-label mb-2">{{ __('main.button_display_mode') }}</label>
+                                        <select name="button_display_mode" id="button_display_mode"
+                                            class="kt-select basic-single">
+                                            <option value="" disabled selected></option>
+                                            <option value="icon"
+                                                {{ $user->button_display_mode == 'icon' ? 'selected' : '' }}>
+                                                {{ __('main.icon') }}
+                                            </option>
+                                            <option value="text"
+                                                {{ $user->button_display_mode == 'text' ? 'selected' : '' }}>
+                                                {{ __('main.text') }}
+                                            </option>
+                                            <option value="both"
+                                                {{ $user->button_display_mode == 'both' ? 'selected' : '' }}>
+                                                {{ __('main.both') }}
+                                            </option>
+                                        </select>
+                                        @error('button_display_mode')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
 
                                 <!-- User Flags -->
-                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                                <div class="flex flex-wrap gap-10 mb-4">
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_admin" value="0">
                                         @include('components.elements.checkbox-button', [

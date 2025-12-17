@@ -17,8 +17,9 @@ return new class extends Migration {
             $table->string('name_ar')->nullable();
             $table->date('season_from');
             $table->date('season_to');
-            $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->foreignId('accommodation_id')->nullable()->constrained('accommodations')->onDelete('set null');
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->index(['season_from', 'season_to']);

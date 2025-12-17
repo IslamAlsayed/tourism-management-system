@@ -22,9 +22,9 @@ class Meal extends Model
         'uuid',
         'name',
         'name_ar',
-        'notes',
         'is_included',
         'is_active',
+        'notes',
     ];
 
     protected $casts = [

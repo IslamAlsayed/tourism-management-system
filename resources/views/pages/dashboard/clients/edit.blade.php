@@ -327,19 +327,17 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            {{-- Street Address --}}
-                            @include('components.elements.input-text-editor', [
-                                'column' => 'notes',
-                                'value' => $client->notes,
-                            ])
+                        {{-- Street Address --}}
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'notes',
+                            'value' => $client->notes,
+                        ])
 
-                            {{-- Address Line 2 --}}
-                            @include('components.elements.input-text-editor', [
-                                'column' => 'address_line_2',
-                                'value' => $client->address_line_2,
-                            ])
-                        </div>
+                        {{-- Address Line 2 --}}
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'address_line_2',
+                            'value' => $client->address_line_2,
+                        ])
                     </div>
                 </div>
 

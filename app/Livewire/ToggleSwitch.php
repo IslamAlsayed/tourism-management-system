@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use Ably\AblyRest;
+use App\Models\Setting;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -42,6 +44,11 @@ class ToggleSwitch extends Component
             $model->save();
 
             $this->value = $newValue;
+            if ($this->table == 'users' && $this->field == 'is_active') {
+                $ably = new AblyRest(Setting::first()->app_ably_key);
+                $data = ['id' => $this->modelId, 'value' => $newValue];
+                $ably->channel('switch.user.active')->publish('switch.user.active', $data);
+            }
             $this->dispatch('show-toast', ['type' => 'success', 'message' => __('messages.updated_successfully')]);
         } catch (\Exception $e) {
             $this->dispatch('show-toast', ['type' => 'error', 'message' => __('messages.error_occurred') . ': ' . $e->getMessage()]);

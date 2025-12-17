@@ -385,11 +385,35 @@
     @break
 
     @case('creator')
-        <td title="{{ optional($model->creator)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->creator)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->creator)->name ?? __('main.unknown') }}">
+            @if (isset($model->creator) && !empty($model->creator))
+                <a href="{{ route('users.show', $model->creator->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    {!! highlightSearch(limitedText(optional($model->creator)->name ?? '--', 30), $search) !!}
+                </a>
+            @else
+                <span
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">{{ __('main.unknown') }}</i>
+                </span>
+            @endif
+        </td>
     @break
 
     @case('updater')
-        <td title="{{ optional($model->updater)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->updater)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->updater)->name ?? __('main.unknown') }}">
+            @if (isset($model->updater) && !empty($model->updater))
+                <a href="{{ route('users.show', $model->updater->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    {!! highlightSearch(limitedText(optional($model->updater)->name ?? '--', 30), $search) !!}
+                </a>
+            @else
+                <span
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">{{ __('main.unknown') }}</i>
+                </span>
+            @endif
+        </td>
     @break
 
     @case('accommodation')
@@ -397,6 +421,33 @@
             {!! $model->accommodation->id .
                 ' - ' .
                 highlightSearch(limitedText(optional($model->accommodation)->name ?? '--', 30), $search) !!}
+        </td>
+    @break
+
+    @case('accommodations')
+        @php
+            $accommodations = $model->accommodations()->get();
+            $accommodationsNames = $accommodations->pluck('name')->filter()->implode(', ');
+        @endphp
+        <td title="{{ $accommodationsNames }}">
+            @if ($accommodations->count() > 0)
+                @foreach ($accommodations->take(3) as $accommodation)
+                    <a href="{{ route('accommodations.show', $accommodation->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        #{{ $accommodation->id }} {!! highlightSearch(limitedText($accommodation->name ?? '--', 30), $search) !!}
+                    </a>
+                @endforeach
+                @if ($accommodations->count() > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        ...
+                    </div>
+                @endif
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
         </td>
     @break
 
@@ -420,9 +471,10 @@
         <td title="{{ $roomNames }}">
             @if ($seasons->count() > 0)
                 @foreach ($seasons->take(3) as $season)
-                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('seasons.show', $season->season->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($season->season->name ?? '--', 30), $search) !!}
-                    </div>
+                    </a>
                 @endforeach
                 @if ($seasons->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
@@ -446,9 +498,10 @@
         <td title="{{ $roomNames }}">
             @if ($rooms->count() > 0)
                 @foreach ($rooms->take(3) as $room)
-                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('rooms.show', $room->room->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($room->room->name ?? '--', 30), $search) !!}
-                    </div>
+                    </a>
                 @endforeach
                 @if ($rooms->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
@@ -472,9 +525,10 @@
         <td title="{{ $mealNames }}">
             @if ($meals->count() > 0)
                 @foreach ($meals->take(3) as $meal)
-                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('meals.show', $meal->meal->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($meal->meal->name ?? '--', 30), $search) !!}
-                    </div>
+                    </a>
                 @endforeach
                 @if ($meals->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
@@ -490,6 +544,14 @@
         </td>
     @break
 
+    @case('price_type')
+        <td title="{{ $model->price_type }}">
+            <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText(str_replace('_', ' ', $model->price_type) ?? '--', 30), $search) !!}
+            </span>
+        </td>
+    @break
+
     @case('accommodation_type')
         <td title="{{ optional($model->accommodation_type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->accommodation_type)->name ?? '--', 30), $search) !!}</td>
     @break
@@ -500,6 +562,10 @@
                 {!! highlightSearch(limitedText(str_replace('_', ' ', $model->timezone->name) ?? '--', 30), $search) !!}
             </span>
         </td>
+    @break
+
+    @case('language')
+        <td title="{{ optional($model->language)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->language)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('company')
@@ -744,11 +810,17 @@
 
     @case('is_admin')
         <td title="{{ $model->is_admin == 1 ? __('main.yes') : __('main.no') }}">
-            <div class="relative">
-                <span class="text-{{ $model->is_admin == 1 ? 'green' : 'red' }}-600 font-semibold">
-                    {!! $model->is_admin == 1 ? highlightSearch(__('main.yes'), $search) : highlightSearch(__('main.no'), $search) !!}
-                </span>
-            </div>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_admin',
+                    'value' => (bool) $model->is_admin,
+                    'table' => $table,
+                ],
+                key('toggle-' . $model->id . '-is_admin')
+            )
         </td>
     @break
 

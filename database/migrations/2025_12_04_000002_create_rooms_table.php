@@ -15,10 +15,10 @@ return new class extends Migration {
             $table->uuid('uuid')->unique()->nullable();
             $table->string('name'); // e.g., Single, Double, Triple, Suite, Quad
             $table->string('name_ar')->nullable();
-            $table->text('description')->nullable();
             $table->unsignedInteger('max_occupancy')->comment('Total max persons');
             $table->string('occupancy_details')->nullable()->comment('e.g. 2A+1C');
             $table->boolean('is_active')->default(true);
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->index('name');

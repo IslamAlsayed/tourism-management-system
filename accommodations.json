@@ -1,0 +1,33 @@
+array: 36 [▼ // app\Http\Controllers\Dashboard\AccommodationController.php:40
+  "_token" => "mC3ZwfqWqyxQfBJapgATSOz92TRnGKkT8fSt4bO7""currency_id" => "92""region_id" => "1""subregion_id" => "1""country_id" => "2""state_id" => "4""city_id" => "4""street" => "Mollitia cupiditate""latitude" => "29""longitude" => "23""timezone_id" => "29""seasons" => array: 2 [▼
+    0 => array: 5 [▼
+      "name" => "Catherine Bass""name_ar" => "Ursula Hogan""season_from" => "2020-06-25""season_to" => "2020-09-08""is_active" => "0"
+        ]
+    1 => array: 5 [▶
+        ]
+    ]
+  "rooms_0_notes" => null
+  "rooms_1_notes" => null
+  "rooms" => array: 2 [▼
+    0 => array: 11 [▼
+      "name" => "Ferdinand Ballard""name_ar" => "Violet Sharpe""max_occupancy" => "71""occupancy_details" => "Adipisicing voluptat""currency_id" => "138""price_per_person_double" => "44""single_room_supplement" => "62""triple_room_discount" => "87""third_person_price" => "897""extra_bed_price" => "681""sea_view_supplement" => "68"
+        ]
+    1 => array: 11 [▶
+        ]
+    ]
+  "meals" => array: 2 [▼
+    0 => array: 7 [▼
+      "is_active" => "0""name" => "Amanda Tucker""name_ar" => "Craig Madden""currency_id" => "76""price" => "92""is_included" => "1""is_supplement" => "1"
+        ]
+    1 => array: 7 [▶
+        ]
+    ]
+  "meals_0_notes" => "<div>vfdvdfv</div>""meals_1_notes" => "<div>erverv</div>""supplements" => array: 2 [▼
+    0 => array: 8 [▼
+      "name" => "Adria Farrell""name_ar" => "Kalia Frank""currency_id" => "106""price" => "302""price_type" => "one_time""notes" => "Est et iure dolor i""is_mandatory" => "1""is_active" => "0"
+        ]
+    1 => array: 8 [▶
+        ]
+    ]
+  "supplements_0_notes" => "<div>reverv</div>""supplements_1_notes" => "<div>fdfd</div>""name" => "Jane Davidson""name_ar" => "Noel Briggs""type_id" => "24""classification" => "Doloremque distincti""stars" => "2""description" => "<div>Obcaecati itaque mod.</div>""general_mobile" => "+1 (568) 389-3668""general_email" => "nuzyc@mailinator.com""phone" => "+1 (203) 402-7872""website" => "https://www.fibamulyj.org.au""contact_person" => "Walter Wyatt""contact_position" => "Sed magni ad eum asp""contact_mobile" => "+1 (734) 505-5645""contact_email" => "qarak@mailinator.com""is_active" => "1"
+]

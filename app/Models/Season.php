@@ -14,7 +14,7 @@ class Season extends Model
     use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
-        'description',
+        'notes',
     ];
 
     protected $fillable = [
@@ -24,8 +24,9 @@ class Season extends Model
         'name_ar',
         'season_from',
         'season_to',
-        'description',
+        'accommodation_id',
         'is_active',
+        'notes',
     ];
 
     protected $casts = [
@@ -33,6 +34,16 @@ class Season extends Model
         'season_to' => 'date',
         'is_active' => 'boolean',
     ];
+
+    public function getRelationshipNames()
+    {
+        return ['accommodations'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return ['accommodation_id'];
+    }
 
     public function getFormattedSeasonFromAttribute()
     {

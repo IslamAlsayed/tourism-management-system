@@ -174,7 +174,7 @@
                     {{-- Selected File Preview --}}
                     <div id="file-preview" class="w-fit mb-4 hidden">
                         <label class="kt-label">{{ __('main.replaced_file') }}</label>
-                        <div id="file-info" class="border rounded-lg p-4"></div>
+                        <div id="file-info" class="kt-card bg-gray-50 rounded-lg p-4"></div>
                         <button type="button" class="kt-btn bg-danger mt-2" onclick="clearSelectedFile()">
                             {{ __('main.cancel') }}
                         </button>

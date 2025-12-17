@@ -48,12 +48,14 @@ class ModelActivityLogger
         }
 
         try {
+            $logMessage = $this->buildLogMessage($model, $event);
+
             activity(config('activitylog.model_log_name'))
                 ->causedBy(Auth::user())
                 ->performedOn($model)
                 ->event($event)
                 ->withProperties($this->buildProperties($model, $event))
-                ->log(class_basename($model) . ' ' . $event);
+                ->log($logMessage);
         } catch (\Throwable $exception) {
             Log::warning('Failed to log model activity', [
                 'model' => get_class($model),
@@ -98,20 +100,25 @@ class ModelActivityLogger
      */
     protected function buildProperties(Model $model, string $event): array
     {
+        $changes = $this->extractModelChanges($model, $event);
+
         $properties = [
-            'event' => $event,
             'model' => [
-                'class' => get_class($model),
+                'class' => class_basename($model),
                 'id' => $model->getKey(),
+                'table' => $model->getTable(),
             ],
-            'changes' => $this->extractModelChanges($model, $event),
-            'context' => array_filter([
-                'url' => $this->requestData('fullUrl'),
-                'ip' => $this->requestData('ip'),
-                'user_agent' => $this->requestData('userAgent'),
-                'method' => $this->requestData('method'),
-            ]),
+            'changes' => $changes,
+            'summary' => $this->buildChangesSummary($changes, $event),
         ];
+
+        // Only add context for important operations or errors
+        if (in_array($event, ['deleted', 'force_deleted']) || app()->bound('request') && request()->isMethod('DELETE')) {
+            $properties['context'] = array_filter([
+                'ip' => $this->requestData('ip'),
+                'method' => $this->requestData('method'),
+            ]);
+        }
 
         return array_filter($properties, function ($value) {
             return $value !== null && $value !== [] && $value !== '';
@@ -214,21 +221,27 @@ class ModelActivityLogger
             $attributes = Arr::only($attributes, $keys);
         }
 
-        $attributes = Arr::except($attributes, array_merge($model->getHidden(), [
+        // Exclude sensitive and unnecessary fields
+        $excludeFields = array_merge($model->getHidden(), [
             'password',
             'remember_token',
             'two_factor_recovery_codes',
             'two_factor_secret',
-        ]));
-
-        $attributes = Arr::except($attributes, [
             'created_at',
             'updated_at',
             'deleted_at',
+            'email_verified_at',
+            'last_login_at',
+            'last_login_ip',
+            'user_status',
+            'session_id',
         ]);
 
-        if ($keys === null && count($attributes) > 25) {
-            $attributes = array_slice($attributes, 0, 25, true);
+        $attributes = Arr::except($attributes, $excludeFields);
+
+        // Limit to important attributes only
+        if ($keys === null && count($attributes) > 10) {
+            $attributes = array_slice($attributes, 0, 10, true);
         }
 
         return $attributes;
@@ -353,29 +366,93 @@ class ModelActivityLogger
     }
 
     /**
-     * Format a human-readable log description with translation support.
+     * Build a descriptive log message with key details.
      */
-    protected function formatLogDescription(Model $model, string $event): string
+    protected function buildLogMessage(Model $model, string $event): string
     {
         $modelBasename = class_basename($model);
         $modelKey = strtolower($modelBasename);
-
-        // Try to get translated model name
         $translatedModel = trans("main.type_{$modelKey}");
 
-        // If translation not found, use the basename
         if ($translatedModel === "main.type_{$modelKey}") {
             $translatedModel = $modelBasename;
         }
 
-        // Try to get translated event
         $translatedEvent = trans("main.{$event}");
-
-        // If translation not found, use the event as is
         if ($translatedEvent === "main.{$event}") {
             $translatedEvent = $event;
         }
 
-        return $translatedModel . ' ' . $translatedEvent;
+        $message = "{$translatedModel} {$translatedEvent}";
+
+        // Add ID for reference
+        if ($model->getKey()) {
+            $message .= " (ID: {$model->getKey()})";
+        }
+
+        // Add name/title if exists for quick identification
+        $identifierField = $this->getModelIdentifierField($model);
+        if ($identifierField && isset($model->{$identifierField})) {
+            $identifier = Str::limit($model->{$identifierField}, 50);
+            $message .= " - {$identifier}";
+        }
+
+        return $message;
+    }
+
+    /**
+     * Get the field that best identifies the model.
+     */
+    protected function getModelIdentifierField(Model $model): ?string
+    {
+        $possibleFields = ['name', 'title', 'label', 'email', 'username'];
+
+        foreach ($possibleFields as $field) {
+            if (isset($model->{$field})) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Build a summary of changes for quick understanding.
+     */
+    protected function buildChangesSummary(array $changes, string $event): ?string
+    {
+        if (empty($changes)) {
+            return null;
+        }
+
+        $summary = [];
+
+        if (isset($changes['current']) && isset($changes['previous'])) {
+            // Updated - show what changed
+            $current = $changes['current'];
+            $previous = $changes['previous'];
+
+            foreach ($current as $key => $value) {
+                if (isset($previous[$key]) && $previous[$key] !== $value) {
+                    $summary[] = "{$key}: {$previous[$key]} → {$value}";
+                }
+            }
+        } elseif (isset($changes['current'])) {
+            // Created - show key fields
+            $current = $changes['current'];
+            $importantFields = array_slice($current, 0, 3, true);
+            foreach ($importantFields as $key => $value) {
+                $summary[] = "{$key}: {$value}";
+            }
+        } elseif (isset($changes['previous'])) {
+            // Deleted - show what was deleted
+            $previous = $changes['previous'];
+            $importantFields = array_slice($previous, 0, 3, true);
+            foreach ($importantFields as $key => $value) {
+                $summary[] = "{$key}: {$value}";
+            }
+        }
+
+        return !empty($summary) ? implode(', ', $summary) : null;
     }
 }

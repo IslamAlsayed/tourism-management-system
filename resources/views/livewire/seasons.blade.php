@@ -17,9 +17,18 @@
     @endcomponent
 
     <div class="kt-card-content px-2" wire:loading.class="loading"
-        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterStatus">
+        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterStatus,filterAccommodations,filterSeasons">
         <!-- Filters -->
         <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable" wire:ignore>
+            <div>
+                <select wire:model.live="filterAccommodations" class="kt-select h-[40px] w-48 max-w-full"
+                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.status') }}">
+                    <option value="all">{{ __('main.all') }}</option>
+                    @foreach ($accommodationsForSeasons as $accommodation)
+                        <option value="{{ $accommodation->id }}">{{ $accommodation->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div>
                 <select wire:model.live="filterStatus" class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
                     data-kt-select-placeholder="{{ __('main.status') }}">
@@ -30,15 +39,12 @@
             </div>
 
             {{-- Reset Sort Button --}}
-            @if ($filterStatus)
-                <div>
-                    <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}"
-                        toggle-button class="kt-btn kt-btn-outline bg-white px-3 hover:bg-gray-50 transition-colors">
-                        <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
-                        <span class="text-sm">{{ __('main.reset_sort') }}</span>
-                    </button>
-                </div>
-            @endif
+            <div>
+                <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}" toggle-button
+                    class="kt-btn kt-btn-outline bg-white px-2 hover:bg-gray-50 transition-colors">
+                    <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
+                </button>
+            </div>
         </div>
 
         <div data-kt-datatable-state-save="false" id="seasons_table">

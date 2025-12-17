@@ -17,7 +17,7 @@ class StoreRequest extends FormRequest
             'name' => 'required|string|max:255',
             'name_ar' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
-            'is_per_person' => 'required|boolean',
+            'price_type' => 'nullable|string',
             'is_mandatory' => 'nullable|boolean',
             'applicable_date' => 'nullable|date',
             'accommodation_id' => 'required|integer|exists:accommodations,id',

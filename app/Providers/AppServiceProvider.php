@@ -50,8 +50,13 @@ class AppServiceProvider extends ServiceProvider
 
         if (Schema::hasTable('settings')) {
             $settings = Setting::first() ?? null;
-            if ($settings && $settings->app_session_lifetime) {
-                config(['session.lifetime' => (int) $settings->app_session_lifetime]);
+            if ($settings && isset($settings->app_session_lifetime)) {
+                // If session lifetime is 0 and user is admin, set unlimited session (1 year)
+                if ($settings->app_session_lifetime == 0 && getActiveUser() && getActiveUser()->is_admin) {
+                    config(['session.lifetime' => 525600]); // 1 year in minutes
+                } elseif ($settings->app_session_lifetime > 0) {
+                    config(['session.lifetime' => (int) $settings->app_session_lifetime]);
+                }
             }
         }
     }

@@ -38,7 +38,7 @@
                                 <div>
                                     <label class="kt-label mb-2">{{ __('main.free_cancellation_days') }}</label>
                                     <input type="number" name="app_free_cancellation_days" class="kt-input h-[45px]"
-                                        value="{{ $settings->app_free_cancellation_days }}" min="0" />
+                                        value="{{ $settings->app_free_cancellation_days }}" minLength="0" />
                                     <div class="text-xs text-secondary-foreground mt-1">
                                         {{ __('main.days_before_checkin_free_cancel') }}
                                     </div>
@@ -47,7 +47,7 @@
                                 <div>
                                     <label class="kt-label mb-2">{{ __('main.min_advance_booking') }}</label>
                                     <input type="number" name="app_min_advance_booking_days" class="kt-input h-[45px]"
-                                        value="{{ $settings->app_min_advance_booking_days }}" min="0" />
+                                        value="{{ $settings->app_min_advance_booking_days }}" minLength="0" />
                                     <div class="text-xs text-secondary-foreground mt-1">
                                         {{ __('main.minimum_days_advance_booking') }}
                                     </div>
@@ -78,15 +78,15 @@
                                 <div>
                                     <label class="kt-label mb-2">{{ __('main.default_tax_rate') }} (%)</label>
                                     <input type="number" name="app_default_tax_rate" class="kt-input h-[45px]"
-                                        value="{{ $settings->app_default_tax_rate }}" step="0.01" min="0"
-                                        max="100" />
+                                        value="{{ $settings->app_default_tax_rate }}" step="0.01" minLength="0"
+                                        maxLength="100" />
                                 </div>
 
                                 <div>
                                     <label class="kt-label mb-2">{{ __('main.service_fee') }} (%)</label>
                                     <input type="number" name="app_service_fee_percentage" class="kt-input h-[45px]"
-                                        value="{{ $settings->app_service_fee_percentage }}" step="0.01" min="0"
-                                        max="100" />
+                                        value="{{ $settings->app_service_fee_percentage }}" step="0.01" minLength="0"
+                                        maxLength="100" />
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                                     <label class="kt-label mb-2">{{ __('main.minimum_deposit') }} (%)</label>
                                     <input type="number" name="app_minimum_deposit_percentage" class="kt-input h-[45px]"
                                         value="{{ $settings->app_minimum_deposit_percentage }}" step="0.01"
-                                        min="0" max="100" />
+                                        minLength="0" maxLength="100" />
                                     <div class="text-xs text-secondary-foreground mt-1">
                                         {{ __('main.min_required_deposit_percentage') }}
                                     </div>
@@ -114,7 +114,7 @@
                                 <div>
                                     <label class="kt-label mb-2">{{ __('main.payment_grace_period') }}</label>
                                     <input type="number" name="app_payment_grace_period_days" class="kt-input h-[45px]"
-                                        value="{{ $settings->app_payment_grace_period_days }}" min="0" />
+                                        value="{{ $settings->app_payment_grace_period_days }}" minLength="0" />
                                     <div class="text-xs text-secondary-foreground mt-1">
                                         {{ __('main.days_allowed_for_payment') }}
                                     </div>
@@ -135,7 +135,7 @@
                                 <div>
                                     <label class="kt-label mb-2">{{ __('main.new_deals_duration') }}</label>
                                     <input type="number" name="app_new_deals_duration_days" class="kt-input h-[45px]"
-                                        value="{{ $settings->app_new_deals_duration_days }}" min="1" />
+                                        value="{{ $settings->app_new_deals_duration_days }}" minLength="1" />
                                     <div class="text-xs text-secondary-foreground mt-1">
                                         {{ __('main.days_to_show_as_new') }}
                                     </div>

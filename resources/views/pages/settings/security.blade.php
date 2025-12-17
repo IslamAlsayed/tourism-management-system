@@ -38,17 +38,22 @@
 
                         <div class="grid lg:grid-cols-2 gap-6 mb-4">
                             <div>
-                                <label class="kt-label mb-2">{{ __('main.session_timeout') }}</label>
+                                <label class="kt-label mb-2">{{ __('main.session_timeout') }}
+                                    <span class="text-red-500 text-sm">
+                                        ({{ __('main.minimum_minutes', ['minutes' => 5]) }})
+                                    </span>
+                                </label>
                                 <input type="number" name="app_session_lifetime" class="kt-input h-[45px]"
-                                    value="{{ $settings->app_session_lifetime }}" />
-                                <div class="text-xs text-secondary-foreground mt-1">
-                                    {{ __('main.session_timeout_description') }}
+                                    value="{{ $settings->app_session_lifetime }}" minLength="0" />
+                                <div class="text-xs text-info mt-1">
+                                    <i class="ki-filled ki-information-2"></i>
+                                    {{ __('main.zero_for_unlimited_session') }}
                                 </div>
                             </div>
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.max_login_attempts') }}</label>
                                 <input type="number" name="app_max_login_attempts" class="kt-input h-[45px]"
-                                    value="{{ $settings->app_max_login_attempts }}" min="1" />
+                                    value="{{ $settings->app_max_login_attempts }}" minLength="1" />
                                 <div class="text-xs text-secondary-foreground mt-1">
                                     {{ __('main.failed_attempts_before_lock') }}
                                 </div>
@@ -72,7 +77,7 @@
                                 </label>
 
                                 <input type="number" name="app_ip_ban_duration_minutes" class="kt-input h-[45px]"
-                                    value="{{ $settings->app_ip_ban_duration_minutes }}" min="1" />
+                                    value="{{ $settings->app_ip_ban_duration_minutes }}" minLength="1" />
                                 <div class="text-xs text-secondary-foreground mt-1">
                                     {{ __('main.minutes_to_ban_ip') }}
                                 </div>

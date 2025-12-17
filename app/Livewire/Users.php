@@ -4,12 +4,12 @@ namespace App\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
+use App\Traits\ExportsData;
 use App\Traits\WithSorting;
 use Livewire\WithPagination;
 use App\Traits\CustomColumns;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
-use App\Traits\ExportsData;
 
 class Users extends Component
 {
@@ -22,6 +22,21 @@ class Users extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function refreshData()
+    {
+        // Force refresh by resetting pagination and clearing any cached data
+        $this->resetPage();
+        $this->reset('search', 'totalCount');
+
+        // Re-render component to fetch fresh data from database
+        $this->render();
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => __('messages.data_refreshed_successfully')
+        ]);
     }
 
     public function mount()
@@ -91,6 +106,9 @@ class Users extends Component
     public function render()
     {
         $query = User::query();
+        if (!getActiveUser()->is_admin) {
+            $query->where('is_admin', 0);
+        }
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

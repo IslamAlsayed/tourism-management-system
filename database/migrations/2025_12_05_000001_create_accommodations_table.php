@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('name_ar')->nullable(); // e.g., هيلتون القاهرة، مخيم بدوي، أخرى
             $table->string('classification')->nullable(); // تصنيف الفندق
             $table->unsignedTinyInteger('stars')->nullable();
-            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
             $table->boolean('is_active')->default(true);
 
             // Contact info

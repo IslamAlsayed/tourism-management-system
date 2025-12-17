@@ -22,13 +22,14 @@
             <!-- Filters -->
             <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 px-4 filterTable" wire:ignore>
                 <div>
-                    <label for="is_per_person" class="text-sm">{{ __('main.is_per_person') }}</label>
-                    <select wire:model.live="filterPerPerson" class="kt-select h-[40px] w-48 max-w-full"
-                        id="is_per_person" data-kt-select="true"
-                        data-kt-select-placeholder="{{ __('main.is_per_person') }}">
+                    <label for="price_type" class="text-sm">{{ __('main.price_type') }}</label>
+                    <select wire:model.live="filterPriceType" class="kt-select h-[40px] w-48 max-w-full" id="price_type"
+                        data-kt-select="true" data-kt-select-placeholder="{{ __('main.price_type') }}">
                         <option value="all">{{ __('main.all') }}</option>
-                        <option value="yes">{{ __('main.yes') }}</option>
-                        <option value="no">{{ __('main.no') }}</option>
+                        <option value="per_person">{{ __('main.per_person') }}</option>
+                        <option value="per_room">{{ __('main.per_room') }}</option>
+                        <option value="per_night">{{ __('main.per_night') }}</option>
+                        <option value="one_time">{{ __('main.one_time') }}</option>
                     </select>
                 </div>
                 <div>
@@ -52,16 +53,12 @@
                 </div>
 
                 {{-- Reset Filters Button --}}
-                @if ($filterPerPerson || $filterMandatory || $filterStatus)
-                    <div>
-                        <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}"
-                            toggle-button
-                            class="kt-btn kt-btn-outline bg-white px-3 hover:bg-gray-50 transition-colors">
-                            <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
-                            <span class="text-sm">{{ __('main.reset_sort') }}</span>
-                        </button>
-                    </div>
-                @endif
+                <div>
+                    <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}"
+                        toggle-button class="kt-btn kt-btn-outline bg-white px-3 hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
+                    </button>
+                </div>
             </div>
 
             <div data-kt-datatable-state-save="false" id="accommodations_table">

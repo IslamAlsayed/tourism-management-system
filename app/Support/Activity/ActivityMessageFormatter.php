@@ -21,6 +21,12 @@ class ActivityMessageFormatter
         }
 
         $message = self::cleanMessage($message);
+        
+        // Add change summary if available
+        $changesSummary = self::getChangesSummary($activity);
+        if ($changesSummary) {
+            $message .= " | {$changesSummary}";
+        }
 
         if ($limit > 0) {
             $message = Str::limit($message, $limit);
@@ -94,5 +100,23 @@ class ActivityMessageFormatter
         }
 
         return trim($message);
+    }
+    
+    /**
+     * Extract changes summary from activity properties.
+     */
+    protected static function getChangesSummary(Activity $activity): ?string
+    {
+        $properties = $activity->properties;
+        
+        if ($properties instanceof Arrayable) {
+            $properties = $properties->toArray();
+        } elseif (is_object($properties) && method_exists($properties, 'toArray')) {
+            $properties = $properties->toArray();
+        }
+        
+        $properties = (array) $properties;
+        
+        return Arr::get($properties, 'summary');
     }
 }

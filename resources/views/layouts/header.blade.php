@@ -29,7 +29,7 @@
             @livewire('notifications.notification-dropdown')
             {{-- @include('components.notification-dropdown') --}}
             @include('partials.topbar-chat')
-            @include('partials.topbar-apps')
+            {{-- @include('partials.topbar-apps') --}}
 
             @include('partials.topbar-user-dropdown')
         </div>

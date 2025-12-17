@@ -101,6 +101,10 @@
                                         {{ getActiveUser()->button_display_mode == 'icon' ? 'selected' : '' }}>
                                         {{ __('main.icon') }}
                                     </option>
+                                    <option value="both"
+                                        {{ getActiveUser()->button_display_mode == 'both' ? 'selected' : '' }}>
+                                        {{ __('main.both') }}
+                                    </option>
                                 </select>
                             </div>
                         </div>

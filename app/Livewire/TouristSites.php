@@ -144,10 +144,10 @@ class TouristSites extends Component
         if ($this->filterStatus) {
             $query->where('status', $this->filterStatus);
         }
-        if ($this->filterFeatured !== '') {
+        if ($this->filterFeatured) {
             $query->where('is_featured', $this->filterFeatured);
         }
-        if ($this->filterFreeEntry !== '') {
+        if ($this->filterFreeEntry) {
             $query->where('is_free_entry', $this->filterFreeEntry);
         }
         $query = $this->applySorting($query);

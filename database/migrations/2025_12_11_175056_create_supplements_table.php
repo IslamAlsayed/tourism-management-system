@@ -15,12 +15,11 @@ return new class extends Migration {
             $table->uuid('uuid')->unique()->nullable();
             $table->string('name');
             $table->string('name_ar')->nullable();
-            $table->text('description')->nullable();
-            $table->text('description_ar')->nullable();
             $table->string('category'); // accommodation, transportation, airport, etc.
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class Accommodation extends Model
     use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
-        'description',
+        'notes',
     ];
 
     protected $fillable = [
@@ -25,7 +25,6 @@ class Accommodation extends Model
         'name_ar',
         'classification',
         'stars',
-        'description',
         'general_mobile',
         'general_email',
         'email',
@@ -44,6 +43,7 @@ class Accommodation extends Model
         'longitude',
         'contract_file_path',
         'is_active',
+        'notes',
         'currency_id',
         'type_id',
         'region_id',
@@ -62,7 +62,7 @@ class Accommodation extends Model
 
     public function getRelationshipNames()
     {
-        return ['currency', 'type', 'seasons', 'rooms', 'meals', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['currency', 'type', 'seasons', 'roomRates', 'mealRates', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
@@ -88,14 +88,14 @@ class Accommodation extends Model
     }
 
     // One-to-Many: جدول accommodation_room_rates يحتوي على أسعار الغرف لكل موسم
-    public function rooms()
+    public function roomRates()
     {
         // return $this->belongsToMany(Room::class, 'accommodation_room_rates')->withTimestamps()->withPivot('notes');
         return $this->hasMany(AccommodationRoomRate::class);
     }
 
     // One-to-Many: جدول accommodation_meal_rates يحتوي على أسعار الوجبات لكل موسم
-    public function meals()
+    public function mealRates()
     {
         // return $this->belongsToMany(Meal::class, 'accommodation_meal_rates')->withTimestamps()->withPivot('notes');
         return $this->hasMany(AccommodationMealRate::class);

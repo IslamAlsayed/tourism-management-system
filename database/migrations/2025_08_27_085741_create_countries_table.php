@@ -37,6 +37,7 @@ return new class extends Migration {
             $table->boolean('is_independent')->nullable()->default(false);
             $table->boolean('is_developed')->nullable()->default(false);
             $table->boolean('is_landlocked')->nullable()->default(false);
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->index(['name', 'name_ar']);

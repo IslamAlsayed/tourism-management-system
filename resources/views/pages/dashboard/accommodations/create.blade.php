@@ -26,172 +26,6 @@
             @csrf
             <div class="grid gap-4 lg:gap-6">
 
-                <!-- Basic Information -->
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
-                    </div>
-                    <div class="kt-card-body p-4 pb-0">
-                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
-                            <!-- Name -->
-                            <div class="align-self-end">
-                                <label for="name" class="kt-label required">
-                                    {{ __('main.name') }}
-                                    <span class="text-red-600 text-2xl">*</span>
-                                </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
-                                    value="{{ old('name') }}" placeholder="Enter accommodation name">
-                                @error('name')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Name Arabic -->
-                            <div class="align-self-end">
-                                <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar') }}" placeholder="أدخل اسم الإقامة">
-                                @error('name_ar')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
-                            <!-- Accommodation Type -->
-                            <div class="align-self-end">
-                                <label for="type_id" class="kt-label flex items-center justify-between mb-2">
-                                    <div>{{ __('main.type') }}</div>
-                                    <a href="{{ route('types.create') }}"
-                                        class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
-                                </label>
-
-                                <select name="type_id" id="type_id" class="kt-select basic-single">
-                                    <option value="" disabled selected></option>
-                                    @foreach ($types as $type)
-                                        <option value="{{ $type->id }}"
-                                            {{ old('type_id') == $type->id ? 'selected' : '' }}>
-                                            {{ $type->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('type_id')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Classification -->
-                            <div class="align-self-end">
-                                <label for="classification" class="kt-label">{{ __('main.classification') }}</label>
-                                <input type="text" name="classification" id="classification" class="kt-input h-[45px]"
-                                    value="{{ old('classification') }}" placeholder="e.g., 5 Stars, Luxury">
-                                @error('classification')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Stars Rating -->
-                            <div class="align-self-end">
-                                <label for="stars" class="kt-label mb-2">{{ __('main.star_rating') }}</label>
-                                <select name="stars" id="stars" class="kt-select basic-single">
-                                    <option value="" disabled selected></option>
-                                    <option value="1" {{ old('stars') == 1 ? 'selected' : '' }}>1 Star</option>
-                                    <option value="2" {{ old('stars') == 2 ? 'selected' : '' }}>2 Stars</option>
-                                    <option value="3" {{ old('stars') == 3 ? 'selected' : '' }}>3 Stars</option>
-                                    <option value="4" {{ old('stars') == 4 ? 'selected' : '' }}>4 Stars</option>
-                                    <option value="5" {{ old('stars') == 5 ? 'selected' : '' }}>5 Stars</option>
-                                </select>
-                                @error('stars')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
-                            <!-- Seasons (Multiple Selection) -->
-                            <div class="align-self-end">
-                                <label for="season_ids" class="kt-label flex items-center justify-between mb-2">
-                                    {{ __('main.seasons') }}
-                                    <a href="{{ route('seasons.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="season_ids[]" id="season_ids" class="kt-select basic-multiple"
-                                    multiple="multiple">
-                                    @foreach ($seasons as $season)
-                                        <option value="{{ $season->id }}"
-                                            {{ in_array($season->id, old('season_ids', [])) ? 'selected' : '' }}>
-                                            {{ $season->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('season_ids')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Room -->
-                            <div class="align-self-end">
-                                <label for="room_ids" class="kt-label flex items-center justify-between mb-2">
-                                    {{ __('main.rooms') }}
-                                    <a href="{{ route('rooms.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="room_ids[]" id="room_ids" class="kt-select basic-multiple"
-                                    multiple="multiple">
-                                    @foreach ($rooms as $room)
-                                        <option value="{{ $room->id }}"
-                                            {{ in_array($room->id, old('room_ids', [])) ? 'selected' : '' }}>
-                                            {{ $room->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('room_ids')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Meal -->
-                            <div class="align-self-end">
-                                <label for="meal_ids" class="kt-label flex items-center justify-between mb-2">
-                                    {{ __('main.meals') }}
-                                    <a href="{{ route('meals.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="meal_ids[]" id="meal_ids" class="kt-select basic-multiple"
-                                    multiple="multiple">
-                                    @foreach ($meals as $meal)
-                                        <option value="{{ $meal->id }}"
-                                            {{ in_array($meal->id, old('meal_ids', [])) ? 'selected' : '' }}>
-                                            {{ $meal->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('meal_ids')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <!-- Info Note -->
-                        <div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                            <p class="text-sm text-blue-700">
-                                <i class="ki-filled ki-information-2 text-blue-700 me-1"></i>
-                                <strong>{{ __('main.note') }}:</strong>
-                                {!! __('messages.accommodation_rates_records_info', ['link' => route('accommodations-rates.index')]) !!}
-                            </p>
-                        </div>
-
-                        {{-- Description --}}
-                        @include('components.elements.input-text-editor', [
-                            'name' => 'description',
-                            'value' => old('description'),
-                        ])
-                    </div>
-                </div>
-
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -253,8 +87,7 @@
                             <div class="align-self-end">
                                 <label for="longitude" class="kt-label">Longitude</label>
                                 <input type="number" name="longitude" id="longitude" step="0.0000001"
-                                    class="kt-input h-[45px]" value="{{ old('longitude') }}"
-                                    placeholder="e.g., 29.9187">
+                                    class="kt-input h-[45px]" value="{{ old('longitude') }}" placeholder="e.g., 29.9187">
                                 @error('longitude')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -280,13 +113,116 @@
                     </div>
                 </div>
 
+                {{-- Seasons Information --}}
+                <livewire:accommodations.season-form />
+
+                {{-- Rooms Information --}}
+                <livewire:accommodations.room-form />
+
+                {{-- Meals Information --}}
+                <livewire:accommodations.meal-form />
+
+                {{-- Supplements Information --}}
+                <livewire:accommodations.supplement-form />
+
+                <!-- Accommodation Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.accommodation')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4 pb-0">
+                        <div class="grid lg:grid-cols-2 gap-6 items-end mb-4">
+                            <!-- Name -->
+                            <div class="align-self-end">
+                                <label for="name" class="kt-label required">
+                                    {{ __('main.name') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ old('name') }}" placeholder="Enter accommodation name">
+                                @error('name')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Name Arabic -->
+                            <div class="align-self-end">
+                                <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}" placeholder="أدخل اسم الإقامة">
+                                @error('name_ar')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid lg:grid-cols-3 gap-6 mb-4">
+                            <!-- Accommodation Type -->
+                            <div class="align-self-end">
+                                <label for="type_id" class="kt-label flex items-center justify-between mb-2">
+                                    <div>{{ __('main.type') }}</div>
+                                    <a href="{{ route('types.create') }}"
+                                        class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+                                </label>
+
+                                <select name="type_id" id="type_id" class="kt-select basic-single">
+                                    <option value="" disabled selected></option>
+                                    @foreach ($types as $type)
+                                        <option value="{{ $type->id }}"
+                                            {{ old('type_id') == $type->id ? 'selected' : '' }}>
+                                            {{ $type->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('type_id')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Classification -->
+                            <div class="align-self-end">
+                                <label for="classification" class="kt-label">{{ __('main.classification') }}</label>
+                                <input type="text" name="classification" id="classification"
+                                    class="kt-input h-[45px]" value="{{ old('classification') }}"
+                                    placeholder="e.g., 5 Stars, Luxury">
+                                @error('classification')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Stars Rating -->
+                            <div class="align-self-end">
+                                <label for="stars" class="kt-label mb-2">{{ __('main.star_rating') }}</label>
+                                <select name="stars" id="stars" class="kt-select basic-single">
+                                    <option value="" disabled selected></option>
+                                    <option value="1" {{ old('stars') == 1 ? 'selected' : '' }}>1 Star</option>
+                                    <option value="2" {{ old('stars') == 2 ? 'selected' : '' }}>2 Stars</option>
+                                    <option value="3" {{ old('stars') == 3 ? 'selected' : '' }}>3 Stars</option>
+                                    <option value="4" {{ old('stars') == 4 ? 'selected' : '' }}>4 Stars</option>
+                                    <option value="5" {{ old('stars') == 5 ? 'selected' : '' }}>5 Stars</option>
+                                </select>
+                                @error('stars')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- notes --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'notes',
+                            'value' => old('notes'),
+                        ])
+                    </div>
+                </div>
+
                 <!-- Contact Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">Contact Information</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                        <div class="grid lg:grid-cols-2 gap-6 items-end mb-4">
                             <!-- General Mobile -->
                             <div class="align-self-end">
                                 <label for="general_mobile" class="kt-label">General Mobile</label>
@@ -309,7 +245,7 @@
                             </div>
                         </div>
 
-                        <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                        <div class="grid lg:grid-cols-2 gap-6 items-end mb-4">
                             <!-- Phone -->
                             <div class="align-self-end">
                                 <label for="phone" class="kt-label">Phone</label>
@@ -334,7 +270,7 @@
                         <!-- Contact Person Details -->
                         <div class="border-t pt-4 mt-4">
                             <h4 class="text-lg font-medium mb-4">Contact Person</h4>
-                            <div class="grid lg:grid-cols-2 gap-6 mb-4">
+                            <div class="grid lg:grid-cols-2 gap-6 items-end mb-4">
                                 <div class="align-self-end">
                                     <label for="contact_person" class="kt-label">Contact Person Name</label>
                                     <input type="text" name="contact_person" id="contact_person"
@@ -381,12 +317,10 @@
                     </div>
                 </div>
 
-                <!-- Additional Settings -->
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">Additional Settings</h3>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 p-4">
+                <div>
+                    {{-- Additional Settings --}}
+                    <label class="kt-label mb-2">{{ __('main.additional_settings') }}</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                         <div class="flex items-center gap-3">
                             <input type="hidden" name="is_active" value="0">
                             @include('components.elements.checkbox-button', [

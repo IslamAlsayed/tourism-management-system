@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', __('main.type_details'))
+@section('title', __('main.type_details', ['type' => __('main.type')]))
 
 @section('content')
     <div class="kt-container-fixed">
@@ -88,7 +88,8 @@
                 <div class="kt-card-body p-4" wire:ignore>
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($type->accommodations as $accommodation)
-                            <div wire:key="accommodation-{{ $accommodation->id }}" class="border rounded-lg p-4 pt-2">
+                            <div wire:key="accommodation-{{ $accommodation->id }}"
+                                class="kt-card bg-gray-50 rounded-lg p-4 pt-2">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -157,8 +158,7 @@
                             <div class="text-center py-8 text-secondary-foreground">
                                 <i class="ki-filled ki-information text-4xl mb-2"></i>
                                 <p>{{ __('main.no_data_available') }}</p>
-                                <a href="{{ route('accommodations.create', ['accommodation_id' => $accommodation->id]) }}"
-                                    class="kt-btn kt-btn-sm kt-btn-primary mt-4">
+                                <a href="{{ route('types.create') }}" class="kt-btn kt-btn-sm kt-btn-primary mt-4">
                                     <i class="ki-filled ki-plus text-sm me-1"></i>
                                     {{ __('main.add_first_accommodation') }}
                                 </a>

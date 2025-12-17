@@ -18,10 +18,17 @@ class Seasons extends Component
     public $search = '';
     public $totalCount = '';
     public $message = [];
+    public $filterAccommodations = '';
+    public $accommodationsForSeasons = [];
     public $filterStatus = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterAccommodations()
     {
         $this->resetPage();
     }
@@ -35,6 +42,7 @@ class Seasons extends Component
     {
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Season::class);
+        $this->accommodationsForSeasons = Season::with('accommodations:id,name')->get()->pluck('accommodations')->flatten()->unique('id')->sortBy('name')->values();
         $this->resetPage();
     }
 
@@ -97,7 +105,7 @@ class Seasons extends Component
 
     public function resetFilters(): void
     {
-        $this->reset(['search', 'filterStatus']);
+        $this->reset(['search', 'filterAccommodations', 'filterStatus']);
         $this->resetPage();
         $this->dispatch('reset-filters');
     }
@@ -106,6 +114,11 @@ class Seasons extends Component
     {
         $query = Season::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        if ($this->filterAccommodations && $this->filterAccommodations['payload']['value'] !== 'all') {
+            $query->whereHas('accommodations', function ($q) {
+                $q->where('accommodations.id', $this->filterAccommodations['payload']['value']);
+            });
+        }
         if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
             $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }

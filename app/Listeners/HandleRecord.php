@@ -130,6 +130,16 @@ class HandleRecord
                         'unread_notifications_count' => $unread_notifications_count,
                         'notification' => $notify ?? null,
                     ];
+
+                    // Log channel information to console
+                    // Log::info('=== Broadcasting Channel Debug ===');
+                    // Log::info('Channel: web.push.notifications');
+                    // Log::info('Event Type: ' . $status);
+                    // Log::info('Model Type: ' . ($type ?? class_basename($record)));
+                    // Log::info('Target User ID: ' . $notifyUser->id);
+                    // Log::info('Performer: ' . getActiveUser()->name . ' (ID: ' . getActiveUser()->id . ')');
+                    // Log::info('===================================');
+
                     $ably->channel('web.push.notifications')->publish('web.push.notifications', $data);
                 } catch (\Exception $e) {
                     Log::error('Failed to broadcast notification via Ably: ' . $e->getMessage());

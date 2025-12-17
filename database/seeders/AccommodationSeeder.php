@@ -138,7 +138,7 @@ class AccommodationSeeder extends Seeder
                     'name' => $supplementName,
                     'name_ar' => $supplementName, // For simplicity, using same name for Arabic
                     'price' => rand(10, 100),
-                    'is_per_person' => true,
+                    'price_type' => fake()->randomElement(['per_person', 'per_room', 'per_night', 'one_time']),
                     'is_mandatory' => true,
                     'applicable_date' => now()->addDays(rand(1, 30)),
                     'is_active' => true,

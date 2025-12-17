@@ -8,7 +8,7 @@
         'showSearch' => true,
     ])
         @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
-                        @include('components.columns', [
+            @include('components.columns', [
                 'allColumns' => $allColumns ?? [],
                 'selectedIds' => $selectedIds ?? [],
             ])
@@ -134,8 +134,16 @@
                     <h3 class="text-sm font-semibold text-blue-900">{{ __('activity.activity_selected_title') }}
                     </h3>
                     <button type="button" wire:click="closeDetails" toggle-button
-                        class="kt-btn bg-danger text-xs font-medium text-blue-700 cursor-pointer hover:underline h-[26px]">
-                        {{ __('main.close') }}
+                        class="kt-btn bg-danger text-xs text-white font-medium text-blue-700 cursor-pointer hover:underline h-[26px]">
+
+                        @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                            {!! $text ?? __('main.close') !!}
+                        @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                            <i class="fas fa-times text-white"></i>
+                        @else
+                            <i class="fas fa-times text-white"></i>
+                            {!! $text ?? __('main.close') !!}
+                        @endif
                     </button>
                 </div>
                 <dl class="mt-3 space-y-1 text-xs text-blue-900">
@@ -281,12 +289,28 @@
                                         <div class="flex justify-end gap-2">
                                             <button type="button" class="kt-btn kt-btn-sm bg-primary"
                                                 wire:click="viewDetails({{ $activity->id }})">
-                                                {{ __('main.show') }}
+
+                                                @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                                    {!! $text ?? __('main.show') !!}
+                                                @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                                    <i class="fas fa-eye text-white"></i>
+                                                @else
+                                                    <i class="fas fa-eye text-white"></i>
+                                                    {!! $text ?? __('main.show') !!}
+                                                @endif
                                             </button>
                                             <button type="button" class="kt-btn kt-btn-sm bg-danger"
                                                 wire:click="delete({{ $activity->id }})"
                                                 wire:confirm="{{ __('main.are_you_sure') }}">
-                                                {{ __('main.delete') }}
+
+                                                @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                                    {!! $text ?? __('main.delete') !!}
+                                                @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                                    <i class="fas fa-trash-can text-white"></i>
+                                                @else
+                                                    <i class="fas fa-trash-can text-white"></i>
+                                                    {!! $text ?? __('main.delete') !!}
+                                                @endif
                                             </button>
                                         </div>
                                     </td>

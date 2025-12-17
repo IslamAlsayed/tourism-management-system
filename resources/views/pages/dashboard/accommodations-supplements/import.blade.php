@@ -28,8 +28,8 @@
                         <th class="border-custom px-2 bg-yellow-200" title="{{ __('main.required') }}">
                             price <span class="text-red-600">*</span>
                         </th>
-                        <th class="border-custom px-2 bg-yellow-200" title="{{ __('main.required') }}">
-                            is_per_person <span class="text-red-600">*</span>
+                        <th class="border-custom px-2 bg-yellow-200" title="{{ __('main.optional') }}">
+                            price_type
                         </th>
                         <th class="border-custom px-2 bg-yellow-200" title="{{ __('main.required') }}">
                             is_mandatory <span class="text-red-600">*</span>

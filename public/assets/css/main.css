@@ -1056,3 +1056,29 @@ th:has(i, svg) {
         transform: translate(-50%, -50%) scale(2);
     }
 }
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.top-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.top-scroll-inner {
+    height: 1px;
+}
+
+/* styling scrollbar */
+.top-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.top-scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+
+.top-scroll::-webkit-scrollbar-track {
+    background: #eee;
+}

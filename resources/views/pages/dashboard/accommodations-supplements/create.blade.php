@@ -66,6 +66,28 @@
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <!-- Price Type -->
+                            <div class="align-self-end">
+                                <label for="price_type" class="kt-label required">
+                                    {{ __('main.price_type') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <select name="price_type" id="price_type" class="kt-select basic-single" required>
+                                    <option value="" disabled selected></option>
+                                    <option value="per_person" {{ old('price_type') == 'per_person' ? 'selected' : '' }}>
+                                        {{ __('main.per_person') }}</option>
+                                    <option value="per_room" {{ old('price_type') == 'per_room' ? 'selected' : '' }}>
+                                        {{ __('main.per_room') }}</option>
+                                    <option value="per_night" {{ old('price_type') == 'per_night' ? 'selected' : '' }}>
+                                        {{ __('main.per_night') }}</option>
+                                    <option value="one_time" {{ old('price_type') == 'one_time' ? 'selected' : '' }}>
+                                        {{ __('main.one_time') }}</option>
+                                </select>
+                                @error('price_type')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="grid lg:grid-cols-2 gap-6 mb-4">
@@ -117,15 +139,6 @@
                                     'value' => '1',
                                     'checked' => 1,
                                     'label' => __('main.is_active'),
-                                ])
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_per_person" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_per_person',
-                                    'id' => 'is_per_person',
-                                    'value' => '1',
-                                    'label' => __('main.is_per_person'),
                                 ])
                             </div>
                             <div class="flex items-center gap-3">

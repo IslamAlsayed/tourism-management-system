@@ -17,7 +17,7 @@ class UpdateRequest extends FormRequest
             'name' => 'nullable|string|max:255',
             'name_ar' => 'nullable|string|max:255',
             'price' => 'nullable|numeric|min:0',
-            'is_per_person' => 'nullable|boolean',
+            'price_type' => 'nullable|string',
             'is_mandatory' => 'nullable|boolean',
             'applicable_date' => 'nullable|date',
             'accommodation_id' => 'nullable|integer|exists:accommodations,id',

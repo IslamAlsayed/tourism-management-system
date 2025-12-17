@@ -51,6 +51,7 @@ return [
     'type_updated_by' => 'تم تحديث :record_name من :type_name بواسطة :user_name',
     'type_updated_count' => 'تم تحديث :count من :type',
     'type_update_failed' => 'فشل تحديث :type',
+    'session_lifetime_min_5_or_0' => 'مدة الجلسة يجب أن تكون 0 أو على الأقل 5 دقائق',
     'type_deleted' => 'تم حذف :type',
     'type_deleted_by' => 'تم حذف :record_name من :type_name بواسطة :user_name',
     'type_deleted_count' => 'تم حذف :count :type',
@@ -142,4 +143,5 @@ return [
     'record_not_found' => 'السجل غير موجود.',
     'field_updated_successfully' => 'تم :status :field بنجاح.',
     'field_deketed_successfully' => 'تم :status :field بنجاح.',
+    'data_refreshed_successfully' => 'تم تحديث البيانات بنجاح.',
 ];

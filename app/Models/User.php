@@ -64,7 +64,7 @@ class User extends Authenticatable
      */
     public function getRelationshipNames()
     {
-        return ['timezone', 'createdBy', 'updatedBy'];
+        return ['timezone', 'creator', 'updater'];
     }
 
     /**

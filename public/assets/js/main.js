@@ -81,3 +81,26 @@ function closeAllDropdowns() {
         .querySelectorAll(".dropdown")
         .forEach((dd) => dd.classList.add("hidden"));
 }
+
+window.addEventListener("record-deleted", (e) => {
+    let id = e.detail.id;
+    if (!id) return;
+    document
+        .querySelector(".record-" + id)
+        ?.classList.add("fade-up", "loading");
+    setTimeout(() => document.querySelector(".record-" + id)?.remove(), 100);
+});
+
+const topScroll = document.getElementById("topScroll");
+const topScrollInner = document.getElementById("topScrollInner");
+const tableWrapper = document.getElementById("tableWrapper");
+const table = document.getElementById("data_table");
+if (topScroll) {
+    topScrollInner.style.width = table.scrollWidth + "px";
+    topScroll.addEventListener("scroll", () => {
+        tableWrapper.scrollLeft = topScroll.scrollLeft;
+    });
+    tableWrapper.addEventListener("scroll", () => {
+        topScroll.scrollLeft = tableWrapper.scrollLeft;
+    });
+}

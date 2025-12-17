@@ -33,7 +33,7 @@ class CrossingsPorts extends Component
         $this->resetPage();
     }
 
-    public function updatingfilterStatus()
+    public function updatingFilterStatus()
     {
         $this->resetPage();
     }
@@ -119,14 +119,14 @@ class CrossingsPorts extends Component
         $query = CrossingPort::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
 
-        if ($this->filterType && $this->filterType['payload']['value'] !== 'all') {
-            $query->where('type', $this->filterType['payload']['value']);
+        if ($this->filterType && $this->filterType !== 'all') {
+            $query->where('type', $this->filterType);
         }
-        if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
-            $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
+        if ($this->filterStatus && $this->filterStatus !== 'all') {
+            $query->where('is_active', $this->filterStatus === 'active' ? true : false);
         }
-        if ($this->filterOperational && $this->filterOperational['payload']['value'] !== 'all') {
-            $query->where('is_operational', $this->filterOperational['payload']['value'] === '1' ? true : false);
+        if ($this->filterOperational && $this->filterOperational !== 'all') {
+            $query->where('is_operational', $this->filterOperational === '1' ? true : false);
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

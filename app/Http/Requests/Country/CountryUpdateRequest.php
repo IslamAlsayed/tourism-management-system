@@ -45,7 +45,7 @@ class CountryUpdateRequest extends FormRequest
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
             'languages' => ['nullable', 'string'],
-            'description' => ['nullable', 'string'],
+            'notes' => ['nullable', 'string'],
             'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'is_active' => ['boolean'],
             'is_independent' => ['boolean'],

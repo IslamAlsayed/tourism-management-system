@@ -128,7 +128,7 @@
                                         </label>
                                         <input type="number" name="app_activity_log_retention_days"
                                             class="kt-input h-[45px]" disabled
-                                            value="{{ $settings->app_activity_log_retention_days }}" min="1" />
+                                            value="{{ $settings->app_activity_log_retention_days }}" minLength="1" />
                                         <div class="text-xs text-secondary-foreground mt-1">
                                             {{ __('main.days_to_keep_logs') }}
                                         </div>

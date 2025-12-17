@@ -17,11 +17,17 @@
         @if (env('DB_MODE') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
             <table class="border min-w-half divide-y text-center divide-gray-200">
-                <thead class="bg-yellow-200">
+                <thead>
                     <tr>
-                        <th class="border px-2">name</th>
-                        <th class="border px-2">email</th>
-                        <th class="border px-2">password</th>
+                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                            name <span class="text-red-600">*</span>
+                        </th>
+                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                            email <span class="text-red-600">*</span>
+                        </th>
+                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                            password <span class="text-red-600">*</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -35,15 +41,15 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-200">
+                <thead>
                     <tr>
-                        <th class="border px-2">photo</th>
-                        <th class="border px-2">bio</th>
-                        <th class="border px-2">phone</th>
-                        <th class="border px-2">first_name</th>
-                        <th class="border px-2">last_name</th>
-                        <th class="border px-2">mobile</th>
-                        <th class="border px-2">address</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">photo</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">bio</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">phone</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">first_name</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">last_name</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">mobile</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">address</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -54,21 +60,23 @@
                         <td class="border px-2">super</td>
                         <td class="border px-2">admin</td>
                         <td class="border px-2">+46804646</td>
-                        <td class="border px-2">Lorem ipsum dolor sit amet consectetur adipisicing.</td>
+                        <td class="border px-2">
+                            Lorem ipsum dolor sit amet consectetur adipisicing.
+                        </td>
                     </tr>
                 </tbody>
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-200">
+                <thead>
                     <tr>
-                        <th class="border px-2">user_code</th>
-                        <th class="border px-2">hire_date</th>
-                        <th class="border px-2">department</th>
-                        <th class="border px-2">position</th>
-                        <th class="border px-2">preferred_language</th>
-                        <th class="border px-2">timezone</th>
-                        <th class="border px-2">preferences</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">user_code</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">hire_date</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">department</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">position</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">preferred_language</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">timezone</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">preferences</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -77,7 +85,7 @@
                         <td class="border px-2">05/04/2025</td>
                         <td class="border px-2">null</td>
                         <td class="border px-2">admin</td>
-                        <td class="border px-2">english</td>
+                        <td class="border px-2">en</td>
                         <td class="border px-2">africa</td>
                         <td class="border px-2">null</td>
                     </tr>
@@ -85,17 +93,17 @@
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-200">
+                <thead>
                     <tr>
-                        <th class="border px-2">is_admin</th>
-                        <th class="border px-2">is_active</th>
-                        <th class="border px-2">is_verified</th>
-                        <th class="border px-2">force_password_change</th>
-                        <th class="border px-2">last_login_at</th>
-                        <th class="border px-2">last_login_ip</th>
-                        <th class="border px-2">notes</th>
-                        <th class="border px-2">created_by</th>
-                        <th class="border px-2">updated_by</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">is_admin</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">is_active</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">is_verified</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">force_password_change</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">last_login_at</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">last_login_ip</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">notes</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">created_by</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">updated_by</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">

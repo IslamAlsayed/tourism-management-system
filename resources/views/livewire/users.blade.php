@@ -8,16 +8,22 @@
         'searchValue' => $search ?? null,
         'showSearch' => true,
     ])
-        @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
-            @include('components.columns', [
-                'allColumns' => $allColumns ?? [],
-                'selectedIds' => $selectedIds ?? [],
-            ])
-        @endif
+        <div class="d-flex gap-2">
+            <button wire:click="refreshData" class="kt-btn btn-icon kt-btn-sm btn-light-primary" toggle-button
+                title="{{ __('main.refresh') }}">
+                <i class="ki-outline ki-arrows-circle fs-2"></i>
+            </button>
+            @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
+                @include('components.columns', [
+                    'allColumns' => $allColumns ?? [],
+                    'selectedIds' => $selectedIds ?? [],
+                ])
+            @endif
+        </div>
     @endcomponent
 
     <div class="kt-card-content" wire:loading.class="loading"
-        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
+        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,refreshData">
         <div data-kt-datatable-state-save="false" id="users_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
@@ -62,6 +68,13 @@
             } else {
                 userHeart.classList.remove('active', 'heartbeat');
             }
+        });
+
+        let switchUserActive = ably.channels.get('switch.user.active');
+        switchUserActive.subscribe('switch.user.active', (message) => {
+            if (!message.data) return;
+            console.log('🔄 Received switch.user.active event:', message.data);
+            @this.dispatch('recordUpdated');
         });
     </script>
 @endpush

@@ -35,8 +35,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Currency Name -->
                             <div class="mb-3">
-                                <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.currency_name_english') }}</label>
+                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]" required
                                     value="{{ old('name') }}">
                                 @error('name')
@@ -79,7 +78,7 @@
                                             'id' => 'is_active',
                                             'value' => '1',
                                             'checked' => 1,
-                                            'label' => __('main.activate_currency'),
+                                            'label' => __('main.active'),
                                         ])
                                     </div>
 
@@ -89,6 +88,7 @@
                                             'name' => 'auto_update_rate',
                                             'id' => 'auto_update_rate',
                                             'value' => '1',
+                                            'disabled' => true,
                                             'label' => __('main.auto_update_rate'),
                                         ])
                                     </div>

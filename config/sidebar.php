@@ -24,6 +24,7 @@ return [
         [
             'title' => 'user management',
             'icon' => 'fa-solid fa-users-gear',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'all users',
@@ -72,6 +73,7 @@ return [
         [
             'title' => 'currency management',
             'icon' => 'fa-solid fa-dollar-sign',
+            'status' => 'done',
             'children' => [
                 [
                     'title' => 'all currencies',
@@ -332,6 +334,28 @@ return [
                     ],
                 ],
                 [
+                    'title' => 'supplements',
+                    'icon' => 'fa-solid fa-utensils',
+                    'children' => [
+                        [
+                            'title' => 'all supplements',
+                            'icon' => 'fa-solid fa-bowl-food',
+                            'route' => 'accommodations-supplements.index',
+                        ],
+                        [
+                            'title' => 'create supplement',
+                            'icon' => 'fa-solid fa-square-plus',
+                            'route' => 'accommodations-supplements.create',
+                        ],
+                        [
+                            'title' => 'import supplements',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'supplements'],
+                        ],
+                    ],
+                ],
+                [
                     'title' => 'rates',
                     'icon' => 'fa-solid fa-dollar-sign',
                     'children' => [
@@ -355,28 +379,6 @@ return [
                             'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['models' => 'accommodations-rates'],
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'supplements',
-                    'icon' => 'fa-solid fa-utensils',
-                    'children' => [
-                        [
-                            'title' => 'all supplements',
-                            'icon' => 'fa-solid fa-bowl-food',
-                            'route' => 'accommodations-supplements.index',
-                        ],
-                        [
-                            'title' => 'create supplement',
-                            'icon' => 'fa-solid fa-square-plus',
-                            'route' => 'accommodations-supplements.create',
-                        ],
-                        [
-                            'title' => 'import supplements',
-                            'icon' => 'fa-solid fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['models' => 'supplements'],
                         ],
                     ],
                 ],

@@ -36,7 +36,7 @@ class AccommodationSupplementController extends Controller
 
     public function show($id)
     {
-        $accommodationSupplement = AccommodationSupplement::find($id);
+        $accommodationSupplement = AccommodationSupplement::with(['accommodation', 'supplement', 'currency'])->findOrFail($id);
         if (!$accommodationSupplement) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.accommodation-supplement')]));
         }

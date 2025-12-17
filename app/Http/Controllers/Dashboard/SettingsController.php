@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Setting;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
-use App\Http\Requests\Settings\SettingsUpdateRequest;
-use App\Models\User;
+use App\Http\Requests\Settings\UpdateRequest;
 
 class SettingsController extends Controller
 {
@@ -19,7 +18,7 @@ class SettingsController extends Controller
         return view('pages.settings.index');
     }
 
-    public function update(SettingsUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $setting = Setting::find($id);
         if (!$setting) {

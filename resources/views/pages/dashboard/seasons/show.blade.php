@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', __('main.season_details'))
+@section('title', __('main.type_details', ['type' => __('main.season')]))
 
 @section('content')
     <div class="kt-container-fixed">
@@ -96,7 +96,10 @@
             <!-- Accommodations -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.accommodations') }}</h3>
+                    <h3 class="kt-card-title">
+                        {{ __('main.accommodations') }}
+                        (<span class="font-semibold text-primary">{{ $season->accommodations->count() }}</span>)
+                    </h3>
                     <div class="kt-card-toolbar">
                         <a href="{{ route('accommodations.create') }}" class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
@@ -107,37 +110,88 @@
                 <div class="kt-card-body p-4" wire:ignore>
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($season->accommodations as $accommodation)
-                            <div wire:key="accommodation-{{ $accommodation->id }}" class="border rounded-lg p-4 pt-2">
+                            <div wire:key="accommodation-{{ $accommodation->id }}"
+                                class="kt-card bg-gray-50 rounded-lg p-4 pt-2">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
-                                        <p class="text-sm text-secondary-foreground">{{ $accommodation->name }}</p>
-                                    </div>
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.price') }}</label>
                                         <p class="text-sm text-secondary-foreground">
-                                            {{ number_format($accommodation->price, 2) }}
-                                            {{ $accommodation->currency?->code }}
-                                        </p>
+                                            {{ $accommodation->name ?: __('main.na') }}</p>
                                     </div>
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.classification') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            {{ $accommodation->classification }}
-                                        </p>
-                                    </div>
+                                    @if ($accommodation->name_ar)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.name_ar') }}</label>
+                                            <p class="text-sm text-secondary-foreground">{{ $accommodation->name_ar }}</p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->type)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.type') }}</label>
+                                            <p class="text-sm text-secondary-foreground">{{ $accommodation->type->name }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->classification)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.classification') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                {{ $accommodation->classification }}</p>
+                                        </div>
+                                    @endif
                                     @if ($accommodation->stars)
                                         <div>
                                             <label class="kt-label mb-1">{{ __('main.star_rating') }}</label>
                                             <div class="flex items-center gap-1">
                                                 @for ($i = 1; $i <= 5; $i++)
-                                                    @if ($i <= $accommodation->stars)
-                                                        <i class="fas fa-star text-yellow-500 text-sm"></i>
-                                                    @else
-                                                        <i class="fas fa-star text-gray-300 text-sm"></i>
-                                                    @endif
+                                                    <i
+                                                        class="fas fa-star {{ $i <= $accommodation->stars ? 'text-yellow-500' : 'text-gray-300' }} text-sm"></i>
                                                 @endfor
                                             </div>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->currency)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.currency') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                {{ $accommodation->currency->code }} -
+                                                {{ $accommodation->currency->name }}</p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->city || $accommodation->country)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.location') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                {{ $accommodation->city?->name ?? '' }}
+                                                {{ $accommodation->city && $accommodation->country ? ', ' : '' }}
+                                                {{ $accommodation->country?->name ?? '' }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->general_mobile)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.general_mobile') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                {{ $accommodation->general_mobile }}</p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->general_email)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.general_email') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                {{ $accommodation->general_email }}</p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->contact_person)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.contact_person') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                {{ $accommodation->contact_person }}</p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->street)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.street') }}</label>
+                                            <p class="text-sm text-secondary-foreground">{{ $accommodation->street }}</p>
                                         </div>
                                     @endif
                                     <div class="col-span-2 flex items-center gap-10 mb-2">
@@ -156,9 +210,9 @@
                                     </div>
                                 </div>
                                 @if ($accommodation->notes)
-                                    <div class="lg:col-span-2">
+                                    <div class="lg:col-span-2 mt-2">
                                         <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                        <p class="text-sm text-secondary-foreground">{!! $accommodation->notes !!}</p>
+                                        <div class="text-sm text-secondary-foreground">{!! $accommodation->notes !!}</div>
                                     </div>
                                 @endif
                                 <div class="lg:col-span-2 flex gap-2 mt-2">
@@ -176,8 +230,7 @@
                             <div class="text-center py-8 text-secondary-foreground">
                                 <i class="ki-filled ki-information text-4xl mb-2"></i>
                                 <p>{{ __('main.no_data_available') }}</p>
-                                <a href="{{ route('accommodations.create', ['accommodation_id' => $accommodation->id]) }}"
-                                    class="kt-btn kt-btn-sm kt-btn-primary mt-4">
+                                <a href="{{ route('seasons.create') }}" class="kt-btn kt-btn-sm kt-btn-primary mt-4">
                                     <i class="ki-filled ki-plus text-sm me-1"></i>
                                     {{ __('main.add_first_accommodation') }}
                                 </a>

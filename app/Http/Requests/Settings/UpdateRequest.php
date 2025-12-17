@@ -4,7 +4,7 @@ namespace App\Http\Requests\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SettingsCreateRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the setting is authorized to make this request.
@@ -28,10 +28,22 @@ class SettingsCreateRequest extends FormRequest
             'app_language' => ['nullable', 'string'],
             'app_version' => ['nullable', 'string'],
             'app_php_version' => ['nullable', 'string'],
-            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
+            'app_columns_length' => ['nullable', 'integer'],
+            'app_light_photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],
+            'app_dark_photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],
+            'app_mini_photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg,ico'],
             'app_status' => ['nullable', 'boolean'],
             'app_minimum_password_length' => ['nullable', 'integer', 'min:' . config('app.app_minimum_password_length', 8), 'max:' . config('app.app_minimum_password_length', 8)],
-            'app_session_lifetime' => ['nullable', 'integer'],
+            'app_session_lifetime' => [
+                'nullable',
+                'integer',
+                'min:0',
+                function ($attribute, $value, $fail) {
+                    if ($value > 0 && $value < 5) {
+                        $fail(__('validation.session_lifetime_min_5_or_0'));
+                    }
+                },
+            ],
             'app_password_confirmation' => ['nullable', 'boolean'],
             'app_two_factor_authentication' => ['nullable', 'boolean'],
             'app_backup_frequency' => ['nullable', 'string', 'in:daily,weekly,monthly'],

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('name_ar')->nullable();
             $table->decimal('price', 10, 2);
-            $table->boolean('is_per_person')->default(false);
+            $table->string('price_type')->default('per_person')->comment('per_person, per_room, per_night, one_time');
             $table->boolean('is_mandatory')->default(false);
             $table->date('applicable_date')->nullable();
             $table->foreignId('accommodation_id')->constrained()->cascadeOnDelete();

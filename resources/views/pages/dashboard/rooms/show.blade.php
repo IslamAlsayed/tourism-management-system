@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', __('main.room_details'))
+@section('title', __('main.type_details', ['type' => __('main.room')]))
 
 @section('content')
     <div class="kt-container-fixed">
@@ -89,7 +89,7 @@
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($room->roomRates as $roomRate)
                             <div wire:key="roomRate-{{ $roomRate->id }}"
-                                class="border rounded-lg p-4 pt-2 record-{{ $roomRate->id }}">
+                                class="kt-card bg-gray-50 rounded-lg p-4 pt-2 record-{{ $roomRate->id }}">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.price_per_person_double') }}</label>

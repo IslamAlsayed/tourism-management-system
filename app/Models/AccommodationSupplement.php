@@ -25,9 +25,9 @@ class AccommodationSupplement extends Model
         'name',
         'name_ar',
         'price',
+        'price_type',
         'currency_id',
         'applicable_date',
-        'is_per_person',
         'is_mandatory',
         'is_active',
         'notes',
@@ -35,8 +35,8 @@ class AccommodationSupplement extends Model
 
     protected $casts = [
         'price' => 'decimal:2',
-        'is_per_person' => 'boolean',
         'is_mandatory' => 'boolean',
+        'price_type' => 'boolean',
         'is_active' => 'boolean',
         'applicable_date' => 'date',
     ];

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', __('main.city_details'))
+@section('title', __('main.type_details', ['type' => __('main.city')]))
 
 @section('content')
     <div class="kt-container-fixed">

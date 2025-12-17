@@ -20,7 +20,7 @@ class AccommodationsSupplements extends Component
     public $message = [];
     public $types = [];
     public $filterStatus = '';
-    public $filterPerPerson = '';
+    public $filterPriceType = '';
     public $filterMandatory = '';
     public $filter = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
@@ -97,7 +97,7 @@ class AccommodationsSupplements extends Component
 
     public function resetFilters(): void
     {
-        $this->reset(['search', 'filterStatus', 'filterPerPerson', 'filterMandatory']);
+        $this->reset(['search', 'filterStatus', 'filterPriceType', 'filterMandatory']);
         $this->resetPage();
         $this->dispatch('reset-filters');
     }
@@ -109,8 +109,8 @@ class AccommodationsSupplements extends Component
         if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
             $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }
-        if ($this->filterPerPerson && $this->filterPerPerson['payload']['value'] !== 'all') {
-            $query->where('is_per_person', $this->filterPerPerson['payload']['value'] === 'yes' ? true : false);
+        if ($this->filterPriceType && $this->filterPriceType !== 'all') {
+            $query->where('price_type', $this->filterPriceType === 'yes' ? true : false);
         }
         if ($this->filterMandatory && $this->filterMandatory['payload']['value'] !== 'all') {
             $query->where('is_mandatory', $this->filterMandatory['payload']['value'] === 'yes' ? true : false);

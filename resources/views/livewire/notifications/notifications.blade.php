@@ -71,15 +71,12 @@
             </div>
 
             {{-- Reset Sort Button --}}
-            @if ($filterTypeUserId || $notificationType || $type)
-                <div>
-                    <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}"
-                        toggle-button class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">
-                        <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
-                        <span class="text-sm">{{ __('main.reset_sort') }}</span>
-                    </button>
-                </div>
-            @endif
+            <div>
+                <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}" toggle-button
+                    class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">
+                    <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
+                </button>
+            </div>
         </div>
 
         <div class="kt-card-content" wire:loading.class="loading"

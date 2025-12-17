@@ -1,4 +1,4 @@
-<div class="custom-input {{ isset($disabled) && $disabled ? 'disabled-option' : '' }}">
+<div class="custom-input {{ isset($disabled) && $disabled ? 'disabled-option' : '' }}" wire:ignore>
     <input type="checkbox" name="{{ isset($name) ? $name : '' }}" id="{{ isset($id) ? $id : '' }}"
         wire:model.live="selectedIds" value="{{ isset($value) ? $value : '' }}"
         {{ isset($checked) && $checked ? 'checked' : '' }} {{ isset($disabled) && $disabled ? 'disabled' : '' }}
