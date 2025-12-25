@@ -74,7 +74,7 @@ class CompanyBusTypeController extends Controller
         }
         $deleted = $transportationCompanyBusTypes->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_company_bus_type')]));
+            return redirect()->route('transportation-company-bus-types.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_company_bus_type')]));
         }
 
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_company_bus_type')]));

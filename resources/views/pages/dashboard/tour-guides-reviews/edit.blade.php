@@ -39,7 +39,7 @@
                             <!-- Tour Guide -->
                             <div class="">
                                 <label for="tour_guide_id" class="kt-label mb-2">{{ __('main.tour_guide') }}</label>
-                                <select name="tour_guide_id" id="tour_guide_id" class="kt-select h-[45px]" special-search
+                                <select name="tour_guide_id" id="tour_guide_id" class="kt-select basic-single"
                                     value="{{ $tourGuideReview->currency_id }}">
                                     <option value="">--</option>
                                     @foreach ($tourGuides as $tourGuide)
@@ -90,68 +90,9 @@
                             </div>
                         </div>
 
-                        <!-- Update Submit Buttons -->
-                        @include('components.elements.update-submit', ['models' => 'tour-guide-reviews'])
+                        <!-- Update Submit -->
+                        @include('components.elements.update-submit', ['models' => 'tour-guides-reviews'])
                     </form>
-                </div>
-            </div>
-
-            <!-- Geographic Info -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.geographic_info') }}</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-geolocation text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.gender')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.gender'), 'type2' => __('main.tour-guide-review')]) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.country')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.country'), 'type2' => __('main.tour-guide-review')]) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.currency')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.currency'), 'type2' => __('main.tour-guide-review')]) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

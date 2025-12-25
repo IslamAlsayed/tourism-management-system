@@ -13,13 +13,14 @@ return new class extends Migration {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique()->nullable();
+            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
+            $table->foreignId('language_id')->nullable()->constrained('languages')->onDelete('set null');
+            $table->foreignId('currency_id')->nullable()->constrained('currencies')->onDelete('set null');
+            $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
+            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
+
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
-            $table->unsignedBigInteger('timezone_id')->nullable();
-            $table->unsignedBigInteger('language_id')->nullable();
-            $table->unsignedBigInteger('currency_id')->nullable();
-            $table->unsignedBigInteger('region_id')->nullable();
-            $table->unsignedBigInteger('subregion_id')->nullable();
             $table->string('iso2', 2)->nullable();
             $table->string('iso3', 3)->nullable();
             $table->integer('numeric_code')->nullable();
@@ -31,12 +32,12 @@ return new class extends Migration {
             $table->decimal('longitude', 10, 6)->nullable();
             $table->bigInteger('population')->nullable();
             $table->string('photo')->nullable();
-            $table->string('continent')->nullable();
             $table->float('area')->nullable();
-            $table->boolean('is_active')->nullable()->default(false);
             $table->boolean('is_independent')->nullable()->default(false);
             $table->boolean('is_developed')->nullable()->default(false);
             $table->boolean('is_landlocked')->nullable()->default(false);
+            $table->boolean('is_active')->nullable()->default(true);
+            $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
 

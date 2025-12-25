@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('client_code')->unique()->nullable();
 
             // Location information
+            $table->foreignId('currency_id')->nullable()->constrained('currencies')->onDelete('set null');
             $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
             $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
             $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
@@ -23,8 +24,6 @@ return new class extends Migration {
             $table->foreignId('state_id')->nullable()->constrained('states')->onDelete('set null');
             $table->foreignId('city_id')->nullable()->constrained('cities')->onDelete('set null');
             $table->foreignId('nationality_id')->nullable()->constrained('nationalities')->onDelete('set null');
-
-            $table->string('currency', 3)->nullable();
 
             // Personal name information
             $table->string('first_name')->nullable();

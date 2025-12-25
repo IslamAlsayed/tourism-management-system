@@ -2,6 +2,44 @@
 
 @section('title', __('main.view_type', ['type' => __('main.airline')]))
 
+@push('styles')
+    <style>
+        /* Define the size of the map container */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script>
+        function initMap() {
+            let mapContainer = document.getElementById('map');
+            let title = mapContainer.getAttribute('data-title');
+            let latitude = mapContainer.getAttribute('data-latitude');
+            let longitude = mapContainer.getAttribute('data-longitude');
+            const latLng = {
+                lat: parseFloat(latitude),
+                lng: parseFloat(longitude)
+            };
+            const mapOptions = {
+                zoom: 15,
+                center: latLng,
+            };
+            const map = new google.maps.Map(mapContainer, mapOptions);
+            new google.maps.Marker({
+                position: latLng,
+                map: map,
+                title: title,
+            });
+        }
+        window.initMap = initMap;
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer>
+    </script>
+@endpush
+
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
@@ -31,7 +69,7 @@
             {{-- Basic Information --}}
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.airline')]) }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -41,14 +79,12 @@
                                 <p class="mt-1 text-gray-900">{{ $airline->name ?? '-' }}</p>
                             </div>
                         @endif
-
                         @if ($airline->name_ar)
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.name_ar') }}</label>
                                 <p class="mt-1 text-gray-900">{{ $airline->name_ar ?? '-' }}</p>
                             </div>
                         @endif
-
                         @if ($airline->code)
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.code') }}</label>
@@ -58,7 +94,6 @@
                                 </p>
                             </div>
                         @endif
-
                         @if ($airline->type)
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.type') }}</label>
@@ -69,7 +104,6 @@
                                 </p>
                             </div>
                         @endif
-
                         @if ($airline->service_type)
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.service_type') }}</label>
@@ -80,7 +114,16 @@
                                 </p>
                             </div>
                         @endif
-
+                        <div>
+                            <label class="font-medium text-gray-700">{{ __('main.established_date') }}</label>
+                            <p class="mt-1 text-gray-900">
+                                {{ $airline->established_date ? $airline->established_date->format('Y-m-d') : '-' }}
+                            </p>
+                        </div>
+                        <div>
+                            <label class="font-medium text-gray-700">{{ __('main.hub_airport') }}</label>
+                            <p class="mt-1 text-gray-900">{{ $airline->hub_airport ?? '-' }}</p>
+                        </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
                             <div class="flex items-center gap-2">
@@ -93,23 +136,18 @@
                                 ])
                             </div>
                         </div>
-
-                        <div>
-                            <label class="font-medium text-gray-700">{{ __('main.established_date') }}</label>
-                            <p class="mt-1 text-gray-900">
-                                {{ $airline->established_date ? $airline->established_date->format('Y-m-d') : '-' }}
-                            </p>
-                        </div>
-
-                        <div>
-                            <label class="font-medium text-gray-700">{{ __('main.hub_airport') }}</label>
-                            <p class="mt-1 text-gray-900">{{ $airline->hub_airport ?? '-' }}</p>
-                        </div>
-
+                        @if ($airline->description)
+                            <div class="col-span-full border-custom rounded-lg p-4">
+                                <label class="kt-label mb-2">{{ __('main.description') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $airline->description !!}
+                                </div>
+                            </div>
+                        @endif
                         @if ($airline->notes)
-                            <div class="md:col-span-2 lg:col-span-3">
-                                <label class="font-medium text-gray-700">{{ __('main.notes') }}</label>
-                                <div class="mt-1 text-gray-900 prose max-w-none">
+                            <div class="col-span-full border-custom rounded-lg p-4">
+                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
                                     {!! $airline->notes !!}
                                 </div>
                             </div>
@@ -119,7 +157,7 @@
             </div>
 
             {{-- Fleet Information --}}
-            <div class="kt-card hidden">
+            {{-- <div class="kt-card hidden">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.fleet_information') }}</h3>
                 </div>
@@ -168,6 +206,35 @@
                         @endif
                     </div>
                 </div>
+            </div> --}}
+
+            <!-- Map -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.map') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    @if ($airline->latitude && $airline->longitude)
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.coordinates') }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $airline->latitude }}, {{ $airline->longitude }}
+                            </p>
+                        </div>
+                        <div class="col-span-full mt-4">
+                            <label class="kt-label block mb-1">{{ __('main.map') }}</label>
+                            <a href="https://maps.google.com?q={{ $airline->latitude }},{{ $airline->longitude }}"
+                                target="_blank" class="text-sm text-primary hover:underline">
+                                {{ __('main.view_on_google_maps') }}
+                            </a>
+                            <div class="w-full bg-white p-4 rounded-lg shadow-lg">
+                                <div id="map" data-title="{{ $airline->title }}"
+                                    data-latitude="{{ $airline->latitude }}" data-longitude="{{ $airline->longitude }}"
+                                    class="rounded-md overflow-hidden shadow"></div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
 
             {{-- Contact Information --}}
@@ -177,51 +244,29 @@
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @if ($airline->phone)
+                        @if ($airline->local_phone_number)
                             <div>
-                                <label class="font-medium text-gray-700">{{ __('main.phone') }}</label>
+                                <label class="font-medium text-gray-700">{{ __('main.local_phone_number') }}</label>
                                 <p class="mt-1 text-gray-900">
-                                    <a href="tel:{{ $airline->phone }}" class="text-blue-600 hover:text-blue-800">
-                                        {{ $airline->phone }}
-                                    </a>
-                                </p>
-                            </div>
-                        @endif
-
-                        @if ($airline->booking_phone)
-                            <div>
-                                <label class="font-medium text-gray-700">{{ __('main.booking_phone') }}</label>
-                                <p class="mt-1 text-gray-900">
-                                    <a href="tel:{{ $airline->booking_phone }}" class="text-blue-600 hover:text-blue-800">
-                                        {{ $airline->booking_phone }}
-                                    </a>
-                                </p>
-                            </div>
-                        @endif
-
-                        @if ($airline->customer_service_phone)
-                            <div>
-                                <label class="font-medium text-gray-700">{{ __('main.customer_service_phone') }}</label>
-                                <p class="mt-1 text-gray-900">
-                                    <a href="tel:{{ $airline->customer_service_phone }}"
+                                    <a href="tel:{{ $airline->local_phone_number }}"
                                         class="text-blue-600 hover:text-blue-800">
-                                        {{ $airline->customer_service_phone }}
+                                        {{ $airline->local_phone_number }}
                                     </a>
                                 </p>
                             </div>
                         @endif
-
-                        @if ($airline->email)
+                        @if ($airline->international_phone_number)
                             <div>
-                                <label class="font-medium text-gray-700">{{ __('main.email') }}</label>
+                                <label
+                                    class="font-medium text-gray-700">{{ __('main.international_phone_number') }}</label>
                                 <p class="mt-1 text-gray-900">
-                                    <a href="mailto:{{ $airline->email }}" class="text-blue-600 hover:text-blue-800">
-                                        {{ $airline->email }}
+                                    <a href="tel:{{ $airline->international_phone_number }}"
+                                        class="text-blue-600 hover:text-blue-800">
+                                        {{ $airline->international_phone_number }}
                                     </a>
                                 </p>
                             </div>
                         @endif
-
                         @if ($airline->website)
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.website') }}</label>
@@ -232,15 +277,6 @@
                                         <i class="fas fa-external-link-alt text-xs ml-1"></i>
                                     </a>
                                 </p>
-                            </div>
-                        @endif
-
-                        @if ($airline->address)
-                            <div class="md:col-span-2 lg:col-span-3">
-                                <label class="font-medium text-gray-700">{{ __('main.address') }}</label>
-                                <div class="mt-1 text-gray-900 prose max-w-none">
-                                    {!! $airline->address !!}
-                                </div>
                             </div>
                         @endif
                     </div>
@@ -301,7 +337,7 @@
             </div>
 
             {{-- Safety & Performance --}}
-            <div class="kt-card hidden">
+            {{-- <div class="kt-card hidden">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.safety_performance') }}</h3>
                 </div>
@@ -340,10 +376,10 @@
                         @endif
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             {{-- Operational Status --}}
-            <div class="kt-card hidden">
+            {{-- <div class="kt-card hidden">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.operational_status') }}</h3>
                 </div>
@@ -393,21 +429,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            @if ($airline->notes)
-                {{-- Additional Notes --}}
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.additional_notes') }}</h3>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <div class="prose max-w-none">
-                            {!! $airline->notes !!}
-                        </div>
-                    </div>
-                </div>
-            @endif
+            </div> --}}
 
             <!-- Metadata -->
             <div class="kt-card">
@@ -450,11 +472,9 @@
                     'models' => 'airlines',
                     'id' => $airline->id,
                 ])
-                @livewire('delete-bottom', [
-                    'type' => 'airline',
-                    'modelId' => $airline->id,
-                    'modelType' => '\\App\\Models\\Airline',
-                    'table' => 'airlines',
+                @include('components.elements.delete-form', [
+                    'model' => 'airlines',
+                    'id' => $airline->id,
                 ])
                 <a href="{{ route('airlines.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.airlines')]) }}

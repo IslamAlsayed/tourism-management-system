@@ -6,14 +6,14 @@ use Livewire\Component;
 use App\Models\Language;
 use Livewire\WithPagination;
 use App\Traits\WithSorting;
-use App\Traits\CustomColumns;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 use App\Traits\ExportsData;
 
 class Languages extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
     public $search = '';
     public $totalCount = '';
     public $message = [];

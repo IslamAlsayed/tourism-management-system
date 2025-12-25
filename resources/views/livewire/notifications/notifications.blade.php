@@ -19,7 +19,7 @@
     <div class="kt-card-content px-2" wire:loading.class="loading"
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,paginate,setFilter,filterTypeUserId">
         <!-- Filters -->
-        <div class="flex flex-wrap gap-2 mb-6 filterTable" wire:ignore>
+        <div class="flex flex-wrap gap-2 mb-6 filterTable">
             <button wire:click="setFilter('all')"
                 class="kt-btn btn-sm {{ $filter == 'all' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
                 toggle-button>
@@ -72,7 +72,7 @@
 
             {{-- Reset Sort Button --}}
             <div>
-                <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}" toggle-button
+                <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}" toggle-button
                     class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">
                     <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
                 </button>

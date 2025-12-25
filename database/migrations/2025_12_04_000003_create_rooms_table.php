@@ -13,8 +13,9 @@ return new class extends Migration {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique()->nullable();
-            $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
-            $table->foreignId('season_id')->constrained('seasons')->onDelete('cascade');
+            $table->unsignedBigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
+            // $table->foreignId('season_id')->constrained('seasons')->onDelete('cascade');
             $table->foreignId('currency_id')->constrained('currencies')->onDelete('cascade');
 
             $table->string('name'); // e.g., Single, Double, Triple, Suite, Quad
@@ -35,8 +36,7 @@ return new class extends Migration {
             $table->text('notes')->nullable();
             $table->timestamps();
 
-            $table->index('name');
-            $table->index(['accommodation_id', 'season_id']);
+            $table->index(['name', 'name_ar']);
         });
     }
 

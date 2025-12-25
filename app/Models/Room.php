@@ -15,6 +15,7 @@ class Room extends Model
 
     protected $richTextAttributes = [
         'description',
+        'notes',
     ];
 
     protected $fillable = [
@@ -22,10 +23,20 @@ class Room extends Model
         'uuid',
         'name',
         'name_ar',
-        'description',
         'max_occupancy',
         'occupancy_details',
+        'model_type',
+        'price_per_person_double',
+        'single_room_supplement',
+        'triple_room_discount',
+        'third_person_price',
+        'extra_bed_price',
+        'sea_view_supplement',
         'is_active',
+        'model_id',
+        'description',
+        'notes',
+        'currency_id',
     ];
 
     protected $casts = [
@@ -33,8 +44,23 @@ class Room extends Model
         'is_active' => 'boolean',
     ];
 
-    public function roomRates()
+    public function getRelationshipNames()
     {
-        return $this->hasMany(AccommodationRoomRate::class);
+        return ['model', 'currency'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return ['model_id', 'currency_id'];
+    }
+
+    public function model()
+    {
+        return $this->morphTo();
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 }

@@ -32,7 +32,6 @@ class ClientFactory extends Factory
             'state_id' => \App\Models\State::inRandomOrder()->first()?->id,
             'city_id' => \App\Models\City::inRandomOrder()->first()?->id,
             'nationality_id' => \App\Models\Nationality::inRandomOrder()->first()?->id,
-            'currency' => $this->faker->optional(0.7)->randomElement(['USD', 'EUR', 'GBP', 'SAR', 'AED']),
 
             // Personal name information
             'first_name' => $firstName,
@@ -86,6 +85,7 @@ class ClientFactory extends Factory
 
             // Status and preferences
             'client_status' => $this->faker->randomElement(['active', 'inactive', 'pending', 'blacklisted']),
+            'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id,
             'timezone_id' => \App\Models\Timezone::inRandomOrder()->first()?->id,
             'notes' => $this->faker->optional(0.4)->paragraph(),
 

@@ -6,14 +6,14 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\TourGuideType;
 use App\Traits\WithSorting;
-use App\Traits\CustomColumns;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 use App\Traits\ExportsData;
 
 class TourGuidesTypes extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -100,10 +100,10 @@ class TourGuidesTypes extends Component
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
-        foreach ($data as $tourGuideType) {
-            $tourGuideType['states'] = $tourGuideType->states();
-            $tourGuideType['cities'] = $tourGuideType->cities();
-        }
+        // foreach ($data as $tourGuideType) {
+        //     $tourGuideType['states'] = $tourGuideType->states();
+        //     $tourGuideType['cities'] = $tourGuideType->cities();
+        // }
         return view('livewire.tour-guides-types', ['data' => $data, 'totalCount' => $this->totalCount ?: TourGuideType::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

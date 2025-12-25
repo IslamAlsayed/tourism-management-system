@@ -24,65 +24,184 @@
     <div class="kt-container-fixed">
         <div class="kt-card p-4">
             <div class="kt-card-body">
-                <form action="{{ route('rooms.store') }}" method="POST">
+                <form class="space-y-6" method="POST" action="{{ route('rooms.store') }}">
                     @csrf
+                    <div class="grid gap-4 lg:gap-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
+                            {{-- accommodations-restaurants --}}
+                            <livewire:accommodations-restaurants-selects />
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        <div class="align-self-end">
-                            <label for="name" class="kt-label required">
-                                {{ __('main.name') }}
-                                <span class="text-red-600 text-2xl">*</span>
-                            </label>
-                            <input type="text" class="kt-input h-[45px]" id="name" name="name"
-                                value="{{ old('name') }}" required>
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            {{-- Currency --}}
+                            <div class="align-self-end">
+                                <label for="currency_id" class="kt-label mb-2">
+                                    {{ __('main.currency') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <select name="currency_id" id="currency_id" class="kt-select basic-single">
+                                    <option value="" disabled selected></option>
+                                    @foreach ($currencies as $currency)
+                                        <option value="{{ $currency->id }}"
+                                            {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
+                                            {{ $currency->name }} - {{ $currency->code }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('currency_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Name (English) --}}
+                            <div class="align-self-end">
+                                <label for="name" class="kt-label mb-1">
+                                    {{ __('main.name') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ old('name') }}">
+                                @error('name')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Name (Arabic) --}}
+                            <div>
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}">
+                                @error('name_ar')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Max Occupancy --}}
+                            <div class="align-self-end">
+                                <label for="max_occupancy" class="kt-label mb-2">
+                                    {{ __('main.max_occupancy') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <input type="number" name="max_occupancy" id="max_occupancy" class="kt-input h-[45px]"
+                                    value="{{ old('max_occupancy') }}" minLength="1">
+                                @error('max_occupancy')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Occupancy Details --}}
+                            <div class="align-self-end">
+                                <label for="occupancy_details" class="kt-label mb-2">
+                                    {{ __('main.occupancy_details') }}
+                                </label>
+                                <input type="text" name="occupancy_details" id="occupancy_details"
+                                    class="kt-input h-[45px]" value="{{ old('occupancy_details') }}">
+                                @error('occupancy_details')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
-                        <div class="align-self-end">
-                            <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                            <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
-                                value="{{ old('name_ar') }}">
-                            @error('name_ar')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        {{-- Pricing Information --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
+                            {{-- Price Per Person Double --}}
+                            <div class="align-self-end">
+                                <label for="price_per_person_double" class="kt-label mb-1">
+                                    {{ __('main.price_per_person_double') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <input type="number" step="0.01" name="price_per_person_double"
+                                    id="price_per_person_double" class="kt-input h-[45px]"
+                                    value="{{ old('price_per_person_double', 0) }}" minLength="0">
+                                @error('price_per_person_double')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Single Room Supplement --}}
+                            <div class="align-self-end">
+                                <label for="single_room_supplement" class="kt-label mb-1">
+                                    {{ __('main.single_room_supplement') }}
+                                </label>
+                                <input type="number" step="0.01" name="single_room_supplement"
+                                    id="single_room_supplement" class="kt-input h-[45px]"
+                                    value="{{ old('single_room_supplement', 0) }}" minLength="0">
+                                @error('single_room_supplement')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Triple Room Discount --}}
+                            <div class="align-self-end">
+                                <label for="triple_room_discount" class="kt-label mb-1">
+                                    {{ __('main.triple_room_discount') }}
+                                </label>
+                                <input type="number" step="0.01" name="triple_room_discount" id="triple_room_discount"
+                                    class="kt-input h-[45px]" value="{{ old('triple_room_discount', 0) }}" minLength="0">
+                                @error('triple_room_discount')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Third Person Price --}}
+                            <div class="align-self-end">
+                                <label for="third_person_price" class="kt-label mb-1">
+                                    {{ __('main.third_person_price') }}
+                                </label>
+                                <input type="number" step="0.01" name="third_person_price" id="third_person_price"
+                                    class="kt-input h-[45px]" value="{{ old('third_person_price', 0) }}" minLength="0">
+                                @error('third_person_price')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Extra Bed Price --}}
+                            <div class="align-self-end">
+                                <label for="extra_bed_price" class="kt-label mb-1">
+                                    {{ __('main.extra_bed_price') }}
+                                </label>
+                                <input type="number" step="0.01" name="extra_bed_price" id="extra_bed_price"
+                                    class="kt-input h-[45px]" value="{{ old('extra_bed_price', 0) }}" minLength="0">
+                                @error('extra_bed_price')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Sea View Supplement --}}
+                            <div class="align-self-end">
+                                <label for="sea_view_supplement" class="kt-label mb-1">
+                                    {{ __('main.sea_view_supplement') }}
+                                </label>
+                                <input type="number" step="0.01" name="sea_view_supplement" id="sea_view_supplement"
+                                    class="kt-input h-[45px]" value="{{ old('sea_view_supplement', 0) }}"
+                                    minLength="0">
+                                @error('sea_view_supplement')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
-                        <div class="mb-3 align-self-end">
-                            <label for="max_occupancy" class="kt-label required">
-                                {{ __('main.max_occupancy') }}
-                                <span class="text-red-600 text-2xl">*</span>
-                            </label>
-                            <input type="number" class="kt-input h-[45px]" id="max_occupancy" name="max_occupancy"
-                                value="{{ old('max_occupancy', 2) }}" minLength="1" required>
-                            @error('max_occupancy')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        {{-- Notes --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'notes',
+                            'value' => old('notes'),
+                        ])
+
+                        {{-- Additional Settings --}}
+                        <div class="flex gap-6">
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_active" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_active',
+                                    'id' => 'is_active',
+                                    'value' => '1',
+                                    'checked' => 1,
+                                    'label' => __('main.is_active'),
+                                ])
+                            </div>
                         </div>
+
+                        {{-- Save Submit --}}
+                        @include('components.elements.save-submit', ['models' => 'rooms'])
                     </div>
-
-                    {{-- Description --}}
-                    @include('components.elements.input-text-editor', [
-                        'name' => 'description',
-                        'value' => old('description'),
-                    ])
-
-                    <div class="mb-4">
-                        <div class="flex items-center gap-3">
-                            <input type="hidden" name="is_active" value="0">
-                            @include('components.elements.checkbox-button', [
-                                'name' => 'is_active',
-                                'id' => 'is_active',
-                                'value' => '1',
-                                'checked' => 1,
-                                'label' => __('main.is_active'),
-                            ])
-                        </div>
-                    </div>
-
-                    {{-- Save Submit --}}
-                    @include('components.elements.save-submit', ['models' => 'rooms'])
                 </form>
             </div>
         </div>

@@ -15,6 +15,7 @@ class Accommodation extends Model
     use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
+        'description',
         'notes',
     ];
 
@@ -43,6 +44,7 @@ class Accommodation extends Model
         'longitude',
         'contract_file_path',
         'is_active',
+        'description',
         'notes',
         'currency_id',
         'type_id',
@@ -62,7 +64,7 @@ class Accommodation extends Model
 
     public function getRelationshipNames()
     {
-        return ['currency', 'type', 'seasons', 'roomRates', 'mealRates', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['currency', 'type', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'rooms', 'meals', 'supplements'];
     }
 
     public function getExcludedColumns()
@@ -79,38 +81,6 @@ class Accommodation extends Model
     {
         return $this->belongsTo(Type::class);
     }
-
-    // Many-to-Many: accommodation يمكن أن يكون له عدة seasons عبر جدول accommodation_seasons
-    public function seasons()
-    {
-        // return $this->belongsToMany(Season::class, 'accommodation_seasons')->withTimestamps()->withPivot('notes');
-        return $this->hasMany(AccommodationSeason::class);
-    }
-
-    // One-to-Many: جدول accommodation_room_rates يحتوي على أسعار الغرف لكل موسم
-    public function roomRates()
-    {
-        // return $this->belongsToMany(Room::class, 'accommodation_room_rates')->withTimestamps()->withPivot('notes');
-        return $this->hasMany(AccommodationRoomRate::class);
-    }
-
-    // One-to-Many: جدول accommodation_meal_rates يحتوي على أسعار الوجبات لكل موسم
-    public function mealRates()
-    {
-        // return $this->belongsToMany(Meal::class, 'accommodation_meal_rates')->withTimestamps()->withPivot('notes');
-        return $this->hasMany(AccommodationMealRate::class);
-    }
-
-    // One-to-Many: Accommodation has many supplements
-    public function supplements()
-    {
-        return $this->hasMany(AccommodationSupplement::class);
-    }
-
-    // public function nationalityRates()
-    // {
-    //     return $this->hasMany(AccommodationNationalityRate::class);
-    // }
 
     public function region()
     {
@@ -135,5 +105,29 @@ class Accommodation extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    // علاقة polymorphic modelship للمواسم
+    public function seasons()
+    {
+        return $this->morphMany(Season::class, 'model');
+    }
+
+    // علاقة polymorphic modelship للغرف
+    public function rooms()
+    {
+        return $this->morphMany(Room::class, 'model');
+    }
+
+    // علاقة polymorphic modelship للوجبات
+    public function meals()
+    {
+        return $this->morphMany(Meal::class, 'model');
+    }
+
+    // علاقة polymorphic modelship للإضافات
+    public function supplements()
+    {
+        return $this->morphMany(Supplement::class, 'model');
     }
 }

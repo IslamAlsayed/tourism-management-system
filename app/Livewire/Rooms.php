@@ -3,25 +3,41 @@
 namespace App\Livewire;
 
 use App\Models\Room;
+use App\Models\Season;
 use Livewire\Component;
-use Livewire\WithPagination;
-use App\Traits\CustomColumns;
+use App\Models\Currency;
+use App\Traits\ExportsData;
 use App\Traits\WithSorting;
+use Livewire\WithPagination;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
-use App\Traits\ExportsData;
 
 class Rooms extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $totalCount = '';
     public $message = [];
+    public $filterSeasonId = '';
+    public $seasons = [];
+    public $filterCurrencyId = '';
+    public $currencies = [];
     public $filterStatus = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterSeasonId()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterCurrencyId()
     {
         $this->resetPage();
     }
@@ -35,6 +51,12 @@ class Rooms extends Component
     {
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Room::class);
+        $this->seasons = Season::with('accommodation')->get()
+            ->mapWithKeys(function ($season) {
+                $label = $season->name . ' (' . optional($season->accommodation)->name . ')';
+                return [$season->id => $label];
+            })->toArray();
+        $this->currencies = Currency::whereIn('id', Room::pluck('currency_id'))->get(['code', 'name', 'id'])->toArray();
         $this->resetPage();
     }
 
@@ -97,7 +119,7 @@ class Rooms extends Component
 
     public function resetFilters(): void
     {
-        $this->reset(['search', 'filterStatus']);
+        $this->reset(['search', 'filterSeasonId', 'filterCurrencyId', 'filterStatus']);
         $this->resetPage();
         $this->dispatch('reset-filters');
     }
@@ -106,6 +128,12 @@ class Rooms extends Component
     {
         $query = Room::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        if ($this->filterSeasonId && $this->filterSeasonId != 'all') {
+            $query->where('season_id', $this->filterSeasonId);
+        }
+        if ($this->filterCurrencyId && $this->filterCurrencyId != 'all') {
+            $query->where('currency_id', $this->filterCurrencyId);
+        }
         if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
             $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }

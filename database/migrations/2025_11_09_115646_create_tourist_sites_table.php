@@ -18,12 +18,11 @@ return new class extends Migration {
             // Basic Information
             $table->string('name');
             $table->string('name_ar')->nullable();
-            $table->text('description')->nullable();
-            $table->text('description_ar')->nullable();
             $table->string('site_type')->nullable();
             $table->string('category')->nullable();
 
             // Location Information
+            $table->foreignId('currency_id')->nullable()->constrained('currencies')->onDelete('set null');
             $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
             $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
             $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
@@ -32,7 +31,6 @@ return new class extends Migration {
 
             // Geographical Details
             $table->text('address')->nullable();
-            $table->text('address_ar')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->string('postal_code')->nullable();
@@ -43,7 +41,6 @@ return new class extends Migration {
             $table->decimal('entry_fee_student', 8, 2)->nullable();
             $table->decimal('entry_fee_senior', 8, 2)->nullable();
             $table->decimal('entry_fee_group', 8, 2)->nullable();
-            $table->string('currency', 3)->default('USD');
             $table->boolean('is_free_entry')->default(false);
 
             // Operating Hours
@@ -116,10 +113,12 @@ return new class extends Migration {
 
             // Administrative
             $table->enum('status', ['active', 'inactive', 'maintenance', 'permanently_closed'])->nullable()->default('active');
+            $table->boolean('is_active')->default(false);
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_verified')->default(false);
-            $table->text('notes')->nullable();
             $table->json('tags')->nullable();
+            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
 
             // Tracking
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');

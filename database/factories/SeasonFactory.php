@@ -26,13 +26,24 @@ class SeasonFactory extends Factory
 
         $season = fake()->unique()->randomElement($seasons);
 
+        // Randomly choose between Restaurant or Accommodation
+        $modelType = fake()->randomElement([
+            \App\Models\Restaurant::class,
+            \App\Models\Accommodation::class,
+        ]);
+        $modelInstance = $modelType::inRandomOrder()->first();
+
         return [
+            'model_id' => $modelInstance?->id,
+            'model_type' => $modelInstance ? $modelType : null,
+
             'name' => $season['name'],
             'name_ar' => $season['name_ar'],
             'season_from' => $season['from'],
             'season_to' => $season['to'],
-            'description' => fake()->paragraph(2),
             'is_active' => fake()->boolean(90),
+            'description' => fake()->paragraph(2),
+            'notes' => fake()->optional()->paragraph(1),
         ];
     }
 }

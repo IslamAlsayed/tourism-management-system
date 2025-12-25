@@ -27,23 +27,19 @@ class State extends Model
         'is_independent',
         'is_developed',
         'is_landlocked',
+        'description',
+        'notes',
         'timezone_id',
         'region_id',
         'subregion_id',
         'country_id',
     ];
 
-    /**
-     * Get relationship names for eager loading
-     */
     public function getRelationshipNames()
     {
-        return ['timezone', 'region', 'subregion', 'country'];
+        return ['timezone', 'region', 'subregion', 'country', 'cities'];
     }
 
-    /**
-     * Get columns to exclude from search/display
-     */
     public function getExcludedColumns()
     {
         return ['timezone_id', 'region_id', 'subregion_id', 'country_id'];

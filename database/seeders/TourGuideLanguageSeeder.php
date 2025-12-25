@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Language;
+use App\Models\RichText;
 use App\Models\TourGuide;
 use Illuminate\Database\Seeder;
 use App\Models\TourGuideLanguage;
@@ -13,6 +14,7 @@ class TourGuideLanguageSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
+        RichText::truncate();
         TourGuideLanguage::truncate();
         Schema::enableForeignKeyConstraints();
 
@@ -1410,7 +1412,7 @@ class TourGuideLanguageSeeder extends Seeder
             foreach (array_chunk($insertData, 500) as $chunk) {
                 TourGuideLanguage::insert($chunk);
             }
-            $this->command->info('Seeded ' . count($insertData) . ' tour guide languages.');
+            // $this->command->info('Seeded ' . count($insertData) . ' tour guide languages.');
         }
     }
 }

@@ -2,39 +2,46 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Traits\BroadcastsRecordEvents;
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use App\Traits\BroadcastsRecordEvents;
+use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Airline extends Model
 {
-    use HasFactory, HasSearch, HasUuid, BroadcastsRecordEvents;
+    use HasFactory, HasSearch, HasRichText, HasUuid, BroadcastsRecordEvents;
+
+    protected $richTextAttributes = [
+        'description',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',
         'uuid',
+        'name',
+        'name_ar',
         'lid',
         'icao',
         'iata',
-        'name',
-        'name_ar',
         'subd',
+        'elevation',
+        'latitude',
+        'longitude',
+        'local_phone_number',
+        'international_phone_number',
+        'website',
+        'is_active',
+        'description',
+        'notes',
+        'timezone_id',
         'region_id',
         'subregion_id',
         'country_id',
         'state_id',
         'city_id',
-        'elevation',
-        'latitude',
-        'longitude',
-        'timezone_id',
-        'local_phone_number',
-        'international_phone_number',
-        'website',
-        'is_active',
-        'notes',
     ];
 
     protected $casts = [
@@ -44,29 +51,14 @@ class Airline extends Model
         'is_active' => 'boolean',
     ];
 
-    /**
-     * Get relationship names for search functionality
-     */
     public function getRelationshipNames(): array
     {
-        return ['region', 'subregion', 'country', 'state', 'city', 'timezone'];
+        return ['timezone', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
-    /**
-     * Get excluded columns for table display
-     */
     public function getExcludedColumns(): array
     {
-        return [
-            'region_id',
-            'subregion_id',
-            'country_id',
-            'state_id',
-            'city_id',
-            'timezone_id',
-            'created_at',
-            'updated_at',
-        ];
+        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
     public function region()

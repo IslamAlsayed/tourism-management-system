@@ -2,24 +2,33 @@
 
 namespace App\Livewire;
 
+use App\Models\Meal;
+use App\Models\Room;
+use App\Models\Type;
+use App\Models\Season;
 use Livewire\Component;
 use App\Traits\ExportsData;
 use App\Traits\WithSorting;
 use Livewire\WithPagination;
 use App\Models\Accommodation;
-use App\Traits\CustomColumns;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
-use App\Models\Type;
 use App\Traits\HandlesCrudSafely;
 
 class Accommodations extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
     public $search = '';
     public $totalCount = '';
     public $message = [];
     public $types = [];
     public $filterTypeId = '';
+    public $filterSeasonId = '';
+    public $seasons = [];
+    public $filterRoomId = '';
+    public $rooms = [];
+    public $filterMealId = '';
+    public $meals = [];
     public $filterStatus = '';
     public $filter = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
@@ -38,6 +47,15 @@ class Accommodations extends Component
         $this->resetPage();
     }
 
+    public function updatingFilterSeasonId($value)
+    {
+        // Handle Select2 array structure
+        if (is_array($value) && isset($value['payload']['value'])) {
+            $this->filterSeasonId = $value['payload']['value'];
+        }
+        $this->resetPage();
+    }
+
     public function updatingFilterStatus($value)
     {
         // Handle Select2 array structure
@@ -51,6 +69,9 @@ class Accommodations extends Component
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Accommodation::class);
         $this->types = Type::pluck('name', 'id')->toArray();
+        $this->seasons = Season::pluck('name', 'id')->toArray();
+        $this->rooms = Room::pluck('name', 'id')->toArray();
+        $this->meals = Meal::pluck('name', 'id')->toArray();
         $this->resetPage();
     }
 
@@ -113,7 +134,7 @@ class Accommodations extends Component
 
     public function resetFilters(): void
     {
-        $this->reset(['search', 'filterTypeId', 'filterStatus']);
+        $this->reset(['search', 'filterTypeId', 'filterSeasonId', 'filterStatus']);
         $this->resetPage();
         $this->dispatch('reset-filters');
     }
@@ -122,8 +143,23 @@ class Accommodations extends Component
     {
         $query = Accommodation::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        if ($this->filterTypeId && $this->filterTypeId['payload']['value'] !== 'all') {
-            $query->where('type_id', $this->filterTypeId['payload']['value']);
+        if ($this->filterTypeId && $this->filterTypeId !== 'all') {
+            $query->where('type_id', $this->filterTypeId);
+        }
+        if ($this->filterSeasonId && $this->filterSeasonId['payload']['value'] !== 'all') {
+            $query->whereHas('seasons', function ($q) {
+                $q->where('id', $this->filterSeasonId['payload']['value']);
+            });
+        }
+        if ($this->filterRoomId && $this->filterRoomId['payload']['value'] !== 'all') {
+            $query->whereHas('rooms', function ($q) {
+                $q->where('id', $this->filterRoomId['payload']['value']);
+            });
+        }
+        if ($this->filterMealId && $this->filterMealId['payload']['value'] !== 'all') {
+            $query->whereHas('meals', function ($q) {
+                $q->where('id', $this->filterMealId['payload']['value']);
+            });
         }
         if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
             $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);

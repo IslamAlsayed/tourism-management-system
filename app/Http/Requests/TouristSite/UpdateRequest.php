@@ -32,10 +32,11 @@ class UpdateRequest extends FormRequest
             'name_ar' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'description_ar' => ['nullable', 'string'],
-            'site_type' => ['nullable', 'string', 'in:' . implode(',', array_keys(config('helpers.site_types') ?? []))],
-            'category' => ['nullable', 'string', 'in:' . implode(',', array_keys(config('helpers.categories') ?? []))],
+            'site_type' => ['nullable', 'string', 'max:100'],
+            'category' => ['nullable', 'string', 'max:100'],
 
             // Location Information
+            'currency_id' => ['nullable', 'exists:currencies,id'],
             'region_id' => ['nullable', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'exists:subregions,id'],
             'country_id' => ['nullable', 'exists:countries,id'],
@@ -55,14 +56,13 @@ class UpdateRequest extends FormRequest
             'entry_fee_student' => ['nullable', 'numeric', 'min:0', 'max:99999.99'],
             'entry_fee_senior' => ['nullable', 'numeric', 'min:0', 'max:99999.99'],
             'entry_fee_group' => ['nullable', 'numeric', 'min:0', 'max:99999.99'],
-            'currency' => ['nullable', 'string', 'max:3'],
             'is_free_entry' => ['nullable', 'boolean'],
 
             // Operating Hours
             'opening_time' => ['nullable', 'date_format:H:i'],
             'closing_time' => ['nullable', 'date_format:H:i'],
             'operating_days' => ['nullable', 'array'],
-            'operating_days.*' => ['integer', 'between:1,7'],
+            'operating_days.*' => ['string', 'between:1,7'],
             'special_hours' => ['nullable', 'json'],
             'is_24_hours' => ['nullable', 'boolean'],
 
@@ -103,21 +103,27 @@ class UpdateRequest extends FormRequest
             'mobile_app' => ['nullable', 'boolean'],
             'virtual_tours' => ['nullable', 'boolean'],
 
+            // Accessibility & Amenities
+            'has_parking' => ['nullable', 'boolean'],
+            'has_restaurant' => ['nullable', 'boolean'],
+            'has_gift_shop' => ['nullable', 'boolean'],
+            'has_restrooms' => ['nullable', 'boolean'],
+
             // Media & Resources
-            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
-            'main_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'], // 5MB
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
+            'main_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'gallery_images' => ['nullable', 'array'],
             'gallery_images.*' => ['image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'video_url' => ['nullable', 'url', 'max:500'],
             'virtual_tour_url' => ['nullable', 'url', 'max:500'],
 
-            // Ratings & Reviews (usually calculated, but can be set manually)
+            // Ratings & Reviews
             'average_rating' => ['nullable', 'numeric', 'between:0,5'],
             'total_reviews' => ['nullable', 'integer', 'min:0'],
             'popularity_score' => ['nullable', 'integer', 'min:0', 'max:100'],
 
             // Visitor Information
-            'estimated_visit_duration' => ['nullable', 'integer', 'min:1'], // in minutes
+            'estimated_visit_duration' => ['nullable', 'integer', 'min:1'],
             'difficulty_level' => ['nullable', 'string', 'in:easy,moderate,challenging,extreme'],
             'age_restrictions' => ['nullable', 'json'],
             'best_visit_time' => ['nullable', 'array'],
@@ -125,6 +131,7 @@ class UpdateRequest extends FormRequest
 
             // Administrative
             'status' => ['nullable', 'string', 'in:active,inactive,maintenance,permanently_closed'],
+            'is_active' => ['nullable', 'boolean'],
             'is_featured' => ['nullable', 'boolean'],
             'is_verified' => ['nullable', 'boolean'],
             'notes' => ['nullable', 'string'],
@@ -132,39 +139,4 @@ class UpdateRequest extends FormRequest
             'tags.*' => ['string', 'max:50'],
         ];
     }
-
-    // /**
-    //  * Get custom error messages for validation.
-    //  */
-    // public function messages(): array
-    // {
-    //     return [
-    //         'name.nullable' => __('main.validation.nullable'),
-    //         'type.nullable' => __('main.validation.nullable'),
-    //         'category.nullable' => __('main.validation.nullable'),
-    //         'latitude.between' => __('main.validation.latitude_range'),
-    //         'longitude.between' => __('main.validation.longitude_range'),
-    //         'main_image.image' => __('main.validation.main_image_format'),
-    //         'main_image.max' => __('main.validation.main_image_size'),
-    //         'gallery_images.*.image' => __('main.validation.gallery_image_format'),
-    //         'gallery_images.*.max' => __('main.validation.gallery_image_size'),
-    //     ];
-    // }
-
-    // /**
-    //  * Get custom attribute names for validation.
-    //  */
-    // public function attributes(): array
-    // {
-    //     return [
-    //         'name' => __('main.name'),
-    //         'name_ar' => __('main.name_ar'),
-    //         'type' => __('main.type'),
-    //         'category' => __('main.category'),
-    //         'latitude' => __('main.latitude'),
-    //         'longitude' => __('main.longitude'),
-    //         'main_image' => __('main.main_image'),
-    //         'gallery_images' => __('main.gallery_images'),
-    //     ];
-    // }
 }

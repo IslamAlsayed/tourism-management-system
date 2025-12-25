@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Region;
 use App\Models\Country;
 use App\Models\Nationality;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Nationalities\StoreRequest;
-use App\Http\Requests\Nationalities\UpdateRequest;
+use App\Http\Requests\Nationality\StoreRequest;
+use App\Http\Requests\Nationality\UpdateRequest;
 
 class NationalityController extends Controller
 {
@@ -17,8 +18,8 @@ class NationalityController extends Controller
 
     public function create()
     {
-        $countries = Country::orderBy('name')->get();
-        return view('pages.dashboard.nationalities.create', compact('countries'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.nationalities.create', compact('regions'));
     }
 
     public function store(StoreRequest $request)
@@ -36,7 +37,7 @@ class NationalityController extends Controller
 
     public function show($id)
     {
-        $nationality = Nationality::with('country')->find($id);
+        $nationality = Nationality::with(['region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$nationality) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.nationality')]));
         }
@@ -49,8 +50,8 @@ class NationalityController extends Controller
         if (!$nationality) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.nationality')]));
         }
-        $countries = Country::orderBy('name')->get();
-        return view('pages.dashboard.nationalities.edit', compact('nationality', 'countries'));
+        $regions = Region::orderBy('name')->get();
+        return view('pages.dashboard.nationalities.edit', compact('nationality', 'regions'));
     }
 
     public function update(UpdateRequest $request, $id)
@@ -75,7 +76,7 @@ class NationalityController extends Controller
         }
         $deleted = $nationality->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.nationality')]));
+            return redirect()->route('nationalities.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.nationality')]));
         }
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.nationality')]));
     }

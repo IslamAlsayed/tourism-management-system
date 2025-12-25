@@ -6,8 +6,8 @@ use App\Models\City;
 use App\Models\Region;
 use App\Models\Timezone;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Cities\CreateCitiesRequest;
-use App\Http\Requests\Cities\UpdateCitiesRequest;
+use App\Http\Requests\City\StoreRequest;
+use App\Http\Requests\City\UpdateRequest;
 
 class CityController extends Controller
 {
@@ -23,7 +23,7 @@ class CityController extends Controller
         return view('pages.dashboard.cities.create', compact('regions', 'timezones'));
     }
 
-    public function store(CreateCitiesRequest $request)
+    public function store(StoreRequest $request)
     {
         $data = $request->validated();
         if ($request['state_id']) {
@@ -33,7 +33,6 @@ class CityController extends Controller
             $data['city_id'] = array_unique($data['city_id']);
         }
         $created = City::create($data);
-
         if ($created) {
             if ($request->has('save_and_add')) {
                 return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.city')]));
@@ -45,7 +44,7 @@ class CityController extends Controller
 
     public function show($id)
     {
-        $city = City::with(['region', 'subregion', 'country', 'state', 'timezone'])->find($id);
+        $city = City::with(['timezone', 'region', 'subregion', 'country', 'state'])->find($id);
         if (!$city) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
         }
@@ -54,7 +53,7 @@ class CityController extends Controller
 
     public function edit($id)
     {
-        $city = City::with(['region', 'subregion', 'country'])->find($id);
+        $city = City::find($id);
         if (!$city) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
         }
@@ -63,7 +62,7 @@ class CityController extends Controller
         return view('pages.dashboard.cities.edit', compact('city', 'regions', 'timezones'));
     }
 
-    public function update(UpdateCitiesRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $city = City::find($id);
         if (!$city) {
@@ -91,7 +90,7 @@ class CityController extends Controller
         }
         $deleted = $city->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.city')]));
+            return redirect()->route('cities.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.city')]));
         }
         return redirect()->route('cities.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.city')]));
     }

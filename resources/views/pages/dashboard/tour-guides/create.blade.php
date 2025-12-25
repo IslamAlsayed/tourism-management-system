@@ -22,42 +22,80 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-4 lg:gap-6">
-            <!-- Tour Guide Form -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.tour-guide')]) }}</h3>
+        <form action="{{ route('tour-guides.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="grid gap-4 lg:gap-6">
+
+                {{-- Tour Guide Photo --}}
+                @include('components.input-image', [
+                    'column' => 'tour-guide',
+                    'columnName' => 'photo',
+                ])
+
+                <!-- Location Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.location')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            {{-- Regions [region, subregion, country, state, city] --}}
+                            @include('components.regions.create', [
+                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                                'multiple' => false,
+                            ])
+
+                            <!-- Currency -->
+                            <div class="align-self-end">
+                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
+                                    {{ __('main.currency') }}
+                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="currency_id" id="currency_id" class="kt-select basic-single">
+                                    <option value="" selected disabled></option>
+                                    @foreach ($currencies as $currency)
+                                        <option value="{{ $currency->id }}"
+                                            {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
+                                            {{ $currency->code }} - {{ $currency->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('currency_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="kt-card-body">
-                    <form method="POST" action="{{ route('tour-guides.store') }}" enctype="multipart/form-data"
-                        class="space-y-6 p-4">
-                        @csrf
 
-                        <!-- Tour guide Photo -->
-                        @include('components.input-image', [
-                            'column' => 'tour-guide',
-                            'columnName' => 'photo',
-                        ])
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            <!-- Name (Arabic) -->
+                <!-- Tour Guide Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.tour-guide')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            <!-- Name (English) -->
                             <div class="">
-                                <label for="name_ar"
-                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.tour-guide')]) }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar') }}">
-                                @error('name_ar')
+                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ old('name') }}">
+                                @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Name (English) -->
+                            <!-- Name (Arabic) -->
                             <div class="">
-                                <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.type_name_english', ['type' => __('main.tour-guide')]) }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
-                                    value="{{ old('name') }}">
-                                @error('name')
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}">
+                                @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -113,10 +151,10 @@
                             </div>
 
                             <!-- Gender -->
-                            <div class="">
+                            <div class="align-self-end">
                                 <label for="gender" class="kt-label required mb-2">{{ __('main.gender') }}</label>
-                                <select name="gender" id="gender" class="kt-select h-[45px]" special-search required>
-                                    <option value="">--</option>
+                                <select name="gender" id="gender" class="kt-select basic-single" required>
+                                    <option value="" selected disabled></option>
                                     <option value="male">male</option>
                                     <option value="female">female</option>
                                 </select>
@@ -136,54 +174,30 @@
                                 @enderror
                             </div>
 
-                            <!-- Currency -->
-                            <div class="">
-                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
-                                    {{ __('main.currency') }}
-                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
-                                    <option value="">--</option>
-                                    @foreach ($currencies as $currency)
-                                        <option value="{{ $currency->id }}"
-                                            {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
-                                            {{ $currency->code }} - {{ $currency->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('currency_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <!-- Guide languages -->
-                            <div class="">
-                                <label for="languages_ids" class="kt-label mb-2 flex items-center justify-between">
+                            <div class="align-self-end">
+                                <label for="language_id" class="kt-label mb-2 flex items-center justify-between">
                                     {{ __('main.language') }}
                                 </label>
-                                <select name="languages_ids[]" id="languages_ids" class="kt-select h-[45px]"
-                                    special-multiple>
-                                    <option value="">--</option>
-                                    @foreach ($languages_ids as $id => $language)
-                                        <option value="{{ $id }}">
+                                <select name="language_id[]" id="language_id" class="kt-select basic-multiple" multiple>
+                                    @foreach ($languages as $language)
+                                        <option value="{{ $language->id }}"
+                                            {{ in_array(old('language_id'), $language_ids) ? 'selected' : '' }}>
                                             {{ getCurrentLocale() == 'ar' ? $language['name_ar'] : $language['name'] }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('languages_ids')
+                                @error('language_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Guide Type -->
-                            <div class="">
+                            <div class="align-self-end">
                                 <label for="guide_type_id"
                                     class="kt-label required mb-2">{{ __('main.guide_type') }}</label>
-                                <select name="guide_type_id" id="guide_type_id" class="kt-input h-[45px]"
-                                    special-multiple data-current-value="{{ $tourGuide->guide_type_id ?? 1 }}" required>
-                                    <option value="">--</option>
+                                <select name="guide_type_id" id="guide_type_id" class="kt-input basic-single" required>
+                                    <option value="" selected disabled></option>
                                     @foreach ($guideTypes as $type)
                                         <option value="{{ $type->id }}"
                                             {{ old('guide_type_id') == $type->id ? 'selected' : '' }}>
@@ -195,12 +209,6 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.create', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => true,
-                            ])
 
                             <!-- Tourism Ministry Code -->
                             <div class="">
@@ -253,111 +261,38 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Notes -->
-                        @include('components.elements.input-text-editor', [
-                            'column' => 'notes',
-                            'value' => old('notes'),
-                        ])
-
-                        <!-- Tour guide Settings -->
-                        <div class="space-y-4 mb-4">
-                            <h4 class="font-semibold mb-2">
-                                {{ __('main.type_settings', ['type' => __('main.tour-guide')]) }}
-                            </h4>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="status" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'status',
-                                        'id' => 'status',
-                                        'value' => '1',
-                                        'checked' => old('status'),
-                                        'label' => __('main.status'),
-                                    ])
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Save Submit Buttons -->
-                        @include('components.elements.save-submit', ['models' => 'tour-guides'])
-                    </form>
-                </div>
-            </div>
-
-            <!-- Geographic Info -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.geographic_info') }}</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-geolocation text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.gender')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.gender'), 'type2' => __('main.tour-guide')]) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.country')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.country'), 'type2' => __('main.tour-guide')]) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.currency')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.currency'), 'type2' => __('main.tour-guide')]) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.guide_type')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.guide_type'), 'type2' => __('main.tour-guide')]) }}
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
+                <!-- Description -->
+                @include('components.elements.input-text-editor', [
+                    'column' => 'description',
+                    'value' => old('description'),
+                ])
+
+                <!-- Notes -->
+                @include('components.elements.input-text-editor', [
+                    'column' => 'notes',
+                    'value' => old('notes'),
+                ])
+
+                <div class="flex flex-wrap" style="gap: 10px 40px;">
+                    <div class="flex items-center gap-3">
+                        <input type="hidden" name="is_active" value="0">
+                        @include('components.elements.checkbox-button', [
+                            'name' => 'is_active',
+                            'id' => 'is_active',
+                            'value' => '1',
+                            'checked' => 1,
+                            'label' => __('main.active'),
+                        ])
+                    </div>
+                </div>
+
+                {{-- Save Buttons --}}
+                @include('components.elements.save-submit', ['models' => 'tour-guides'])
             </div>
-        </div>
+        </form>
     </div>
 @endsection
 

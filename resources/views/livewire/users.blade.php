@@ -9,10 +9,10 @@
         'showSearch' => true,
     ])
         <div class="d-flex gap-2">
-            <button wire:click="refreshData" class="kt-btn btn-icon kt-btn-sm btn-light-primary" toggle-button
+            {{-- <button wire:click="refreshData" class="kt-btn btn-icon kt-btn-sm btn-light-primary" toggle-button
                 title="{{ __('main.refresh') }}">
                 <i class="ki-outline ki-arrows-circle fs-2"></i>
-            </button>
+            </button> --}}
             @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
                 @include('components.columns', [
                     'allColumns' => $allColumns ?? [],
@@ -73,7 +73,6 @@
         let switchUserActive = ably.channels.get('switch.user.active');
         switchUserActive.subscribe('switch.user.active', (message) => {
             if (!message.data) return;
-            console.log('🔄 Received switch.user.active event:', message.data);
             @this.dispatch('recordUpdated');
         });
     </script>

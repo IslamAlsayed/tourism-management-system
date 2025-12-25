@@ -26,12 +26,26 @@ class MealFactory extends Factory
 
         $type = fake()->unique()->randomElement($types);
 
+        // Randomly choose between Restaurant or Accommodation
+        $modelType = fake()->randomElement([
+            \App\Models\Restaurant::class,
+            \App\Models\Accommodation::class,
+        ]);
+        $modelInstance = $modelType::inRandomOrder()->first();
+
         return [
+            'model_id' => $modelInstance?->id,
+            'model_type' => $modelInstance ? $modelType : null,
+
+            'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? null,
             'name' => $type['name'],
             'name_ar' => $type['name_ar'],
+            'price' => fake()->randomFloat(2, 10, 100),
             'is_included' => $type['included'],
-            'notes' => fake()->paragraph(2),
+            'is_supplement' => fake()->boolean(60),
             'is_active' => fake()->boolean(90),
+            'description' => fake()->optional()->paragraph(2),
+            'notes' => fake()->optional()->paragraph(1),
         ];
     }
 }

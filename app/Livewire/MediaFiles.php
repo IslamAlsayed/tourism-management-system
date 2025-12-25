@@ -7,13 +7,13 @@ use App\Models\MediaFile;
 use App\Traits\ExportsData;
 use App\Traits\WithSorting;
 use Livewire\WithPagination;
-use App\Traits\CustomColumns;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 
 class MediaFiles extends Component
 {
-    use WithPagination, CustomColumns, WithSorting, CustomPagination, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomColumnsLivewireLegacy, WithSorting, CustomPagination, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $filterType = '';

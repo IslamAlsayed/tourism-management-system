@@ -18,11 +18,13 @@ class Nationality extends Model
         'name',
         'name_ar',
         'is_active',
-        // 'region_id',
-        // 'subregion_id',
+        'description',
+        'notes',
+        'region_id',
+        'subregion_id',
         'country_id',
-        // 'state_id',
-        // 'city_id',
+        'state_id',
+        'city_id',
     ];
 
     /**
@@ -30,8 +32,7 @@ class Nationality extends Model
      */
     public function getRelationshipNames()
     {
-        // return ['region', 'subregion', 'country', 'state', 'city'];
-        return ['country'];
+        return ['region', 'subregion', 'country', 'state', 'city'];
     }
 
     /**
@@ -39,80 +40,31 @@ class Nationality extends Model
      */
     public function getExcludedColumns()
     {
-        // return ['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
-        return ['country_id'];
+        return ['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
-    // public function region()
-    // {
-    //     return $this->belongsTo(Region::class);
-    // }
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
 
-    // public function subregion()
-    // {
-    //     return $this->belongsTo(Subregion::class);
-    // }
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
+    }
 
     public function country()
     {
         return $this->belongsTo(Country::class);
     }
 
-    // public function state()
-    // {
-    //     return $this->belongsTo(State::class);
-    // }
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
 
-    // public function city()
-    // {
-    //     return $this->belongsTo(City::class);
-    // }
-
-    // public function states()
-    // {
-    //     if (!$this->state_id)
-    //         return [];
-    //     return State::whereIn('id', explode(',', $this->state_id))->get()->toArray();
-    // }
-
-    // public function getStateListAttribute()
-    // {
-    //     if (!$this->state_id)
-    //         return [];
-    //     return State::whereIn('id', explode(',', $this->state_id))->get(['id', 'name'])->toArray();
-    // }
-
-    // public function getStateIdAttribute($value)
-    // {
-    //     return $value ?: "";
-    // }
-
-    // public function setStateIdAttribute($value)
-    // {
-    //     $this->attributes['state_id'] = is_array($value) ? implode(',', $value) : $value;
-    // }
-
-    // public function cities()
-    // {
-    //     if (!$this->city_id)
-    //         return [];
-    //     return City::whereIn('id', explode(',', $this->city_id))->get()->toArray();
-    // }
-
-    // public function getCityListAttribute()
-    // {
-    //     if (!$this->city_id)
-    //         return [];
-    //     return City::whereIn('id', explode(',', $this->city_id))->get(['id', 'name'])->toArray();
-    // }
-
-    // public function getCityIdAttribute($value)
-    // {
-    //     return $value ?: "";
-    // }
-
-    // public function setCityIdAttribute($value)
-    // {
-    //     $this->attributes['city_id'] = is_array($value) ? implode(',', $value) : $value;
-    // }
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }

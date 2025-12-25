@@ -173,71 +173,95 @@ th:has(i, svg) {
 
 /* End datatable loading */
 
-.fade-out {
-    animation: fadeOut 150ms forwards linear;
+.fade-right {
+    animation: fadeRight 400ms forwards cubic-bezier(0.4, 0, 1, 1);
 }
 
 .fade-up {
-    animation: fadeUp 150ms forwards linear;
+    animation: fadeUp 400ms forwards cubic-bezier(0.4, 0, 1, 1);
 }
 
 .fade-left {
-    animation: fadeLeft 150ms forwards linear;
+    animation: fadeLeft 400ms forwards cubic-bezier(0.4, 0, 1, 1);
 }
 
-.fade-bottom {
-    animation: fadeBottom 150ms forwards linear;
+.fade-down {
+    animation: fadeDown 400ms forwards cubic-bezier(0.4, 0, 1, 1);
 }
 
-@keyframes fadeOut {
+@keyframes fadeRight {
     0% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
+
+    50% {
+        transform: translateX(75px) scale(0.95);
     }
 
     100% {
         opacity: 0;
         visibility: hidden;
-        transform: translateX(30px);
+        transform: translateX(200px) scale(0.8);
+        filter: blur(2px);
     }
 }
 
 @keyframes fadeUp {
     0% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+
+    50% {
+        transform: translateY(-75px) scale(0.95);
     }
 
     100% {
         opacity: 0;
         visibility: hidden;
-        transform: translateY(-30px);
+        transform: translateY(-200px) scale(0.8);
+        filter: blur(2px);
     }
 }
 
 @keyframes fadeLeft {
     0% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
+
+    50% {
+        transform: translateX(-75px) scale(0.95);
     }
 
     100% {
         opacity: 0;
         visibility: hidden;
-        transform: translateX(-30px);
+        transform: translateX(-200px) scale(0.8);
+        filter: blur(2px);
     }
 }
 
-@keyframes fadeBottom {
+@keyframes fadeDown {
     0% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+
+    50% {
+        transform: translateY(75px) scale(0.95);
     }
 
     100% {
         opacity: 0;
         visibility: hidden;
-        transform: translateY(30px);
+        transform: translateY(200px) scale(0.8);
+        filter: blur(2px);
     }
 }
 
@@ -368,7 +392,7 @@ th:has(i, svg) {
 
 #columnsModal .grid::-webkit-scrollbar,
 #notifications::-webkit-scrollbar {
-    width: 2px;
+    width: 5px;
 }
 
 #columnsModal .grid::-webkit-scrollbar-thumb,

@@ -34,6 +34,22 @@
                         @method('PUT')
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            <!-- Region id -->
+                            <div class="">
+                                <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
+                                <select name="region_id" id="region_id" class="kt-input basic-single">
+                                    <option value="" selected disabled></option>
+                                    @foreach ($regions as $region)
+                                        <option value="{{ $region->id }}"
+                                            {{ $region->id == $subregion->region_id ? 'selected' : '' }}>
+                                            {{ $region->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('region_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Subregion Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar"
@@ -62,22 +78,6 @@
                                 <input type="text" name="wiki_data_id" id="wiki_data_id" class="kt-input h-[45px]"
                                     value="{{ $subregion->wiki_data_id }}">
                                 @error('wiki_data_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Region id -->
-                            <div class="">
-                                <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
-                                <select name="region_id" id="region_id" class="kt-input h-[45px]" special-search>
-                                    <option value="">--</option>
-                                    @foreach ($regions as $region)
-                                        <option value="{{ $region->id }}"
-                                            {{ $region->id == $subregion->region_id ? 'selected' : '' }}>
-                                            {{ $region->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('region_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

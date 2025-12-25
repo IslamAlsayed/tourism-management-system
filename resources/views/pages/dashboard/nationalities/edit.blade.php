@@ -35,21 +35,10 @@
                         @method('PUT')
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            <!-- Nationality Name (Arabic) -->
-                            <div class="">
-                                <label for="name_ar"
-                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.nationality')]) }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ $nationality->name_ar }}">
-                                @error('name_ar')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <!-- Nationality Name (English) -->
                             <div class="">
                                 <label for="name"
-                                    class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.nationality')]) }}</label>
+                                    class="kt-label mb-2">{{ __('main.name', ['type' => __('main.nationality')]) }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $nationality->name }}">
                                 @error('name')
@@ -57,50 +46,59 @@
                                 @enderror
                             </div>
 
-                            <div class="align-self-end">
-                                <label for="country_id" class="kt-label flex items-center justify-between mb-2">
-                                    {{ __('main.countries') }}
-                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="country_id" id="country_id" class="kt-select basic-single">
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ $nationality->country_id == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('country_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                            <!-- Nationality Name (Arabic) -->
+                            <div class="">
+                                <label for="name_ar"
+                                    class="kt-label mb-2">{{ __('main.name_ar', ['type' => __('main.nationality')]) }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $nationality->name_ar }}">
+                                @error('name_ar')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            {{-- Regions [region, subregion, country, state, city] --}}
+                            @include('components.regions.edit', [
+                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                                'multiple' => false,
+                                'record' => $nationality,
+                            ])
                         </div>
 
+                        {{-- Description --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'description',
+                            'value' => $nationality->description,
+                        ])
+
+                        {{-- Notes --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'notes',
+                            'value' => $nationality->notes,
+                        ])
+
                         <!-- Is active -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="flex flex-wrap gap-10 mb-4">
                             <div class="flex items-center gap-3">
                                 <input type="hidden" name="is_active" value="0">
                                 @include('components.elements.checkbox-button', [
                                     'name' => 'is_active',
                                     'id' => 'is_active',
                                     'value' => '1',
-                                    'checked' => $nationality->is_active == 1,
+                                    'checked' => $nationality->is_active,
                                     'label' => __('main.is_active'),
                                 ])
                             </div>
                         </div>
 
-                        <!-- Update Submit Buttons -->
+                        <!-- Update Submit -->
                         @include('components.elements.update-submit', ['models' => 'nationalities'])
                     </form>
                 </div>
             </div>
 
             <!-- Quick Info -->
-            <div class="kt-card">
+            <div class="kt-card hidden">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.important_information') }}</h3>
                 </div>
@@ -145,3 +143,18 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
+                filterByForeignId("subregion_id", "country", "country_id", "edit");
+                filterByForeignId("country_id", "state", "state_id", "edit");
+                filterByForeignId("state_id", "city", "city_id", "edit");
+            }, 500);
+        });
+    </script>
+@endpush
+
+@include('components.regions.script-cascading')

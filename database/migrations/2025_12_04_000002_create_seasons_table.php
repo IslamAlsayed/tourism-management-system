@@ -13,7 +13,8 @@ return new class extends Migration {
         Schema::create('seasons', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique()->nullable();
-            $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
+            $table->unsignedBigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
 
             $table->string('name'); // e.g., Winter, Summer, High Season, Low Season
             $table->string('name_ar')->nullable();
@@ -24,7 +25,7 @@ return new class extends Migration {
             $table->text('notes')->nullable();
             $table->timestamps();
 
-            $table->index(['season_from', 'season_to']);
+            $table->index(['name', 'name_ar', 'season_from', 'season_to']);
         });
     }
 

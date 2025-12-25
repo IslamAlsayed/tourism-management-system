@@ -376,6 +376,21 @@ if (!function_exists('db_connection')) {
     }
 }
 
+if (!function_exists('getOrderedModelType')) {
+    function getOrderedModelType(string $separator = '', $model = null, $order = 0)
+    {
+        return explode($separator, $model)[$order];
+    }
+}
+
+/* Removed invalid anonymous function definition that caused a syntax error */
+if (!function_exists('pluralLowerCaseName')) {
+    function pluralLowerCaseName(?string $models, string $type = '-')
+    {
+        return implode($type, array_map([Str::class, 'lower'], array_map([Str::class, 'plural'], explode('-', $models))));
+    }
+}
+
 // ارجاع الاسم مفرد => جمع
 if (!function_exists('studlySingular')) {
     function studlySingular(?string $models, string $type = '')

@@ -18,16 +18,18 @@ class RoomForm extends Component
     {
         $this->accommodation = $accommodation;
         $this->currencies = Currency::pluck('code', 'id')->toArray();
-        
+
         // If editing and has existing rooms, load them
-        if ($accommodation && $accommodation->roomRates()->exists()) {
-            $existingRooms = $accommodation->roomRates()
-                ->with('room')
+        if ($accommodation && $accommodation->rooms()->exists()) {
+            $existingRooms = $accommodation->rooms()
                 ->get()
                 ->groupBy('room_id')
-                ->map(function($rates, $roomId) {
+                ->map(function ($rates) {
                     $firstRate = $rates->first();
-                    $room = $firstRate->room;
+                    $room = $firstRate ? $firstRate->room : null;
+                    if (!$firstRate || !$room) {
+                        return null;
+                    }
                     return [
                         'id' => uniqid(),
                         'room_id' => $room->id,
@@ -45,13 +47,13 @@ class RoomForm extends Component
                         'notes' => $room->notes,
                         'is_active' => $room->is_active,
                     ];
-                })->values()->toArray();
-            
+                })->filter()->values()->toArray();
+
             if (!empty($existingRooms)) {
                 $this->rooms = $existingRooms;
             }
         }
-        
+
         // Initialize with one empty room if none exist
         if (empty($this->rooms)) {
             $this->rooms[] = [

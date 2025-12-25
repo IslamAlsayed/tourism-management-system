@@ -19,7 +19,7 @@
     <div class="kt-card-content px-3" wire:target="search,resetFilters,filterType,filterCollection,filterStatus"
         wire:loading.class="loading">
         <!-- Filters -->
-        <div class="grid grid-cols-1 md-grid-cols-2 gap-4 filterTable" wire:ignore>
+        <div class="grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
             {{-- Filter by Type --}}
             <div>
                 <label for="filterType">{{ __('main.all_types') }}</label>
@@ -56,7 +56,7 @@
 
             {{-- Reset Sort Button --}}
             <div>
-                <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}" toggle-button
+                <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}" toggle-button
                     class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">
                     <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
                 </button>

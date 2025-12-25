@@ -40,13 +40,13 @@ class CrossingPortFactory extends Factory
             'country_id' => \App\Models\Country::inRandomOrder()->first()?->id,
             'state_id' => \App\Models\State::inRandomOrder()->first()?->id,
             'city_id' => \App\Models\City::inRandomOrder()->first()?->id,
+            'address' => $this->faker->optional(0.8)->address(),
 
             // Basic information
             'name' => $name,
             'name_ar' => $nameAr,
             'type' => $type,
             'code' => $this->generateCodeByType($type),
-            'description' => $this->faker->optional(0.7)->paragraph(),
 
             // Geographic coordinates
             'latitude' => $latitude,
@@ -64,7 +64,7 @@ class CrossingPortFactory extends Factory
             'allows_visa_on_arrival' => $this->faker->boolean(40),
             'nationality_policy' => $this->generateNationalityPolicies(),
             'departure_tax' => $this->faker->optional(0.7)->randomFloat(2, 10, 100),
-            'departure_tax_currency' => $this->faker->randomElement(['USD', 'EUR', 'SAR', 'AED']),
+            'departure_tax_currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id,
 
             // Contact information
             'contact_phone' => $this->faker->optional(0.8)->phoneNumber(),
@@ -78,7 +78,7 @@ class CrossingPortFactory extends Factory
             // Visa requirements
             'visa_required' => $this->faker->boolean(70),
             'visa_fee' => $this->faker->optional(0.8)->randomFloat(2, 20, 200),
-            'visa_fee_currency' => $this->faker->randomElement(['USD', 'EUR', 'SAR', 'AED']),
+            'visa_fee_currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id,
             'visa_duration' => $this->faker->optional(0.8)->randomElement([30, 60, 90, 180]),
             'visa_conditions' => $this->faker->optional(0.5)->paragraph(),
             'visa_application_url' => $this->faker->optional(0.4)->url(),
@@ -86,6 +86,7 @@ class CrossingPortFactory extends Factory
             'visa_last_update' => $this->faker->optional(0.7)->dateTimeBetween('-1 year', 'now'),
 
             // Additional notes
+            'description' => $this->faker->optional(0.7)->paragraph(),
             'notes' => $this->faker->optional(0.4)->paragraph(),
         ];
     }

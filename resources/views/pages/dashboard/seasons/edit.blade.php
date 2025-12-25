@@ -22,23 +22,25 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="kt-card p-6">
-            <form class="space-y-6" method="POST" action="{{ route('seasons.update', $season->id) }}">
-                @csrf
-                @method('PUT')
+        <div class="kt-card p-4">
+            <div class="kt-card-body">
+                <form class="space-y-6" method="POST" action="{{ route('seasons.update', $season->id) }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="grid gap-4 lg:gap-6">
 
-                {{-- Basic Information --}}
-                <div class="kt-card mb-6">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
+                            {{-- accommodations-restaurants --}}
+                            <livewire:accommodations-restaurants-selects :record="$season" />
+
                             {{-- Name (English) --}}
-                            <div>
-                                <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
+                            <div class="align-self-end">
+                                <label for="name" class="kt-label mb-1">
+                                    {{ __('main.name') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ old('name', $season->name) }}">
+                                    value="{{ $season->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -48,29 +50,33 @@
                             <div>
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar', $season->name_ar) }}">
+                                    value="{{ $season->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
                             {{-- Season From --}}
-                            <div>
-                                <label for="season_from" class="kt-label mb-2">{{ __('main.season_from') }}</label>
+                            <div class="align-self-end">
+                                <label for="season_from" class="kt-label mb-1">
+                                    {{ __('main.season_from') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
                                 <input type="date" name="season_from" id="season_from" class="kt-input h-[45px]"
-                                    value="{{ old('season_from', $season->season_from?->format('Y-m-d')) }}">
+                                    value="{{ old('season_from', $season->formatted_season_from) }}">
                                 @error('season_from')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             {{-- Season To --}}
-                            <div>
-                                <label for="season_to" class="kt-label mb-2">{{ __('main.season_to') }}</label>
+                            <div class="align-self-end">
+                                <label for="season_to" class="kt-label mb-1">
+                                    {{ __('main.season_to') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
                                 <input type="date" name="season_to" id="season_to" class="kt-input h-[45px]"
-                                    value="{{ old('season_to', $season->season_to?->format('Y-m-d')) }}">
+                                    value="{{ old('season_to', $season->formatted_season_to) }}">
                                 @error('season_to')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -83,20 +89,28 @@
                             'value' => $season->description,
                         ])
 
-                        {{-- Status --}}
-                        <div class="mb-4">
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="checkbox" name="is_active" value="1" class="kt-checkbox"
-                                    {{ old('is_active', $season->is_active) ? 'checked' : '' }}>
-                                <span class="kt-label">{{ __('main.active') }}</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                        {{-- Notes --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'notes',
+                            'value' => $season->notes,
+                        ])
 
-                <!-- Save Submit Buttons -->
-                @include('components.elements.save-submit', ['models' => 'seasons'])
-            </form>
+                        <div class="flex items-center gap-3">
+                            <input type="hidden" name="is_active" value="0">
+                            @include('components.elements.checkbox-button', [
+                                'name' => 'is_active',
+                                'id' => 'is_active',
+                                'value' => '1',
+                                'checked' => $season->is_active,
+                                'label' => __('main.active'),
+                            ])
+                        </div>
+
+                        <!-- Update Submit -->
+                        @include('components.elements.update-submit', ['models' => 'seasons'])
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

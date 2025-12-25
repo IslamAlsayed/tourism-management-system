@@ -34,24 +34,22 @@
                         @method('PUT')
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            <!-- City Name (Arabic) -->
+                            <!-- City Name (English) -->
                             <div class="">
-                                <label for="name_ar"
-                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.city')]) }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ $city->name_ar }}">
-                                @error('name_ar')
+                                <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $city->name }}">
+                                @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- City Name (English) -->
+                            <!-- City Name (Arabic) -->
                             <div class="">
-                                <label for="name"
-                                    class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.city')]) }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ $city->name }}">
-                                @error('name')
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $city->name_ar }}">
+                                @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -67,10 +65,10 @@
                             </div>
 
                             {{-- Regions [region, subregion, country, state] --}}
-                            @include('components.regions.edit', [
+                            @include('components.regions.create', [
                                 'levels' => ['region', 'subregion', 'country', 'state'],
-                                'record' => $city,
                                 'multiple' => true,
+                                'record' => $city,
                             ])
 
                             <!-- Latitude -->
@@ -96,9 +94,8 @@
                             <!-- Timezone -->
                             <div class="">
                                 <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search
-                                    data-current-value="{{ $city->timezone_id }}" value="{{ $city->timezone_id }}">
-                                    <option value="">--</option>
+                                <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
+                                    <option value="" selected disabled></option>
                                     @foreach ($timezones as $zone)
                                         <option value="{{ $zone['id'] }}"
                                             {{ $city->timezone_id == $zone['id'] ? 'selected' : '' }}>
@@ -122,14 +119,40 @@
                             </div>
                         </div>
 
-                        <!-- Update Submit Buttons -->
+                        {{-- Description --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'description',
+                            'value' => $city->description,
+                        ])
+
+                        {{-- Notes --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'notes',
+                            'value' => $city->notes,
+                        ])
+
+                        <!-- Is active -->
+                        <div class="flex flex-wrap gap-10 mb-4">
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_active" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_active',
+                                    'id' => 'is_active',
+                                    'value' => '1',
+                                    'checked' => $city->is_active,
+                                    'label' => __('main.is_active'),
+                                ])
+                            </div>
+                        </div>
+
+                        <!-- Update Submit -->
                         @include('components.elements.update-submit', ['models' => 'cities'])
                     </form>
                 </div>
             </div>
 
             <!-- Quick Info -->
-            <div class="kt-card">
+            <div class="kt-card hidden">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.important_information') }}</h3>
                 </div>
@@ -176,9 +199,9 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
-                filterByForeignId("subregion_id", "country", "country_id", "edit");
-                filterByForeignId("country_id", "state", "state_id", "edit");
+                filterByForeignId("region_id", "subregion", "subregion_id");
+                filterByForeignId("subregion_id", "country", "country_id");
+                filterByForeignId("country_id", "state", "state_id");
             }, 500);
         });
     </script>

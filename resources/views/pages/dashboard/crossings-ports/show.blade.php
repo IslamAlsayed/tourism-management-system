@@ -27,57 +27,74 @@
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
 
-            {{-- Basic Information --}}
+            {{-- Crossing Port Information --}}
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
+                    <h3 class="kt-card-title">
+                        {{ __('main.type_information', ['type' => __('main.crossing_port')]) }}
+                    </h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                         @if ($crossingPort->name)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.name') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->name ?? '-' }}</p>
+                                <label class="kt-label mb-1">{{ __('main.name') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $crossingPort->name }}</p>
                             </div>
                         @endif
                         @if ($crossingPort->name_ar)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.name_ar') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->name_ar ?? '-' }}</p>
+                                <label class="kt-label mb-1">{{ __('main.name_ar') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $crossingPort->name_ar }}</p>
                             </div>
                         @endif
                         @if ($crossingPort->code)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.code') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->code ?? '-' }}</p>
+                                <label class="kt-label mb-1">{{ __('main.code') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-secondary">
+                                        {{ $crossingPort->code }}
+                                    </span>
+                                </p>
                             </div>
                         @endif
                         @if ($crossingPort->type)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.type') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->getTypeLabel() }}</p>
+                                <label class="kt-label mb-1">{{ __('main.type') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-primary">{{ $crossingPort->getTypeLabel() }}</span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($crossingPort->sort_order)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.sort_order') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $crossingPort->sort_order }}</p>
                             </div>
                         @endif
                         @if ($crossingPort->operating_hours)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.operating_hours') }}</label><br />
-                                <span class="kt-badge kt-badge-info">{{ $crossingPort->operating_hours }}</span>
+                                <label class="kt-label mb-1">{{ __('main.operating_hours') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">{{ $crossingPort->operating_hours }}</span>
+                                </p>
                             </div>
                         @endif
-
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.is_24_7') }}</label>
-                            <div class="flex items-center gap-2">
-                                @livewire('toggle-switch', [
-                                    'modelId' => $crossingPort->id,
-                                    'modelType' => '\\App\\Models\\CrossingPort',
-                                    'field' => 'is_24_7',
-                                    'value' => (bool) $crossingPort->is_24_7,
-                                    'table' => 'crossing_ports',
-                                ])
+                        @if ($crossingPort->operating_days)
+                            <div class="col-span-full">
+                                <label class="kt-label mb-2">{{ __('main.operating_days') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    @foreach ($crossingPort->operating_days as $day)
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            {{ ucfirst(str_replace('_', ' ', $day)) }}
+                                        </span>
+                                    @endforeach
+                                </p>
                             </div>
-                        </div>
-
+                        @endif
+                    </div>
+                    <div class="flex flex-wrap my-8" style="gap: 10px 40px">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
                             <div class="flex items-center gap-2">
@@ -90,7 +107,18 @@
                                 ])
                             </div>
                         </div>
-
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.is_24_7') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $crossingPort->id,
+                                    'modelType' => '\\App\\Models\\CrossingPort',
+                                    'field' => 'is_24_7',
+                                    'value' => (bool) $crossingPort->is_24_7,
+                                    'table' => 'crossing_ports',
+                                ])
+                            </div>
+                        </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.is_commercial') }}</label>
                             <div class="flex items-center gap-2">
@@ -103,7 +131,6 @@
                                 ])
                             </div>
                         </div>
-
                         <div>
                             <label class="kt-label mb-1">{{ __('main.is_passenger') }}</label>
                             <div class="flex items-center gap-2">
@@ -116,7 +143,6 @@
                                 ])
                             </div>
                         </div>
-
                         <div>
                             <label class="kt-label mb-1">{{ __('main.is_international') }}</label>
                             <div class="flex items-center gap-2">
@@ -129,7 +155,6 @@
                                 ])
                             </div>
                         </div>
-
                         <div>
                             <label class="kt-label mb-1">{{ __('main.is_major') }}</label>
                             <div class="flex items-center gap-2">
@@ -143,9 +168,16 @@
                             </div>
                         </div>
                     </div>
-
+                    @if ($crossingPort->description)
+                        <div class="col-span-full border-custom mb-4 p-3 pt-0 rounded-[9px]">
+                            <label class="kt-label mb-1">{{ __('main.description') }}</label>
+                            <div class="text-sm text-secondary-foreground prose max-w-none">
+                                {!! $crossingPort->description !!}
+                            </div>
+                        </div>
+                    @endif
                     @if ($crossingPort->notes)
-                        <div class="mt-6">
+                        <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
                             <label class="kt-label mb-1">{{ __('main.notes') }}</label>
                             <div class="text-sm text-secondary-foreground prose max-w-none">
                                 {!! $crossingPort->notes !!}
@@ -155,97 +187,79 @@
                 </div>
             </div>
 
-            {{-- Visa Information --}}
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.visa')]) }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @if ($crossingPort->visa_required)
-                            <div>
-                                <label class="font-medium text-gray-900">{{ __('main.visa_required') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->visa_required ?? '-' }}</p>
-                            </div>
-                        @endif
-                        @if ($crossingPort->visa_fee)
-                            <div>
-                                <label class="font-medium text-gray-900">{{ __('main.visa_fee') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->visa_fee ?? '-' }}</p>
-                            </div>
-                        @endif
-                        @if ($crossingPort->visa_fee_currency)
-                            <div>
-                                <label class="font-medium text-gray-900">{{ __('main.visa_fee_currency') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->visa_fee_currency ?? '-' }}</p>
-                            </div>
-                        @endif
-                        @if ($crossingPort->visa_duration)
-                            <div>
-                                <label class="font-medium text-gray-900">{{ __('main.visa_duration') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->visa_duration ?? '-' }}</p>
-                            </div>
-                        @endif
-                        @if ($crossingPort->visa_application_url)
-                            <div>
-                                <label class="font-medium text-gray-900">{{ __('main.visa_application_url') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->visa_application_url ?? '-' }}</p>
-                            </div>
-                        @endif
-                        @if ($crossingPort->visa_policy_source)
-                            <div>
-                                <label class="font-medium text-gray-900">{{ __('main.visa_policy_source') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->visa_policy_source ?? '-' }}</p>
-                            </div>
-                        @endif
-                        @if ($crossingPort->visa_last_update)
-                            <div>
-                                <label class="font-medium text-gray-900">{{ __('main.visa_last_update') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->visa_last_update ?? '-' }}</p>
-                            </div>
-                        @endif
-                        @if ($crossingPort->visa_conditions)
-                            <div class="col-span-full">
-                                <label class="font-medium text-gray-900">{{ __('main.visa_conditions') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->visa_conditions ?? '-' }}</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
             {{-- Location Information --}}
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
+                    <h3 class="kt-card-title">
+                        {{ __('main.type_information', ['type' => __('main.location')]) }}
+                    </h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="flex flex-wrap justify-between gap-10">
                         <div>
-                            <label class="font-medium text-gray-900">{{ __('main.region') }}</label>
-                            <p class="mt-1 text-gray-500">{{ $crossingPort->region?->name ?? '-' }}</p>
+                            <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                            @if ($crossingPort->region)
+                                <a href="{{ route('regions.show', $crossingPort->region->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $crossingPort->region->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
                         </div>
-
                         <div>
-                            <label class="font-medium text-gray-900">{{ __('main.country') }}</label>
-                            <p class="mt-1 text-gray-500">{{ $crossingPort->country?->name ?? '-' }}</p>
+                            <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                            @if ($crossingPort->subregion)
+                                <a href="{{ route('subregions.show', $crossingPort->subregion->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $crossingPort->subregion->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
                         </div>
-
                         <div>
-                            <label class="font-medium text-gray-900">{{ __('main.state') }}</label>
-                            <p class="mt-1 text-gray-500">{{ $crossingPort->state?->name ?? '-' }}</p>
+                            <label class="kt-label mb-1">{{ __('main.country') }}</label>
+                            @if ($crossingPort->country)
+                                <a href="{{ route('countries.show', $crossingPort->country->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $crossingPort->country->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
                         </div>
-
                         <div>
-                            <label class="font-medium text-gray-900">{{ __('main.city') }}</label>
-                            <p class="mt-1 text-gray-500">{{ $crossingPort->city?->name ?? '-' }}</p>
+                            <label class="kt-label mb-1">{{ __('main.state') }}</label>
+                            @if ($crossingPort->state)
+                                <a href="{{ route('states.show', $crossingPort->state->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $crossingPort->state->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
                         </div>
-
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.city') }}</label>
+                            @if ($crossingPort->city)
+                                <a href="{{ route('cities.show', $crossingPort->city->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $crossingPort->city->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
+                        </div>
                         <div>
                             <label class="font-medium text-gray-900">{{ __('main.coordinates') }}</label>
                             <p class="mt-1 text-gray-500">{{ $crossingPort->coordinates ?? '-' }}</p>
                         </div>
-
                         @if ($crossingPort->elevation)
                             <div>
                                 <label class="font-medium text-gray-900">{{ __('main.elevation') }}</label>
@@ -264,6 +278,119 @@
                     @endif
                 </div>
             </div>
+
+            {{-- Visa & Immigration Policies --}}
+            @if ($crossingPort->departure_tax || $crossingPort->allows_visa_on_arrival)
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.visa_immigration_policies') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            @if ($crossingPort->departure_tax)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.departure_tax') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        {{ number_format($crossingPort->departure_tax, 2) }}
+                                        {{ $crossingPort->departureTaxCurrency?->code }}
+                                    </p>
+                                </div>
+                            @endif
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.allows_visa_on_arrival') }}</label>
+                                <div class="flex items-center gap-2">
+                                    @livewire('toggle-switch', [
+                                        'modelId' => $crossingPort->id,
+                                        'modelType' => '\\App\\Models\\CrossingPort',
+                                        'field' => 'allows_visa_on_arrival',
+                                        'value' => (bool) $crossingPort->allows_visa_on_arrival,
+                                        'table' => 'crossing_ports',
+                                    ])
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            {{-- Visa Requirements --}}
+            {{-- @if ($crossingPort->visa_required || $crossingPort->visa_fee) --}}
+            @if ($crossingPort->visa_fee)
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.visa_requirements') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            {{-- <div>
+                                <label class="kt-label mb-1">{{ __('main.visa_required') }}</label>
+                                <div class="flex items-center gap-2">
+                                    @livewire('toggle-switch', [
+                                        'modelId' => $crossingPort->id,
+                                        'modelType' => '\\App\\Models\\CrossingPort',
+                                        'field' => 'visa_required',
+                                        'value' => (bool) $crossingPort->visa_required,
+                                        'table' => 'crossing_ports',
+                                    ])
+                                </div>
+                            </div> --}}
+                            @if ($crossingPort->visa_fee)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.visa_fee') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        {{ number_format($crossingPort->visa_fee, 2) }}
+                                        {{ $crossingPort->visaFeeCurrency?->code }}
+                                    </p>
+                                </div>
+                            @endif
+                            @if ($crossingPort->visa_duration)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.visa_duration') }}</label>
+                                    <p class="text-sm text-secondary-foreground">{{ $crossingPort->visa_duration }}
+                                        {{ __('main.days') }}</p>
+                                </div>
+                            @endif
+                            @if ($crossingPort->visa_application_url)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.visa_application_url') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        <a href="{{ $crossingPort->visa_application_url }}" target="_blank"
+                                            class="text-blue-600 hover:underline">
+                                            {{ $crossingPort->visa_application_url }}
+                                        </a>
+                                    </p>
+                                </div>
+                            @endif
+                            @if ($crossingPort->visa_policy_source)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.visa_policy_source') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        <a href="{{ $crossingPort->visa_policy_source }}" target="_blank"
+                                            class="text-blue-600 hover:underline">
+                                            {{ __('main.view_source') }}
+                                        </a>
+                                    </p>
+                                </div>
+                            @endif
+                            @if ($crossingPort->visa_last_update)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.visa_last_update') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        {{ $crossingPort->visa_last_update->format('Y-m-d') }}</p>
+                                </div>
+                            @endif
+                        </div>
+                        @if ($crossingPort->visa_conditions)
+                            <div class="mt-6">
+                                <label class="kt-label mb-1">{{ __('main.visa_conditions') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $crossingPort->visa_conditions !!}
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endif
 
             {{-- Operating Information --}}
             <div class="kt-card hidden">
@@ -335,44 +462,42 @@
             </div>
 
             {{-- Contact Information --}}
-            @if ($crossingPort->phone || $crossingPort->email || $crossingPort->website)
+            @if ($crossingPort->contact_phone || $crossingPort->email || $crossingPort->website)
                 <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            @if ($crossingPort->phone)
-                                <div>
-                                    <label class="font-medium text-gray-900">{{ __('main.phone') }}</label>
-                                    <p class="mt-1 text-gray-500">
-                                        <a href="tel:{{ $crossingPort->phone }}"
-                                            class="text-blue-600 hover:text-blue-800">
-                                            {{ $crossingPort->phone }}
-                                        </a>
-                                    </p>
-                                </div>
-                            @endif
-
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             @if ($crossingPort->email)
                                 <div>
-                                    <label class="font-medium text-gray-900">{{ __('main.email') }}</label>
-                                    <p class="mt-1 text-gray-500">
+                                    <label class="kt-label mb-1">{{ __('main.email') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
                                         <a href="mailto:{{ $crossingPort->email }}"
-                                            class="text-blue-600 hover:text-blue-800">
+                                            class="text-blue-600 hover:underline">
                                             {{ $crossingPort->email }}
                                         </a>
                                     </p>
                                 </div>
                             @endif
-
+                            @if ($crossingPort->contact_phone)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.contact_phone') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        <a href="tel:{{ $crossingPort->contact_phone }}"
+                                            class="text-blue-600 hover:underline">
+                                            {{ $crossingPort->contact_phone }}
+                                        </a>
+                                    </p>
+                                </div>
+                            @endif
                             @if ($crossingPort->website)
                                 <div>
-                                    <label class="font-medium text-gray-900">{{ __('main.website') }}</label>
-                                    <p class="mt-1 text-gray-500">
+                                    <label class="kt-label mb-1">{{ __('main.website') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
                                         <a href="{{ $crossingPort->website }}" target="_blank"
-                                            class="text-blue-600 hover:text-blue-800">
-                                            {{ $crossingPort->website }} <i class="fas fa-external-link-alt text-xs"></i>
+                                            class="text-blue-600 hover:underline">
+                                            {{ $crossingPort->website }}
                                         </a>
                                     </p>
                                 </div>
@@ -382,80 +507,36 @@
                 </div>
             @endif
 
-            {{-- Additional Information --}}
-            @if (
-                $crossingPort->notes ||
-                    $crossingPort->notes_ar ||
-                    $crossingPort->customs_office ||
-                    $crossingPort->immigration_office)
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.additional_information') }}</h3>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            @if ($crossingPort->customs_office)
-                                <div>
-                                    <label class="font-medium text-gray-900">{{ __('main.customs_office') }}</label>
-                                    <p class="mt-1 text-gray-500">{{ $crossingPort->customs_office }}</p>
-                                </div>
-                            @endif
-
-                            @if ($crossingPort->immigration_office)
-                                <div>
-                                    <label class="font-medium text-gray-900">{{ __('main.immigration_office') }}</label>
-                                    <p class="mt-1 text-gray-500">{{ $crossingPort->immigration_office }}</p>
-                                </div>
-                            @endif
-
-                            @if ($crossingPort->notes)
-                                <div class="col-span-full">
-                                    <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                    <div class="text-sm text-secondary-foreground prose max-w-none">
-                                        {!! $crossingPort->notes !!}
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if ($crossingPort->notes_ar)
-                                <div class="col-span-full">
-                                    <label class="kt-label mb-1">{{ __('main.notes_ar') }}</label>
-                                    <div class="text-sm text-secondary-foreground prose max-w-none">
-                                        {!! $crossingPort->notes_ar !!}
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            @endif
-
-            {{-- System Information --}}
+            <!-- Metadata -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.system_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
                         @if ($crossingPort->creator)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.created_by') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->creator->name }}</p>
+                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $crossingPort->creator->name }}</p>
                             </div>
                         @endif
                         <div>
-                            <label class="font-medium text-gray-900">{{ __('main.created_at') }}</label>
-                            <p class="mt-1 text-gray-500">{{ $crossingPort->created_at->format('Y-m-d H:i:s') }}</p>
+                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $crossingPort->created_at?->format('Y-m-d H:i:s') }}
+                            </p>
                         </div>
                         @if ($crossingPort->updater)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.updated_by') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->updater->name }}</p>
+                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $crossingPort->updater->name }}</p>
                             </div>
                         @endif
                         <div>
-                            <label class="font-medium text-gray-900">{{ __('main.updated_at') }}</label>
-                            <p class="mt-1 text-gray-500">{{ $crossingPort->updated_at->format('Y-m-d H:i:s') }}</p>
+                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $crossingPort->updated_at?->format('Y-m-d H:i:s') }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -467,11 +548,9 @@
                     'models' => 'crossings-ports',
                     'id' => $crossingPort->id,
                 ])
-                @livewire('delete-bottom', [
-                    'type' => 'crossings-port',
-                    'modelId' => $crossingPort->id,
-                    'modelType' => '\\App\\Models\\CrossingsPort',
-                    'table' => 'crossings_ports',
+                @include('components.elements.delete-form', [
+                    'model' => 'crossings-ports',
+                    'id' => $crossingPort->id,
                 ])
                 <a href="{{ route('crossings-ports.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.crossings_ports')]) }}

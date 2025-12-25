@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
                     {{ __('main.create_type', ['type' => __('main.accommodation')]) }}
@@ -24,15 +24,45 @@
     <div class="kt-container-fixed">
         <form action="{{ route('accommodations.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="grid gap-4 lg:gap-6">
 
+            {{-- Accommodation Photo --}}
+            @include('components.input-image', [
+                'column' => 'accommodation',
+                'columnName' => 'photo',
+            ])
+
+            <div class="grid gap-4 lg:gap-6">
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
+                        <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.location')]) }}
+                        </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            {{-- Regions [region, subregion, country, state, city] --}}
+                            @include('components.regions.create', [
+                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                                'multiple' => false,
+                            ])
+
+                            <!-- Timezone -->
+                            <div class="align-self-end">
+                                <label for="timezone_id" class="kt-label">{{ __('main.timezone') }}</label>
+                                <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
+                                    <option value="" disabled selected></option>
+                                    @foreach ($timezones as $zone)
+                                        <option value="{{ $zone['id'] }}"
+                                            {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
+                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('timezone_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Currency -->
                             <div class="align-self-end">
                                 <label for="currency_id" class="kt-label flex items-center justify-between mb-2">
@@ -55,14 +85,6 @@
                                 @enderror
                             </div>
 
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.create', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                            ])
-                        </div>
-
-                        <div class="grid lg:grid-cols-3 gap-6">
                             <!-- Street Address -->
                             <div class="align-self-end">
                                 <label for="street" class="kt-label">Street Address</label>
@@ -92,46 +114,18 @@
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <!-- Timezone -->
-                            <div class="align-self-end">
-                                <label for="timezone_id" class="kt-label">{{ __('main.timezone') }}</label>
-                                <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
-                                    <option value="" disabled selected></option>
-                                    @foreach ($timezones as $zone)
-                                        <option value="{{ $zone['id'] }}"
-                                            {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
-                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('timezone_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Seasons Information --}}
-                <livewire:accommodations.season-form />
-
-                {{-- Rooms Information --}}
-                <livewire:accommodations.room-form />
-
-                {{-- Meals Information --}}
-                <livewire:accommodations.meal-form />
-
-                {{-- Supplements Information --}}
-                <livewire:accommodations.supplement-form />
-
                 <!-- Accommodation Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.accommodation')]) }}
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.accommodation')]) }}
                         </h3>
                     </div>
-                    <div class="kt-card-body p-4 pb-0">
+                    <div class="kt-card-body p-4">
                         <div class="grid lg:grid-cols-2 gap-6 items-end mb-4">
                             <!-- Name -->
                             <div class="align-self-end">
@@ -196,11 +190,10 @@
                                 <label for="stars" class="kt-label mb-2">{{ __('main.star_rating') }}</label>
                                 <select name="stars" id="stars" class="kt-select basic-single">
                                     <option value="" disabled selected></option>
-                                    <option value="1" {{ old('stars') == 1 ? 'selected' : '' }}>1 Star</option>
-                                    <option value="2" {{ old('stars') == 2 ? 'selected' : '' }}>2 Stars</option>
-                                    <option value="3" {{ old('stars') == 3 ? 'selected' : '' }}>3 Stars</option>
-                                    <option value="4" {{ old('stars') == 4 ? 'selected' : '' }}>4 Stars</option>
-                                    <option value="5" {{ old('stars') == 5 ? 'selected' : '' }}>5 Stars</option>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <option value="{{ $i }}" {{ old('stars') == $i ? 'selected' : '' }}>
+                                            {{ $i . ' ' . ($i > 1 ? __('main.stars') : __('main.star')) }}</option>
+                                    @endfor
                                 </select>
                                 @error('stars')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -208,7 +201,14 @@
                             </div>
                         </div>
 
-                        {{-- notes --}}
+                        {{-- Description --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'description',
+                            'value' => old('description'),
+                            'classes' => 'mb-4',
+                        ])
+
+                        {{-- Notes --}}
                         @include('components.elements.input-text-editor', [
                             'name' => 'notes',
                             'value' => old('notes'),
@@ -219,7 +219,9 @@
                 <!-- Contact Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">Contact Information</h3>
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.contact')]) }}
+                        </h3>
                     </div>
                     <div class="kt-card-body p-4">
                         <div class="grid lg:grid-cols-2 gap-6 items-end mb-4">
@@ -317,24 +319,32 @@
                     </div>
                 </div>
 
-                <div>
-                    {{-- Additional Settings --}}
-                    <label class="kt-label mb-2">{{ __('main.additional_settings') }}</label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                        <div class="flex items-center gap-3">
-                            <input type="hidden" name="is_active" value="0">
-                            @include('components.elements.checkbox-button', [
-                                'name' => 'is_active',
-                                'id' => 'is_active',
-                                'value' => '1',
-                                'checked' => 1,
-                                'label' => __('main.active'),
-                            ])
-                        </div>
+                <div class="flex flex-wrap" style="gap: 10px 40px;">
+                    <div class="flex items-center gap-3">
+                        <input type="hidden" name="is_active" value="0">
+                        @include('components.elements.checkbox-button', [
+                            'name' => 'is_active',
+                            'id' => 'is_active',
+                            'value' => '1',
+                            'checked' => 1,
+                            'label' => __('main.active'),
+                        ])
                     </div>
                 </div>
 
-                {{-- Submit Buttons --}}
+                {{-- Seasons Information --}}
+                <livewire:morphic-forms.season-form />
+
+                {{-- Rooms Information --}}
+                <livewire:morphic-forms.room-form />
+
+                {{-- Meals Information --}}
+                <livewire:morphic-forms.meal-form />
+
+                {{-- Supplements Information --}}
+                <livewire:morphic-forms.supplement-form />
+
+                {{-- Save Buttons --}}
                 @include('components.elements.save-submit', ['models' => 'accommodations'])
             </div>
         </form>

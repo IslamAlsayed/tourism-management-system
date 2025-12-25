@@ -106,11 +106,9 @@
                     'models' => 'currencies',
                     'id' => $currency->id,
                 ])
-                @livewire('delete-bottom', [
-                    'type' => 'currency',
-                    'modelId' => $currency->id,
-                    'modelType' => '\\App\\Models\\Currency',
-                    'table' => 'currencies',
+                @include('components.elements.delete-form', [
+                    'model' => 'currencies',
+                    'id' => $currency->id,
                 ])
                 <a href="{{ route('currencies.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.currencies')]) }}

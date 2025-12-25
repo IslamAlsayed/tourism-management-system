@@ -14,7 +14,8 @@ class Season extends Model
     use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
-        'notes',
+        'description',
+        'notes'
     ];
 
     protected $fillable = [
@@ -24,9 +25,11 @@ class Season extends Model
         'name_ar',
         'season_from',
         'season_to',
-        'accommodation_id',
+        'model_type',
         'is_active',
+        'description',
         'notes',
+        'model_id',
     ];
 
     protected $casts = [
@@ -37,13 +40,14 @@ class Season extends Model
 
     public function getRelationshipNames()
     {
-        return ['accommodations'];
+        return ['model'];
     }
 
     public function getExcludedColumns()
     {
-        return ['accommodation_id'];
+        return ['model_id'];
     }
+
 
     public function getFormattedSeasonFromAttribute()
     {
@@ -55,23 +59,8 @@ class Season extends Model
         return $this->season_to ? \Carbon\Carbon::parse($this->season_to)->format('Y-m-d') : null;
     }
 
-    public function accommodations()
+    public function model()
     {
-        return $this->belongsToMany(Accommodation::class, 'accommodation_seasons')->withTimestamps()->withPivot('notes');
-    }
-
-    public function roomRates()
-    {
-        return $this->hasMany(AccommodationRoomRate::class);
-    }
-
-    public function mealRates()
-    {
-        return $this->hasMany(AccommodationMealRate::class);
-    }
-
-    public function nationalityRates()
-    {
-        return $this->hasMany(AccommodationNationalityRate::class);
+        return $this->morphTo();
     }
 }

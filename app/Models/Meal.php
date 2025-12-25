@@ -14,6 +14,7 @@ class Meal extends Model
     use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
+        'description',
         'notes',
     ];
 
@@ -22,9 +23,15 @@ class Meal extends Model
         'uuid',
         'name',
         'name_ar',
+        'price',
         'is_included',
+        'is_supplement',
+        'model_type',
         'is_active',
+        'description',
         'notes',
+        'model_id',
+        'currency_id',
     ];
 
     protected $casts = [
@@ -32,8 +39,23 @@ class Meal extends Model
         'is_active' => 'boolean',
     ];
 
-    public function mealRates()
+    public function getRelationshipNames()
     {
-        return $this->hasMany(AccommodationMealRate::class);
+        return ['model', 'currency'];
+    }
+
+    public function getExcludedColumns()
+    {
+        return ['model_id', 'currency_id'];
+    }
+
+    public function model()
+    {
+        return $this->morphTo();
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 }

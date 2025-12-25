@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RichText;
 use App\Models\CrossingPort;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,7 @@ class CrossingPortSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
+        RichText::truncate();
         CrossingPort::truncate();
         Schema::enableForeignKeyConstraints();
 
@@ -53,7 +55,7 @@ class CrossingPortSeeder extends Seeder
                 'is_major' => true,
                 'allows_visa_on_arrival' => true,
                 'departure_tax' => 75.00,
-                'departure_tax_currency' => 'SAR',
+                'departure_tax_currency_id' => \App\Models\Currency::where('code', 'SAR')->first()?->id,
                 'contact_phone' => '+966 11 221 1000',
                 'website' => 'https://www.riyadhairport.com',
                 'visa_required' => false,
@@ -82,7 +84,7 @@ class CrossingPortSeeder extends Seeder
                 'is_major' => true,
                 'allows_visa_on_arrival' => true,
                 'departure_tax' => 75.00,
-                'departure_tax_currency' => 'SAR',
+                'departure_tax_currency_id' => \App\Models\Currency::where('code', 'SAR')->first()?->id,
                 'contact_phone' => '+966 12 684 2222',
                 'website' => 'https://www.jeddahairport.com',
                 'visa_required' => false,

@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Timezone;
 use App\Models\User;
+use App\Models\RichText;
+use App\Models\Timezone;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -12,6 +13,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
+        RichText::truncate();
         User::truncate();
         Schema::enableForeignKeyConstraints();
 
@@ -31,7 +33,7 @@ class UserSeeder extends Seeder
             'department' => 'Administration',
             'position' => 'HR Manager',
             'is_admin' => 1,
-            'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id,
+            'timezone_id' => 2,
             'photo' => 'uploads/users/1/Ak5G29KHP54dNf7PG7syIhE8YUck4yRRPAyJbrNS.png',
         ]);
 
@@ -49,7 +51,7 @@ class UserSeeder extends Seeder
             'department' => 'Development',
             'position' => 'Senior Developer',
             'is_admin' => 1,
-            'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id,
+            'timezone_id' => 1,
             'photo' => 'uploads/users/2/2W7uER2vMWn6Eeec8NJgGgYfoYw1eSrV64ZfyM7FC96.png',
         ]);
 
@@ -62,7 +64,7 @@ class UserSeeder extends Seeder
             'address' => 'القاهرة، مصر',
             'department' => 'Users',
             'position' => 'User',
-            'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id,
+            'timezone_id' => 3,
             'photo' => 'uploads/users/3/fhjdy2WvMWn6E8NJgGgYfoYw1eSrV64ZfyM7FC96.png',
         ]);
     }

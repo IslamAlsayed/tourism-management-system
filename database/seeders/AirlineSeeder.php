@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Airline;
+use App\Models\RichText;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
 class AirlineSeeder extends Seeder
@@ -14,6 +15,7 @@ class AirlineSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
+        RichText::truncate();
         Airline::truncate();
         Schema::enableForeignKeyConstraints();
 

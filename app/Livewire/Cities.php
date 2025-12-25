@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\City;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Traits\CustomColumns;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\WithSorting;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
@@ -13,7 +13,7 @@ use App\Traits\ExportsData;
 
 class Cities extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $totalCount = '';
@@ -95,9 +95,6 @@ class Cities extends Component
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
-        foreach ($data as $city) {
-            $city['states'] = $city->states();
-        }
         return view('livewire.cities', ['data' => $data, 'totalCount' => $this->totalCount ?: City::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

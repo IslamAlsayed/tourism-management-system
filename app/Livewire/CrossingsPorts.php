@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\CrossingPort;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Traits\CustomColumns;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\WithSorting;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
@@ -13,14 +13,14 @@ use App\Traits\ExportsData;
 
 class CrossingsPorts extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $totalCount = '';
     public $message = [];
     public $filterType = '';
-    public $filterStatus = '';
-    public $filterOperational = '';
+    public $filterIsActive = '';
+    public $filterOperatingDays = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
@@ -33,12 +33,12 @@ class CrossingsPorts extends Component
         $this->resetPage();
     }
 
-    public function updatingFilterStatus()
+    public function updatingFilterIsActive()
     {
         $this->resetPage();
     }
 
-    public function updatingFilterOperational()
+    public function updatingFilterOperatingDays()
     {
         $this->resetPage();
     }
@@ -109,7 +109,8 @@ class CrossingsPorts extends Component
 
     public function resetFilters()
     {
-        $this->reset(['search', 'filterType', 'filterStatus', 'filterOperational']);
+        $this->reset(['search', 'filterType', 'filterIsActive', 'filterOperatingDays']);
+        $this->resetSort();
         $this->resetPage();
         $this->dispatch('reset-filters');
     }
@@ -122,11 +123,20 @@ class CrossingsPorts extends Component
         if ($this->filterType && $this->filterType !== 'all') {
             $query->where('type', $this->filterType);
         }
-        if ($this->filterStatus && $this->filterStatus !== 'all') {
-            $query->where('is_active', $this->filterStatus === 'active' ? true : false);
+        if ($this->filterIsActive && $this->filterIsActive !== 'all') {
+            $query->where('is_active', $this->filterIsActive === 'active' ? true : false);
         }
-        if ($this->filterOperational && $this->filterOperational !== 'all') {
-            $query->where('is_operational', $this->filterOperational === '1' ? true : false);
+        if ($this->filterOperatingDays && $this->filterOperatingDays !== 'all') {
+            $day = is_array($this->filterOperatingDays)
+                ? ($this->filterOperatingDays['payload']['value'] ?? $this->filterOperatingDays)
+                : $this->filterOperatingDays;
+
+            if ($day && $day !== 'all') {
+                $query->where(function ($q) use ($day) {
+                    $q->whereJsonContains('operating_days', $day)
+                        ->orWhereRaw("JSON_SEARCH(operating_days, 'one', ?) IS NOT NULL", [$day]);
+                });
+            }
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

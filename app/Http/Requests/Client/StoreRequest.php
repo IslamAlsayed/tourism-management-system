@@ -25,6 +25,7 @@ class StoreRequest extends FormRequest
             'client_code' => ['required', 'string', 'max:50', 'unique:clients,client_code'],
 
             // Location information
+            'currency_id' => ['nullable', 'exists:currencies,id'],
             'timezone_id' => ['nullable', 'exists:timezones,id'],
             'region_id' => ['nullable', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'exists:subregions,id'],
@@ -34,7 +35,6 @@ class StoreRequest extends FormRequest
             'city_id' => ['nullable'],
             'city_id.*' => ['exists:cities,id'],
             'nationality_id' => ['nullable', 'exists:nationalities,id'],
-            'currency' => ['nullable', 'string', 'max:3'],
 
             // Personal name information
             'first_name' => ['required', 'string', 'max:140'],
@@ -87,64 +87,9 @@ class StoreRequest extends FormRequest
             'linkedin_url' => ['nullable', 'url', 'max:255'],
 
             // Status and preferences
-            'status' => ['nullable', 'in:active,inactive,pending,blacklisted'],
+            'client_status' => ['nullable', 'in:active,inactive,pending,blacklisted'],
             'is_active' => 'nullable|boolean',
             'notes' => ['nullable', 'string', 'max:1400'],
-        ];
-    }
-
-    /**
-     * Get custom attributes for validator errors.
-     */
-    public function attributes(): array
-    {
-        return [
-            'timezone_id' => __('main.timezone'),
-            'region_id' => __('main.region'),
-            'subregion_id' => __('main.subregion'),
-            'country_id' => __('main.country'),
-            'state_id' => __('main.state'),
-            'city_id' => __('main.city'),
-            'nationality_id' => __('main.nationality'),
-            'currency' => __('main.currency'),
-            'first_name' => __('main.first_name'),
-            'middle_name' => __('main.middle_name'),
-            'gf_name' => __('main.gf_name'),
-            'last_name' => __('main.last_name'),
-            'gender' => __('main.gender'),
-            'birth_date' => __('main.birth_date'),
-            'passport_number' => __('main.passport_number'),
-            'passport_issue_date' => __('main.passport_issue_date'),
-            'passport_expiry_date' => __('main.passport_expiry_date'),
-            'personal_email' => __('main.personal_email'),
-            'email_primary' => __('main.email_primary'),
-            'work_email' => __('main.work_email'),
-            'secondary_email' => __('main.secondary_email'),
-            'primary_phone' => __('main.primary_phone'),
-            'secondary_phone' => __('main.secondary_phone'),
-            'mobile' => __('main.mobile_phone'),
-            'home_phone' => __('main.home_phone'),
-            'work_phone' => __('main.work_phone'),
-            'work_phone_ext' => __('main.work_phone_ext'),
-            'fax_number' => __('main.fax_number'),
-            'whatsapp' => __('main.whatsapp'),
-            'company_name' => __('main.company_name'),
-            'company_phone' => __('main.company_phone'),
-            'company_email' => __('main.company_email'),
-            'job_title' => __('main.job_title'),
-            'sector' => __('main.sector'),
-            'department' => __('main.department'),
-            'business_type' => __('main.business_type'),
-            'business_registration_number' => __('main.business_registration_number'),
-            'tax_id' => __('main.tax_id'),
-            'box' => __('main.box'),
-            'postal_code' => __('main.postal_code'),
-            'street_address' => __('main.street_address'),
-            'address_line_2' => __('main.address_line_2'),
-            'website_url' => __('main.website_url'),
-            'linkedin_url' => __('main.linkedin_url'),
-            'status' => __('main.status'),
-            'notes' => __('main.notes'),
         ];
     }
 }

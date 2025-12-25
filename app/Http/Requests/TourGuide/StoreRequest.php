@@ -23,30 +23,28 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
+
+            'currency_id' => ['nullable', 'exists:currencies,id'],
+            'guide_type_id' => ['required', 'exists:tour_guide_types,id'],
+            'region_id' => ['nullable', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'exists:countries,id'],
+
+            'state_id' => ['nullable', 'array'],
+            'city_id' => ['nullable', 'array'],
+
+            'language_id' => ['nullable'],
+            'language_id.*' => ['integer', 'exists:languages,id'],
+
             'email' => ['required', 'email', 'max:255', 'unique:tour_guides,email'],
             'mobile_01' => ['required', 'string', 'max:20'],
-            'gender' => ['required', 'in:male,female'],
-            'guide_type_id' => ['required', 'exists:tour_guide_types,id'],
-            'country_id' => ['required', 'exists:countries,id'],
-
-            'name_ar' => ['nullable', 'string', 'max:255'],
             'mobile_02' => ['nullable', 'string', 'max:20'],
             'home_city' => ['nullable', 'string', 'max:255'],
             'birth_year' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
             'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
+            'gender' => ['required', 'in:male,female'],
             'national_guide_id' => ['nullable', 'string', 'max:100'],
-            'currency_id' => ['nullable', 'exists:currencies,id'],
-            'languages_ids' => ['nullable', 'array'],
-            'languages_ids.*' => ['exists:languages,id'],
-
-            'region_id' => ['nullable', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'exists:subregions,id'],
-
-            'state_id' => ['nullable', 'array'],
-            'state_id.*' => ['integer', 'exists:states,id'],
-
-            'city_id' => ['nullable', 'array'],
-            'city_id.*' => ['integer', 'exists:cities,id'],
 
             'tourism_ministry_code' => ['nullable', 'string', 'max:100'],
             'fd_day_fees' => ['nullable', 'numeric', 'min:0'],
@@ -54,6 +52,7 @@ class StoreRequest extends FormRequest
             'extra_fees_1' => ['nullable', 'numeric', 'min:0'],
             'extra_fees_2' => ['nullable', 'numeric', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
+            'description' => ['nullable', 'string', 'max:1000'],
             'notes' => ['nullable', 'string', 'max:1000']
         ];
     }

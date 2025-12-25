@@ -6,8 +6,8 @@ use App\Models\State;
 use App\Models\Region;
 use App\Models\Timezone;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\States\StateCreateRequest;
-use App\Http\Requests\States\StateUpdateRequest;
+use App\Http\Requests\State\StoreRequest;
+use App\Http\Requests\State\UpdateRequest;
 
 class StateController extends Controller
 {
@@ -23,7 +23,7 @@ class StateController extends Controller
         return view('pages.dashboard.states.create', compact('regions', 'timezones'));
     }
 
-    public function store(StateCreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $validated = $request->validated();
         if ($request['state_id']) {
@@ -44,7 +44,7 @@ class StateController extends Controller
 
     public function show($id)
     {
-        $state = State::with(['region', 'subregion', 'country', 'timezone'])->find($id);
+        $state = State::with(['timezone', 'region', 'subregion', 'country', 'cities'])->find($id);
         if (!$state) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         }
@@ -62,7 +62,7 @@ class StateController extends Controller
         return view('pages.dashboard.states.edit', compact('state', 'regions', 'timezones'));
     }
 
-    public function update(StateUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $state = State::find($id);
         if (!$state) {
@@ -80,5 +80,19 @@ class StateController extends Controller
             return redirect()->route('states.index')->withSuccess(__('messages.type_updated', ['type' => __('main.state')]));
         }
         return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.state')]));
+    }
+
+
+    public function destroy($id)
+    {
+        $state = State::find($id);
+        if (!$state) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
+        }
+        $deleted = $state->delete();
+        if ($deleted) {
+            return redirect()->route('states.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.state')]));
+        }
+        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.state')]));
     }
 }

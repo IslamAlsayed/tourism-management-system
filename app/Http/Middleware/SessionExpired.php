@@ -15,6 +15,8 @@ class SessionExpired
         $loginTime = Session::get('login_time');
         $lifetime = config('session.lifetime') * 60;
         if ($loginTime && (time() - $loginTime > $lifetime)) {
+            // Save the intended URL before logout
+            $intendedUrl = $request->fullUrl();
             Session::forget(['login_time', 'login_attempted']);
             $user = getActiveUser();
             if ($user) {
@@ -30,6 +32,7 @@ class SessionExpired
             }
             Auth::logout();
             Session::put('session_expired', true);
+            Session::put('url.intended', $intendedUrl);
             // Redirect with token in URL
             return redirect()->route('session.expired');
         }

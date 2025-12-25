@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
-use App\Traits\BroadcastsRecordEvents;
-use App\Traits\FiltersByUserRole;
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
+use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Country extends Model
 {
-    use HasSearch, HasUuid, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasSearch, HasRichText, HasUuid, FiltersByUserRole, BroadcastsRecordEvents;
+    protected $richTextAttributes = [
+        'description',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',
@@ -33,6 +38,8 @@ class Country extends Model
         'is_independent',
         'is_developed',
         'is_landlocked',
+        'description',
+        'notes',
         'timezone_id',
         'language_id',
         'currency_id',
@@ -45,7 +52,7 @@ class Country extends Model
      */
     public function getRelationshipNames()
     {
-        return ['timezone', 'language', 'currency', 'region', 'subregion'];
+        return ['timezone', 'language', 'currency', 'region', 'subregion', 'states', 'cities'];
     }
 
     /**

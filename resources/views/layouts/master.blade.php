@@ -44,44 +44,6 @@
 
     <!-- Scripts -->
     @livewireScripts
-
-    <script>
-        // Listen for toast events from Livewire components
-        // document.addEventListener('livewire:init', () => {
-        //     Livewire.on('show-toast', (event) => {
-        //         const data = event[0] || event;
-        //         const type = data.type || 'info';
-        //         const message = data.message || 'Action completed';
-
-        //         // Use existing showToast system
-        //         if (typeof window.showToast === 'function') {
-        //             window.showToast({
-        //                 type: type,
-        //                 title: type === 'success' ? '{{ __('main.success') }}' : '{{ __('main.error') }}',
-        //                 message: message
-        //             });
-        //         } else {
-        //             alert(message);
-        //         }
-        //     });
-
-        //     // Listen for toggle loading events
-        //     Livewire.on('toggle-loading-start', () => {
-        //         const tableContent = document.querySelector('.kt-card-content');
-        //         if (tableContent) {
-        //             tableContent.classList.add('loading');
-        //         }
-        //     });
-
-        //     Livewire.on('toggle-loading-end', () => {
-        //         const tableContent = document.querySelector('.kt-card-content');
-        //         if (tableContent) {
-        //             tableContent.classList.remove('loading');
-        //         }
-        //     });
-        // });
-    </script>
-
     @include('layouts.partials.scripts')
 </body>
 

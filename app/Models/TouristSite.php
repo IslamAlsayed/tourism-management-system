@@ -14,8 +14,8 @@ class TouristSite extends Model
     use HasSearch, HasUuid, HasRichText, HasFactory;
 
     protected $richTextAttributes = [
+        'address',
         'description',
-        'description_ar',
         'notes',
     ];
 
@@ -28,12 +28,11 @@ class TouristSite extends Model
         // Basic Information
         'name',
         'name_ar',
-        'description',
-        'description_ar',
         'site_type',
         'category',
 
         // Location Information
+        'currency_id',
         'region_id',
         'subregion_id',
         'country_id',
@@ -42,7 +41,6 @@ class TouristSite extends Model
 
         // Geographical Details
         'address',
-        'address_ar',
         'latitude',
         'longitude',
         'postal_code',
@@ -53,7 +51,6 @@ class TouristSite extends Model
         'entry_fee_student',
         'entry_fee_senior',
         'entry_fee_group',
-        'currency',
         'is_free_entry',
 
         // Operating Hours
@@ -64,6 +61,7 @@ class TouristSite extends Model
         'is_24_hours',
 
         // Contact Information
+        'phone',
         'mobile',
         'email',
         'website_url',
@@ -99,12 +97,17 @@ class TouristSite extends Model
         'mobile_app',
         'virtual_tours',
 
+        // Accessibility & Amenities
+        'has_parking',
+        'has_restaurant',
+        'has_gift_shop',
+        'has_restrooms',
+
         // Media & Resources
-        'phone',
-        // 'main_image',
-        // 'gallery_images',
-        // 'video_url',
-        // 'virtual_tour_url',
+        'main_image',
+        'gallery_images',
+        'video_url',
+        'virtual_tour_url',
 
         // Ratings & Reviews
         'average_rating',
@@ -119,8 +122,10 @@ class TouristSite extends Model
 
         // Administrative
         'status',
+        'is_active',
         'is_featured',
         'is_verified',
+        'description',
         'notes',
         'tags',
 
@@ -131,20 +136,17 @@ class TouristSite extends Model
 
     public function getRelationshipNames()
     {
-        return ['region', 'subregion', 'country', 'state', 'city'];
+        return ['currency', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
     {
-        return ['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
     protected $casts = [
         'operating_days' => 'array',
         'special_hours' => 'array',
-        'facilities' => 'array',
-        'activities' => 'array',
-        'services' => 'array',
         'gallery_images' => 'array',
         'age_restrictions' => 'array',
         'best_visit_time' => 'array',
@@ -156,6 +158,28 @@ class TouristSite extends Model
         'has_gift_shop' => 'boolean',
         'has_restrooms' => 'boolean',
         'wheelchair_accessible' => 'boolean',
+        'free_wifi' => 'boolean',
+        'parking' => 'boolean',
+        'restrooms' => 'boolean',
+        'restaurants' => 'boolean',
+        'gift_shop' => 'boolean',
+        'guided_tours' => 'boolean',
+        'audio_guide' => 'boolean',
+        'photography' => 'boolean',
+        'hiking' => 'boolean',
+        'swimming' => 'boolean',
+        'camping' => 'boolean',
+        'shopping' => 'boolean',
+        'dining' => 'boolean',
+        'entertainment' => 'boolean',
+        'educational_tours' => 'boolean',
+        'translation' => 'boolean',
+        'special_events' => 'boolean',
+        'group_bookings' => 'boolean',
+        'online_booking' => 'boolean',
+        'mobile_app' => 'boolean',
+        'virtual_tours' => 'boolean',
+        'is_active' => 'boolean',
         'is_featured' => 'boolean',
         'is_verified' => 'boolean',
         'entry_fee_adult' => 'decimal:2',
@@ -208,6 +232,11 @@ class TouristSite extends Model
      */
 
     // Location relationships
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+
     public function region()
     {
         return $this->belongsTo(Region::class);

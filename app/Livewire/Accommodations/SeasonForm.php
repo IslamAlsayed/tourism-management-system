@@ -18,8 +18,8 @@ class SeasonForm extends Component
         // dd($this->accommodation->toArray());
 
         // If editing and has existing seasons, load them
-        if ($accommodation && $accommodation->roomRates()->exists()) {
-            $existingSeasons = $accommodation->roomRates()
+        if ($accommodation && $accommodation->rooms()->exists()) {
+            $existingSeasons = $accommodation->rooms()
                 ->with('season')
                 ->get()
                 ->pluck('season')

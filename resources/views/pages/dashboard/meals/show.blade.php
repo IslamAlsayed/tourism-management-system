@@ -87,100 +87,215 @@
                 </div>
             </div>
 
-            <!-- Meal rates -->
-            <div class="kt-card">
+
+            <!-- Accommodations -->
+            <div class="kt-card record-accommodations-{{ $meal->accommodation->id }}">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.meal_rates') }}</h3>
-                    <div class="kt-card-toolbar">
-                        <a href="{{ route('accommodations-rates.create-meal') }}" class="kt-btn kt-btn-sm kt-btn-primary">
-                            <i class="ki-filled ki-plus text-sm me-1"></i>
-                            {{ __('main.add_type', ['type' => __('main.meal_rates')]) }}
-                        </a>
-                    </div>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.accommodation')]) }}</h3>
                 </div>
-                <div class="kt-card-body p-4" wire:ignore>
-                    <div class="grid lg:grid-cols-2 gap-4">
-                        @forelse($meal->mealRates as $mealRate)
-                            <div wire:key="mealRate-{{ $mealRate->id }}" class="kt-card bg-gray-50 rounded-lg p-4 pt-2">
-                                <div class="grid lg:grid-cols-2 gap-4">
+                <div class="kt-card-body p-4">
+                    <div wire:key="accommodation-{{ $meal->accommodation->id }}">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.name') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $meal->accommodation->name ?: __('main.na') }}</p>
+                            </div>
+                            @if ($meal->accommodation->name_ar)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.name_ar') }}</label>
+                                    <p class="text-sm text-secondary-foreground">{{ $meal->accommodation->name_ar }}
+                                    </p>
+                                </div>
+                            @endif
+                            @if ($meal->accommodation->type)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.type') }}</label>
                                     <div>
-                                        <label class="kt-label mb-1">{{ __('main.accommodation') }} -
-                                            {{ __('main.name') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            {{ $mealRate->accommodation->name ?: __('main.na') }}</p>
-                                    </div>
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.name_ar') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            {{ $mealRate->accommodation->name_ar ?: __('main.na') }}</p>
-                                    </div>
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.season') }} -
-                                            {{ __('main.name') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            {{ $mealRate->season->name ?: __('main.na') }}</p>
-                                    </div>
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.name_ar') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            {{ $mealRate->season->name_ar ?: __('main.na') }}</p>
-                                    </div>
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.price') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            {{ number_format($mealRate->price, 2) }}</p>
-                                    </div>
-                                    <div class="col-span-2 flex items-center gap-10 mb-2">
-                                        <div wire:key="toggle-{{ $mealRate->id }}-is_supplement">
-                                            <label class="kt-label mb-1">{{ __('main.is_supplement') }}</label>
-                                            <div class="flex items-center gap-2">
-                                                @livewire('toggle-switch', [
-                                                    'modelId' => $mealRate->id,
-                                                    'modelType' => '\\App\\Models\\AccommodationMealRate',
-                                                    'field' => 'is_supplement',
-                                                    'value' => (bool) $mealRate->is_supplement,
-                                                    'table' => 'accommodation_meal_rates',
-                                                ])
-                                            </div>
-                                        </div>
-                                        <div wire:key="toggle-{{ $mealRate->id }}-is_active">
-                                            <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
-                                            <div class="flex items-center gap-2">
-                                                @livewire('toggle-switch', [
-                                                    'modelId' => $mealRate->id,
-                                                    'modelType' => '\\App\\Models\\AccommodationMealRate',
-                                                    'field' => 'is_active',
-                                                    'value' => (bool) $mealRate->is_active,
-                                                    'table' => 'accommodation_meal_rates',
-                                                ])
-                                            </div>
-                                        </div>
+                                        <a href="{{ route('types.show', $meal->accommodation->type->id) }}"
+                                            class="kt-badge kt-badge-primary">
+                                            {{ $meal->accommodation->type->name ?: __('main.na') }}
+                                            <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                        </a>
                                     </div>
                                 </div>
-                                @if ($mealRate->notes)
-                                    <div class="lg:col-span-2">
-                                        <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                        <p class="text-sm text-secondary-foreground">{!! $mealRate->notes !!}</p>
+                            @endif
+                            @if ($meal->accommodation->classification)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.classification') }}</label>
+                                    <div>
+                                        <span class="kt-badge kt-badge-primary">
+                                            {{ $meal->accommodation->classification ?: __('main.na') }}
+                                        </span>
                                     </div>
-                                @endif
-                                @livewire('delete-bottom', [
-                                    'type' => 'mealRate',
-                                    'modelId' => $mealRate->id,
-                                    'modelType' => '\\App\\Models\\AccommodationMealRate',
-                                    'table' => 'accommodation_meal_rates',
-                                ])
+                                </div>
+                            @endif
+                            @if ($meal->accommodation->stars)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.star_rating') }}</label>
+                                    <div class="flex items-center gap-1">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <i
+                                                class="fas fa-star {{ $i <= $meal->accommodation->stars ? 'text-yellow-500' : 'text-gray-300' }} text-sm"></i>
+                                        @endfor
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($meal->accommodation->currency)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.currency') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        {{ $meal->accommodation->currency->code }} -
+                                        {{ $meal->accommodation->currency->name }}</p>
+                                </div>
+                            @endif
+                            @if ($meal->accommodation->city || $meal->accommodation->country)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.location') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        {{ $meal->accommodation->city?->name ?? '' }}
+                                        {{ $meal->accommodation->city && $meal->accommodation->country ? ', ' : '' }}
+                                        {{ $meal->accommodation->country?->name ?? '' }}
+                                    </p>
+                                </div>
+                            @endif
+                            @if ($meal->accommodation->general_mobile)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.general_mobile') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        {{ $meal->accommodation->general_mobile }}</p>
+                                </div>
+                            @endif
+                            @if ($meal->accommodation->general_email)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.general_email') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        {{ $meal->accommodation->general_email }}</p>
+                                </div>
+                            @endif
+                            @if ($meal->accommodation->contact_person)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.contact_person') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        {{ $meal->accommodation->contact_person }}</p>
+                                </div>
+                            @endif
+                            @if ($meal->accommodation->street)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.street') }}</label>
+                                    <p class="text-sm text-secondary-foreground">{{ $meal->accommodation->street }}
+                                    </p>
+                                </div>
+                            @endif
+                            <div class="col-span-2 flex items-center gap-10 mb-2">
+                                <div wire:key="toggle-{{ $meal->accommodation->id }}-is_active">
+                                    <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
+                                    <div class="flex items-center gap-2">
+                                        @livewire('toggle-switch', [
+                                            'modelId' => $meal->accommodation->id,
+                                            'modelType' => '\\App\\Models\\Accommodation',
+                                            'field' => 'is_active',
+                                            'value' => (bool) $meal->accommodation->is_active,
+                                            'table' => 'accommodations',
+                                        ])
+                                    </div>
+                                </div>
                             </div>
-                        @empty
-                            <div class="text-center py-8 text-secondary-foreground">
-                                <i class="ki-filled ki-information text-4xl mb-2"></i>
-                                <p>{{ __('main.no_data_available') }}</p>
-                                <a href="{{ route('accommodations-rates.create-meal') }}"
-                                    class="kt-btn kt-btn-sm kt-btn-primary mt-4">
-                                    <i class="ki-filled ki-plus text-sm me-1"></i>
-                                    {{ __('main.create_type', ['type' => __('main.meal_rate')]) }}
-                                </a>
+                        </div>
+                        @if ($meal->accommodation->notes)
+                            <div class="lg:col-span-2 mt-2">
+                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
+                                <div class="text-sm text-secondary-foreground">{!! $meal->accommodation->notes !!}</div>
                             </div>
-                        @endforelse
+                        @endif
+                        <div class="lg:col-span-2 flex gap-2 mt-2">
+                            @include('components.elements.show-button', [
+                                'models' => 'accommodations',
+                                'id' => $meal->accommodation->id,
+                            ])
+                            @include('components.elements.edit-button', [
+                                'models' => 'accommodations',
+                                'id' => $meal->accommodation->id,
+                            ])
+                            @livewire('delete-bottom', [
+                                'type' => 'accommodations',
+                                'modelId' => $meal->accommodation->id,
+                                'modelType' => '\\App\\Models\\Accommodation',
+                                'table' => 'accommodations',
+                            ])
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seasons for this accommodation -->
+            <div class="kt-card bg-blue-100 record-meals-seasons-{{ $meal->season->id }}">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.seasons') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div wire:key="season-{{ $meal->season->id }}" class="kt-card bg-white rounded-lg p-4 pt-2">
+                        <div class="grid lg:grid-cols-2 gap-4">
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.name') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $meal->season->name ?: __('main.na') }}
+                                </p>
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.name_ar') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $meal->season->name_ar ?: __('main.na') }}
+                                </p>
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.season_from') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $meal->season->season_from->format('Y-m-d') ?: __('main.na') }}
+                                </p>
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.season_to') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $meal->season->season_to->format('Y-m-d') ?: __('main.na') }}
+                                </p>
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
+                                <div class="flex items-center gap-2">
+                                    @livewire('toggle-switch', [
+                                        'modelId' => $meal->season->id,
+                                        'modelType' => '\\App\\Models\\Season',
+                                        'field' => 'is_active',
+                                        'value' => (bool) $meal->season->is_active,
+                                        'table' => 'seasons',
+                                    ])
+                                </div>
+                            </div>
+                        </div>
+                        @if ($meal->season->description)
+                            <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
+                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $meal->season->description !!}</div>
+                            </div>
+                        @endif
+                        <div class="lg:col-span-2 flex gap-2 mt-2">
+                            @include('components.elements.show-button', [
+                                'models' => 'meals',
+                                'id' => $meal->season->id,
+                            ])
+                            @include('components.elements.edit-button', [
+                                'models' => 'meals',
+                                'id' => $meal->season->id,
+                            ])
+                            @livewire('delete-bottom', [
+                                'type' => 'meals-seasons',
+                                'modelId' => $meal->season->id,
+                                'modelType' => '\\App\\Models\\Season',
+                                'table' => 'seasons',
+                            ])
+                        </div>
                     </div>
                 </div>
             </div>
@@ -191,11 +306,9 @@
                     'models' => 'meals',
                     'id' => $meal->id,
                 ])
-                @livewire('delete-bottom', [
-                    'type' => 'meal',
-                    'modelId' => $meal->id,
-                    'modelType' => '\\App\\Models\\Meal',
-                    'table' => 'meals',
+                @include('components.elements.delete-form', [
+                    'model' => 'meals',
+                    'id' => $meal->id,
                 ])
                 <a href="{{ route('meals.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.meals')]) }}

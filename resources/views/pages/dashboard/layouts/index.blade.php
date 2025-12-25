@@ -29,7 +29,7 @@
         window.addEventListener('resize', function() {
             toggleScroll = window.innerWidth > 768;
         });
-
+        // 
         window.addEventListener('scroll', function(event) {
             if (dataTargetModel?.classList.contains('hidden')) return;
             if (isMouseInsideModal) return;
@@ -79,16 +79,83 @@
 @push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            let lastChecked = null;
             let selectAll = document.getElementById("selectPage");
+
             if (!selectAll) return;
+
             let newSelectAll = selectAll?.cloneNode(true);
             let checkboxes = document.querySelectorAll(".custom-input input[name='selectItem[]']");
+
+            // Select All functionality
             selectAll.addEventListener("change", () => {
                 newSelectAll.checked = selectAll.checked;
                 checkboxes.forEach((cb) => (cb.checked = newSelectAll.checked));
+                lastChecked = null; // Reset on select all
+            });
+
+            // Shift + Click Multi-Select functionality
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener('click', function(e) {
+                    const allCheckboxes = Array.from(document.querySelectorAll(
+                        ".custom-input input[name='selectItem[]']"));
+
+                    let cardContent = document.querySelector('.kt-card-content');
+                    let userActions = document.querySelectorAll('.user-action');
+                    userActions.forEach(action => {
+                        if (cardContent) cardContent.classList.add('loading');
+                        action.classList.add('loading');
+                        const spinner = action.querySelector('#loading-spinner');
+                        if (spinner) spinner.classList.remove('hidden');
+                    });
+
+                    // بعد انتهاء تحديث Livewire
+                    if (typeof Livewire !== 'undefined') {
+                        Livewire.hook('message.processed', () => {
+                            let cardContent = document.querySelector('.kt-card-content');
+                            let userActions = document.querySelectorAll('.user-action');
+                            userActions.forEach(action => {
+                                if (cardContent) cardContent.classList.remove(
+                                    'loading');
+                                action.classList.remove('loading');
+                                const spinner = action.querySelector(
+                                    '#loading-spinner');
+                                if (spinner) spinner.classList.add('hidden');
+                            });
+                        });
+                    }
+
+                    if (!lastChecked) {
+                        lastChecked = this;
+                        return;
+                    }
+
+                    if (e.shiftKey) {
+                        const currentIndex = allCheckboxes.indexOf(this);
+                        const lastIndex = allCheckboxes.indexOf(lastChecked);
+
+                        const start = Math.min(currentIndex, lastIndex);
+                        const end = Math.max(currentIndex, lastIndex);
+
+                        const shouldCheck = this.checked;
+
+                        for (let i = start; i <= end; i++) {
+                            allCheckboxes[i].checked = shouldCheck;
+
+                            // Trigger Livewire update
+                            const event = new Event('change', {
+                                bubbles: true
+                            });
+                            allCheckboxes[i].dispatchEvent(event);
+                        }
+                    }
+
+                    lastChecked = this;
+                });
             });
         });
 
+        // Reset checkboxes
         window.addEventListener('reset-checkout-boxes', () => {
             let selectAll = document.getElementById("selectPage");
             if (!selectAll) return;
@@ -97,6 +164,47 @@
             let checkboxes = document.querySelectorAll(".custom-input input[name='selectItem[]']");
             checkboxes.forEach((cb) => (cb.checked = false));
         });
+
+        // Re-initialize after Livewire updates
+        if (typeof Livewire !== 'undefined') {
+            Livewire.hook('morph.updated', () => {
+                let lastChecked = null;
+                const checkboxes = document.querySelectorAll(".custom-input input[name='selectItem[]']");
+
+                checkboxes.forEach((checkbox) => {
+                    checkbox.addEventListener('click', function(e) {
+                        const allCheckboxes = Array.from(document.querySelectorAll(
+                            ".custom-input input[name='selectItem[]']"));
+
+                        if (!lastChecked) {
+                            lastChecked = this;
+                            return;
+                        }
+
+                        if (e.shiftKey) {
+                            const currentIndex = allCheckboxes.indexOf(this);
+                            const lastIndex = allCheckboxes.indexOf(lastChecked);
+
+                            const start = Math.min(currentIndex, lastIndex);
+                            const end = Math.max(currentIndex, lastIndex);
+
+                            const shouldCheck = this.checked;
+
+                            for (let i = start; i <= end; i++) {
+                                allCheckboxes[i].checked = shouldCheck;
+
+                                const event = new Event('change', {
+                                    bubbles: true
+                                });
+                                allCheckboxes[i].dispatchEvent(event);
+                            }
+                        }
+
+                        lastChecked = this;
+                    });
+                });
+            });
+        }
     </script>
 @endpush
 

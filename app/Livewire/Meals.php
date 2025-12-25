@@ -4,20 +4,23 @@ namespace App\Livewire;
 
 use App\Models\Meal;
 use Livewire\Component;
-use Livewire\WithPagination;
-use App\Traits\CustomColumns;
+use App\Models\Currency;
+use App\Traits\ExportsData;
 use App\Traits\WithSorting;
+use Livewire\WithPagination;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
-use App\Traits\ExportsData;
 
 class Meals extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $totalCount = '';
     public $message = [];
+    public $filterCurrencyId = '';
+    public $currencies = [];
     public $filterStatus = '';
     public $filterIsIncluded = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
@@ -26,6 +29,12 @@ class Meals extends Component
     {
         $this->resetPage();
     }
+
+    public function updatingFilterCurrencyId()
+    {
+        $this->resetPage();
+    }
+
 
     public function updatingFilterStatus()
     {
@@ -41,6 +50,7 @@ class Meals extends Component
     {
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Meal::class);
+        $this->currencies = Currency::whereIn('id', Meal::pluck('currency_id'))->get(['code', 'name', 'id'])->toArray();
         $this->resetPage();
     }
 
@@ -103,7 +113,7 @@ class Meals extends Component
 
     public function resetFilters(): void
     {
-        $this->reset(['search', 'filterStatus', 'filterIsIncluded']);
+        $this->reset(['search', 'filterCurrencyId', 'filterStatus', 'filterIsIncluded']);
         $this->resetPage();
         $this->dispatch('reset-filters');
     }
@@ -112,11 +122,17 @@ class Meals extends Component
     {
         $query = Meal::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        if ($this->filterCurrencyId && $this->filterCurrencyId != 'all') {
+            $query->where('currency_id', $this->filterCurrencyId);
+        }
         if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
             $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }
         if ($this->filterIsIncluded && $this->filterIsIncluded['payload']['value'] !== 'all') {
             $query->where('is_included', $this->filterIsIncluded['payload']['value'] === 'yes' ? true : false);
+        }
+        if (request()->type) {
+            $query->where('model_type', 'like', '%' . (isset(request()->type) ? request()->type : 'accommodation') . '%');
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

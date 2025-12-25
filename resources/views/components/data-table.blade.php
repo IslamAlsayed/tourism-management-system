@@ -2,7 +2,7 @@
     <div class="top-scroll-inner" id="topScrollInner"></div>
 </div>
 
-<div class="table-wrapper" id="tableWrapper" wire:ignore>
+<div class="table-wrapper" id="tableWrapper">
     <table class="kt-table table-auto text-nowrap" id="data_table">
         <thead>
             <tr>
@@ -31,7 +31,7 @@
         </thead>
         <tbody id="data_table_tbody">
             @forelse ($data as $item)
-                <tr wire:key="{{ $item->id }}" class="hover:bg-gray-100 unique-record-{{ $item->id }}">
+                <tr wire:key="row-{{ $item->id }}" class="hover:bg-gray-100 unique-record-{{ $item->id }}">
                     <td class="text-center">
                         @include('components.elements.checkbox-button', [
                             'name' => 'selectItem[]',
@@ -42,7 +42,6 @@
                     </td>
                     @foreach ($columns as $column)
                         @include('components.static-columns', [
-                            'table' => 'users',
                             'column' => $column,
                             'model' => $item,
                             'search' => $search,
@@ -93,3 +92,9 @@
         </tbody>
     </table>
 </div>
+
+{{-- <script>
+    document.addEventListener('livewire:initialized', () => {
+        Livewire.on('refresh-page', () => setTimeout(() => location.reload(), 0));
+    });
+</script> --}}

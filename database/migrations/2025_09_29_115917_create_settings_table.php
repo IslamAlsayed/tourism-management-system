@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string('app_language')->default('en');
             $table->string('app_version')->default(env('APP_VERSION', '4.4.0'));
             $table->string('app_php_version')->default('8.2.28');
-            $table->string('app_columns_length')->default(config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)));
+            $table->string('app_columns_length')->default(config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 6)));
             $table->string('app_light_photo')->nullable();
             $table->string('app_dark_photo')->nullable();
             $table->string('app_mini_photo')->nullable();
@@ -85,7 +85,7 @@ return new class extends Migration {
             $table->string('app_smtp_username')->nullable();
             $table->string('app_smtp_password')->nullable();
             $table->integer('app_sidebar_width')->nullable()->default(310);
-            $table->boolean('app_show_uuid_column')->nullable()->default(1);
+            $table->boolean('app_show_uuid_column')->nullable()->default(false);
             $table->timestamps();
         });
     }

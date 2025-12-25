@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
-use App\Traits\BroadcastsRecordEvents;
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
 {
-    use HasSearch, HasUuid, HasFactory, BroadcastsRecordEvents;
+    use HasSearch, HasRichText, HasUuid, HasFactory, BroadcastsRecordEvents;
+    protected $richTextAttributes = [
+        'description',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',
@@ -31,7 +36,6 @@ class Client extends Model
         'state_id',
         'city_id',
         'nationality_id',
-        'currency',
 
         // Passport information
         'passport_number',
@@ -78,8 +82,10 @@ class Client extends Model
         // Status and preferences
         // 'status',
         'client_status',
+        'currency_id',
         'timezone_id',
         'is_active',
+        'description',
         'notes',
 
         // Tracking
@@ -92,7 +98,7 @@ class Client extends Model
      */
     public function getRelationshipNames()
     {
-        return ['region', 'subregion', 'country', 'state', 'city', 'timezone'];
+        return ['region', 'subregion', 'country', 'state', 'city', 'timezone', 'currency'];
     }
 
     /**
@@ -108,6 +114,7 @@ class Client extends Model
             'city_id',
             'nationality_id',
             'timezone_id',
+            'currency_id',
         ];
     }
 
@@ -174,6 +181,11 @@ class Client extends Model
     public function timezone()
     {
         return $this->belongsTo(Timezone::class);
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 
     public function creator()

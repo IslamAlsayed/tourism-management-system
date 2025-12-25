@@ -76,7 +76,7 @@ class RegionController extends Controller
         }
         $deleted = $region->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.region')]));
+            return redirect()->route('regions.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.region')]));
         }
 
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.region')]));

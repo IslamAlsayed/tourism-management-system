@@ -164,8 +164,8 @@
                                                 @foreach ($child['children'] as $subChild)
                                                     @php $subChildIsActive = isActive($subChild['route'] ?? null, $subChild['parameters'] ?? [], $currentRoute, $currentParameters); @endphp
                                                     <div class="kt-menu-item px-2">
-                                                        <a class="kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px] gap-[14px] ps-[10px] pe-[10px] py-[8px]"
-                                                            href="{{ isset($subChild['route']) && $subChild['route'] !== '#' ? route($subChild['route'], isset($subChild['parameters']) ? $subChild['parameters'] : []) : 'javascript:void(0)' }}"
+                                                        <a class="islam {{ isset($subChild['parameters']['types']) ? $subChild['parameters']['types'] : '' }} kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px] gap-[14px] ps-[10px] pe-[10px] py-[8px]"
+                                                            href="{{ isset($subChild['route']) ? route($subChild['route'], isset($subChild['parameters']) ? $subChild['parameters'] : []) : '#' }}"
                                                             {{ ($subChild['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                                             {{-- <span
                                                                 class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $subChildIsActive ? 'before:bg-primary' : '' }}">

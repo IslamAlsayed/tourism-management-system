@@ -25,13 +25,80 @@
         <form class="space-y-6" method="POST" action="{{ route('airlines.store') }}" enctype="multipart/form-data">
             @csrf
 
+            {{-- Location Information --}}
+            <div class="kt-card mb-6">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">
+                        {{ __('main.type_information', ['type' => __('main.location')]) }}
+                    </h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        @include('components.regions.create', [
+                            'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                            'multiple' => false,
+                        ])
+
+                        <!-- Timezone -->
+                        <div class="">
+                            <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                            <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
+                                <option value="" selected disabled></option>
+                                @foreach ($timezones as $zone)
+                                    <option value="{{ $zone['id'] }}"
+                                        {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
+                                        {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('timezone_id')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Elevation --}}
+                        <div>
+                            <label for="elevation" class="kt-label mb-2">{{ __('main.elevation') }}</label>
+                            <input type="number" name="elevation" id="elevation" class="kt-input h-[45px]"
+                                value="{{ old('elevation') }}" step="0.01" placeholder="meters">
+                            @error('elevation')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Latitude --}}
+                        <div>
+                            <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
+                            <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]"
+                                value="{{ old('latitude') }}" step="any" min="-90" max="90"
+                                placeholder="24.9576">
+                            @error('latitude')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Longitude --}}
+                        <div>
+                            <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
+                            <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]"
+                                value="{{ old('longitude') }}" step="any" min="-180" max="180"
+                                placeholder="46.6988">
+                            @error('longitude')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {{-- Airport Information --}}
             <div class="kt-card mb-6">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.airport_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.airport')]) }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                         {{-- ICAO Code --}}
                         <div>
                             <label for="icao" class="kt-label mb-2">{{ __('main.icao') }}</label>
@@ -85,8 +152,8 @@
                         {{-- Subdivision/Type --}}
                         <div>
                             <label for="subd" class="kt-label mb-2">{{ __('main.subd') }}</label>
-                            <select name="subd" id="subd" class="kt-input h-[45px]" special-search>
-                                <option value="">--</option>
+                            <select name="subd" id="subd" class="kt-input basic-single">
+                                <option value="" selected disabled></option>
                                 <option value="International" {{ old('subd') == 'International' ? 'selected' : '' }}>
                                     {{ __('main.international') }}
                                 </option>
@@ -111,78 +178,13 @@
                 </div>
             </div>
 
-            {{-- Location Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
-                        @include('components.regions.create', [
-                            'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                            'multiple' => false,
-                        ])
-
-                        {{-- Elevation --}}
-                        <div>
-                            <label for="elevation" class="kt-label mb-2">{{ __('main.elevation') }}</label>
-                            <input type="number" name="elevation" id="elevation" class="kt-input h-[45px]"
-                                value="{{ old('elevation') }}" step="0.01" placeholder="meters">
-                            @error('elevation')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Latitude --}}
-                        <div>
-                            <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                            <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]"
-                                value="{{ old('latitude') }}" step="any" min="-90" max="90"
-                                placeholder="24.9576">
-                            @error('latitude')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Longitude --}}
-                        <div>
-                            <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                            <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]"
-                                value="{{ old('longitude') }}" step="any" min="-180" max="180"
-                                placeholder="46.6988">
-                            @error('longitude')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Timezone -->
-                        <div class="">
-                            <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                            <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search>
-                                <option value="">--</option>
-                                @foreach ($timezones as $zone)
-                                    <option value="{{ $zone['id'] }}"
-                                        {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
-                                        {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('timezone_id')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             {{-- Contact Information --}}
             <div class="kt-card mb-6">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                         {{-- Local Phone --}}
                         <div>
                             <label for="local_phone_number"
@@ -218,7 +220,32 @@
                 </div>
             </div>
 
-            {{-- Submit Buttons --}}
+            {{-- Description --}}
+            @include('components.elements.input-text-editor', [
+                'name' => 'description',
+                'value' => old('description'),
+            ])
+
+            {{-- Notes --}}
+            @include('components.elements.input-text-editor', [
+                'name' => 'notes',
+                'value' => old('notes'),
+            ])
+
+            <div class="flex flex-wrap gap-10 mb-4">
+                <div class="flex items-center gap-3">
+                    <input type="hidden" name="is_active" value="0">
+                    @include('components.elements.checkbox-button', [
+                        'name' => 'is_active',
+                        'id' => 'is_active',
+                        'value' => '1',
+                        'checked' => 1,
+                        'label' => __('main.active'),
+                    ])
+                </div>
+            </div>
+
+            {{-- Save Submit --}}
             @include('components.elements.save-submit', ['models' => 'airlines'])
         </form>
     </div>

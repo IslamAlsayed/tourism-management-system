@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-use App\Traits\FiltersByUserRole;
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Restaurant extends Model
 {
-    use HasSearch, HasUuid, HasRichText, FiltersByUserRole;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole;
 
     protected $richTextAttributes = [
+        'description',
         'notes',
     ];
 
@@ -22,6 +24,7 @@ class Restaurant extends Model
         'photo',
         'name',
         'name_ar',
+        'rating',
         'company_name_ar',
         'specialty',
         'phone_01',
@@ -35,7 +38,7 @@ class Restaurant extends Model
         'street',
         'mobile',
         'website',
-        'is_active',
+
         'wheelchair_accessible',
         'free_wifi',
         'parking',
@@ -44,9 +47,12 @@ class Restaurant extends Model
         'indoor',
         'outdoor',
         'spa',
-        'rating',
+        'is_active',
+        'description',
         'notes',
+
         'type_id',
+        'currency_id',
         'region_id',
         'subregion_id',
         'country_id',
@@ -54,20 +60,14 @@ class Restaurant extends Model
         'city_id',
     ];
 
-    /**
-     * Get relationship names for eager loading
-     */
     public function getRelationshipNames()
     {
-        return ['type', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['type', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'meals', 'supplements'];
     }
 
-    /**
-     * Get columns to exclude from search/display
-     */
     public function getExcludedColumns()
     {
-        return ['type_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['type_id', 'currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
     public function type()
@@ -98,5 +98,23 @@ class Restaurant extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    // علاقة polymorphic modelship للمواسم
+    public function seasons()
+    {
+        return $this->morphMany(Season::class, 'model');
+    }
+
+    // علاقة polymorphic modelship للوجبات
+    public function meals()
+    {
+        return $this->morphMany(Meal::class, 'model');
+    }
+
+    // علاقة polymorphic modelship للإضافات
+    public function supplements()
+    {
+        return $this->morphMany(Supplement::class, 'model');
     }
 }

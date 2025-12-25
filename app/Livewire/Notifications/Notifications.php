@@ -6,7 +6,7 @@ use Ably\AblyRest;
 use Livewire\Component;
 use App\Traits\WithSorting;
 use Livewire\WithPagination;
-use App\Traits\CustomColumns;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 use App\Traits\ExportsData;
@@ -15,7 +15,7 @@ use App\Models\Notification as ModelsNotification;
 
 class Notifications extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $filter = 'all'; // all, unread, read

@@ -11,6 +11,11 @@ return [
         'antarctica' => 'antarctica',
     ],
 
+    'genders' => [
+        'male' => 'male',
+        'female' => 'female',
+    ],
+
     'timezones' => [
         'asia/riyadh' => 'asia/riyadh',
         'asia/dubai' => 'asia/dubai',

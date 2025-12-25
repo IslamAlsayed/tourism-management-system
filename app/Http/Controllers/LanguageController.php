@@ -66,7 +66,7 @@ class LanguageController extends Controller
         }
         $deleted = $language->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.language')]));
+            return redirect()->route('languages.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.language')]));
         }
 
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.language')]));

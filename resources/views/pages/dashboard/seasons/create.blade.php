@@ -22,77 +22,77 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('seasons.store') }}">
-            @csrf
+        <div class="kt-card p-4">
+            <div class="kt-card-body">
+                <form class="space-y-6" method="POST" action="{{ route('seasons.store') }}">
+                    @csrf
+                    <div class="grid gap-4 lg:gap-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
+                            {{-- accommodations-restaurants --}}
+                            <livewire:accommodations-restaurants-selects />
 
-            {{-- Basic Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
-                        {{-- Name (English) --}}
-                        <div class="align-self-end">
-                            <label for="name" class="kt-label required mb-2">
-                                {{ __('main.name') }}
-                                <span class="text-red-600 text-2xl">*</span>
-                            </label>
-                            <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                value="{{ old('name') }}" required>
-                            @error('name')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
+                            {{-- Name (English) --}}
+                            <div class="align-self-end">
+                                <label for="name" class="kt-label mb-1">
+                                    {{ __('main.name') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ old('name') }}">
+                                @error('name')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Name (Arabic) --}}
+                            <div>
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}">
+                                @error('name_ar')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Season From --}}
+                            <div class="align-self-end">
+                                <label for="season_from" class="kt-label mb-1">
+                                    {{ __('main.season_from') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <input type="date" name="season_from" id="season_from" class="kt-input h-[45px]"
+                                    value="{{ old('season_from') }}">
+                                @error('season_from')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Season To --}}
+                            <div class="align-self-end">
+                                <label for="season_to" class="kt-label mb-1">
+                                    {{ __('main.season_to') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <input type="date" name="season_to" id="season_to" class="kt-input h-[45px]"
+                                    value="{{ old('season_to') }}">
+                                @error('season_to')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
-                        {{-- Name (Arabic) --}}
-                        <div>
-                            <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                            <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                value="{{ old('name_ar') }}">
-                            @error('name_ar')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
+                        {{-- Description --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'description',
+                            'value' => old('description'),
+                        ])
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-4">
-                        {{-- Season From --}}
-                        <div class="align-self-end">
-                            <label for="season_from" class="kt-label required mb-2">
-                                {{ __('main.season_from') }}
-                                <span class="text-red-600 text-2xl">*</span>
-                            </label>
-                            <input type="date" name="season_from" id="season_from" class="kt-input h-[45px]"
-                                value="{{ old('season_from') }}" required>
-                            @error('season_from')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        {{-- Notes --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'notes',
+                            'value' => old('notes'),
+                        ])
 
-                        {{-- Season To --}}
-                        <div class="align-self-end">
-                            <label for="season_to" class="kt-label required mb-2">
-                                {{ __('main.season_to') }}
-                                <span class="text-red-600 text-2xl">*</span>
-                            </label>
-                            <input type="date" name="season_to" id="season_to" class="kt-input h-[45px]"
-                                value="{{ old('season_to') }}" required>
-                            @error('season_to')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    {{-- Description --}}
-                    @include('components.elements.input-text-editor', [
-                        'name' => 'description',
-                        'value' => old('description'),
-                    ])
-
-                    {{-- Additional Settings --}}
-                    <label for="season_to" class="kt-label required mb-2">{{ __('main.additional_settings') }}</label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                         <div class="flex items-center gap-3">
                             <input type="hidden" name="is_active" value="0">
                             @include('components.elements.checkbox-button', [
@@ -103,12 +103,12 @@
                                 'label' => __('main.active'),
                             ])
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Save Submit Buttons -->
-            @include('components.elements.save-submit', ['models' => 'seasons'])
-        </form>
+                        <!-- Save Submit Buttons -->
+                        @include('components.elements.save-submit', ['models' => 'seasons'])
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection

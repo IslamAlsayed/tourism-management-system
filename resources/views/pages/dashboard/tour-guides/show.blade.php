@@ -10,7 +10,7 @@
                     {{ $tourGuide->name }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ $tourGuide->guide_type?->type }} • {{ $tourGuide->home_city }}
+                    {{ $tourGuide->guide_type?->type }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -27,11 +27,10 @@
 
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
-
-            <!-- Basic Information -->
+            <!-- Tour Guide Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.tour-guide')]) }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -48,48 +47,85 @@
                                     {{ $tourGuide->name_ar ?: __('main.na') }}</p>
                             </div>
                         @endif
+                        @if ($tourGuide->home_city)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.home_city') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $tourGuide->home_city ?: __('main.na') }}</p>
+                            </div>
+                        @endif
+                        @if ($tourGuide->birth_year)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.birth_year') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $tourGuide->birth_year ?: __('main.na') }}</p>
+                            </div>
+                        @endif
+                        @if ($tourGuide->gender)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.gender') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">{{ $tourGuide->gender ?: __('main.na') }}</span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($tourGuide->national_guide_id)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.national_guide_id') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $tourGuide->national_guide_id ?: __('main.na') }}</p>
+                            </div>
+                        @endif
+                        @if ($tourGuide->tourism_ministry_code)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.tourism_ministry_code') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $tourGuide->tourism_ministry_code ?: __('main.na') }}</p>
+                            </div>
+                        @endif
+                        @if ($tourGuide->fd_day_fees)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.fd_day_fees') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $tourGuide->fd_day_fees ?? 0 . ' ' . $tourGuide->currency->code ?: __('main.na') }}
+                                </p>
+                            </div>
+                        @endif
+                        @if ($tourGuide->hd_day_fees)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.hd_day_fees') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $tourGuide->hd_day_fe ?? 0 . ' ' . $tourGuide->currency->code ?: __('main.na') }}
+                                </p>
+                            </div>
+                        @endif
+                        @if ($tourGuide->extra_fees_1)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.extra_fees_1') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $tourGuide->extra_fees_1 ?? 0 . ' ' . $tourGuide->currency->code ?: __('main.na') }}
+                                </p>
+                            </div>
+                        @endif
+                        @if ($tourGuide->extra_fees_2)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.extra_fees_2') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $tourGuide->extra_fees_2 ?? 0 . ' ' . $tourGuide->currency->code ?: __('main.na') }}
+                                </p>
+                            </div>
+                        @endif
                         @if ($tourGuide->guideType)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.guide_type') }}</label>
                                 <p class="text-sm text-secondary-foreground">{{ $tourGuide->guideType->name }}</p>
                             </div>
                         @endif
-                        @if ($tourGuide->currency)
+                        @if ($tourGuide->currency_id)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.currency') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->currency->name }}
-                                    ({{ $tourGuide->currency->code }})</p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->tourGuideLanguages && $tourGuide->tourGuideLanguages->count() > 0)
-                            <div class="col-span-full">
-                                <label class="kt-label mb-1">{{ __('main.languages') }}</label>
-                                <div class="flex flex-wrap gap-2">
-                                    @foreach ($tourGuide->tourGuideLanguages as $tourGuideLanguage)
-                                        <span
-                                            class="kt-badge kt-badge-info">{{ $tourGuideLanguage->language?->name }}</span>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                        @if ($tourGuide->license_number)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.license_number') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->license_number }}</p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->experience_years)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.experience_years') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->experience_years }}
-                                    {{ __('main.years') }}</p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->price)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.price') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    {{ number_format($tourGuide->price, 2) }} {{ $tourGuide->currency?->code }}
+                                    {{ $tourGuide->currency->name . ' - ' . $tourGuide->currency->code }}
                                 </p>
                             </div>
                         @endif
@@ -101,69 +137,100 @@
                                     'modelType' => '\\App\\Models\\TourGuide',
                                     'field' => 'is_active',
                                     'value' => (bool) $tourGuide->is_active,
-                                    'table' => 'tourGuides',
+                                    'table' => 'tour-guides',
                                 ])
                             </div>
                         </div>
-                    </div>
-                    @if ($tourGuide->notes)
-                        <div class="mt-6">
-                            <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $tourGuide->notes !!}
+                        @if ($tourGuide->description)
+                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
+                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $tourGuide->description !!}
+                                </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
+                        @if ($tourGuide->notes)
+                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
+                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $tourGuide->notes !!}
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
 
             <!-- Location Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.location')]) }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div class="flex flex-wrap justify-between gap-10">
                         @if ($tourGuide->region)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->region->name }}</p>
+                                <a href="{{ route('regions.show', $tourGuide->region->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuide->region->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
                         @if ($tourGuide->subregion)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->subregion->name }}</p>
+                                <a href="{{ route('subregions.show', $tourGuide->subregion->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuide->subregion->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
                         @if ($tourGuide->country)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->country?->name ?: __('main.na') }}</p>
+                                <a href="{{ route('countries.show', $tourGuide->country->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuide->country->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
                         @if ($tourGuide->state)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.state') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->state?->name ?: __('main.na') }}</p>
+                                <a href="{{ route('states.show', $tourGuide->state->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuide->state->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
                         @if ($tourGuide->city)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.city') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->city?->name ?: __('main.na') }}
-                                </p>
+                                <a href="{{ route('cities.show', $tourGuide->city->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuide->city->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
-                        @if ($tourGuide->street)
-                            <div class="lg:col-span-2">
-                                <label class="kt-label mb-1">{{ __('main.street_address') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->street }}</p>
-                            </div>
-                        @endif
+                        <div class="col-span-2">
+                            <label class="kt-label mb-1">{{ __('main.street_address') }}</label>
+                            <p class="text-sm text-secondary-foreground">{{ $tourGuide->street ?? __('main.na') }}</p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.box') }}</label>
+                            <p class="text-sm text-secondary-foreground">{{ $tourGuide->box ?? __('main.na') }}</p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.postal_code') }}</label>
+                            <p class="text-sm text-secondary-foreground">{{ $tourGuide->postal_code ?? __('main.na') }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,35 +238,36 @@
             <!-- Contact Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.contact')]) }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        @if ($tourGuide->phone)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.phone') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->phone }}</p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->mobile)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.mobile') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->mobile }}</p>
-                            </div>
-                        @endif
                         @if ($tourGuide->email)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.email') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->email }}</p>
+                                <p class="text-sm text-secondary-foreground">
+                                    <a href="mailto:{{ $tourGuide->email }}" class="text-primary hover:underline">
+                                        {{ $tourGuide->email }}
+                                    </a>
+                                </p>
                             </div>
                         @endif
-                        @if ($tourGuide->website)
+                        @if ($tourGuide->mobile_01)
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.website') }}</label>
+                                <label class="kt-label mb-1">{{ __('main.mobile_01') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    <a href="{{ $tourGuide->website }}" target="_blank"
-                                        class="text-primary hover:underline">
-                                        {{ $tourGuide->website }}
+                                    <a href="tel:{{ $tourGuide->mobile_01 }}" class="text-primary hover:underline">
+                                        {{ $tourGuide->mobile_01 }}
+                                    </a>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($tourGuide->mobile_02)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.mobile_02') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <a href="tel:{{ $tourGuide->mobile_02 }}" class="text-primary hover:underline">
+                                        {{ $tourGuide->mobile_02 }}
                                     </a>
                                 </p>
                             </div>
@@ -207,19 +275,6 @@
                     </div>
                 </div>
             </div>
-
-            @if ($tourGuide->photo)
-                <!-- Photo -->
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.photo') }}</h3>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <img src="{{ asset('storage/' . $tourGuide->photo) }}" alt="{{ $tourGuide->name }}"
-                            class="max-w-md rounded-lg">
-                    </div>
-                </div>
-            @endif
 
             <!-- Metadata -->
             <div class="kt-card">
@@ -262,11 +317,9 @@
                     'models' => 'tour-guides',
                     'id' => $tourGuide->id,
                 ])
-                @livewire('delete-bottom', [
-                    'type' => 'tour-guide',
-                    'modelId' => $tourGuide->id,
-                    'modelType' => '\\App\\Models\\TourGuide',
-                    'table' => 'tourGuides',
+                @include('components.elements.delete-form', [
+                    'model' => 'tour-guides',
+                    'id' => $tourGuide->id,
                 ])
                 <a href="{{ route('tour-guides.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tour-guides')]) }}

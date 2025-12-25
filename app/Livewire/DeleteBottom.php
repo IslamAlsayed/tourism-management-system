@@ -37,11 +37,11 @@ class DeleteBottom extends Component
                 return;
             }
 
-            $deleted = $model->delete();
-            // $deleted = true;
+            // $deleted = $model->delete();
+            $deleted = true;
             if ($deleted) {
-                $this->dispatch('record-deleted', id: $model->id);
-                $this->dispatch('show-toast', ['type' => 'success', 'message' => __('messages.type_deleted', ['type' => __('main.' . $this->type)])]);
+                $this->dispatch('record-deleted', id: $model->id, type: $this->type);
+                $this->dispatch('show-toast', ['type' => 'success', 'message' => __('messages.type_deleted', ['type' => __('main.' . $this->type) . ' ' . $model->id])]);
                 // return redirect()->route(Str::snake($this->type) . '.index');
             } else {
                 $this->dispatch('show-toast', ['type' => 'success', 'message' => __('messages.type_deletion_failed', ['type' => __('main.' . $this->type)])]);

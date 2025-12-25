@@ -101,11 +101,9 @@
                     'models' => 'subregions',
                     'id' => $subregion->id,
                 ])
-                @livewire('delete-bottom', [
-                    'type' => 'subregion',
-                    'modelId' => $subregion->id,
-                    'modelType' => '\\App\\Models\\Subregion',
-                    'table' => 'subregions',
+                @include('components.elements.delete-form', [
+                    'model' => 'subregions',
+                    'id' => $subregion->id,
                 ])
                 <a href="{{ route('subregions.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.subregions')]) }}

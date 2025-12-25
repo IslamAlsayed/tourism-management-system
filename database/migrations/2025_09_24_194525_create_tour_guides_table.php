@@ -36,6 +36,7 @@ return new class extends Migration {
             $table->decimal('extra_fees_1', 10, 2)->nullable();
             $table->decimal('extra_fees_2', 10, 2)->nullable();
             $table->boolean('is_active')->default(true);
+            $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });

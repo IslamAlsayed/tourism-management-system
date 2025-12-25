@@ -26,13 +26,32 @@ class RoomFactory extends Factory
 
         $type = fake()->unique()->randomElement($types);
 
+        // Randomly choose between Restaurant or Accommodation
+        $modelType = fake()->randomElement([
+            \App\Models\Restaurant::class,
+            \App\Models\Accommodation::class,
+        ]);
+        $modelInstance = $modelType::inRandomOrder()->first();
+
         return [
+            'model_id' => $modelInstance?->id,
+            'model_type' => $modelInstance ? $modelType : null,
+
+            // 'season_id' => \App\Models\Season::inRandomOrder()->first()?->id ?? null,
+            'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? null,
             'name' => $type['name'],
             'name_ar' => $type['name_ar'],
             'max_occupancy' => $type['max_occupancy'],
             'occupancy_details' => $type['occupancy_details'],
-            'description' => fake()->paragraph(2),
+            'price_per_person_double' => fake()->randomFloat(2, 50, 500),
+            'single_room_supplement' => fake()->randomFloat(2, 20, 100),
+            'triple_room_discount' => fake()->randomFloat(2, 10, 50),
+            'third_person_price' => fake()->randomFloat(2, 30, 200),
+            'extra_bed_price' => fake()->randomFloat(2, 25, 150),
+            'sea_view_supplement' => fake()->randomFloat(2, 30, 100),
             'is_active' => fake()->boolean(90),
+            'description' => fake()->paragraph(2),
+            'notes' => fake()->optional()->paragraph(1),
         ];
     }
 }

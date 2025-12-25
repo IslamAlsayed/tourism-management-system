@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Region;
 use App\Models\Subregion;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Subregions\SubregionsCreateRequest;
-use App\Http\Requests\Subregions\SubregionsUpdateRequest;
+use App\Http\Requests\Subregion\StoreRequest;
+use App\Http\Requests\Subregion\UpdateRequest;
 
 class SubregionController extends Controller
 {
@@ -21,7 +21,7 @@ class SubregionController extends Controller
         return view('pages.dashboard.subregions.create', compact('regions'));
     }
 
-    public function store(SubregionsCreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $validated = $request->validated();
         $created = Subregion::create($validated);
@@ -55,7 +55,7 @@ class SubregionController extends Controller
         return view('pages.dashboard.subregions.edit', compact('subregion', 'regions'));
     }
 
-    public function update(SubregionsUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $subregions = Subregion::find($id);
         if (!$subregions) {
@@ -79,7 +79,7 @@ class SubregionController extends Controller
         }
         $deleted = $subregions->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.subregion')]));
+            return redirect()->route('subregions.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.subregion')]));
         }
 
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.subregion')]));

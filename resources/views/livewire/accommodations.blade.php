@@ -18,9 +18,9 @@
 
     <div class="kt-card-content">
         <div class="kt-card-content" wire:loading.class="loading"
-            wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterTypeId,filterStatus">
+            wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterTypeId,filterSeasonId,filterRoomId,filterMealId,filterStatus">
             <!-- Filters -->
-            <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 px-4 filterTable" wire:ignore>
+            <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 px-4 filterTable">
                 <div>
                     <select wire:model.live="filterTypeId" class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
                         data-kt-select-placeholder="{{ __('main.type') }}">
@@ -32,6 +32,36 @@
                     </select>
                 </div>
                 <div>
+                    <select wire:model.live="filterSeasonId" class="kt-select h-[40px] w-48 max-w-full"
+                        data-kt-select="true" data-kt-select-placeholder="{{ __('main.season') }}">
+                        <option value="all">{{ __('main.all') }}</option>
+                        @foreach ($seasons as $id => $name)
+                            <option value="{{ $id }}">
+                                {{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                {{-- <div>
+                    <select wire:model.live="filterRoomId" class="kt-select h-[40px] w-48 max-w-full"
+                        data-kt-select="true" data-kt-select-placeholder="{{ __('main.room') }}">
+                        <option value="all">{{ __('main.all') }}</option>
+                        @foreach ($rooms as $id => $name)
+                            <option value="{{ $id }}">
+                                {{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <select wire:model.live="filterMealId" class="kt-select h-[40px] w-48 max-w-full"
+                        data-kt-select="true" data-kt-select-placeholder="{{ __('main.meal') }}">
+                        <option value="all">{{ __('main.all') }}</option>
+                        @foreach ($meals as $id => $name)
+                            <option value="{{ $id }}">
+                                {{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div> --}}
+                <div>
                     <select wire:model.live="filterStatus" class="kt-select h-[40px] w-48 max-w-full"
                         data-kt-select="true" data-kt-select-placeholder="{{ __('main.status') }}">
                         <option value="all">{{ __('main.all') }}</option>
@@ -42,8 +72,8 @@
 
                 {{-- Reset Sort Button --}}
                 <div>
-                    <button type="button" wire:click="resetFilters" title="{{ __('main.reset_validate') }}"
-                        toggle-button class="kt-btn kt-btn-outline bg-white px-3 hover:bg-gray-50 transition-colors">
+                    <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}"
+                        toggle-button class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">
                         <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
                     </button>
                 </div>

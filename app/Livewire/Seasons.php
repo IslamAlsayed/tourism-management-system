@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\Season;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Traits\CustomColumns;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\WithSorting;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
@@ -13,12 +13,12 @@ use App\Traits\ExportsData;
 
 class Seasons extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
 
     public $search = '';
     public $totalCount = '';
     public $message = [];
-    public $filterAccommodations = '';
+    public $filterAccommodationId = '';
     public $accommodationsForSeasons = [];
     public $filterStatus = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
@@ -28,7 +28,7 @@ class Seasons extends Component
         $this->resetPage();
     }
 
-    public function updatingFilterAccommodations()
+    public function updatingFilterAccommodationId()
     {
         $this->resetPage();
     }
@@ -42,7 +42,7 @@ class Seasons extends Component
     {
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Season::class);
-        $this->accommodationsForSeasons = Season::with('accommodations:id,name')->get()->pluck('accommodations')->flatten()->unique('id')->sortBy('name')->values();
+        // $this->accommodationsForSeasons = Season::with('accommodation:id,name')->get()->pluck('accommodation')->flatten()->unique('id')->sortBy('name')->values();
         $this->resetPage();
     }
 
@@ -105,7 +105,7 @@ class Seasons extends Component
 
     public function resetFilters(): void
     {
-        $this->reset(['search', 'filterAccommodations', 'filterStatus']);
+        $this->reset(['search', 'filterAccommodationId', 'filterStatus']);
         $this->resetPage();
         $this->dispatch('reset-filters');
     }
@@ -114,11 +114,9 @@ class Seasons extends Component
     {
         $query = Season::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        if ($this->filterAccommodations && $this->filterAccommodations['payload']['value'] !== 'all') {
-            $query->whereHas('accommodations', function ($q) {
-                $q->where('accommodations.id', $this->filterAccommodations['payload']['value']);
-            });
-        }
+        // if ($this->filterAccommodationId && $this->filterAccommodationId['payload']['value'] !== 'all') {
+        //     $query->where('accommodation_id', $this->filterAccommodationId['payload']['value'] === 'active' ? true : false);
+        // }
         if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
             $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }

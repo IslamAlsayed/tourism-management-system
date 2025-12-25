@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Client;
 use App\Models\Region;
+use App\Models\Currency;
 use App\Models\Timezone;
 use App\Models\Nationality;
 use App\Traits\PhotoUploadTrait;
@@ -23,9 +24,10 @@ class ClientController extends Controller
     public function create()
     {
         $regions = Region::orderBy('name')->get();
+        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $nationalities = Nationality::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.clients.create', compact('regions', 'nationalities', 'timezones'));
+        return view('pages.dashboard.clients.create', compact('regions', 'currencies', 'nationalities', 'timezones'));
     }
 
     public function store(StoreRequest $request)
@@ -49,21 +51,17 @@ class ClientController extends Controller
             if ($request->has('save_and_add')) {
                 return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.client')]));
             }
-
             return redirect()->route('clients.index')->withSuccess(__('messages.type_created', ['type' => __('main.client')]));
         }
-
         return redirect()->route('clients.index')->withError(__('messages.type_creation_failed', ['type' => __('main.client')]));
     }
 
     public function show($id)
     {
         $client = Client::with(['region', 'subregion', 'country', 'state', 'city', 'nationality', 'creator', 'updater'])->find($id);
-
         if (!$client) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
         }
-
         return view('pages.dashboard.clients.show', compact('client'));
     }
 
@@ -74,15 +72,15 @@ class ClientController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
         }
         $regions = Region::orderBy('name')->get();
+        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $nationalities = Nationality::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.clients.edit', compact('client', 'regions', 'nationalities', 'timezones'));
+        return view('pages.dashboard.clients.edit', compact('client', 'regions', 'currencies', 'nationalities', 'timezones'));
     }
 
     public function update(UpdateRequest $request, $id)
     {
         $client = Client::find($id);
-
         if (!$client) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
         }
@@ -99,13 +97,10 @@ class ClientController extends Controller
 
         // Set updated_by
         $validated['updated_by'] = getActiveUser()->id;
-
         $updated = $client->update($validated);
-
         if ($updated) {
             return redirect()->route('clients.index')->withSuccess(__('messages.type_updated', ['type' => __('main.client')]));
         }
-
         return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.client')]));
     }
 
@@ -117,7 +112,7 @@ class ClientController extends Controller
         }
         $deleted = $client->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.client')]));
+            return redirect()->route('clients.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.client')]));
         }
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.client')]));
     }

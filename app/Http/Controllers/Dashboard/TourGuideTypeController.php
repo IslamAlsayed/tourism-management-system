@@ -10,8 +10,8 @@ use App\Models\TourGuideType;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TourGuideType\TourGuideTypeCreateRequest;
-use App\Http\Requests\TourGuideType\TourGuideTypeUpdateRequest;
+use App\Http\Requests\TourGuideType\StoreRequest;
+use App\Http\Requests\TourGuideType\UpdateRequest;
 
 class TourGuideTypeController extends Controller
 {
@@ -29,7 +29,7 @@ class TourGuideTypeController extends Controller
         return view('pages.dashboard.tour-guides-types.create', compact('currencies', 'regions'));
     }
 
-    public function store(TourGuideTypeCreateRequest $request)
+    public function store(StoreRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -100,10 +100,10 @@ class TourGuideTypeController extends Controller
         }
         $currencies = Currency::all();
         $regions = Region::all();
-        return view('pages.dashboard.tour-guides-types.edit', compact('currencies', 'regions'));
+        return view('pages.dashboard.tour-guides-types.edit', compact('tourGuideType', 'currencies', 'regions'));
     }
 
-    public function update(TourGuideTypeUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $tourGuideType = TourGuideType::find($id);
         if (!$tourGuideType) {
@@ -141,7 +141,7 @@ class TourGuideTypeController extends Controller
         }
         $deleted = $tourGuideType->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guide-type')]));
+            return redirect()->route('tour-guides-types.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guide-type')]));
         }
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.tour-guide-type')]));
     }

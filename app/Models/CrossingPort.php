@@ -23,41 +23,61 @@ class CrossingPort extends Model
     protected $fillable = [
         'id',
         'uuid',
+
+        // Basic Information
         'name',
         'name_ar',
         'type',
         'code',
+
+        // Location Information
         'region_id',
         'subregion_id',
         'country_id',
         'state_id',
         'city_id',
-        'description',
+        'address',
+
+        // Geographic coordinates
         'latitude',
         'longitude',
+
+        // Operating Information
+        'operating_days',
         'operating_hours',
         'is_24_7',
-        'is_active',
         'is_commercial',
         'is_passenger',
         'is_international',
+
+        // Visa and Immigration Policies
         'allows_visa_on_arrival',
         'nationality_policy',
         'departure_tax',
-        'departure_tax_currency',
-        'contact_phone',
+        'departure_tax_currency_id',
+
+        // Contact Information
         'email',
+        'contact_phone',
         'website',
+
+        // Display and Classification
         'sort_order',
         'is_major',
+
+        // Visa Requirements
         'visa_required',
         'visa_fee',
-        'visa_fee_currency',
+        'visa_fee_currency_id',
         'visa_duration',
         'visa_conditions',
         'visa_application_url',
         'visa_policy_source',
         'visa_last_update',
+
+        // Administrative
+        'is_active',
+        'description',
         'notes',
     ];
 
@@ -66,7 +86,7 @@ class CrossingPort extends Model
      */
     public function getRelationshipNames()
     {
-        return ['region', 'subregion', 'country', 'state', 'city'];
+        return ['departure_tax_currency', 'visa_fee_currency', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     /**
@@ -74,7 +94,7 @@ class CrossingPort extends Model
      */
     public function getExcludedColumns()
     {
-        return ['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'created_by', 'updated_by'];
+        return ['departure_tax_currency_id', 'visa_fee_currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'created_by', 'updated_by'];
     }
 
     /**
@@ -104,6 +124,16 @@ class CrossingPort extends Model
     /**
      * Relationships
      */
+    public function departure_tax_currency()
+    {
+        return $this->belongsTo(Currency::class, 'departure_tax_currency_id');
+    }
+
+    public function visa_fee_currency()
+    {
+        return $this->belongsTo(Currency::class, 'visa_fee_currency_id');
+    }
+
     public function region()
     {
         return $this->belongsTo(Region::class);
@@ -213,6 +243,12 @@ class CrossingPort extends Model
     public function getStatusLabel()
     {
         return $this->is_active ? 'Active' : 'Inactive';
+    }
+
+    // Get operating days formatted
+    public function getOperatingDaysAttribute()
+    {
+        return json_decode($this->attributes['operating_days'] ?? '[]', true);
     }
 
     // Get operating hours formatted

@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
-use App\Traits\BroadcastsRecordEvents;
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class City extends Model
 {
-    use HasSearch, HasUuid, BroadcastsRecordEvents;
+    use HasSearch, HasRichText, HasUuid, BroadcastsRecordEvents;
+
+    protected $richTextAttributes = [
+        'description',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',
@@ -20,6 +26,12 @@ class City extends Model
         'longitude',
         'wiki_data_id',
         'population',
+        'is_active',
+        'is_independent',
+        'is_developed',
+        'is_landlocked',
+        'description',
+        'notes',
         'timezone_id',
         'region_id',
         'subregion_id',
@@ -27,17 +39,11 @@ class City extends Model
         'state_id',
     ];
 
-    /**
-     * Get relationship names for eager loading
-     */
     public function getRelationshipNames()
     {
         return ['timezone', 'region', 'subregion', 'country', 'state'];
     }
 
-    /**
-     * Get columns to exclude from search/display
-     */
     public function getExcludedColumns()
     {
         return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id'];

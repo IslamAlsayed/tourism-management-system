@@ -26,247 +26,404 @@
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <div class="grid gap-4 lg:gap-6">
 
-            {{-- Basic Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        {{-- Name --}}
-                        <div>
-                            <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
-                            <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->name }}">
-                            @error('name')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Arabic Name --}}
-                        <div>
-                            <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                            <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->name_ar }}">
-                            @error('name_ar')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Code --}}
-                        <div>
-                            <label for="code" class="kt-label mb-2">{{ __('main.code') }}</label>
-                            <input type="text" name="code" id="code" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->code }}" placeholder="e.g., RUH, JED" disabled />
-                            @error('code')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Type --}}
-                        <div>
-                            <label for="crossings-ports-type" class="kt-label mb-2">{{ __('main.type') }}</label>
-                            <select name="type" id="crossings-ports-type" class="kt-input h-[45px]" special-search
-                                data-current-value="{{ $crossingPort->type }}" data-value="{{ $crossingPort->type }}">
-                                <option value="">--</option>
-                                @foreach ($crossing_port_types as $key => $type)
-                                    <option value="{{ $key }}"
-                                        {{ $crossingPort->type == $key ? 'selected' : '' }}>
-                                        {{ __('main.' . $type) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('type')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                {{-- Location Information --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.location')]) }}
+                        </h3>
                     </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            {{-- Regions [region, subregion, country, state, city] --}}
+                            @include('components.regions.edit', [
+                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
+                                'multiple' => false,
+                                'record' => $crossingPort,
+                            ])
 
-                    {{-- Description --}}
-                    @include('components.elements.input-text-editor', [
-                        'column' => 'description',
-                        'value' => $crossingPort->description,
-                    ])
-                </div>
-            </div>
+                            {{-- Latitude --}}
+                            <div>
+                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
+                                <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->latitude }}" step="any" min="-90" max="90"
+                                    placeholder="24.9576" />
+                                @error('latitude')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-            {{-- Location Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
-                        @include('components.regions.edit', [
-                            'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                            'multiple' => false,
-                            'record' => $crossingPort,
+                            {{-- Longitude --}}
+                            <div>
+                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
+                                <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->longitude }}" step="any" min="-180" max="180"
+                                    placeholder="46.6988" />
+                                @error('longitude')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- Address --}}
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'address',
+                            'value' => $crossingPort->address,
                         ])
+                    </div>
+                </div>
 
-                        {{-- Latitude --}}
-                        <div>
-                            <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                            <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->latitude }}" step="any" min="-90" max="90"
-                                placeholder="24.9576" />
-                            @error('latitude')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                {{-- Crossing Port Information --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.crossing_port')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            {{-- Name --}}
+                            <div>
+                                <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->name }}">
+                                @error('name')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                        {{-- Longitude --}}
-                        <div>
-                            <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                            <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->longitude }}" step="any" min="-180" max="180"
-                                placeholder="46.6988" />
-                            @error('longitude')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
+                            {{-- Arabic Name --}}
+                            <div>
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->name_ar }}">
+                                @error('name_ar')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Code --}}
+                            <div>
+                                <label for="code" class="kt-label mb-2">{{ __('main.code') }}</label>
+                                <input type="text" name="code" id="code" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->code }}" disabled readonly />
+                                @error('code')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Type --}}
+                            <div>
+                                <label for="crossings-ports-type" class="kt-label mb-2">{{ __('main.type') }}</label>
+                                <select name="type" id="crossings-ports-type" class="kt-input basic-single">
+                                    @foreach ($crossing_port_types as $type)
+                                        <option value="{{ $type }}"
+                                            {{ $crossingPort->type == $type ? 'selected' : '' }}>
+                                            {{ __('main.' . $type) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('type')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    {{-- Address --}}
-                         @include('components.elements.input-text-editor', [
-                        'column' => 'address',
-                        'value' => $crossingPort->address,
+                {{-- Operating Information --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.operating_information') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            {{-- Operating days --}}
+                            <div>
+                                <label for="operating_days" class="kt-label mb-2">{{ __('main.operating_days') }}</label>
+                                <select name="operating_days[]" id="operating_days" class="kt-select basic-multiple"
+                                    multiple>
+                                    @foreach (['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] as $days)
+                                        <option value="{{ $days }}"
+                                            {{ in_array($days, $crossingPort->operating_days ?? []) ? 'selected' : '' }}>
+                                            {{ __('main.' . $days) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('operating_days')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Operating Hours --}}
+                            <div>
+                                <label for="operating_hours" class="kt-label mb-2">{{ __('main.operating_hours') }}</label>
+                                <input type="text" name="operating_hours" id="operating_hours" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->operating_hours }}" placeholder="e.g., 24/7, 08:00-18:00">
+                                @error('operating_hours')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Sort Order --}}
+                            <div>
+                                <label for="sort_order" class="kt-label mb-2">{{ __('main.sort_order') }}</label>
+                                <input type="number" name="sort_order" id="sort_order" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->sort_order }}" min="0">
+                                @error('sort_order')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap mb-4" style="gap: 10px 40px;">
+                            {{-- Is 24/7 --}}
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_24_7" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_24_7',
+                                    'id' => 'is_24_7',
+                                    'value' => '1',
+                                    'checked' => $crossingPort->is_24_7,
+                                    'label' => __('main.is_24_7'),
+                                ])
+                            </div>
+
+                            {{-- Is Commercial --}}
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_commercial" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_commercial',
+                                    'id' => 'is_commercial',
+                                    'value' => '1',
+                                    'checked' => $crossingPort->is_commercial,
+                                    'label' => __('main.is_commercial'),
+                                ])
+                            </div>
+
+                            {{-- Is Passenger --}}
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_passenger" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_passenger',
+                                    'id' => 'is_passenger',
+                                    'value' => '1',
+                                    'checked' => $crossingPort->is_passenger,
+                                    'label' => __('main.is_passenger'),
+                                ])
+                            </div>
+
+                            {{-- Is International --}}
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_international" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_international',
+                                    'id' => 'is_international',
+                                    'value' => '1',
+                                    'checked' => $crossingPort->is_international,
+                                    'label' => __('main.is_international'),
+                                ])
+                            </div>
+
+                            {{-- Is Major --}}
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_major" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_major',
+                                    'id' => 'is_major',
+                                    'value' => '1',
+                                    'checked' => $crossingPort->is_major,
+                                    'label' => __('main.is_major'),
+                                ])
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Visa & Immigration Policies --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.visa_immigration_policies') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            {{-- Departure Tax --}}
+                            <div>
+                                <label for="departure_tax" class="kt-label mb-2">{{ __('main.departure_tax') }}</label>
+                                <input type="number" name="departure_tax" id="departure_tax" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->departure_tax }}" step="0.01" min="0">
+                                @error('departure_tax')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Departure Tax Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'departure_tax_currency',
+                                'currencies' => $currencies,
+                                'record' => $crossingPort,
+                            ])
+                        </div>
+
+                        {{-- Allows Visa on Arrival --}}
+                        <div class="flex items-center gap-3">
+                            <input type="hidden" name="allows_visa_on_arrival" value="0">
+                            @include('components.elements.checkbox-button', [
+                                'name' => 'allows_visa_on_arrival',
+                                'id' => 'allows_visa_on_arrival',
+                                'value' => '1',
+                                'checked' => $crossingPort->allows_visa_on_arrival,
+                                'label' => __('main.allows_visa_on_arrival'),
+                            ])
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Visa Requirements --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.visa_requirements') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            {{-- Visa Fee --}}
+                            <div>
+                                <label for="visa_fee" class="kt-label mb-2">{{ __('main.visa_fee') }}</label>
+                                <input type="number" name="visa_fee" id="visa_fee" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->visa_fee }}" step="0.01" min="0">
+                                @error('visa_fee')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Visa Fee Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'visa_fee_currency',
+                                'currencies' => $currencies,
+                                'record' => $crossingPort,
+                            ])
+
+                            {{-- Visa Duration --}}
+                            <div>
+                                <label for="visa_duration" class="kt-label mb-2">{{ __('main.visa_duration') }}
+                                    ({{ __('main.days') }})</label>
+                                <input type="number" name="visa_duration" id="visa_duration" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->visa_duration }}" min="1">
+                                @error('visa_duration')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Visa Application URL --}}
+                            <div>
+                                <label for="visa_application_url"
+                                    class="kt-label mb-2">{{ __('main.visa_application_url') }}</label>
+                                <input type="url" name="visa_application_url" id="visa_application_url"
+                                    class="kt-input h-[45px]" value="{{ $crossingPort->visa_application_url }}">
+                                @error('visa_application_url')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Visa Policy Source --}}
+                            <div>
+                                <label for="visa_policy_source"
+                                    class="kt-label mb-2">{{ __('main.visa_policy_source') }}</label>
+                                <input type="url" name="visa_policy_source" id="visa_policy_source"
+                                    class="kt-input h-[45px]" value="{{ $crossingPort->visa_policy_source }}">
+                                @error('visa_policy_source')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Visa Last Update --}}
+                            <div>
+                                <label for="visa_last_update"
+                                    class="kt-label mb-2">{{ __('main.visa_last_update') }}</label>
+                                <input type="date" name="visa_last_update" id="visa_last_update"
+                                    class="kt-input h-[45px]" value="{{ $crossingPort->visa_last_update }}">
+                                @error('visa_last_update')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- Visa Conditions --}}
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'visa_conditions',
+                            'value' => $crossingPort->visa_conditions,
+                        ])
+                    </div>
+                </div>
+
+                {{-- Contact Information --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.contact')]) }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            {{-- Email --}}
+                            <div>
+                                <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
+                                <input type="email" name="email" id="email" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->email }}">
+                                @error('email')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Contact Phone --}}
+                            <div>
+                                <label for="contact_phone" class="kt-label mb-2">{{ __('main.contact_phone') }}</label>
+                                <input type="text" name="contact_phone" id="contact_phone" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->contact_phone }}">
+                                @error('contact_phone')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Website --}}
+                            <div>
+                                <label for="website" class="kt-label mb-2">{{ __('main.website') }}</label>
+                                <input type="url" name="website" id="website" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->website }}">
+                                @error('website')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Description --}}
+                @include('components.elements.input-text-editor', [
+                    'column' => 'description',
+                    'value' => $crossingPort->description,
+                ])
+
+                {{-- Notes --}}
+                @include('components.elements.input-text-editor', [
+                    'column' => 'notes',
+                    'value' => $crossingPort->notes,
+                ])
+
+                <div class="flex items-center gap-3">
+                    <input type="hidden" name="is_active" value="0">
+                    @include('components.elements.checkbox-button', [
+                        'name' => 'is_active',
+                        'id' => 'is_active',
+                        'value' => '1',
+                        'checked' => $crossingPort->is_active,
+                        'label' => __('main.is_active'),
                     ])
                 </div>
+
+                {{-- Update Submit --}}
+                @include('components.elements.update-submit', ['models' => 'crossings-ports'])
             </div>
-
-            {{-- Operating Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.operating_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        {{-- Opening Time --}}
-                        <div>
-                            <label for="opening_time" class="kt-label mb-2">{{ __('main.opening_time') }}</label>
-                            <input type="time" name="opening_time" id="opening_time" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->opening_time }}">
-                            @error('opening_time')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Closing Time --}}
-                        <div>
-                            <label for="closing_time" class="kt-label mb-2">{{ __('main.closing_time') }}</label>
-                            <input type="time" name="closing_time" id="closing_time" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->closing_time }}">
-                            @error('closing_time')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Capacity --}}
-                        <div>
-                            <label for="capacity" class="kt-label mb-2">{{ __('main.capacity') }}</label>
-                            <input type="number" name="capacity" id="capacity" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->capacity }}" min="1"
-                                placeholder="{{ __('main.passengers_per_hour') }}" />
-                            @error('capacity')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Elevation (for airports) --}}
-                        <div>
-                            <label for="elevation" class="kt-label mb-2">{{ __('main.elevation') }}</label>
-                            <input type="text" name="elevation" id="elevation" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->elevation }}" placeholder="2049 ft" />
-                            @error('elevation')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Contact Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                        {{-- Phone --}}
-                        <div>
-                            <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
-                            <input type="text" name="phone" id="phone" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->phone }}">
-                            @error('phone')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Email --}}
-                        <div>
-                            <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
-                            <input type="email" name="email" id="email" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->email }}">
-                            @error('email')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {{-- Website --}}
-                        <div>
-                            <label for="website" class="kt-label mb-2">{{ __('main.website') }}</label>
-                            <input type="url" name="website" id="website" class="kt-input h-[45px]"
-                                value="{{ $crossingPort->website }}">
-                            @error('website')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Additional Information --}}
-            <div class="kt-card-body p-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                    {{-- Is Operational --}}
-                    <div class="flex items-center gap-3">
-                        <div class="flex items-center gap-3">
-                            <input type="hidden" name="is_operational" value="0">
-                            @include('components.elements.checkbox-button', [
-                                'name' => 'is_operational',
-                                'id' => 'is_operational',
-                                'value' => '1',
-                                'checked' => $crossingPort->is_operational,
-                                'label' => __('main.operational'),
-                            ])
-                        </div>
-                        @error('is_operational')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    {{-- Is 24 Hours --}}
-                    <div class="flex items-center gap-3">
-                        <div class="flex items-center gap-3">
-                            <input type="hidden" name="is_24_hours" value="0">
-                            @include('components.elements.checkbox-button', [
-                                'name' => 'is_24_hours',
-                                'id' => 'is_24_hours',
-                                'value' => '1',
-                                'checked' => $crossingPort->is_24_hours,
-                                'label' => __('main.is_24_hours'),
-                            ])
-                        </div>
-                        @error('is_24_hours')
-                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            @include('components.elements.update-submit', ['models' => 'crossings-ports'])
         </form>
     </div>
 @endsection
@@ -285,122 +442,3 @@
 @endpush
 
 @include('components.regions.script-cascading')
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            let crossingsPortsType = document.getElementById("crossings-ports-type");
-            let facilitiesParent = document.getElementById("facilities");
-            let servicesParent = document.getElementById("services");
-
-            crossingsPortsType.addEventListener('updatedSelect', (e) => {
-                let type = e.detail.value;
-                let facilitiesTypes = document.querySelectorAll(".facility_type");
-                let serviceTypes = document.querySelectorAll(".service_type");
-
-                facilitiesTypes.forEach((facility) => {
-                    let facilityType = facility.dataset.facilityType;
-
-                    if (type) {
-                        if (type == 'international_airport') {
-                            facilitiesParent.parentElement.style.display = 'block';
-                            if (facilityType == 'duty_free' || facilityType == 'vip_lounge' ||
-                                facilityType == 'restaurants' || facilityType ==
-                                'currency_exchange' ||
-                                facilityType == 'shops') {
-                                facility.style.display = 'flex';
-                            } else {
-                                facility.style.display = 'none';
-                                facility.querySelector('input[type="checkbox"]').checked = false;
-                            }
-                        } else if (type == 'domestic_airport') {
-                            facilitiesParent.parentElement.style.display = 'block';
-                            if (facilityType == 'restaurants' || facilityType ==
-                                'currency_exchange' ||
-                                facilityType == 'shops') {
-                                facility.style.display = 'flex';
-                            } else {
-                                facility.style.display = 'none';
-                                facility.querySelector('input[type="checkbox"]').checked =
-                                    false;
-                            }
-                        } else if (type == 'seaport') {
-                            facilitiesParent.parentElement.style.display = 'block';
-                            if (facilityType == 'cargo_handling' ||
-                                facilityType ==
-                                'passenger_terminal' || facilityType ==
-                                'parking') {
-                                facility.style.display = 'flex';
-                            } else {
-                                facility.style.display = 'none';
-                                facility.querySelector('input[type="checkbox"]')
-                                    .checked = false;
-                            }
-                        } else {
-                            facilitiesParent.parentElement.style.display = 'block';
-                            if (facilityType == 'customs' || facilityType == 'immigration' ||
-                                facilityType == 'security') {
-                                facility.style.display = 'flex';
-                            } else {
-                                facility.style.display = 'none';
-                                facility.querySelector('input[type="checkbox"]').checked = false;
-                            }
-                        }
-                    } else {
-                        facilitiesParent.parentElement.style.display = 'none';
-                        facilitiesTypes.forEach((facility) => {
-                            facility.style.display = 'none';
-                            facility.querySelector('input[type="checkbox"]').checked =
-                                false;
-                        });
-                    }
-                });
-
-                serviceTypes.forEach((service) => {
-                    let serviceType = service.dataset.serviceType;
-
-                    if (type) {
-                        if (type == 'international_airport' || type == 'domestic_airport') {
-                            servicesParent.parentElement.style.display = 'block';
-                            if (serviceType == 'baggage_handling' || serviceType ==
-                                'ground_services' ||
-                                serviceType == 'fueling') {
-                                service.style.display = 'flex';
-                            } else {
-                                service.style.display = 'none';
-                                service.querySelector('input[type="checkbox"]').checked = false;
-                            }
-                        } else if (type == 'seaport') {
-                            servicesParent.parentElement.style.display = 'block';
-                            if (serviceType == 'cargo_services' || serviceType ==
-                                'passenger_services' ||
-                                serviceType == 'ship_services') {
-                                service.style.display = 'flex';
-                            } else {
-                                service.style.display = 'none';
-                                service.querySelector('input[type="checkbox"]').checked = false;
-                            }
-                        } else {
-                            servicesParent.parentElement.style.display = 'block';
-                            if (serviceType == 'inspection_services' || serviceType ==
-                                'document_processing') {
-                                service.style.display = 'flex';
-                            } else {
-                                service.style.display = 'none';
-                                service.querySelector('input[type="checkbox"]').checked = false;
-                            }
-                        }
-                    } else {
-                        servicesParent.parentElement.style.display = 'none';
-                        servicesTypes.forEach((service) => {
-                            service.style.display = 'none';
-                            service.querySelector('input[type="checkbox"]').checked =
-                                false;
-                        });
-                    }
-                });
-
-            });
-        });
-    </script>
-@endpush

@@ -42,6 +42,12 @@ trait WithSorting
     protected function applySorting($query)
     {
         if (!empty($this->sortField) && !empty($this->sortDirection)) {
+            // Check if sortField is a relation (skip sorting for relations)
+            if (isset($this->relations) && in_array($this->sortField, $this->relations)) {
+                // Don't apply sorting for relation columns
+                return $query;
+            }
+
             $query->orderBy($this->sortField, $this->sortDirection);
         }
 

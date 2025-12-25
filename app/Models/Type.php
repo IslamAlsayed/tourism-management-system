@@ -24,11 +24,22 @@ class Type extends Model
         'name_ar',
         'description',
         'is_active',
+        // 'accommodation_id',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    // public function getRelationshipNames()
+    // {
+    //     return ['accommodation'];
+    // }
+
+    // public function getExcludedColumns()
+    // {
+    //     return ['accommodation_id'];
+    // }
 
     public function accommodations()
     {

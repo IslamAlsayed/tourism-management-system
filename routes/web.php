@@ -19,12 +19,14 @@ use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\ReportsController;
 use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\SettingsController;
+use App\Http\Controllers\Dashboard\TimezoneController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\MediaFileController;
 use App\Http\Controllers\Dashboard\SubregionController;
 use App\Http\Controllers\Dashboard\TourGuideController;
 use App\Http\Controllers\Admin\SidebarManagerController;
 use App\Http\Controllers\Dashboard\RestaurantController;
+use App\Http\Controllers\Dashboard\SupplementController;
 use App\Http\Controllers\Dashboard\ActivityLogController;
 use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\TouristSiteController;
@@ -33,15 +35,14 @@ use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\TourGuideTypeController;
 use App\Http\Controllers\Dashboard\TourGuideReviewController;
-use App\Http\Controllers\Dashboard\AccommodationRateController;
 use App\Http\Controllers\Dashboard\Transportation\BusTypeController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyController;
 use App\Http\Controllers\Dashboard\Transportation\VehicleController;
-use App\Http\Controllers\Dashboard\AccommodationSupplementController;
 use App\Http\Controllers\Dashboard\Transportation\DepartmentController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyBusTypeController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
+use App\Http\Controllers\ColumnPreferenceController;
 
 /*
 |----------------------|
@@ -90,6 +91,13 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     Route::get('/main-form', [DashboardController::class, 'mainForm'])->name('dashboard.mainForm');
 
+    // === COLUMN PREFERENCES ===
+    Route::prefix('columns')->name('columns.')->group(function () {
+        Route::post('/save', [ColumnPreferenceController::class, 'save'])->name('save');
+        Route::post('/toggle-all', [ColumnPreferenceController::class, 'toggleAll'])->name('toggle-all');
+        Route::post('/reset', [ColumnPreferenceController::class, 'reset'])->name('reset');
+    });
+
     // === LANGUAGES ===
     Route::get('languages/{locale}/locale', [SystemLanguageController::class, 'locale'])->name('system-languages.change');
     Route::resource('system-languages', SystemLanguageController::class)->names('system-languages');
@@ -113,8 +121,17 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('media-files', MediaFileController::class)->names('media-files');
     Route::post('media-files/bulk-delete', [MediaFileController::class, 'bulkDelete'])->name('media-files.bulk-delete');
 
+    // === TIMEZONE MANAGEMENT ===
+    Route::resource('timezones', TimezoneController::class)->names('timezones');
+
     // === CURRENCY MANAGEMENT ===
     Route::resource('currencies', CurrencyController::class)->names('currencies');
+
+    // === REGIONS MANAGEMENT ===
+    Route::resource('regions', RegionController::class)->names('regions');
+
+    // === SUBREGIONS MANAGEMENT ===
+    Route::resource('subregions', SubregionController::class)->names('subregions');
 
     // === COUNTRIES MANAGEMENT ===
     Route::resource('countries', CountryController::class)->names('countries');
@@ -124,12 +141,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === CITIES MANAGEMENT ===
     Route::resource('cities', CityController::class)->names('cities');
-
-    // === REGIONS MANAGEMENT ===
-    Route::resource('regions', RegionController::class)->names('regions');
-
-    // === SUBREGIONS MANAGEMENT ===
-    Route::resource('subregions', SubregionController::class)->names('subregions');
 
     // === NATIONALITIES MANAGEMENT ===
     Route::resource('nationalities', NationalityController::class)->names('nationalities');
@@ -158,19 +169,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('seasons', SeasonController::class)->names('seasons');
     Route::resource('rooms', RoomController::class)->names('rooms');
     Route::resource('meals', MealController::class)->names('meals');
-    Route::resource('accommodations-supplements', AccommodationSupplementController::class)->names('accommodations-supplements');
-
-    Route::prefix('accommodations-rates')->name('accommodations-rates.')->group(function () {
-        Route::get('/', [AccommodationRateController::class, 'index'])->name('index');
-        Route::get('/create-room', [AccommodationRateController::class, 'createRoomRate'])->name('create-room');
-        Route::post('/store-room', [AccommodationRateController::class, 'storeRoomRate'])->name('store-room');
-        Route::get('/edit-room/{id}', [AccommodationRateController::class, 'editRoomRate'])->name('room.edit');
-        Route::put('/update-room/{id}', [AccommodationRateController::class, 'updateRoomRate'])->name('update-room');
-        Route::get('/create-meal', [AccommodationRateController::class, 'createMealRate'])->name('create-meal');
-        Route::post('/store-meal', [AccommodationRateController::class, 'storeMealRate'])->name('store-meal');
-        Route::get('/edit-meal/{id}', [AccommodationRateController::class, 'editMealRate'])->name('meal.edit');
-        Route::put('/update-meal/{id}', [AccommodationRateController::class, 'updateMealRate'])->name('update-meal');
-    });
+    Route::resource('supplements', SupplementController::class)->names('supplements');
 
     // === PROFILE MANAGEMENT ===
     Route::prefix('profile')->name('profile.')->group(function () {

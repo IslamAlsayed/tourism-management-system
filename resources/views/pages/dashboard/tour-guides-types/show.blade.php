@@ -41,19 +41,48 @@
                                 <p class="text-sm text-secondary-foreground">{{ $tourGuideType->type ?: __('main.na') }}</p>
                             </div>
                         @endif
-                        @if ($tourGuideType->currency)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.currency') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuideType->currency->name }}
-                                    ({{ $tourGuideType->currency->code }})</p>
-                            </div>
-                        @endif
                         @if ($tourGuideType->price)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.price') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     {{ number_format($tourGuideType->price, 2) }} {{ $tourGuideType->currency?->code }}
                                 </p>
+                            </div>
+                        @endif
+                        @if ($tourGuideType->currency_id)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.currency') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $tourGuideType->currency->name . ' - ' . $tourGuideType->currency->code }}
+                                </p>
+                            </div>
+                        @endif
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $tourGuideType->id,
+                                    'modelType' => '\\App\\Models\\TourGuideType',
+                                    'field' => 'is_active',
+                                    'value' => (bool) $tourGuideType->is_active,
+                                    'table' => 'tour-guides-types',
+                                ])
+                            </div>
+                        </div>
+                        @if ($tourGuideType->description)
+                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
+                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $tourGuideType->description !!}
+                                </div>
+                            </div>
+                        @endif
+                        @if ($tourGuideType->notes)
+                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
+                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $tourGuideType->notes !!}
+                                </div>
                             </div>
                         @endif
                         {{-- @if ($tourGuideType->all_states)
@@ -87,42 +116,58 @@
             <!-- Location Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.location')]) }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div class="flex flex-wrap justify-between gap-10">
                         @if ($tourGuideType->region)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuideType->region->name }}</p>
+                                <a href="{{ route('regions.show', $tourGuideType->region->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuideType->region->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
                         @if ($tourGuideType->subregion)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuideType->subregion->name }}</p>
+                                <a href="{{ route('subregions.show', $tourGuideType->subregion->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuideType->subregion->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
                         @if ($tourGuideType->country)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuideType->country?->name ?: __('main.na') }}</p>
+                                <a href="{{ route('countries.show', $tourGuideType->country->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuideType->country->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
                         @if ($tourGuideType->state)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.state') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuideType->state?->name ?: __('main.na') }}</p>
+                                <a href="{{ route('states.show', $tourGuideType->state->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuideType->state->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
                         @if ($tourGuideType->city)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.city') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuideType->city?->name ?: __('main.na') }}
-                                </p>
+                                <a href="{{ route('cities.show', $tourGuideType->city->id) }}"
+                                    class="block text-sm text-primary underline">
+                                    {{ $tourGuideType->city->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
                             </div>
                         @endif
                     </div>
@@ -170,11 +215,9 @@
                     'models' => 'tour-guides-types',
                     'id' => $tourGuideType->id,
                 ])
-                @livewire('delete-bottom', [
-                    'type' => 'tour-guide-type',
-                    'modelId' => $tourGuideType->id,
-                    'modelType' => '\\App\\Models\\TourGuideType',
-                    'table' => 'tourGuideTypes',
+                @include('components.elements.delete-form', [
+                    'model' => 'tour-guides-types',
+                    'id' => $tourGuideType->id,
                 ])
                 <a href="{{ route('tour-guides-types.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tour_guides_types')]) }}

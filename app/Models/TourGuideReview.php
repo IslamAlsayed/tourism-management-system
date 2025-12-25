@@ -2,13 +2,21 @@
 
 namespace App\Models;
 
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
+use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TourGuideReview extends Model
 {
-    use HasSearch, HasUuid;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents;
+
+    protected $richTextAttributes = [
+        'description',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',
@@ -16,19 +24,16 @@ class TourGuideReview extends Model
         'tour_guide_id',
         'rating',
         'review',
+        'is_active',
+        'description',
+        'notes',
     ];
 
-    /**
-     * Get relationship names for eager loading
-     */
     public function getRelationshipNames()
     {
         return ['tour_guide'];
     }
 
-    /**
-     * Get columns to exclude from search/display
-     */
     public function getExcludedColumns()
     {
         return ['tour_guide_id'];

@@ -143,11 +143,9 @@
                     'models' => 'users',
                     'id' => $user->id,
                 ])
-                @livewire('delete-bottom', [
-                    'type' => 'user',
-                    'modelId' => $user->id,
-                    'modelType' => '\\App\\Models\\User',
-                    'table' => 'users',
+                @include('components.elements.delete-form', [
+                    'model' => 'users',
+                    'id' => $user->id,
                 ])
                 <a href="{{ route('users.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.users')]) }}

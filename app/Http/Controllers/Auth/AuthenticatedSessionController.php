@@ -60,6 +60,7 @@ class AuthenticatedSessionController extends Controller
                 'expired' => true
             ])->log(__('messages.user_logged_out', ['name' => $user->name]));
         }
+        event(new UserLoggedEvent($user, 'offline'));
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

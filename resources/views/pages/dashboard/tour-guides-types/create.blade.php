@@ -66,7 +66,7 @@
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
+                                <select name="currency_id" id="currency_id" class="kt-select basic-single">
                                     <option value="">--</option>
                                     @foreach ($currencies as $currency)
                                         <option value="{{ $currency->id }}"
@@ -87,68 +87,34 @@
                             ])
                         </div>
 
-                        <!-- Save Submit Buttons -->
+                        <!-- Description -->
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'description',
+                            'value' => old('description'),
+                        ])
+
+                        <!-- Notes -->
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'notes',
+                            'value' => old('notes'),
+                        ])
+
+                        <div class="flex flex-wrap mb-4" style="gap: 10px 40px;">
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_active" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_active',
+                                    'id' => 'is_active',
+                                    'value' => '1',
+                                    'checked' => 1,
+                                    'label' => __('main.active'),
+                                ])
+                            </div>
+                        </div>
+
+                        <!-- Save Submit -->
                         @include('components.elements.save-submit', ['models' => 'tour-guides-types'])
                     </form>
-                </div>
-            </div>
-
-            <!-- Geographic Info -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.geographic_info') }}</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-geolocation text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.gender')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.gender'), 'type2' => __('main.tour-guide-type')]) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.country')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.country'), 'type2' => __('main.tour-guide-type')]) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.currency')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.currency'), 'type2' => __('main.tour-guide-type')]) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

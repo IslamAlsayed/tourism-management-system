@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('state_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->boolean('is_active')->nullable()->default(true);
+            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

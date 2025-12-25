@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Currency;
+use App\Models\RichText;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -11,6 +12,7 @@ class CurrencySeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
+        RichText::truncate();
         Currency::truncate();
         Schema::enableForeignKeyConstraints();
 

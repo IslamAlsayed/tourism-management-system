@@ -14,12 +14,15 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'model_id' => 'nullable|string|max:255',
+            'model_type' => 'nullable|string|max:255',
             'name' => 'nullable|string|max:255',
             'name_ar' => 'nullable|string|max:255',
             'season_from' => 'nullable|date',
             'season_to' => 'nullable|date|after:season_from',
-            'description' => 'nullable|string|max:1000',
             'is_active' => 'boolean',
+            'description' => 'nullable|string|max:1000',
+            'notes' => 'nullable|string|max:1000',
         ];
     }
 }

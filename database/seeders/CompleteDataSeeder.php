@@ -2,19 +2,18 @@
 
 namespace Database\Seeders;
 
-use ZipStream\Time;
 use App\Models\City;
 use App\Models\Type;
 use App\Models\State;
 use App\Models\Region;
 use App\Models\Country;
-use App\Models\Currency;
-use App\Models\Language;
+use App\Models\RichText;
 use App\Models\Timezone;
 use App\Models\Subregion;
 use App\Models\TourGuide;
 use App\Models\Restaurant;
 use App\Models\Nationality;
+use App\Models\TourGuideReview;
 use App\Models\TourGuideType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -28,6 +27,7 @@ class CompleteDataSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
+        RichText::truncate();
         City::truncate();
         Country::truncate();
         Nationality::truncate();
@@ -40,10 +40,6 @@ class CompleteDataSeeder extends Seeder
         Type::truncate();
         Schema::enableForeignKeyConstraints();
 
-        // ============================================
-        // 1. Base Data (No Dependencies)
-        // ============================================
-
         // Types
         $types = [
             ['name' => 'Hotel', 'name_ar' => 'فندق'],
@@ -52,10 +48,6 @@ class CompleteDataSeeder extends Seeder
         foreach ($types as $typeData) {
             Type::create($typeData);
         }
-
-        // ============================================
-        // 2. Geographical Hierarchy
-        // ============================================
 
         // Regions
         $regions = [
@@ -137,66 +129,35 @@ class CompleteDataSeeder extends Seeder
 
         // Cities
         $cities = [
-            ['name' => 'Cairo', 'name_ar' => 'القاهرة', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 9500000, 'latitude' => 30.0444, 'longitude' => 31.2357],
-            ['name' => 'Giza', 'name_ar' => 'الجيزة', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[1]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 4000000, 'latitude' => 30.0131, 'longitude' => 31.2089],
-            ['name' => 'Amman', 'name_ar' => 'عمان', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[2]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 4000000, 'latitude' => 31.9454, 'longitude' => 35.9284],
-            ['name' => 'Aqaba', 'name_ar' => 'العقبة', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[3]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 150000, 'latitude' => 29.5320, 'longitude' => 35.0063],
+            // Cairo State Cities
+            ['name' => 'Nasr City', 'name_ar' => 'مدينة نصر', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 2500000, 'latitude' => 30.0444, 'longitude' => 31.3547],
+            ['name' => 'Heliopolis', 'name_ar' => 'مصر الجديدة', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 1800000, 'latitude' => 30.0880, 'longitude' => 31.3220],
+            ['name' => 'Maadi', 'name_ar' => 'المعادي', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 750000, 'latitude' => 29.9602, 'longitude' => 31.2569],
+            // Giza State Cities
+            ['name' => '6th of October', 'name_ar' => '6 أكتوبر', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[1]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 650000, 'latitude' => 29.9334, 'longitude' => 30.9166],
+            ['name' => 'Dokki', 'name_ar' => 'الدقي', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[1]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 500000, 'latitude' => 30.0385, 'longitude' => 31.2121],
+            ['name' => 'Haram', 'name_ar' => 'الهرم', 'timezone_id' => Timezone::where('name', 'Africa/Cairo')->first()?->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[1]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'population' => 850000, 'latitude' => 29.9897, 'longitude' => 31.1689],
+            // Amman State Cities
+            ['name' => 'Abdali', 'name_ar' => 'العبدلي', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[2]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 450000, 'latitude' => 31.9632, 'longitude' => 35.9104],
+            ['name' => 'Jabal Amman', 'name_ar' => 'جبل عمان', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[2]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 380000, 'latitude' => 31.9539, 'longitude' => 35.9106],
+            ['name' => 'Zarqa', 'name_ar' => 'الزرقاء', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[2]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 635160, 'latitude' => 32.0727, 'longitude' => 36.0880],
+            // Aqaba State Cities
+            ['name' => 'Aqaba City', 'name_ar' => 'مدينة العقبة', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[3]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 120000, 'latitude' => 29.5320, 'longitude' => 35.0063],
+            ['name' => 'Wadi Rum', 'name_ar' => 'وادي رم', 'timezone_id' => Timezone::where('name', 'Asia/Amman')->first()?->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[3]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'population' => 15000, 'latitude' => 29.5756, 'longitude' => 35.4164],
         ];
         $createdCities = [];
         foreach ($cities as $cityData) {
             $createdCities[] = City::create($cityData);
         }
 
-        // ============================================
-        // 3. People & Organizations
-        // ============================================
-
         // Nationalities
         $nationalities = [
-            ['name' => 'Egyptian', 'name_ar' => 'مصري', 'country_id' => $createdCountries[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'is_active' => true],
-            ['name' => 'Jordanian', 'name_ar' => 'أردني', 'country_id' => $createdCountries[1]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'is_active' => true],
+            ['name' => 'Egyptian', 'name_ar' => 'مصري', 'country_id' => $createdCountries[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'state_id' => $createdStates[1]->id, 'city_id' => $createdCities[1]->id, 'is_active' => true],
+            ['name' => 'Jordanian', 'name_ar' => 'أردني', 'country_id' => $createdCountries[1]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'state_id' => $createdStates[0]->id, 'city_id' => $createdCities[0]->id, 'is_active' => true],
         ];
         $createdNationalities = [];
         foreach ($nationalities as $nationalityData) {
             $createdNationalities[] = Nationality::create($nationalityData);
-        }
-
-        // Restaurants
-        $restaurants = [
-            [
-                'name' => 'Nile Maxim Restaurant',
-                'name_ar' => 'مطعم نايل ماكسيم',
-                'specialty' => 'Egyptian Cuisine',
-                'phone_01' => '+20-2-25735696',
-                'email_01' => 'info@nilemaxim.com',
-                'website' => 'https://nilemaxim.com',
-                'is_active' => true,
-                'rating' => 4.5,
-                'type_id' => 2,
-                'region_id' => $createdRegions[1]->id,
-                'subregion_id' => $createdSubregions[1]->id,
-                'country_id' => $createdCountries[0]->id,
-                'state_id' => $createdStates[0]->id,
-                'city_id' => $createdCities[0]->id,
-            ],
-            [
-                'name' => 'Hashem Restaurant',
-                'name_ar' => 'مطعم هاشم',
-                'specialty' => 'Traditional Jordanian',
-                'phone_01' => '+962-6-4636440',
-                'email_01' => 'info@hashemrestaurant.com',
-                'is_active' => true,
-                'rating' => 4.7,
-                'type_id' => 2,
-                'region_id' => $createdRegions[0]->id,
-                'subregion_id' => $createdSubregions[0]->id,
-                'country_id' => $createdCountries[1]->id,
-                'state_id' => $createdStates[2]->id,
-                'city_id' => $createdCities[2]->id,
-            ],
-        ];
-        foreach ($restaurants as $restaurantData) {
-            Restaurant::create($restaurantData);
         }
 
         // Tour Guide Types
@@ -250,8 +211,26 @@ class CompleteDataSeeder extends Seeder
                 'hd_day_fees' => 45,
             ],
         ];
+        $createdTourGuides = [];
         foreach ($tourGuides as $guideData) {
-            TourGuide::create($guideData);
+            $createdTourGuides[] = TourGuide::create($guideData);
+        }
+
+        // Tour Guides Reviews
+        $tourGuidesReviews = [
+            [
+                'tour_guide_id' => $createdTourGuides[0]->id,
+                'rating' => rand(1, 5),
+                'review' => fake()->paragraph(3),
+            ],
+            [
+                'tour_guide_id' => $createdTourGuides[1]->id,
+                'rating' => rand(1, 5),
+                'review' => fake()->paragraph(3),
+            ],
+        ];
+        foreach ($tourGuidesReviews as $guideData) {
+            TourGuideReview::create($guideData);
         }
     }
 }

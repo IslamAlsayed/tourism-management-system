@@ -26,13 +26,15 @@ return new class extends Migration {
             $table->integer('level')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
-            $table->boolean('is_active')->nullable()->default(false);
             $table->boolean('is_independent')->nullable()->default(false);
             $table->boolean('is_developed')->nullable()->default(false);
             $table->boolean('is_landlocked')->nullable()->default(false);
+            $table->boolean('is_active')->nullable()->default(true);
+            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
 
-            $table->index(['name', 'name_ar', 'country_id']);
+            $table->index(['name', 'name_ar']);
         });
     }
 

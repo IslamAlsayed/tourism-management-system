@@ -13,7 +13,8 @@ return new class extends Migration {
         Schema::create('supplements', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique()->nullable();
-            $table->foreignId('accommodation_id')->constrained('accommodations')->onDelete('cascade');
+            $table->unsignedBigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
 
             $table->string('name');
             $table->string('name_ar')->nullable();
@@ -28,7 +29,7 @@ return new class extends Migration {
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
 
-            $table->index('name');
+            $table->index(['name', 'name_ar']);
         });
     }
 

@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->unsignedBigInteger('type_id')->nullable();
+            $table->unsignedBigInteger('currency_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
@@ -36,7 +37,6 @@ return new class extends Migration {
             $table->string('mobile')->nullable();
             $table->string('website')->nullable();
             $table->string('photo')->nullable();
-            $table->text('notes')->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('wheelchair_accessible')->default(true);
             $table->boolean('free_wifi')->default(false);
@@ -46,6 +46,8 @@ return new class extends Migration {
             $table->boolean('indoor')->default(false);
             $table->boolean('outdoor')->default(false);
             $table->boolean('spa')->default(false);
+            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

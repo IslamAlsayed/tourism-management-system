@@ -37,23 +37,22 @@
                         @include('components.input-image', ['column' => 'country', 'columnName' => 'flag'])
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            <!-- Country Name (Arabic) -->
+                            <!-- Country Name (English) -->
                             <div class="">
-                                <label for="name_ar" class="kt-label mb-2">{{ __('main.country_name_arabic') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar') }}">
-                                @error('name_ar')
+                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ old('name') }}">
+                                @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Country Name (English) -->
+                            <!-- Country Name (Arabic) -->
                             <div class="">
-                                <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.country_name_english') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
-                                    value="{{ old('name') }}">
-                                @error('name')
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}">
+                                @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -70,8 +69,7 @@
 
                             <!-- Country Code (ISO 2) -->
                             <div class="">
-                                <label for="iso2"
-                                    class="kt-label required mb-2">{{ __('main.country_code_iso2') }}</label>
+                                <label for="iso2" class="kt-label required mb-2">{{ __('main.iso2') }}</label>
                                 <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" maxLength="2"
                                     required value="{{ old('iso2') }}">
                                 @error('iso2')
@@ -81,10 +79,20 @@
 
                             <!-- Country Code (ISO 3) -->
                             <div class="">
-                                <label for="iso3" class="kt-label mb-2">{{ __('main.country_code_iso3') }}</label>
+                                <label for="iso3" class="kt-label mb-2">{{ __('main.iso3') }}</label>
                                 <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" maxLength="3"
                                     value="{{ old('iso3') }}">
                                 @error('iso3')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Numeric Code -->
+                            <div class="">
+                                <label for="numeric_code" class="kt-label mb-2">{{ __('main.numeric_code') }}</label>
+                                <input type="number" name="numeric_code" id="numeric_code" class="kt-input h-[45px]"
+                                    value="{{ old('numeric_code') }}">
+                                @error('numeric_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -99,47 +107,22 @@
                                 @enderror
                             </div>
 
-                            <!-- Currency -->
+                            <!-- TLD (Top Level Domain) -->
                             <div class="">
-                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
-                                    {{ __('main.currency') }}
-                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="currency_id" id="currency_id" class="kt-select h-[45px]" special-search>
-                                    <option value="">--</option>
-                                    @foreach ($currencies as $currency)
-                                        <option value="{{ $currency->id }}"
-                                            {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
-                                            {{ $currency->code }} - {{ $currency->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('currency_id')
+                                <label for="tld" class="kt-label mb-2">{{ __('main.tld') }}</label>
+                                <input type="text" name="tld" id="tld" class="kt-input h-[45px]" maxLength="10"
+                                    value="{{ old('tld') }}" placeholder=".com, .eg, .sa">
+                                @error('tld')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Language -->
+                            <!-- Native Name -->
                             <div class="">
-                                <label for="language_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.language') }}
-                                    <a href="{{ route('languages.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="language_id" id="language_id" class="kt-select h-[45px]" special-search
-                                    required>
-                                    <option value="">--</option>
-                                    @foreach ($languages as $language)
-                                        <option value="{{ $language->id }}"
-                                            {{ old('language_id') == $language->id ? 'selected' : '' }}>
-                                            {{ $language->name }}{{ $language->name_ar ? ' - ' . $language->name_ar : '' }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('language_id')
+                                <label for="native" class="kt-label mb-2">{{ __('main.native') }}</label>
+                                <input type="text" name="native" id="native" class="kt-input h-[45px]"
+                                    value="{{ old('native') }}">
+                                @error('native')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -153,13 +136,88 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
 
-                            {{-- Regions [region, subregion, state, city] --}}
-                            @include('components.regions.create', [
-                                'levels' => ['region', 'subregion', 'state', 'city'],
-                                'multiple' => true,
-                            ])
+                        <div class="kt-card mb-4">
+                            <div class="kt-card-header">
+                                <h3 class="kt-card-title">
+                                    {{ __('main.location_information', ['type' => __('main.location')]) }}</h3>
+                            </div>
+                            <div class="kt-card-body p-4 pb-0">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                                    {{-- Regions [region, subregion, state, city] --}}
+                                    @include('components.regions.create', [
+                                        'levels' => ['region', 'subregion', 'state', 'city'],
+                                        'multiple' => true,
+                                    ])
 
+                                    <!-- Timezone -->
+                                    <div class="">
+                                        <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
+                                        <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
+                                            <option value="" selected disabled></option>
+                                            @foreach ($timezones as $zone)
+                                                <option value="{{ $zone['id'] }}"
+                                                    {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
+                                                    {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('timezone_id')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Currency -->
+                                    <div class="">
+                                        <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
+                                            {{ __('main.currency') }}
+                                            <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+                                                {{ __('main.add') }}
+                                            </a>
+                                        </label>
+                                        <select name="currency_id" id="currency_id" class="kt-select basic-single">
+                                            <option value="" selected disabled></option>
+                                            @foreach ($currencies as $currency)
+                                                <option value="{{ $currency->id }}"
+                                                    {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
+                                                    {{ $currency->code }} - {{ $currency->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('currency_id')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Language -->
+                                    <div class="">
+                                        <label for="language_id"
+                                            class="kt-label required mb-2 flex items-center justify-between">
+                                            {{ __('main.language') }}
+                                            <a href="{{ route('languages.create') }}" class="text-blue-600 text-2sm">
+                                                {{ __('main.add') }}
+                                            </a>
+                                        </label>
+                                        <select name="language_id" id="language_id" class="kt-select basic-single"
+                                            required>
+                                            <option value="" selected disabled></option>
+                                            @foreach ($languages as $language)
+                                                <option value="{{ $language->id }}"
+                                                    {{ old('language_id') == $language->id ? 'selected' : '' }}>
+                                                    {{ $language->name }}{{ $language->name_ar ? ' - ' . $language->name_ar : '' }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('language_id')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Area (km²) -->
                             <div class="">
                                 <label for="area" class="kt-label mb-2">{{ __('main.area') }}</label>
@@ -189,66 +247,58 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <!-- Timezone -->
-                            <div class="">
-                                <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone_id" id="timezone_id" class="kt-select h-[45px]" special-search>
-                                    <option value="">--</option>
-                                    @foreach ($timezones as $zone)
-                                        <option value="{{ $zone['id'] }}"
-                                            {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
-                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('timezone_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
                         </div>
 
+                        {{-- Description --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'description',
+                            'value' => old('description'),
+                        ])
+
+                        {{-- Notes --}}
+                        @include('components.elements.input-text-editor', [
+                            'name' => 'notes',
+                            'value' => old('notes'),
+                        ])
+
                         <!-- Country Settings -->
-                        <div class="space-y-4 mb-4">
-                            <label class="kt-label mb-2">{{ __('main.country_settings') }}</label>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_active" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'is_active',
-                                        'id' => 'is_active',
-                                        'value' => '1',
-                                        'checked' => 1,
-                                        'label' => __('main.activate_country'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_independent" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'is_independent',
-                                        'id' => 'is_independent',
-                                        'value' => '1',
-                                        'label' => __('main.independent_country'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_developed" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'is_developed',
-                                        'id' => 'is_developed',
-                                        'value' => '1',
-                                        'label' => __('main.developed_country'),
-                                    ])
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_landlocked" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'is_landlocked',
-                                        'id' => 'is_landlocked',
-                                        'value' => '1',
-                                        'label' => __('main.landlocked_country'),
-                                    ])
-                                </div>
+                        <div class="flex flex-wrap gap-10 mb-4">
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_active" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_active',
+                                    'id' => 'is_active',
+                                    'value' => '1',
+                                    'checked' => 1,
+                                    'label' => __('main.activate_country'),
+                                ])
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_independent" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_independent',
+                                    'id' => 'is_independent',
+                                    'value' => '1',
+                                    'label' => __('main.independent_country'),
+                                ])
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_developed" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_developed',
+                                    'id' => 'is_developed',
+                                    'value' => '1',
+                                    'label' => __('main.developed_country'),
+                                ])
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_landlocked" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_landlocked',
+                                    'id' => 'is_landlocked',
+                                    'value' => '1',
+                                    'label' => __('main.landlocked_country'),
+                                ])
                             </div>
                         </div>
 
@@ -261,7 +311,7 @@
             <!-- Geographic Info -->
             <div class="kt-card">
                 <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.geographic_info') }}</h3>
+                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.geographic')]) }}</h3>
                 </div>
                 <div class="kt-card-body p-2">
                     <div class="space-y-3">

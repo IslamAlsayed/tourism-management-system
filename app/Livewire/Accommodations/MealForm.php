@@ -20,14 +20,16 @@ class MealForm extends Component
         $this->currencies = Currency::pluck('code', 'id')->toArray();
 
         // If editing and has existing meals, load them
-        if ($accommodation && $accommodation->mealRates()->exists()) {
-            $existingMeals = $accommodation->mealRates()
-                ->with('meal')
+        if ($accommodation && $accommodation->meals()->exists()) {
+            $existingMeals = $accommodation->meals()
                 ->get()
                 ->groupBy('meal_id')
-                ->map(function ($rates, $mealId) {
+                ->map(function ($rates) {
                     $firstRate = $rates->first();
-                    $meal = $firstRate->meal;
+                    $meal = $firstRate ? $firstRate->meal : null;
+                    if (!$firstRate || !$meal) {
+                        return null;
+                    }
                     return [
                         'id' => uniqid(),
                         'meal_id' => $meal->id,
@@ -40,7 +42,7 @@ class MealForm extends Component
                         'is_active' => $meal->is_active ?? 1,
                         'notes' => $meal->notes,
                     ];
-                })->values()->toArray();
+                })->filter()->values()->toArray();
 
             if (!empty($existingMeals)) {
                 $this->meals = $existingMeals;

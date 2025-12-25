@@ -6,14 +6,14 @@ use Livewire\Component;
 use App\Models\Restaurant;
 use Livewire\WithPagination;
 use App\Traits\WithSorting;
-use App\Traits\CustomColumns;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 use App\Traits\ExportsData;
 
 class Restaurants extends Component
 {
-    use WithPagination, CustomPagination, CustomColumns, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -94,10 +94,6 @@ class Restaurants extends Component
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
-        // foreach ($data as $restaurant) {
-        //     $restaurant['states'] = $restaurant->states();
-        //     $restaurant['cities'] = $restaurant->cities();
-        // }
         return view('livewire.restaurants', ['data' => $data, 'totalCount' => $this->totalCount ?: Restaurant::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

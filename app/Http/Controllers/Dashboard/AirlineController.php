@@ -36,21 +36,9 @@ class AirlineController extends Controller
         return redirect()->route('airlines.index')->withError(__('messages.type_creation_failed', ['type' => __('main.airline')]));
     }
 
-    // public function store(StoreRequest $request)
-    // {
-    //     try {
-    //         $data = $request->validated();
-    //         $airline = Airline::create($data);
-    //         return redirect()->route('airlines.index')->withSuccess(__('main.airline_created_successfully'));
-    //     } catch (\Exception $e) {
-    //         return back()->withError(__('main.error_occurred'))->withInput();
-    //     }
-    // }
-
-    // public function show(Airline $airline)
     public function show($id)
     {
-        $airline = Airline::with(['region', 'subregion', 'country', 'state', 'city'])->find($id);
+        $airline = Airline::with(['timezone', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$airline) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
         }
@@ -82,17 +70,6 @@ class AirlineController extends Controller
         return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.airline')]));
     }
 
-    // public function update(UpdateRequest $request, Airline $airline)
-    // {
-    //     try {
-    //         $data = $request->validated();
-    //         $airline->update($data);
-    //         return redirect()->route('airlines.index')->withSuccess(__('main.airline_updated_successfully'));
-    //     } catch (\Exception $e) {
-    //         return back()->withError(__('main.error_occurred'))->withInput();
-    //     }
-    // }
-
     public function destroy($id)
     {
         $airline = Airline::find($id);
@@ -101,7 +78,7 @@ class AirlineController extends Controller
         }
         $deleted = $airline->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.airline')]));
+            return redirect()->route('airlines.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.airline')]));
         }
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.airline')]));
     }

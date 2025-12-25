@@ -2,13 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\TouristSite;
-use App\Models\User;
-use App\Models\Region;
-use App\Models\Subregion;
-use App\Models\Country;
-use App\Models\State;
 use App\Models\City;
+use App\Models\User;
+use App\Models\State;
+use App\Models\Region;
+use App\Models\Country;
+use App\Models\Currency;
+use App\Models\Subregion;
+use App\Models\TouristSite;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,6 +28,7 @@ class TouristSiteFactory extends Factory
     {
         return [
             // Location information
+            'currency_id' => Currency::inRandomOrder()->first()?->id,
             'region_id' => Region::inRandomOrder()->first()?->id,
             'subregion_id' => Subregion::inRandomOrder()->first()?->id,
             'country_id' => Country::inRandomOrder()->first()?->id,
@@ -59,13 +61,11 @@ class TouristSiteFactory extends Factory
                 'منطقة المحافظة على الطبيعة'
             ]),
             'description' => $this->faker->paragraphs(3, true),
-            'description_ar' => 'وصف باللغة العربية للموقع السياحي يتضمن تفاصيل مهمة عن المكان وتاريخه وأهميته الثقافية والسياحية.',
             'site_type' => $this->faker->randomElement(['historical', 'natural', 'cultural', 'religious', 'recreational', 'archaeological', 'museum', 'park', 'other']),
             'category' => $this->faker->randomElement(['monument', 'landmark', 'attraction', 'site', 'facility']),
 
             // Geographical Details
             'address' => $this->faker->address(),
-            'address_ar' => $this->faker->optional(0.7)->address(),
             'latitude' => $this->faker->latitude(20, 35),
             'longitude' => $this->faker->longitude(25, 55),
             'postal_code' => $this->faker->optional(0.6)->postcode(),
@@ -76,7 +76,6 @@ class TouristSiteFactory extends Factory
             'entry_fee_student' => $this->faker->randomFloat(2, 0, 35),
             'entry_fee_senior' => $this->faker->randomFloat(2, 0, 40),
             'entry_fee_group' => $this->faker->randomFloat(2, 0, 200),
-            'currency' => $this->faker->randomElement(['USD', 'EUR', 'SAR', 'AED', 'EGP']),
             'is_free_entry' => $this->faker->boolean(30),
 
             // Operating Hours

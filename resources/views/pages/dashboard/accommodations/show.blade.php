@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('title', __('main.type_details', ['type' => __('main.accommodation')]))
+
 @push('styles')
     <style>
         /* Define the size of the map container */
@@ -10,6 +11,7 @@
         }
     </style>
 @endpush
+
 @push('scripts')
     <script>
         function initMap() {
@@ -65,7 +67,7 @@
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
 
-            <!-- Basic Information -->
+            <!-- Accommodation Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.accommodation')]) }}</h3>
@@ -95,31 +97,19 @@
                                     <a href="{{ route('types.show', $accommodation->type->id) }}"
                                         class="kt-badge kt-badge-primary">
                                         #{{ $accommodation->type->id }} | {{ $accommodation->type->name }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                     </a>
-                                </div>
-                            </div>
-                        @endif
-                        @if ($accommodation->seasons)
-                            <div class="lg:col-span-2">
-                                <label class="kt-label mb-1">{{ __('main.seasons') }}</label>
-                                <div class="flex flex-wrap gap-2">
-                                    @forelse($accommodation->seasons as $season)
-                                        <a href="{{ route('seasons.show', $season->season->id) }}"
-                                            class="kt-badge kt-badge-info">
-                                            #{{ $season->season->id }} | {{ $season->season->name }}
-                                        </a>
-                                    @empty
-                                        <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
-                                    @endforelse
                                 </div>
                             </div>
                         @endif
                         @if ($accommodation->classification)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.classification') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $accommodation->classification ?: __('main.na') }}
-                                </p>
+                                <div>
+                                    <span class="kt-badge kt-badge-primary">
+                                        {{ $accommodation->classification ?: __('main.na') }}
+                                    </span>
+                                </div>
                             </div>
                         @endif
                         @if ($accommodation->stars)
@@ -130,6 +120,21 @@
                                         <i
                                             class="fas fa-star {{ $i <= $accommodation->stars ? 'text-yellow-500' : 'text-gray-300' }} text-sm"></i>
                                     @endfor
+                                </div>
+                            </div>
+                        @endif
+                        @if ($accommodation->seasons)
+                            <div class="col-span-full">
+                                <label class="kt-label mb-1">{{ __('main.seasons') }}</label>
+                                <div class="flex flex-wrap gap-2">
+                                    @forelse($accommodation->seasons as $season)
+                                        <a href="{{ route('seasons.show', $season->id) }}" class="kt-badge kt-badge-info">
+                                            #{{ $season->id }} | {{ $season->name }}
+                                            <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                        </a>
+                                    @empty
+                                        <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                                    @endforelse
                                 </div>
                             </div>
                         @endif
@@ -145,6 +150,14 @@
                                 ])
                             </div>
                         </div>
+                        @if ($accommodation->description)
+                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
+                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $accommodation->description !!}
+                                </div>
+                            </div>
+                        @endif
                         @if ($accommodation->notes)
                             <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
                                 <label class="kt-label mb-1">{{ __('main.notes') }}</label>
@@ -163,70 +176,80 @@
                     <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        @if ($accommodation->region)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                    <div class="flex flex-wrap justify-between gap-10">
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                            @if ($accommodation->region)
                                 <a href="{{ route('regions.show', $accommodation->region->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $accommodation->region->name }}
+                                    {{ $accommodation->region->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            </div>
-                        @endif
-                        @if ($accommodation->subregion)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                            @if ($accommodation->subregion)
                                 <a href="{{ route('subregions.show', $accommodation->subregion->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $accommodation->subregion->name }}
+                                    {{ $accommodation->subregion->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            </div>
-                        @endif
-                        @if ($accommodation->country)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.country') }}</label>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.country') }}</label>
+                            @if ($accommodation->country)
                                 <a href="{{ route('countries.show', $accommodation->country->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $accommodation->country->name }}
+                                    {{ $accommodation->country->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            </div>
-                        @endif
-                        @if ($accommodation->state)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.state') }}</label>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.state') }}</label>
+                            @if ($accommodation->state)
                                 <a href="{{ route('states.show', $accommodation->state->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $accommodation->state->name }}
+                                    {{ $accommodation->state->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            </div>
-                        @endif
-                        @if ($accommodation->city)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.city') }}</label>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.city') }}</label>
+                            @if ($accommodation->city)
                                 <a href="{{ route('cities.show', $accommodation->city->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $accommodation->city->name }}
+                                    {{ $accommodation->city->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            </div>
-                        @endif
-                        @if ($accommodation->street)
-                            <div class="col-span-2">
-                                <label class="kt-label mb-1">{{ __('main.street_address') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $accommodation->street }}</p>
-                            </div>
-                        @endif
-                        @if ($accommodation->box)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.box') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $accommodation->box }}</p>
-                            </div>
-                        @endif
-                        @if ($accommodation->postal_code)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.postal_code') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $accommodation->postal_code }}</p>
-                            </div>
-                        @endif
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
+                        </div>
+                        <div class="col-span-2">
+                            <label class="kt-label mb-1">{{ __('main.street_address') }}</label>
+                            <p class="text-sm text-secondary-foreground">{{ $accommodation->street ?? __('main.na') }}</p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.box') }}</label>
+                            <p class="text-sm text-secondary-foreground">{{ $accommodation->box ?? __('main.na') }}</p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.postal_code') }}</label>
+                            <p class="text-sm text-secondary-foreground">{{ $accommodation->postal_code ?? __('main.na') }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -340,7 +363,7 @@
                             $accommodation->contact_position ||
                             $accommodation->contact_mobile ||
                             $accommodation->contact_email)
-                        <div class="border-t pt-4 mt-4">
+                        <div class="border-custom-t pt-4 mt-4">
                             <h4 class="text-lg font-medium mb-4">{{ __('main.contact_person') }}</h4>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                 @if ($accommodation->contact_person)
@@ -446,7 +469,8 @@
                         (<span class="font-semibold text-primary">{{ $accommodation->seasons->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('seasons.create') }}" class="kt-btn kt-btn-sm kt-btn-primary">
+                        <a href="{{ route('seasons.create', [Str::random(120), 'type' => 'accommodation']) }}"
+                            class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.season')]) }}
                         </a>
@@ -454,11 +478,9 @@
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-4">
-                        @forelse($accommodation->seasons as $accommodationSeason)
-                            @php
-                                $season = $accommodationSeason->season;
-                            @endphp
-                            <div wire:key="season-{{ $season->id }}" class="kt-card bg-white rounded-lg p-4 pt-2">
+                        @forelse($accommodation->seasons as $season)
+                            <div wire:key="season-{{ $season->id }}"
+                                class="kt-card bg-white rounded-lg p-4 pt-2 record-seasons-{{ $season->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -500,11 +522,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($season->notes)
-                                    <div class="lg:col-span-2 mt-2 border-t pt-2">
-                                        <label class="kt-label mb-1">{{ __('main.notes') }}</label>
+                                @if ($season->description)
+                                    <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
+                                        <label class="kt-label mb-1">{{ __('main.description') }}</label>
                                         <div class="text-sm text-secondary-foreground prose max-w-none">
-                                            {!! $season->notes !!}</div>
+                                            {!! $season->description !!}</div>
                                     </div>
                                 @endif
                                 <div class="lg:col-span-2 flex gap-2 mt-2">
@@ -516,16 +538,18 @@
                                         'models' => 'seasons',
                                         'id' => $season->id,
                                     ])
+                                    @livewire('delete-bottom', [
+                                        'type' => 'seasons',
+                                        'modelId' => $season->id,
+                                        'modelType' => '\\App\\Models\\Season',
+                                        'table' => 'seasons',
+                                    ])
                                 </div>
                             </div>
                         @empty
                             <div class="col-span-2 text-center py-8 text-secondary-foreground">
                                 <i class="ki-filled ki-information text-4xl mb-2"></i>
                                 <p>{{ __('main.no_data_available') }}</p>
-                                <a href="{{ route('seasons.create') }}" class="kt-btn kt-btn-sm kt-btn-primary mt-4">
-                                    <i class="ki-filled ki-plus text-sm me-1"></i>
-                                    {{ __('main.add_first_season') }}
-                                </a>
                             </div>
                         @endforelse
                     </div>
@@ -537,7 +561,7 @@
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">
                         {{ __('main.rooms') }}
-                        (<span class="font-semibold text-primary">{{ $accommodation->roomRates->count() }}</span>)
+                        (<span class="font-semibold text-primary">{{ $accommodation->rooms->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
                         <a href="{{ route('rooms.create') }}" class="kt-btn kt-btn-sm kt-btn-primary">
@@ -548,16 +572,9 @@
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-4">
-                        @php
-                            $rooms = $accommodation->roomRates
-                                ->groupBy('room_id')
-                                ->map(function ($rates) {
-                                    return $rates->first()->room;
-                                })
-                                ->unique('id');
-                        @endphp
-                        @forelse($rooms as $room)
-                            <div wire:key="room-{{ $room->id }}" class="kt-card bg-white rounded-lg p-4 pt-2">
+                        @forelse($accommodation->rooms as $room)
+                            <div wire:key="room-{{ $room->id }}"
+                                class="kt-card bg-white rounded-lg p-4 pt-2 record-rooms-{{ $room->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -579,7 +596,8 @@
                                     @if ($room->occupancy_details)
                                         <div>
                                             <label class="kt-label mb-1">{{ __('main.occupancy_details') }}</label>
-                                            <p class="text-sm text-secondary-foreground">{{ $room->occupancy_details }}
+                                            <p class="text-sm text-secondary-foreground">
+                                                {{ $room->occupancy_details }}
                                             </p>
                                         </div>
                                     @endif
@@ -599,88 +617,81 @@
                                     </div>
                                 </div>
 
-                                {{-- Room Rates by Season --}}
-                                @php
-                                    $roomRates = $accommodation->roomRates->where('room_id', $room->id);
-                                @endphp
-                                @if ($roomRates->isNotEmpty())
-                                    <div class="lg:col-span-2 mt-3 border-t pt-3">
-                                        <label class="kt-label mb-2">{{ __('main.pricing_by_season') }}</label>
-                                        <div class="space-y-2">
-                                            @foreach ($roomRates as $rate)
-                                                @php
-                                                    $season = $rate->season;
-                                                    $currency = $rate->currency;
-                                                @endphp
-                                                <div class="bg-blue-50 p-3 rounded-lg">
-                                                    <div class="flex items-center justify-between mb-2">
-                                                        <span class="font-medium text-sm">{{ $season->name }}</span>
-                                                        <span
-                                                            class="text-xs text-gray-500">{{ $season->season_from->format('Y-m-d') }}
-                                                            → {{ $season->season_to->format('Y-m-d') }}</span>
-                                                    </div>
-                                                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 text-xs">
-                                                        <div>
-                                                            <span
-                                                                class="text-gray-600">{{ __('main.price_per_person_double') }}:</span>
-                                                            <span
-                                                                class="font-semibold">{{ number_format($rate->price_per_person_double, 2) }}
-                                                                {{ $currency->code }}</span>
-                                                        </div>
-                                                        @if ($rate->single_room_supplement)
-                                                            <div>
-                                                                <span
-                                                                    class="text-gray-600">{{ __('main.single_room_supplement') }}:</span>
-                                                                <span
-                                                                    class="font-semibold">{{ number_format($rate->single_room_supplement, 2) }}
-                                                                    {{ $currency->code }}</span>
-                                                            </div>
-                                                        @endif
-                                                        @if ($rate->triple_room_discount)
-                                                            <div>
-                                                                <span
-                                                                    class="text-gray-600">{{ __('main.triple_room_discount') }}:</span>
-                                                                <span
-                                                                    class="font-semibold">{{ number_format($rate->triple_room_discount, 2) }}
-                                                                    {{ $currency->code }}</span>
-                                                            </div>
-                                                        @endif
-                                                        @if ($rate->third_person_price)
-                                                            <div>
-                                                                <span
-                                                                    class="text-gray-600">{{ __('main.third_person_price') }}:</span>
-                                                                <span
-                                                                    class="font-semibold">{{ number_format($rate->third_person_price, 2) }}
-                                                                    {{ $currency->code }}</span>
-                                                            </div>
-                                                        @endif
-                                                        @if ($rate->extra_bed_price)
-                                                            <div>
-                                                                <span
-                                                                    class="text-gray-600">{{ __('main.extra_bed_price') }}:</span>
-                                                                <span
-                                                                    class="font-semibold">{{ number_format($rate->extra_bed_price, 2) }}
-                                                                    {{ $currency->code }}</span>
-                                                            </div>
-                                                        @endif
-                                                        @if ($rate->sea_view_supplement)
-                                                            <div>
-                                                                <span
-                                                                    class="text-gray-600">{{ __('main.sea_view_supplement') }}:</span>
-                                                                <span
-                                                                    class="font-semibold">{{ number_format($rate->sea_view_supplement, 2) }}
-                                                                    {{ $currency->code }}</span>
-                                                            </div>
-                                                        @endif
-                                                    </div>
+                                {{-- Room Pricing Information --}}
+                                @if ($room->season || $room->price_per_person_double)
+                                    <div class="lg:col-span-2 mt-3 border-custom-t pt-3">
+                                        <label
+                                            class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
+                                        <div class="bg-blue-50 p-3 rounded-lg">
+                                            @if ($room->season)
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="font-medium text-sm">{{ $room->season->name }}</span>
+                                                    <span
+                                                        class="text-xs text-gray-500">{{ $room->season->season_from->format('Y-m-d') }}
+                                                        → {{ $room->season->season_to->format('Y-m-d') }}</span>
                                                 </div>
-                                            @endforeach
+                                            @endif
+                                            <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 text-xs">
+                                                @if ($room->price_per_person_double)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.price_per_person_double') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($room->price_per_person_double, 2) }}
+                                                            {{ $room->currency?->code }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($room->single_room_supplement)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.single_room_supplement') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($room->single_room_supplement, 2) }}
+                                                            {{ $room->currency?->code }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($room->triple_room_discount)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.triple_room_discount') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($room->triple_room_discount, 2) }}
+                                                            {{ $room->currency?->code }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($room->third_person_price)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.third_person_price') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($room->third_person_price, 2) }}
+                                                            {{ $room->currency?->code }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($room->extra_bed_price)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.extra_bed_price') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($room->extra_bed_price, 2) }}
+                                                            {{ $room->currency?->code }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($room->sea_view_supplement)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.sea_view_supplement') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($room->sea_view_supplement, 2) }}
+                                                            {{ $room->currency?->code }}</span>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
-
                                 @if ($room->description)
-                                    <div class="lg:col-span-2 mt-2 border-t pt-2">
+                                    <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
                                         <label class="kt-label mb-1">{{ __('main.description') }}</label>
                                         <div class="text-sm text-secondary-foreground prose max-w-none">
                                             {!! $room->description !!}</div>
@@ -695,16 +706,18 @@
                                         'models' => 'rooms',
                                         'id' => $room->id,
                                     ])
+                                    @livewire('delete-bottom', [
+                                        'type' => 'rooms',
+                                        'modelId' => $room->id,
+                                        'modelType' => '\\App\\Models\\Room',
+                                        'table' => 'rooms',
+                                    ])
                                 </div>
                             </div>
                         @empty
                             <div class="col-span-2 text-center py-8 text-secondary-foreground">
                                 <i class="ki-filled ki-information text-4xl mb-2"></i>
                                 <p>{{ __('main.no_data_available') }}</p>
-                                <a href="{{ route('rooms.create') }}" class="kt-btn kt-btn-sm kt-btn-primary mt-4">
-                                    <i class="ki-filled ki-plus text-sm me-1"></i>
-                                    {{ __('main.add_first_room') }}
-                                </a>
                             </div>
                         @endforelse
                     </div>
@@ -716,7 +729,7 @@
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">
                         {{ __('main.meals') }}
-                        (<span class="font-semibold text-primary">{{ $accommodation->mealRates->count() }}</span>)
+                        (<span class="font-semibold text-primary">{{ $accommodation->meals->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
                         <a href="{{ route('meals.create') }}" class="kt-btn kt-btn-sm kt-btn-primary">
@@ -727,16 +740,9 @@
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-4">
-                        @php
-                            $meals = $accommodation->mealRates
-                                ->groupBy('meal_id')
-                                ->map(function ($rates) {
-                                    return $rates->first()->meal;
-                                })
-                                ->unique('id');
-                        @endphp
-                        @forelse($meals as $meal)
-                            <div wire:key="meal-{{ $meal->id }}" class="kt-card bg-white rounded-lg p-4 pt-2">
+                        @forelse($accommodation->meals as $meal)
+                            <div wire:key="meal-{{ $meal->id }}"
+                                class="kt-card bg-white rounded-lg p-4 pt-2 record-meals-{{ $meal->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -777,53 +783,47 @@
                                     </div>
                                 </div>
 
-                                {{-- Meal Rates by Season --}}
-                                @php
-                                    $mealRates = $accommodation->mealRates->where('meal_id', $meal->id);
-                                @endphp
-                                @if ($mealRates->isNotEmpty())
-                                    <div class="lg:col-span-2 mt-3 border-t pt-3">
-                                        <label class="kt-label mb-2">{{ __('main.pricing_by_season') }}</label>
-                                        <div class="space-y-2">
-                                            @foreach ($mealRates as $rate)
-                                                @php
-                                                    $season = $rate->season;
-                                                    $currency = $rate->currency;
-                                                @endphp
-                                                <div class="bg-blue-50 p-3 rounded-lg">
-                                                    <div class="flex items-center justify-between mb-2">
-                                                        <span class="font-medium text-sm">{{ $season->name }}</span>
-                                                        <span
-                                                            class="text-xs text-gray-500">{{ $season->season_from->format('Y-m-d') }}
-                                                            → {{ $season->season_to->format('Y-m-d') }}</span>
-                                                    </div>
-                                                    <div class="flex items-center gap-4 text-sm">
-                                                        <div>
-                                                            <span class="text-gray-600">{{ __('main.price') }}:</span>
-                                                            <span
-                                                                class="font-semibold text-lg">{{ number_format($rate->price, 2) }}
-                                                                {{ $currency->code }}</span>
-                                                        </div>
-                                                        @if ($rate->is_included)
-                                                            <span
-                                                                class="kt-badge kt-badge-success">{{ __('main.included') }}</span>
-                                                        @endif
-                                                        @if ($rate->is_supplement)
-                                                            <span
-                                                                class="kt-badge kt-badge-info">{{ __('main.supplement') }}</span>
-                                                        @endif
-                                                    </div>
+                                {{-- Meal Pricing Information --}}
+                                @if ($meal->season || $meal->price)
+                                    <div class="lg:col-span-2 mt-3 border-custom-t pt-3">
+                                        <label
+                                            class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
+                                        <div class="bg-blue-50 p-3 rounded-lg">
+                                            @if ($meal->season)
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="font-medium text-sm">{{ $meal->season->name }}</span>
+                                                    <span
+                                                        class="text-xs text-gray-500">{{ $meal->season->season_from->format('Y-m-d') }}
+                                                        → {{ $meal->season->season_to->format('Y-m-d') }}</span>
                                                 </div>
-                                            @endforeach
+                                            @endif
+                                            <div class="flex items-center gap-4 text-sm">
+                                                @if ($meal->price)
+                                                    <div>
+                                                        <span class="text-gray-600">{{ __('main.price') }}:</span>
+                                                        <span
+                                                            class="font-semibold text-lg">{{ number_format($meal->price, 2) }}
+                                                            {{ $meal->currency?->code }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($meal->is_included)
+                                                    <span
+                                                        class="kt-badge kt-badge-success">{{ __('main.included') }}</span>
+                                                @endif
+                                                @if ($meal->is_supplement)
+                                                    <span
+                                                        class="kt-badge kt-badge-info">{{ __('main.supplement') }}</span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
 
-                                @if ($meal->notes)
-                                    <div class="lg:col-span-2 mt-2 border-t pt-2">
-                                        <label class="kt-label mb-1">{{ __('main.notes') }}</label>
+                                @if ($meal->description)
+                                    <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
+                                        <label class="kt-label mb-1">{{ __('main.description') }}</label>
                                         <div class="text-sm text-secondary-foreground prose max-w-none">
-                                            {!! $meal->notes !!}</div>
+                                            {!! $meal->description !!}</div>
                                     </div>
                                 @endif
                                 <div class="lg:col-span-2 flex gap-2 mt-2">
@@ -835,16 +835,18 @@
                                         'models' => 'meals',
                                         'id' => $meal->id,
                                     ])
+                                    @livewire('delete-bottom', [
+                                        'type' => 'meals',
+                                        'modelId' => $meal->id,
+                                        'modelType' => '\\App\\Models\\Meal',
+                                        'table' => 'meals',
+                                    ])
                                 </div>
                             </div>
                         @empty
                             <div class="col-span-2 text-center py-8 text-secondary-foreground">
                                 <i class="ki-filled ki-information text-4xl mb-2"></i>
                                 <p>{{ __('main.no_data_available') }}</p>
-                                <a href="{{ route('meals.create') }}" class="kt-btn kt-btn-sm kt-btn-primary mt-4">
-                                    <i class="ki-filled ki-plus text-sm me-1"></i>
-                                    {{ __('main.add_first_meal') }}
-                                </a>
                             </div>
                         @endforelse
                     </div>
@@ -859,7 +861,7 @@
                         (<span class="font-semibold text-primary">{{ $accommodation->supplements->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('accommodations-supplements.create', ['accommodation_id' => $accommodation->id]) }}"
+                        <a href="{{ route('supplements.create', ['accommodation_id' => $accommodation->id]) }}"
                             class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.supplement')]) }}
@@ -870,7 +872,7 @@
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($accommodation->supplements as $supplement)
                             <div wire:key="supplement-{{ $supplement->id }}"
-                                class="kt-card bg-white rounded-lg p-4 pt-2">
+                                class="kt-card bg-white rounded-lg p-4 pt-2 record-supplements-{{ $supplement->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -910,10 +912,10 @@
                                             <div class="flex items-center gap-2">
                                                 @livewire('toggle-switch', [
                                                     'modelId' => $supplement->id,
-                                                    'modelType' => '\\App\\Models\\AccommodationSupplement',
+                                                    'modelType' => '\\App\\Models\\Supplement',
                                                     'field' => 'is_mandatory',
                                                     'value' => (bool) $supplement->is_mandatory,
-                                                    'table' => 'accommodations-supplements',
+                                                    'table' => 'supplements',
                                                 ])
                                             </div>
                                         </div>
@@ -922,30 +924,36 @@
                                             <div class="flex items-center gap-2">
                                                 @livewire('toggle-switch', [
                                                     'modelId' => $supplement->id,
-                                                    'modelType' => '\\App\\Models\\AccommodationSupplement',
+                                                    'modelType' => '\\App\\Models\\Supplement',
                                                     'field' => 'is_active',
                                                     'value' => (bool) $supplement->is_active,
-                                                    'table' => 'accommodations-supplements',
+                                                    'table' => 'supplements',
                                                 ])
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @if ($supplement->notes)
-                                    <div class="lg:col-span-2 mt-2 border-t pt-2">
-                                        <label class="kt-label mb-1">{{ __('main.notes') }}</label>
+                                @if ($supplement->description)
+                                    <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
+                                        <label class="kt-label mb-1">{{ __('main.description') }}</label>
                                         <div class="text-sm text-secondary-foreground prose max-w-none">
-                                            {!! $supplement->notes !!}</div>
+                                            {!! $supplement->description !!}</div>
                                     </div>
                                 @endif
                                 <div class="lg:col-span-2 flex gap-2 mt-2">
                                     @include('components.elements.show-button', [
-                                        'models' => 'accommodations-supplements',
+                                        'models' => 'supplements',
                                         'id' => $supplement->id,
                                     ])
                                     @include('components.elements.edit-button', [
-                                        'models' => 'accommodations-supplements',
+                                        'models' => 'supplements',
                                         'id' => $supplement->id,
+                                    ])
+                                    @livewire('delete-bottom', [
+                                        'type' => 'supplements',
+                                        'modelId' => $supplement->id,
+                                        'modelType' => '\\App\\Models\\Supplement',
+                                        'table' => 'supplements',
                                     ])
                                 </div>
                             </div>
@@ -953,11 +961,6 @@
                             <div class="col-span-2 text-center py-8 text-secondary-foreground">
                                 <i class="ki-filled ki-information text-4xl mb-2"></i>
                                 <p>{{ __('main.no_supplements_available') }}</p>
-                                <a href="{{ route('accommodations-supplements.create', ['accommodation_id' => $accommodation->id]) }}"
-                                    class="kt-btn kt-btn-sm kt-btn-primary mt-4">
-                                    <i class="ki-filled ki-plus text-sm me-1"></i>
-                                    {{ __('main.add_first_supplement') }}
-                                </a>
                             </div>
                         @endforelse
                     </div>
@@ -967,17 +970,15 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'accommodations-supplements',
-                    'id' => $supplement->id,
+                    'models' => 'accommodations',
+                    'id' => $accommodation->id,
                 ])
-                @livewire('delete-bottom', [
-                    'type' => 'accommodations-supplement',
-                    'modelId' => $supplement->id,
-                    'modelType' => '\\App\\Models\\Supplement',
-                    'table' => 'supplements',
+                @include('components.elements.delete-form', [
+                    'model' => 'accommodations',
+                    'id' => $accommodation->id,
                 ])
-                <a href="{{ route('accommodations-supplements.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.accommodations-supplements')]) }}
+                <a href="{{ route('accommodations.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_types', ['types' => __('main.accommodations')]) }}
                 </a>
             </div>
         </div>

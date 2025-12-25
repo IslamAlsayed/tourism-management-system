@@ -43,21 +43,21 @@ class UpdateRequest extends FormRequest
 
             // Seasons Array
             'seasons' => 'nullable|array',
-            'seasons.*.name' => 'required|string|max:255',
+            'seasons.*.name' => 'nullable|string|max:255',
             'seasons.*.name_ar' => 'nullable|string|max:255',
-            'seasons.*.season_from' => 'required|date',
-            'seasons.*.season_to' => 'required|date|after:seasons.*.season_from',
+            'seasons.*.season_from' => 'nullable|date',
+            'seasons.*.season_to' => 'nullable|date|after:seasons.*.season_from',
             'seasons.*.notes' => 'nullable|string|max:5000',
             'seasons.*.is_active' => 'nullable|boolean',
 
             // Rooms Array
             'rooms' => 'nullable|array',
-            'rooms.*.name' => 'required|string|max:255',
+            'rooms.*.name' => 'nullable|string|max:255',
             'rooms.*.name_ar' => 'nullable|string|max:255',
             'rooms.*.max_occupancy' => 'nullable|integer|min:1',
             'rooms.*.occupancy_details' => 'nullable|string|max:500',
-            'rooms.*.currency_id' => 'required|exists:currencies,id',
-            'rooms.*.price_per_person_double' => 'required|numeric|min:0',
+            'rooms.*.currency_id' => 'nullable|exists:currencies,id',
+            'rooms.*.price_per_person_double' => 'nullable|numeric|min:0',
             'rooms.*.single_room_supplement' => 'nullable|numeric|min:0',
             'rooms.*.triple_room_discount' => 'nullable|numeric|min:0',
             'rooms.*.third_person_price' => 'nullable|numeric|min:0',
@@ -68,10 +68,10 @@ class UpdateRequest extends FormRequest
 
             // Meals Array
             'meals' => 'nullable|array',
-            'meals.*.name' => 'required|string|max:255',
+            'meals.*.name' => 'nullable|string|max:255',
             'meals.*.name_ar' => 'nullable|string|max:255',
-            'meals.*.currency_id' => 'required|exists:currencies,id',
-            'meals.*.price' => 'required|numeric|min:0',
+            'meals.*.currency_id' => 'nullable|exists:currencies,id',
+            'meals.*.price' => 'nullable|numeric|min:0',
             'meals.*.is_included' => 'nullable|boolean',
             'meals.*.is_supplement' => 'nullable|boolean',
             'meals.*.is_active' => 'nullable|boolean',
@@ -79,10 +79,10 @@ class UpdateRequest extends FormRequest
 
             // Supplements Array
             'supplements' => 'nullable|array',
-            'supplements.*.name' => 'required|string|max:255',
+            'supplements.*.name' => 'nullable|string|max:255',
             'supplements.*.name_ar' => 'nullable|string|max:255',
-            'supplements.*.currency_id' => 'required|exists:currencies,id',
-            'supplements.*.price' => 'required|numeric|min:0',
+            'supplements.*.currency_id' => 'nullable|exists:currencies,id',
+            'supplements.*.price' => 'nullable|numeric|min:0',
             'supplements.*.price_type' => 'nullable|string|in:per_person,per_room,per_night,one_time',
             'supplements.*.is_mandatory' => 'nullable|boolean',
             'supplements.*.is_active' => 'nullable|boolean',

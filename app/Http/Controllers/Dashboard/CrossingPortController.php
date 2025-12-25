@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Region;
+use App\Models\Currency;
 use App\Models\CrossingPort;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CrossingPort\CrossingPortCreateRequest;
-use App\Http\Requests\CrossingPort\CrossingPortUpdateRequest;
+use App\Http\Requests\CrossingPort\StoreRequest;
+use App\Http\Requests\CrossingPort\UpdateRequest;
 
 class CrossingPortController extends Controller
 {
@@ -17,12 +18,13 @@ class CrossingPortController extends Controller
 
     public function create()
     {
-        $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
         $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.crossings-ports.create', compact('crossing_port_types', 'regions'));
+        $currencies = Currency::orderBy('code')->get();
+        $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
+        return view('pages.dashboard.crossings-ports.create', compact('regions', 'currencies', 'crossing_port_types'));
     }
 
-    public function store(CrossingPortCreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $validated = $request->validated();
 
@@ -46,7 +48,7 @@ class CrossingPortController extends Controller
 
     public function show($id)
     {
-        $crossingPort = CrossingPort::with(['region', 'subregion', 'country', 'state', 'city'])->find($id);
+        $crossingPort = CrossingPort::with(['departure_tax_currency', 'visa_fee_currency', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
         if (!$crossingPort) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         }
@@ -59,12 +61,13 @@ class CrossingPortController extends Controller
         if (!$crossingPort) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         }
-        $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
         $regions = Region::orderBy('name')->get();
-        return view('pages.dashboard.crossings-ports.edit', compact('crossingPort', 'crossing_port_types', 'regions'));
+        $currencies = Currency::orderBy('code')->get();
+        $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
+        return view('pages.dashboard.crossings-ports.edit', compact('crossingPort', 'regions', 'currencies', 'crossing_port_types'));
     }
 
-    public function update(CrossingPortUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $crossingPort = CrossingPort::find($id);
         if (!$crossingPort) {
@@ -95,7 +98,7 @@ class CrossingPortController extends Controller
         }
         $deleted = $crossingPort->delete();
         if ($deleted) {
-            return redirect()->back()->withSuccess(__('messages.type_deleted', ['type' => __('main.crossing_port')]));
+            return redirect()->route('crossings-ports.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.crossing_port')]));
         }
         return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.crossing_port')]));
     }

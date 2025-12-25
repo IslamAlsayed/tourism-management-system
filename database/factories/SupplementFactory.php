@@ -31,15 +31,25 @@ class SupplementFactory extends Factory
 
         $supplement = fake()->randomElement($supplements);
 
+        // Randomly choose between Restaurant or Accommodation
+        $modelType = fake()->randomElement([
+            \App\Models\Restaurant::class,
+            \App\Models\Accommodation::class,
+        ]);
+        $modelInstance = $modelType::inRandomOrder()->first();
+
         return [
-            'accommodation_id' => \App\Models\Accommodation::inRandomOrder()->first()?->id ?? null,
+            'model_id' => $modelInstance?->id,
+            'model_type' => $modelInstance ? $modelType : null,
+
             'name' => $supplement['name'],
             'name_ar' => $supplement['name_ar'],
             'description' => fake()->paragraph(2),
-            'description_ar' => fake()->paragraph(2),
-            'category' => $supplement['category'],
+            // 'description_ar' => fake()->paragraph(2),
+            // 'category' => $supplement['category'],
             'price' => fake()->randomFloat(2, 10, 200),
-            'is_per_person' => fake()->boolean(60),
+            // 'is_per_person' => fake()->boolean(60),
+            'price_type' => fake()->randomElement(['per_person', 'per_room', 'per_night', 'one_time']),
             'is_mandatory' => fake()->boolean(20),
             'applicable_date' => fake()->optional()->dateTimeBetween('now', '+1 year'),
             'is_active' => fake()->boolean(90),
