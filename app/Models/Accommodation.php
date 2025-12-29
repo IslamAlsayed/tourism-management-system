@@ -46,8 +46,9 @@ class Accommodation extends Model
         'is_active',
         'description',
         'notes',
-        'currency_id',
+
         'type_id',
+        'currency_id',
         'region_id',
         'subregion_id',
         'country_id',
@@ -64,22 +65,22 @@ class Accommodation extends Model
 
     public function getRelationshipNames()
     {
-        return ['currency', 'type', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'rooms', 'meals', 'supplements'];
+        return ['type', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'rooms', 'meals', 'supplements'];
     }
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'type_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
-    }
-
-    public function currency()
-    {
-        return $this->belongsTo(Currency::class);
+        return ['type_id', 'currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
     public function type()
     {
         return $this->belongsTo(Type::class);
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 
     public function region()

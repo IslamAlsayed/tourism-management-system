@@ -91,23 +91,11 @@
                                 @enderror
                             </div>
 
-                            <!-- Currencies -->
-                            <div class="">
-                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    Currency
-                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="currency_id" id="currency_id" class="kt-input h-[45px]" required
-                                    special-search>
-                                    <option value="">--</option>
-                                    @foreach ($currencies as $currency)
-                                        <option value="{{ $currency->id }}">{{ $currency->code }}
-                                            {{ $currency->name ? ' - ' . $currency->name : '' }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            {{-- Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
+                            ])
 
                             <!-- Price -->
                             <div class="">

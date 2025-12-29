@@ -321,7 +321,7 @@ return [
                             'title' => 'all meals',
                             'icon' => 'fa-regular fa-bowl-food',
                             'route' => 'meals.index',
-                            'parameters' => ['type' => 'accommodation'],
+                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create meal',
@@ -344,6 +344,7 @@ return [
                             'title' => 'all supplements',
                             'icon' => 'fa-regular fa-bowl-food',
                             'route' => 'supplements.index',
+                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create supplement',
@@ -391,7 +392,7 @@ return [
                             'title' => 'all meals',
                             'icon' => 'fa-solid fa-bowl-food',
                             'route' => 'meals.index',
-                            'parameters' => ['type' => 'restaurant'],
+                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'restaurant'],
                         ],
                         [
                             'title' => 'create meal',
@@ -405,7 +406,30 @@ return [
                             'parameters' => ['models' => 'meals'],
                         ],
                     ],
-                ]
+                ],
+                [
+                    'title' => 'supplements',
+                    'icon' => 'fa-regular fa-utensils',
+                    'children' => [
+                        [
+                            'title' => 'all supplements',
+                            'icon' => 'fa-regular fa-bowl-food',
+                            'route' => 'supplements.index',
+                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'restaurant'],
+                        ],
+                        [
+                            'title' => 'create supplement',
+                            'icon' => 'fa-regular fa-square-plus',
+                            'route' => 'supplements.create',
+                        ],
+                        [
+                            'title' => 'import supplements',
+                            'icon' => 'fa-regular fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'supplements'],
+                        ],
+                    ],
+                ],
             ],
         ],
 

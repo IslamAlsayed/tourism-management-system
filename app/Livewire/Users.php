@@ -9,6 +9,7 @@ use App\Traits\WithSorting;
 use Livewire\WithPagination;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use Illuminate\Support\Facades\Cache;
 use App\Traits\CustomColumnsLivewireLegacy;
 
 class Users extends Component
@@ -17,6 +18,7 @@ class Users extends Component
     public $search = '';
     public $totalCount = '';
     public $message = [];
+    public $getCacheKey = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
@@ -49,6 +51,7 @@ class Users extends Component
     public function destroy($id)
     {
         $this->safeDestroy($id, 'user');
+        Cache::tags(['users'])->flash();
     }
 
     public function updatedSelectPage($value)
@@ -103,15 +106,39 @@ class Users extends Component
         return $result;
     }
 
+    protected function getCacheKey()
+    {
+        return 'users_list:' . md5(json_encode([
+            'search' => $this->search,
+            'page' => request()->get('page', 1),
+            'sort' => $this->sortField ?? null,
+            'dir' => $this->sortDirection ?? null,
+            'perPage' => getPaginate(),
+            'is_admin' => getActiveUser()->is_admin,
+        ]));
+    }
+
     public function render()
     {
-        $query = User::query();
-        if (!getActiveUser()->is_admin) {
-            $query->where('is_admin', 0);
-        }
-        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $this->applySorting($query);
-        $data = $query->paginate(getPaginate());
-        return view('livewire.users', ['data' => $data, 'totalCount' => $this->totalCount ?: User::count(), 'selectedIds' => $this->selectedIds]);
+        $cacheKey = $this->getCacheKey();
+        $data = Cache::remember($cacheKey, now()->addMinutes(5), function () {
+            $query = User::query();
+            if (!getActiveUser()->is_admin) {
+                $query->where('is_admin', 0);
+            }
+            $query->searchWithRelations(
+                search: $this->search,
+                selectedColumns: $this->columns,
+                availableRelations: $this->relations
+            );
+            $this->applySorting($query);
+            return $query->paginate(getPaginate());
+        });
+
+        return view('livewire.users', [
+            'data' => $data,
+            'totalCount' => $this->totalCount ?: User::count(),
+            'selectedIds' => $this->selectedIds
+        ]);
     }
 }

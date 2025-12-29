@@ -85,7 +85,7 @@
         <i class="fas fa-list"></i>
     </div>
 
-    <div class="hidden" data-target-model="#columnsModal" id="columnsModal"
+    <div class="hidden background" data-target-model="#columnsModal" id="columnsModal"
         style="{{ app()->getLocale() == 'ar' ? 'right: auto; left: 0; direction: ltr;' : 'left: auto; right: 0; direction: ltr;' }}">
 
         @if (isset($allColumns) && count($allColumns) > 0)

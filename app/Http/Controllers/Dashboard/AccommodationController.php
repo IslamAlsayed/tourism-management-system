@@ -9,13 +9,17 @@ use App\Models\Region;
 use App\Models\Season;
 use App\Models\Currency;
 use App\Models\Timezone;
+use App\Models\Supplement;
 use App\Models\Accommodation;
+use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Accommodations\StoreRequest;
 use App\Http\Requests\Accommodations\UpdateRequest;
 
 class AccommodationController extends Controller
 {
+    use PhotoUploadTrait;
+
     public function index()
     {
         return view('pages.dashboard.accommodations.index');
@@ -30,74 +34,61 @@ class AccommodationController extends Controller
         $currencies = Currency::orderBy('code')->get();
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.accommodations.create', compact('types', 'seasons', 'rooms', 'meals', 'currencies', 'regions', 'timezones'));
+        return view('pages.dashboard.accommodations.create', get_defined_vars());
     }
 
     public function store(StoreRequest $request)
     {
-        $data = $request->validated();
+        $validated = $request->validated();
 
         // Create accommodation (basic fields only)
         $accommodation = Accommodation::create($request->except(['seasons', 'rooms', 'meals', 'supplements']));
 
-        // Attach seasons with price in pivot table
-        if (!empty($data['seasons']) && is_array($data['seasons'])) {
-            $seasonsToSync = [];
-            foreach ($data['seasons'] as $season) {
-                if (isset($season['season_id']) && isset($season['price'])) {
-                    $seasonsToSync[$season['season_id']] = ['price' => $season['price']];
-                }
-            }
-            if (!empty($seasonsToSync)) {
-                $accommodation->seasons()->sync($seasonsToSync);
+        // SEASONS
+        if (!empty($validated['seasons'])) {
+            foreach ($validated['seasons'] as $seasonData) {
+                $seasonData['model_id'] = $accommodation->id;
+                $seasonData['model_type'] = Accommodation::class;
+                Season::create($seasonData);
             }
         }
 
-        // Attach rooms with price in pivot table
-        if (!empty($data['rooms']) && is_array($data['rooms'])) {
-            $roomsToSync = [];
-            foreach ($data['rooms'] as $room) {
-                if (isset($room['room_id']) && isset($room['price'])) {
-                    $roomsToSync[$room['room_id']] = ['price' => $room['price']];
-                }
-            }
-            if (!empty($roomsToSync)) {
-                $accommodation->rooms()->sync($roomsToSync);
+        // ROOMS
+        if (!empty($validated['rooms'])) {
+            foreach ($validated['rooms'] as $roomData) {
+                $roomData['model_id'] = $accommodation->id;
+                $roomData['model_type'] = Accommodation::class;
+                Room::create($roomData);
             }
         }
 
-        // Attach meals with price in pivot table
-        if (!empty($data['meals']) && is_array($data['meals'])) {
-            $mealsToSync = [];
-            foreach ($data['meals'] as $meal) {
-                if (isset($meal['meal_id']) && isset($meal['price'])) {
-                    $mealsToSync[$meal['meal_id']] = ['price' => $meal['price']];
-                }
-            }
-            if (!empty($mealsToSync)) {
-                $accommodation->meals()->sync($mealsToSync);
+        // MEALS
+        if (!empty($validated['meals'])) {
+            foreach ($validated['meals'] as $mealData) {
+                $mealData['model_id'] = $accommodation->id;
+                $mealData['model_type'] = Accommodation::class;
+                Meal::create($mealData);
             }
         }
 
-        // Attach supplements with price in pivot table
-        if (!empty($data['supplements']) && is_array($data['supplements'])) {
-            $supplementsToSync = [];
-            foreach ($data['supplements'] as $supplement) {
-                if (isset($supplement['supplement_id']) && isset($supplement['price'])) {
-                    $supplementsToSync[$supplement['supplement_id']] = ['price' => $supplement['price']];
-                }
-            }
-            if (!empty($supplementsToSync)) {
-                $accommodation->supplements()->sync($supplementsToSync);
+        // SUPPLEMENTS
+        if (!empty($validated['supplements'])) {
+            foreach ($validated['supplements'] as $supplementData) {
+                $supplementData['model_id'] = $accommodation->id;
+                $supplementData['model_type'] = Accommodation::class;
+                Supplement::create($supplementData);
             }
         }
 
-        return redirect()->route('accommodations.index')->withSuccess(__('messages.type_updated', ['type' => __('main.accommodation')]));
+        if ($request->has('save_and_add')) {
+            return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.accommodation')]));
+        }
+        return redirect()->route('accommodations.index')->withSuccess(__('messages.type_created', ['type' => __('main.accommodation')]));
     }
 
     public function show($id)
     {
-        $accommodation = Accommodation::with(['supplements', 'currency', 'type', 'seasons', 'rooms', 'meals', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
+        $accommodation = Accommodation::with((new Accommodation())->getRelationshipNames())->find($id);
         if (!$accommodation) {
             return redirect()->route('accommodations.index')->withError(__('messages.type_not_found', ['type' => __('main.accommodation')]));
         }
@@ -106,53 +97,15 @@ class AccommodationController extends Controller
 
     public function edit($id)
     {
-        $accommodation = Accommodation::with(['currency', 'type', 'seasons', 'rooms', 'meals', 'supplements', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
+        $accommodation = Accommodation::with((new Accommodation())->getRelationshipNames())->find($id);
         if (!$accommodation) {
             return redirect()->route('accommodations.index')->withError(__('messages.type_not_found', ['type' => __('main.accommodation')]));
         }
         $types = Type::orderBy('name')->get();
-
-        // Get all available seasons/meals/supplements for selection
-        $availableSeasons = Season::orderBy('name')->get();
-        $selectedSeasons = $accommodation->seasons->map(function ($season) {
-            return [
-                'id' => $season->id,
-                'name' => $season->name,
-                'price' => $season->pivot->price ?? 0
-            ];
-        })->toArray();
-
-        $availableRooms = Room::orderBy('name')->get();
-        $selectedRooms = $accommodation->rooms->map(function ($room) {
-            return [
-                'id' => $room->id,
-                'name' => $room->name,
-                'price' => $room->pivot->price ?? 0
-            ];
-        })->toArray();
-
-        $availableMeals = Meal::orderBy('name')->get();
-        $selectedMeals = $accommodation->meals->map(function ($meal) {
-            return [
-                'id' => $meal->id,
-                'name' => $meal->name,
-                'price' => $meal->pivot->price ?? 0
-            ];
-        })->toArray();
-
-        $availableSupplements = \App\Models\Supplement::orderBy('name')->get();
-        $selectedSupplements = $accommodation->supplements->map(function ($supplement) {
-            return [
-                'id' => $supplement->id,
-                'name' => $supplement->name,
-                'price' => $supplement->pivot->price ?? 0
-            ];
-        })->toArray();
-
         $currencies = Currency::orderBy('code')->get();
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.accommodations.edit', compact('accommodation', 'types', 'availableSeasons', 'selectedSeasons', 'availableRooms', 'selectedRooms', 'availableMeals', 'selectedMeals', 'availableSupplements', 'selectedSupplements', 'currencies', 'regions', 'timezones'));
+        return view('pages.dashboard.accommodations.edit', get_defined_vars());
     }
 
     public function update(UpdateRequest $request, $id)
@@ -162,64 +115,58 @@ class AccommodationController extends Controller
             return redirect()->route('accommodations.index')->withError(__('messages.type_not_found', ['type' => __('main.accommodation')]));
         }
 
-        $data = $request->validated();
+        $validated = $request->validated();
+        $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons', 'rooms', 'meals', 'supplements']));
+        $updated = $accommodation->update($validated);
 
-        // Update basic fields
-        $accommodation->update($request->except(['seasons', 'rooms', 'meals', 'supplements']));
-
-        // Sync seasons with price in pivot table
-        if (isset($data['seasons']) && is_array($data['seasons'])) {
-            $seasonsToSync = [];
-            foreach ($data['seasons'] as $season) {
-                if (isset($season['season_id']) && isset($season['price'])) {
-                    $seasonsToSync[$season['season_id']] = ['price' => $season['price']];
-                }
-            }
-            $accommodation->seasons()->sync($seasonsToSync);
-        } else {
-            $accommodation->seasons()->sync([]);
+        if ($request->has('photo')) {
+            $this->uploadPhoto($request, $accommodation, 'photo', 'accommodations');
         }
 
-        // Sync rooms with price in pivot table
-        if (isset($data['rooms']) && is_array($data['rooms'])) {
-            $roomsToSync = [];
-            foreach ($data['rooms'] as $room) {
-                if (isset($room['room_id']) && isset($room['price'])) {
-                    $roomsToSync[$room['room_id']] = ['price' => $room['price']];
-                }
+        // EDIT SEASONS
+        if (!empty($validated['seasons'])) {
+            $accommodation->seasons()->where('model_type', Accommodation::class)->where('model_id', $accommodation->id)->delete();
+            foreach ($validated['seasons'] as $seasonData) {
+                $seasonData['model_id'] = $accommodation->id;
+                $seasonData['model_type'] = Accommodation::class;
+                Season::create($seasonData);
             }
-            $accommodation->rooms()->sync($roomsToSync);
-        } else {
-            $accommodation->rooms()->sync([]);
         }
 
-        // Sync meals with price in pivot table
-        if (isset($data['meals']) && is_array($data['meals'])) {
-            $mealsToSync = [];
-            foreach ($data['meals'] as $meal) {
-                if (isset($meal['meal_id']) && isset($meal['price'])) {
-                    $mealsToSync[$meal['meal_id']] = ['price' => $meal['price']];
-                }
+        // EDIT ROOMS
+        if (!empty($validated['rooms'])) {
+            $accommodation->rooms()->where('model_type', Accommodation::class)->where('model_id', $accommodation->id)->delete();
+            foreach ($validated['rooms'] as $roomData) {
+                $roomData['model_id'] = $accommodation->id;
+                $roomData['model_type'] = Accommodation::class;
+                Room::create($roomData);
             }
-            $accommodation->meals()->sync($mealsToSync);
-        } else {
-            $accommodation->meals()->sync([]);
         }
 
-        // Sync supplements with price in pivot table
-        if (isset($data['supplements']) && is_array($data['supplements'])) {
-            $supplementsToSync = [];
-            foreach ($data['supplements'] as $supplement) {
-                if (isset($supplement['supplement_id']) && isset($supplement['price'])) {
-                    $supplementsToSync[$supplement['supplement_id']] = ['price' => $supplement['price']];
-                }
+        // EDIT MEALS
+        if (!empty($validated['meals'])) {
+            $accommodation->meals()->where('model_type', Accommodation::class)->where('model_id', $accommodation->id)->delete();
+            foreach ($validated['meals'] as $mealData) {
+                $mealData['model_id'] = $accommodation->id;
+                $mealData['model_type'] = Accommodation::class;
+                Meal::create($mealData);
             }
-            $accommodation->supplements()->sync($supplementsToSync);
-        } else {
-            $accommodation->supplements()->sync([]);
         }
 
-        return redirect()->route('accommodations.index')->withSuccess(__('messages.type_updated', ['type' => __('main.accommodation')]));
+        // EDIT SUPPLEMENTS
+        if (!empty($validated['supplements'])) {
+            $accommodation->supplements()->where('model_type', Accommodation::class)->where('model_id', $accommodation->id)->delete();
+            foreach ($validated['supplements'] as $supplementData) {
+                $supplementData['model_id'] = $accommodation->id;
+                $supplementData['model_type'] = Accommodation::class;
+                Supplement::create($supplementData);
+            }
+        }
+
+        if ($updated) {
+            return redirect()->route('accommodations.index')->withSuccess(__('messages.type_updated', ['type' => __('main.accommodation')]));
+        }
+        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.accommodation')]));
     }
 
     public function destroy($id)

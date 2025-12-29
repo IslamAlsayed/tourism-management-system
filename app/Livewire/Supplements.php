@@ -23,6 +23,8 @@ class Supplements extends Component
     public $filterMandatory = '';
     public $filterActive = '';
     public $filter = '';
+    public $type = null;
+    protected $queryString = ['type'];
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
@@ -50,6 +52,7 @@ class Supplements extends Component
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Supplement::class);
         $this->types = Type::pluck('name', 'id')->toArray();
+        $this->type = request()->query('type');
         $this->resetPage();
     }
 
@@ -129,6 +132,9 @@ class Supplements extends Component
         }
         if ($this->filterActive && $this->filterActive !== 'all') {
             $query->where('is_active', $this->filterActive === 'active' ? true : false);
+        }
+        if ($this->type) {
+            $query->where('model_type', 'like', '%' . $this->type . '%');
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

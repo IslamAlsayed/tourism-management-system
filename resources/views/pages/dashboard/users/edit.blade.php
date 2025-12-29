@@ -22,17 +22,13 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-6">
-            <!-- Personal Information -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.personal_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <form class="space-y-6" method="POST" action="{{ route('users.update', $user->id) }}"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+        <div class="kt-card p-4">
+            <div class="kt-card-body">
+                <form class="space-y-6" method="POST" action="{{ route('users.update', $user->id) }}"
+                    enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="grid gap-4 lg:gap-6">
 
                         <!-- Profile Photo -->
                         @include('components.input-image', [
@@ -42,7 +38,7 @@
                             'record' => $user,
                         ])
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Name -->
                             <div class="">
                                 <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
@@ -72,16 +68,6 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <!-- Email -->
-                            <div class="">
-                                <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
-                                <input type="email" name="email" id="email" class="kt-input h-[45px]"
-                                    value="{{ $user->email }}">
-                                @error('email')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
                         </div>
 
                         <!-- Bio -->
@@ -91,12 +77,22 @@
                         ])
 
                         <!-- Contact Information -->
-                        <div class="kt-card mb-4">
+                        <div class="kt-card">
                             <div class="kt-card-header">
                                 <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                                    <!-- Email -->
+                                    <div class="">
+                                        <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
+                                        <input type="email" name="email" id="email" class="kt-input h-[45px]"
+                                            value="{{ $user->email }}">
+                                        @error('email')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                     <!-- Phone -->
                                     <div class="">
                                         <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
@@ -127,7 +123,7 @@
                         </div>
 
                         <!-- Employment Information -->
-                        <div class="kt-card mb-4">
+                        <div class="kt-card">
                             <div class="kt-card-header">
                                 <h3 class="kt-card-title">{{ __('main.employment_information') }}</h3>
                             </div>
@@ -201,7 +197,7 @@
                         </div>
 
                         <!-- System Settings -->
-                        <div class="kt-card mb-4">
+                        <div class="kt-card">
                             <div class="kt-card-header">
                                 <h3 class="kt-card-title">{{ __('main.system_settings') }}</h3>
                             </div>
@@ -226,22 +222,12 @@
                                         @enderror
                                     </div>
 
-                                    <!-- Timezone -->
-                                    <div class="">
-                                        <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                        <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
-                                            <option value="" disabled selected></option>
-                                            @foreach ($timezones as $zone)
-                                                <option value="{{ $zone['id'] }}"
-                                                    {{ $user->timezone_id == $zone['id'] ? 'selected' : '' }}>
-                                                    {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('timezone_id')
-                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    {{-- Timezone --}}
+                                    @include('components.selects.timezone', [
+                                        'name' => 'timezone_id',
+                                        'timezones' => $timezones,
+                                        'record' => $user,
+                                    ])
 
                                     <!-- Button Display Mode -->
                                     <div class="">
@@ -315,76 +301,22 @@
                             </div>
                         </div>
 
-                        <!-- Additional Information -->
-                        <div class="kt-card">
-                            <div class="kt-card-header">
-                                <h3 class="kt-card-title">{{ __('main.additional_information') }}</h3>
-                            </div>
-                            <div class="kt-card-body p-4">
-                                <!-- Preferences -->
-                                @include('components.elements.input-text-editor', [
-                                    'column' => 'preferences',
-                                    'value' => $user->preferences,
-                                ])
+                        <!-- Preferences -->
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'preferences',
+                            'value' => $user->preferences,
+                        ])
 
-                                <!-- Notes -->
-                                @include('components.elements.input-text-editor', [
-                                    'column' => 'notes',
-                                    'value' => $user->notes,
-                                ])
+                        <!-- Notes -->
+                        @include('components.elements.input-text-editor', [
+                            'column' => 'notes',
+                            'value' => $user->notes,
+                        ])
 
-                                <!-- Update Submit Buttons -->
-                                @include('components.elements.update-submit', ['models' => 'users'])
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- User Creation Tips -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.user_creation_tips') }}</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-success"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.complete_profile') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.complete_profile_desc') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-security-user text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.secure_password') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.secure_password_desc') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-security-user"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.user_permissions') }}
-                                </div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.user_permissions_desc') }}
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Update Submit Buttons -->
+                        @include('components.elements.update-submit', ['models' => 'users'])
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

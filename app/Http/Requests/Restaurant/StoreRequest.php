@@ -39,15 +39,20 @@ class StoreRequest extends FormRequest
 
             // Seasons Array
             'seasons' => 'nullable|array',
+            'seasons.*.model_id' => 'nullable|string|max:255',
+            'seasons.*.model_type' => 'nullable|string|max:255',
             'seasons.*.name' => 'required|string|max:255',
             'seasons.*.name_ar' => 'nullable|string|max:255',
             'seasons.*.season_from' => 'required|date',
             'seasons.*.season_to' => 'required|date|after:seasons.*.season_from',
-            'seasons.*.notes' => 'nullable|string|max:5000',
             'seasons.*.is_active' => 'nullable|boolean',
+            'seasons.*.description' => 'nullable|string|max:5000',
+            'seasons.*.notes' => 'nullable|string|max:5000',
 
             // Meals Array
             'meals' => 'nullable|array',
+            'meals.*.model_id' => 'nullable|string|max:255',
+            'meals.*.model_type' => 'nullable|string|max:255',
             'meals.*.name' => 'required|string|max:255',
             'meals.*.name_ar' => 'nullable|string|max:255',
             'meals.*.currency_id' => 'required|exists:currencies,id',
@@ -55,10 +60,13 @@ class StoreRequest extends FormRequest
             'meals.*.is_included' => 'nullable|boolean',
             'meals.*.is_supplement' => 'nullable|boolean',
             'meals.*.is_active' => 'nullable|boolean',
+            'meals.*.description' => 'nullable|string|max:5000',
             'meals.*.notes' => 'nullable|string|max:5000',
 
             // Supplements Array
             'supplements' => 'nullable|array',
+            'supplements.*.model_id' => 'nullable|string|max:255',
+            'supplements.*.model_type' => 'nullable|string|max:255',
             'supplements.*.name' => 'required|string|max:255',
             'supplements.*.name_ar' => 'nullable|string|max:255',
             'supplements.*.currency_id' => 'required|exists:currencies,id',
@@ -66,6 +74,7 @@ class StoreRequest extends FormRequest
             'supplements.*.price_type' => 'nullable|string|in:per_person,per_room,per_night,one_time',
             'supplements.*.is_mandatory' => 'nullable|boolean',
             'supplements.*.is_active' => 'nullable|boolean',
+            'supplements.*.description' => 'nullable|string|max:5000',
             'supplements.*.notes' => 'nullable|string|max:5000',
 
             'company_name_ar' => ['nullable', 'string', 'max:255'],

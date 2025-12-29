@@ -70,13 +70,8 @@
                     </select>
                 </div>
 
-                {{-- Reset Sort Button --}}
-                <div>
-                    <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}"
-                        toggle-button class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">
-                        <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
-                    </button>
-                </div>
+                {{-- Reset Button --}}
+                @include('components.elements.reset-button')
             </div>
 
             <div data-kt-datatable-state-save="false" id="accommodations_table">

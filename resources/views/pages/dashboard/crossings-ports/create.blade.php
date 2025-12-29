@@ -262,7 +262,7 @@
 
                             {{-- Departure Tax Currency --}}
                             @include('components.selects.currency', [
-                                'name' => 'departure_tax_currency',
+                                'name' => 'departure_tax_currency_id',
                                 'currencies' => $currencies,
                             ])
                         </div>

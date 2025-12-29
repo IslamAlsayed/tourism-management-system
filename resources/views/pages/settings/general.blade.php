@@ -56,17 +56,12 @@
                                     value="{{ $settings->app_url }}" />
                             </div>
 
-                            <div>
-                                <label class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="app_timezone" class="kt-select h-[45px]">
-                                    @foreach (config('helpers.timezones') as $key => $item)
-                                        <option value="{{ $key }}"
-                                            {{ strtolower($settings->app_timezone) == $key ? 'selected' : '' }}>
-                                            {{ $item }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            {{-- Timezone --}}
+                            @include('components.selects.timezone', [
+                                'name' => 'app_timezone',
+                                'timezones' => $timezones,
+                                'record' => $settings,
+                            ])
 
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.app_version') }}</label>

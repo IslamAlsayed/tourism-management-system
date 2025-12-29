@@ -8,6 +8,7 @@ use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\Settings\UpdateRequest;
+use App\Models\Timezone;
 
 class SettingsController extends Controller
 {
@@ -56,7 +57,8 @@ class SettingsController extends Controller
     public function general()
     {
         $settings = Setting::first();
-        return view('pages.settings.general', compact('settings'));
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        return view('pages.settings.general', compact('settings', 'timezones'));
     }
 
     public function security()

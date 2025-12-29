@@ -23,6 +23,8 @@ class Meals extends Component
     public $currencies = [];
     public $filterStatus = '';
     public $filterIsIncluded = '';
+    public $type = null;
+    protected $queryString = ['type'];
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
@@ -51,6 +53,7 @@ class Meals extends Component
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Meal::class);
         $this->currencies = Currency::whereIn('id', Meal::pluck('currency_id'))->get(['code', 'name', 'id'])->toArray();
+        $this->type = request()->query('type');
         $this->resetPage();
     }
 
@@ -131,8 +134,8 @@ class Meals extends Component
         if ($this->filterIsIncluded && $this->filterIsIncluded['payload']['value'] !== 'all') {
             $query->where('is_included', $this->filterIsIncluded['payload']['value'] === 'yes' ? true : false);
         }
-        if (request()->type) {
-            $query->where('model_type', 'like', '%' . (isset(request()->type) ? request()->type : 'accommodation') . '%');
+        if ($this->type) {
+            $query->where('model_type', 'like', '%' . $this->type . '%');
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

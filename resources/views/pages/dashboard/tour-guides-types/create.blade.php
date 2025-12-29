@@ -55,30 +55,10 @@
                             </div>
 
                             {{-- Currency --}}
-                            <div class="">
-                                <label for="currency_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    <div>
-                                        {{ __('main.currency') }}
-                                        <strong
-                                            class="dataLength text-primary text-2sm">({{ $currencies->count() ?: 0 }})</strong>
-                                    </div>
-                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="currency_id" id="currency_id" class="kt-select basic-single">
-                                    <option value="">--</option>
-                                    @foreach ($currencies as $currency)
-                                        <option value="{{ $currency->id }}"
-                                            {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
-                                            {{ $currency->code }} - {{ $currency->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('currency_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
+                            ])
 
                             {{-- Regions [region, subregion, country, state, city] --}}
                             @include('components.regions.create', [

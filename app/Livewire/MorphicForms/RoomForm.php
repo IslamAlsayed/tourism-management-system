@@ -19,60 +19,35 @@ class RoomForm extends Component
         $this->record = $record;
         $this->currencies = Currency::pluck('code', 'id')->toArray();
 
-        // If editing and has existing rooms, load them
-        if ($record && $record->rooms()->exists()) {
-            $existingRooms = $record->rooms()
-                ->get()
-                ->groupBy('room_id')
-                ->map(function ($rates) {
-                    $firstRate = $rates->first();
-                    $room = $firstRate ? $firstRate->room : null;
-                    if (!$firstRate || !$room) {
-                        return null;
-                    }
-                    return [
-                        'id' => uniqid(),
-                        'room_id' => $room->id,
-                        'name' => $room->name,
-                        'name_ar' => $room->name_ar,
-                        'max_occupancy' => $room->max_occupancy,
-                        'currency_id' => $firstRate->currency_id,
-                        'price_per_person_double' => $firstRate->price_per_person_double,
-                        'single_room_supplement' => $firstRate->single_room_supplement,
-                        'triple_room_discount' => $firstRate->triple_room_discount,
-                        'third_person_price' => $firstRate->third_person_price,
-                        'extra_bed_price' => $firstRate->extra_bed_price,
-                        'sea_view_supplement' => $firstRate->sea_view_supplement,
-                        'occupancy_details' => $room->occupancy_details,
-                        'is_active' => $room->is_active,
-                        'description' => $room->description,
-                    ];
-                })->filter()->values()->toArray();
-
-            if (!empty($existingRooms)) {
+        if ($record) {
+            if (method_exists($record, 'rooms') && $record->rooms()->exists()) {
+                $existingRooms = $record->rooms()
+                    ->get()
+                    ->unique('id')
+                    ->map(function ($room) {
+                        return [
+                            'id' => uniqid(),
+                            'room_id' => $room->id,
+                            'name' => $room->name,
+                            'name_ar' => $room->name_ar,
+                            'max_occupancy' => $room->max_occupancy,
+                            'currency_id' => $room->currency_id,
+                            'price_per_person_double' => $room->price_per_person_double,
+                            'single_room_supplement' => $room->single_room_supplement,
+                            'triple_room_discount' => $room->triple_room_discount,
+                            'third_person_price' => $room->third_person_price,
+                            'extra_bed_price' => $room->extra_bed_price,
+                            'sea_view_supplement' => $room->sea_view_supplement,
+                            'occupancy_details' => $room->occupancy_details,
+                            'is_active' => $room->is_active,
+                            'description' => $room->description,
+                        ];
+                    })->toArray();
+            }
+            if (!empty($existingRooms ?? [])) {
                 $this->rooms = $existingRooms;
             }
         }
-
-        // Initialize with one empty room if none exist
-        // if (empty($this->rooms)) {
-        //     $this->rooms[] = [
-        //         'id' => uniqid(),
-        //         'name' => '',
-        //         'name_ar' => '',
-        //         'max_occupancy' => '',
-        //         'occupancy_details' => '',
-        //         'currency_id' => '',
-        //         'price_per_person_double' => '',
-        //         'single_room_supplement' => '',
-        //         'triple_room_discount' => '',
-        //         'third_person_price' => '',
-        //         'extra_bed_price' => '',
-        //         'sea_view_supplement' => '',
-        //         'is_active' => 1,
-        //         'description' => '',
-        //     ];
-        // }
     }
 
     public function addRoom()

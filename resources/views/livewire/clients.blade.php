@@ -21,7 +21,7 @@
         <!-- Filters -->
         <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 px-4 filterTable">
             <div>
-                <label for="gender" class="text-sm">{{ __('main.gender') }}</label>
+                <label for="gender" class="text-sm mb-1">{{ __('main.gender') }}</label>
                 <select wire:model.live="filterClientGender" class="kt-select h-[40px] w-48 max-w-full"
                     data-kt-select="true" data-kt-select-placeholder="{{ __('main.gender') }}">
                     <option value="all">{{ __('main.all') }}</option>
@@ -31,7 +31,7 @@
             </div>
 
             <div>
-                <label for="active" class="text-sm">{{ __('main.active') }}</label>
+                <label for="active" class="text-sm mb-1">{{ __('main.active') }}</label>
                 <select wire:model.live="filterClientStatus" class="kt-select h-[40px] w-48 max-w-full"
                     data-kt-select="true" data-kt-select-placeholder="{{ __('main.status') }}">
                     <option value="all">{{ __('main.all') }}</option>
@@ -41,13 +41,8 @@
                 </select>
             </div>
 
-            {{-- Reset Sort Button --}}
-            <div>
-                <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}" toggle-button
-                    class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">
-                    <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
-                </button>
-            </div>
+            {{-- Reset Button --}}
+            @include('components.elements.reset-button')
         </div>
 
         <div data-kt-datatable-state-save="false" id="clients_table">

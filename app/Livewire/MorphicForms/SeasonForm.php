@@ -17,16 +17,7 @@ class SeasonForm extends Component
         $this->record = $record;
 
         if ($record) {
-            if (method_exists($record, 'rooms') && $record->rooms()->exists()) {
-                $existingSeasons = $record->rooms()
-                    ->with('season')
-                    ->get()
-                    ->pluck('season')
-                    ->unique('id')
-                    ->map(function ($season) {
-                        // ...existing code...
-                    })->toArray();
-            } elseif (method_exists($record, 'seasons') && $record->seasons()->exists()) {
+            if (method_exists($record, 'seasons') && $record->seasons()->exists()) {
                 $existingSeasons = $record->seasons()
                     ->get()
                     ->unique('id')
@@ -47,19 +38,6 @@ class SeasonForm extends Component
                 $this->seasons = $existingSeasons;
             }
         }
-
-        // Initialize with one empty season if none exist
-        // if (empty($this->seasons)) {
-        //     $this->seasons[] = [
-        //         'id' => uniqid(),
-        //         'name' => '',
-        //         'name_ar' => '',
-        //         'season_from' => '',
-        //         'season_to' => '',
-        //         'is_active' => 1,
-        //         'description' => '',
-        //     ];
-        // }
     }
 
     public function addSeason()

@@ -21,8 +21,8 @@
         <!-- Filters -->
         <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
             <div>
-                <select wire:model.live="filterCurrencyId" class="kt-select h-[40px] w-48 max-w-full"
-                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.currency') }}">
+                <select wire:model.live="filterCurrencyId" class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
+                    data-kt-select-placeholder="{{ __('main.currency') }}">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($currencies as $currency)
                         <option value="{{ $currency['id'] }}" title="{{ $currency['name'] }}">
@@ -48,13 +48,8 @@
                 </select>
             </div>
 
-            {{-- Reset Sort Button --}}
-            <div>
-                <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}" toggle-button
-                    class="kt-btn kt-btn-outline bg-white px-3hover:bg-gray-50 transition-colors">
-                    <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
-                </button>
-            </div>
+            {{-- Reset Button --}}
+            @include('components.elements.reset-button')
         </div>
 
         <div data-kt-datatable-state-save="false" id="meals_table">

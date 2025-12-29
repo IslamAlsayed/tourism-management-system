@@ -26,7 +26,7 @@
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
-                
+
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -43,26 +43,12 @@
                                 'record' => $touristSite,
                             ])
 
-                            <!-- Currency -->
-                            <div class="">
-                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
-                                    {{ __('main.currency') }}
-                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="currency_id" id="currency_id" class="kt-select basic-single">
-                                    @foreach ($currencies as $currency)
-                                        <option value="{{ $currency->id }}"
-                                            {{ $touristSite->currency_id == $currency->id ? 'selected' : '' }}>
-                                            {{ $currency->code }} - {{ $currency->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('currency_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
+                                'record' => $touristSite,
+                            ])
 
                             <!-- Latitude -->
                             <div class="">

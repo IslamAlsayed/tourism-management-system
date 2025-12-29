@@ -42,24 +42,11 @@
                         ])
 
                         {{-- Currency --}}
-                        <div class="align-self-end">
-                            <label for="currency_id" class="kt-label">
-                                {{ __('main.currency') }}
-                                <span class="text-red-600 text-2xl">*</span>
-                            </label>
-                            <select name="currency_id" id="currency_id" class="kt-select basic-single">
-                                <option value="" disabled selected></option>
-                                @foreach ($currencies as $currency)
-                                    <option value="{{ $currency->id }}"
-                                        {{ $client->currency_id == $currency->id ? 'selected' : '' }}>
-                                        {{ $currency->name }} - {{ $currency->code }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('currency_id')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @include('components.selects.currency', [
+                            'name' => 'currency_id',
+                            'currencies' => $currencies,
+                            'record' => $client,
+                        ])
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
@@ -509,22 +496,12 @@
                             @enderror
                         </div>
 
-                        <!-- Timezone -->
-                        <div class="">
-                            <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                            <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
-                                <option value="" selected disabled></option>
-                                @foreach ($timezones as $zone)
-                                    <option value="{{ $zone['id'] }}"
-                                        {{ $client->timezone_id == $zone['id'] ? 'selected' : '' }}>
-                                        {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('timezone_id')
-                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        {{-- Timezone --}}
+                        @include('components.selects.timezone', [
+                            'name' => 'timezone_id',
+                            'timezones' => $timezones,
+                            'record' => $client,
+                        ])
                     </div>
 
                     {{-- Notes --}}

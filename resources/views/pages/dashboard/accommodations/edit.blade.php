@@ -51,42 +51,12 @@
                                 'record' => $accommodation,
                             ])
 
-                            <!-- Timezone -->
-                            <div class="align-self-end">
-                                <label for="timezone_id" class="kt-label">{{ __('main.timezone') }}</label>
-                                <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
-                                    @foreach ($timezones as $zone)
-                                        <option value="{{ $zone['id'] }}"
-                                            {{ $accommodation->timezone_id == $zone['id'] ? 'selected' : '' }}>
-                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('timezone_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Currency -->
-                            <div class="align-self-end">
-                                <label for="currency_id" class="kt-label flex items-center justify-between mb-2">
-                                    {{ __('main.currency') }}
-                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="currency_id" id="currency_id" class="kt-select basic-single">
-                                    @foreach ($currencies as $currency)
-                                        <option value="{{ $currency->id }}"
-                                            {{ $accommodation->currency_id == $currency->id ? 'selected' : '' }}>
-                                            {{ $currency->code }} - {{ $currency->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('currency_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
+                                'record' => $accommodation,
+                            ])
 
                             <!-- Street Address -->
                             <div class="align-self-end">
@@ -181,9 +151,8 @@
                             <!-- Classification -->
                             <div class="align-self-end">
                                 <label for="classification" class="kt-label">{{ __('main.classification') }}</label>
-                                <input type="text" name="classification" id="classification"
-                                    class="kt-input h-[45px]" value="{{ $accommodation->classification }}"
-                                    placeholder="e.g., 5 Stars, Luxury">
+                                <input type="text" name="classification" id="classification" class="kt-input h-[45px]"
+                                    value="{{ $accommodation->classification }}" placeholder="e.g., 5 Stars, Luxury">
                                 @error('classification')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -339,16 +308,16 @@
                 </div>
 
                 {{-- Seasons Information --}}
-                <livewire:accommodations.season-form :record="$accommodation" />
+                <livewire:morphic-forms.season-form :record="$accommodation" />
 
                 {{-- Rooms Information --}}
-                <livewire:accommodations.room-form :record="$accommodation" />
+                <livewire:morphic-forms.room-form :record="$accommodation" />
 
                 {{-- Meals Information --}}
-                <livewire:accommodations.meal-form :record="$accommodation" />
+                <livewire:morphic-forms.meal-form :record="$accommodation" />
 
                 {{-- Supplements Information --}}
-                <livewire:accommodations.supplement-form :record="$accommodation" />
+                <livewire:morphic-forms.supplement-form :record="$accommodation" />
 
                 {{-- Update Buttons --}}
                 @include('components.elements.update-submit', ['models' => 'accommodations'])

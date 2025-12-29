@@ -33,20 +33,11 @@
                             <livewire:accommodations-restaurants-selects :record="$room" />
 
                             {{-- Currency --}}
-                            <div class="align-self-end">
-                                <label for="currency_id" class="kt-label mb-2">{{ __('main.currency') }}</label>
-                                <select name="currency_id" id="currency_id" class="kt-select basic-single">
-                                    @foreach ($currencies as $currency)
-                                        <option value="{{ $currency->id }}"
-                                            {{ $room->currency_id == $currency->id ? 'selected' : '' }}>
-                                            {{ $currency->name }} - {{ $currency->code }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('currency_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
+                                'record' => $room,
+                            ])
 
                             {{-- Name (English) --}}
                             <div class="align-self-end">

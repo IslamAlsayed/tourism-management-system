@@ -63,43 +63,17 @@
                                 @enderror
                             </div>
 
-                            <!-- Currency -->
-                            <div class="">
-                                <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
-                                    {{ __('main.currency') }}
-                                    <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
-                                    </a>
-                                </label>
-                                <select name="currency_id" id="currency_id" class="kt-select basic-single">
-                                    @foreach ($currencies as $currency)
-                                        <option value="{{ $currency->id }}"
-                                            {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
-                                            {{ $currency->code }} - {{ $currency->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('currency_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
+                            ])
 
-                            <!-- Timezone -->
-                            <div class="">
-                                <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
-                                    <option value="" selected disabled></option>
-                                    @foreach ($timezones as $zone)
-                                        <option value="{{ $zone['id'] }}"
-                                            {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
-                                            {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('timezone_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Timezone --}}
+                            @include('components.selects.timezone', [
+                                'name' => 'timezone_id',
+                                'timezones' => $timezones,
+                            ])
 
                             <!-- Street Address -->
                             <div class="align-self-end">
@@ -169,8 +143,8 @@
                             <!-- Company Name Arabic -->
                             <div class="align-self-end">
                                 <label for="company_name_ar" class="kt-label">{{ __('main.company_name_ar') }}</label>
-                                <input type="text" name="company_name_ar" id="company_name_ar"
-                                    class="kt-input h-[45px]" value="{{ old('company_name_ar') }}">
+                                <input type="text" name="company_name_ar" id="company_name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('company_name_ar') }}">
                                 @error('company_name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -229,6 +203,7 @@
                         @include('components.elements.input-text-editor', [
                             'column' => 'description',
                             'value' => old('description'),
+                            'classes' => 'mb-4',
                         ])
 
                         {{-- notes --}}

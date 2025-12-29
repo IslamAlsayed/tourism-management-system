@@ -19,50 +19,30 @@ class MealForm extends Component
         $this->record = $record;
         $this->currencies = Currency::pluck('code', 'id')->toArray();
 
-        // If editing and has existing meals, load them
-        if ($record && $record->meals()->exists()) {
-            $existingMeals = $record->meals()
-                ->get()
-                ->groupBy('meal_id')
-                ->map(function ($rates) {
-                    $firstRate = $rates->first();
-                    $meal = $firstRate ? $firstRate->meal : null;
-                    if (!$firstRate || !$meal) {
-                        return null;
-                    }
-                    return [
-                        'id' => uniqid(),
-                        'meal_id' => $meal->id,
-                        'name' => $meal->name,
-                        'name_ar' => $meal->name_ar,
-                        'currency_id' => $firstRate->currency_id,
-                        'price' => $firstRate->price,
-                        'is_included' => $firstRate->is_included ?? 1,
-                        'is_supplement' => $firstRate->is_supplement ?? 1,
-                        'is_active' => $meal->is_active ?? 1,
-                        'description' => $meal->description,
-                    ];
-                })->filter()->values()->toArray();
-
-            if (!empty($existingMeals)) {
+        if ($record) {
+            if (method_exists($record, 'meals') && $record->meals()->exists()) {
+                $existingMeals = $record->meals()
+                    ->get()
+                    ->unique('id')
+                    ->map(function ($meal) {
+                        return [
+                            'id' => uniqid(),
+                            'meal_id' => $meal->id,
+                            'name' => $meal->name,
+                            'name_ar' => $meal->name_ar,
+                            'currency_id' => $meal->currency_id,
+                            'price' => $meal->price,
+                            'is_included' => $meal->is_included ?? 1,
+                            'is_supplement' => $meal->is_supplement ?? 1,
+                            'is_active' => $meal->is_active ?? 1,
+                            'description' => $meal->description,
+                        ];
+                    })->toArray();
+            }
+            if (!empty($existingMeals ?? [])) {
                 $this->meals = $existingMeals;
             }
         }
-
-        // Initialize with one empty room if none exist
-        // if (empty($this->meals)) {
-        // $this->meals[] = [
-        //     'id' => uniqid(),
-        //     'name' => '',
-        //     'name_ar' => '',
-        //     'currency_id' => '',
-        //     'price' => '',
-        //     'is_included' => 1,
-        //     'is_supplement' => 1,
-        //     'is_active' => 1,
-        //     'description' => '',
-        // ];
-        // }
     }
 
     public function addMeal()

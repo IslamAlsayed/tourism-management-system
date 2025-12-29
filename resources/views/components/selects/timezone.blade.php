@@ -1,7 +1,7 @@
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
         {{ __('main.' . (isset($name) ? str_replace('_id', '', $name) : '')) }}
-        <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+        <a href="{{ route('timezones.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>
     </label>
@@ -9,10 +9,10 @@
         @if (!isset($record) || !isset($record->{isset($name) ? $name : ''}))
             <option value="" selected disabled></option>
         @endif
-        @foreach ($currencies as $currency)
-            <option value="{{ $currency->code }}"
-                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $currency->code ? 'selected' : '' }}>
-                {{ $currency->code }} - {{ $currency->name }}
+        @foreach ($timezones as $timezone)
+            <option value="{{ $timezone['id'] }}"
+                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $timezone['id'] ? 'selected' : '' }}>
+                {{ app()->getLocale() == 'ar' ? ($timezone['name_ar'] ? $timezone['name_ar'] . ' ' : '') : ($timezone['name'] ? $timezone['name'] . ' ' : '') }}({{ $timezone['abbreviation'] }})
             </option>
         @endforeach
     </select>

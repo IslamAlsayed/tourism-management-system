@@ -61,11 +61,12 @@
                                     <i class="ki-filled ki-users text-2xl text-primary"></i>
                                     <span class="text-2xl">{{ number_format($stats['users']) }}</span>
                                 </span>
-                                <span class="text-sm font-normal text-secondary-foreground">
+                                <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_users') }}
                                 </span>
                                 <a href="{{ route('users.index') }}" class="text-xs text-blue-600 hover:underline">
-                                    {{ __('main.view_all') }} →
+                                    {{ __('main.view_all') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
                             </div>
                         </div>
@@ -76,11 +77,12 @@
                                     <i class="ki-filled ki-geolocation text-2xl text-green-500"></i>
                                     <span class="text-2xl">{{ number_format($stats['countries']) }}</span>
                                 </span>
-                                <span class="text-sm font-normal text-secondary-foreground">
+                                <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_countries') }}
                                 </span>
                                 <a href="{{ route('countries.index') }}" class="text-xs text-blue-600 hover:underline">
-                                    {{ __('main.view_all') }} →
+                                    {{ __('main.view_all') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
                             </div>
                         </div>
@@ -91,11 +93,12 @@
                                     <i class="ki-filled ki-map text-2xl text-blue-500"></i>
                                     <span class="text-2xl">{{ number_format($stats['cities']) }}</span>
                                 </span>
-                                <span class="text-sm font-normal text-secondary-foreground">
+                                <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_cities') }}
                                 </span>
                                 <a href="{{ route('cities.index') }}" class="text-xs text-blue-600 hover:underline">
-                                    {{ __('main.view_all') }} →
+                                    {{ __('main.view_all') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
                             </div>
                         </div>
@@ -106,11 +109,12 @@
                                     <i class="ki-filled ki-dollar text-2xl text-yellow-500"></i>
                                     <span class="text-2xl">{{ number_format($stats['currencies']) }}</span>
                                 </span>
-                                <span class="text-sm font-normal text-secondary-foreground">
+                                <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_currencies') }}
                                 </span>
                                 <a href="{{ route('currencies.index') }}" class="text-xs text-blue-600 hover:underline">
-                                    {{ __('main.view_all') }} →
+                                    {{ __('main.view_all') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
                             </div>
                         </div>
@@ -325,7 +329,7 @@
                                             <i class="ki-filled ki-users text-xl text-success"></i>
                                         </div>
                                         <div class="text-center">
-                                            <div class="text-sm font-semibold text-mono text-primary">
+                                            <div class="text-sm mb-2 font-semibold text-mono text-primary">
                                                 <a href="{{ route('users.index') }}">{{ __('main.manage_users') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['users'] }}
@@ -340,7 +344,7 @@
                                             <i class="ki-filled ki-geolocation text-xl text-primary"></i>
                                         </div>
                                         <div class="text-center">
-                                            <div class="text-sm font-semibold text-mono text-primary">
+                                            <div class="text-sm mb-2 font-semibold text-mono text-primary">
                                                 <a href="{{ route('countries.index') }}">{{ __('main.countries') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['countries'] }}
@@ -355,7 +359,7 @@
                                             <i class="ki-filled ki-map text-xl text-info"></i>
                                         </div>
                                         <div class="text-center">
-                                            <div class="text-sm font-semibold text-mono text-primary">
+                                            <div class="text-sm mb-2 font-semibold text-mono text-primary">
                                                 <a href="{{ route('cities.index') }}">{{ __('main.cities') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['cities'] }}
@@ -370,7 +374,7 @@
                                             <i class="ki-filled ki-dollar text-xl text-warning"></i>
                                         </div>
                                         <div class="text-center">
-                                            <div class="text-sm font-semibold text-mono text-primary">
+                                            <div class="text-sm mb-2 font-semibold text-mono text-primary">
                                                 <a href="{{ route('currencies.index') }}">{{ __('main.currencies') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['currencies'] }}

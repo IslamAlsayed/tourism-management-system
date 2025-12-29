@@ -151,44 +151,17 @@
                                         'multiple' => true,
                                     ])
 
-                                    <!-- Timezone -->
-                                    <div class="">
-                                        <label for="timezone_id" class="kt-label mb-2">{{ __('main.timezone') }}</label>
-                                        <select name="timezone_id" id="timezone_id" class="kt-select basic-single">
-                                            <option value="" selected disabled></option>
-                                            @foreach ($timezones as $zone)
-                                                <option value="{{ $zone['id'] }}"
-                                                    {{ old('timezone_id') == $zone['id'] ? 'selected' : '' }}>
-                                                    {{ app()->getLocale() == 'ar' ? ($zone['name_ar'] ? $zone['name_ar'] . ' ' : '') : ($zone['name'] ? $zone['name'] . ' ' : '') }}({{ $zone['abbreviation'] }})
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('timezone_id')
-                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    {{-- Timezone --}}
+                                    @include('components.selects.timezone', [
+                                        'name' => 'timezone_id',
+                                        'timezones' => $timezones,
+                                    ])
 
-                                    <!-- Currency -->
-                                    <div class="">
-                                        <label for="currency_id" class="kt-label mb-2 flex items-center justify-between">
-                                            {{ __('main.currency') }}
-                                            <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
-                                                {{ __('main.add') }}
-                                            </a>
-                                        </label>
-                                        <select name="currency_id" id="currency_id" class="kt-select basic-single">
-                                            <option value="" selected disabled></option>
-                                            @foreach ($currencies as $currency)
-                                                <option value="{{ $currency->id }}"
-                                                    {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
-                                                    {{ $currency->code }} - {{ $currency->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('currency_id')
-                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    {{-- Currency --}}
+                                    @include('components.selects.currency', [
+                                        'name' => 'currency_id',
+                                        'currencies' => $currencies,
+                                    ])
 
                                     <!-- Language -->
                                     <div class="">

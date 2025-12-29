@@ -19,44 +19,30 @@ class SupplementForm extends Component
         $this->record = $record;
         $this->currencies = Currency::pluck('code', 'id')->toArray();
 
-        // If editing and has existing supplements, load them
-        if ($record && $record->supplements()->exists()) {
-            $existingSupplements = $record->supplements()
-                ->get()
-                ->map(function ($supplement) {
-                    return [
-                        'id' => uniqid(),
-                        'supplement_id' => $supplement->id,
-                        'name' => $supplement->name,
-                        'name_ar' => $supplement->name_ar,
-                        'currency_id' => $supplement->currency_id,
-                        'price' => $supplement->price,
-                        'price_type' => $supplement->price_type ?? 'per_person',
-                        'is_mandatory' => $supplement->is_mandatory ?? 0,
-                        'is_active' => $supplement->is_active ?? 1,
-                        'description' => $supplement->description,
-                    ];
-                })->toArray();
-
-            if (!empty($existingSupplements)) {
+        if ($record) {
+            if (method_exists($record, 'supplements') && $record->supplements()->exists()) {
+                $existingSupplements = $record->supplements()
+                    ->get()
+                    ->unique('id')
+                    ->map(function ($supplement) {
+                        return [
+                            'id' => uniqid(),
+                            'supplement_id' => $supplement->id,
+                            'name' => $supplement->name,
+                            'name_ar' => $supplement->name_ar,
+                            'currency_id' => $supplement->currency_id,
+                            'price' => $supplement->price,
+                            'price_type' => $supplement->price_type ?? 'per_person',
+                            'is_mandatory' => $supplement->is_mandatory ?? 0,
+                            'is_active' => $supplement->is_active ?? 1,
+                            'description' => $supplement->description,
+                        ];
+                    })->toArray();
+            }
+            if (!empty($existingSupplements ?? [])) {
                 $this->supplements = $existingSupplements;
             }
         }
-
-        // Initialize with one empty supplement if none exist
-        // if (empty($this->supplements)) {
-        //     $this->supplements[] = [
-        //         'id' => uniqid(),
-        //         'name' => '',
-        //         'name_ar' => '',
-        //         'currency_id' => '',
-        //         'price' => '',
-        //         'price_type' => 'per_person',
-        //         'is_mandatory' => 0,
-        //         'is_active' => 1,
-        //         'description' => '',
-        //     ];
-        // }
     }
 
     public function addSupplement()

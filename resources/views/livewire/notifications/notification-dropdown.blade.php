@@ -18,13 +18,13 @@
     <div x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform scale-95"
         x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-75"
         x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95"
-        class="absolute mt-2 w-80 bg-white rounded-md shadow-lg z-50 border border-gray-200 hidden"
+        class="absolute mt-2 w-80 background rounded-md shadow-lg z-50 border border-gray-200 hidden"
         id="notification-dropdown">
 
         @if (count($notifications) > 0)
             {{-- Header --}}
             <div class="p-2 border-b border-gray-200 flex items-center justify-between">
-                <span class="font-semibold text-gray-800" style="font-size: 14px">{{ __('main.notifications') }}</span>
+                <span class="font-semibold text-gray-600" style="font-size: 14px">{{ __('main.notifications') }}</span>
                 @if ($unreadNotificationsCount > 0)
                     <button wire:click="markAllAsRead" class="text-blue-600 hover:text-blue-800 cursor-pointer"
                         style="font-size: 14px">
@@ -42,7 +42,7 @@
                             <div class="flex items-start space-x-3">
                                 <div class="flex-1 min-w-0">
                                     @if ($notification->title)
-                                        <p class="text-sm font-medium text-gray-900 truncate">
+                                        <p class="text-sm font-medium text-gray-600 truncate">
                                             {{ $notification->title }}
                                         </p>
                                     @endif

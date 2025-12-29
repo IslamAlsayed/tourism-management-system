@@ -362,11 +362,11 @@ th:has(i, svg) {
     left: auto;
     right: auto;
     z-index: 1000;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-gray-500);
     padding: 20px;
     border-radius: 15px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* background-color: white; */
+    box-shadow: 0 4px 8px var(--color-gray-500);
     text-wrap: nowrap;
     overflow: hidden;
 
@@ -377,10 +377,10 @@ th:has(i, svg) {
 }
 
 #columnsModal {
-    box-shadow:
+    /* box-shadow:
         0px 5px 7px #f3f3f3,
         -5px 0px 7px #f3f3f3,
-        5px 0px 7px #f3f3f3;
+        5px 0px 7px #f3f3f3; */
 }
 
 #columnsModal .grid,
@@ -633,7 +633,7 @@ th:has(i, svg) {
         }
 
         .custom-input {
-            --unchecked: #27272a;
+            --unchecked: #343435;
             --checked: #1379f0;
             --stroke: 1px;
             --inset: 1px;

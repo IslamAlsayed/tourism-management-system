@@ -376,12 +376,27 @@ if (!function_exists('db_connection')) {
     }
 }
 
-if (!function_exists('getOrderedModelType')) {
-    function getOrderedModelType(string $separator = '', $model = null, $order = 0)
+if (!function_exists('modelTypeToRoute')) {
+    function modelTypeToRoute(?string $modelType, bool $plural = false): ?string
     {
-        return explode($separator, $model)[$order];
+        if (!$modelType)
+            return null;
+
+        $name = Str::kebab(class_basename($modelType));
+        return $plural ? Str::plural($name) : Str::singular($name);
     }
 }
+
+
+// if (!function_exists('modelTypeToRoute')) {
+//     function modelTypeToRoute(?string $modelType): ?string
+//     {
+//         if (!$modelType)
+//             return null;
+
+//         return Str::plural(Str::kebab(class_basename($modelType)));
+//     }
+// }
 
 /* Removed invalid anonymous function definition that caused a syntax error */
 if (!function_exists('pluralLowerCaseName')) {

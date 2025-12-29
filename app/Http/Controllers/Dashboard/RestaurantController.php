@@ -33,15 +33,14 @@ class RestaurantController extends Controller
         $seasons = Season::orderBy('name')->get();
         $meals = Meal::orderBy('name')->get();
         $supplements = Supplement::orderBy('name')->get();
-        return view('pages.dashboard.restaurants.create', compact('regions', 'currencies', 'timezones', 'types', 'seasons', 'meals', 'supplements'));
+        return view('pages.dashboard.restaurants.create', get_defined_vars());
     }
 
     public function store(StoreRequest $request)
     {
-        // dd($request->all(), $request->validated());
         $validated = $request->validated();
-        $data = array_merge($validated, $request->safe()->except(['photo', 'seasons', 'meals', 'supplements']));
-        $restaurant = Restaurant::create($data);
+        $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons', 'meals', 'supplements']));
+        $restaurant = Restaurant::create($validated);
 
         if (!$restaurant) {
             return redirect()->route('restaurants.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
@@ -49,61 +48,30 @@ class RestaurantController extends Controller
 
         $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
 
+        // CREATE SEASONS
         if (!empty($validated['seasons'])) {
             foreach ($validated['seasons'] as $seasonData) {
-
-                $season = Season::create([
-                    'name' => $seasonData['name'],
-                    'name_ar' => $seasonData['name_ar'] ?? null,
-                    'season_from' => $seasonData['season_from'],
-                    'season_to' => $seasonData['season_to'],
-                    'notes' => $seasonData['notes'] ?? null,
-                    'is_active' => $seasonData['is_active'] ?? true,
-                ]);
-
-                $restaurant->seasons()->attach($season->id, [
-                    'price' => $seasonData['price'] ?? null,
-                ]);
+                $validated['model_id'] = $restaurant->id;
+                $validated['model_type'] = Restaurant::class;
+                Season::create($seasonData);
             }
         }
 
+        // CREATE MEALS
         if (!empty($validated['meals'])) {
             foreach ($validated['meals'] as $mealData) {
-
-                $meal = Meal::create([
-                    'name' => $mealData['name'],
-                    'name_ar' => $mealData['name_ar'] ?? null,
-                    'currency_id' => $mealData['currency_id'],
-                    'price' => $mealData['price'],
-                    'is_included' => $mealData['is_included'] ?? false,
-                    'is_supplement' => $mealData['is_supplement'] ?? false,
-                    'is_active' => $mealData['is_active'] ?? true,
-                    'notes' => $mealData['notes'] ?? null,
-                ]);
-
-                $restaurant->meals()->attach($meal->id, [
-                    'price' => $mealData['price'],
-                ]);
+                $validated['model_id'] = $restaurant->id;
+                $validated['model_type'] = Restaurant::class;
+                Meal::create($mealData);
             }
         }
 
+        // CREATE SUPPLEMENTS
         if (!empty($validated['supplements'])) {
             foreach ($validated['supplements'] as $supplementData) {
-
-                $supplement = Supplement::create([
-                    'name' => $supplementData['name'],
-                    'name_ar' => $supplementData['name_ar'] ?? null,
-                    'currency_id' => $supplementData['currency_id'],
-                    'price' => $supplementData['price'],
-                    'price_type' => $supplementData['price_type'] ?? 'one_time',
-                    'is_mandatory' => $supplementData['is_mandatory'] ?? false,
-                    'is_active' => $supplementData['is_active'] ?? true,
-                    'notes' => $supplementData['notes'] ?? null,
-                ]);
-
-                $restaurant->supplements()->attach($supplement->id, [
-                    'price' => $supplementData['price'],
-                ]);
+                $validated['model_id'] = $restaurant->id;
+                $validated['model_type'] = Restaurant::class;
+                Supplement::create($supplementData);
             }
         }
 
@@ -115,7 +83,7 @@ class RestaurantController extends Controller
 
     public function show($id)
     {
-        $restaurant = Restaurant::with(['type', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'meals', 'supplements'])->find($id);
+        $restaurant = Restaurant::with((new Restaurant())->getRelationshipNames())->find($id);
         if (!$restaurant) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
         }
@@ -124,7 +92,7 @@ class RestaurantController extends Controller
 
     public function edit($id)
     {
-        $restaurant = Restaurant::with(['seasons', 'meals', 'supplements'])->find($id);
+        $restaurant = Restaurant::with((new Restaurant())->getRelationshipNames())->find($id);
         if (!$restaurant) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
         }
@@ -132,89 +100,52 @@ class RestaurantController extends Controller
         $currencies = Currency::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         $types = Type::all()->pluck('name', 'id');
-
-        // Get all available seasons/meals/supplements for selection
-        $availableSeasons = Season::orderBy('name')->get();
-        $seasonsSelected = $restaurant->seasons->map(function ($season) {
-            return [
-                'id' => $season->id,
-                'name' => $season->name,
-                'price' => $season->pivot->price ?? 0
-            ];
-        })->toArray();
-
-        $availableMeals = Meal::orderBy('name')->get();
-        $mealsSelected = $restaurant->meals->map(function ($meal) {
-            return [
-                'id' => $meal->id,
-                'name' => $meal->name,
-                'price' => $meal->pivot->price ?? 0
-            ];
-        })->toArray();
-
-        $availableSupplements = Supplement::orderBy('name')->get();
-        $supplementsSelected = $restaurant->supplements->map(function ($supplement) {
-            return [
-                'id' => $supplement->id,
-                'name' => $supplement->name,
-                'price' => $supplement->pivot->price ?? 0
-            ];
-        })->toArray();
-
-        return view('pages.dashboard.restaurants.edit', compact('restaurant', 'regions', 'currencies', 'timezones', 'types', 'availableSeasons', 'seasonsSelected', 'availableMeals', 'mealsSelected', 'availableSupplements', 'supplementsSelected'));
+        return view('pages.dashboard.restaurants.edit', get_defined_vars());
     }
 
     public function update(UpdateRequest $request, $id)
     {
         $restaurant = Restaurant::find($id);
         if (!$restaurant) {
-            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
+            return redirect()->route('restaurants.index')->withError(__('messages.type_not_found', ['type' => __('main.restaurant')]));
         }
-        $data = $request->validated();
-        $data = array_merge($data, $request->safe()->except(['photo', 'seasons', 'meals', 'supplements']));
-        $updated = $restaurant->update($data);
+
+        $validated = $request->validated();
+        $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons', 'meals', 'supplements']));
+        $updated = $restaurant->update($validated);
 
         if ($request->has('photo')) {
             $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
         }
 
-        // Sync seasons with price in pivot table
-        if (isset($data['seasons']) && is_array($data['seasons'])) {
-            $seasonsToSync = [];
-            foreach ($data['seasons'] as $season) {
-                if (isset($season['season_id']) && isset($season['price'])) {
-                    $seasonsToSync[$season['season_id']] = ['price' => $season['price']];
-                }
+        // EDIT SEASONS
+        if (!empty($validated['seasons'])) {
+            $restaurant->seasons()->where('model_type', Restaurant::class)->where('model_id', $restaurant->id)->delete();
+            foreach ($validated['seasons'] as $seasonData) {
+                $seasonData['model_id'] = $restaurant->id;
+                $seasonData['model_type'] = Restaurant::class;
+                Season::create($seasonData);
             }
-            $restaurant->seasons()->sync($seasonsToSync);
-        } else {
-            $restaurant->seasons()->sync([]);
         }
 
-        // Sync meals with price in pivot table
-        if (isset($data['meals']) && is_array($data['meals'])) {
-            $mealsToSync = [];
-            foreach ($data['meals'] as $meal) {
-                if (isset($meal['meal_id']) && isset($meal['price'])) {
-                    $mealsToSync[$meal['meal_id']] = ['price' => $meal['price']];
-                }
+        // EDIT MEALS
+        if (!empty($validated['meals'])) {
+            $restaurant->meals()->where('model_type', Restaurant::class)->where('model_id', $restaurant->id)->delete();
+            foreach ($validated['meals'] as $mealData) {
+                $mealData['model_id'] = $restaurant->id;
+                $mealData['model_type'] = Restaurant::class;
+                Meal::create($mealData);
             }
-            $restaurant->meals()->sync($mealsToSync);
-        } else {
-            $restaurant->meals()->sync([]);
         }
 
-        // Sync supplements with price in pivot table
-        if (isset($data['supplements']) && is_array($data['supplements'])) {
-            $supplementsToSync = [];
-            foreach ($data['supplements'] as $supplement) {
-                if (isset($supplement['supplement_id']) && isset($supplement['price'])) {
-                    $supplementsToSync[$supplement['supplement_id']] = ['price' => $supplement['price']];
-                }
+        // EDIT SUPPLEMENTS
+        if (!empty($validated['supplements'])) {
+            $restaurant->supplements()->where('model_type', Restaurant::class)->where('model_id', $restaurant->id)->delete();
+            foreach ($validated['supplements'] as $supplementData) {
+                $supplementData['model_id'] = $restaurant->id;
+                $supplementData['model_type'] = Restaurant::class;
+                Supplement::create($supplementData);
             }
-            $restaurant->supplements()->sync($supplementsToSync);
-        } else {
-            $restaurant->supplements()->sync([]);
         }
 
         if ($updated) {
@@ -222,7 +153,6 @@ class RestaurantController extends Controller
         }
         return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.restaurant')]));
     }
-
     public function destroy($id)
     {
         $restaurant = Restaurant::find($id);

@@ -731,14 +731,11 @@
     @break
 
     @case('model_type')
-        <td title="{{ __('main.' . singularLowerCaseName(getOrderedModelType('\\', $model->model_type, 2), '') ?? '--') }}">
+        <td title="{{ __('main.' . modelTypeToRoute($model->model_type)) ?? '--' }}">
             @if ($model->model_type && $model->model)
                 <span
-                    class="inline-block text-black {{ singularLowerCaseName(getOrderedModelType('\\', $model->model_type, 2)) == 'accommodation' ? 'bg-yellow/30' : 'bg-info/30' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                    {!! highlightSearch(
-                        limitedText(__('main.' . singularLowerCaseName(getOrderedModelType('\\', $model->model_type, 2), '')) ?? '--', 30),
-                        $search,
-                    ) !!}
+                    class="inline-block text-black {{ modelTypeToRoute($model->model_type, true) == 'accommodations' ? 'bg-yellow/30' : 'bg-info/30' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    {!! highlightSearch(limitedText(__('main.' . modelTypeToRoute($model->model_type)) ?? '--', 30), $search) !!}
                 </span>
             @else
                 <div
@@ -752,7 +749,7 @@
     @case('model')
         <td title="{{ optional($model->model)->name ?? '--' }}">
             @if ($model->model)
-                <a href="{{ route(pluralLowerCaseName(getOrderedModelType('\\', $model->model_type, 2)) . '.show', $model->model->id) }}"
+                <a href="{{ route(modelTypeToRoute($model->model_type, true) . '.show', $model->model->id) }}"
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->model)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>

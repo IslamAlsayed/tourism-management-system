@@ -75,6 +75,11 @@ class Restaurant extends Model
         return $this->belongsTo(Type::class);
     }
 
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+
     public function region()
     {
         return $this->belongsTo(Region::class);

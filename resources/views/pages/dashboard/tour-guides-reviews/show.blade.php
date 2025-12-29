@@ -49,7 +49,7 @@
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.rating') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuideReview->rating . '/5' ?: __('main.na') }}
+                                    {{ number_format($tourGuideReview->rating, 0) ?: '0' }}/5
                                     <i class="fas fa-star" style="color: #ffdd00"></i>
                                 </p>
                             </div>
