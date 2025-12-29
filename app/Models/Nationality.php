@@ -20,6 +20,7 @@ class Nationality extends Model
         'is_active',
         'description',
         'notes',
+        'timezone_id',
         'region_id',
         'subregion_id',
         'country_id',
@@ -32,7 +33,7 @@ class Nationality extends Model
      */
     public function getRelationshipNames()
     {
-        return ['region', 'subregion', 'country', 'state', 'city'];
+        return ['timezone', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
     /**
@@ -40,7 +41,12 @@ class Nationality extends Model
      */
     public function getExcludedColumns()
     {
-        return ['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     public function region()

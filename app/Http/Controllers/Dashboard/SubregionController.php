@@ -78,10 +78,8 @@ class SubregionController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregions')]));
         }
         $deleted = $subregions->delete();
-        if ($deleted) {
-            return redirect()->route('subregions.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.subregion')]));
-        }
-
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.subregion')]));
+        return $deleted
+            ? redirect()->route('subregions.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.subregion')]))
+            : redirect()->route('subregions.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.subregion')]));
     }
 }

@@ -83,10 +83,8 @@ class CompanyController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_company')]));
         }
         $deleted = $transportationCompany->delete();
-        if ($deleted) {
-            return redirect()->route('transportation-companies.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_company')]));
-        }
-
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_company')]));
+        return $deleted
+            ? redirect()->route('transportation-companies.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_company')]))
+            : redirect()->route('transportation-companies.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_company')]));
     }
 }

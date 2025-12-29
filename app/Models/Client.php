@@ -98,7 +98,7 @@ class Client extends Model
      */
     public function getRelationshipNames()
     {
-        return ['region', 'subregion', 'country', 'state', 'city', 'timezone', 'currency'];
+        return ['timezone', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'nationality', 'creator', 'updater'];
     }
 
     /**
@@ -107,14 +107,14 @@ class Client extends Model
     public function getExcludedColumns()
     {
         return [
+            'timezone_id',
+            'currency_id',
             'region_id',
             'subregion_id',
             'country_id',
             'state_id',
             'city_id',
             'nationality_id',
-            'timezone_id',
-            'currency_id',
         ];
     }
 
@@ -148,6 +148,16 @@ class Client extends Model
      * Relationships
      */
 
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+
     public function region()
     {
         return $this->belongsTo(Region::class);
@@ -176,16 +186,6 @@ class Client extends Model
     public function nationality()
     {
         return $this->belongsTo(Nationality::class);
-    }
-
-    public function timezone()
-    {
-        return $this->belongsTo(Timezone::class);
-    }
-
-    public function currency()
-    {
-        return $this->belongsTo(Currency::class);
     }
 
     public function creator()

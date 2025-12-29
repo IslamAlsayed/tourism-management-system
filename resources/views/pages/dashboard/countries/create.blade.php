@@ -22,21 +22,88 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-4 lg:gap-6">
-            <!-- Country Form -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.country')]) }}</h3>
+        <form action="{{ route('countries.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <!-- Country Photo -->
+            @include('components.input-image', [
+                'column' => 'country',
+                'columnName' => 'photo',
+            ])
+
+            <div class="grid gap-4 lg:gap-6">
+                <!-- Location Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.location')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        {{-- Regions [region, subregion, state, city] --}}
+                        <livewire:regions.location-to-country :multiple="['states', 'cities']" />
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            <!-- Latitude -->
+                            <div class="">
+                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
+                                <input type="number" step="0.00000001" name="latitude" id="latitude"
+                                    class="kt-input h-[45px]" value="{{ old('latitude') }}">
+                                @error('latitude')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Longitude -->
+                            <div class="">
+                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
+                                <input type="number" step="0.00000001" name="longitude" id="longitude"
+                                    class="kt-input h-[45px]" value="{{ old('longitude') }}">
+                                @error('longitude')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Capital City -->
+                            <div class="">
+                                <label for="capital" class="kt-label mb-2">{{ __('main.capital') }}</label>
+                                <input type="text" name="capital" id="capital" class="kt-input h-[45px]"
+                                    value="{{ old('capital') }}">
+                                @error('capital')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Timezone --}}
+                            @include('components.selects.timezone', [
+                                'name' => 'timezone_id',
+                                'timezones' => $timezones,
+                            ])
+
+                            {{-- Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
+                            ])
+
+                            {{-- Language --}}
+                            @include('components.selects.language', [
+                                'name' => 'language_id',
+                                'languages' => $languages,
+                            ])
+                        </div>
+                    </div>
                 </div>
-                <div class="kt-card-body">
-                    <form method="POST" action="{{ route('countries.store') }}" enctype="multipart/form-data"
-                        class="space-y-6 p-4">
-                        @csrf
 
-                        <!-- Country Photo -->
-                        @include('components.input-image', ['column' => 'country', 'columnName' => 'flag'])
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                <!-- Country Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.country')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Country Name (English) -->
                             <div class="">
                                 <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
@@ -97,21 +164,11 @@
                                 @enderror
                             </div>
 
-                            <!-- Capital City -->
-                            <div class="">
-                                <label for="capital" class="kt-label mb-2">{{ __('main.capital') }}</label>
-                                <input type="text" name="capital" id="capital" class="kt-input h-[45px]"
-                                    value="{{ old('capital') }}">
-                                @error('capital')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <!-- TLD (Top Level Domain) -->
                             <div class="">
                                 <label for="tld" class="kt-label mb-2">{{ __('main.tld') }}</label>
-                                <input type="text" name="tld" id="tld" class="kt-input h-[45px]" maxLength="10"
-                                    value="{{ old('tld') }}" placeholder=".com, .eg, .sa">
+                                <input type="text" name="tld" id="tld" class="kt-input h-[45px]"
+                                    maxLength="10" value="{{ old('tld') }}" placeholder=".com, .eg, .sa">
                                 @error('tld')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -136,61 +193,7 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="kt-card mb-4">
-                            <div class="kt-card-header">
-                                <h3 class="kt-card-title">
-                                    {{ __('main.location_information', ['type' => __('main.location')]) }}</h3>
-                            </div>
-                            <div class="kt-card-body p-4 pb-0">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                                    {{-- Regions [region, subregion, state, city] --}}
-                                    @include('components.regions.create', [
-                                        'levels' => ['region', 'subregion', 'state', 'city'],
-                                        'multiple' => true,
-                                    ])
-
-                                    {{-- Timezone --}}
-                                    @include('components.selects.timezone', [
-                                        'name' => 'timezone_id',
-                                        'timezones' => $timezones,
-                                    ])
-
-                                    {{-- Currency --}}
-                                    @include('components.selects.currency', [
-                                        'name' => 'currency_id',
-                                        'currencies' => $currencies,
-                                    ])
-
-                                    <!-- Language -->
-                                    <div class="">
-                                        <label for="language_id"
-                                            class="kt-label required mb-2 flex items-center justify-between">
-                                            {{ __('main.language') }}
-                                            <a href="{{ route('languages.create') }}" class="text-blue-600 text-2sm">
-                                                {{ __('main.add') }}
-                                            </a>
-                                        </label>
-                                        <select name="language_id" id="language_id" class="kt-select basic-single"
-                                            required>
-                                            <option value="" selected disabled></option>
-                                            @foreach ($languages as $language)
-                                                <option value="{{ $language->id }}"
-                                                    {{ old('language_id') == $language->id ? 'selected' : '' }}>
-                                                    {{ $language->name }}{{ $language->name_ar ? ' - ' . $language->name_ar : '' }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('language_id')
-                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Area (km²) -->
                             <div class="">
                                 <label for="area" class="kt-label mb-2">{{ __('main.area') }}</label>
@@ -200,141 +203,65 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <!-- Latitude -->
-                            <div class="">
-                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" step="any" name="latitude" id="latitude"
-                                    class="kt-input h-[45px]" value="{{ old('latitude') }}">
-                                @error('latitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Longitude -->
-                            <div class="">
-                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" step="any" name="longitude" id="longitude"
-                                    class="kt-input h-[45px]" value="{{ old('longitude') }}">
-                                @error('longitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        {{-- Description --}}
-                        @include('components.elements.input-text-editor', [
-                            'name' => 'description',
-                            'value' => old('description'),
-                        ])
-
-                        {{-- Notes --}}
-                        @include('components.elements.input-text-editor', [
-                            'name' => 'notes',
-                            'value' => old('notes'),
-                        ])
-
-                        <!-- Country Settings -->
-                        <div class="flex flex-wrap gap-10 mb-4">
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_active" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_active',
-                                    'id' => 'is_active',
-                                    'value' => '1',
-                                    'checked' => 1,
-                                    'label' => __('main.activate_country'),
-                                ])
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_independent" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_independent',
-                                    'id' => 'is_independent',
-                                    'value' => '1',
-                                    'label' => __('main.independent_country'),
-                                ])
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_developed" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_developed',
-                                    'id' => 'is_developed',
-                                    'value' => '1',
-                                    'label' => __('main.developed_country'),
-                                ])
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_landlocked" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_landlocked',
-                                    'id' => 'is_landlocked',
-                                    'value' => '1',
-                                    'label' => __('main.landlocked_country'),
-                                ])
-                            </div>
-                        </div>
-
-                        <!-- Save Submit Buttons -->
-                        @include('components.elements.save-submit', ['models' => 'countries'])
-                    </form>
-                </div>
-            </div>
-
-            <!-- Geographic Info -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.geographic')]) }}</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-geolocation text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.coordinates_hint') }}</div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-success"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.iso_codes') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.iso_codes_hint') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-dollar text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.official_currency') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.currency_hint') }}</div>
-                            </div>
                         </div>
                     </div>
                 </div>
+
+                {{-- Description --}}
+                @include('components.elements.input-text-editor', [
+                    'name' => 'description',
+                    'value' => old('description'),
+                ])
+
+                {{-- Notes --}}
+                @include('components.elements.input-text-editor', [
+                    'name' => 'notes',
+                    'value' => old('notes'),
+                ])
+
+                <div class="flex flex-wrap" style="gap: 10px 40px;">
+                    <div class="flex items-center gap-3">
+                        <input type="hidden" name="is_active" value="0">
+                        @include('components.elements.checkbox-button', [
+                            'name' => 'is_active',
+                            'id' => 'is_active',
+                            'value' => '1',
+                            'checked' => 1,
+                            'label' => __('main.is_active'),
+                        ])
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="hidden" name="is_independent" value="0">
+                        @include('components.elements.checkbox-button', [
+                            'name' => 'is_independent',
+                            'id' => 'is_independent',
+                            'value' => '1',
+                            'label' => __('main.is_independent'),
+                        ])
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="hidden" name="is_developed" value="0">
+                        @include('components.elements.checkbox-button', [
+                            'name' => 'is_developed',
+                            'id' => 'is_developed',
+                            'value' => '1',
+                            'label' => __('main.is_developed'),
+                        ])
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="hidden" name="is_landlocked" value="0">
+                        @include('components.elements.checkbox-button', [
+                            'name' => 'is_landlocked',
+                            'id' => 'is_landlocked',
+                            'value' => '1',
+                            'label' => __('main.is_landlocked'),
+                        ])
+                    </div>
+                </div>
+
+                <!-- Save Submit -->
+                @include('components.elements.save-submit', ['models' => 'countries'])
             </div>
-        </div>
+        </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-countries-cascading')

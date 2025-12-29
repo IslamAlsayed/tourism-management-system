@@ -181,6 +181,13 @@ if (!function_exists('hasActiveChild')) {
     }
 }
 
+if (!function_exists('hasEmpty')) {
+    function hasEmpty($data)
+    {
+        return is_array($data) ? count($data) > 0 : !is_null($data);
+    }
+}
+
 if (!function_exists('routeExists')) {
     /**
      * Check if a named route exists.

@@ -78,9 +78,8 @@ class CurrencyController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.currency')]));
         }
         $deleted = $currency->delete();
-        if ($deleted) {
-            return redirect()->route('currencies.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.currency')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.currency')]));
+        return $deleted
+            ? redirect()->route('currencies.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.currency')]))
+            : redirect()->route('currencies.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.currency')]));
     }
 }

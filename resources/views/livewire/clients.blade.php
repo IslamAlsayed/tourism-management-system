@@ -16,10 +16,10 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content" wire:loading.class="loading"
+    <div class="kt-card-content px-2" wire:loading.class="loading"
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterClientGender,filterClientStatus">
         <!-- Filters -->
-        <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 px-4 filterTable">
+        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 filterTable">
             <div>
                 <label for="gender" class="text-sm mb-1">{{ __('main.gender') }}</label>
                 <select wire:model.live="filterClientGender" class="kt-select h-[40px] w-48 max-w-full"

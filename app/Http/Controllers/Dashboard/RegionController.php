@@ -75,10 +75,8 @@ class RegionController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.region')]));
         }
         $deleted = $region->delete();
-        if ($deleted) {
-            return redirect()->route('regions.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.region')]));
-        }
-
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.region')]));
+        return $deleted
+            ? redirect()->route('regions.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.region')]))
+            : redirect()->route('regions.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.region')]));
     }
 }

@@ -26,6 +26,7 @@ class City extends Model
         'longitude',
         'wiki_data_id',
         'population',
+        'all_states',
         'is_active',
         'is_independent',
         'is_developed',
@@ -69,8 +70,8 @@ class City extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function state()
+    public function states()
     {
-        return $this->belongsTo(State::class);
+        return $this->belongsToMany(State::class, 'city_state');
     }
 }

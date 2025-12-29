@@ -89,9 +89,8 @@ class SeasonController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
         }
         $deleted = $season->delete();
-        if ($deleted) {
-            return redirect()->route('seasons.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.season')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.season')]));
+        return $deleted
+            ? redirect()->route('seasons.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.season')]))
+            : redirect()->route('seasons.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.season')]));
     }
 }

@@ -87,10 +87,8 @@ class DepartmentController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_department')]));
         }
         $deleted = $transportationDepartment->delete();
-        if ($deleted) {
-            return redirect()->route('transportation-departments.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_department')]));
-        }
-
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_department')]));
+        return $deleted
+            ? redirect()->route('transportation-departments.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_department')]))
+            : redirect()->route('transportation-departments.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_department')]));
     }
 }

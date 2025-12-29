@@ -22,21 +22,42 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-4 lg:gap-6">
-            <!-- Nationality Form -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.nationality')]) }}</h3>
-                </div>
-                <div class="kt-card-body">
-                    <form method="POST" action="{{ route('nationalities.store') }}" class="space-y-6 p-4">
-                        @csrf
+        <form action="{{ route('nationalities.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="grid gap-4 lg:gap-6">
+                <!-- Location Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.location')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base />
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            {{-- Timezone --}}
+                            @include('components.selects.timezone', [
+                                'name' => 'timezone_id',
+                                'timezones' => $timezones,
+                            ])
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nationality Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.nationality')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Nationality Name (English) -->
                             <div class="">
-                                <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.name', ['type' => __('main.nationality')]) }}</label>
+                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]" required
                                     value="{{ old('name') }}">
                                 @error('name')
@@ -46,112 +67,46 @@
 
                             <!-- Nationality Name (Arabic) -->
                             <div class="">
-                                <label for="name_ar"
-                                    class="kt-label required mb-2">{{ __('main.name_ar', ['type' => __('main.nationality')]) }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.create', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                            ])
-                        </div>
-
-                        {{-- Description --}}
-                        @include('components.elements.input-text-editor', [
-                            'name' => 'description',
-                            'value' => old('description'),
-                        ])
-
-                        {{-- Notes --}}
-                        @include('components.elements.input-text-editor', [
-                            'name' => 'notes',
-                            'value' => old('notes'),
-                        ])
-
-                        <!-- Is active -->
-                        <div class="flex flex-wrap gap-10 mb-4">
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_active" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_active',
-                                    'id' => 'is_active',
-                                    'value' => '1',
-                                    'checked' => 1,
-                                    'label' => __('main.is_active'),
-                                ])
-                            </div>
-                        </div>
-
-                        <!-- Save Submit -->
-                        @include('components.elements.save-submit', ['models' => 'nationalities'])
-                    </form>
-                </div>
-            </div>
-
-            <!-- Quick Info -->
-            <div class="kt-card hidden">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.important_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.ensure_data_accuracy') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.geographic_coordinates') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-geolocation text-success"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.use_map_services') }}</div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-flag text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">
-                                    {{ __('main.type_selection', ['type' => __('main.country')]) }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.must_select_type1_before_creating_type2', ['type1' => __('main.country'), 'type2' => __('main.nationality')]) }}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
+
+                {{-- Description --}}
+                @include('components.elements.input-text-editor', [
+                    'name' => 'description',
+                    'value' => old('description'),
+                ])
+
+                {{-- Notes --}}
+                @include('components.elements.input-text-editor', [
+                    'name' => 'notes',
+                    'value' => old('notes'),
+                ])
+
+                <!-- Is active -->
+                <div class="flex flex-wrap gap-10">
+                    <div class="flex items-center gap-3">
+                        <input type="hidden" name="is_active" value="0">
+                        @include('components.elements.checkbox-button', [
+                            'name' => 'is_active',
+                            'id' => 'is_active',
+                            'value' => '1',
+                            'checked' => 1,
+                            'label' => __('main.is_active'),
+                        ])
+                    </div>
+                </div>
+
+                <!-- Save Submit -->
+                @include('components.elements.save-submit', ['models' => 'nationalities'])
             </div>
-        </div>
+        </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

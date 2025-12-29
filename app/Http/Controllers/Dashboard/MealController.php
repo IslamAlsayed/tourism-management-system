@@ -91,9 +91,8 @@ class MealController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal')]));
         }
         $deleted = $meal->delete();
-        if ($deleted) {
-            return redirect()->route('meals.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.meal')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.meal')]));
+        return $deleted
+            ? redirect()->route('meals.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.meal')]))
+            : redirect()->route('meals.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.meal')]));
     }
 }

@@ -26,31 +26,25 @@ class AirlineController extends Controller
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
-        $airline = Airline::create($validated);
-        if ($airline) {
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.airline')]));
-            }
-            return redirect()->route('airlines.index')->withSuccess(__('messages.type_created', ['type' => __('main.airline')]));
-        }
-        return redirect()->route('airlines.index')->withError(__('messages.type_creation_failed', ['type' => __('main.airline')]));
+        Airline::create($validated);
+        return $request->has('save_and_add')
+            ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.airline')]))
+            : redirect()->route('airlines.index')->withSuccess(__('messages.type_created', ['type' => __('main.airline')]));
     }
 
     public function show($id)
     {
         $airline = Airline::with(['timezone', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
-        if (!$airline) {
+        if (!$airline)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
-        }
         return view('pages.dashboard.airlines.show', compact('airline'));
     }
 
     public function edit($id)
     {
         $airline = Airline::find($id);
-        if (!$airline) {
+        if (!$airline)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
-        }
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.airlines.edit', compact('airline', 'regions', 'timezones'));
@@ -59,27 +53,23 @@ class AirlineController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $airline = Airline::find($id);
-        if (!$airline) {
+        if (!$airline)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
-        }
         $validated = $request->validated();
         $updated = $airline->update($validated);
-        if ($updated) {
-            return redirect()->route('airlines.index')->withSuccess(__('messages.type_updated', ['type' => __('main.airline')]));
-        }
-        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.airline')]));
+        return $updated
+            ? redirect()->route('airlines.index')->withSuccess(__('messages.type_updated', ['type' => __('main.airline')]))
+            : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.airline')]));
     }
 
     public function destroy($id)
     {
         $airline = Airline::find($id);
-        if (!$airline) {
+        if (!$airline)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
-        }
         $deleted = $airline->delete();
-        if ($deleted) {
-            return redirect()->route('airlines.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.airline')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.airline')]));
+        return $deleted
+            ? redirect()->route('airlines.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.airline')]))
+            : redirect()->route('airlines.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.airline')]));
     }
 }

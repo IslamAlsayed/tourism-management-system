@@ -19,7 +19,7 @@
     <div class="kt-card-content px-2" wire:loading.class="loading"
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterSeasonId,filterCurrencyId,filterStatus">
         <!-- Filters -->
-        <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
+        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 filterTable">
             <div>
                 <select wire:model.live="filterSeasonId" class="kt-select h-[40px] w-[300px]" data-kt-select="true"
                     data-kt-select-placeholder="{{ __('main.season') }}">

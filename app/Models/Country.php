@@ -88,15 +88,13 @@ class Country extends Model
         return $this->belongsTo(Subregion::class);
     }
 
-    // One-to-Many: Country has many States
     public function states()
     {
-        return $this->hasMany(State::class);
+        return $this->belongsToMany(State::class, 'country_state', 'country_id', 'state_id');
     }
 
-    // One-to-Many: Country has many Cities
     public function cities()
     {
-        return $this->hasMany(City::class);
+        return $this->belongsToMany(City::class, 'country_city', 'country_id', 'city_id');
     }
 }

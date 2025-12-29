@@ -97,10 +97,9 @@ class CrossingPortController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         }
         $deleted = $crossingPort->delete();
-        if ($deleted) {
-            return redirect()->route('crossings-ports.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.crossing_port')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.crossing_port')]));
+        return $deleted
+            ? redirect()->route('crossings-ports.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.crossing_port')]))
+            : redirect()->route('crossings-ports.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.crossing_port')]));
     }
 
     /**

@@ -23,6 +23,7 @@ class State extends Model
         'level',
         'latitude',
         'longitude',
+        'all_cities',
         'is_active',
         'is_independent',
         'is_developed',
@@ -65,9 +66,8 @@ class State extends Model
         return $this->belongsTo(Country::class);
     }
 
-    // One-to-Many: State has many Cities
     public function cities()
     {
-        return $this->hasMany(City::class);
+        return $this->belongsToMany(City::class, 'city_state');
     }
 }

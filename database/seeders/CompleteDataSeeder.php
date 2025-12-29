@@ -152,8 +152,8 @@ class CompleteDataSeeder extends Seeder
 
         // Nationalities
         $nationalities = [
-            ['name' => 'Egyptian', 'name_ar' => 'مصري', 'country_id' => $createdCountries[0]->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'state_id' => $createdStates[1]->id, 'city_id' => $createdCities[1]->id, 'is_active' => true],
-            ['name' => 'Jordanian', 'name_ar' => 'أردني', 'country_id' => $createdCountries[1]->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'state_id' => $createdStates[0]->id, 'city_id' => $createdCities[0]->id, 'is_active' => true],
+            ['name' => 'Egyptian', 'name_ar' => 'مصري', 'timezone_id' => Timezone::inRandomOrder()->first()?->id, 'region_id' => $createdRegions[1]->id, 'subregion_id' => $createdSubregions[1]->id, 'country_id' => $createdCountries[0]->id, 'state_id' => $createdStates[1]->id, 'city_id' => $createdCities[1]->id, 'is_active' => true],
+            ['name' => 'Jordanian', 'name_ar' => 'أردني', 'timezone_id' => Timezone::inRandomOrder()->first()?->id, 'region_id' => $createdRegions[0]->id, 'subregion_id' => $createdSubregions[0]->id, 'country_id' => $createdCountries[1]->id, 'state_id' => $createdStates[0]->id, 'city_id' => $createdCities[0]->id, 'is_active' => true],
         ];
         $createdNationalities = [];
         foreach ($nationalities as $nationalityData) {

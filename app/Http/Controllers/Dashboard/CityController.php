@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\City;
+use App\Models\State;
 use App\Models\Region;
 use App\Models\Timezone;
 use App\Http\Controllers\Controller;
@@ -26,29 +27,31 @@ class CityController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        if ($request['state_id']) {
-            $data['state_id'] = array_unique($data['state_id']);
+        unset($data['state_id']);
+        $city = City::create($data);
+        if (!$city) {
+            return redirect()->route('cities.index')->withError(__('messages.type_creation_failed', ['type' => __('main.city')]));
         }
-        if ($request['city_id']) {
-            $data['city_id'] = array_unique($data['city_id']);
+        $stateIds = [];
+        if ($request->boolean('all_states') && isset($data['country_id'])) {
+            $stateIds = State::where('country_id', $data['country_id'])->pluck('id')->toArray();
+        } elseif ($request->filled('state_id')) {
+            $stateIds = array_unique((array) $request->input('state_id'));
         }
-        $created = City::create($data);
-        if ($created) {
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.city')]));
-            }
-            return redirect()->route('cities.index')->withSuccess(__('messages.type_created', ['type' => __('main.city')]));
+        if (!empty($stateIds)) {
+            $city->states()->sync($stateIds);
         }
-        return redirect()->route('cities.index')->withError(__('messages.type_creation_failed', ['type' => __('main.city')]));
+        return $request->has('save_and_add')
+            ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.city')]))
+            : redirect()->route('cities.index')->withSuccess(__('messages.type_created', ['type' => __('main.city')]));
     }
 
     public function show($id)
     {
         $city = City::with(['timezone', 'region', 'subregion', 'country', 'state'])->find($id);
-        if (!$city) {
-            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
-        }
-        return view('pages.dashboard.cities.show', compact('city'));
+        return $city
+            ? view('pages.dashboard.cities.show', compact('city'))
+            : redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
     }
 
     public function edit($id)
@@ -69,17 +72,16 @@ class CityController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
         }
         $data = $request->validated();
-        if ($request['state_id']) {
-            $data['state_id'] = array_unique($data['state_id']);
+        unset($data['state_id']);
+        $city->update($data);
+        $stateIds = [];
+        if ($request->boolean('all_states') && isset($data['country_id'])) {
+            $stateIds = State::where('country_id', $data['country_id'])->pluck('id')->toArray();
+        } elseif ($request->filled('state_id')) {
+            $stateIds = array_unique((array) $request->input('state_id'));
         }
-        if ($request['city_id']) {
-            $data['city_id'] = array_unique($data['city_id']);
-        }
-        $updated = $city->update($data);
-        if ($updated) {
-            return redirect()->route('cities.index')->withSuccess(__('messages.type_updated', ['type' => __('main.city')]));
-        }
-        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.city')]));
+        $city->states()->sync($stateIds);
+        return redirect()->route('cities.index')->withSuccess(__('messages.type_updated', ['type' => __('main.city')]));
     }
 
     public function destroy($id)
@@ -89,9 +91,8 @@ class CityController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
         }
         $deleted = $city->delete();
-        if ($deleted) {
-            return redirect()->route('cities.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.city')]));
-        }
-        return redirect()->route('cities.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.city')]));
+        return $deleted
+            ? redirect()->route('cities.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.city')]))
+            : redirect()->route('cities.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.city')]));
     }
 }

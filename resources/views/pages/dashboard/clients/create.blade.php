@@ -24,27 +24,30 @@
     <div class="kt-container-fixed">
         <form class="space-y-6" method="POST" action="{{ route('clients.store') }}" enctype="multipart/form-data">
             @csrf
+            <div class="grid gap-4 lg:gap-6">
 
-            {{-- Location Information --}}
-            <div class="kt-card mb-6">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4 pb-0">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 items-end gap-6 mb-4">
+                {{-- Location Information --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
                         {{-- Regions [region, subregion, country, state, city] --}}
-                        @include('components.regions.create', [
-                            'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                            'multiple' => false,
-                        ])
-
-                        {{-- Currency --}}
-                        @include('components.selects.currency', [
-                            'name' => 'currency_id',
-                            'currencies' => $currencies,
-                        ])
+                        <livewire:regions.location-select-base />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            {{-- Timezone --}}
+                            @include('components.selects.timezone', [
+                                'name' => 'timezone_id',
+                                'timezones' => $timezones,
+                            ])
+
+                            {{-- Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
+                            ])
+
                             {{-- Box --}}
                             <div>
                                 <label for="box" class="kt-label mb-2">{{ __('main.box') }}</label>
@@ -70,6 +73,7 @@
                         @include('components.elements.input-text-editor', [
                             'column' => 'street_address',
                             'value' => old('street_address'),
+                            'classes' => 'mb-4',
                         ])
 
                         {{-- Address Line 2 --}}
@@ -81,12 +85,12 @@
                 </div>
 
                 {{-- Personal Information --}}
-                <div class="kt-card mb-6">
+                <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">{{ __('main.personal_information') }}</h3>
                     </div>
-                    <div class="kt-card-body p-4 pb-0">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- First Name --}}
                             <div>
                                 <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
@@ -127,7 +131,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Gender --}}
                             <div>
                                 <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
@@ -175,12 +179,12 @@
                 </div>
 
                 {{-- Passport Information --}}
-                <div class="kt-card mb-6">
+                <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">{{ __('main.passport_information') }}</h3>
                     </div>
-                    <div class="kt-card-body p-4 pb-0">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Passport Number --}}
                             <div>
                                 <label for="passport_number"
@@ -218,13 +222,13 @@
                 </div>
 
                 {{-- Contact Information --}}
-                <div class="kt-card mb-6">
+                <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                     </div>
-                    <div class="kt-card-body p-4 pb-0">
+                    <div class="kt-card-body p-4">
                         {{-- Email Addresses --}}
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Primary Email --}}
                             <div>
                                 <label for="email_primary"
@@ -353,12 +357,12 @@
                 </div>
 
                 {{-- Company/Business Information --}}
-                <div class="kt-card mb-6">
+                <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">{{ __('main.company_information') }}</h3>
                     </div>
-                    <div class="kt-card-body p-4 pb-0">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Company Name --}}
                             <div>
                                 <label for="company_name" class="kt-label mb-2">{{ __('main.company_name') }}</label>
@@ -462,12 +466,12 @@
                 </div>
 
                 {{-- Online Presence --}}
-                <div class="kt-card mb-6">
+                <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">{{ __('main.online_presence') }}</h3>
                     </div>
-                    <div class="kt-card-body p-4 pb-0">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Website URL --}}
                             <div>
                                 <label for="website_url" class="kt-label mb-2">{{ __('main.website_url') }}</label>
@@ -491,68 +495,52 @@
                     </div>
                 </div>
 
-                {{-- Additional Settings --}}
-                <div class="kt-card mb-4">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.additional_settings') }}</h3>
-                    </div>
-                    <div class="kt-card-body p-4 pb-0">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            {{-- Status --}}
-                            <div>
-                                <label for="status" class="kt-label mb-2">{{ __('main.status') }}</label>
-                                <select name="status" id="status" class="kt-select basic-single">
-                                    <option value="" selected disabled></option>
-                                    <option value="active" {{ old('status', 'active') == 'active' ? 'selected' : '' }}>
-                                        {{ __('main.active') }}
-                                    </option>
-                                    <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>
-                                        {{ __('main.inactive') }}
-                                    </option>
-                                    <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>
-                                        {{ __('main.pending') }}
-                                    </option>
-                                    <option value="blacklisted" {{ old('status') == 'blacklisted' ? 'selected' : '' }}>
-                                        {{ __('main.blacklisted') }}
-                                    </option>
-                                </select>
-                                @error('status')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                {{-- Description --}}
+                @include('components.elements.input-text-editor', [
+                    'column' => 'description',
+                    'value' => old('description'),
+                ])
 
-                            {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                            ])
-                        </div>
+                {{-- Notes --}}
+                @include('components.elements.input-text-editor', [
+                    'column' => 'notes',
+                    'value' => old('notes'),
+                ])
 
-                        {{-- Notes --}}
-                        @include('components.elements.input-text-editor', [
-                            'column' => 'notes',
-                            'value' => old('notes'),
-                        ])
+                {{-- Status --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                    <div>
+                        <label for="status" class="kt-label mb-2">{{ __('main.status') }}</label>
+                        <select name="client_status" id="status" class="kt-select basic-single">
+                            <option value="" selected disabled></option>
+                            <option value="active" {{ old('client_status', 'active') == 'active' ? 'selected' : '' }}>
+                                {{ __('main.active') }}
+                            </option>
+                            <option value="inactive" {{ old('client_status') == 'inactive' ? 'selected' : '' }}>
+                                {{ __('main.inactive') }}
+                            </option>
+                            <option value="pending" {{ old('client_status') == 'pending' ? 'selected' : '' }}>
+                                {{ __('main.pending') }}
+                            </option>
+                            <option value="blacklisted" {{ old('client_status') == 'blacklisted' ? 'selected' : '' }}>
+                                {{ __('main.blacklisted') }}
+                            </option>
+                        </select>
+                        @error('client_status')
+                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
                 <!-- Save Submit Buttons -->
                 @include('components.elements.save-submit', ['models' => 'clients'])
+            </div>
         </form>
     </div>
 @endsection
 
 @push('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
-            }, 500);
-        });
-
         function generateNewClientCode() {
             function getRandomCode() {
                 const randomNum = Math.floor(Math.random() * 99999) + 1;
@@ -572,5 +560,3 @@
         });
     </script>
 @endpush
-
-@include('components.regions.script-cascading')

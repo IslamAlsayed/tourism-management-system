@@ -22,14 +22,12 @@ class LanguageController extends Controller
     {
         $validated = $request->validated();
         $created = Language::create($validated);
-
         if ($created) {
             if ($request->has('save_and_add')) {
                 return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.language')]));
             }
             return redirect()->route('languages.index')->withSuccess(__('messages.type_created', ['type' => __('main.language')]));
         }
-
         return redirect()->route('languages.index')->withError(__('messages.type_creation_failed', ['type' => __('main.language')]));
     }
 
@@ -65,10 +63,8 @@ class LanguageController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.language')]));
         }
         $deleted = $language->delete();
-        if ($deleted) {
-            return redirect()->route('languages.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.language')]));
-        }
-
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.language')]));
+        return $deleted
+            ? redirect()->route('languages.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.language')]))
+            : redirect()->route('languages.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.language')]));
     }
 }

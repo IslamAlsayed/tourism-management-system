@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             TimezoneSeeder::class,
             CurrencySeeder::class,
-            ClientSeeder::class,
             TouristSiteSeeder::class,
             CrossingPortSeeder::class,
             AirlineSeeder::class,
@@ -30,6 +29,7 @@ class DatabaseSeeder extends Seeder
             AccommodationSeeder::class,
             RestaurantSeeder::class,
             TourGuideLanguageSeeder::class,
+            ClientSeeder::class,
         ]);
     }
 }

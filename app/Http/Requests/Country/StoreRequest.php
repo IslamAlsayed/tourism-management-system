@@ -43,9 +43,11 @@ class StoreRequest extends FormRequest
 
             'state_id' => ['nullable'],
             'state_id.*' => ['integer', 'exists:states,id'],
+            'all_states' => ['boolean'],
 
             'city_id' => ['nullable'],
             'city_id.*' => ['integer', 'exists:cities,id'],
+            'all_cities' => ['boolean'],
 
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],

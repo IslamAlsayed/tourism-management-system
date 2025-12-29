@@ -74,9 +74,8 @@ class TourGuideReviewController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide-review')]));
         }
         $deleted = $tourGuideReview->delete();
-        if ($deleted) {
-            return redirect()->route('tour-guides-reviews.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guides-review')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.tour-guides-review')]));
+        return $deleted
+            ? redirect()->route('tour-guides-reviews.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guide-review')]))
+            : redirect()->route('tour-guides-reviews.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.tour-guide-review')]));
     }
 }

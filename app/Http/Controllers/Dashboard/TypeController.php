@@ -71,9 +71,8 @@ class TypeController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.type')]));
         }
         $deleted = $type->delete();
-        if ($deleted) {
-            return redirect()->route('types.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.type')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.type')]));
+        return $deleted
+            ? redirect()->route('types.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.type')]))
+            : redirect()->route('types.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.type')]));
     }
 }

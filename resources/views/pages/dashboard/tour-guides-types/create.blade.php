@@ -61,10 +61,7 @@
                             ])
 
                             {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.create', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => true,
-                            ])
+                            <livewire:regions.location-select-base />
                         </div>
 
                         <!-- Description -->

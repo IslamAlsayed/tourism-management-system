@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
+            $table->boolean('all_cities')->nullable()->default(false);
             $table->string('iso2')->nullable();
             $table->string('iso3')->nullable();
             $table->string('fips_code')->nullable();

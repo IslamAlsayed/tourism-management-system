@@ -90,9 +90,8 @@ class SupplementController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.supplement')]));
         }
         $deleted = $supplement->delete();
-        if ($deleted) {
-            return redirect()->route('supplements.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.supplement')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.supplement')]));
+        return $deleted
+            ? redirect()->route('supplements.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.supplement')]))
+            : redirect()->route('supplements.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.supplement')]));
     }
 }

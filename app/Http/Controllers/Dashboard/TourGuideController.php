@@ -115,9 +115,8 @@ class TourGuideController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide')]));
         }
         $deleted = $tourGuide->delete();
-        if ($deleted) {
-            return redirect()->route('tour-guides.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guide')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.tour-guide')]));
+        return $deleted
+            ? redirect()->route('tour-guides.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guide')]))
+            : redirect()->route('tour-guides.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.tour-guide')]));
     }
 }

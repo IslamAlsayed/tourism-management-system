@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->uuid('uuid')->unique()->nullable();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
+            $table->unsignedBigInteger('timezone_id')->nullable();
             $table->unsignedBigInteger('region_id')->nullable();
             $table->unsignedBigInteger('subregion_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();

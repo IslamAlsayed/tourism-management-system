@@ -54,7 +54,7 @@ class UpdateRequest extends FormRequest
 
             // Email addresses
             'personal_email' => ['nullable', 'email', 'max:255'],
-            'email_primary' => ['nullable', 'email', 'max:255', 'unique:clients,email_primary'],
+            'email_primary' => ['nullable', 'email', 'max:255', Rule::unique('clients', 'email_primary')->ignore($clientId)],
             'work_email' => ['nullable', 'email', 'max:255'],
             'secondary_email' => ['nullable', 'email', 'max:255'],
 

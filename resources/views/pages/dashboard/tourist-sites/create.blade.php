@@ -38,10 +38,7 @@
                     <div class="kt-card-body p-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.create', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                            ])
+                            <livewire:regions.location-select-base />
 
                             {{-- Currency --}}
                             @include('components.selects.currency', [

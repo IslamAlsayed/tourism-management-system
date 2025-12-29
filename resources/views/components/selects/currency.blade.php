@@ -10,8 +10,8 @@
             <option value="" selected disabled></option>
         @endif
         @foreach ($currencies as $currency)
-            <option value="{{ $currency->code }}"
-                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $currency->code ? 'selected' : '' }}>
+            <option value="{{ $currency->id }}"
+                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $currency->id ? 'selected' : '' }}>
                 {{ $currency->code }} - {{ $currency->name }}
             </option>
         @endforeach

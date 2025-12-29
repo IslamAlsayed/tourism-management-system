@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\City;
 use App\Models\State;
 use App\Models\Region;
 use App\Models\Timezone;
@@ -25,21 +26,24 @@ class StateController extends Controller
 
     public function store(StoreRequest $request)
     {
-        $validated = $request->validated();
-        if ($request['state_id']) {
-            $validated['state_id'] = array_unique($validated['state_id']);
+        $data = $request->validated();
+        unset($data['city_id']);
+        $state = State::create($data);
+        if (!$state) {
+            return redirect()->route('states.index')->withError(__('messages.type_creation_failed', ['type' => __('main.state')]));
         }
-        if ($request['city_id']) {
-            $validated['city_id'] = array_unique($validated['city_id']);
+        $cityIds = [];
+        if ($request->boolean('all_cities') && isset($data['country_id'])) {
+            $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
+        } elseif ($request->filled('city_id')) {
+            $cityIds = array_unique((array) $request->input('city_id'));
         }
-        $state = State::create($validated);
-        if ($state) {
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.state')]));
-            }
-            return redirect()->route('states.index')->withSuccess(__('messages.type_created', ['type' => __('main.state')]));
+        if (!empty($cityIds)) {
+            $state->cities()->sync($cityIds);
         }
-        return redirect()->route('states.index')->withError(__('messages.type_creation_failed', ['type' => __('main.state')]));
+        return $request->has('save_and_add')
+            ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.state')]))
+            : redirect()->route('states.index')->withSuccess(__('messages.type_created', ['type' => __('main.state')]));
     }
 
     public function show($id)
@@ -61,27 +65,24 @@ class StateController extends Controller
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.states.edit', compact('state', 'regions', 'timezones'));
     }
-
     public function update(UpdateRequest $request, $id)
     {
         $state = State::find($id);
         if (!$state) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         }
-        $validated = $request->validated();
-        if ($request['state_id']) {
-            $validated['state_id'] = array_unique($validated['state_id']);
+        $data = $request->validated();
+        unset($data['city_id']);
+        $state->update($data);
+        $cityIds = [];
+        if ($request->boolean('all_cities') && isset($data['country_id'])) {
+            $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
+        } elseif ($request->filled('city_id')) {
+            $cityIds = array_unique((array) $request->input('city_id'));
         }
-        if ($request['city_id']) {
-            $validated['city_id'] = array_unique($validated['city_id']);
-        }
-        $updated = $state->update($validated);
-        if ($updated) {
-            return redirect()->route('states.index')->withSuccess(__('messages.type_updated', ['type' => __('main.state')]));
-        }
-        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.state')]));
+        $state->cities()->sync($cityIds);
+        return redirect()->route('states.index')->withSuccess(__('messages.type_updated', ['type' => __('main.state')]));
     }
-
 
     public function destroy($id)
     {
@@ -90,9 +91,8 @@ class StateController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         }
         $deleted = $state->delete();
-        if ($deleted) {
-            return redirect()->route('states.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.state')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.state')]));
+        return $deleted
+            ? redirect()->route('states.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.state')]))
+            : redirect()->route('states.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.state')]));
     }
 }

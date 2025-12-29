@@ -90,9 +90,8 @@ class RoomController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room')]));
         }
         $deleted = $room->delete();
-        if ($deleted) {
-            return redirect()->route('rooms.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.room')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.room')]));
+        return $deleted
+            ? redirect()->route('rooms.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.room')]))
+            : redirect()->route('rooms.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.room')]));
     }
 }

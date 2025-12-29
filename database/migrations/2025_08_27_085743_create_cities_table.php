@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('subregion_id')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('state_id')->nullable();
+            $table->boolean('all_states')->nullable()->default(false);
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
             $table->string('wiki_data_id')->nullable();

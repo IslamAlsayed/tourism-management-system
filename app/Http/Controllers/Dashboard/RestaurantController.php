@@ -160,9 +160,8 @@ class RestaurantController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
         }
         $deleted = $restaurant->delete();
-        if ($deleted) {
-            return redirect()->route('restaurants.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.restaurant')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.restaurant')]));
+        return $deleted
+            ? redirect()->route('restaurants.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.restaurant')]))
+            : redirect()->route('restaurants.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.restaurant')]));
     }
 }

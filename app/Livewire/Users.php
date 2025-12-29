@@ -18,7 +18,6 @@ class Users extends Component
     public $search = '';
     public $totalCount = '';
     public $message = [];
-    public $getCacheKey = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
@@ -105,6 +104,8 @@ class Users extends Component
         $this->dispatch('reset-checkout-boxes');
         return $result;
     }
+
+    public $getCacheKey = '';
 
     protected function getCacheKey()
     {

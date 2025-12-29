@@ -4,12 +4,13 @@ namespace App\Livewire;
 
 use App\Models\Client;
 use Livewire\Component;
-use Livewire\WithPagination;
-use App\Traits\CustomColumnsLivewireLegacy;
+use App\Traits\ExportsData;
 use App\Traits\WithSorting;
+use Livewire\WithPagination;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
-use App\Traits\ExportsData;
+use Illuminate\Support\Facades\Cache;
+use App\Traits\CustomColumnsLivewireLegacy;
 
 class Clients extends Component
 {
@@ -108,18 +109,38 @@ class Clients extends Component
         $this->dispatch('reset-filters');
     }
 
+    public $getCacheKey = '';
+
+    protected function getCacheKey()
+    {
+        return 'clients_list:' . md5(json_encode([
+            'search' => $this->search,
+            'page' => request()->get('page', 1),
+            'sort' => $this->sortField ?? null,
+            'dir' => $this->sortDirection ?? null,
+            'perPage' => getPaginate(),
+            'is_admin' => getActiveUser()->is_admin,
+        ]));
+    }
+
     public function render()
     {
-        $query = Client::query();
-        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        if ($this->filterClientGender && $this->filterClientGender['payload']['value'] !== 'all') {
-            $query->where('gender', $this->filterClientGender);
-        }
-        if ($this->filterClientStatus && $this->filterClientStatus['payload']['value'] !== 'all') {
-            $query->where('client_status', $this->filterClientStatus);
-        }
-        $this->applySorting($query);
-        $data = $query->paginate(getPaginate());
+        $cacheKey = $this->getCacheKey();
+        $data = Cache::remember($cacheKey, now()->addMinutes(5), function () {
+            $query = Client::query();
+            if (!getActiveUser()->is_admin) {
+                $query->where('is_admin', 0);
+            }
+            $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+            if ($this->filterClientGender && $this->filterClientGender['payload']['value'] !== 'all') {
+                $query->where('gender', $this->filterClientGender);
+            }
+            if ($this->filterClientStatus && $this->filterClientStatus['payload']['value'] !== 'all') {
+                $query->where('client_status', $this->filterClientStatus);
+            }
+            $this->applySorting($query);
+            return $query->paginate(getPaginate());
+        });
         return view('livewire.clients', ['data' => $data, 'totalCount' => $this->totalCount ?: Client::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

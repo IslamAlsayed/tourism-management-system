@@ -77,25 +77,42 @@
                                 <p class="text-sm text-secondary-foreground">{{ $user->mobile }}</p>
                             </div>
                         @endif
-                        @if ($user->user_status)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
-                                <div class="flex items-center gap-2">
-                                    @livewire('toggle-switch', [
-                                        'modelId' => $user->id,
-                                        'modelType' => '\\App\\Models\\User',
-                                        'field' => 'is_active',
-                                        'value' => (bool) $user->is_active,
-                                        'table' => 'users',
-                                    ])
-                                </div>
-                            </div>
-                        @endif
                         @if ($user->timezone)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.timezone') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $user->timezone->name ?: __('main.no') }}
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $user->timezone->name }} ({{ $user->timezone->abbreviation }})
+                                    </span>
                                 </p>
+                            </div>
+                        @endif
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $user->id,
+                                    'modelType' => '\\App\\Models\\User',
+                                    'field' => 'is_active',
+                                    'value' => (bool) $user->is_active,
+                                    'table' => 'users',
+                                ])
+                            </div>
+                        </div>
+                        @if ($user->description)
+                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
+                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $user->description !!}
+                                </div>
+                            </div>
+                        @endif
+                        @if ($user->notes)
+                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
+                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $user->notes !!}
+                                </div>
                             </div>
                         @endif
                     </div>

@@ -79,28 +79,24 @@ class AccommodationController extends Controller
                 Supplement::create($supplementData);
             }
         }
-
-        if ($request->has('save_and_add')) {
-            return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.accommodation')]));
-        }
-        return redirect()->route('accommodations.index')->withSuccess(__('messages.type_created', ['type' => __('main.accommodation')]));
+        return $request->has('save_and_add')
+            ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.accommodation')]))
+            : redirect()->route('accommodations.index')->withSuccess(__('messages.type_created', ['type' => __('main.accommodation')]));
     }
 
     public function show($id)
     {
         $accommodation = Accommodation::with((new Accommodation())->getRelationshipNames())->find($id);
-        if (!$accommodation) {
+        if (!$accommodation)
             return redirect()->route('accommodations.index')->withError(__('messages.type_not_found', ['type' => __('main.accommodation')]));
-        }
         return view('pages.dashboard.accommodations.show', compact('accommodation'));
     }
 
     public function edit($id)
     {
         $accommodation = Accommodation::with((new Accommodation())->getRelationshipNames())->find($id);
-        if (!$accommodation) {
+        if (!$accommodation)
             return redirect()->route('accommodations.index')->withError(__('messages.type_not_found', ['type' => __('main.accommodation')]));
-        }
         $types = Type::orderBy('name')->get();
         $currencies = Currency::orderBy('code')->get();
         $regions = Region::orderBy('name')->get();
@@ -111,10 +107,8 @@ class AccommodationController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $accommodation = Accommodation::find($id);
-        if (!$accommodation) {
+        if (!$accommodation)
             return redirect()->route('accommodations.index')->withError(__('messages.type_not_found', ['type' => __('main.accommodation')]));
-        }
-
         $validated = $request->validated();
         $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons', 'rooms', 'meals', 'supplements']));
         $updated = $accommodation->update($validated);
@@ -162,23 +156,19 @@ class AccommodationController extends Controller
                 Supplement::create($supplementData);
             }
         }
-
-        if ($updated) {
-            return redirect()->route('accommodations.index')->withSuccess(__('messages.type_updated', ['type' => __('main.accommodation')]));
-        }
-        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.accommodation')]));
+        return $updated
+            ? redirect()->route('accommodations.index')->withSuccess(__('messages.type_updated', ['type' => __('main.accommodation')]))
+            : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.accommodation')]));
     }
 
     public function destroy($id)
     {
         $accommodation = Accommodation::find($id);
-        if (!$accommodation) {
+        if (!$accommodation)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.accommodation')]));
-        }
         $deleted = $accommodation->delete();
-        if ($deleted) {
-            return redirect()->route('accommodations.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.accommodation')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.accommodation')]));
+        return $deleted
+            ? redirect()->route('accommodations.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.accommodation')]))
+            : redirect()->route('accommodations.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.accommodation')]));
     }
 }

@@ -30,8 +30,9 @@ class UpdateRequest extends FormRequest
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
 
-            'state_id' => ['nullable'],
-            'state_id.*' => ['integer', 'exists:states,id'],
+            'city_id' => ['nullable'],
+            'city_id.*' => ['integer', 'exists:cities,id'],
+            'all_cities' => ['nullable'],
 
             'iso2' => ['nullable', 'string', 'min:2', 'max:2', Rule::unique('states', 'iso2')->ignore($this->route('state'))],
             'iso3' => ['nullable', 'string', 'min:3', 'max:3', Rule::unique('states', 'iso3')->ignore($this->route('state'))],

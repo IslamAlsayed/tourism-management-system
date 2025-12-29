@@ -24,7 +24,6 @@
 
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
-
             <!-- Basic Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -121,7 +120,8 @@
                     <div class="flex flex-wrap justify-between gap-10">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $nationality->region->name ?? __('main.na') }}
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $nationality->region->name ?? __('main.na') }}
                             </p>
                         </div>
                         <div>
@@ -132,17 +132,20 @@
                         </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $nationality->country->name ?? __('main.na') }}
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $nationality->country->name ?? __('main.na') }}
                             </p>
                         </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.state') }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $nationality->state->name ?? __('main.na') }}
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $nationality->state->name ?? __('main.na') }}
                             </p>
                         </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.city') }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $nationality->city->name ?? __('main.na') }}
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $nationality->city->name ?? __('main.na') }}
                             </p>
                         </div>
                     </div>
@@ -184,7 +187,8 @@
                                 <div>
                                     <label class="kt-label mb-1">{{ __('main.area') }} (km²)</label>
                                     <p class="text-sm text-secondary-foreground">
-                                        {{ number_format($nationality->area, 2) }}</p>
+                                        {{ number_format($nationality->area, 2) }}
+                                    </p>
                                 </div>
                             @endif
                         </div>

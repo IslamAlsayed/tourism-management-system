@@ -73,10 +73,8 @@ class CompanyBusTypeController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation_company_bus_type')]));
         }
         $deleted = $transportationCompanyBusTypes->delete();
-        if ($deleted) {
-            return redirect()->route('transportation-company-bus-types.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_company_bus_type')]));
-        }
-
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_company_bus_type')]));
+        return $deleted
+            ? redirect()->route('transportation-company-bus-types.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation_company_bus_type')]))
+            : redirect()->route('transportation-company-bus-types.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation_company_bus_type')]));
     }
 }

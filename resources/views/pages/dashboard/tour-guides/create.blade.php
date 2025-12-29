@@ -35,16 +35,14 @@
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.location')]) }}
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.location')]) }}
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.create', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                            ])
+                            <livewire:regions.location-select-base />
 
                             {{-- Currency --}}
                             @include('components.selects.currency', [

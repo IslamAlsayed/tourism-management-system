@@ -38,14 +38,16 @@
                         @if ($client->first_name)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.first_name') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $client->first_name ?: __('main.unknown') }}
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $client->first_name ?: __('main.unknown') }}
                                 </p>
                             </div>
                         @endif
                         @if ($client->last_name)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.last_name') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $client->last_name ?: __('main.unknown') }}
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $client->last_name ?: __('main.unknown') }}
                                 </p>
                             </div>
                         @endif
@@ -105,6 +107,24 @@
                                 <p class="text-sm text-secondary-foreground">{{ $client->fax }}</p>
                             </div>
                         @endif
+                        @if ($client->timezone)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.timezone') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $client->timezone->name }} ({{ $client->timezone->abbreviation }})
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($client->currency)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.currency') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $client->currency->name . ' - ' . $client->currency->code }}
+                                </p>
+                            </div>
+                        @endif
                         @if ($client->nationality)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.nationality') }}</label>
@@ -123,6 +143,22 @@
                                 ])
                             </div>
                         </div>
+                        @if ($client->description)
+                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
+                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $client->description !!}
+                                </div>
+                            </div>
+                        @endif
+                        @if ($client->notes)
+                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
+                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
+                                <div class="text-sm text-secondary-foreground prose max-w-none">
+                                    {!! $client->notes !!}
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

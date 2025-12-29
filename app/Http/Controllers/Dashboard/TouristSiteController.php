@@ -131,9 +131,8 @@ class TouristSiteController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tourist_site')]));
         }
         $deleted = $touristSite->delete();
-        if ($deleted) {
-            return redirect()->route('tourist-sites.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tourist_site')]));
-        }
-        return redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.tourist_site')]));
+        return $deleted
+            ? redirect()->route('tourist-sites.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tourist_site')]))
+            : redirect()->route('tourist-sites.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.tourist_site')]));
     }
 }

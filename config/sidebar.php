@@ -269,28 +269,28 @@ return [
                         ],
                     ],
                 ],
-                [
-                    'title' => 'seasons',
-                    'icon' => 'fa-regular fa-calendar-days',
-                    'children' => [
-                        [
-                            'title' => 'all seasons',
-                            'icon' => 'fa-regular fa-calendar-check',
-                            'route' => 'seasons.index',
-                        ],
-                        [
-                            'title' => 'create season',
-                            'icon' => 'fa-regular fa-calendar-plus',
-                            'route' => 'seasons.create',
-                        ],
-                        [
-                            'title' => 'import seasons',
-                            'icon' => 'fa-regular fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['models' => 'seasons'],
-                        ],
-                    ],
-                ],
+                // [
+                //     'title' => 'cores',
+                //     'icon' => 'fa-regular fa-layer-group',
+                //     'children' => [
+                //         [
+                //             'title' => 'all cores',
+                //             'icon' => 'fa-regular fa-list-ul',
+                //             'route' => 'cores.index',
+                //         ],
+                //         [
+                //             'title' => 'create type',
+                //             'icon' => 'fa-regular fa-square-plus',
+                //             'route' => 'cores.create',
+                //         ],
+                //         [
+                //             'title' => 'import cores',
+                //             'icon' => 'fa-regular fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['models' => 'cores'],
+                //         ],
+                //     ],
+                // ],
                 [
                     'title' => 'rooms',
                     'icon' => 'fa-regular fa-door-closed',
@@ -313,6 +313,72 @@ return [
                         ],
                     ],
                 ],
+                [
+                    'title' => 'seasons',
+                    'icon' => 'fa-regular fa-calendar-days',
+                    'children' => [
+                        [
+                            'title' => 'all seasons',
+                            'icon' => 'fa-regular fa-calendar-check',
+                            'route' => 'seasons.index',
+                        ],
+                        [
+                            'title' => 'create season',
+                            'icon' => 'fa-regular fa-calendar-plus',
+                            'route' => 'seasons.create',
+                        ],
+                        [
+                            'title' => 'import seasons',
+                            'icon' => 'fa-regular fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'seasons'],
+                        ],
+                    ],
+                ],
+                // [
+                //     'title' => 'pricing',
+                //     'icon' => 'fa-regular fa-layer-group',
+                //     'children' => [
+                //         [
+                //             'title' => 'all pricing',
+                //             'icon' => 'fa-regular fa-list-ul',
+                //             'route' => 'pricing.index',
+                //         ],
+                //         [
+                //             'title' => 'create type',
+                //             'icon' => 'fa-regular fa-square-plus',
+                //             'route' => 'pricing.create',
+                //         ],
+                //         [
+                //             'title' => 'import pricing',
+                //             'icon' => 'fa-regular fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['models' => 'pricing'],
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'availability',
+                //     'icon' => 'fa-regular fa-layer-group',
+                //     'children' => [
+                //         [
+                //             'title' => 'all availability',
+                //             'icon' => 'fa-regular fa-list-ul',
+                //             'route' => 'availability.index',
+                //         ],
+                //         [
+                //             'title' => 'create type',
+                //             'icon' => 'fa-regular fa-square-plus',
+                //             'route' => 'availability.create',
+                //         ],
+                //         [
+                //             'title' => 'import availability',
+                //             'icon' => 'fa-regular fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['models' => 'availability'],
+                //         ],
+                //     ],
+                // ],
                 [
                     'title' => 'meals',
                     'icon' => 'fa-regular fa-utensils',
@@ -359,6 +425,72 @@ return [
                         ],
                     ],
                 ],
+                // [
+                //     'title' => 'policing',
+                //     'icon' => 'fa-regular fa-layer-group',
+                //     'children' => [
+                //         [
+                //             'title' => 'all policing',
+                //             'icon' => 'fa-regular fa-list-ul',
+                //             'route' => 'policing.index',
+                //         ],
+                //         [
+                //             'title' => 'create type',
+                //             'icon' => 'fa-regular fa-square-plus',
+                //             'route' => 'policing.create',
+                //         ],
+                //         [
+                //             'title' => 'import policing',
+                //             'icon' => 'fa-regular fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['models' => 'policing'],
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'amenities',
+                //     'icon' => 'fa-regular fa-layer-group',
+                //     'children' => [
+                //         [
+                //             'title' => 'all amenities',
+                //             'icon' => 'fa-regular fa-list-ul',
+                //             'route' => 'amenities.index',
+                //         ],
+                //         [
+                //             'title' => 'create type',
+                //             'icon' => 'fa-regular fa-square-plus',
+                //             'route' => 'amenities.create',
+                //         ],
+                //         [
+                //             'title' => 'import amenities',
+                //             'icon' => 'fa-regular fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['models' => 'amenities'],
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'media',
+                //     'icon' => 'fa-regular fa-layer-group',
+                //     'children' => [
+                //         [
+                //             'title' => 'all media',
+                //             'icon' => 'fa-regular fa-list-ul',
+                //             'route' => 'media.index',
+                //         ],
+                //         [
+                //             'title' => 'create type',
+                //             'icon' => 'fa-regular fa-square-plus',
+                //             'route' => 'media.create',
+                //         ],
+                //         [
+                //             'title' => 'import media',
+                //             'icon' => 'fa-regular fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['models' => 'media'],
+                //         ],
+                //     ],
+                // ],
             ],
         ],
 

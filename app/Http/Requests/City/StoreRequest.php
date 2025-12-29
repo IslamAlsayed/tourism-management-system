@@ -29,7 +29,10 @@ class StoreRequest extends FormRequest
             'region_id' => ['nullable', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'exists:subregions,id'],
             'country_id' => ['nullable', 'exists:countries,id'],
-            'state_id' => ['nullable', 'exists:states,id'],
+
+            'state_id' => ['nullable'],
+            'state_id.*' => ['integer', 'exists:states,id'],
+            'all_states' => ['nullable'],
 
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
