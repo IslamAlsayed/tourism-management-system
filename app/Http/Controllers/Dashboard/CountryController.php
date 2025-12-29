@@ -39,9 +39,8 @@ class CountryController extends Controller
         $data = $request->validated();
         unset($data['state_id'], $data['city_id']);
         $country = Country::create($data);
-        if (!$country) {
+        if (!$country)
             return redirect()->route('countries.index')->withError(__('messages.type_creation_failed', ['type' => __('main.country')]));
-        }
         $this->uploadPhoto($request, $country, 'photo', 'countries');
         // States
         $stateIds = [];
@@ -71,18 +70,16 @@ class CountryController extends Controller
     public function show($id)
     {
         $country = Country::with(['timezone', 'language', 'currency', 'region', 'subregion', 'states', 'cities'])->find($id);
-        if (!$country) {
+        if (!$country)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
-        }
         return view('pages.dashboard.countries.show', compact('country'));
     }
 
     public function edit($id)
     {
         $country = Country::find($id);
-        if (!$country) {
+        if (!$country)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
-        }
         $currencies = Currency::orderBy('code')->get();
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
@@ -93,9 +90,8 @@ class CountryController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $country = Country::find($id);
-        if (!$country) {
+        if (!$country)
             return redirect()->route('countries.index')->withError(__('messages.type_creation_failed', ['type' => __('main.country')]));
-        }
         $data = $request->validated();
         unset($data['state_id'], $data['city_id']);
         // States
@@ -121,9 +117,8 @@ class CountryController extends Controller
     public function destroy($id)
     {
         $country = Country::find($id);
-        if (!$country) {
+        if (!$country)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
-        }
         $deleted = $country->delete();
         return $deleted
             ? redirect()->route('countries.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.country')]))

@@ -6,9 +6,7 @@
             <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
         <select name="region_id" id="region_id" class="kt-select basic-single">
-            @if (!isset($record) && !$record)
-                <option value="" selected>--</option>
-            @endif
+            <option value="" selected>--</option>
             @foreach ($options['regions'] as $item)
                 <option value="{{ $item->id }}"
                     {{ old('region_id', $record->region_id ?? null) == $item->id ? 'selected' : '' }}>
@@ -40,9 +38,7 @@
         </label>
         <select name="subregion_id" id="subregion_id" class="kt-select basic-single"
             {{ !hasEmpty($filters['region']) ? 'disabled' : '' }}>
-            @if (!isset($record) && !$record)
-                <option value="" selected>--</option>
-            @endif
+            <option value="" selected>--</option>
             @foreach ($options['subregions'] as $item)
                 <option value="{{ $item->id }}"
                     {{ old('subregion_id', $record->subregion_id ?? null) == $item->id ? 'selected' : '' }}>
@@ -73,9 +69,7 @@
         </label>
         <select name="country_id" id="country_id" class="kt-select basic-single"
             {{ !hasEmpty($filters['subregion']) ? 'disabled' : '' }}>
-            @if (!isset($record) && !$record)
-                <option value="" selected>--</option>
-            @endif
+            <option value="" selected>--</option>
             @foreach ($options['countries'] as $item)
                 <option value="{{ $item->id }}"
                     {{ old('country_id', $record->country_id ?? null) == $item->id ? 'selected' : '' }}>
@@ -122,9 +116,7 @@
             {{ !hasEmpty($filters['country']) || ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'disabled' : '' }}
             {{ isset($multiple) && in_array('states', $multiple) ? 'multiple' : '' }}>
             @if (!isset($multiple) && !in_array('states', (array) $multiple))
-                @if (!isset($record) && !$record)
-                    <option value="" selected>--</option>
-                @endif
+                <option value="" selected>--</option>
             @endif
             @foreach ($options['states'] as $item)
                 <option value="{{ $item->id }}" @selected((isset($multiple) && in_array('states', $multiple) && in_array($item->id, $selectedStates ?? [])) || $item->id == old('state_id', $record->state_id ?? null))>
@@ -172,9 +164,7 @@
             {{ !hasEmpty($filters['state']) || ($record->all_cities ?? 0) == 1 || ($record->all_cities ?? 0) == true ? 'disabled' : '' }}
             {{ isset($multiple) && in_array('cities', $multiple) ? 'multiple' : '' }}>
             @if (!isset($multiple) && !in_array('cities', (array) $multiple))
-                @if (!isset($record) && !$record)
-                    <option value="" selected>--</option>
-                @endif
+                <option value="" selected>--</option>
             @endif
             @foreach ($options['cities'] as $item)
                 <option value="{{ $item->id }}" @selected((isset($multiple) && in_array('cities', $multiple) && in_array($item->id, $selectedCities ?? [])) || $item->id == old('city_id', $record->city_id ?? null))>

@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.create_type', ['type' => __('main.crossing_port')]))
+@section('title', __('main.create_type', ['type' => __('main.crossing-port')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.create_type', ['type' => __('main.crossing_port')]) }}
+                    {{ __('main.create_type', ['type' => __('main.crossing-port')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.create_type_description', ['type' => __('main.crossing_port')]) }}
+                    {{ __('main.create_type_description', ['type' => __('main.crossing-port')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -34,10 +34,10 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            <livewire:regions.location-select-base />
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base />
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Latitude --}}
                             <div>
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
@@ -73,7 +73,7 @@
                 <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            {{ __('main.type_information', ['type' => __('main.crossing_port')]) }}
+                            {{ __('main.type_information', ['type' => __('main.crossing-port')]) }}
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
@@ -424,15 +424,6 @@
 
 @push('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
-            }, 500);
-        });
-
         function generateNewCode() {
             function getRandomCode() {
                 const randomNum = Math.floor(Math.random() * 99999) + 1;
@@ -443,5 +434,3 @@
         }
     </script>
 @endpush
-
-@include('components.regions.script-cascading')

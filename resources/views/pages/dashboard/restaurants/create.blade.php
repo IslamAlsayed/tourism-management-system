@@ -36,10 +36,10 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            <livewire:regions.location-select-base />
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base />
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Latitude -->
                             <div class="">
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
@@ -412,18 +412,3 @@
         </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

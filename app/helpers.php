@@ -462,17 +462,17 @@ if (!function_exists('badgeClasses')) {
     function badgeClasses($event)
     {
         return match ($event) {
-            'created' => 'bg-success/30 text-green-800',
-            'updated' => 'bg-primary/30 text-blue-800',
-            'deleted', 'force_deleted' => 'bg-danger/30 text-red-800',
-            'restored' => 'bg-yellow/30 text-yellow-800',
-            'error' => 'bg-danger/30 text-red-800',
-            'login' => 'bg-success/30 text-green-800',
-            'register' => 'bg-success/30 text-green-800',
-            'logout' => 'bg-success/30 text-green-800',
-            'password_reset' => 'bg-success/30 text-green-800',
-            'password_update' => 'bg-success/30 text-green-800',
-            'password_reset_request' => 'bg-success/30 text-green-800',
+            'created' => 'bg-success/30 text-green-600',
+            'updated' => 'bg-primary/30 text-blue-600',
+            'deleted', 'force_deleted' => 'bg-danger/30 text-red-600',
+            'restored' => 'bg-yellow/30 text-yellow-600',
+            'error' => 'bg-danger/30 text-red-600',
+            'login' => 'bg-success/30 text-green-600',
+            'register' => 'bg-success/30 text-green-600',
+            'logout' => 'bg-success/30 text-green-600',
+            'password_reset' => 'bg-success/30 text-green-600',
+            'password_update' => 'bg-success/30 text-green-600',
+            'password_reset_request' => 'bg-success/30 text-green-600',
             default => 'bg-gray/30 text-gray-700',
         };
     }

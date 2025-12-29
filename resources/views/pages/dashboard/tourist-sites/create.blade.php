@@ -26,7 +26,10 @@
             @csrf
             <div class="grid gap-4 lg:gap-6">
                 <!-- Tourist Site Photo -->
-                @include('components.input-image', ['column' => 'tourist-site', 'columnName' => 'photo'])
+                @include('components.input-image', [
+                    'column' => 'tourist-site',
+                    'columnName' => 'photo',
+                ])
 
                 <!-- Location Information -->
                 <div class="kt-card">
@@ -36,10 +39,10 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            <livewire:regions.location-select-base />
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base />
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'currency_id',
@@ -811,15 +814,6 @@
 
 @push('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
-            }, 500);
-        });
-
         // Image Preview for Main Image
         document.getElementById('main_image').addEventListener('change', function(e) {
             const preview = document.getElementById('main_image_preview');
@@ -909,5 +903,3 @@
         });
     </script>
 @endpush
-
-@include('components.regions.script-cascading')

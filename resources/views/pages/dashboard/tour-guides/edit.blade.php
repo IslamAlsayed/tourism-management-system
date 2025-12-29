@@ -284,18 +284,3 @@
         </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
-                filterByForeignId("subregion_id", "country", "country_id", "edit");
-                filterByForeignId("country_id", "state", "state_id", "edit");
-                filterByForeignId("state_id", "city", "city_id", "edit");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

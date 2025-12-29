@@ -101,7 +101,7 @@
 .disabled-option {
     color: #6b7280;
     pointer-events: none;
-    background-color: #f3f4f6
+    background-color: var(--background);
 }
 
 .disabled {

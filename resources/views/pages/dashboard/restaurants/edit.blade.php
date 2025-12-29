@@ -42,14 +42,10 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.edit', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                                'record' => $restaurant,
-                            ])
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base :record="$restaurant" />
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Latitude -->
                             <div class="">
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
@@ -70,17 +66,17 @@
                                 @enderror
                             </div>
 
-                            {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                                'record' => $restaurant,
-                            ])
-
                             {{-- Timezone --}}
                             @include('components.selects.timezone', [
                                 'name' => 'timezone_id',
                                 'timezones' => $timezones,
+                                'record' => $restaurant,
+                            ])
+
+                            {{-- Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
                                 'record' => $restaurant,
                             ])
 
@@ -212,6 +208,7 @@
                         @include('components.elements.input-text-editor', [
                             'column' => 'description',
                             'value' => $restaurant->description,
+                            'classes' => 'mb-4',
                         ])
 
                         {{-- notes --}}
@@ -423,18 +420,3 @@
         </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
-                filterByForeignId("subregion_id", "country", "country_id", "edit");
-                filterByForeignId("country_id", "state", "state_id", "edit");
-                filterByForeignId("state_id", "city", "city_id", "edit");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

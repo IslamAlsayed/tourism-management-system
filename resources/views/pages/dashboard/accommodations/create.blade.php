@@ -24,25 +24,26 @@
     <div class="kt-container-fixed">
         <form action="{{ route('accommodations.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
-            {{-- Accommodation Photo --}}
-            @include('components.input-image', [
-                'column' => 'accommodation',
-                'columnName' => 'photo',
-            ])
-
             <div class="grid gap-4 lg:gap-6">
+
+                {{-- Accommodation Photo --}}
+                @include('components.input-image', [
+                    'column' => 'accommodation',
+                    'columnName' => 'photo',
+                ])
+
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.location')]) }}
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.location')]) }}
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            <livewire:regions.location-select-base />
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base />
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'currency_id',
@@ -51,7 +52,7 @@
 
                             <!-- Street Address -->
                             <div class="align-self-end">
-                                <label for="street" class="kt-label">Street Address</label>
+                                <label for="street" class="kt-label">{{ __('main.street_address') }}</label>
                                 <input type="text" name="street" id="street" class="kt-input h-[45px]"
                                     value="{{ old('street') }}" placeholder="Enter street address">
                                 @error('street')
@@ -61,7 +62,7 @@
 
                             <!-- Latitude -->
                             <div class="align-self-end">
-                                <label for="latitude" class="kt-label">Latitude</label>
+                                <label for="latitude" class="kt-label">{{ __('main.latitude') }}</label>
                                 <input type="number" name="latitude" id="latitude" step="0.0000001"
                                     class="kt-input h-[45px]" value="{{ old('latitude') }}" placeholder="e.g., 31.2001">
                                 @error('latitude')
@@ -71,7 +72,7 @@
 
                             <!-- Longitude -->
                             <div class="align-self-end">
-                                <label for="longitude" class="kt-label">Longitude</label>
+                                <label for="longitude" class="kt-label">{{ __('main.longitude') }}</label>
                                 <input type="number" name="longitude" id="longitude" step="0.0000001"
                                     class="kt-input h-[45px]" value="{{ old('longitude') }}" placeholder="e.g., 29.9187">
                                 @error('longitude')
@@ -98,7 +99,7 @@
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]" required
-                                    value="{{ old('name') }}" placeholder="Enter accommodation name">
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -108,7 +109,7 @@
                             <div class="align-self-end">
                                 <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar') }}" placeholder="أدخل اسم الإقامة">
+                                    value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -190,7 +191,7 @@
                         <div class="grid lg:grid-cols-2 gap-6 items-end mb-4">
                             <!-- General Mobile -->
                             <div class="align-self-end">
-                                <label for="general_mobile" class="kt-label">General Mobile</label>
+                                <label for="general_mobile" class="kt-label">{{ __('main.general_mobile') }}</label>
                                 <input type="tel" name="general_mobile" id="general_mobile"
                                     class="kt-input h-[45px]" value="{{ old('general_mobile') }}"
                                     placeholder="+1234567890">
@@ -201,7 +202,7 @@
 
                             <!-- General Email -->
                             <div class="align-self-end">
-                                <label for="general_email" class="kt-label">General Email</label>
+                                <label for="general_email" class="kt-label">{{ __('main.general_email') }}</label>
                                 <input type="email" name="general_email" id="general_email" class="kt-input h-[45px]"
                                     value="{{ old('general_email') }}" placeholder="info@accommodation.com">
                                 @error('general_email')
@@ -213,7 +214,7 @@
                         <div class="grid lg:grid-cols-2 gap-6 items-end mb-4">
                             <!-- Phone -->
                             <div class="align-self-end">
-                                <label for="phone" class="kt-label">Phone</label>
+                                <label for="phone" class="kt-label">{{ __('main.phone') }}</label>
                                 <input type="tel" name="phone" id="phone" class="kt-input h-[45px]"
                                     value="{{ old('phone') }}" placeholder="+1234567890">
                                 @error('phone')
@@ -223,7 +224,7 @@
 
                             <!-- Website -->
                             <div class="align-self-end">
-                                <label for="website" class="kt-label">Website</label>
+                                <label for="website" class="kt-label">{{ __('main.website') }}</label>
                                 <input type="url" name="website" id="website" class="kt-input h-[45px]"
                                     value="{{ old('website') }}" placeholder="https://www.accommodation.com">
                                 @error('website')
@@ -234,10 +235,11 @@
 
                         <!-- Contact Person Details -->
                         <div class="border-t pt-4 mt-4">
-                            <h4 class="text-lg font-medium mb-4">Contact Person</h4>
+                            <h4 class="text-lg font-medium mb-4">{{ __('main.contact_person') }}</h4>
                             <div class="grid lg:grid-cols-2 gap-6 items-end mb-4">
                                 <div class="align-self-end">
-                                    <label for="contact_person" class="kt-label">Contact Person Name</label>
+                                    <label for="contact_person"
+                                        class="kt-label">{{ __('main.contact_person_name') }}</label>
                                     <input type="text" name="contact_person" id="contact_person"
                                         class="kt-input h-[45px]" value="{{ old('contact_person') }}"
                                         placeholder="John Doe">
@@ -247,7 +249,7 @@
                                 </div>
 
                                 <div class="align-self-end">
-                                    <label for="contact_position" class="kt-label">Position</label>
+                                    <label for="contact_position" class="kt-label">{{ __('main.position') }}</label>
                                     <input type="text" name="contact_position" id="contact_position"
                                         class="kt-input h-[45px]" value="{{ old('contact_position') }}"
                                         placeholder="Manager">
@@ -259,7 +261,7 @@
 
                             <div class="grid lg:grid-cols-2 gap-6">
                                 <div class="align-self-end">
-                                    <label for="contact_mobile" class="kt-label">Contact Mobile</label>
+                                    <label for="contact_mobile" class="kt-label">{{ __('main.contact_mobile') }}</label>
                                     <input type="tel" name="contact_mobile" id="contact_mobile"
                                         class="kt-input h-[45px]" value="{{ old('contact_mobile') }}"
                                         placeholder="+1234567890">
@@ -269,7 +271,7 @@
                                 </div>
 
                                 <div class="align-self-end">
-                                    <label for="contact_email" class="kt-label">Contact Email</label>
+                                    <label for="contact_email" class="kt-label">{{ __('main.contact_email') }}</label>
                                     <input type="email" name="contact_email" id="contact_email"
                                         class="kt-input h-[45px]" value="{{ old('contact_email') }}"
                                         placeholder="manager@accommodation.com">
@@ -313,18 +315,3 @@
         </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

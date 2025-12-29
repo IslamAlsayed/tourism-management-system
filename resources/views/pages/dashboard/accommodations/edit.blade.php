@@ -25,16 +25,15 @@
         <form action="{{ route('accommodations.update', $accommodation->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-
-            <!-- Accommodation Photo -->
-            @include('components.input-image', [
-                'modelKey' => $accommodation->name ?? 'A',
-                'column' => 'accommodation',
-                'columnName' => 'photo',
-                'record' => $accommodation,
-            ])
-
             <div class="grid gap-4 lg:gap-6">
+                {{-- Accommodation Photo --}}
+                @include('components.input-image', [
+                    'modelKey' => $accommodation->name ?? 'A',
+                    'column' => 'accommodation',
+                    'columnName' => 'photo',
+                    'record' => $accommodation,
+                ])
+
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -43,14 +42,10 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.edit', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                                'record' => $accommodation,
-                            ])
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base :record="$accommodation" />
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'currency_id',
@@ -70,7 +65,7 @@
 
                             <!-- Latitude -->
                             <div class="align-self-end">
-                                <label for="street" class="kt-label">{{ __('main.latitude') }}</label>
+                                <label for="latitude" class="kt-label">{{ __('main.latitude') }}</label>
                                 <input type="number" name="latitude" id="latitude" step="0.0000001"
                                     class="kt-input h-[45px]" value="{{ $accommodation->latitude }}"
                                     placeholder="e.g., 31.2001">
@@ -81,7 +76,7 @@
 
                             <!-- Longitude -->
                             <div class="align-self-end">
-                                <label for="street" class="kt-label">{{ __('main.longitude') }}</label>
+                                <label for="longitude" class="kt-label">{{ __('main.longitude') }}</label>
                                 <input type="number" name="longitude" id="longitude" step="0.0000001"
                                     class="kt-input h-[45px]" value="{{ $accommodation->longitude }}"
                                     placeholder="e.g., 29.9187">
@@ -106,10 +101,9 @@
                             <div class="align-self-end">
                                 <label for="name" class="kt-label">
                                     {{ __('main.name') }}
-                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ $accommodation->name }}" placeholder="Enter accommodation name">
+                                    value="{{ $accommodation->name }}">
                                 @error('name')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -119,7 +113,7 @@
                             <div class="align-self-end">
                                 <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ $accommodation->name_ar }}" placeholder="أدخل اسم الإقامة">
+                                    value="{{ $accommodation->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -136,6 +130,7 @@
                                 </label>
 
                                 <select name="type_id" id="type_id" class="kt-select basic-single">
+                                    <option value="" disabled selected></option>
                                     @foreach ($types as $type)
                                         <option value="{{ $type->id }}"
                                             {{ $accommodation->type_id == $type->id ? 'selected' : '' }}>
@@ -162,6 +157,7 @@
                             <div class="align-self-end">
                                 <label for="stars" class="kt-label mb-2">{{ __('main.star_rating') }}</label>
                                 <select name="stars" id="stars" class="kt-select basic-single">
+                                    <option value="" disabled selected></option>
                                     @for ($i = 1; $i <= 5; $i++)
                                         <option value="{{ $i }}"
                                             {{ $accommodation->stars == $i ? 'selected' : '' }}>
@@ -258,8 +254,7 @@
                                 </div>
 
                                 <div class="align-self-end">
-                                    <label for="contact_position"
-                                        class="kt-label">{{ __('main.position') }}Position</label>
+                                    <label for="contact_position" class="kt-label">{{ __('main.position') }}</label>
                                     <input type="text" name="contact_position" id="contact_position"
                                         class="kt-input h-[45px]" value="{{ $accommodation->contact_position }}"
                                         placeholder="Manager">
@@ -319,24 +314,9 @@
                 {{-- Supplements Information --}}
                 <livewire:morphic-forms.supplement-form :record="$accommodation" />
 
-                {{-- Update Buttons --}}
-                @include('components.elements.update-submit', ['models' => 'accommodations'])
+                {{-- Save Buttons --}}
+                @include('components.elements.save-submit', ['models' => 'accommodations'])
             </div>
         </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
-                filterByForeignId("subregion_id", "country", "country_id", "edit");
-                filterByForeignId("country_id", "state", "state_id", "edit");
-                filterByForeignId("state_id", "city", "city_id", "edit");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

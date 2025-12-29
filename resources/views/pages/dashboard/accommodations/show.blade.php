@@ -66,7 +66,6 @@
 
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
-
             <!-- Accommodation Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -91,7 +90,7 @@
                             </div>
                         @endif
                         @if ($accommodation->type)
-                            <div class="lg:col-span-2">
+                            <div>
                                 <label class="kt-label mb-1">{{ __('main.type') }}</label>
                                 <div class="flex flex-wrap gap-2">
                                     <a href="{{ route('types.show', $accommodation->type->id) }}"
@@ -480,7 +479,7 @@
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($accommodation->seasons as $season)
                             <div wire:key="season-{{ $season->id }}"
-                                class="kt-card bg-white rounded-lg p-4 pt-2 record-seasons-{{ $season->id }}">
+                                class="kt-card background rounded-lg p-4 pt-2 record-seasons-{{ $season->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -574,7 +573,7 @@
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($accommodation->rooms as $room)
                             <div wire:key="room-{{ $room->id }}"
-                                class="kt-card bg-white rounded-lg p-4 pt-2 record-rooms-{{ $room->id }}">
+                                class="kt-card background rounded-lg p-4 pt-2 record-rooms-{{ $room->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -622,7 +621,7 @@
                                     <div class="lg:col-span-2 mt-3 border-custom-t pt-3">
                                         <label
                                             class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
-                                        <div class="bg-blue-50 p-3 rounded-lg">
+                                        <div class="bg-blue-100 p-3 rounded-lg">
                                             @if ($room->season)
                                                 <div class="flex items-center justify-between mb-2">
                                                     <span class="font-medium text-sm">{{ $room->season->name }}</span>
@@ -742,7 +741,7 @@
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($accommodation->meals as $meal)
                             <div wire:key="meal-{{ $meal->id }}"
-                                class="kt-card bg-white rounded-lg p-4 pt-2 record-meals-{{ $meal->id }}">
+                                class="kt-card background rounded-lg p-4 pt-2 record-meals-{{ $meal->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -788,7 +787,7 @@
                                     <div class="lg:col-span-2 mt-3 border-custom-t pt-3">
                                         <label
                                             class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
-                                        <div class="bg-blue-50 p-3 rounded-lg">
+                                        <div class="bg-blue-100 p-3 rounded-lg">
                                             @if ($meal->season)
                                                 <div class="flex items-center justify-between mb-2">
                                                     <span class="font-medium text-sm">{{ $meal->season->name }}</span>
@@ -872,7 +871,7 @@
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($accommodation->supplements as $supplement)
                             <div wire:key="supplement-{{ $supplement->id }}"
-                                class="kt-card bg-white rounded-lg p-4 pt-2 record-supplements-{{ $supplement->id }}">
+                                class="kt-card background rounded-lg p-4 pt-2 record-supplements-{{ $supplement->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>

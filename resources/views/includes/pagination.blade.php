@@ -29,7 +29,7 @@
                     {{-- Previous --}}
                     <span>
                         <button wire:click="previousPage"
-                            class="px-3 py-1 text-blue-600 bg-white border border-gray-300 rounded hover:bg-blue-50 cursor-pointer previousPage"
+                            class="px-3 py-1 text-blue-600 background border border-gray-300 rounded hover:bg-gray-50 cursor-pointer previousPage"
                             @if ($data->onFirstPage()) disabled @endif>
                             <span>&laquo;</span><span class="s">{{ __('main.previous') }}</span>
                         </button>
@@ -39,7 +39,7 @@
                         {{-- First Page --}}
                         <span>
                             <button wire:click="gotoPage(1)" wire:key="page-1"
-                                class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($data->currentPage() == 1) text-white bg-blue-600 @else text-blue-600 bg-white hover:bg-blue-50 @endif">
+                                class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($data->currentPage() == 1) text-white bg-blue-600 @else text-blue-600 background hover:bg-blue-50 @endif">
                                 1
                             </button>
                         </span>
@@ -66,7 +66,7 @@
 
                         @for ($i = $start; $i <= $end; $i++)
                             <button wire:click="gotoPage({{ $i }})" wire:key="page-{{ $i }}"
-                                class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($i == $data->currentPage()) text-white bg-blue-600 @else text-blue-600 bg-white hover:bg-blue-50 @endif">
+                                class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($i == $data->currentPage()) text-white bg-blue-600 @else text-blue-600 background hover:bg-blue-50 @endif">
                                 {{ $i }}
                             </button>
                         @endfor
@@ -80,7 +80,7 @@
                         @if ($data->lastPage() > 1)
                             <span>
                                 <button wire:click="gotoPage({{ $data->lastPage() }})" wire:key="page-last"
-                                    class="px-3 py-1 border border-gray-300 rounded hover:bg-blue-50 cursor-pointer @if ($data->currentPage() == $data->lastPage()) text-white bg-blue-600 @else text-blue-600 bg-white @endif">
+                                    class="px-3 py-1 border border-gray-300 rounded hover:bg-blue-50 cursor-pointer @if ($data->currentPage() == $data->lastPage()) text-white bg-blue-600 @else text-blue-600 background @endif">
                                     {{ $data->lastPage() }}
                                 </button>
                             </span>
@@ -90,7 +90,7 @@
                     {{-- Next --}}
                     <span>
                         <button wire:click="nextPage"
-                            class="flex align-items-center px-3 py-1 text-blue-600 bg-white border border-gray-300 rounded hover:bg-blue-50 cursor-pointer nextPage"
+                            class="flex align-items-center px-3 py-1 text-blue-600 background border border-gray-300 rounded hover:bg-gray-50 cursor-pointer nextPage"
                             @if (!$data->hasMorePages()) disabled @endif>
                             <span class="s">{{ __('main.next') }}</span><span>&raquo;</span>
                         </button>

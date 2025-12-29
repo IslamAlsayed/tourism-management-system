@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.edit_type', ['type' => __('main.crossing_port')]))
+@section('title', __('main.edit_type', ['type' => __('main.crossing-port')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.edit_type', ['type' => __('main.crossing_port')]) }}
+                    {{ __('main.edit_type', ['type' => __('main.crossing-port')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.edit_type_description', ['type' => __('main.crossing_port')]) }}
+                    {{ __('main.edit_type_description', ['type' => __('main.crossing-port')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -36,14 +36,10 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.edit', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                                'record' => $crossingPort,
-                            ])
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base :record="$crossingPort" />
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Latitude --}}
                             <div>
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
@@ -79,7 +75,7 @@
                 <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
-                            {{ __('main.type_information', ['type' => __('main.crossing_port')]) }}
+                            {{ __('main.type_information', ['type' => __('main.crossing-port')]) }}
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
@@ -107,8 +103,15 @@
                             {{-- Code --}}
                             <div>
                                 <label for="code" class="kt-label mb-2">{{ __('main.code') }}</label>
-                                <input type="text" name="code" id="code" class="kt-input h-[45px]"
-                                    value="{{ $crossingPort->code }}" disabled readonly />
+                                <div class="relative">
+                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
+                                        value="{{ $crossingPort->code }}" readonly>
+
+                                    <button type="button" onclick="generateNewCode()" toggle-button
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer hover:text-gray-700">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </div>
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -118,6 +121,7 @@
                             <div>
                                 <label for="crossings-ports-type" class="kt-label mb-2">{{ __('main.type') }}</label>
                                 <select name="type" id="crossings-ports-type" class="kt-input basic-single">
+                                    <option value="" selected disabled></option>
                                     @foreach ($crossing_port_types as $type)
                                         <option value="{{ $type }}"
                                             {{ $crossingPort->type == $type ? 'selected' : '' }}>
@@ -160,8 +164,9 @@
                             {{-- Operating Hours --}}
                             <div>
                                 <label for="operating_hours" class="kt-label mb-2">{{ __('main.operating_hours') }}</label>
-                                <input type="text" name="operating_hours" id="operating_hours" class="kt-input h-[45px]"
-                                    value="{{ $crossingPort->operating_hours }}" placeholder="e.g., 24/7, 08:00-18:00">
+                                <input type="text" name="operating_hours" id="operating_hours"
+                                    class="kt-input h-[45px]" value="{{ $crossingPort->operating_hours }}"
+                                    placeholder="e.g., 24/7, 08:00-18:00">
                                 @error('operating_hours')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -171,14 +176,14 @@
                             <div>
                                 <label for="sort_order" class="kt-label mb-2">{{ __('main.sort_order') }}</label>
                                 <input type="number" name="sort_order" id="sort_order" class="kt-input h-[45px]"
-                                    value="{{ $crossingPort->sort_order }}" min="0">
+                                    value="{{ $crossingPort->sort_order ?? 0 }}" min="0">
                                 @error('sort_order')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="flex flex-wrap mb-4" style="gap: 10px 40px;">
+                        <div class="flex flex-wrap" style="gap: 10px 40px;">
                             {{-- Is 24/7 --}}
                             <div class="flex items-center gap-3">
                                 <input type="hidden" name="is_24_7" value="0">
@@ -261,7 +266,7 @@
 
                             {{-- Departure Tax Currency --}}
                             @include('components.selects.currency', [
-                                'name' => 'departure_tax_currency',
+                                'name' => 'departure_tax_currency_id',
                                 'currencies' => $currencies,
                                 'record' => $crossingPort,
                             ])
@@ -300,7 +305,7 @@
 
                             {{-- Visa Fee Currency --}}
                             @include('components.selects.currency', [
-                                'name' => 'visa_fee_currency',
+                                'name' => 'visa_fee_currency_id',
                                 'currencies' => $currencies,
                                 'record' => $crossingPort,
                             ])
@@ -427,18 +432,3 @@
         </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
-                filterByForeignId("subregion_id", "country", "country_id", "edit");
-                filterByForeignId("country_id", "state", "state_id", "edit");
-                filterByForeignId("state_id", "city", "city_id", "edit");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

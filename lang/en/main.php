@@ -75,7 +75,6 @@ return [
     'columns_updated_successfully' => 'Columns updated successfully',
     'columns_reset_successfully' => 'Columns reset to default successfully',
     'are_you_sure_reset_columns' => 'Are you sure you want to reset columns to default?',
-    'unauthorized' => 'Unauthorized action',
     'monday' => 'Monday',
     'tuesday' => 'Tuesday',
     'wednesday' => 'Wednesday',
@@ -230,7 +229,6 @@ return [
     'immigration' => 'Immigration',
     'duty_free' => 'Duty Free',
     'vip_lounge' => 'Vip Lounge',
-    'restaurants' => 'Restaurants',
     'currency_exchange' => 'Currency Exchange',
     'shops' => 'Shops',
     'cargo_handling' => 'Cargo Handling',
@@ -278,7 +276,6 @@ return [
     'tax_number' => 'Tax Number',
     'certifications' => 'Certifications',
     'destinations' => 'Destinations',
-    'services' => 'Services',
     'cabin_classes' => 'Cabin Classes',
     'has_frequent_flyer' => 'Has Frequent Flyer Program',
     'frequent_flyer_program' => 'Frequent Flyer Program',
@@ -308,7 +305,6 @@ return [
     'premium_economy' => 'Premium Economy',
     'business' => 'Business',
     'first_class' => 'First Class',
-    'parking' => 'Parking',
     'baggage_handling' => 'Baggage Handling',
     'ground_services' => 'Ground Services',
     'fueling' => 'Fueling',
@@ -481,7 +477,6 @@ return [
     'company_address' => 'Company Address',
     'company_email' => 'Company Email',
     'company_phone' => 'Company Phone',
-    'tax_number' => 'Tax Number',
     'commercial_registration' => 'Commercial Registration',
 
     // Personal Fields
@@ -668,7 +663,6 @@ return [
     'unknown_user' => 'Unknown user',
     'unknown_email' => 'Unknown email',
     'dark_mode' => 'Dark Mode',
-    'user' => 'User',
     'import_csv' => 'Import CSV/Excel',
     'add_member' => 'Add Member',
 

@@ -18,28 +18,28 @@
     <div class="kt-card-body space-y-6 px-3">
         {{-- Cards totals --}}
         <div class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-4">
-            <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-                <p class="text-sm text-gray-500">{{ __('activity.activity_total_events') }}</p>
-                <p class="mt-2 text-2xl font-semibold text-gray-900">{{ number_format($stats['total']) }}</p>
+            <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
+                <p class="text-sm text-gray-600">{{ __('activity.activity_total_events') }}</p>
+                <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['total']) }}</p>
             </div>
-            <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-                <p class="text-sm text-gray-500">{{ __('activity.activity_model_events') }}</p>
-                <p class="mt-2 text-2xl font-semibold text-gray-900">{{ number_format($stats['models']) }}</p>
+            <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
+                <p class="text-sm text-gray-600">{{ __('activity.activity_model_events') }}</p>
+                <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['models']) }}</p>
             </div>
-            <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-                <p class="text-sm text-gray-500">{{ __('activity.activity_system_events') }}</p>
-                <p class="mt-2 text-2xl font-semibold text-gray-900">{{ number_format($stats['system']) }}</p>
+            <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
+                <p class="text-sm text-gray-600">{{ __('activity.activity_system_events') }}</p>
+                <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['system']) }}</p>
             </div>
-            <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-                <p class="text-sm text-gray-500">{{ __('activity.activity_error_events') }}</p>
-                <p class="mt-2 text-2xl font-semibold text-gray-900">{{ number_format($stats['errors']) }}</p>
+            <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
+                <p class="text-sm text-gray-600">{{ __('activity.activity_error_events') }}</p>
+                <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['errors']) }}</p>
             </div>
         </div>
 
         {{-- Breakdown --}}
-        <div class="rounded-lg border border-dashed border-gray-200 bg-white mb-4 p-4"
+        <div class="rounded-lg border border-dashed border-gray-200 background mb-4 p-4"
             id="activity-breakdown-container">
-            <h3 class="text-sm font-semibold text-gray-700">{{ __('activity.activity_breakdown_title') }}</h3>
+            <h3 class="text-sm font-semibold text-gray-600">{{ __('activity.activity_breakdown_title') }}</h3>
             <ul class="mt-3 space-y-2 text-sm text-gray-600">
                 <div>
                     @forelse ($breakdown as $row)
@@ -50,7 +50,7 @@
                             class="flex items-center font-semibold justify-center gap-2 {{ $rowBadgeClass }} rounded-full ps-3 px-1 py-1">
                             <span>{{ __('main.' . $row->event ?? 'unknown') }}</span>
                             <span
-                                class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700">{{ $row->total }}</span>
+                                class="rounded-full px-2 py-0.5 text-xs font-medium bg-gray-50">{{ $row->total }}</span>
                         </li>
                     @empty
                         <li class="text-gray-400">{{ __('main.no_data_available') }}</li>
@@ -63,7 +63,7 @@
         <div class="gap-2 md:gap-4 mb-4 px-1" id="activity-filters-container">
             <div class="space-y-1">
                 <label for="filter-log"
-                    class="text-sm font-medium text-gray-700 mb-2 inline-block">{{ __('activity.activity_log_type') }}</label>
+                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_log_type') }}</label>
                 <select id="filter-log" class="kt-select h-[45px]" wire:model.live="filterLog">
                     <option value="">--</option>
                     @foreach ($logNames as $logName)
@@ -75,7 +75,7 @@
             </div>
             <div class="space-y-1">
                 <label for="filter-event"
-                    class="text-sm font-medium text-gray-700 mb-2 inline-block">{{ __('activity.activity_event_type') }}</label>
+                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_event_type') }}</label>
                 <select id="filter-event" class="kt-select h-[45px]" wire:model.live="filterEvent">
                     <option value="">--</option>
                     @foreach ($events as $event)
@@ -87,7 +87,7 @@
             </div>
             <div class="space-y-1">
                 <label for="filter-user"
-                    class="text-sm font-medium text-gray-700 mb-2 inline-block">{{ __('activity.activity_user_filter') }}</label>
+                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_user_filter') }}</label>
                 <select id="filter-user" class="kt-select h-[45px]" wire:model.live="filterUser">
                     <option value="">--</option>
                     @foreach ($users as $user)
@@ -99,12 +99,12 @@
             </div>
             <div class="space-y-1">
                 <label for="date-from"
-                    class="text-sm font-medium text-gray-700 mb-2 inline-block">{{ __('activity.activity_date_from') }}</label>
+                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_from') }}</label>
                 <input id="date-from" type="datetime-local" class="kt-input h-[45px]" wire:model.live="dateFrom">
             </div>
             <div class="space-y-1">
                 <label for="date-to"
-                    class="text-sm font-medium text-gray-700 mb-2 inline-block">{{ __('activity.activity_date_to') }}</label>
+                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_to') }}</label>
                 <input id="date-to" type="datetime-local" class="kt-input h-[45px]" wire:model.live="dateTo">
             </div>
             <div class="flex items-end gap-2">
@@ -230,7 +230,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
+                        <tbody class="divide-y divide-gray-200 background">
                             @forelse ($data as $activity)
                                 @php $badgeClass = badgeClasses($activity->event); @endphp
                                 <tr wire:key="activity-{{ $activity->id }}" class="hover:bg-gray-50">
@@ -239,7 +239,7 @@
                                         <input type="checkbox" class="kt-checkbox" wire:model.live="selectedIds"
                                             value="{{ $activity->id }}">
                                     </td> --}}
-                                    <td class="px-3 py-2 text-sm text-gray-700">
+                                    <td class="px-3 py-2 text-sm text-gray-600">
                                         <div>
                                             {{ $activity->created_at?->format('Y-m-d H:i:s') }}
                                         </div>
@@ -253,10 +253,10 @@
                                             {!! highlightSearch(__('main.' . $activity->event ?? 'unknown'), $search) !!}
                                         </span>
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-700">
+                                    <td class="px-3 py-2 text-sm text-gray-600">
                                         {!! highlightSearch(__('main.' . '_' . $activity->log_name ?? 'unknown'), $search) !!}
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-700">
+                                    <td class="px-3 py-2 text-sm text-gray-600">
                                         @if ($activity->causer)
                                             <div>{!! highlightSearch($activity->causer->name ?? $activity->causer->email, $search) !!}</div>
                                             @if ($activity->causer->email)
@@ -269,7 +269,7 @@
                                                 class="text-xs text-gray-400">{{ __('activity.system_generated') }}</span>
                                         @endif
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-700">
+                                    <td class="px-3 py-2 text-sm text-gray-600">
                                         @if ($activity->subject)
                                             <div>
                                                 {!! highlightSearch(class_basename($activity->subject_type), $search) !!}
@@ -279,7 +279,7 @@
                                             <span class="text-xs text-gray-400">—</span>
                                         @endif
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-700"
+                                    <td class="px-3 py-2 text-sm text-gray-600"
                                         title="{{ activityMessageSummary($activity, 1000) }}">
                                         <div style="text-wrap: wrap;">
                                             {!! highlightSearch(activityMessageSummary($activity), $search) !!}

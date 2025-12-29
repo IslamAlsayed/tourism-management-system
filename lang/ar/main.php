@@ -75,7 +75,6 @@ return [
     'columns_updated_successfully' => 'تم تحديث الأعمدة بنجاح',
     'columns_reset_successfully' => 'تم إعادة تعيين الأعمدة بنجاح',
     'are_you_sure_reset_columns' => 'هل أنت متأكد من إعادة تعيين الأعمدة للافتراضي؟',
-    'unauthorized' => 'إجراء غير مصرح به',
     'monday' => 'الإثنين',
     'tuesday' => 'الثلاثاء',
     'wednesday' => 'الأربعاء',
@@ -230,7 +229,6 @@ return [
     'immigration' => 'الهجرة',
     'duty_free' => 'منطقة حرة',
     'vip_lounge' => 'صالة كبار الشخصيات',
-    'restaurants' => 'مطاعم',
     'currency_exchange' => 'تبادل العملات',
     'shops' => 'محلات',
     'cargo_handling' => 'مناولة البضائع',
@@ -278,7 +276,6 @@ return [
     'tax_number' => 'الرقم الضريبي',
     'certifications' => 'الشهادات',
     'destinations' => 'الوجهات',
-    'services' => 'الخدمات',
     'cabin_classes' => 'درجات السفر',
     'has_frequent_flyer' => 'يوجد برنامج مسافر دائم',
     'frequent_flyer_program' => 'برنامج المسافر الدائم',
@@ -308,7 +305,6 @@ return [
     'premium_economy' => 'الدرجة الاقتصادية المتميزة',
     'business' => 'درجة رجال الأعمال',
     'first_class' => 'الدرجة الأولى',
-    'parking' => 'موقف سيارات',
     'baggage_handling' => 'مناولة الأمتعة',
     'ground_services' => 'خدمات أرضية',
     'fueling' => 'التزود بالوقود',
@@ -481,7 +477,6 @@ return [
     'company_address' => 'عنوان الشركة',
     'company_email' => 'البريد الإلكتروني للشركة',
     'company_phone' => 'هاتف الشركة',
-    'tax_number' => 'الرقم الضريبي',
     'commercial_registration' => 'السجل التجاري',
 
     // Personal Fields
@@ -668,7 +663,6 @@ return [
     'unknown_user' => 'مستخدم غير معروف',
     'unknown_email' => 'بريد إلكتروني غير معروف',
     'dark_mode' => 'الوضع الداكن',
-    'user' => 'المستخدم',
     'import_csv' => 'استيراد CSV/Excel',
     'add_member' => 'إضافة عضو',
 

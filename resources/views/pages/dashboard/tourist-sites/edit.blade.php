@@ -26,6 +26,13 @@
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
+                <!-- Tourist Site Photo -->
+                @include('components.input-image', [
+                    'modelKey' => $touristSite->name ?? 'A',
+                    'column' => 'tourist-site',
+                    'columnName' => 'photo',
+                    'record' => $touristSite,
+                ])
 
                 <!-- Location Information -->
                 <div class="kt-card">
@@ -35,14 +42,10 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.edit', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                                'record' => $touristSite,
-                            ])
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base :record="$touristSite" />
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'currency_id',
@@ -96,6 +99,7 @@
                             <div class="align-self-end">
                                 <label for="name" class="kt-label">
                                     {{ __('main.name') }}
+                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $touristSite->name }}">
@@ -120,6 +124,7 @@
                                     {{ __('main.site_type') }}
                                 </label>
                                 <select name="site_type" id="site_type" class="kt-select basic-single">
+                                    <option value="" selected disabled></option>
                                     @foreach ($siteTypes as $key => $siteType)
                                         <option value="{{ $key }}"
                                             {{ $touristSite->site_type == $key ? 'selected' : '' }}>
@@ -138,6 +143,7 @@
                                     {{ __('main.category') }}
                                 </label>
                                 <select name="category" id="category" class="kt-select basic-single">
+                                    <option value="" selected disabled></option>
                                     @foreach ($categories as $key => $category)
                                         <option value="{{ $key }}"
                                             {{ $touristSite->category == $key ? 'selected' : '' }}>
@@ -170,12 +176,6 @@
                                 @error('main_image')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
-                                @if ($touristSite->main_image)
-                                    <div class="mt-2">
-                                        <img src="{{ asset('storage/' . $touristSite->main_image) }}" alt="Main Image"
-                                            class="w-32 h-32 object-cover rounded">
-                                    </div>
-                                @endif
                                 <!-- Preview Main Image -->
                                 <div id="main_image_preview" class="mt-3"></div>
                             </div>
@@ -188,14 +188,6 @@
                                 @error('gallery_images')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
-                                @if ($touristSite->gallery_images && count($touristSite->gallery_images) > 0)
-                                    <div class="mt-2 flex gap-2 flex-wrap">
-                                        @foreach ($touristSite->gallery_images as $image)
-                                            <img src="{{ asset('storage/' . $image) }}" alt="Gallery"
-                                                class="w-20 h-20 object-cover rounded">
-                                        @endforeach
-                                    </div>
-                                @endif
                                 <!-- Preview Gallery Images -->
                                 <div id="gallery_preview" class="mt-3 grid grid-cols-4 gap-2"></div>
                             </div>
@@ -252,6 +244,7 @@
                                 <label for="difficulty_level"
                                     class="kt-label mb-2">{{ __('main.difficulty_level') }}</label>
                                 <select name="difficulty_level" id="difficulty_level" class="kt-select basic-single">
+                                    <option value="" selected disabled></option>
                                     <option value="easy"
                                         {{ $touristSite->difficulty_level == 'easy' ? 'selected' : '' }}>
                                         {{ __('main.easy') }}</option>
@@ -364,13 +357,13 @@
                     </div>
                     <div class="kt-card-body p-4 pb-0">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-
                             <!-- entry_fee_adult -->
                             <div class="">
                                 <label for="entry_fee_adult"
                                     class="kt-label mb-2">{{ __('main.entry_fee_adult') }}</label>
-                                <input type="text" name="entry_fee_adult" id="entry_fee_adult"
-                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_adult }}">
+                                <input type="number" name="entry_fee_adult" id="entry_fee_adult"
+                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_adult }}"
+                                    minLength="1">
                                 @error('entry_fee_adult')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -380,8 +373,9 @@
                             <div class="">
                                 <label for="entry_fee_child"
                                     class="kt-label mb-2">{{ __('main.entry_fee_child') }}</label>
-                                <input type="text" name="entry_fee_child" id="entry_fee_child"
-                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_child }}">
+                                <input type="number" name="entry_fee_child" id="entry_fee_child"
+                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_child }}"
+                                    minLength="1">
                                 @error('entry_fee_child')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -391,8 +385,9 @@
                             <div class="">
                                 <label for="entry_fee_student"
                                     class="kt-label mb-2">{{ __('main.entry_fee_student') }}</label>
-                                <input type="text" name="entry_fee_student" id="entry_fee_student"
-                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_student }}">
+                                <input type="number" name="entry_fee_student" id="entry_fee_student"
+                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_student }}"
+                                    minLength="1">
                                 @error('entry_fee_student')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -402,8 +397,9 @@
                             <div class="">
                                 <label for="entry_fee_senior"
                                     class="kt-label mb-2">{{ __('main.entry_fee_senior') }}</label>
-                                <input type="text" name="entry_fee_senior" id="entry_fee_senior"
-                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_senior }}">
+                                <input type="number" name="entry_fee_senior" id="entry_fee_senior"
+                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_senior }}"
+                                    minLength="1">
                                 @error('entry_fee_senior')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -413,22 +409,24 @@
                             <div class="">
                                 <label for="entry_fee_group"
                                     class="kt-label mb-2">{{ __('main.entry_fee_group') }}</label>
-                                <input type="text" name="entry_fee_group" id="entry_fee_group"
-                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_group }}">
+                                <input type="number" name="entry_fee_group" id="entry_fee_group"
+                                    class="kt-input h-[45px]" value="{{ $touristSite->entry_fee_group }}"
+                                    minLength="1">
                                 @error('entry_fee_group')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- is_free_entry -->
-                            <div class="">
-                                <label for="is_free_entry" class="kt-label mb-2">{{ __('main.is_free_entry') }}</label>
-                                <input type="text" name="is_free_entry" id="is_free_entry" class="kt-input h-[45px]"
-                                    value="{{ $touristSite->is_free_entry }}">
+                            {{-- <div class="">
+                                <label for="is_free_entry"
+                                    class="kt-label mb-2">{{ __('main.is_free_entry') }}</label>
+                                <input type="checkbox" name="is_free_entry" id="is_free_entry" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->is_free_entry }}" minLength="1">
                                 @error('is_free_entry')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -442,10 +440,29 @@
                     </div>
                     <div class="kt-card-body p-4 pb-0">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            <!-- Operating Days -->
+                            <div class="">
+                                <label for="operating_days" class="kt-label mb-2 flex items-center justify-between">
+                                    {{ __('main.operating_days') }}
+                                </label>
+                                <select name="operating_days[]" id="operating_days" class="kt-select basic-multiple"
+                                    multiple>
+                                    @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $key => $day)
+                                        <option value="{{ $key }}"
+                                            {{ is_array($touristSite->operating_days) && in_array($key, $touristSite->operating_days) ? 'selected' : '' }}>
+                                            {{ $day }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('operating_days')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Opening Hours -->
                             <div class="">
                                 <label for="opening_hours" class="kt-label mb-2">{{ __('main.opening_hours') }}</label>
-                                <input type="text" name="opening_hours" id="opening_hours" class="kt-input h-[45px]"
+                                <input type="time" name="opening_hours" id="opening_hours" class="kt-input h-[45px]"
                                     value="{{ $touristSite->opening_hours }}">
                                 @error('opening_hours')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -497,6 +514,7 @@
                             <div class="">
                                 <label for="status" class="mb-2 kt-label">{{ __('main.status') }}</label>
                                 <select name="status" id="status" class="kt-select basic-single">
+                                    <option value="">--</option>
                                     <option value="active" {{ $touristSite->status == 'active' ? 'selected' : '' }}>
                                         {{ __('main.active') }}</option>
                                     <option value="inactive" {{ $touristSite->status == 'inactive' ? 'selected' : '' }}>
@@ -763,21 +781,18 @@
                 @include('components.elements.input-text-editor', [
                     'column' => 'address',
                     'value' => $touristSite->address,
-                    'classes' => '',
                 ])
 
                 {{-- Description --}}
                 @include('components.elements.input-text-editor', [
                     'column' => 'description',
                     'value' => $touristSite->description,
-                    'classes' => '',
                 ])
 
                 {{-- Notes --}}
                 @include('components.elements.input-text-editor', [
                     'column' => 'notes',
                     'value' => $touristSite->notes,
-                    'classes' => '',
                 ])
 
                 <div class="flex flex-wrap ps-4" style="gap: 10px 40px;">
@@ -787,7 +802,7 @@
                             'name' => 'is_active',
                             'id' => 'is_active',
                             'value' => '1',
-                            'checked' => $touristSite->is_active,
+                            'checked' => 1,
                             'label' => __('main.is_active'),
                         ])
                     </div>
@@ -798,7 +813,6 @@
                             'name' => 'is_featured',
                             'id' => 'is_featured',
                             'value' => '1',
-                            'checked' => $touristSite->is_featured,
                             'label' => __('main.is_featured'),
                         ])
                     </div>
@@ -809,7 +823,6 @@
                             'name' => 'is_verified',
                             'id' => 'is_verified',
                             'value' => '1',
-                            'checked' => $touristSite->is_verified,
                             'label' => __('main.is_verified'),
                         ])
                     </div>
@@ -824,15 +837,6 @@
 
 @push('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id", "edit");
-                filterByForeignId("subregion_id", "country", "country_id", "edit");
-                filterByForeignId("country_id", "state", "state_id", "edit");
-                filterByForeignId("state_id", "city", "city_id", "edit");
-            }, 500);
-        });
-
         // Image Preview for Main Image
         document.getElementById('main_image').addEventListener('change', function(e) {
             const preview = document.getElementById('main_image_preview');
@@ -922,5 +926,3 @@
         });
     </script>
 @endpush
-
-@include('components.regions.script-cascading')

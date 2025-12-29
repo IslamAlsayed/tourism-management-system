@@ -22,18 +22,39 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-4 lg:gap-6">
-            <!-- Tour Guides Types Form -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.tour-guide-type')]) }}</h3>
-                </div>
-                <div class="kt-card-body">
-                    <form method="POST" action="{{ route('tour-guides-types.store') }}" enctype="multipart/form-data"
-                        class="space-y-6 p-4">
-                        @csrf
+        <form class="space-y-6" method="POST" action="{{ route('tour-guides-types.store') }}" enctype="multipart/form-data">
+            @csrf
+            <div class="grid gap-4 lg:gap-6">
+                {{-- Location Information --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.location')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base />
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            {{-- Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'currency_id',
+                                'currencies' => $currencies,
+                            ])
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Tour Guide Type Information --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.tour-guide-type')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Type --}}
                             <div class="">
                                 <label for="type" class="kt-label required mb-2">{{ __('main.type') }}</label>
@@ -53,62 +74,36 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                            ])
-
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            <livewire:regions.location-select-base />
                         </div>
-
-                        <!-- Description -->
-                        @include('components.elements.input-text-editor', [
-                            'column' => 'description',
-                            'value' => old('description'),
-                        ])
-
-                        <!-- Notes -->
-                        @include('components.elements.input-text-editor', [
-                            'column' => 'notes',
-                            'value' => old('notes'),
-                        ])
-
-                        <div class="flex flex-wrap mb-4" style="gap: 10px 40px;">
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_active" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_active',
-                                    'id' => 'is_active',
-                                    'value' => '1',
-                                    'checked' => 1,
-                                    'label' => __('main.active'),
-                                ])
-                            </div>
-                        </div>
-
-                        <!-- Save Submit -->
-                        @include('components.elements.save-submit', ['models' => 'tour-guides-types'])
-                    </form>
+                    </div>
                 </div>
+
+                {{-- Description --}}
+                @include('components.elements.input-text-editor', [
+                    'column' => 'description',
+                    'value' => old('description'),
+                ])
+
+                {{-- Notes --}}
+                @include('components.elements.input-text-editor', [
+                    'column' => 'notes',
+                    'value' => old('notes'),
+                ])
+
+                <div class="flex items-center gap-3">
+                    <input type="hidden" name="is_active" value="0">
+                    @include('components.elements.checkbox-button', [
+                        'name' => 'is_active',
+                        'id' => 'is_active',
+                        'value' => '1',
+                        'checked' => 1,
+                        'label' => __('main.is_active'),
+                    ])
+                </div>
+
+                {{-- Save Buttons --}}
+                @include('components.elements.save-submit', ['models' => 'tour-guides-types'])
             </div>
-        </div>
+        </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                filterByForeignId("region_id", "subregion", "subregion_id");
-                filterByForeignId("subregion_id", "country", "country_id");
-                filterByForeignId("country_id", "state", "state_id");
-                filterByForeignId("state_id", "city", "city_id");
-            }, 500);
-        });
-    </script>
-@endpush
-
-@include('components.regions.script-cascading')

@@ -17,7 +17,7 @@
 <script src="{{ asset('assets/js/multiples/specialCheckbox.js') }}"></script>
 <script src="{{ asset('assets/js/multiples/specialSearch.js') }}"></script>
 {{-- <script src="{{ asset('assets/js/multiples/specialDelete.js') }}"></script> --}}
-<script src="{{ asset('assets/js/filterByForeignId.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/filterByForeignId.js') }}"></script> --}}
 {{-- Helpers --}}
 <script src="{{ asset('assets/js/helpers.js') }}"></script>
 {{-- Main --}}

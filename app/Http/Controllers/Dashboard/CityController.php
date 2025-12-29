@@ -29,9 +29,8 @@ class CityController extends Controller
         $data = $request->validated();
         unset($data['state_id']);
         $city = City::create($data);
-        if (!$city) {
+        if (!$city)
             return redirect()->route('cities.index')->withError(__('messages.type_creation_failed', ['type' => __('main.city')]));
-        }
         $stateIds = [];
         if ($request->boolean('all_states') && isset($data['country_id'])) {
             $stateIds = State::where('country_id', $data['country_id'])->pluck('id')->toArray();
@@ -57,9 +56,8 @@ class CityController extends Controller
     public function edit($id)
     {
         $city = City::find($id);
-        if (!$city) {
+        if (!$city)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
-        }
         $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         return view('pages.dashboard.cities.edit', compact('city', 'regions', 'timezones'));
@@ -68,9 +66,8 @@ class CityController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $city = City::find($id);
-        if (!$city) {
+        if (!$city)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
-        }
         $data = $request->validated();
         unset($data['state_id']);
         $city->update($data);
@@ -87,9 +84,8 @@ class CityController extends Controller
     public function destroy($id)
     {
         $city = City::find($id);
-        if (!$city) {
+        if (!$city)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
-        }
         $deleted = $city->delete();
         return $deleted
             ? redirect()->route('cities.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.city')]))
