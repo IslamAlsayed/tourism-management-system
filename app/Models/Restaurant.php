@@ -38,6 +38,8 @@ class Restaurant extends Model
         'street',
         'mobile',
         'website',
+        'latitude',
+        'longitude',
 
         'wheelchair_accessible',
         'free_wifi',
@@ -52,6 +54,7 @@ class Restaurant extends Model
         'notes',
 
         'type_id',
+        'timezone_id',
         'currency_id',
         'region_id',
         'subregion_id',
@@ -62,17 +65,22 @@ class Restaurant extends Model
 
     public function getRelationshipNames()
     {
-        return ['type', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'meals', 'supplements'];
+        return ['type', 'timezone', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'meals', 'supplements'];
     }
 
     public function getExcludedColumns()
     {
-        return ['type_id', 'currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['type_id', 'timezone_id', 'currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
     }
 
     public function type()
     {
         return $this->belongsTo(Type::class);
+    }
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
     }
 
     public function currency()

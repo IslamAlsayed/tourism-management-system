@@ -935,7 +935,7 @@
     @case('states')
         <td title="{{ $model->states->pluck('name')->filter()->implode(', ') }}">
             @if ($model->states && $model->states->count() > 0)
-                @foreach ($model->states->take(3)->get() as $state)
+                @foreach ($model->states->take(3) as $state)
                     <a href="{{ route('states.show', $state->id) }}"
                         class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($state->name ?? '--', 30), $search) !!}
@@ -959,7 +959,7 @@
     @case('cities')
         <td title="{{ $model->cities->pluck('name')->filter()->implode(', ') }}">
             @if ($model->cities && $model->cities->count() > 0)
-                @foreach ($model->cities->take(3)->get() as $city)
+                @foreach ($model->cities->take(3) as $city)
                     <a href="{{ route('cities.show', $city->id) }}"
                         class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($city->name ?? '--', 30), $search) !!}

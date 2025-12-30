@@ -41,13 +41,9 @@ class RestaurantController extends Controller
         $validated = $request->validated();
         $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons', 'meals', 'supplements']));
         $restaurant = Restaurant::create($validated);
-
-        if (!$restaurant) {
+        if (!$restaurant)
             return redirect()->route('restaurants.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
-        }
-
         $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
-
         // CREATE SEASONS
         if (!empty($validated['seasons'])) {
             foreach ($validated['seasons'] as $seasonData) {
@@ -56,7 +52,6 @@ class RestaurantController extends Controller
                 Season::create($seasonData);
             }
         }
-
         // CREATE MEALS
         if (!empty($validated['meals'])) {
             foreach ($validated['meals'] as $mealData) {
@@ -65,7 +60,6 @@ class RestaurantController extends Controller
                 Meal::create($mealData);
             }
         }
-
         // CREATE SUPPLEMENTS
         if (!empty($validated['supplements'])) {
             foreach ($validated['supplements'] as $supplementData) {
@@ -74,28 +68,24 @@ class RestaurantController extends Controller
                 Supplement::create($supplementData);
             }
         }
-
-        if ($request->has('save_and_add')) {
-            return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.restaurant')]));
-        }
-        return redirect()->route('restaurants.index')->withSuccess(__('messages.type_created', ['type' => __('main.restaurant')]));
+        return $request->has('save_and_add')
+            ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.restaurant')]))
+            : redirect()->route('restaurants.index')->withSuccess(__('messages.type_created', ['type' => __('main.restaurant')]));
     }
 
     public function show($id)
     {
         $restaurant = Restaurant::with((new Restaurant())->getRelationshipNames())->find($id);
-        if (!$restaurant) {
+        if (!$restaurant)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
-        }
         return view('pages.dashboard.restaurants.show', compact('restaurant'));
     }
 
     public function edit($id)
     {
         $restaurant = Restaurant::with((new Restaurant())->getRelationshipNames())->find($id);
-        if (!$restaurant) {
+        if (!$restaurant)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
-        }
         $regions = Region::all();
         $currencies = Currency::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
@@ -106,18 +96,14 @@ class RestaurantController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $restaurant = Restaurant::find($id);
-        if (!$restaurant) {
+        if (!$restaurant)
             return redirect()->route('restaurants.index')->withError(__('messages.type_not_found', ['type' => __('main.restaurant')]));
-        }
-
         $validated = $request->validated();
         $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons', 'meals', 'supplements']));
         $updated = $restaurant->update($validated);
-
         if ($request->has('photo')) {
             $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
         }
-
         // EDIT SEASONS
         if (!empty($validated['seasons'])) {
             $restaurant->seasons()->where('model_type', Restaurant::class)->where('model_id', $restaurant->id)->delete();
@@ -127,7 +113,6 @@ class RestaurantController extends Controller
                 Season::create($seasonData);
             }
         }
-
         // EDIT MEALS
         if (!empty($validated['meals'])) {
             $restaurant->meals()->where('model_type', Restaurant::class)->where('model_id', $restaurant->id)->delete();
@@ -137,7 +122,6 @@ class RestaurantController extends Controller
                 Meal::create($mealData);
             }
         }
-
         // EDIT SUPPLEMENTS
         if (!empty($validated['supplements'])) {
             $restaurant->supplements()->where('model_type', Restaurant::class)->where('model_id', $restaurant->id)->delete();
@@ -147,18 +131,16 @@ class RestaurantController extends Controller
                 Supplement::create($supplementData);
             }
         }
-
-        if ($updated) {
-            return redirect()->route('restaurants.index')->withSuccess(__('messages.type_updated', ['type' => __('main.restaurant')]));
-        }
-        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.restaurant')]));
+        return $updated
+            ? redirect()->route('restaurants.index')->withSuccess(__('messages.type_updated', ['type' => __('main.restaurant')]))
+            : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.restaurant')]));
     }
+
     public function destroy($id)
     {
         $restaurant = Restaurant::find($id);
-        if (!$restaurant) {
+        if (!$restaurant)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
-        }
         $deleted = $restaurant->delete();
         return $deleted
             ? redirect()->route('restaurants.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.restaurant')]))

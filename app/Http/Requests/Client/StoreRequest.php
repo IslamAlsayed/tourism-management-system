@@ -30,10 +30,8 @@ class StoreRequest extends FormRequest
             'region_id' => ['nullable', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'exists:subregions,id'],
             'country_id' => ['nullable', 'exists:countries,id'],
-            'state_id' => ['nullable'],
-            'state_id.*' => ['exists:states,id'],
-            'city_id' => ['nullable'],
-            'city_id.*' => ['exists:cities,id'],
+            'state_id' => ['nullable', 'exists:states,id'],
+            'city_id' => ['nullable', 'exists:cities,id'],
             'nationality_id' => ['nullable', 'exists:nationalities,id'],
 
             // Personal name information
@@ -89,6 +87,7 @@ class StoreRequest extends FormRequest
             // Status and preferences
             'client_status' => ['nullable', 'in:active,inactive,pending,blacklisted'],
             'is_active' => 'nullable|boolean',
+            'description' => ['nullable', 'string', 'max:1400'],
             'notes' => ['nullable', 'string', 'max:1400'],
         ];
     }

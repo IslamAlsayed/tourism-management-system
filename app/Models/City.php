@@ -42,7 +42,7 @@ class City extends Model
 
     public function getRelationshipNames()
     {
-        return ['timezone', 'region', 'subregion', 'country', 'state'];
+        return ['timezone', 'region', 'subregion', 'country', 'state', 'states'];
     }
 
     public function getExcludedColumns()
@@ -68,6 +68,11 @@ class City extends Model
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
     }
 
     public function states()

@@ -49,9 +49,7 @@ class CountryController extends Controller
         } elseif ($request->filled('state_id')) {
             $stateIds = array_unique((array) $request->input('state_id'));
         }
-        if (!empty($stateIds)) {
-            $country->states()->sync($stateIds);
-        }
+        $country->states()->sync($stateIds);
         // Cities
         $cityIds = [];
         if ($request->boolean('all_cities')) {
@@ -59,9 +57,7 @@ class CountryController extends Controller
         } elseif ($request->filled('city_id')) {
             $cityIds = array_unique((array) $request->input('city_id'));
         }
-        if (!empty($cityIds)) {
-            $country->cities()->sync($cityIds);
-        }
+        $country->cities()->sync($cityIds);
         return $request->has('save_and_add')
             ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.country')]))
             : redirect()->route('countries.index')->withSuccess(__('messages.type_created', ['type' => __('main.country')]));

@@ -94,9 +94,6 @@ class States extends Component
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
-        foreach ($data as $state) {
-            $state['cities'] = $state->cities();
-        }
         return view('livewire.states', ['data' => $data, 'totalCount' => $this->totalCount ?: State::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

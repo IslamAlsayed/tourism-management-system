@@ -26,16 +26,15 @@ class StoreRequest extends FormRequest
             'name_ar' => ['nullable', 'string', 'max:255'],
 
             'type_id' => ['required', 'string', 'max:50', 'exists:types,id'],
+            'timezone_id' => ['nullable', 'string', 'exists:timezones,id'],
             'currency_id' => ['nullable', 'string', 'exists:currencies,id'],
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
-
-            'state_id' => ['nullable'],
-            'state_id.*' => ['integer', 'exists:states,id'],
-
-            'city_id' => ['nullable'],
-            'city_id.*' => ['integer', 'exists:cities,id'],
+            'state_id' => ['nullable', 'integer', 'exists:states,id'],
+            'city_id' => ['nullable', 'integer', 'exists:cities,id'],
+            'latitude' => ['nullable', 'numeric'],
+            'longitude' => ['nullable', 'numeric'],
 
             // Seasons Array
             'seasons' => 'nullable|array',

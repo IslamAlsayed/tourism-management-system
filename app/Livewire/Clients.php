@@ -109,8 +109,6 @@ class Clients extends Component
         $this->dispatch('reset-filters');
     }
 
-    public $getCacheKey = '';
-
     protected function getCacheKey()
     {
         return 'clients_list:' . md5(json_encode([
@@ -120,23 +118,27 @@ class Clients extends Component
             'dir' => $this->sortDirection ?? null,
             'perPage' => getPaginate(),
             'is_admin' => getActiveUser()->is_admin,
+            'filterClientGender' => is_array($this->filterClientGender) ? ($this->filterClientGender['payload']['value'] ?? null) : $this->filterClientGender,
+            'filterClientStatus' => is_array($this->filterClientStatus) ? ($this->filterClientStatus['payload']['value'] ?? null) : $this->filterClientStatus,
         ]));
     }
 
     public function render()
     {
         $cacheKey = $this->getCacheKey();
-        $data = Cache::remember($cacheKey, now()->addMinutes(5), function () {
+        $filterGender = is_array($this->filterClientGender) ? ($this->filterClientGender['payload']['value'] ?? null) : $this->filterClientGender;
+        $filterStatus = is_array($this->filterClientStatus) ? ($this->filterClientStatus['payload']['value'] ?? null) : $this->filterClientStatus;
+        $data = Cache::remember($cacheKey, now()->addMinutes(5), function () use ($filterGender, $filterStatus) {
             $query = Client::query();
             if (!getActiveUser()->is_admin) {
                 $query->where('is_admin', 0);
             }
             $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-            if ($this->filterClientGender && $this->filterClientGender['payload']['value'] !== 'all') {
-                $query->where('gender', $this->filterClientGender);
+            if ($filterGender && $filterGender !== 'all') {
+                $query->where('gender', $filterGender);
             }
-            if ($this->filterClientStatus && $this->filterClientStatus['payload']['value'] !== 'all') {
-                $query->where('client_status', $this->filterClientStatus);
+            if ($filterStatus && $filterStatus !== 'all') {
+                $query->where('client_status', $filterStatus);
             }
             $this->applySorting($query);
             return $query->paginate(getPaginate());

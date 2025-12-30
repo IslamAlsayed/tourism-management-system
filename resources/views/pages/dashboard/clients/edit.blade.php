@@ -446,8 +446,8 @@
                             {{-- Company Phone --}}
                             <div>
                                 <label for="company_phone" class="kt-label mb-2">{{ __('main.company_phone') }}</label>
-                                <input type="text" name="company_phone" id="company_phone" class="kt-input h-[45px]"
-                                    maxLength="14" value="{{ $client->company_phone }}">
+                                <input type="number" name="company_phone" id="company_phone" class="kt-input h-[45px]"
+                                    maxLength="17" value="{{ $client->company_phone }}">
                                 @error('company_phone')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

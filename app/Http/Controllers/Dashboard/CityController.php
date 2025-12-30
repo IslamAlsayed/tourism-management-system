@@ -47,7 +47,7 @@ class CityController extends Controller
 
     public function show($id)
     {
-        $city = City::with(['timezone', 'region', 'subregion', 'country', 'state'])->find($id);
+        $city = City::with(['timezone', 'region', 'subregion', 'country', 'state', 'states'])->find($id);
         return $city
             ? view('pages.dashboard.cities.show', compact('city'))
             : redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));

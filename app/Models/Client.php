@@ -20,35 +20,18 @@ class Client extends Model
     protected $fillable = [
         'id',
         'uuid',
-
-        // Personal name information
+        'client_code',
         'first_name',
         'last_name',
-
-        // Personal details
         'gender',
         'birth_date',
-
-        // Location information
-        'region_id',
-        'subregion_id',
-        'country_id',
-        'state_id',
-        'city_id',
-        'nationality_id',
-
-        // Passport information
         'passport_number',
         'passport_issue_date',
         'passport_expiry_date',
-
-        // Email addresses
         'personal_email',
         'email_primary',
         'work_email',
         'secondary_email',
-
-        // Phone numbers
         'primary_phone',
         'secondary_phone',
         'mobile',
@@ -56,39 +39,34 @@ class Client extends Model
         'work_phone',
         'work_phone_ext',
         'fax_number',
-        'whatsapp',
-
-        // Company/Business information
         'company_name',
-        'company_phone',
-        'company_email',
         'job_title',
         'sector',
         'department',
         'business_type',
         'business_registration_number',
         'tax_id',
-
-        // Address information
         'box',
         'postal_code',
         'street_address',
         'address_line_2',
-
-        // Online presence
         'website_url',
         'linkedin_url',
-
-        // Status and preferences
-        // 'status',
         'client_status',
-        'currency_id',
-        'timezone_id',
+        'whatsapp',
+        'company_phone',
+        'company_email',
         'is_active',
         'description',
         'notes',
-
-        // Tracking
+        'currency_id',
+        'timezone_id',
+        'region_id',
+        'subregion_id',
+        'country_id',
+        'state_id',
+        'city_id',
+        'nationality_id',
         'created_by',
         'updated_by',
     ];

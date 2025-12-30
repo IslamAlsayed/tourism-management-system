@@ -105,8 +105,6 @@ class Users extends Component
         return $result;
     }
 
-    public $getCacheKey = '';
-
     protected function getCacheKey()
     {
         return 'users_list:' . md5(json_encode([
