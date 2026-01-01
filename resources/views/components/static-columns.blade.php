@@ -476,6 +476,14 @@
         <td title="{{ optional($model)->seats }}">{!! highlightSearch(limitedText(optional($model)->seats ?? '--', 30), $search) !!}</td>
     @break
 
+    @case('min_capacity')
+        <td title="{{ optional($model)->min_capacity . ' ' . __('main.pax') }}">{!! highlightSearch(limitedText(optional($model)->min_capacity . ' ' . __('main.pax') ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('max_capacity')
+        <td title="{{ optional($model)->max_capacity . ' ' . __('main.pax') }}">{!! highlightSearch(limitedText(optional($model)->max_capacity . ' ' . __('main.pax') ?? '--', 30), $search) !!}</td>
+    @break
+
     @case('price')
         <td title="{{ optional($model)->price }}">{!! highlightSearch(limitedText(optional($model)->price ?? '--', 30), $search) !!} {{ $settings->app_default_currency }}</td>
     @break
@@ -1305,6 +1313,38 @@
                     'table' => $models,
                 ],
                 key('toggle-' . $model->id . '-is_included')
+            )
+        </td>
+    @break
+
+    @case('has_luggage')
+        <td title="{{ $model->has_luggage == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'has_luggage',
+                    'value' => (bool) $model->has_luggage,
+                    'table' => $models,
+                ],
+                key('toggle-' . $model->id . '-has_luggage')
+            )
+        </td>
+    @break
+
+    @case('is_air_conditioning')
+        <td title="{{ $model->is_air_conditioning == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'is_air_conditioning',
+                    'value' => (bool) $model->is_air_conditioning,
+                    'table' => $models,
+                ],
+                key('toggle-' . $model->id . '-is_air_conditioning')
             )
         </td>
     @break

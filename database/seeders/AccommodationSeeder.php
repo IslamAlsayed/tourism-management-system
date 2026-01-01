@@ -6,8 +6,6 @@ use App\Models\Meal;
 use App\Models\Room;
 use App\Models\Type;
 use App\Models\Season;
-use App\Models\RichText;
-use App\Models\Restaurant;
 use App\Models\Supplement;
 use App\Models\Accommodation;
 use Illuminate\Database\Seeder;
@@ -20,23 +18,10 @@ class AccommodationSeeder extends Seeder
      */
     public function run()
     {
-        // Delete existing data (using delete() instead of truncate() to handle rich_texts)
+        // حذف بيانات الإقامة القديمة
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
-        Supplement::truncate();
-        Meal::truncate();
-        Room::truncate();
-        Season::truncate();
         Accommodation::truncate();
-        Type::truncate();
         Schema::enableForeignKeyConstraints();
-
-        Supplement::query()->delete();
-        Meal::query()->delete();
-        Room::query()->delete();
-        Season::query()->delete();
-        Accommodation::query()->delete();
-        Type::query()->delete();
 
         // Get or create types (Hotel, Resort, Villa, Apartment, Hostel, etc.)
         $typeNames = [
@@ -182,7 +167,5 @@ class AccommodationSeeder extends Seeder
                 ]);
             }
         }
-
-        // لا داعي لإضافة علاقات pivot بعد الآن، البيانات مرتبطة عبر model_id وmodel_type
     }
 }

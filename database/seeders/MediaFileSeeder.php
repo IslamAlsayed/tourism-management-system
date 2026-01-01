@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Client;
 use App\Models\Airline;
 use App\Models\Country;
-use App\Models\RichText;
 use App\Models\MediaFile;
 use App\Models\TourGuide;
 use App\Models\Restaurant;
@@ -24,7 +23,6 @@ class MediaFileSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
         MediaFile::truncate();
         Schema::enableForeignKeyConstraints();
 

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Meal;
 use App\Models\Season;
-use App\Models\RichText;
 use App\Models\Restaurant;
 use App\Models\Supplement;
 use Illuminate\Database\Seeder;
@@ -15,7 +14,6 @@ class RestaurantSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
         Restaurant::truncate();
         Schema::enableForeignKeyConstraints();
 

@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('user_id')->nullable(); // Deprecated, use performer_id and target_user_id
             $table->unsignedBigInteger('performer_id')->nullable(); // من قام بالفعل
             $table->unsignedBigInteger('target_user_id')->nullable(); // من يستلم الإشعار

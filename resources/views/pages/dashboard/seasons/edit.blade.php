@@ -30,14 +30,13 @@
                     <div class="grid gap-4 lg:gap-6">
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
-                            {{-- accommodations-restaurants --}}
-                            <livewire:accommodations-restaurants-selects :record="$season" />
+                            {{-- Polymorphic Model Select --}}
+                            <livewire:polymorphic-model-select :record="$season" />
 
                             {{-- Name (English) --}}
                             <div class="align-self-end">
                                 <label for="name" class="kt-label mb-1">
                                     {{ __('main.name') }}
-                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $season->name }}">
@@ -60,7 +59,6 @@
                             <div class="align-self-end">
                                 <label for="season_from" class="kt-label mb-1">
                                     {{ __('main.season_from') }}
-                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="date" name="season_from" id="season_from" class="kt-input h-[45px]"
                                     value="{{ old('season_from', $season->formatted_season_from) }}">
@@ -73,7 +71,6 @@
                             <div class="align-self-end">
                                 <label for="season_to" class="kt-label mb-1">
                                     {{ __('main.season_to') }}
-                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="date" name="season_to" id="season_to" class="kt-input h-[45px]"
                                     value="{{ old('season_to', $season->formatted_season_to) }}">

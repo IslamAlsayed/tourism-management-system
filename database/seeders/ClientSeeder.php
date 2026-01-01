@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Client;
-use App\Models\RichText;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -15,7 +14,6 @@ class ClientSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
         Client::truncate();
         Schema::enableForeignKeyConstraints();
 

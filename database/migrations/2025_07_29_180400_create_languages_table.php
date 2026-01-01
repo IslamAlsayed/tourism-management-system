@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('languages', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
             $table->string('name')->unique();
             $table->string('name_ar')->nullable();
             $table->string('code')->unique()->nullable();

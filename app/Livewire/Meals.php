@@ -114,9 +114,10 @@ class Meals extends Component
         return $result;
     }
 
-    public function resetFilters(): void
+    public function resetFilters()
     {
         $this->reset(['search', 'filterCurrencyId', 'filterStatus', 'filterIsIncluded']);
+        $this->resetSort();
         $this->resetPage();
         $this->dispatch('reset-filters');
     }

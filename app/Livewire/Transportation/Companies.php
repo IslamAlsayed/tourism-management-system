@@ -3,17 +3,18 @@
 namespace App\Livewire\Transportation;
 
 use Livewire\Component;
-use Livewire\WithPagination;
-use App\Traits\CustomColumnsLivewireLegacy;
-use App\Traits\CustomPagination;
-use App\Traits\HandlesCrudSafely;
 use App\Traits\ExportsData;
 use App\Traits\WithSorting;
+use Livewire\WithPagination;
+use App\Traits\CustomPagination;
+use App\Traits\HandlesCrudSafely;
 use App\Models\TransportationCompany;
+use App\Traits\CustomColumnsLivewireLegacy;
 
 class Companies extends Component
 {
     use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
+
     public $search = '';
     public $totalCount = '';
     public $message = [];
@@ -33,7 +34,7 @@ class Companies extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'transportationCompany');
+        $this->safeDestroy($id, 'transportation_company');
     }
 
     public function updatedSelectPage($value)
@@ -64,7 +65,7 @@ class Companies extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('transportation.companies'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('transportation_company.transportation_companies'), 'count' => $count]),
         ]);
     }
 
@@ -90,9 +91,10 @@ class Companies extends Component
 
     public function render()
     {
-        $query = TransportationCompany::query()->with($this->relations)->search($this->search);
+        $query = TransportationCompany::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
-        return view('livewire.transportation.companies', ['data' => $data, 'totalCount' => TransportationCompany::count(), 'selectedIds' => $this->selectedIds]);
+        return view('livewire.transportation.companies', ['data' => $data, 'totalCount' => $this->totalCount ?: TransportationCompany::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

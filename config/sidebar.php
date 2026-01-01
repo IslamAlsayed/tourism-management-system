@@ -565,6 +565,146 @@ return [
             ],
         ],
 
+        // ================= Transportation =================
+        [
+            'title' => 'transportation',
+            'icon' => 'fa-solid fa-hotel',
+            'status' => 'inprogress',
+            'children' => [
+                [
+                    'title' => 'all transportation',
+                    'icon' => 'fa-regular fa-building',
+                    'route' => 'transportation.companies.index',
+                ],
+                [
+                    'title' => 'create transportation',
+                    'icon' => 'fa-regular fa-square-plus',
+                    'route' => 'transportation.companies.create',
+                ],
+                [
+                    'title' => 'import transportation',
+                    'icon' => 'fa-regular fa-file-import',
+                    'route' => 'import.data',
+                    'parameters' => ['models' => 'transportation'],
+                ],
+                [
+                    'title' => 'vehicle-types',
+                    'icon' => 'fa-regular fa-layer-group',
+                    'children' => [
+                        [
+                            'title' => 'all vehicle-types',
+                            'icon' => 'fa-regular fa-list-ul',
+                            'route' => 'transportation.vehicle-types.index',
+                        ],
+                        [
+                            'title' => 'create vehicle-type',
+                            'icon' => 'fa-regular fa-square-plus',
+                            'route' => 'transportation.vehicle-types.create',
+                        ],
+                        [
+                            'title' => 'import vehicle-types',
+                            'icon' => 'fa-regular fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'vehicle-types'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'pricing',
+                    'icon' => 'fa-regular fa-layer-group',
+                    'children' => [
+                        [
+                            'title' => 'all pricing',
+                            'icon' => 'fa-regular fa-list-ul',
+                            'route' => 'transportation.pricings.index',
+                        ],
+                        [
+                            'title' => 'create pricing',
+                            'icon' => 'fa-regular fa-square-plus',
+                            'route' => 'transportation.pricings.create',
+                        ],
+                        [
+                            'title' => 'import pricing',
+                            'icon' => 'fa-regular fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'pricings'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'seasons',
+                    'icon' => 'fa-regular fa-utensils',
+                    'children' => [
+                        [
+                            'title' => 'all seasons',
+                            'icon' => 'fa-regular fa-bowl-food',
+                            'route' => 'seasons.index',
+                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'Transportation'],
+                        ],
+                        [
+                            'title' => 'create season',
+                            'icon' => 'fa-regular fa-square-plus',
+                            'route' => 'seasons.create',
+                        ],
+                        [
+                            'title' => 'import seasons',
+                            'icon' => 'fa-regular fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'seasons'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'supplements',
+                    'icon' => 'fa-regular fa-utensils',
+                    'children' => [
+                        [
+                            'title' => 'all supplements',
+                            'icon' => 'fa-regular fa-bowl-food',
+                            'route' => 'supplements.index',
+                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'Transportation'],
+                        ],
+                        [
+                            'title' => 'create supplement',
+                            'icon' => 'fa-regular fa-square-plus',
+                            'route' => 'supplements.create',
+                        ],
+                        [
+                            'title' => 'import supplements',
+                            'icon' => 'fa-regular fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['models' => 'supplements'],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+
+        // ================= Topics =================
+        [
+            'title' => 'topics',
+            'icon' => 'fa-solid fa-hotel',
+            'status' => 'new',
+            'children' => [
+                [
+                    'title' => 'pricing definitions',
+                    'icon' => 'fa-regular fa-layer-group',
+                    'children' => [
+                        [
+                            'title' => 'all pricing definitions',
+                            'icon' => 'fa-regular fa-building',
+                            'route' => 'pricing-definitions.index',
+                        ],
+                        [
+                            'title' => 'create pricing definition',
+                            'icon' => 'fa-regular fa-square-plus',
+                            'route' => 'pricing-definitions.create',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+
         // ================= Tour Guides =================
         [
             'title' => 'tour guides',
@@ -640,58 +780,6 @@ return [
             ],
         ],
 
-        // ================= Transportation =================
-        [
-            'title' => 'transportation',
-            'fixed' => 'soon',
-            'icon' => 'fa-solid fa-truck-fast',
-            'children' => [
-                [
-                    'title' => 'companies',
-                    'icon' => 'fa-solid fa-building',
-                    'route' => 'transportation-companies.index'
-                ],
-                [
-                    'title' => 'departments',
-                    'icon' => 'fa-solid fa-sitemap',
-                    'route' => 'transportation-departments.index'
-                ],
-                [
-                    'title' => 'car rental',
-                    'fixed' => false,
-                    'icon' => 'fa-solid fa-car',
-                    'route' => '#'
-                ],
-                [
-                    'title' => 'limousine transfers',
-                    'fixed' => false,
-                    'icon' => 'fa-solid fa-taxi',
-                    'route' => '#'
-                ],
-                [
-                    'title' => 'vehicles',
-                    'icon' => 'fa-solid fa-warehouse',
-                    'children' => [
-                        [
-                            'title' => 'bus types',
-                            'icon' => 'fa-solid fa-bus',
-                            'route' => 'transportation-bus-types.index'
-                        ],
-                        [
-                            'title' => 'company bus types',
-                            'icon' => 'fa-solid fa-bus-simple',
-                            'route' => 'transportation-company-bus-types.index'
-                        ],
-                        [
-                            'title' => '4x4 vehicles',
-                            'icon' => 'fa-solid fa-car-side',
-                            'route' => 'transportation-vehicles.index'
-                        ],
-                    ],
-                ],
-            ],
-        ],
-
         // ================= Air Transport =================
         [
             'title' => 'airlines',
@@ -716,34 +804,6 @@ return [
                 ],
             ],
         ],
-
-        // ================= Vehicles =================
-        // [
-        //     'title' => 'vehicles',
-        //     'icon' => 'ki-filled ki-car',
-        //     'children' => [
-        //         [
-        //             'title' => 'tourist buses',
-        //             'icon' => 'ki-filled ki-bus',
-        //             'route' => '#'
-        //         ],
-        //         [
-        //             'title' => 'transport vehicles',
-        //             'icon' => 'ki-filled ki-delivery',
-        //             'route' => '#'
-        //         ],
-        //         [
-        //             'title' => 'tourist transport companies',
-        //             'icon' => 'ki-filled ki-category',
-        //             'route' => '#'
-        //         ],
-        //         [
-        //             'title' => '4x4 vehicles',
-        //             'icon' => 'ki-filled ki-car',
-        //             'route' => '#'
-        //         ],
-        //     ],
-        // ],
 
         // ================= Tourist Sites =================
         [

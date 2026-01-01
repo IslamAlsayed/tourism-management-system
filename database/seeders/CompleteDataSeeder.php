@@ -7,7 +7,6 @@ use App\Models\Type;
 use App\Models\State;
 use App\Models\Region;
 use App\Models\Country;
-use App\Models\RichText;
 use App\Models\Timezone;
 use App\Models\Subregion;
 use App\Models\TourGuide;
@@ -27,7 +26,6 @@ class CompleteDataSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
         City::truncate();
         Country::truncate();
         Nationality::truncate();

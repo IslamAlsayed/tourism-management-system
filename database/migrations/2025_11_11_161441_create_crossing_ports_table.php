@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('crossing_ports', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
 
             // Location relationships
             $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');

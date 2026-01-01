@@ -29,8 +29,8 @@
                     @method('PUT')
                     <div class="grid gap-4 lg:gap-6">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
-                            {{-- accommodations-restaurants --}}
-                            <livewire:accommodations-restaurants-selects :record="$room" />
+                            {{-- Polymorphic Model Select --}}
+                            <livewire:polymorphic-model-select :record="$room" />
 
                             {{-- Currency --}}
                             @include('components.selects.currency', [
@@ -63,7 +63,6 @@
                             <div class="align-self-end">
                                 <label for="max_occupancy" class="kt-label mb-2">
                                     {{ __('main.max_occupancy') }}
-                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="number" name="max_occupancy" id="max_occupancy" class="kt-input h-[45px]"
                                     value="{{ $room->max_occupancy }}" minLength="1">
@@ -91,7 +90,6 @@
                             <div class="align-self-end">
                                 <label for="price_per_person_double" class="kt-label mb-1">
                                     {{ __('main.price_per_person_double') }}
-                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="number" step="0.01" name="price_per_person_double"
                                     id="price_per_person_double" class="kt-input h-[45px]"

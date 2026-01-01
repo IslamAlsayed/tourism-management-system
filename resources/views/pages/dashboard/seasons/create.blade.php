@@ -28,8 +28,8 @@
                     @csrf
                     <div class="grid gap-4 lg:gap-6">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
-                            {{-- accommodations-restaurants --}}
-                            <livewire:accommodations-restaurants-selects />
+                            {{-- Polymorphic Model Select --}}
+                            <livewire:polymorphic-model-select />
 
                             {{-- Name (English) --}}
                             <div class="align-self-end">

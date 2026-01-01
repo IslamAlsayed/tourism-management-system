@@ -21,15 +21,6 @@
         <!-- Filters -->
         <div class="mb-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
             <div>
-                <select wire:model.live="filterAccommodationId" class="kt-select h-[40px] w-48 max-w-full"
-                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.status') }}">
-                    <option value="all">{{ __('main.all') }}</option>
-                    @foreach ($accommodationsForSeasons as $accommodation)
-                        <option value="{{ $accommodation->id }}">{{ $accommodation->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div>
                 <select wire:model.live="filterStatus" class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
                     data-kt-select-placeholder="{{ __('main.status') }}">
                     <option value="all">{{ __('main.all') }}</option>

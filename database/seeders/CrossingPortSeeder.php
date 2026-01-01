@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\RichText;
 use App\Models\CrossingPort;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +14,6 @@ class CrossingPortSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
         CrossingPort::truncate();
         Schema::enableForeignKeyConstraints();
 

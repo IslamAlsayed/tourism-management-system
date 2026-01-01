@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
 
             // General Settings
             $table->string('app_name')->default('laravel');

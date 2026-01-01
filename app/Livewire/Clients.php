@@ -102,9 +102,10 @@ class Clients extends Component
         return $result;
     }
 
-    public function resetFilters(): void
+    public function resetFilters()
     {
         $this->reset(['search', 'filterClientGender', 'filterClientStatus']);
+        $this->resetSort();
         $this->resetPage();
         $this->dispatch('reset-filters');
     }

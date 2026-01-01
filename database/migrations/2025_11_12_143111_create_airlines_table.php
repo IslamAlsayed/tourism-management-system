@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('airlines', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
             $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
             $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
             $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');

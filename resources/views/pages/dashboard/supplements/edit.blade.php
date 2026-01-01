@@ -31,8 +31,8 @@
 
                         <!-- Supplement Information -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
-                            {{-- accommodations-restaurants --}}
-                            <livewire:accommodations-restaurants-selects :record="$supplement" />
+                            {{-- Polymorphic Model Select --}}
+                            <livewire:polymorphic-model-select :record="$supplement" />
 
                             {{-- Currency --}}
                             @include('components.selects.currency', [
@@ -45,7 +45,6 @@
                             <div class="align-self-end">
                                 <label for="name" class="kt-label mb-1">
                                     {{ __('main.name') }}
-                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $supplement->name }}">
@@ -68,7 +67,6 @@
                             <div class="align-self-end">
                                 <label for="price" class="kt-label mb-1">
                                     {{ __('main.price') }}
-                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="number" step="0.01" name="price" id="price" class="kt-input h-[45px]"
                                     value="{{ $supplement->price }}" min="0">

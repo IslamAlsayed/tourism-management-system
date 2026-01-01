@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('tour_guides', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();

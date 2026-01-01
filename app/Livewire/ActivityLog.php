@@ -36,7 +36,7 @@ class ActivityLog extends Component
 
     protected string $paginationTheme = 'tailwind';
 
-    public function mount(): void
+    public function mount()
     {
         $this->mountWithCustomPagination();
         $this->filterColumns = [
@@ -49,53 +49,53 @@ class ActivityLog extends Component
         ];
     }
 
-    public function updatingSearch(): void
+    public function updatingSearch()
     {
         $this->resetPage();
     }
 
-    public function updatedFilterLog(): void
+    public function updatedFilterLog()
     {
         $this->resetPage();
     }
 
-    public function updatedFilterEvent(): void
+    public function updatedFilterEvent()
     {
         $this->resetPage();
     }
 
-    public function updatedFilterUser(): void
+    public function updatedFilterUser()
     {
         $this->resetPage();
     }
 
-    public function updatedDateFrom(): void
+    public function updatedDateFrom()
     {
         $this->resetPage();
     }
 
-    public function updatedDateTo(): void
+    public function updatedDateTo()
     {
         $this->resetPage();
     }
 
-    public function updatedSelectPage($value): void
+    public function updatedSelectPage($value)
     {
         $this->selectedIds = $value ? $this->currentPageActivityIds()->toArray() : [];
     }
 
-    public function updatedSelectedIds(): void
+    public function updatedSelectedIds()
     {
         $this->selectPage = count($this->selectedIds) === $this->currentPageActivityIds()->count();
     }
 
-    public function resetFilters(): void
+    public function resetFilters()
     {
         $this->reset(['search', 'filterLog', 'filterEvent', 'filterUser', 'dateFrom', 'dateTo']);
         $this->resetPage();
     }
 
-    public function viewDetails(int $activityId): void
+    public function viewDetails(int $activityId)
     {
         $activity = Activity::with(['causer', 'subject'])->find($activityId);
 
@@ -109,13 +109,13 @@ class ActivityLog extends Component
         $this->focusedActivityId = $activity->id;
     }
 
-    public function closeDetails(): void
+    public function closeDetails()
     {
         $this->selectedActivity = [];
         $this->focusedActivityId = null;
     }
 
-    public function delete(int $activityId): void
+    public function delete(int $activityId)
     {
         if ($activity = Activity::find($activityId)) {
             $activity->delete();
@@ -127,7 +127,7 @@ class ActivityLog extends Component
         }
     }
 
-    public function deleteSelected(): void
+    public function deleteSelected()
     {
         if (empty($this->selectedIds)) {
             return;
@@ -143,7 +143,7 @@ class ActivityLog extends Component
         ]);
     }
 
-    public function clearLog(string $logName): void
+    public function clearLog(string $logName)
     {
         Activity::where('log_name', $logName)->delete();
         $this->afterMutation();
@@ -154,7 +154,7 @@ class ActivityLog extends Component
         ]);
     }
 
-    protected function afterMutation(): void
+    protected function afterMutation()
     {
         $this->reset(['selectedIds', 'selectPage']);
         $this->selectedActivity = [];

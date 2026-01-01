@@ -57,7 +57,7 @@
                                 ])
                             @endif
 
-                            @if (isset($models) && $models != 'notifications')
+                            @if (isset($models) && $models != 'notifications' && !Str::contains($models, 'transportation'))
                                 @include('components.elements.edit-button', [
                                     'models' => $models,
                                     'id' => $item->id,

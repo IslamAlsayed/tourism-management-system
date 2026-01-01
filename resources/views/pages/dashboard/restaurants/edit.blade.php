@@ -126,7 +126,6 @@
                             <div class="align-self-end">
                                 <label for="name" class="kt-label">
                                     {{ __('main.name') }}
-                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $restaurant->name }}">

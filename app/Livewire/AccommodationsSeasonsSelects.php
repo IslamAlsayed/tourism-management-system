@@ -58,9 +58,7 @@ class AccommodationsSeasonsSelects extends Component
         if ($record && $record->accommodation_id) {
             $this->filterAccommodationId = $record->accommodation_id;
             $this->isAccommodation = true;
-            $this->seasons = Season::where('accommodation_id', $record->accommodation_id)
-                ->orderBy('name')
-                ->get(['id', 'name']);
+            $this->seasons = Season::where('accommodation_id', $record->accommodation_id)->orderBy('name')->get(['id', 'name']);
         } else {
             $this->filterAccommodationId = '';
             $this->isAccommodation = false;

@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\RichText;
-use App\Models\Timezone;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -13,7 +11,6 @@ class UserSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
         User::truncate();
         Schema::enableForeignKeyConstraints();
 

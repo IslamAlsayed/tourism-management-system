@@ -11,7 +11,7 @@
 
 <div class="text-center mb-4">
     <div class="inline-block mb-4">
-        <div class="relative">
+        <div class="relative flex justify-center">
             @php
                 $classes =
                     isset($photoUrl) && $photoUrl
@@ -65,7 +65,7 @@
 
             <label for="photo"
                 class="absolute bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark"
-                style="right: -15px; bottom: -10px; padding-inline: 12px">
+                style="right: 25%; bottom: -10px; padding-inline: 12px">
                 <i class="fas fa-camera text-sm"></i>
             </label>
         </div>

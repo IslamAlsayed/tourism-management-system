@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('accommodations', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
 
             // Foreign Keys
             $table->unsignedBigInteger('type_id')->nullable();
@@ -39,9 +39,6 @@ return new class extends Migration {
             $table->string('name_ar')->nullable(); // e.g., هيلتون القاهرة، مخيم بدوي، أخرى
             $table->string('classification')->nullable(); // تصنيف الفندق
             $table->unsignedTinyInteger('stars')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->text('description')->nullable();
-            $table->text('notes')->nullable();
 
             // Contact info
             $table->string('general_mobile')->nullable();
@@ -63,6 +60,9 @@ return new class extends Migration {
             $table->string('postal_code')->nullable();
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
 
             // Contract
             $table->string('contract_file_path')->nullable();

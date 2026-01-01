@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('tour_guide_reviews', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
             $table->foreignId('tour_guide_id')->nullable()->constrained()->cascadeOnDelete();
             $table->tinyInteger('rating')->checkBetween([1, 5])->default(3);
             $table->text('review')->nullable();

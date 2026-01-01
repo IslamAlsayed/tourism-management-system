@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\SystemLanguageController;
 use App\Http\Controllers\Dashboard\ExcelController;
 use App\Http\Controllers\Dashboard\StateController;
+use App\Http\Controllers\ColumnPreferenceController;
 use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\RegionController;
 use App\Http\Controllers\Dashboard\SeasonController;
@@ -37,12 +38,15 @@ use App\Http\Controllers\Dashboard\TourGuideTypeController;
 use App\Http\Controllers\Dashboard\TourGuideReviewController;
 use App\Http\Controllers\Dashboard\Transportation\BusTypeController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyController;
+use App\Http\Controllers\Dashboard\Transportation\PricingController;
 use App\Http\Controllers\Dashboard\Transportation\VehicleController;
 use App\Http\Controllers\Dashboard\Transportation\DepartmentController;
+use App\Http\Controllers\Dashboard\Transportation\PricingDefinitionController;
+use App\Http\Controllers\Dashboard\Transportation\VehicleTypeController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyBusTypeController;
+use App\Http\Controllers\Dashboard\Transportation\TransportationController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
-use App\Http\Controllers\ColumnPreferenceController;
 
 /*
 |----------------------|
@@ -153,12 +157,19 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('tour-guides-types', TourGuideTypeController::class)->names('tour-guides-types');
     Route::resource('tour-guides-reviews', TourGuideReviewController::class)->names('tour-guides-reviews');
 
+    Route::resource('pricing-definitions', PricingDefinitionController::class)->names('pricing-definitions');
+
     // === TRANSPORTATION MANAGEMENT ===
-    Route::resource('transportation/companies', CompanyController::class)->names('transportation-companies');
-    Route::resource('transportation/departments', DepartmentController::class)->names('transportation-departments');
-    Route::resource('transportation/bus-types', BusTypeController::class)->names('transportation-bus-types');
-    Route::resource('transportation/company/bus-types', CompanyBusTypeController::class)->names('transportation-company-bus-types');
-    Route::resource('transportation/vehicles', VehicleController::class)->names('transportation-vehicles');
+    Route::prefix('transportation')->name('transportation.')->group(function () {
+        Route::resource('companies', CompanyController::class)->names('companies');
+        Route::resource('vehicle-types', VehicleTypeController::class)->names('vehicle-types');
+        Route::resource('pricings', PricingController::class)->names('pricings');
+    });
+    // Route::resource('transportation/companies', CompanyController::class)->names('transportation-companies');
+    // Route::resource('transportation/departments', DepartmentController::class)->names('transportation-departments');
+    // Route::resource('transportation/bus-types', BusTypeController::class)->names('transportation-bus-types');
+    // Route::resource('transportation/company/bus-types', CompanyBusTypeController::class)->names('transportation-company-bus-types');
+    // Route::resource('transportation/vehicles', VehicleController::class)->names('transportation-vehicles');
 
     // === TOURIST SITES MANAGEMENT ===
     Route::resource('tourist-sites', TouristSiteController::class)->names('tourist-sites');

@@ -214,31 +214,70 @@ if (!function_exists('showRouteExists')) {
     }
 }
 
+// تحقق من وجود دالة show في الكنترولر الخاص بالريسورس
 if (!function_exists('showFunctionExists')) {
-    /**
-     * Check if a 'show' method exists in the controller for a given resource.
-     *
-     * @param string $resource
-     * @return bool
-     */
-    function showFunctionExists(string $resource)
+
+    function showFunctionExists(string $routeName): bool
     {
         try {
-            // Convert resource name to controller name (e.g., 'tour-guides' => 'TourGuidesController')
-            $controllerName = singularLowerCaseName($resource, '') . 'Controller';
-            $controllerClass = 'App\\Http\\Controllers\\' . $controllerName;
-            $controllerClassDashboard = 'App\\Http\\Controllers\\Dashboard\\' . $controllerName;
+            $parts = explode('.', $routeName);
 
-            if (!class_exists($controllerClass) && !class_exists($controllerClassDashboard)) {
-                return false;
+            // Determine module & resource
+            if (count($parts) === 2) {
+                [$module, $resource] = $parts;
+            } else {
+                $module = null;
+                $resource = $parts[0];
             }
 
-            return method_exists($controllerClass, 'show') || method_exists($controllerClassDashboard, 'show');
-        } catch (\Exception $e) {
+            $controller = Str::studly(Str::singular($resource)) . 'Controller';
+
+            $possibleControllers = array_filter([
+                $module ? "App\\Http\\Controllers\\Dashboard\\" . Str::studly($module) . "\\{$controller}" : null,
+                $module ? "App\\Http\\Controllers\\" . Str::studly($module) . "\\{$controller}" : null,
+                "App\\Http\\Controllers\\Dashboard\\{$controller}",
+                "App\\Http\\Controllers\\{$controller}",
+            ]);
+
+            foreach ($possibleControllers as $class) {
+                if (class_exists($class)) {
+                    return method_exists($class, 'show');
+                }
+            }
+            return false;
+        } catch (\Throwable $e) {
             return false;
         }
     }
 }
+
+// اخر حاجه شغاله
+// if (!function_exists('showFunctionExists')) {
+//     /**
+//      * Check if a 'show' method exists in the controller for a given resource.
+//      *
+//      * @param string $resource
+//      * @return bool
+//      */
+//     function showFunctionExists(string $resource)
+//     {
+//         try {
+//             // Convert resource name to controller name (e.g., 'tour-guides' => 'TourGuidesController')
+//             $controllerName = singularLowerCaseName($resource, '') . 'Controller';
+//             dd($controllerName, class_basename($controllerName));
+//             $controllerClass = 'App\\Http\\Controllers\\' . $controllerName;
+//             $controllerClassDashboard = 'App\\Http\\Controllers\\Dashboard\\' . $controllerName;
+
+//             if (!class_exists($controllerClass) && !class_exists($controllerClassDashboard)) {
+//                 return false;
+//             }
+
+//             return method_exists($controllerClass, 'show') || method_exists($controllerClassDashboard, 'show');
+//         } catch (\Exception $e) {
+//             return false;
+//         }
+//     }
+// }
 
 if (!function_exists('generateUniqueFilename')) {
     function generateUniqueFilename($prefix = 'data')
@@ -383,16 +422,81 @@ if (!function_exists('db_connection')) {
     }
 }
 
+// تحويل نوع الموديل إلى مسار الراوت
 if (!function_exists('modelTypeToRoute')) {
-    function modelTypeToRoute(?string $modelType, bool $plural = false): ?string
-    {
-        if (!$modelType)
-            return null;
 
-        $name = Str::kebab(class_basename($modelType));
-        return $plural ? Str::plural($name) : Str::singular($name);
+    function modelTypeToRoute(?string $modelType, bool $plural = true): ?string
+    {
+        if (!$modelType) {
+            return null;
+        }
+
+        $className = class_basename($modelType);
+
+        // Split CamelCase words
+        preg_match_all('/[A-Z][a-z]*/', $className, $matches);
+        $parts = $matches[0];
+
+        // Case: Single word model (Season, City, User)
+        if (count($parts) === 1) {
+            $resource = Str::kebab($parts[0]);
+
+            return $plural
+                ? Str::plural($resource)
+                : Str::singular($resource);
+        }
+
+        // Case: Domain + Resource (TransportationCompany)
+        $domain = Str::kebab(array_shift($parts));
+        $resource = Str::kebab(implode('', $parts));
+
+        $resource = $plural
+            ? Str::plural($resource)
+            : Str::singular($resource);
+
+        return "{$domain}.{$resource}";
     }
 }
+
+
+// if (!function_exists('modelTypeToRoute')) {
+//     function modelTypeToRoute(?string $modelType, bool $plural = true): ?string
+//     {
+//         if (!$modelType) {
+//             return null;
+//         }
+
+//         $className = class_basename($modelType);
+
+//         // Split by capital letters
+//         preg_match_all('/[A-Z][a-z]*/', $className, $matches);
+//         $parts = $matches[0];
+
+//         if (count($parts) < 2) {
+//             return Str::kebab($className);
+//         }
+
+//         $domain = Str::kebab(array_shift($parts));
+//         $resource = Str::kebab(implode('', $parts));
+//         $resource = $plural
+//             ? Str::plural($resource)
+//             : Str::singular($resource);
+//         return "{$domain}.{$resource}";
+//     }
+// }
+
+
+// دي اخر حاجه شغاله
+// if (!function_exists('modelTypeToRoute')) {
+//     function modelTypeToRoute(?string $modelType, bool $plural = false): ?string
+//     {
+//         if (!$modelType)
+//             return null;
+
+//         $name = Str::kebab(class_basename($modelType));
+//         return $plural ? Str::plural($name) : Str::singular($name);
+//     }
+// }
 
 
 // if (!function_exists('modelTypeToRoute')) {

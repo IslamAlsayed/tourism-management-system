@@ -239,6 +239,7 @@ class Notifications extends Component
     public function resetFilters()
     {
         $this->reset(['search', 'filterTypeUserId', 'notificationType', 'type']);
+        $this->resetSort();
         $this->resetPage();
         $this->dispatch('reset-filters');
     }

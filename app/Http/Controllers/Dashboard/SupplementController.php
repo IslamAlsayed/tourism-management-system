@@ -46,18 +46,16 @@ class SupplementController extends Controller
     public function show($id)
     {
         $supplement = Supplement::with('model')->find($id);
-        if (!$supplement) {
+        if (!$supplement)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.supplement')]));
-        }
         return view('pages.dashboard.supplements.show', compact('supplement'));
     }
 
     public function edit($id)
     {
         $supplement = Supplement::find($id);
-        if (!$supplement) {
+        if (!$supplement)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.supplement')]));
-        }
         $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         return view('pages.dashboard.supplements.edit', compact('supplement', 'currencies'));
     }
@@ -65,9 +63,8 @@ class SupplementController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $supplement = Supplement::find($id);
-        if (!$supplement) {
+        if (!$supplement)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.supplement')]));
-        }
         $validated = $request->validated();
         if ($request->input('model_type') === 'restaurant' && $request->filled('model_id')) {
             $validated['model_id'] = $request->input('model_id');
@@ -86,9 +83,8 @@ class SupplementController extends Controller
     public function destroy($id)
     {
         $supplement = Supplement::find($id);
-        if (!$supplement) {
+        if (!$supplement)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.supplement')]));
-        }
         $deleted = $supplement->delete();
         return $deleted
             ? redirect()->route('supplements.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.supplement')]))

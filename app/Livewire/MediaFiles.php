@@ -58,6 +58,7 @@ class MediaFiles extends Component
     public function resetFilters()
     {
         $this->reset(['search', 'filterType', 'filterCollection', 'filterStatus']);
+        $this->resetSort();
         $this->resetPage();
         $this->dispatch('reset-filters');
     }

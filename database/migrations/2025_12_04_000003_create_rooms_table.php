@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('model_id')->nullable();
             $table->string('model_type')->nullable();
             // $table->foreignId('season_id')->constrained('seasons')->onDelete('cascade');

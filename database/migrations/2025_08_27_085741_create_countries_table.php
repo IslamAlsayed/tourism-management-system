@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable();
+            $table->uuid('uuid')->unique();
             $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
             $table->foreignId('language_id')->nullable()->constrained('languages')->onDelete('set null');
             $table->foreignId('currency_id')->nullable()->constrained('currencies')->onDelete('set null');

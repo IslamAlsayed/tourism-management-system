@@ -16,115 +16,117 @@
     @endcomponent
 
     <div class="kt-card-body space-y-6 px-3">
-        {{-- Cards totals --}}
-        <div class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-4">
-            <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
-                <p class="text-sm text-gray-600">{{ __('activity.activity_total_events') }}</p>
-                <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['total']) }}</p>
-            </div>
-            <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
-                <p class="text-sm text-gray-600">{{ __('activity.activity_model_events') }}</p>
-                <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['models']) }}</p>
-            </div>
-            <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
-                <p class="text-sm text-gray-600">{{ __('activity.activity_system_events') }}</p>
-                <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['system']) }}</p>
-            </div>
-            <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
-                <p class="text-sm text-gray-600">{{ __('activity.activity_error_events') }}</p>
-                <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['errors']) }}</p>
-            </div>
-        </div>
-
-        {{-- Breakdown --}}
-        <div class="rounded-lg border border-dashed border-gray-200 background mb-4 p-4"
-            id="activity-breakdown-container">
-            <h3 class="text-sm font-semibold text-gray-600">{{ __('activity.activity_breakdown_title') }}</h3>
-            <ul class="mt-3 space-y-2 text-sm text-gray-600">
-                <div>
-                    @forelse ($breakdown as $row)
-                        @php
-                            $rowBadgeClass = badgeClasses($row->event ?? 'unknown');
-                        @endphp
-                        <li wire:key="activity-breakdown-{{ $row->event }}"
-                            class="flex items-center font-semibold justify-center gap-2 {{ $rowBadgeClass }} rounded-full ps-3 px-1 py-1">
-                            <span>{{ __('main.' . $row->event ?? 'unknown') }}</span>
-                            <span
-                                class="rounded-full px-2 py-0.5 text-xs font-medium bg-gray-50">{{ $row->total }}</span>
-                        </li>
-                    @empty
-                        <li class="text-gray-400">{{ __('main.no_data_available') }}</li>
-                    @endforelse
+        @if (isset($data) && count($data) > 0)
+            {{-- Cards totals --}}
+            <div class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-4">
+                <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
+                    <p class="text-sm text-gray-600">{{ __('activity.activity_total_events') }}</p>
+                    <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['total']) }}</p>
                 </div>
-            </ul>
-        </div>
+                <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
+                    <p class="text-sm text-gray-600">{{ __('activity.activity_model_events') }}</p>
+                    <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['models']) }}</p>
+                </div>
+                <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
+                    <p class="text-sm text-gray-600">{{ __('activity.activity_system_events') }}</p>
+                    <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['system']) }}</p>
+                </div>
+                <div class="rounded-lg border border-gray-200 background p-4 shadow-sm">
+                    <p class="text-sm text-gray-600">{{ __('activity.activity_error_events') }}</p>
+                    <p class="mt-2 text-2xl font-semibold text-gray-600">{{ number_format($stats['errors']) }}</p>
+                </div>
+            </div>
 
-        {{-- Filters --}}
-        <div class="gap-2 md:gap-4 mb-4 px-1" id="activity-filters-container">
-            <div class="space-y-1">
-                <label for="filter-log"
-                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_log_type') }}</label>
-                <select id="filter-log" class="kt-select h-[45px]" wire:model.live="filterLog">
-                    <option value="">--</option>
-                    @foreach ($logNames as $logName)
-                        <option wire:key="logName-{{ $logName }}" value="{{ $logName }}">
-                            {{ __('main.' . $logName) }}
-                        </option>
-                    @endforeach
-                </select>
+            {{-- Activity Breakdown --}}
+            <div class="rounded-lg border border-dashed border-gray-200 background mb-4 p-4"
+                id="activity-breakdown-container">
+                <h3 class="text-sm font-semibold text-gray-600">{{ __('activity.activity_breakdown_title') }}</h3>
+                <ul class="mt-3 space-y-2 text-sm text-gray-600">
+                    <div>
+                        @forelse ($breakdown as $row)
+                            @php
+                                $rowBadgeClass = badgeClasses($row->event ?? 'unknown');
+                            @endphp
+                            <li wire:key="activity-breakdown-{{ $row->event }}"
+                                class="flex items-center font-semibold justify-center gap-2 {{ $rowBadgeClass }} rounded-full ps-3 px-1 py-1">
+                                <span>{{ __('main.' . $row->event ?? 'unknown') }}</span>
+                                <span
+                                    class="rounded-full px-2 py-0.5 text-xs font-medium bg-gray-50">{{ $row->total }}</span>
+                            </li>
+                        @empty
+                            <li class="text-gray-400">{{ __('main.no_data_available') }}</li>
+                        @endforelse
+                    </div>
+                </ul>
             </div>
-            <div class="space-y-1">
-                <label for="filter-event"
-                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_event_type') }}</label>
-                <select id="filter-event" class="kt-select h-[45px]" wire:model.live="filterEvent">
-                    <option value="">--</option>
-                    @foreach ($events as $event)
-                        <option wire:key="event-{{ $event }}" value="{{ $event }}">
-                            {{ __('main.' . $event) }}
-                        </option>
-                    @endforeach
-                </select>
+
+            {{-- Filters --}}
+            <div class="gap-2 md:gap-4 mb-4 px-1" id="activity-filters-container">
+                <div class="space-y-1">
+                    <label for="filter-log"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_log_type') }}</label>
+                    <select id="filter-log" class="kt-select h-[45px]" wire:model.live="filterLog">
+                        <option value="">--</option>
+                        @foreach ($logNames as $logName)
+                            <option wire:key="logName-{{ $logName }}" value="{{ $logName }}">
+                                {{ __('main.' . $logName) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label for="filter-event"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_event_type') }}</label>
+                    <select id="filter-event" class="kt-select h-[45px]" wire:model.live="filterEvent">
+                        <option value="">--</option>
+                        @foreach ($events as $event)
+                            <option wire:key="event-{{ $event }}" value="{{ $event }}">
+                                {{ __('main.' . $event) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label for="filter-user"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_user_filter') }}</label>
+                    <select id="filter-user" class="kt-select h-[45px]" wire:model.live="filterUser">
+                        <option value="">--</option>
+                        @foreach ($users as $user)
+                            <option wire:key="user-{{ $user->id }}" value="{{ $user->id }}">
+                                {{ $user->name ?? $user->email }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label for="date-from"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_from') }}</label>
+                    <input id="date-from" type="datetime-local" class="kt-input h-[45px]" wire:model.live="dateFrom">
+                </div>
+                <div class="space-y-1">
+                    <label for="date-to"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_to') }}</label>
+                    <input id="date-to" type="datetime-local" class="kt-input h-[45px]" wire:model.live="dateTo">
+                </div>
+                <div class="flex items-end gap-2">
+                    @if (isset($dateFrom) || isset($dateTo) || $filterLog != '' || $filterEvent != '' || $filterUser != '')
+                        <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}"
+                            toggle-button
+                            class="kt-btn bg-primary/30 text-blue-600 px-3 h-[45px] hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
+                            <span class="text-sm">{{ __('main.reset_filters') }}</span>
+                        </button>
+                    @endif
+                    @if ($filterLog != '')
+                        <button type="button" class="kt-btn bg-danger h-[45px]"
+                            wire:click="clearLog('{{ $filterLog }}')" wire:confirm="{{ __('main.are_you_sure') }}">
+                            <i class="ki-filled ki-trash me-1"></i>
+                            {{ __('activity.activity_clear_current_log') }}
+                        </button>
+                    @endif
+                </div>
             </div>
-            <div class="space-y-1">
-                <label for="filter-user"
-                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_user_filter') }}</label>
-                <select id="filter-user" class="kt-select h-[45px]" wire:model.live="filterUser">
-                    <option value="">--</option>
-                    @foreach ($users as $user)
-                        <option wire:key="user-{{ $user->id }}" value="{{ $user->id }}">
-                            {{ $user->name ?? $user->email }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="space-y-1">
-                <label for="date-from"
-                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_from') }}</label>
-                <input id="date-from" type="datetime-local" class="kt-input h-[45px]" wire:model.live="dateFrom">
-            </div>
-            <div class="space-y-1">
-                <label for="date-to"
-                    class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_to') }}</label>
-                <input id="date-to" type="datetime-local" class="kt-input h-[45px]" wire:model.live="dateTo">
-            </div>
-            <div class="flex items-end gap-2">
-                @if (isset($dateFrom) || isset($dateTo) || $filterLog != '' || $filterEvent != '' || $filterUser != '')
-                    <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}"
-                        toggle-button
-                        class="kt-btn bg-primary/30 text-blue-600 px-3 h-[45px] hover:bg-gray-50 transition-colors">
-                        <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
-                        <span class="text-sm">{{ __('main.reset_filters') }}</span>
-                    </button>
-                @endif
-                @if ($filterLog != '')
-                    <button type="button" class="kt-btn bg-danger h-[45px]"
-                        wire:click="clearLog('{{ $filterLog }}')" wire:confirm="{{ __('main.are_you_sure') }}">
-                        <i class="ki-filled ki-trash me-1"></i>
-                        {{ __('activity.activity_clear_current_log') }}
-                    </button>
-                @endif
-            </div>
-        </div>
+        @endif
 
         {{-- Selected Activity --}}
         @if (!empty($selectedActivity))

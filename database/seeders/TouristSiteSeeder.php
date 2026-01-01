@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\RichText;
 use App\Models\TouristSite;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +15,6 @@ class TouristSiteSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
         TouristSite::truncate();
         Schema::enableForeignKeyConstraints();
 

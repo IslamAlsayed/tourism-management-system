@@ -110,7 +110,7 @@ class OtherServices extends Component
         ]);
     }
 
-    private function recalculateSubtotal(): void
+    private function recalculateSubtotal()
     {
         $this->subtotal_services = 0;
         foreach ($this->services as $service) {

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\RichText;
 use App\Models\Timezone;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -15,10 +14,9 @@ class TimezoneSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
         Timezone::truncate();
         Schema::enableForeignKeyConstraints();
-        
+
         Timezone::query()->delete();
 
         $timezones = [

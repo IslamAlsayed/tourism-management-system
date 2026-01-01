@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Language;
-use App\Models\RichText;
 use App\Models\TourGuide;
 use Illuminate\Database\Seeder;
 use App\Models\TourGuideLanguage;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
 
 class TourGuideLanguageSeeder extends Seeder
@@ -14,7 +14,6 @@ class TourGuideLanguageSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        RichText::truncate();
         TourGuideLanguage::truncate();
         Schema::enableForeignKeyConstraints();
 
@@ -1402,6 +1401,7 @@ class TourGuideLanguageSeeder extends Seeder
                         'language_id' => $languagesCache[$languageName]->id,
                         'created_at' => $now,
                         'updated_at' => $now,
+                        'uuid' => (string) Str::uuid(),
                     ];
                 }
             }
