@@ -49,8 +49,8 @@ class Users extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'user');
-        Cache::tags(['users'])->flash();
+        $this->safeDestroy($id, User::class, 'user');
+        Cache::tags(['users'])->flush();
     }
 
     public function updatedSelectPage($value)

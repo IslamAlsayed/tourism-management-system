@@ -34,7 +34,7 @@ class PricingDefinitions extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'pricing_definition');
+        $this->safeDestroy($id, PricingDefinition::class, 'pricing_definition');
     }
 
     public function updatedSelectPage($value)

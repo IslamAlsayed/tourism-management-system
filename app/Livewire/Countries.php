@@ -34,7 +34,7 @@ class Countries extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'country');
+        $this->safeDestroy($id, Country::class, 'country');
     }
 
     public function updatedSelectPage($value)

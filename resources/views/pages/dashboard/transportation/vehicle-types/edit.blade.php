@@ -38,10 +38,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Transportation Company -->
                             <div class="align-self-end">
-                                <label for="company_id" class="kt-label">
-                                    {{ __('main.company_id') }}
-                                    <span class="text-red-600 text-2xl">*</span>
-                                </label>
+                                <label for="company_id" class="kt-label">{{ __('main.company') }}</label>
                                 <select name="company_id" id="company_id" class="kt-select basic-single">
                                     <option value="" disabled selected>--</option>
                                     @foreach ($companies as $company)
@@ -58,10 +55,7 @@
 
                             <!-- Name -->
                             <div class="align-self-end">
-                                <label for="name" class="kt-label">
-                                    {{ __('main.name') }}
-                                    <span class="text-red-600 text-2xl">*</span>
-                                </label>
+                                <label for="name" class="kt-label">{{ __('main.name') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $vehicleType->name }}">
                                 @error('name')

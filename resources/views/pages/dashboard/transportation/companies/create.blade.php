@@ -44,12 +44,6 @@
                         <livewire:regions.location-select-base />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                            ])
-
                             {{-- Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'currency_id',

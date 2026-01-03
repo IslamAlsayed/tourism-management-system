@@ -204,7 +204,7 @@
                                             <div class="text-sm text-secondary-foreground">{!! $accommodation->notes !!}</div>
                                         </div>
                                     @endif
-                                    <div class="lg:col-span-2 flex gap-2 mt-2">
+                                    <div class="lg:col-span-2 flex gap-2 mt-4">
                                         @include('components.elements.show-button', [
                                             'models' => 'accommodations',
                                             'id' => $accommodation->id,

@@ -51,7 +51,7 @@ class Seasons extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'season');
+        $this->safeDestroy($id, Season::class, 'season');
     }
 
     public function updatedSelectPage($value)

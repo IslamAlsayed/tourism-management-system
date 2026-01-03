@@ -41,7 +41,7 @@ class Nationality extends Model
      */
     public function getExcludedColumns()
     {
-        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
     public function timezone()

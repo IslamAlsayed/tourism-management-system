@@ -77,7 +77,7 @@ class Accommodations extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'accommodation');
+        $this->safeDestroy($id, Accommodation::class, 'accommodation');
     }
 
     public function updatedSelectPage($value)

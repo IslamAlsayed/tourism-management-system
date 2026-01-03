@@ -43,7 +43,7 @@ class State extends Model
 
     public function getExcludedColumns()
     {
-        return ['timezone_id', 'region_id', 'subregion_id', 'country_id'];
+        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'description', 'notes'];
     }
 
     public function timezone()

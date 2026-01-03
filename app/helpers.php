@@ -422,15 +422,37 @@ if (!function_exists('db_connection')) {
     }
 }
 
-// تحويل نوع الموديل إلى مسار الراوت
-if (!function_exists('modelTypeToRoute')) {
+// تحويل نوع الموديل إلى نص مفصول بشرطة
+if (!function_exists('modelTypeToString')) {
 
-    function modelTypeToRoute(?string $modelType, bool $plural = true): ?string
+    function modelTypeToString(?string $modelType, string $separator = '-'): ?string
     {
         if (!$modelType) {
             return null;
         }
 
+        // Get class name only (TransportationCompany)
+        $className = class_basename($modelType);
+
+        // Split CamelCase into words
+        preg_match_all('/[A-Z][a-z]*/', $className, $matches);
+        $parts = $matches[0];
+
+        // Convert to lowercase
+        $parts = array_map(fn($part) => Str::lower($part), $parts);
+
+        // Join with requested separator
+        return implode($separator, $parts);
+    }
+}
+
+// تحويل نوع الموديل إلى مسار الراوت
+if (!function_exists('modelTypeToRoute')) {
+
+    function modelTypeToRoute(?string $modelType, bool $plural = true): ?string
+    {
+        if (!$modelType)
+            return null;
         $className = class_basename($modelType);
 
         // Split CamelCase words
@@ -440,20 +462,13 @@ if (!function_exists('modelTypeToRoute')) {
         // Case: Single word model (Season, City, User)
         if (count($parts) === 1) {
             $resource = Str::kebab($parts[0]);
-
-            return $plural
-                ? Str::plural($resource)
-                : Str::singular($resource);
+            return $plural ? Str::plural($resource) : Str::singular($resource);
         }
 
         // Case: Domain + Resource (TransportationCompany)
         $domain = Str::kebab(array_shift($parts));
         $resource = Str::kebab(implode('', $parts));
-
-        $resource = $plural
-            ? Str::plural($resource)
-            : Str::singular($resource);
-
+        $resource = $plural ? Str::plural($resource) : Str::singular($resource);
         return "{$domain}.{$resource}";
     }
 }

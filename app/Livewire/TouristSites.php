@@ -64,7 +64,7 @@ class TouristSites extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'tourist-site');
+        $this->safeDestroy($id, TouristSite::class, 'tourist_site');
     }
 
     public function updatedSelectPage($value)

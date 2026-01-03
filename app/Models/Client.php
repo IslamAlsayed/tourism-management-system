@@ -93,6 +93,8 @@ class Client extends Model
             'state_id',
             'city_id',
             'nationality_id',
+            'description',
+            'notes'
         ];
     }
 

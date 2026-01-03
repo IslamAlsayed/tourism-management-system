@@ -34,7 +34,7 @@ class Pricings extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'transportation_company');
+        $this->safeDestroy($id, TransportationPricing::class, 'transportation_pricing');
     }
 
     public function updatedSelectPage($value)

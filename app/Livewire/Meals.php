@@ -59,7 +59,7 @@ class Meals extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'meal');
+        $this->safeDestroy($id, Meal::class, 'meal');
     }
 
     public function updatedSelectPage($value)

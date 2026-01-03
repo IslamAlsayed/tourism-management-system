@@ -34,7 +34,7 @@ class Cities extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'city');
+        $this->safeDestroy($id, City::class, 'city');
     }
 
     public function updatedSelectPage($value)

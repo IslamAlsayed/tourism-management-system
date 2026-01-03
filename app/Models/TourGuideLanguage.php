@@ -24,7 +24,7 @@ class TourGuideLanguage extends Model
 
     public function getExcludedColumns()
     {
-        return ['tour_guide_id', 'language_id'];
+        return ['tour_guide_id', 'language_id', 'description', 'notes'];
     }
 
     public function tour_guide()

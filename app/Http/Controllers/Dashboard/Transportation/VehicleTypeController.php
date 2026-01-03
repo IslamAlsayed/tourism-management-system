@@ -12,13 +12,13 @@ class VehicleTypeController extends Controller
 {
     public function index()
     {
-        return view('pages.dashboard.transportation.vehicle_types.index');
+        return view('pages.dashboard.transportation.vehicle-types.index');
     }
 
     public function create()
     {
         $companies = TransportationCompany::orderBy('name')->get();
-        return view('pages.dashboard.transportation.vehicle_types.create', compact('companies'));
+        return view('pages.dashboard.transportation.vehicle-types.create', compact('companies'));
     }
 
     public function store(StoreRequest $request)
@@ -26,10 +26,18 @@ class VehicleTypeController extends Controller
         $data = $request->validated();
         $vehicleType = TransportationVehicleType::create($data);
         if (!$vehicleType)
-            return redirect()->route('transportation.vehicle_types.index')->withError(__('messages.type_creation_failed', ['type' => __('main.transportation-vehicle-type')]));
+            return redirect()->route('transportation.vehicle-types.index')->withError(__('messages.type_creation_failed', ['type' => __('main.transportation-vehicle-type')]));
         return $request->has('save_and_add')
             ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.transportation-vehicle-type')]))
-            : redirect()->route('transportation.vehicle_types.index')->withSuccess(__('messages.type_created', ['type' => __('main.transportation-vehicle-type')]));
+            : redirect()->route('transportation.vehicle-types.index')->withSuccess(__('messages.type_created', ['type' => __('main.transportation-vehicle-type')]));
+    }
+
+    public function show($id)
+    {
+        $vehicleType = TransportationVehicleType::with((new TransportationVehicleType())->getRelationshipNames())->find($id);
+        if (!$vehicleType)
+            return redirect()->route('transportation.vehicle-types.index')->withError(__('messages.type_not_found', ['type' => __('main.transportation-vehicle-type')]));
+        return view('pages.dashboard.transportation.vehicle-types.show', compact('vehicleType'));
     }
 
     public function edit($id)
@@ -38,7 +46,7 @@ class VehicleTypeController extends Controller
         if (!$vehicleType)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation-vehicle-type')]));
         $companies = TransportationCompany::orderBy('name')->get();
-        return view('pages.dashboard.transportation.vehicle_types.edit', compact('companies', 'vehicleType'));
+        return view('pages.dashboard.transportation.vehicle-types.edit', compact('companies', 'vehicleType'));
     }
 
     public function update(UpdateRequest $request, $id)
@@ -49,7 +57,7 @@ class VehicleTypeController extends Controller
         $data = $request->validated();
         $updated = $vehicleType->update($data);
         return $updated
-            ? redirect()->route('transportation.vehicle_types.index')->withSuccess(__('messages.type_updated', ['type' => __('main.transportation-vehicle-type')]))
+            ? redirect()->route('transportation.vehicle-types.index')->withSuccess(__('messages.type_updated', ['type' => __('main.transportation-vehicle-type')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.transportation-vehicle-type')]));
     }
 
@@ -60,7 +68,7 @@ class VehicleTypeController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation-vehicle-type')]));
         $deleted = $vehicleType->delete();
         return $deleted
-            ? redirect()->route('transportation.vehicle_types.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation-vehicle-type')]))
-            : redirect()->route('transportation.vehicle_types.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation-vehicle-type')]));
+            ? redirect()->route('transportation.vehicle-types.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.transportation-vehicle-type')]))
+            : redirect()->route('transportation.vehicle-types.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.transportation-vehicle-type')]));
     }
 }

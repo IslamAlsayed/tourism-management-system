@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             // Foreign Keys
-            $table->foreignId('timezone_id')->constrained()->cascadeOnDelete();
             $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
             $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
             $table->foreignId('subregion_id')->nullable()->constrained('subregions')->nullOnDelete();

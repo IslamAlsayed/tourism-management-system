@@ -739,11 +739,10 @@
     @break
 
     @case('model_type')
-        <td title="{{ __('main.' . modelTypeToRoute($model->model_type)) ?? '--' }}">
+        <td title="{{ __('main.' . modelTypeToString($model->model_type, '-')) ?? '--' }}">
             @if ($model->model_type && $model->model)
-                <span
-                    class="inline-block text-black {{ modelTypeToRoute($model->model_type, true) == 'accommodations' ? 'bg-yellow/30' : 'bg-info/30' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                    {!! highlightSearch(limitedText(__('main.' . modelTypeToRoute($model->model_type)) ?? '--', 30), $search) !!}
+                <span class="inline-block text-black bg-info/30 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    {!! highlightSearch(limitedText(__('main.' . modelTypeToString($model->model_type, '-')) ?? '--', 30), $search) !!}
                 </span>
             @else
                 <div
@@ -777,6 +776,14 @@
 
     @case('company')
         <td title="{{ optional($model->company)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->company)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('vehicle_type')
+        <td title="{{ optional($model->vehicle_type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->vehicle_type)->name ?? '--', 30), $search) !!}</td>
+    @break
+
+    @case('pricing_unit')
+        <td title="{{ optional($model->pricing_unit)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->pricing_unit)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('region')

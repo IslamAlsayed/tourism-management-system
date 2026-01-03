@@ -37,7 +37,7 @@ class SystemLanguages extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'system_language');
+        $this->safeDestroy($id, SystemLanguage::class, 'system_language');
     }
 
     public function updatedSelectPage($value)

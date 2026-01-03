@@ -34,7 +34,7 @@ class VehicleTypes extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'transportation_vehicle_type');
+        $this->safeDestroy($id, TransportationVehicleType::class, 'transportation-vehicle-type');
     }
 
     public function updatedSelectPage($value)

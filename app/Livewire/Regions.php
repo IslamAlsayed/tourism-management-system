@@ -33,7 +33,7 @@ class Regions extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'region');
+        $this->safeDestroy($id, Region::class, 'region');
     }
 
     public function updatedSelectPage($value)

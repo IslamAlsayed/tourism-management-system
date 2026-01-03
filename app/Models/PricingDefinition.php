@@ -30,12 +30,17 @@ class PricingDefinition extends Model
         'notes',
     ];
 
-    public function isPerPerson(): bool
+    public function getExcludedColumns()
+    {
+        return ['key', 'category', 'description', 'notes'];
+    }
+
+    public function isPerPerson()
     {
         return $this->key === 'per_person';
     }
 
-    public function isPerDay(): bool
+    public function isPerDay()
     {
         return $this->key === 'per_day';
     }

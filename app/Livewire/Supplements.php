@@ -58,7 +58,7 @@ class Supplements extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'supplement');
+        $this->safeDestroy($id, Supplement::class, 'supplement');
     }
 
     public function updatedSelectPage($value)

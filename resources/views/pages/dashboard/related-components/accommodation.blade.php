@@ -1,13 +1,14 @@
 <!-- Accommodations -->
-<div class="kt-card bg-yellow-100 record-accommodations-{{ $record->id }}">
+<div wire:key="accommodation-{{ $record->id }}" class="kt-card bg-yellow-100 record-accommodation-{{ $record->id }}">
     <div class="kt-card-header">
         <h3 class="kt-card-title">
             {{ __('main.type_information', ['type' => __('main.accommodation')]) }}
         </h3>
+        <div class="kt-card-toolbar">{{ $record->created_at->diffForHumans() }}</div>
     </div>
     <div class="kt-card-body p-4">
-        <div class="kt-card background rounded-lg p-4 pt-2" wire:key="accommodation-{{ $record->id }}">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="kt-card background rounded-lg p-4 pt-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                 <div>
                     <label class="kt-label mb-1">{{ __('main.name') }}</label>
                     <p class="text-sm text-secondary-foreground">
@@ -113,13 +114,15 @@
                     </div>
                 </div>
             </div>
-            @if ($record->notes)
-                <div class="lg:col-span-2 mt-2">
-                    <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                    <div class="text-sm text-secondary-foreground">{!! $record->notes !!}</div>
+            @if ($record->description)
+                <div class="col-span-full border-custom rounded-lg p-4">
+                    <label class="kt-label mb-1">{{ __('main.description') }}</label>
+                    <div class="text-sm text-secondary-foreground prose max-w-none">
+                        {!! $record->description !!}
+                    </div>
                 </div>
             @endif
-            <div class="lg:col-span-2 flex gap-2 mt-2">
+            <div class="lg:col-span-2 flex gap-2 mt-4">
                 @include('components.elements.show-button', [
                     'models' => 'accommodations',
                     'id' => $record->id,
@@ -129,7 +132,7 @@
                     'id' => $record->id,
                 ])
                 @livewire('delete-bottom', [
-                    'type' => 'accommodations',
+                    'type' => 'accommodation',
                     'modelId' => $record->id,
                     'modelType' => '\\App\\Models\\Accommodation',
                     'table' => 'accommodations',

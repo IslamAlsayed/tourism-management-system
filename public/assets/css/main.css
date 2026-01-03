@@ -11,6 +11,12 @@
     }
 }
 
+@keyframes rotate {
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
 /* #pageContent>div>div:nth-child(2) {
     display: grid !important;
     flex-wrap: wrap !important;
@@ -174,19 +180,19 @@ th:has(i, svg) {
 /* End datatable loading */
 
 .fade-right {
-    animation: fadeRight 400ms forwards cubic-bezier(0.4, 0, 1, 1);
+    animation: fadeRight 150ms forwards cubic-bezier(0.4, 0, 1, 1);
 }
 
 .fade-up {
-    animation: fadeUp 400ms forwards cubic-bezier(0.4, 0, 1, 1);
+    animation: fadeUp 150ms forwards cubic-bezier(0.4, 0, 1, 1);
 }
 
 .fade-left {
-    animation: fadeLeft 400ms forwards cubic-bezier(0.4, 0, 1, 1);
+    animation: fadeLeft 150ms forwards cubic-bezier(0.4, 0, 1, 1);
 }
 
 .fade-down {
-    animation: fadeDown 400ms forwards cubic-bezier(0.4, 0, 1, 1);
+    animation: fadeDown 150ms forwards cubic-bezier(0.4, 0, 1, 1);
 }
 
 @keyframes fadeRight {
@@ -376,12 +382,12 @@ th:has(i, svg) {
     }
 }
 
-#columnsModal {
-    /* box-shadow:
+/* #columnsModal {
+    box-shadow:
         0px 5px 7px #f3f3f3,
         -5px 0px 7px #f3f3f3,
-        5px 0px 7px #f3f3f3; */
-}
+        5px 0px 7px #f3f3f3;
+} */
 
 #columnsModal .grid,
 #notifications {
@@ -426,6 +432,11 @@ th:has(i, svg) {
         display: flex;
         flex-direction: column;
     }
+}
+
+#map {
+    height: 400px;
+    width: 100%;
 }
 
 .filterTable {

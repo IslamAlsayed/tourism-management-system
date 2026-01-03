@@ -26,6 +26,7 @@ class StoreRequest extends FormRequest
             'name_ar' => 'nullable|string|max:255',
             'rating' => 'nullable|integer|min:1|max:5',
             'postal_code' => 'nullable|string|max:20',
+            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
 
             // Contact
             'email' => 'nullable|email|max:255',
@@ -35,6 +36,7 @@ class StoreRequest extends FormRequest
             'website' => 'nullable|url|max:255',
 
             // Location
+            'currency_id' => 'nullable|exists:currencies,id',
             'region_id' => 'nullable|exists:regions,id',
             'subregion_id' => 'nullable|exists:subregions,id',
             'country_id' => 'nullable|exists:countries,id',

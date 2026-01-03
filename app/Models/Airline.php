@@ -51,14 +51,14 @@ class Airline extends Model
         'is_active' => 'boolean',
     ];
 
-    public function getRelationshipNames(): array
+    public function getRelationshipNames()
     {
         return ['timezone', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
-    public function getExcludedColumns(): array
+    public function getExcludedColumns()
     {
-        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
     public function region()

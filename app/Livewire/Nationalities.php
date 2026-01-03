@@ -33,7 +33,7 @@ class Nationalities extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'nationality');
+        $this->safeDestroy($id, Nationality::class, 'nationality');
     }
 
     public function updatedSelectPage($value)

@@ -160,20 +160,19 @@
                 </div>
             </div>
 
-            <!-- Related Accommodations or Restaurants -->
+            <!-- Supplement Related Components -->
             @if ($supplement->model && Str::contains($supplement->model_type, 'Accommodation'))
-                @include('pages.dashboard.related-components.accommodations', [
+                @include('pages.dashboard.related-components.accommodation', [
                     'record' => $supplement->model,
                 ])
             @elseif($supplement->model && Str::contains($supplement->model_type, 'Restaurant'))
-                @include('pages.dashboard.related-components.restaurants', [
+                @include('pages.dashboard.related-components.restaurant', [
                     'record' => $supplement->model,
                 ])
             @elseif($supplement->model && Str::contains($supplement->model_type, 'Transportation'))
-                {{-- @include('pages.dashboard.related-components.restaurants', [
+                @include('pages.dashboard.related-components.transportation', [
                     'record' => $supplement->model,
-                ]) --}}
-                Transportation details component to be implemented.
+                ])
             @else
                 <!-- No Associated Type Information -->
                 <div class="kt-card">
@@ -181,8 +180,13 @@
                         <h3 class="kt-card-title">
                             {{ __('main.type_information', ['type' => __('main.no_associated_type')]) }}
                         </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <p class="text-sm text-secondary-foreground mb-4">
+                            {{ __('main.no_associated_type_details', ['type' => __('main.season')]) }}
+                        </p>
 
-                        <div class="flex items-center gap-4">
+                        <div class="flex flex-wrap items-center gap-4">
                             @include('components.elements.create-button', [
                                 'models' => 'accommodations',
                                 'model' => 'accommodation',
@@ -191,12 +195,11 @@
                                 'models' => 'restaurants',
                                 'model' => 'restaurant',
                             ])
+                            @include('components.elements.create-button', [
+                                'models' => 'transportation.companies',
+                                'model' => 'transportation-company',
+                            ])
                         </div>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <p class="text-sm text-secondary-foreground">
-                            {{ __('main.no_associated_type_details', ['type' => __('main.season')]) }}
-                        </p>
                     </div>
                 </div>
             @endif

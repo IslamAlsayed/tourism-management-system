@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Currency;
 use App\Models\Restaurant;
 use App\Models\Supplement;
 use App\Models\Accommodation;
@@ -19,8 +18,7 @@ class SupplementController extends Controller
 
     public function create()
     {
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.supplements.create', compact('currencies'));
+        return view('pages.dashboard.supplements.create');
     }
 
     public function store(StoreRequest $request)
@@ -56,8 +54,7 @@ class SupplementController extends Controller
         $supplement = Supplement::find($id);
         if (!$supplement)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.supplement')]));
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.supplements.edit', compact('supplement', 'currencies'));
+        return view('pages.dashboard.supplements.edit', compact('supplement'));
     }
 
     public function update(UpdateRequest $request, $id)

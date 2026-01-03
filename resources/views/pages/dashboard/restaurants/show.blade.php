@@ -2,44 +2,6 @@
 
 @section('title', __('main.type_details', ['type' => __('main.restaurant')]))
 
-@push('styles')
-    <style>
-        /* Define the size of the map container */
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-    </style>
-@endpush
-
-@push('scripts')
-    <script>
-        function initMap() {
-            let mapContainer = document.getElementById('map');
-            let title = mapContainer.getAttribute('data-title');
-            let latitude = mapContainer.getAttribute('data-latitude');
-            let longitude = mapContainer.getAttribute('data-longitude');
-            const latLng = {
-                lat: parseFloat(latitude),
-                lng: parseFloat(longitude)
-            };
-            const mapOptions = {
-                zoom: 15,
-                center: latLng,
-            };
-            const map = new google.maps.Map(mapContainer, mapOptions);
-            new google.maps.Marker({
-                position: latLng,
-                map: map,
-                title: title,
-            });
-        }
-        window.initMap = initMap;
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer>
-    </script>
-@endpush
-
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
@@ -490,7 +452,7 @@
                                             {!! $season->description !!}</div>
                                     </div>
                                 @endif
-                                <div class="lg:col-span-2 flex gap-2 mt-2">
+                                <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
                                         'models' => 'seasons',
                                         'id' => $season->id,
@@ -619,7 +581,7 @@
                                             {!! $meal->description !!}</div>
                                     </div>
                                 @endif
-                                <div class="lg:col-span-2 flex gap-2 mt-2">
+                                <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
                                         'models' => 'meals',
                                         'id' => $meal->id,
@@ -733,7 +695,7 @@
                                             {!! $supplement->description !!}</div>
                                     </div>
                                 @endif
-                                <div class="lg:col-span-2 flex gap-2 mt-2">
+                                <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
                                         'models' => 'supplements',
                                         'id' => $supplement->id,

@@ -36,7 +36,7 @@ class TourGuideReview extends Model
 
     public function getExcludedColumns()
     {
-        return ['tour_guide_id'];
+        return ['tour_guide_id', 'description', 'notes'];
     }
 
     public function tour_guide()

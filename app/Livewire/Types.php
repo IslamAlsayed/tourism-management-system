@@ -39,7 +39,7 @@ class Types extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'type');
+        $this->safeDestroy($id, Type::class, 'type');
     }
 
     public function updatedSelectPage($value)

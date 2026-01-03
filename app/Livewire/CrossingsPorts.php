@@ -52,7 +52,7 @@ class CrossingsPorts extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'crossing_port');
+        $this->safeDestroy($id, CrossingPort::class, 'crossing_port');
     }
 
     public function updatedSelectPage($value)

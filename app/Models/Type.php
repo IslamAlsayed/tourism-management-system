@@ -36,10 +36,10 @@ class Type extends Model
     //     return ['accommodation'];
     // }
 
-    // public function getExcludedColumns()
-    // {
-    //     return ['accommodation_id'];
-    // }
+    public function getExcludedColumns()
+    {
+        return ['description'];
+    }
 
     public function accommodations()
     {

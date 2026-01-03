@@ -60,7 +60,7 @@ class Country extends Model
      */
     public function getExcludedColumns()
     {
-        return ['timezone_id', 'language_id', 'currency_id', 'region_id', 'subregion_id'];
+        return ['timezone_id', 'language_id', 'currency_id', 'region_id', 'subregion_id', 'description', 'notes'];
     }
 
     public function timezone()

@@ -141,7 +141,7 @@ class TouristSite extends Model
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
     protected $casts = [

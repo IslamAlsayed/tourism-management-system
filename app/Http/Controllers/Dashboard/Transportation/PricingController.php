@@ -32,6 +32,14 @@ class PricingController extends Controller
             : redirect()->route('transportation.pricings.index')->withSuccess(__('messages.type_created', ['type' => __('main.transportation-pricing')]));
     }
 
+    public function show($id)
+    {
+        $pricing = TransportationPricing::with((new TransportationPricing())->getRelationshipNames())->find($id);
+        if (!$pricing)
+            return redirect()->route('transportation.pricings.index')->withError(__('messages.type_not_found', ['type' => __('main.transportation-pricing')]));
+        return view('pages.dashboard.transportation.pricings.show', compact('pricing'));
+    }
+
     public function edit($id)
     {
         $pricing = TransportationPricing::find($id);

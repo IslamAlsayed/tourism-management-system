@@ -33,7 +33,7 @@ class Restaurants extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'restaurant');
+        $this->safeDestroy($id, Restaurant::class, 'restaurant');
     }
 
     public function updatedSelectPage($value)

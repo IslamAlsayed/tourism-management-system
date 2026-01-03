@@ -32,12 +32,6 @@
                             {{-- Polymorphic Model Select --}}
                             <livewire:polymorphic-model-select />
 
-                            {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                            ])
-
                             {{-- Name (English) --}}
                             <div class="align-self-end">
                                 <label for="name" class="kt-label mb-1">

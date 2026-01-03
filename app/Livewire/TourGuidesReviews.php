@@ -33,7 +33,7 @@ class TourGuidesReviews extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'tourGuideReview');
+        $this->safeDestroy($id, TourGuideReview::class, 'tour_guide_review');
     }
 
     public function updatedSelectPage($value)

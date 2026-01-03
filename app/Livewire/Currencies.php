@@ -33,7 +33,7 @@ class Currencies extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'currency');
+        $this->safeDestroy($id, Currency::class, 'currency');
     }
 
     public function updatedSelectPage($value)

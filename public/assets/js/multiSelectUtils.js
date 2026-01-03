@@ -320,3 +320,25 @@ window.getVal = function (id) {
         document.querySelector(`#${id}`)?.value
     );
 };
+
+window.initMap = function () {
+    let mapContainer = document.getElementById("map");
+    let title = mapContainer.getAttribute("data-title");
+    let latitude = mapContainer.getAttribute("data-latitude");
+    let longitude = mapContainer.getAttribute("data-longitude");
+    const latLng = {
+        lat: parseFloat(latitude),
+        lng: parseFloat(longitude),
+    };
+    const mapOptions = {
+        zoom: 15,
+        center: latLng,
+    };
+    const map = new google.maps.Map(mapContainer, mapOptions);
+    new google.maps.Marker({
+        position: latLng,
+        map: map,
+        title: title,
+    });
+};
+window.initMap = initMap;

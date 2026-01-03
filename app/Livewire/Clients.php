@@ -47,7 +47,7 @@ class Clients extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'client');
+        $this->safeDestroy($id, Client::class, 'client');
     }
 
     public function updatedSelectPage($value)

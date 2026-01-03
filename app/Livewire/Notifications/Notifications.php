@@ -199,7 +199,7 @@ class Notifications extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'notification');
+        $this->safeDestroy($id, ModelsNotification::class, 'notification');
     }
 
     public function getNotificationsProperty()

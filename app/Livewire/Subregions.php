@@ -33,7 +33,7 @@ class Subregions extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'subregion');
+        $this->safeDestroy($id, Subregion::class, 'subregion');
     }
 
     public function updatedSelectPage($value)

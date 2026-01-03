@@ -28,13 +28,8 @@ class AccommodationController extends Controller
     public function create()
     {
         $types = Type::orderBy('name')->get();
-        $seasons = Season::orderBy('name')->get();
-        $rooms = Room::orderBy('name')->get();
-        $meals = Meal::orderBy('name')->get();
         $currencies = Currency::orderBy('code')->get();
-        $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.accommodations.create', get_defined_vars());
+        return view('pages.dashboard.accommodations.create', compact('types', 'currencies'));
     }
 
     public function store(StoreRequest $request)
@@ -99,9 +94,7 @@ class AccommodationController extends Controller
             return redirect()->route('accommodations.index')->withError(__('messages.type_not_found', ['type' => __('main.accommodation')]));
         $types = Type::orderBy('name')->get();
         $currencies = Currency::orderBy('code')->get();
-        $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.accommodations.edit', get_defined_vars());
+        return view('pages.dashboard.accommodations.edit', compact('accommodation', 'types', 'currencies'));
     }
 
     public function update(UpdateRequest $request, $id)

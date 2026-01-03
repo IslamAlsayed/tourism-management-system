@@ -3424,6 +3424,28 @@
         background-color: var(--color-blue-600);
     }
 
+    .bg-violet-50 {
+        background-color: var(--color-violet-50);
+    }
+
+    .bg-violet-100 {
+        background-color: var(--color-violet-100);
+    }
+
+    html.dark {
+        .bg-violet-100 {
+            background-color: var(--color-violet-950);
+        }
+    }
+
+    .bg-violet-500 {
+        background-color: var(--color-violet-500);
+    }
+
+    .bg-violet-600 {
+        background-color: var(--color-violet-600);
+    }
+
     .bg-border {
         background-color: var(--border);
     }

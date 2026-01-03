@@ -3,7 +3,10 @@
         {{-- Type --}}
         <div wire:ignore>
             <label class="kt-label mb-2">
-                {{ __('main.type') }} <span class="text-red-600">*</span>
+                {{ __('main.type') }}
+                @if (!$record)
+                    <span class="text-red-600">*</span>
+                @endif
             </label>
 
             <select wire:model="filterType" name="model_type" id="model_type" class="kt-select basic-single">
@@ -18,7 +21,9 @@
             @if (isset($types[$filterType]))
                 <label class="kt-label mb-2">
                     {{ __($types[$filterType]['label']) }}
-                    <span class="text-red-600">*</span>
+                    @if (!$record)
+                        <span class="text-red-600">*</span>
+                    @endif
                     <strong class="text-primary">({{ count($models) }})</strong>
                 </label>
             @endif

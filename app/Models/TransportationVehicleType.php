@@ -41,11 +41,11 @@ class TransportationVehicleType extends Model
 
     public function getExcludedColumns()
     {
-        return ['company_id'];
+        return ['company_id', 'description', 'notes'];
     }
 
     public function company()
     {
-        return $this->belongsTo(TransportationCompany::class);
+        return $this->belongsTo(TransportationCompany::class, 'company_id');
     }
 }

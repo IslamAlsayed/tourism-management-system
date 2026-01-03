@@ -58,7 +58,7 @@ class MediaFile extends Model
      */
     public function getExcludedColumns()
     {
-        return ['metadata', 'table_columns', 'deleted_at'];
+        return ['metadata', 'table_columns', 'deleted_at', 'description', 'notes'];
     }
 
     /**

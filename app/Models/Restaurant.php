@@ -70,7 +70,7 @@ class Restaurant extends Model
 
     public function getExcludedColumns()
     {
-        return ['type_id', 'timezone_id', 'currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['type_id', 'timezone_id', 'currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
     public function type()

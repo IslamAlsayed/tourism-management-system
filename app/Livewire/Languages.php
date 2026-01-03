@@ -39,7 +39,7 @@ class Languages extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'language');
+        $this->safeDestroy($id, Language::class, 'language');
     }
 
     public function updatedSelectPage($value)

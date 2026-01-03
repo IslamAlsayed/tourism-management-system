@@ -43,7 +43,7 @@ class Supplement extends Model
 
     public function getExcludedColumns()
     {
-        return ['model_id'];
+        return ['model_id', 'description', 'notes'];
     }
 
     public function model()

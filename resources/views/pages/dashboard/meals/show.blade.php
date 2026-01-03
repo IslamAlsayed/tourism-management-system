@@ -208,7 +208,7 @@
                                 <div class="text-sm text-secondary-foreground">{!! $meal->accommodation->notes !!}</div>
                             </div>
                         @endif
-                        <div class="lg:col-span-2 flex gap-2 mt-2">
+                        <div class="lg:col-span-2 flex gap-2 mt-4">
                             @include('components.elements.show-button', [
                                 'models' => 'accommodations',
                                 'id' => $meal->accommodation->id,
@@ -280,7 +280,7 @@
                                     {!! $meal->season->description !!}</div>
                             </div>
                         @endif
-                        <div class="lg:col-span-2 flex gap-2 mt-2">
+                        <div class="lg:col-span-2 flex gap-2 mt-4">
                             @include('components.elements.show-button', [
                                 'models' => 'meals',
                                 'id' => $meal->season->id,

@@ -34,7 +34,7 @@ class Companies extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'transportation_company');
+        $this->safeDestroy($id, TransportationCompany::class, 'transportation_company');
     }
 
     public function updatedSelectPage($value)

@@ -51,7 +51,7 @@ class Timezone extends Model
      */
     public function getExcludedColumns()
     {
-        return ['description', 'sort_order'];
+        return ['sort_order', 'description', 'notes'];
     }
 
     /**

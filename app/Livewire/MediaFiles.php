@@ -65,7 +65,7 @@ class MediaFiles extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'media_file');
+        $this->safeDestroy($id, MediaFile::class, 'media_file');
     }
 
     public function updatedSelectAll($value)

@@ -94,7 +94,19 @@ class CrossingPort extends Model
      */
     public function getExcludedColumns()
     {
-        return ['departure_tax_currency_id', 'visa_fee_currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'created_by', 'updated_by'];
+        return [
+            'departure_tax_currency_id',
+            'visa_fee_currency_id',
+            'region_id',
+            'subregion_id',
+            'country_id',
+            'state_id',
+            'city_id',
+            'created_by',
+            'updated_by',
+            'description',
+            'notes'
+        ];
     }
 
     /**

@@ -1,6 +1,6 @@
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
-        {{ __('main.' . (isset($name) ? str_replace('_id', '', $name) : '')) }}
+        {{ __('main.' . (isset($name) ? str_replace('_id', '', str_replace('app_', '', $name)) : '')) }}
         <a href="{{ route('timezones.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>

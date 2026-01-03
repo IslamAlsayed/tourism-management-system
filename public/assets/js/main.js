@@ -106,10 +106,11 @@ window.addEventListener("record-deleted", (e) => {
     let type = e.detail.type;
     if (!id) return;
 
+    console.log(".record-" + type + "-" + id);
     const element = document.querySelector(".record-" + type + "-" + id);
     if (element) {
         element.classList.add("fade-down", "loading");
-        setTimeout(() => element.remove(), 400);
+        setTimeout(() => element.remove(), 250);
     }
 });
 

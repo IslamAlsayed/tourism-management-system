@@ -33,7 +33,7 @@ class States extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'state');
+        $this->safeDestroy($id, State::class, 'state');
     }
 
     public function updatedSelectPage($value)

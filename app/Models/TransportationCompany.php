@@ -21,6 +21,7 @@ class TransportationCompany extends Model
     protected $fillable = [
         'id',
         'uuid',
+        'photo',
         'name',
         'name_ar',
         'code',
@@ -39,7 +40,6 @@ class TransportationCompany extends Model
         'description',
         'notes',
 
-        'timezone_id',
         'currency_id',
         'region_id',
         'subregion_id',
@@ -50,17 +50,12 @@ class TransportationCompany extends Model
 
     public function getRelationshipNames()
     {
-        return ['timezone', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'supplements'];
+        return ['currency', 'region', 'subregion', 'country', 'state', 'city', 'vehicleTypes', 'seasons', 'supplements'];
     }
 
     public function getExcludedColumns()
     {
-        return ['timezone_id', 'currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
-    }
-
-    public function timezone()
-    {
-        return $this->belongsTo(Timezone::class);
+        return ['currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
     public function currency()
@@ -91,6 +86,11 @@ class TransportationCompany extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function vehicleTypes()
+    {
+        return $this->hasMany(TransportationVehicleType::class, 'company_id');
     }
 
     public function seasons()

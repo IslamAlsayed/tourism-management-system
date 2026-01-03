@@ -25,7 +25,6 @@
         <form action="{{ route('accommodations.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
-
                 {{-- Accommodation Photo --}}
                 @include('components.input-image', [
                     'column' => 'accommodation',

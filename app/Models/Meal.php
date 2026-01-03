@@ -46,7 +46,7 @@ class Meal extends Model
 
     public function getExcludedColumns()
     {
-        return ['model_id', 'currency_id'];
+        return ['model_id', 'currency_id', 'description', 'notes'];
     }
 
     public function model()

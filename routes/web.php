@@ -165,6 +165,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::resource('vehicle-types', VehicleTypeController::class)->names('vehicle-types');
         Route::resource('pricings', PricingController::class)->names('pricings');
     });
+
     // Route::resource('transportation/companies', CompanyController::class)->names('transportation-companies');
     // Route::resource('transportation/departments', DepartmentController::class)->names('transportation-departments');
     // Route::resource('transportation/bus-types', BusTypeController::class)->names('transportation-bus-types');

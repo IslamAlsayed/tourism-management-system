@@ -34,7 +34,7 @@ class Airlines extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'airlines');
+        $this->safeDestroy($id, Airline::class, 'airline');
     }
 
     public function updatedSelectPage($value)

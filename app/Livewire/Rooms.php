@@ -62,7 +62,7 @@ class Rooms extends Component
 
     public function destroy($id)
     {
-        $this->safeDestroy($id, 'room');
+        $this->safeDestroy($id, Room::class, 'room');
     }
 
     public function updatedSelectPage($value)
