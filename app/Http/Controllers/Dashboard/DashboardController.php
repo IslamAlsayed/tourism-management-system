@@ -156,8 +156,7 @@ class DashboardController extends Controller
 
     public function deleteAll(Request $request)
     {
-        $modelName = studlySingular($request->input('model'));
-        $modelClass = "App\\Models\\$modelName";
+        $modelClass = "App\\Models\\" . studlyCaseName($request->input('model'));
         if (!class_exists($modelClass)) {
             return redirect()->back()->withError(__('messages.invalid_model_specified'));
         }

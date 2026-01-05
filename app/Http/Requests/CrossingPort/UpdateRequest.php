@@ -22,28 +22,24 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $crossingPortId = $this->route('crossing_port');
+        $crossingPortId = $this->route('crossings_port');
 
         return [
             'code' => ['nullable', 'string', 'max:10', Rule::unique('crossing_ports', 'code')->ignore($crossingPortId)],
 
             // Location information
-            'region_id' => ['nullable', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'exists:subregions,id'],
-            'country_id' => ['nullable', 'exists:countries,id'],
-            'state_id' => ['nullable'],
-            'state_id.*' => ['exists:states,id'],
-            'city_id' => ['nullable'],
-            'city_id.*' => ['exists:cities,id'],
+            'region_id' => ['nullable', 'string', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'string', 'exists:countries,id'],
+            'state_id' => ['nullable', 'integer', 'exists:states,id'],
+            'city_id' => ['nullable', 'integer', 'exists:cities,id'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
 
             // Basic information
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
             'type' => ['nullable', 'in:' . implode(',', array_keys(config('helpers.crossing_port_types')))],
-
-            // Geographic coordinates
-            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
-            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
 
             // Operating information
             'operating_days' => ['nullable', 'array'],

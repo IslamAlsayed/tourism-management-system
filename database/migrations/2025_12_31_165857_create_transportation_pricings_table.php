@@ -18,7 +18,9 @@ return new class extends Migration {
             $table->foreignId('vehicle_type_id')->constrained('transportation_vehicle_types')->cascadeOnDelete();
             $table->foreignId('season_id')->constrained('seasons')->cascadeOnDelete();
             $table->foreignId('pricing_unit_id')->constrained('pricing_definitions');
+            $table->foreignId('currency_id')->constrained('currencies')->cascadeOnDelete();
             $table->decimal('price', 10, 2);
+            $table->integer('tax');
             $table->boolean('is_active')->default(true);
             $table->text('description')->nullable();
             $table->text('notes')->nullable();

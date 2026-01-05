@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :requirements="[
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
         [
             'condition' => \App\Models\Region::count() > 0,
             'route' => route('regions.index'),
@@ -37,7 +37,7 @@
         @if (env('DB_MODE') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200">
-                <thead class="bg-yellow-200">
+                <thead class="bg-yellow-100">
                     <tr>
                         <th class="border px-2">name</th>
                         <th class="border px-2">name_ar</th>
@@ -52,7 +52,7 @@
                         <th class="border px-2">city_id</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">Islam Alsayed</td>
                         <td class="border px-2">اسلام السيد</td>
@@ -71,7 +71,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-200">
+                <thead class="bg-yellow-100">
                     <tr>
                         <th class="border px-2">mobile_02</th>
                         <th class="border px-2">home_city</th>
@@ -81,7 +81,7 @@
 
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">01098765432</td>
                         <td class="border px-2">Cairo</td>
@@ -93,7 +93,7 @@
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200">
-                <thead class="bg-yellow-200">
+                <thead class="bg-yellow-100">
                     <tr>
                         <th class="border px-2">tourism_ministry_code</th>
                         <th class="border px-2">fd_day_fees</th>
@@ -104,7 +104,7 @@
                         <th class="border px-2">notes</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">TM-001</td>
                         <td class="border px-2">100.00</td>

@@ -55,12 +55,12 @@ class TransportationCompanySeeder extends Seeder
 
         // أنواع المركبات المصرية والأردنية
         $vehicleTypes = [
-            ['name' => 'Tourist Bus', 'name_ar' => 'اتوبيس سياحي', 'min_capacity' => 20, 'max_capacity' => 50, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::where('country_id', 1)->first()?->id],
-            ['name' => 'Microbus', 'name_ar' => 'ميكروباص', 'min_capacity' => 8, 'max_capacity' => 14, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::where('country_id', 1)->first()?->id],
-            ['name' => 'Limousine', 'name_ar' => 'ليموزين', 'min_capacity' => 2, 'max_capacity' => 4, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::where('country_id', 1)->first()?->id],
-            ['name' => 'Tourist Coach', 'name_ar' => 'حافلة سياحية', 'min_capacity' => 30, 'max_capacity' => 55, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::where('country_id', 2)->first()?->id],
-            ['name' => 'Van', 'name_ar' => 'سيارة فان', 'min_capacity' => 6, 'max_capacity' => 12, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::where('country_id', 2)->first()?->id],
-            ['name' => 'Limousine', 'name_ar' => 'ليموزين', 'min_capacity' => 2, 'max_capacity' => 4, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::where('country_id', 2)->first()?->id],
+            ['name' => 'Tourist Bus', 'name_ar' => 'اتوبيس سياحي', 'min_capacity' => 20, 'max_capacity' => 50, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::inRandomOrder()->first()?->id],
+            ['name' => 'Microbus', 'name_ar' => 'ميكروباص', 'min_capacity' => 8, 'max_capacity' => 14, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::inRandomOrder()->first()?->id],
+            ['name' => 'Limousine', 'name_ar' => 'ليموزين', 'min_capacity' => 2, 'max_capacity' => 4, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::inRandomOrder()->first()?->id],
+            ['name' => 'Tourist Coach', 'name_ar' => 'حافلة سياحية', 'min_capacity' => 30, 'max_capacity' => 55, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::inRandomOrder()->first()?->id],
+            ['name' => 'Van', 'name_ar' => 'سيارة فان', 'min_capacity' => 6, 'max_capacity' => 12, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::inRandomOrder()->first()?->id],
+            ['name' => 'Limousine', 'name_ar' => 'ليموزين', 'min_capacity' => 2, 'max_capacity' => 4, 'has_luggage' => fake()->boolean(70), 'is_air_conditioning' => fake()->boolean(80), 'is_active' => true, 'company_id' => TransportationCompany::inRandomOrder()->first()?->id],
         ];
         foreach ($vehicleTypes as $type) {
             TransportationVehicleType::create($type);
@@ -119,32 +119,19 @@ class TransportationCompanySeeder extends Seeder
                 ]);
             }
 
-
             // أسعار شركات المواصلات
-            TransportationPricing::create([
-                'price' => fake()->numberBetween(900, 4000),
-                'is_active' => fake()->boolean(80),
-                'description' => fake()->paragraph(3),
-                'notes' => fake()->optional()->sentence(),
-                'company_id' => $company->id,
-                'vehicle_type_id' => TransportationVehicleType::inRandomOrder()->first()?->id ?? null,
-                'season_id' => Season::where('model_type', 'like', '%transportation%')->where('model_id', $company->id)->first()?->id ?? null,
-                'pricing_unit_id' => PricingDefinition::inRandomOrder()->first()?->id ?? PricingDefinition::factory(),
-            ]);
+            $vehicleType = TransportationVehicleType::where('company_id', $company->id)->inRandomOrder()->first() 
+                ?? TransportationVehicleType::inRandomOrder()->first();
+            
+            if ($vehicleType) {
+                TransportationPricing::factory()->create([
+                    'price' => fake()->numberBetween(900, 4000),
+                    'company_id' => $company->id,
+                    'vehicle_type_id' => $vehicleType->id,
+                    'season_id' => Season::where('model_type', 'like', '%ransportation%')->where('model_id', $company->id)->first()?->id ?? null,
+                    'pricing_unit_id' => PricingDefinition::inRandomOrder()->first()?->id ?? PricingDefinition::factory(),
+                ]);
+            }
         }
-
-        // أسعار شركات المواصلات
-        // $companiesPricings = [
-        //     ['price' => rand(1000, 3000), 'company_id' => TransportationCompany::where('country_id', rand(1, 7))->first()?->id, 'season_id' => Season::where('model_type', 'like', '%transportation%')->where('model_id', rand(1, 7))->first()?->id],
-        //     ['price' => rand(1200, 3500), 'company_id' => TransportationCompany::where('country_id', rand(1, 7))->first()?->id, 'season_id' => Season::where('model_type', 'like', '%transportation%')->where('model_id', rand(1, 7))->first()?->id],
-        //     ['price' => rand(900, 2500), 'company_id' => TransportationCompany::where('country_id', rand(1, 7))->first()?->id, 'season_id' => Season::where('model_type', 'like', '%transportation%')->where('model_id', rand(1, 7))->first()?->id],
-        //     ['price' => rand(1500, 4000), 'company_id' => TransportationCompany::where('country_id', rand(1, 7))->first()?->id, 'season_id' => Season::where('model_type', 'like', '%transportation%')->where('model_id', rand(1, 7))->first()?->id],
-        //     ['price' => rand(1300, 3700), 'company_id' => TransportationCompany::where('country_id', rand(1, 7))->first()?->id, 'season_id' => Season::where('model_type', 'like', '%transportation%')->where('model_id', rand(1, 7))->first()?->id],
-        //     ['price' => rand(1100, 3200), 'company_id' => TransportationCompany::where('country_id', rand(1, 7))->first()?->id, 'season_id' => Season::where('model_type', 'like', '%transportation%')->where('model_id', rand(1, 7))->first()?->id],
-        //     ['price' => rand(1400, 3600), 'company_id' => TransportationCompany::where('country_id', rand(1, 7))->first()?->id, 'season_id' => Season::where('model_type', 'like', '%transportation%')->where('model_id', rand(1, 7))->first()?->id],
-        // ];
-        // foreach ($companiesPricings as $pricing) {
-        //     TransportationPricing::factory()->create($pricing);
-        // }
     }
 }

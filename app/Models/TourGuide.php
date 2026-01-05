@@ -69,7 +69,7 @@ class TourGuide extends Model
 
     public function tourGuideLanguages()
     {
-        return $this->hasMany(TourGuideLanguage::class, 'tour_guide_id');
+        return $this->hasMany(TourGuideLanguage::class, 'tour_guide_id')->with('language');
     }
 
     public function region()

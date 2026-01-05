@@ -106,11 +106,6 @@
                                 <div class="relative">
                                     <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
                                         value="{{ $crossingPort->code }}" readonly>
-
-                                    <button type="button" onclick="generateNewCode()" toggle-button
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer hover:text-gray-700">
-                                        <i class="fas fa-sync-alt"></i>
-                                    </button>
                                 </div>
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -164,9 +159,8 @@
                             {{-- Operating Hours --}}
                             <div>
                                 <label for="operating_hours" class="kt-label mb-2">{{ __('main.operating_hours') }}</label>
-                                <input type="text" name="operating_hours" id="operating_hours"
-                                    class="kt-input h-[45px]" value="{{ $crossingPort->operating_hours }}"
-                                    placeholder="e.g., 24/7, 08:00-18:00">
+                                <input type="text" name="operating_hours" id="operating_hours" class="kt-input h-[45px]"
+                                    value="{{ $crossingPort->operating_hours }}" placeholder="e.g., 24/7, 08:00-18:00">
                                 @error('operating_hours')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -348,7 +342,7 @@
                                 <label for="visa_last_update"
                                     class="kt-label mb-2">{{ __('main.visa_last_update') }}</label>
                                 <input type="date" name="visa_last_update" id="visa_last_update"
-                                    class="kt-input h-[45px]" value="{{ $crossingPort->visa_last_update }}">
+                                    class="kt-input h-[45px]" value="{{ $crossingPort->formatted_visa_last_update }}">
                                 @error('visa_last_update')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

@@ -321,7 +321,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="kt-card-content p-5 lg:p-7.5">
+                        <div class="kt-card-content p-5 lg:p-7.5 content-center">
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
                                 <div class="kt-card kt-card-outline hover:bg-accent/60 p-5">
                                     <div class="flex flex-col items-center gap-3">

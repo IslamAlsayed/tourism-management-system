@@ -78,9 +78,8 @@ class CountryController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
         $currencies = Currency::orderBy('code')->get();
         $languages = Language::orderBy('name')->get();
-        $regions = Region::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'languages', 'regions', 'timezones'));
+        return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'languages', 'timezones'));
     }
 
     public function update(UpdateRequest $request, $id)
@@ -106,8 +105,10 @@ class CountryController extends Controller
             $cityIds = array_unique((array) $request->input('city_id'));
         }
         $country->cities()->sync($cityIds);
-        $country->update($data);
-        return redirect()->route('countries.index')->withSuccess(__('messages.type_updated', ['type' => __('main.country')]));
+        $updated = $country->update($data);
+        return $updated
+            ? redirect()->route('countries.index')->withSuccess(__('messages.type_updated', ['type' => __('main.country')]))
+            : redirect()->route('countries.index')->withError(__('messages.type_update_failed', ['type' => __('main.country')]));
     }
 
     public function destroy($id)

@@ -27,9 +27,9 @@
                 <form class="space-y-6" method="POST" action="{{ route('meals.update', $meal->id) }}">
                     @csrf
                     @method('PUT')
-                    <div class="grid gap-4 lg:gap-6">
+                    <input type="hidden" name="type" value="{{ request()->query('type') }}">
 
-                        {{-- Meal Information --}}
+                    <div class="grid gap-4 lg:gap-6">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6 mb-4">
                             {{-- Polymorphic Model Select --}}
                             <livewire:polymorphic-model-select :record="$meal" />

@@ -74,6 +74,7 @@ class PricingSteps extends Component
 
     public function render()
     {
+        // dd($this->options);
         return view('livewire.transportation.pricing-steps');
     }
 }

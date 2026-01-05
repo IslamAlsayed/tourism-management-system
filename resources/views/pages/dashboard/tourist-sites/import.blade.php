@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :requirements="[
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
         [
             'condition' => \App\Models\Region::count() > 0,
             'route' => route('regions.index'),
@@ -37,7 +37,7 @@
         @if (env('DB_MODE') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200">
-                <thead class="bg-yellow-200">
+                <thead class="bg-yellow-100">
                     <tr>
                         <th class="border px-2">name</th>
                         <th class="border px-2">name_ar</th>
@@ -49,7 +49,7 @@
                         <th class="border px-2">status</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">Great Pyramid of Giza</td>
                         <td class="border px-2">الهرم الأكبر بالجيزة</td>
@@ -64,7 +64,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-200">
+                <thead class="bg-yellow-100">
                     <tr>
                         <th class="border px-2">description_ar</th>
                         <th class="border px-2">subregion_id</th>
@@ -78,7 +78,7 @@
                         <th class="border px-2">is_free_entry</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">الوصف بالعربية</td>
                         <td class="border px-2">1</td>
@@ -95,7 +95,7 @@
             </table>
 
             <table class="border min-w-full divide-y text-center divide-gray-200">
-                <thead class="bg-yellow-200">
+                <thead class="bg-yellow-100">
                     <tr>
                         <th class="border px-2">opening_time</th>
                         <th class="border px-2">closing_time</th>
@@ -109,7 +109,7 @@
                         <th class="border px-2">wheelchair_accessible</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">08:00</td>
                         <td class="border px-2">17:00</td>

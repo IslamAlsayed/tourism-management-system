@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
         });
     }
+
     public function down()
     {
         Schema::dropIfExists('country_state');

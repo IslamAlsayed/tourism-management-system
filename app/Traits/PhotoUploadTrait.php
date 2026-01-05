@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 trait PhotoUploadTrait
@@ -9,26 +10,49 @@ trait PhotoUploadTrait
     /**
      * Upload and delete old photo for any model.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request|\Illuminate\Http\UploadedFile  $request
      * @param  mixed  $model
      * @param  string  $photoColumn
      * @param  string  $folder
      * @return void
      */
-    public function uploadPhoto($request, $model, $photoColumn = 'photo', $folder = 'other')
+    public function uploadPhoto($request, $model, $photoColumn = 'photo', $folder = 'other', $column = null)
     {
-        if ($request->hasFile($photoColumn)) {
-            // Delete the old photo if exists
-            if ($model->{$photoColumn}) {
-                Storage::disk('public')->delete($model->{$photoColumn});
+        // Handle if $request is an UploadedFile directly
+        $file = $request instanceof UploadedFile ? $request : null;
+
+        // Handle if $request is a Request object
+        if (!$file && $request->hasFile($photoColumn)) {
+            $file = $request->file($photoColumn);
+        }
+
+        if ($file) {
+            // Store the new photo
+            $filename = $file->hashName();
+            $path = $file->storeAs('uploads/' . $folder . '/' . $model->id . ($column ? '/' . $column : ''), $filename, 'public');
+
+            // Handle gallery_images (array) vs single photo (string)
+            if ($photoColumn === 'gallery_images' || is_array($model->{$photoColumn})) {
+                // Add to existing array
+                $existing = $model->{$photoColumn} ?? [];
+                if (is_string($existing)) {
+                    $existing = json_decode($existing, true) ?? [];
+                }
+                // Clean empty arrays and ensure we only have strings
+                $existing = array_filter($existing, function ($item) {
+                    return is_string($item) && !empty($item);
+                });
+                $existing[] = $path;
+                $model->{$photoColumn} = array_values($existing);
+            } else {
+                // Delete the old photo if exists (single photo)
+                if ($model->{$photoColumn} && is_string($model->{$photoColumn})) {
+                    Storage::disk('public')->delete($model->{$photoColumn});
+                }
+                // Update with new photo path
+                $model->{$photoColumn} = $path;
             }
 
-            // Store the new photo
-            $filename = $request->file($photoColumn)->hashName();
-            $path = $request->file($photoColumn)->storeAs('uploads/' . $folder . '/' . $model->id, $filename, 'public');
-
-            // Update the model with the new photo path
-            $model->{$photoColumn} = $path;
             $model->save();
         }
     }

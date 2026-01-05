@@ -21,7 +21,7 @@ class PolymorphicModelSelect extends Component
 
     protected $listeners = ['recordUpdated' => '$refresh'];
 
-    protected function config(): array
+    protected function config()
     {
         return config('polymorphic-selects');
     }
@@ -39,7 +39,6 @@ class PolymorphicModelSelect extends Component
         if ($record && $record->model_type) {
             $this->filterType = $this->resolveTypeFromModel($record->model_type);
         }
-
         $this->loadModels();
     }
 

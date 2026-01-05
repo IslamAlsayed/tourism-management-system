@@ -48,11 +48,22 @@
                         $hasActiveChild = $hasChildren
                             ? hasActiveChild($item['children'], $currentRoute, $currentParameters)
                             : false;
+
+                        if (
+                            (isset(request()->type) && Str::contains($item['title'], request()->type)) ||
+                            Str::contains($item['title'], singularLowerCaseName(key($currentParameters), '-'))
+                        ) {
+                            $hasActiveChild = true;
+                        }
+
+                        if (Str::contains($item['title'], 'guide') && Str::contains(key($currentParameters), 'guide')) {
+                            $hasActiveChild = true;
+                        }
                     @endphp
 
                     @if ($hasChildren)
                         {{-- Menu with Children --}}
-                        <div class="kt-menu-item {{ $hasActiveChild ? 'show' : '' }}"
+                        <div class="isActive-{{ $isActive }} hasActiveChild-{{ $hasActiveChild }} kt-menu-item {{ $hasActiveChild ? 'show' : '' }}"
                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                             <div
                                 class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[15px] py-[6px] {{ $hasActiveChild ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px]">
@@ -110,6 +121,23 @@
                                         $childHasActiveChild = $childHasChildren
                                             ? hasActiveChild($child['children'], $currentRoute, $currentParameters)
                                             : false;
+
+                                        if (
+                                            (isset(request()->type) &&
+                                                Str::contains($item['title'], request()->type) &&
+                                                Str::contains($currentRoute, $child['title'])) ||
+                                            $child['title'] ==
+                                                str_replace(
+                                                    'tours-',
+                                                    'tour-',
+                                                    pluralLowerCaseName(
+                                                        str_replace('_', '-', key($currentParameters)),
+                                                        '-',
+                                                    ),
+                                                )
+                                        ) {
+                                            $childHasActiveChild = true;
+                                        }
                                     @endphp
 
                                     @if ($childHasChildren)
@@ -164,9 +192,10 @@
                                                 @foreach ($child['children'] as $subChild)
                                                     @php $subChildIsActive = isActive($subChild['route'] ?? null, $subChild['parameters'] ?? [], $currentRoute, $currentParameters); @endphp
                                                     <div class="kt-menu-item px-2">
-                                                        <a class="islam {{ isset($subChild['parameters']['types']) ? $subChild['parameters']['types'] : '' }} kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px] gap-[14px] ps-[10px] pe-[10px] py-[8px]"
-                                                            href="{{ isset($subChild['route']) ? route($subChild['route'], isset($subChild['parameters']) ? $subChild['parameters'] : []) : '#' }}"
-                                                            {{ ($subChild['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
+                                                        <a class="{{ $subChild['parameters']['types'] ?? '' }} kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px] gap-[14px] ps-[10px] pe-[10px] py-[8px]"
+                                                            href="{{ !empty($subChild['route']) ? route($subChild['route'], $subChild['parameters'] ?? []) : 'javascript:void(0)' }}"
+                                                            @if (empty($subChild['route'])) onclick="return false;" aria-disabled="true" @endif>
+
                                                             {{-- <span
                                                                 class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $subChildIsActive ? 'before:bg-primary' : '' }}">
                                                             </span> --}}

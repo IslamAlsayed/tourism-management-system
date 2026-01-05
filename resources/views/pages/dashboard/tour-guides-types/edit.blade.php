@@ -36,7 +36,7 @@
                     </div>
                     <div class="kt-card-body p-4">
                         {{-- Regions [region, subregion, country, state, city] --}}
-                        <livewire:regions.location-select-base :record="$tourGuideType" />
+                        <livewire:regions.location-select-base :record="$tourGuideType" :multiple="['states', 'cities']" />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Currency --}}

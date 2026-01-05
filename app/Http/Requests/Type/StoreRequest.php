@@ -16,8 +16,9 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'required|string|max:255|unique:types,name',
             'name_ar' => 'nullable|string|max:255',
-            'description' => 'nullable|string|max:1000',
             'is_active' => 'boolean',
+            'description' => 'nullable|string|max:1000',
+            'notes' => 'nullable|string|max:1000',
         ];
     }
 }

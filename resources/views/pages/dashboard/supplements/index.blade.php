@@ -6,7 +6,7 @@
         'title' => __('main.supplements'),
         'description' => __('main.manage_system_types', ['types' => __('main.supplements')]),
         'import_url' => route('import.data', ['models' => 'supplements']),
-        'page_create_url' => route('supplements.create'),
+        'page_create_url' => route('supplements.create', ['type' => request()->query('type')]),
         'page_create_title' => __('main.create_type', ['type' => __('main.supplement')]),
     ])
     <!-- End of Container -->

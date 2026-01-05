@@ -444,6 +444,7 @@ return [
     'business_type' => 'Business Type',
     'business_registration_number' => 'Business Registration Number',
     'tax_id' => 'Tax ID',
+    'tax' => 'Tax',
 
     // Address information
     'box' => 'P.O. Box',
@@ -1193,6 +1194,8 @@ return [
     'tour_guide_languages' => 'Tour Guide Languages',
     'tour-guides-languages' => 'Tour Guides Languages',
     'tour_guides_languages' => 'Tour Guides Languages',
+    'tourGuideLanguage' => 'Tour Guide Language',
+    'tourGuideLanguages' => 'Tour Guide Language',
 
     // Reports Section
     'reports_dashboard' => 'Reports Dashboard',
@@ -1621,6 +1624,8 @@ return [
     'transportation-company' => 'Transportation Company',
     'transportation_companies' => 'Transportation Companies',
     'transportation_company' => 'Transportation Company',
+    'transportation.companies' => 'Transportation Companies',
+    'transportation.company' => 'Transportation Company',
     'transportation-departments' => 'Transportation Departments',
     'transportation-department' => 'Transportation Department',
     'transportation_departments' => 'Transportation Departments',
@@ -1642,9 +1647,11 @@ return [
     'transportation_vehicle-types' => 'Transportation Vehicle Types',
     'transportation_vehicle-type' => 'Transportation Vehicle Type',
     'vehicle-type' => 'Vehicle Type',
-    'vehicle_type' => 'Vehicle Type',
     'vehicle-types' => 'Vehicle Types',
+    'vehicle_type' => 'Vehicle Type',
     'vehicle_types' => 'Vehicle Types',
+    'vehicleType' => 'Vehicle Type',
+    'vehicleTypes' => 'Vehicle Types',
     'transportation-pricing' => 'Transportation Pricing',
     'transportation-pricings' => 'Transportation Pricings',
     'transportation_pricing' => 'Transportation Pricing',
@@ -1653,8 +1660,12 @@ return [
     'pricing-definition' => 'Pricing Definition',
     'pricing' => 'Pricing',
     'pricings' => 'Pricings',
+    'pricing-unit' => 'Pricing Unit',
+    'pricing-units' => 'Pricing Units',
     'pricing_unit' => 'Pricing Unit',
     'pricing_units' => 'Pricing Units',
+    'pricingUnit' => 'Pricing Unit',
+    'pricingUnits' => 'Pricing Units',
 
     'no_transportation_companies' => 'No Transportation Companies Found',
     'other_services' => 'Other Services',

@@ -34,7 +34,6 @@ class TransportationCompanyFactory extends Factory
             'is_active' => fake()->boolean(80),
             'description' => fake()->paragraph(3),
             'notes' => fake()->optional()->sentence(),
-            'timezone_id' => \App\Models\Timezone::inRandomOrder()->first()?->id ?? \App\Models\Timezone::factory(),
             'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? \App\Models\Currency::factory(),
             'region_id' => \App\Models\Region::inRandomOrder()->first()?->id ?? null,
             'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id ?? null,

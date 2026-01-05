@@ -28,14 +28,13 @@ class UpdateRequest extends FormRequest
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
 
-            'currency_id' => ['nullable', 'exists:currencies,id'],
-            'guide_type_id' => ['required', 'exists:tour_guide_types,id'],
-            'region_id' => ['nullable', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'exists:subregions,id'],
-            'country_id' => ['nullable', 'exists:countries,id'],
-
-            'state_id' => ['nullable', 'array'],
-            'city_id' => ['nullable', 'array'],
+            'currency_id' => ['nullable', 'integer', 'exists:currencies,id'],
+            'guide_type_id' => ['required', 'integer', 'exists:tour_guide_types,id'],
+            'region_id' => ['nullable', 'integer', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'integer', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'integer', 'exists:countries,id'],
+            'state_id' => ['nullable', 'integer', 'exists:states,id'],
+            'city_id' => ['nullable', 'integer', 'exists:cities,id'],
 
             'language_id' => ['nullable'],
             'language_id.*' => ['integer', 'exists:languages,id'],

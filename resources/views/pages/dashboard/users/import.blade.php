@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :requirements="[
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
         [
             'condition' => \App\Models\Country::count() > 0,
             'route' => route('countries.index'),
@@ -30,7 +30,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">superadmin</td>
                         <td class="border px-2">email@gmail.com</td>
@@ -52,7 +52,7 @@
                         <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">address</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">null</td>
                         <td class="border px-2">Lorem, ipsum dolor.</td>
@@ -79,7 +79,7 @@
                         <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">preferences</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">CODE7845</td>
                         <td class="border px-2">05/04/2025</td>
@@ -106,7 +106,7 @@
                         <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">updated_by</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">1</td>
                         <td class="border px-2">1</td>

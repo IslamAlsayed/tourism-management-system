@@ -13,6 +13,8 @@ class LocationSelectBase extends Component
 {
     public $record;
     public $multiple;
+    public $all_states = false;
+    public $all_cities = false;
     public $selectedStates = [];
     public $selectedCities = [];
     public $filters = ['region' => null, 'subregion' => null, 'country' => null, 'state' => null, 'city' => null];
@@ -78,6 +80,22 @@ class LocationSelectBase extends Component
         }
     }
 
+    public function updatedAllStates($value)
+    {
+        if ($value) {
+            $this->selectedStates = [];
+            $this->filters['state'] = null;
+            $this->options['cities'] = [];
+            if (!empty($this->filters['country'])) {
+                $this->options['cities'] = City::whereIn('state_id', State::where('country_id', $this->filters['country'])->pluck('id'))->orderBy('name')->get(['id', 'name']);
+            }
+            $this->dispatch('select-options-updated', true);
+        } else {
+            $this->options['cities'] = [];
+            $this->selectedCities = [];
+        }
+    }
+
     public function updatedFilters($value, $key)
     {
         $key = str_replace('filters.', '', $key);
@@ -115,6 +133,11 @@ class LocationSelectBase extends Component
         foreach (array_slice($order, $index + 1) as $lowerKey) {
             $this->filters[$lowerKey] = null;
             $this->options[$optionKeys[$lowerKey]] = [];
+        }
+        
+        // Reset all_states when country changes
+        if ($key === 'country') {
+            $this->all_states = false;
         }
     }
 

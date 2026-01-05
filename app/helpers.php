@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Support\Activity\ActivityMessageFormatter;
+use Illuminate\Support\Arr;
 
 if (!function_exists('getActiveUser')) {
     /**
@@ -125,22 +126,41 @@ if (!function_exists('isRtlLocale')) {
     }
 }
 
+// تحقق من كون الراوت الحالي هو الراوت المحدد مع إمكانية التحقق من البراميترز
 if (!function_exists('isActive')) {
-    function isActive($route, $parameters, $currentRoute, $currentParameters = [])
+    function isActive(?string $route, array $menuParameters = [], ?string $currentRoute = null, array $currentParameters = [])
     {
-        if (!isset($route) || $route !== $currentRoute) {
+        if (!$route || $route !== $currentRoute) {
             return false;
         }
 
-        foreach ($parameters as $key => $value) {
-            if (($currentParameters[$key] ?? null) != $value) {
+        // لو المينيو مفيهوش parameters → route match يكفي
+        if (empty($menuParameters)) {
+            return true;
+        }
+
+        // parameters الحالية (route + query)
+        $requestParams = array_merge(request()->route()?->parameters() ?? [], request()->query() ?? []);
+
+        foreach ($menuParameters as $key => $value) {
+            // تجاهل أي key رقمي (زي Str::random)
+            if (is_int($key)) {
+                continue;
+            }
+
+            // لو المينيو متوقع parameter مش موجود في الطلب → تجاهله
+            if (!array_key_exists($key, $requestParams)) {
+                continue;
+            }
+
+            // لو موجود بس القيمة مختلفة → مش active
+            if ((string) $requestParams[$key] !== (string) $value) {
                 return false;
             }
         }
 
         return true;
     }
-
 }
 
 if (!function_exists('isActiveRoute')) {
@@ -150,33 +170,23 @@ if (!function_exists('isActiveRoute')) {
     }
 }
 
+// تحقق من وجود راوت نشط بين الأطفال
 if (!function_exists('hasActiveChild')) {
-    function hasActiveChild(array $children, $currentRoute, array $currentParameters = []): bool
+    function hasActiveChild(array $children, ?string $currentRoute, array $currentParameters)
     {
         foreach ($children as $child) {
-            if (isset($child['route'])) {
-                if ($child['route'] === $currentRoute) {
-                    if (isset($child['parameters'])) {
-                        $allMatch = true;
-                        foreach ($child['parameters'] as $key => $value) {
-                            if (($currentParameters[$key] ?? null) != $value) {
-                                $allMatch = false;
-                                break;
-                            }
-                        }
-                        if ($allMatch) {
-                            return true;
-                        }
-                    } else {
-                        return true;
-                    }
-                }
+            if (isActive($child['route'] ?? null, $child['parameters'] ?? [], $currentRoute, $currentParameters)) {
+                return true;
             }
 
-            if (isset($child['children']) && hasActiveChild($child['children'], $currentRoute, $currentParameters)) {
+            if (
+                isset($child['children']) &&
+                hasActiveChild($child['children'], $currentRoute, $currentParameters)
+            ) {
                 return true;
             }
         }
+
         return false;
     }
 }
@@ -230,13 +240,14 @@ if (!function_exists('showFunctionExists')) {
                 $resource = $parts[0];
             }
 
-            $controller = Str::studly(Str::singular($resource)) . 'Controller';
+            $resource = str_replace('.', '\\', $routeName);
+            $controller = studlyCaseName($resource) . 'Controller';
 
             $possibleControllers = array_filter([
-                $module ? "App\\Http\\Controllers\\Dashboard\\" . Str::studly($module) . "\\{$controller}" : null,
-                $module ? "App\\Http\\Controllers\\" . Str::studly($module) . "\\{$controller}" : null,
-                "App\\Http\\Controllers\\Dashboard\\{$controller}",
-                "App\\Http\\Controllers\\{$controller}",
+                $module ? "App\\Http\\Controllers\\Dashboard\\$controller" : null,
+                $module ? "App\\Http\\Controllers\\$controller" : null,
+                "App\\Http\\Controllers\\Dashboard\\$controller",
+                "App\\Http\\Controllers\\$controller",
             ]);
 
             foreach ($possibleControllers as $class) {
@@ -528,33 +539,52 @@ if (!function_exists('modelTypeToRoute')) {
 if (!function_exists('pluralLowerCaseName')) {
     function pluralLowerCaseName(?string $models, string $type = '-')
     {
-        return implode($type, array_map([Str::class, 'lower'], array_map([Str::class, 'plural'], explode('-', $models))));
+        return implode($type, array_map([Str::class, 'lower'], array_map([Str::class, 'plural'], explode($type, $models))));
     }
 }
 
 // ارجاع الاسم مفرد => جمع
-if (!function_exists('studlySingular')) {
-    function studlySingular(?string $models, string $type = '')
+if (!function_exists('studlyCaseName')) {
+    function studlyCaseName(?string $models, string $glue = '')
     {
-        return implode($type, array_map([Str::class, 'studly'], array_map([Str::class, 'singular'], explode('-', $models))));
+        if (!$models)
+            return null;
+
+        return implode($glue, array_map(
+            fn($item) => Str::studly(Str::singular($item)),
+            preg_split('/[.\-_]/', $models)
+        ));
     }
 }
 
 // ارجاع الاسم مفرد => جمع مفصول بشرطة
-if (!function_exists('studyCapitalCaseName')) {
-    function studyCapitalCaseName(?string $models, string $type = '-')
+if (!function_exists('pluralCaseName')) {
+    function pluralCaseName(?string $models, string $glue = '-', bool $lower = false)
     {
-        return implode($type, array_map([Str::class, 'studly'], explode('-', $models)));
+        if (!$models)
+            return null;
+
+        return implode($glue, array_map(
+            fn($item) => $lower ? Str::lower(Str::studly($item)) : Str::studly($item),
+            preg_split('/[.\-_]/', $models)
+        ));
     }
 }
 
 // ارجاع الاسم مفرد مفصول بشرطة
 if (!function_exists('singularLowerCaseName')) {
-    function singularLowerCaseName(?string $models, string $type = '-')
+    function singularLowerCaseName(?string $models, string $glue = '-')
     {
-        return implode($type, array_map([Str::class, 'lower'], array_map([Str::class, 'singular'], explode('-', $models))));
+        if (!$models)
+            return null;
+
+        return implode($glue, array_map(
+            fn($item) => Str::lower(Str::singular($item)),
+            preg_split('/[.\-_]/', $models)
+        ));
     }
 }
+
 
 // تحقق من وجود ملف في التخزين
 if (!function_exists('checkExistFile')) {

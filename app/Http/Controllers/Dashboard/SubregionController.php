@@ -25,32 +25,26 @@ class SubregionController extends Controller
     {
         $validated = $request->validated();
         $created = Subregion::create($validated);
-
-        if ($created) {
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.subregion')]));
-            }
-            return redirect()->route('subregions.index')->withSuccess(__('messages.type_created', ['type' => __('main.subregion')]));
-        }
-
-        return redirect()->route('subregions.index')->withError(__('messages.type_creation_failed', ['type' => __('main.subregion')]));
+        return $created
+            ? ($request->has('save_and_add')
+                ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.subregion')]))
+                : redirect()->route('subregions.index')->with('success', __('messages.type_created', ['type' => __('main.subregion')])))
+            : redirect()->route('subregions.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.subregion')]));
     }
 
     public function show($id)
     {
         $subregion = Subregion::with('region')->find($id);
-        if (!$subregion) {
+        if (!$subregion)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregion')]));
-        }
         return view('pages.dashboard.subregions.show', compact('subregion'));
     }
 
     public function edit($id)
     {
         $subregion = Subregion::find($id);
-        if (!$subregion) {
+        if (!$subregion)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregion')]));
-        }
         $regions = Region::orderBy('name')->get();
         return view('pages.dashboard.subregions.edit', compact('subregion', 'regions'));
     }
@@ -62,13 +56,10 @@ class SubregionController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregions')]));
         }
         $validated = $request->validated();
-
         $updated = $subregions->update($validated);
-        if ($updated) {
-            return redirect()->route('subregions.index')->withSuccess(__('messages.type_updated', ['type' => __('main.subregion')]));
-        }
-
-        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.subregion')]));
+        return $updated
+            ? redirect()->route('subregions.index')->withSuccess(__('messages.type_updated', ['type' => __('main.subregion')]))
+            : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.subregion')]));
     }
 
     public function destroy($id)

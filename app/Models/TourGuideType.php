@@ -21,18 +21,16 @@ class TourGuideType extends Model
         'region_id',
         'subregion_id',
         'country_id',
-        'state_id',
-        'city_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['currency', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['currency', 'region', 'subregion', 'country', 'states', 'cities'];
     }
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id'];
+        return ['currency_id', 'region_id', 'subregion_id', 'country_id'];
     }
 
     public function currency()
@@ -55,13 +53,13 @@ class TourGuideType extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function state()
+    public function states()
     {
-        return $this->belongsTo(State::class);
+        return $this->belongsToMany(State::class, 'tour_guide_type_state');
     }
 
-    public function city()
+    public function cities()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsToMany(City::class, 'tour_guide_type_city');
     }
 }

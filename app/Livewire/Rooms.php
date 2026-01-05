@@ -51,11 +51,6 @@ class Rooms extends Component
     {
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Room::class);
-        $this->seasons = Season::with('accommodation')->get()
-            ->mapWithKeys(function ($season) {
-                $label = $season->name . ' (' . optional($season->accommodation)->name . ')';
-                return [$season->id => $label];
-            })->toArray();
         $this->currencies = Currency::whereIn('id', Room::pluck('currency_id'))->get(['code', 'name', 'id'])->toArray();
         $this->resetPage();
     }

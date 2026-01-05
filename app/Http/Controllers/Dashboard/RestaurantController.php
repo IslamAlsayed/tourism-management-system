@@ -26,13 +26,9 @@ class RestaurantController extends Controller
 
     public function create()
     {
-        $regions = Region::all();
         $currencies = Currency::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         $types = Type::all()->pluck('name', 'id');
-        $seasons = Season::orderBy('name')->get();
-        $meals = Meal::orderBy('name')->get();
-        $supplements = Supplement::orderBy('name')->get();
         return view('pages.dashboard.restaurants.create', get_defined_vars());
     }
 
@@ -86,7 +82,6 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::with((new Restaurant())->getRelationshipNames())->find($id);
         if (!$restaurant)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
-        $regions = Region::all();
         $currencies = Currency::orderBy('name')->get();
         $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         $types = Type::all()->pluck('name', 'id');

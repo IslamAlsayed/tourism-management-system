@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :requirements="[
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
         [
             'condition' => \App\Models\TransportationCompany::count() > 0,
-            'route' => route('transportation-companies.index'),
-            'label' => __('main.transportation_companies'),
+            'route' => route('transportation.companies.index'),
+            'label' => __('main.transportation-companies'),
         ],
     ]">
         <div class="mt-4">
@@ -16,26 +16,47 @@
 
         @if (env('DB_MODE') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
-            <table class="border min-w-half divide-y text-center divide-gray-200">
-                <thead class="bg-yellow-200">
+            <table class="border-custom min-w-full divide-y text-center divide-gray-200 mb-4">
+                <thead class="bg-blue-100">
                     <tr>
-                        <th class="border px-2">name</th>
-                        <th class="border px-2">min_seats</th>
-                        <th class="border px-2">max_seats</th>
-                        <th class="border px-2">seats</th>
-                        <th class="border px-2">company_id</th>
-                        <th class="border px-2">bus_type_id</th>
+                        <th class="border-custom px-2 bg-yellow-100" title="{{ __('main.required') }}">
+                            name <span class="text-red-600">*</span>
+                        </th>
+                        <th class="border-custom px-2" title="{{ __('main.optional') }}">name_ar</th>
+                        <th class="border-custom px-2 bg-yellow-100" title="{{ __('main.required') }}">
+                            company_id <span class="text-red-600">*</span>
+                        </th>
+                        <th class="border-custom px-2" title="{{ __('main.optional') }}">min_capacity</th>
+                        <th class="border-custom px-2" title="{{ __('main.optional') }}">max_capacity</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">Sedans car</td>
-                        <td class="border px-2">31</td>
-                        <td class="border px-2">49</td>
-                        <td class="border px-2">null</td>
-                        <td class="border px-2">1</td>
-                        <td class="border px-2">1</td>
+                        <td class="border-custom px-2">Microbus</td>
+                        <td class="border-custom px-2">ميكروباص</td>
+                        <td class="border-custom px-2">1</td>
+                        <td class="border-custom px-2">10</td>
+                        <td class="border-custom px-2">15</td>
+                </tbody>
+            </table>
+
+            <table class="border-custom min-w-full divide-y text-center divide-gray-200 mb-4">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="border-custom px-2" title="{{ __('main.optional') }}">has_luggage</th>
+                        <th class="border-custom px-2" title="{{ __('main.optional') }}">is_air_conditioning</th>
+                        <th class="border-custom px-2" title="{{ __('main.optional') }}">is_active</th>
+                        <th class="border-custom px-2" title="{{ __('main.optional') }}">description</th>
+                        <th class="border-custom px-2" title="{{ __('main.optional') }}">notes</th>
                     </tr>
+                </thead>
+                <tbody class="background divide-y divide-gray-200">
+                    <tr>
+                        <td class="border-custom px-2">1</td>
+                        <td class="border-custom px-2">1</td>
+                        <td class="border-custom px-2">1</td>
+                        <td class="border-custom px-2">A comfortable microbus for city tours.</td>
+                        <td class="border-custom px-2">Includes Wi-Fi and refreshments.</td </tr>
                 </tbody>
             </table>
         @endif

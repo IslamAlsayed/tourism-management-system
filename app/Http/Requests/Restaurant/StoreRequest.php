@@ -31,8 +31,8 @@ class StoreRequest extends FormRequest
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
-            'state_id' => ['nullable', 'integer', 'exists:states,id'],
-            'city_id' => ['nullable', 'integer', 'exists:cities,id'],
+            'state_id' => ['nullable', 'string', 'exists:states,id'],
+            'city_id' => ['nullable', 'string', 'exists:cities,id'],
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
 

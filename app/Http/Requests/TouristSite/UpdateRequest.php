@@ -124,13 +124,13 @@ class UpdateRequest extends FormRequest
 
             // Visitor Information
             'estimated_visit_duration' => ['nullable', 'integer', 'min:1'],
-            'difficulty_level' => ['nullable', 'string', 'in:easy,moderate,challenging,extreme'],
+            'difficulty_level' => ['nullable', 'string'],
             'age_restrictions' => ['nullable', 'json'],
             'best_visit_time' => ['nullable', 'array'],
             'best_visit_time.*' => ['string', 'max:50'],
 
             // Administrative
-            'status' => ['nullable', 'string', 'in:active,inactive,maintenance,permanently_closed'],
+            'status' => ['nullable', 'string'],
             'is_active' => ['nullable', 'boolean'],
             'is_featured' => ['nullable', 'boolean'],
             'is_verified' => ['nullable', 'boolean'],

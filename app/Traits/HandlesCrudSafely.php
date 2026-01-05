@@ -25,8 +25,7 @@ trait HandlesCrudSafely
     public function safeDestroy($id, $modelClass, $type, $showToast = true)
     {
         return $this->safeRun(function () use ($id, $modelClass, $type, $showToast) {
-            // $modelName = studlySingular($type);
-            // $modelClass = "App\\Models\\$modelName";
+            // $modelClass = "App\\Models\\" . studlyCaseName($type);
             if (!class_exists($modelClass)) {
                 throw new \Exception("Model class $modelClass does not exist");
             }

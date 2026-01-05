@@ -62,6 +62,12 @@
                         'value' => old('description'),
                     ])
 
+                    {{-- Notes --}}
+                    @include('components.elements.input-text-editor', [
+                        'name' => 'notes',
+                        'value' => old('notes'),
+                    ])
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                         <div class="flex items-center gap-3">
                             <input type="hidden" name="is_active" value="0">

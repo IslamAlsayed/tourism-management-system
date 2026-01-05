@@ -2,6 +2,7 @@
     'title',
     'description',
     'models',
+    'view',
     'route' => null,
     'cancelRoute' => null,
     'requirements' => [],
@@ -13,7 +14,7 @@
 
 @php
     $formRoute = $route ?? route('import.data.post', ['models' => $models]);
-    $models = str_replace('.', '-', $models);
+    $models = $view;
     $backRoute = $cancelRoute ?? route("$models.index");
 @endphp
 
@@ -21,7 +22,7 @@
     <div class="flex flex-col">
         <div class="-mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="align-middle inline-block min-w-full lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg pt-0">
+                <div class="background overflow-hidden shadow-sm sm:rounded-lg pt-0">
                     <h1 class="text-xl font-semibold">{{ $title }}</h1>
                     <p class="mb-3">{{ $description }}</p>
 

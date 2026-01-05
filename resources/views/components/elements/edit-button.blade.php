@@ -1,12 +1,28 @@
-<a href="{{ route(isset($models) ? "$models.edit" : '', isset($id) ? $id : '') }}"
-    class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white" style="{{ isset($styles) ? $styles : '' }}" wire:ignore>
+@php
+    $routeName = isset($models) ? "{$models}.edit" : null;
+    $route = $routeName ? Route::getRoutes()->getByName($routeName) : null;
+    $parameterName = $route ? collect($route->parameterNames())->first() : null;
 
-    @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
-        {!! $text ?? __('main.edit') !!}
-    @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
-        <i class="fas fa-edit text-white"></i>
-    @else
-        <i class="fas fa-edit text-white"></i>
-        {!! $text ?? __('main.edit') !!}
-    @endif
-</a>
+    $routeParams = array_filter(
+        [
+            $parameterName => $id ?? null,
+            'type' => request()->query('type'),
+        ],
+        fn($value) => !is_null($value),
+    );
+@endphp
+
+@if ($routeName)
+    <a href="{{ route($routeName, $routeParams) }}" class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white"
+        style="{{ $styles ?? '' }}" wire:ignore>
+
+        @if (getActiveUser()->button_display_mode === 'text')
+            {!! $text ?? __('main.edit') !!}
+        @elseif (getActiveUser()->button_display_mode === 'icon')
+            <i class="fas fa-edit text-white"></i>
+        @else
+            <i class="fas fa-edit text-white"></i>
+            {!! $text ?? __('main.edit') !!}
+        @endif
+    </a>
+@endif

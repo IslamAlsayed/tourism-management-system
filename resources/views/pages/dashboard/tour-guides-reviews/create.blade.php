@@ -22,19 +22,12 @@
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-4 lg:gap-6">
-            <!-- Tour Guides Reviews Form -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.tour-guide-review')]) }}
-                    </h3>
-                </div>
-                <div class="kt-card-body">
-                    <form method="POST" action="{{ route('tour-guides-reviews.store') }}" enctype="multipart/form-data"
-                        class="space-y-6 p-4">
-                        @csrf
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+        <div class="kt-card p-4">
+            <div class="kt-card-body">
+                <form class="space-y-6" method="POST" action="{{ route('tour-guides-reviews.store') }}">
+                    @csrf
+                    <div class="grid gap-4 lg:gap-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Tour Guide -->
                             <div class="">
                                 <label for="tour_guide_id" class="kt-label required mb-2 flex items-center justify-between">
@@ -64,38 +57,36 @@
                             'value' => old('review'),
                         ])
 
-                        <div class="space-y-6 mb-4">
-                            <!-- Rating -->
-                            <div class="">
-                                <label for="rating" class="kt-label mb-2">{{ __('main.rating') }}</label>
-                                <div class="flex flex-col">
-                                    <div class="inline-flex flex-wrap items-center gap-6">
-                                        @for ($star = 1; $star <= 5; $star++)
-                                            <div class="custom-input">
-                                                <input type="radio" name="rating" class="mb-0 rating"
-                                                    id="{{ $star }}" value="{{ $star }}">
+                        <!-- Rating -->
+                        <div class="">
+                            <label for="rating" class="kt-label mb-2">{{ __('main.rating') }}</label>
+                            <div class="flex flex-col">
+                                <div class="inline-flex flex-wrap items-center gap-6">
+                                    @for ($star = 1; $star <= 5; $star++)
+                                        <div class="custom-input">
+                                            <input type="radio" name="rating" class="mb-0 rating"
+                                                id="{{ $star }}" value="{{ $star }}">
 
-                                                <label for="{{ $star }}">
-                                                    {{ $star }}
+                                            <label for="{{ $star }}">
+                                                {{ $star }}
 
-                                                    @for ($i = 0; $i < $star; $i++)
-                                                        <i class="fas fa-star" style="color: #ffdd00"></i>
-                                                    @endfor
-                                                </label>
-                                            </div>
-                                        @endfor
-                                    </div>
+                                                @for ($i = 0; $i < $star; $i++)
+                                                    <i class="fas fa-star" style="color: #ffdd00"></i>
+                                                @endfor
+                                            </label>
+                                        </div>
+                                    @endfor
                                 </div>
-                                @error('rating')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
                             </div>
+                            @error('rating')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Save Submit -->
                         @include('components.elements.save-submit', ['models' => 'tour-guides-reviews'])
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

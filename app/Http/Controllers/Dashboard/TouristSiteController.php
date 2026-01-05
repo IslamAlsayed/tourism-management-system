@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\TouristSite;
-use App\Models\Region;
 use App\Models\Currency;
+use App\Models\TouristSite;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\TouristSite\StoreRequest;
 use App\Http\Requests\TouristSite\UpdateRequest;
 
@@ -21,7 +21,6 @@ class TouristSiteController extends Controller
 
     public function create()
     {
-        $regions = Region::orderBy('name')->get();
         $currencies = Currency::orderBy('name')->get();
         $siteTypes = config('helpers.site_types') ?: [];
         $categories = config('helpers.categories') ?: [];
@@ -33,55 +32,39 @@ class TouristSiteController extends Controller
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
-        $data = array_merge($validated, $request->safe()->except('photo'));
+        $data = array_merge($validated, $request->safe()->except(['main_image', 'gallery_images']));
 
-        // Handle location arrays (if multi-select)
-        if (isset($data['state_id']) && is_array($data['state_id'])) {
-            $data['state_id'] = $data['state_id'][0] ?? null;
-        }
-        if (isset($data['city_id']) && is_array($data['city_id'])) {
-            $data['city_id'] = $data['city_id'][0] ?? null;
-        }
-
-        // Handle JSON fields
-        $jsonFields = ['facilities', 'activities', 'services', 'operating_days', 'tags', 'best_visit_time'];
-        foreach ($jsonFields as $field) {
-            if (isset($data[$field]) && is_string($data[$field])) {
-                $data[$field] = json_decode($data[$field], true);
-            }
-        }
-
-        // Set created_by
         $data['created_by'] = getActiveUser()->id;
         $created = TouristSite::create($data);
         if ($created) {
-            $this->uploadPhoto($request, $created, 'photo', "tourist-sites");
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.tourist_site')]));
+            if ($request->hasFile('main_image')) {
+                $this->uploadPhoto($request, $created, 'main_image', "tourist-sites", 'main_image');
             }
-
-            return redirect()->route('tourist-sites.index')->withSuccess(__('messages.type_created', ['type' => __('main.tourist_site')]));
+            if ($request->hasFile('gallery_images')) {
+                foreach ($request->file('gallery_images') as $image) {
+                    $this->uploadPhoto($image, $created, 'gallery_images', "tourist-sites", 'gallery_images');
+                }
+            }
+            return $request->has('save_and_add')
+                ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.tourist_site')]))
+                : redirect()->route('tourist-sites.index')->withSuccess(__('messages.type_created', ['type' => __('main.tourist_site')]));
         }
-
         return redirect()->route('tourist-sites.index')->withError(__('messages.type_creation_failed', ['type' => __('main.tourist_site')]));
     }
 
     public function show($id)
     {
-        $touristSite = TouristSite::with(['region', 'subregion', 'country', 'state', 'city', 'creator', 'updater'])->find($id);
-        if (!$touristSite) {
+        $touristSite = TouristSite::with((new TouristSite())->getRelationshipNames())->find($id);
+        if (!$touristSite)
             return redirect()->route('tourist-sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist_site')]));
-        }
         return view('pages.dashboard.tourist-sites.show', compact('touristSite'));
     }
 
     public function edit($id)
     {
-        $touristSite = TouristSite::with(['region', 'subregion', 'country', 'state', 'city'])->find($id);
-        if (!$touristSite) {
+        $touristSite = TouristSite::find($id);
+        if (!$touristSite)
             return redirect()->route('tourist-sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist_site')]));
-        }
-        $regions = Region::orderBy('name')->get();
         $currencies = Currency::orderBy('name')->get();
         $siteTypes = config('helpers.site_types') ?: [];
         $categories = config('helpers.categories') ?: [];
@@ -93,43 +76,53 @@ class TouristSiteController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $touristSite = TouristSite::find($id);
-        if (!$touristSite) {
+        if (!$touristSite)
             return redirect()->route('tourist-sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist_site')]));
-        }
         $validated = $request->validated();
-        $data = array_merge($validated, $request->safe()->except('photo'));
-        // Handle location arrays (if multi-select)
-        if (isset($data['state_id']) && is_array($data['state_id'])) {
-            $data['state_id'] = $data['state_id'][0] ?? null;
-        }
-        if (isset($data['city_id']) && is_array($data['city_id'])) {
-            $data['city_id'] = $data['city_id'][0] ?? null;
-        }
-        // Handle JSON fields
-        $jsonFields = ['facilities', 'activities', 'services', 'operating_days', 'tags', 'best_visit_time'];
-        foreach ($jsonFields as $field) {
-            if (isset($data[$field]) && is_string($data[$field])) {
-                $data[$field] = json_decode($data[$field], true);
+        $data = array_merge($validated, $request->safe()->except(['main_image', 'gallery_images', 'remove_main_image', 'remove_gallery_images']));
+
+        $data['updated_by'] = getActiveUser()->id;
+
+        // Handle main image removal
+        if ($request->input('remove_main_image') == '1') {
+            if ($touristSite->main_image) {
+                Storage::disk('public')->delete($touristSite->main_image);
+                $data['main_image'] = null;
             }
         }
-        // Set updated_by
-        $data['updated_by'] = getActiveUser()->id;
+
+        // Handle gallery images removal
+        if ($request->has('remove_gallery_images') && !empty($request->input('remove_gallery_images'))) {
+            $removeImages = json_decode($request->input('remove_gallery_images'), true);
+            if (is_array($removeImages) && !empty($removeImages)) {
+                $currentGallery = $touristSite->gallery_images ?? [];
+                foreach ($removeImages as $removeImage) {
+                    Storage::disk('public')->delete($removeImage);
+                    $currentGallery = array_filter($currentGallery, fn($img) => $img !== $removeImage);
+                }
+                $data['gallery_images'] = array_values($currentGallery);
+            }
+        }
+
         $updated = $touristSite->update($data);
-        if ($request->has('photo')) {
-            $this->uploadPhoto($request, $touristSite, 'photo', "tourist-sites");
+        if ($request->hasFile('main_image')) {
+            $this->uploadPhoto($request, $touristSite, 'main_image', "tourist-sites");
         }
-        if ($updated) {
-            return redirect()->route('tourist-sites.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tourist_site')]));
+        if ($request->hasFile('gallery_images')) {
+            foreach ($request->file('gallery_images') as $image) {
+                $this->uploadPhoto($image, $touristSite, 'gallery_images', "tourist-sites");
+            }
         }
-        return redirect()->route('tourist-sites.index')->withError(__('messages.type_update_failed', ['type' => __('main.tourist_site')]));
+        return $updated
+            ? redirect()->route('tourist-sites.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tourist_site')]))
+            : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.tourist_site')]));
     }
 
     public function destroy($id)
     {
         $touristSite = TouristSite::find($id);
-        if (!$touristSite) {
+        if (!$touristSite)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tourist_site')]));
-        }
         $deleted = $touristSite->delete();
         return $deleted
             ? redirect()->route('tourist-sites.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tourist_site')]))

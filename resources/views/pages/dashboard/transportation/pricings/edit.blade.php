@@ -37,21 +37,34 @@
                     <div class="kt-card-body p-4">
                         <livewire:transportation.pricing-steps :record="$pricing" />
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 items-end gap-6">
                             <!-- Price -->
-                            <div class="align-self-end">
+                            <div>
                                 <label for="price" class="kt-label">
                                     {{ __('main.price') }}
+                                    <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <input type="text" name="price" id="price" class="kt-input h-[45px]"
-                                    value="{{ $pricing->price }}">
+                                <input type="number" name="price" id="price" class="kt-input h-[45px]"
+                                    value="{{ $pricing->price }}" minlength="1">
                                 @error('price')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            <!-- Tax -->
+                            <div>
+                                <label for="tax" class="kt-label">{{ __('main.tax') }}
+                                    <span class="text-primary font-semibold">(%)</span>
+                                </label>
+                                <input type="number" name="tax" id="tax" class="kt-input h-[45px]"
+                                    value="{{ $pricing->tax }}" minlength="0" maxlength="100">
+                                @error('tax')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Pricing Unit -->
-                            <div class="align-self-end">
+                            <div>
                                 <label for="pricing_unit_id" class="kt-label">
                                     {{ __('main.pricing_unit') }}
                                 </label>
@@ -68,6 +81,13 @@
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            {{-- Currency --}}
+                            @include('components.selects.currency', [
+                                'name' => 'currency',
+                                'currencies' => $currencies,
+                                'record' => $pricing,
+                            ])
                         </div>
                     </div>
                 </div>

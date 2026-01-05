@@ -17,23 +17,12 @@
     @endcomponent
 
     <div class="kt-card-content px-2" wire:loading.class="loading"
-        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterSeasonId,filterCurrencyId,filterStatus">
+        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterCurrencyId,filterStatus">
         <!-- Filters -->
         <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 filterTable">
             <div>
-                <select wire:model.live="filterSeasonId" class="kt-select h-[40px] w-[300px]" data-kt-select="true"
-                    data-kt-select-placeholder="{{ __('main.season') }}">
-                    <option value="all">{{ __('main.all') }}</option>
-                    @foreach ($seasons as $id => $name)
-                        <option value="{{ $id }}" title="{{ $name }}">
-                            {{ $name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div>
-                <select wire:model.live="filterCurrencyId" class="kt-select h-[40px] w-48 max-w-full"
-                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.currency') }}">
+                <select wire:model.live="filterCurrencyId" class="kt-select h-[40px] w-48 max-w-full" data-kt-select="true"
+                    data-kt-select-placeholder="{{ __('main.currency') }}">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($currencies as $currency)
                         <option value="{{ $currency['id'] }}" title="{{ $currency['name'] }}">

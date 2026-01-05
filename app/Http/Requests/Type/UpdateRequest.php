@@ -18,8 +18,9 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'nullable|string|max:255|unique:types,name,' . $typeId,
             'name_ar' => 'nullable|string|max:255',
-            'description' => 'nullable|string|max:1000',
             'is_active' => 'boolean',
+            'description' => 'nullable|string|max:1000',
+            'notes' => 'nullable|string|max:1000',
         ];
     }
 }

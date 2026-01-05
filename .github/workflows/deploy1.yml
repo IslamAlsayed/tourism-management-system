@@ -46,16 +46,6 @@ jobs:
           find . -mindepth 1 -not -name '.git' -not -name '.env' -exec cp -r --parents '{}' \$DST \;
           "
 
-      # Step 3: Run fresh migrations
-      - name: 🗄️ Migrate Database
-        run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan migrate --force"
-
-      # Step 4: Run seeders
-      - name: 🗄️ Seeders Database
-        run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.SERVER_PATH }}/project_root && php artisan db:seed --force"
-
       # Step 5: Clear caches
       - name: 🧹 Clear Cache
         run: |

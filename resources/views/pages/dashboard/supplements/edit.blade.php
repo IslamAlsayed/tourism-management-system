@@ -26,10 +26,10 @@
             <div class="kt-card-body">
                 <form class="space-y-6" method="POST" action="{{ route('supplements.update', $supplement->id) }}">
                     @csrf
+                    <input type="hidden" name="type" value="{{ request()->query('type') }}">
+
                     @method('PUT')
                     <div class="grid gap-4 lg:gap-6">
-
-                        <!-- Supplement Information -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
                             {{-- Polymorphic Model Select --}}
                             <livewire:polymorphic-model-select :record="$supplement" />

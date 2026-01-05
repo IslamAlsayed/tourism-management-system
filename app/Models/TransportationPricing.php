@@ -30,16 +30,17 @@ class TransportationPricing extends Model
         'vehicle_type_id',
         'season_id',
         'pricing_unit_id',
+        'currency_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['company', 'vehicleType', 'season', 'pricingUnit'];
+        return ['company', 'vehicleType', 'season', 'pricingUnit', 'currency'];
     }
 
     public function getExcludedColumns()
     {
-        return ['company_id', 'vehicle_type_id', 'season_id', 'pricing_unit_id', 'description', 'notes'];
+        return ['company_id', 'vehicle_type_id', 'season_id', 'pricing_unit_id', 'currency_id', 'description', 'notes'];
     }
 
     public function company()
@@ -60,5 +61,10 @@ class TransportationPricing extends Model
     public function pricingUnit()
     {
         return $this->belongsTo(PricingDefinition::class);
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 }

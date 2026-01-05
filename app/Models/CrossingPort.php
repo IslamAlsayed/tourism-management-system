@@ -271,4 +271,9 @@ class CrossingPort extends Model
         }
         return $this->operating_hours ?? 'Not specified';
     }
+
+    public function getFormattedVisaLastUpdateAttribute()
+    {
+        return $this->visa_last_update ? \Carbon\Carbon::parse($this->visa_last_update)->format('Y-m-d') : null;
+    }
 }

@@ -453,36 +453,36 @@
                                 @enderror
                             </div>
 
-                            <!-- Opening Hours -->
+                            <!-- Opening Time -->
                             <div class="">
-                                <label for="opening_hours"
-                                    class="kt-label required mb-2">{{ __('main.opening_hours') }}</label>
-                                <input type="time" name="opening_hours" id="opening_hours" class="kt-input h-[45px]"
-                                    value="{{ old('opening_hours') }}" required>
-                                @error('opening_hours')
+                                <label for="opening_time"
+                                    class="kt-label required mb-2">{{ __('main.opening_time') }}</label>
+                                <input type="time" name="opening_time" id="opening_time" class="kt-input h-[45px]"
+                                    value="{{ old('opening_time') }}" required>
+                                @error('opening_time')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Best Time to Visit -->
-                            <div class="">
+                            {{-- <div class="">
                                 <label for="best_time" class="kt-label required mb-2">{{ __('main.best_time') }}</label>
                                 <input type="time" name="best_time" id="best_time" class="kt-input h-[45px]"
                                     value="{{ old('best_time') }}" required>
                                 @error('best_time')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <!-- Duration -->
-                            <div class="">
+                            {{-- <div class="">
                                 <label for="duration" class="kt-label required mb-2">{{ __('main.duration') }}</label>
                                 <input type="text" name="duration" id="duration" class="kt-input h-[45px]"
                                     value="{{ old('duration') }}" required>
                                 @error('duration')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <!-- Recommended Duration -->
                             <div class="">
@@ -827,7 +827,7 @@
 
                     const img = document.createElement('img');
                     img.src = e.target.result;
-                    img.className = 'rounded-lg shadow-md max-w-xs h-auto';
+                    img.className = 'h-32 w-32 rounded-lg shadow-md h-auto';
 
                     const removeBtn = document.createElement('button');
                     removeBtn.type = 'button';

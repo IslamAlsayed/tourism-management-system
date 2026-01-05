@@ -340,6 +340,12 @@ th:has(i, svg) {
     background-color: yellow;
 }
 
+html.dark {
+    .highlight {
+        background-color: #0400ff;
+    }
+}
+
 .customSelect:focus {
     outline: none;
 }

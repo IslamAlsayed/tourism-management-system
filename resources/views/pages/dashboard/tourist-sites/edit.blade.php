@@ -176,7 +176,18 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                                 <!-- Preview Main Image -->
-                                <div id="main_image_preview" class="mt-3"></div>
+                                <div id="main_image_preview" class="mt-3">
+                                    @if ($touristSite->main_image)
+                                        <div class="relative inline-block" id="existing_main_image">
+                                            <img src="{{ asset('storage/' . $touristSite->main_image) }}"
+                                                alt="Main Image" class="h-32 w-32 object-cover rounded-lg shadow-md">
+                                            <button type="button" onclick="removeExistingMainImage()"
+                                                class="absolute -top-2 -right-2 z-20 bg-danger text-white cursor-pointer rounded-full w-6 h-6 text-center">×</button>
+                                        </div>
+                                        <input type="hidden" name="remove_main_image" id="remove_main_image"
+                                            value="0">
+                                    @endif
+                                </div>
                             </div>
 
                             <!-- Gallery Images -->
@@ -188,7 +199,23 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                                 <!-- Preview Gallery Images -->
-                                <div id="gallery_preview" class="mt-3 grid grid-cols-4 gap-2"></div>
+                                <div id="gallery_preview" class="mt-3 grid grid-cols-4 gap-2">
+                                    @if ($touristSite->gallery_images && is_array($touristSite->gallery_images))
+                                        @foreach ($touristSite->gallery_images as $index => $image)
+                                            @if (!empty($image) && is_string($image))
+                                                <div class="relative" id="existing_gallery_{{ $index }}">
+                                                    <img src="{{ asset('storage/' . $image) }}" alt="Gallery Image"
+                                                        class="rounded-lg shadow-md w-full h-24 object-cover">
+                                                    <button type="button"
+                                                        onclick="removeExistingGalleryImage({{ $index }}, '{{ $image }}')"
+                                                        class="absolute -top-2 -right-2 z-20 bg-danger text-white cursor-pointer rounded-full w-6 h-6 text-center">×</button>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <input type="hidden" name="remove_gallery_images" id="remove_gallery_images"
+                                    value="">
                             </div>
 
                             <!-- Video URL -->
@@ -458,35 +485,36 @@
                                 @enderror
                             </div>
 
-                            <!-- Opening Hours -->
+                            <!-- Opening Time -->
                             <div class="">
-                                <label for="opening_hours" class="kt-label mb-2">{{ __('main.opening_hours') }}</label>
-                                <input type="time" name="opening_hours" id="opening_hours" class="kt-input h-[45px]"
-                                    value="{{ $touristSite->opening_hours }}">
-                                @error('opening_hours')
+                                <label for="opening_time" class="kt-label mb-2">{{ __('main.opening_time') }}</label>
+                                <input type="time" name="opening_time" id="opening_time" class="kt-input h-[45px]"
+                                    value="{{ $touristSite->formatted_opening_time }}">
+                                @error('opening_time')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Best Time to Visit -->
-                            <div class="">
+                            {{-- <div class="">
                                 <label for="best_time" class="kt-label mb-2">{{ __('main.best_time') }}</label>
                                 <input type="time" name="best_time" id="best_time" class="kt-input h-[45px]"
                                     value="{{ $touristSite->best_time }}">
                                 @error('best_time')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <!-- Duration -->
-                            <div class="">
-                                <label for="duration" class="kt-label mb-2">{{ __('main.duration') }}</label>
-                                <input type="text" name="duration" id="duration" class="kt-input h-[45px]"
-                                    value="{{ $touristSite->duration }}">
+                            {{-- <div class="">
+                                <label for="duration"
+                                    class="kt-label mb-2">{{ __('main.duration') }}</label>
+                                <input type="text" name="duration" id="duration"
+                                    class="kt-input h-[45px]" value="{{ $touristSite->duration }}">
                                 @error('duration')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <!-- Recommended Duration -->
                             <div class="">
@@ -836,20 +864,49 @@
 
 @push('scripts')
     <script>
+        // Track removed gallery images
+        let removedGalleryImages = [];
+
+        // Remove existing main image
+        function removeExistingMainImage() {
+            document.getElementById('existing_main_image').style.display = 'none';
+            document.getElementById('remove_main_image').value = '1';
+        }
+
+        // Remove existing gallery image
+        function removeExistingGalleryImage(index, imagePath) {
+            document.getElementById('existing_gallery_' + index).style.display = 'none';
+            removedGalleryImages.push(imagePath);
+            document.getElementById('remove_gallery_images').value = JSON.stringify(removedGalleryImages);
+        }
+
         // Image Preview for Main Image
         document.getElementById('main_image').addEventListener('change', function(e) {
             const preview = document.getElementById('main_image_preview');
-            preview.innerHTML = '';
+            const existingImg = document.getElementById('existing_main_image');
 
             if (this.files && this.files[0]) {
+                // Hide existing image when new image is selected
+                if (existingImg) {
+                    existingImg.style.display = 'none';
+                    document.getElementById('remove_main_image').value = '1';
+                }
+
+                // Remove old new preview if exists
+                const oldNewPreview = document.getElementById('new_main_image_preview');
+                if (oldNewPreview) {
+                    oldNewPreview.remove();
+                }
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const container = document.createElement('div');
                     container.className = 'relative inline-block';
+                    container.id = 'new_main_image_preview';
 
                     const img = document.createElement('img');
                     img.src = e.target.result;
-                    img.className = 'rounded-lg shadow-md max-w-xs h-auto';
+                    img.className = 'h-32 w-32 rounded-lg shadow-md object-cover';
 
                     const removeBtn = document.createElement('button');
                     removeBtn.type = 'button';
@@ -858,7 +915,12 @@
                         'absolute -top-2 -right-2 z-20 bg-danger text-white cursor-pointer rounded-full w-6 h-6 text-center';
                     removeBtn.onclick = function() {
                         document.getElementById('main_image').value = '';
-                        preview.innerHTML = '';
+                        container.remove();
+                        // Show existing image again if it was hidden
+                        if (existingImg) {
+                            existingImg.style.display = 'inline-block';
+                            document.getElementById('remove_main_image').value = '0';
+                        }
                     };
 
                     container.appendChild(img);
@@ -871,22 +933,37 @@
 
         // Image Preview for Gallery Images
         const galleryInput = document.getElementById('gallery_images');
-        const galleryDataTransfer = new DataTransfer();
+        const galleryPreview = document.getElementById('gallery_preview');
+        let newGalleryFiles = new DataTransfer();
+        let existingGalleryHidden = false;
 
         galleryInput.addEventListener('change', function(e) {
-            const preview = document.getElementById('gallery_preview');
-            preview.innerHTML = '';
-            galleryDataTransfer.items.clear();
+            if (this.files && this.files.length > 0) {
+                // Hide all existing gallery images when new images are selected
+                if (!existingGalleryHidden) {
+                    document.querySelectorAll('[id^="existing_gallery_"]').forEach(function(element) {
+                        if (element.style.display !== 'none') {
+                            element.style.display = 'none';
+                            const imagePath = element.querySelector('img').src.replace(window.location
+                                .origin + '/storage/', '');
+                            if (!removedGalleryImages.includes(imagePath)) {
+                                removedGalleryImages.push(imagePath);
+                            }
+                        }
+                    });
+                    document.getElementById('remove_gallery_images').value = JSON.stringify(removedGalleryImages);
+                    existingGalleryHidden = true;
+                }
 
-            if (this.files) {
                 Array.from(this.files).forEach((file, index) => {
-                    galleryDataTransfer.items.add(file);
+                    newGalleryFiles.items.add(file);
 
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         const div = document.createElement('div');
-                        div.className = 'relative';
-                        div.dataset.index = index;
+                        div.className = 'relative new-gallery-item';
+                        div.dataset.fileIndex = newGalleryFiles.files.length - Array.from(
+                            galleryInput.files).length + index;
 
                         const img = document.createElement('img');
                         img.src = e.target.result;
@@ -898,29 +975,37 @@
                         removeBtn.className =
                             'absolute -top-2 -right-2 z-20 bg-danger text-white cursor-pointer rounded-full w-6 h-6 text-center';
                         removeBtn.onclick = function() {
-                            // Remove from DataTransfer
-                            const newDataTransfer = new DataTransfer();
-                            for (let i = 0; i < galleryDataTransfer.files.length; i++) {
-                                if (i !== index) {
-                                    newDataTransfer.items.add(galleryDataTransfer.files[i]);
+                            div.remove();
+                            // Rebuild DataTransfer without this file
+                            const tempTransfer = new DataTransfer();
+                            Array.from(newGalleryFiles.files).forEach((f, i) => {
+                                if (i !== parseInt(div.dataset.fileIndex)) {
+                                    tempTransfer.items.add(f);
                                 }
+                            });
+                            newGalleryFiles = tempTransfer;
+                            galleryInput.files = newGalleryFiles.files;
+
+                            // If no new images, show existing images again
+                            if (newGalleryFiles.files.length === 0) {
+                                document.querySelectorAll('[id^="existing_gallery_"]').forEach(
+                                    function(element) {
+                                        element.style.display = 'block';
+                                    });
+                                removedGalleryImages = [];
+                                document.getElementById('remove_gallery_images').value = '';
+                                existingGalleryHidden = false;
                             }
-
-                            // Update the input files and preview
-                            galleryInput.files = newDataTransfer.files;
-
-                            // Trigger change to refresh preview
-                            galleryInput.dispatchEvent(new Event('change'));
                         };
 
                         div.appendChild(img);
                         div.appendChild(removeBtn);
-                        preview.appendChild(div);
+                        galleryPreview.appendChild(div);
                     };
                     reader.readAsDataURL(file);
                 });
 
-                galleryInput.files = galleryDataTransfer.files;
+                galleryInput.files = newGalleryFiles.files;
             }
         });
     </script>

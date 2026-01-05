@@ -24,21 +24,14 @@ class SupplementController extends Controller
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
-        if ($request->input('model_type') == 'restaurant' && $request->filled('model_id')) {
-            $validated['model_id'] = $request->input('model_id');
-            $validated['model_type'] = Restaurant::class;
-        } elseif ($request->input('model_type') == 'accommodation' && $request->filled('model_id')) {
-            $validated['model_id'] = $request->input('model_id');
-            $validated['model_type'] = Accommodation::class;
-        }
-        $supplement = Supplement::create($validated);
-        if ($supplement) {
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.supplement')]));
-            }
-            return redirect()->route('supplements.index')->withSuccess(__('messages.type_created', ['type' => __('main.supplement')]));
-        }
-        return redirect()->route('supplements.index')->withError(__('messages.type_creation_failed', ['type' => __('main.supplement')]));
+        $validated['model_id'] = $request->input('model_id');
+        $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
+        $created = Supplement::create($validated);
+        return $created
+            ? ($request->has('save_and_add')
+                ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.supplement')]))
+                : redirect()->route('supplements.index', ['type' => $request->input('type')])->with('success', __('messages.type_created', ['type' => __('main.supplement')])))
+            : redirect()->route('supplements.index', ['type' => $request->input('type')])->with('error', __('messages.type_creation_failed', ['type' => __('main.supplement')]));
     }
 
     public function show($id)
@@ -63,18 +56,12 @@ class SupplementController extends Controller
         if (!$supplement)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.supplement')]));
         $validated = $request->validated();
-        if ($request->input('model_type') === 'restaurant' && $request->filled('model_id')) {
-            $validated['model_id'] = $request->input('model_id');
-            $validated['model_type'] = Restaurant::class;
-        } elseif ($request->input('model_type') === 'accommodation' && $request->filled('model_id')) {
-            $validated['model_id'] = $request->input('model_id');
-            $validated['model_type'] = Accommodation::class;
-        }
+        $validated['model_id'] = $request->input('model_id');
+        $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
         $updated = $supplement->update($validated);
-        if ($updated) {
-            return redirect()->route('supplements.index')->withSuccess(__('messages.type_updated', ['type' => __('main.supplement')]));
-        }
-        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.supplement')]));
+        return $updated
+            ? redirect()->route('supplements.index', ['type' => $request->input('type')])->withSuccess(__('messages.type_updated', ['type' => __('main.supplement')]))
+            : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.supplement')]));
     }
 
     public function destroy($id)

@@ -778,12 +778,12 @@
         <td title="{{ optional($model->company)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->company)->name ?? '--', 30), $search) !!}</td>
     @break
 
-    @case('vehicle_type')
-        <td title="{{ optional($model->vehicle_type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->vehicle_type)->name ?? '--', 30), $search) !!}</td>
+    @case('vehicleType')
+        <td title="{{ optional($model->vehicleType)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->vehicleType)->name ?? '--', 30), $search) !!}</td>
     @break
 
-    @case('pricing_unit')
-        <td title="{{ optional($model->pricing_unit)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->pricing_unit)->name ?? '--', 30), $search) !!}</td>
+    @case('pricingUnit')
+        <td title="{{ optional($model->pricingUnit)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->pricingUnit)->name ?? '--', 30), $search) !!}</td>
     @break
 
     @case('region')
@@ -908,7 +908,7 @@
     @case('guide_type')
         <td title="{{ optional($model->guide_type)->type ?? '--' }}">
             @if ($model->guide_type)
-                <a href="{{ route('guide-types.show', $model->guide_type->id) }}"
+                <a href="{{ route('tour-guides-types.show', $model->guide_type->id) }}"
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->guide_type)->type ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
@@ -922,25 +922,42 @@
         </td>
     @break
 
+    @case('tourGuideLanguages')
+        <td title="{{ $model->tourGuideLanguages->pluck('language.name')->filter()->implode(', ') }}">
+            @php
+                $languageNames = $model->tourGuideLanguages->pluck('language.name')->filter();
+            @endphp
+            @if ($languageNames->count() > 0)
+                @foreach ($languageNames->take(3) as $languageName)
+                    <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($languageName ?? '--', 30), $search) !!}
+                    </span>
+                @endforeach
+                @if ($languageNames->count() > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        ...
+                    </div>
+                @endif
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
     @case('type')
-        <td title="{{ is_string($model->type) ? __('main.' . $model->type) : optional($model->type)->name ?? '--' }}">
+        <td title="{{ is_string($model->type) ? $model->type : optional($model->type)->name ?? '--' }}">
             <span class="kt-badge kt-badge-info">
                 {!! highlightSearch(
-                    limitedText(is_string($model->type) ? __('main.' . $model->type) : optional($model->type)->name ?? '--', 30),
+                    limitedText(is_string($model->type) ? $model->type : optional($model->type)->name ?? '--', 30),
                     $search,
                 ) !!}
             </span>
         </td>
     @break
 
-    {{-- @case('type')
-        <td title="{{ is_string($model->type) ? $model->type : optional($model->type)->name ?? '--' }}">
-            <span class="kt-badge kt-badge-info">{!! highlightSearch(
-                limitedText(is_string($model->type) ? $model->type : optional($model->type)->name ?? '--', 30),
-                $search,
-            ) !!}</span>
-        </td>
-    @break --}}
     @case('classification')
         <td title="{{ $model->classification ?? '--' }}">
             <span class="kt-badge kt-badge-info">{!! highlightSearch(limitedText($model->classification ?? '--', 30), $search) !!}</span>
@@ -1000,12 +1017,12 @@
             @if ($model->all_states == 1)
                 <div
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
-                    {!! highlightSearch(limitedText($model->all_states == 1 ? 'all' : '--', 30), $search) !!}
+                    {!! highlightSearch(limitedText($model->all_states == 1 ? __('main.yes') : '--', 30), $search) !!}
                 </div>
             @else
                 <div
-                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
-                    <i class="opacity-25">null</i>
+                    class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    {!! highlightSearch(limitedText(__('main.no'), 30), $search) !!}
                 </div>
             @endif
         </td>
@@ -1016,12 +1033,12 @@
             @if ($model->all_cities == 1)
                 <div
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
-                    {!! highlightSearch(limitedText($model->all_cities == 1 ? 'all' : '--', 30), $search) !!}
+                    {!! highlightSearch(limitedText($model->all_cities == 1 ? __('main.yes') : '--', 30), $search) !!}
                 </div>
             @else
                 <div
-                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
-                    <i class="opacity-25">null</i>
+                    class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    {!! highlightSearch(limitedText(__('main.no'), 30), $search) !!}
                 </div>
             @endif
         </td>

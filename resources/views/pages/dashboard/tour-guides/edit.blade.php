@@ -26,9 +26,10 @@
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
-                <!-- Tour Guide Photo -->
+
+                {{-- Tour Guide Photo --}}
                 @include('components.input-image', [
-                    'modelKey' => $tourGuide->name ?? 'A',
+                    'modelKey' => $tourGuide->name ?? 'TG',
                     'column' => 'tour-guide',
                     'columnName' => 'photo',
                     'record' => $tourGuide,
@@ -37,18 +38,15 @@
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.location')]) }}
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.location')]) }}
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Regions [region, subregion, country, state, city] --}}
-                            @include('components.regions.edit', [
-                                'levels' => ['region', 'subregion', 'country', 'state', 'city'],
-                                'multiple' => false,
-                                'record' => $tourGuide,
-                            ])
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        <livewire:regions.location-select-base :record="$tourGuide" />
 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'currency_id',
@@ -142,9 +140,11 @@
                             <div class="align-self-end">
                                 <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
                                 <select name="gender" id="gender" class="kt-select basic-single">
-                                    <option value="" selected disabled></option>
-                                    <option value="male">male</option>
-                                    <option value="female">female</option>
+                                    <option value="" disabled></option>
+                                    <option value="male" {{ $tourGuide->gender == 'male' ? 'selected' : '' }}>male
+                                    </option>
+                                    <option value="female" {{ $tourGuide->gender == 'female' ? 'selected' : '' }}>female
+                                    </option>
                                 </select>
                                 @error('gender')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -184,7 +184,7 @@
                             <div class="align-self-end">
                                 <label for="guide_type_id" class="kt-label mb-2">{{ __('main.guide_type') }}</label>
                                 <select name="guide_type_id" id="guide_type_id" class="kt-input basic-single">
-                                    <option value="" selected disabled></option>
+                                    <option value="" disabled></option>
                                     @foreach ($guideTypes as $type)
                                         <option value="{{ $type->id }}"
                                             {{ $tourGuide->guide_type_id == $type->id ? 'selected' : '' }}>
@@ -255,14 +255,12 @@
                 @include('components.elements.input-text-editor', [
                     'column' => 'description',
                     'value' => $tourGuide->description,
-                    'classes' => '',
                 ])
 
                 <!-- Notes -->
                 @include('components.elements.input-text-editor', [
                     'column' => 'notes',
                     'value' => $tourGuide->notes,
-                    'classes' => '',
                 ])
 
                 <div class="flex flex-wrap" style="gap: 10px 40px;">

@@ -17,7 +17,8 @@ class TransportationPricingFactory extends Factory
     public function definition(): array
     {
         return [
-            'price' => fake()->randomFloat(2, 10, 1000),
+            'price' => fake()->numberBetween(900, 4000),
+            'tax' => fake()->randomFloat(2, 0, 100),
             'is_active' => fake()->boolean(80),
             'description' => fake()->paragraph(3),
             'notes' => fake()->optional()->sentence(),
@@ -25,6 +26,7 @@ class TransportationPricingFactory extends Factory
             'vehicle_type_id' => \App\Models\TransportationVehicleType::inRandomOrder()->first()?->id ?? null,
             'season_id' => \App\Models\Season::inRandomOrder()->first()?->id ?? null,
             'pricing_unit_id' => \App\Models\PricingDefinition::inRandomOrder()->first()?->id ?? \App\Models\PricingDefinition::factory(),
+            'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? \App\Models\Currency::factory(),
         ];
     }
 }

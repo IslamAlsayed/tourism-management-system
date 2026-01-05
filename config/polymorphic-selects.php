@@ -11,7 +11,7 @@ return [
         'label' => 'main.restaurant',
     ],
 
-    'transportation' => [
+    'transportation-company' => [
         'model' => \App\Models\TransportationCompany::class,
         'label' => 'main.transportation',
     ],

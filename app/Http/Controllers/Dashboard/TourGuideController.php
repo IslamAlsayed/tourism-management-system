@@ -27,7 +27,6 @@ class TourGuideController extends Controller
         $currencies = Currency::all();
         $languages = Language::get(['id', 'name', 'name_ar']);
         $guideTypes = TourGuideType::all();
-        $regions = Region::all();
         $language_ids = TourGuideLanguage::with('language')->pluck('language_id', 'id')->toArray();
         return view('pages.dashboard.tour-guides.create', get_defined_vars());
     }
@@ -37,6 +36,7 @@ class TourGuideController extends Controller
         $data = $request->validated();
         $data = array_merge($data, $request->safe()->except(['photo']));
         $tourGuide = TourGuide::create($data);
+
         if ($tourGuide && $request['language_id']) {
             foreach ($request['language_id'] as $language_id) {
                 TourGuideLanguage::create([
@@ -45,46 +45,41 @@ class TourGuideController extends Controller
                 ]);
             }
         }
-        $this->uploadPhoto($request, $tourGuide, 'photo', "tour-guides");
-        if ($tourGuide) {
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.tour-guide')]));
-            }
-            return redirect()->route('tour-guides.index')->withSuccess(__('messages.type_created', ['type' => __('main.tour-guide')]));
+        if ($request->has('photo')) {
+            $this->uploadPhoto($request, $tourGuide, 'photo', "tour-guides");
         }
-        return redirect()->route('tour-guides.index')->withError(__('messages.type_creation_failed', ['type' => __('main.tour-guide')]));
+        return $tourGuide
+            ? ($request->has('save_and_add')
+                ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.tour-guide')]))
+                : redirect()->route('tour-guides.index')->with('success', __('messages.type_created', ['type' => __('main.tour-guide')])))
+            : redirect()->route('tour-guides.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.tour-guide')]));
     }
 
     public function show($id)
     {
-        $tourGuide = TourGuide::with(['currency', 'guide_type', 'tourGuideLanguages', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
-        if (!$tourGuide) {
+        $tourGuide = TourGuide::with((new TourGuide())->getRelationshipNames())->find($id);
+        if (!$tourGuide)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide')]));
-        }
         return view('pages.dashboard.tour-guides.show', compact('tourGuide'));
     }
 
     public function edit($id)
     {
-        $tourGuide = TourGuide::with('tourGuideLanguages')->find($id);
-        if (!$tourGuide) {
+        $tourGuide = TourGuide::with((new TourGuide())->getRelationshipNames())->find($id);
+        if (!$tourGuide)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide')]));
-        }
-        $tour_guide_languages = TourGuideLanguage::with('language')->where('tour_guide_id', $tourGuide->id)->pluck('language_id', 'id')->toArray();
-        $tourGuide->language_ids = $tour_guide_languages;
+        $tourGuide->language_ids = TourGuideLanguage::with('language')->where('tour_guide_id', $tourGuide->id)->pluck('language_id', 'id')->toArray();
         $currencies = Currency::all();
         $languages = Language::get(['id', 'name', 'name_ar']);
         $guideTypes = TourGuideType::all();
-        $regions = Region::all();
         return view('pages.dashboard.tour-guides.edit', get_defined_vars());
     }
 
     public function update(UpdateRequest $request, $id)
     {
         $tourGuide = TourGuide::find($id);
-        if (!$tourGuide) {
+        if (!$tourGuide)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide')]));
-        }
         $data = $request->validated();
         $data = array_merge($data, $request->safe()->except(['photo']));
         $data['updated_by'] = getActiveUser()->id;
@@ -102,18 +97,16 @@ class TourGuideController extends Controller
         if ($request->has('photo')) {
             $this->uploadPhoto($request, $tourGuide, 'photo', "tour-guides");
         }
-        if ($updated) {
-            return redirect()->route('tour-guides.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tour-guide')]));
-        }
-        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.tour-guide')]));
+        return $updated
+            ? redirect()->route('tour-guides.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tour-guide')]))
+            : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.tour-guide')]));
     }
 
     public function destroy($id)
     {
         $tourGuide = TourGuide::find($id);
-        if (!$tourGuide) {
+        if (!$tourGuide)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tour-guide')]));
-        }
         $deleted = $tourGuide->delete();
         return $deleted
             ? redirect()->route('tour-guides.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tour-guide')]))

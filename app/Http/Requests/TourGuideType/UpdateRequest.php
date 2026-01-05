@@ -26,17 +26,16 @@ class UpdateRequest extends FormRequest
             'price' => ['nullable', 'numeric', 'min:0'],
             'currency_id' => ['nullable', 'exists:currencies,id'],
 
-            'region_id' => ['nullable', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'exists:subregions,id'],
-            'country_id' => ['nullable', 'exists:countries,id'],
-
-            'all_states' => ['nullable', 'in:0,1'],
+            'region_id' => ['nullable', 'integer', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'integer', 'exists:subregions,id'],
+            'country_id' => ['nullable', 'integer', 'exists:countries,id'],
             'state_id' => ['nullable', 'array'],
             'state_id.*' => ['integer', 'exists:states,id'],
-
-            'all_cities' => ['nullable', 'in:0,1'],
+            'all_states' => ['nullable', 'boolean'],
             'city_id' => ['nullable', 'array'],
             'city_id.*' => ['integer', 'exists:cities,id'],
+            'all_cities' => ['nullable', 'boolean'],
+
             'is_active' => ['nullable', 'boolean'],
             'description' => ['nullable', 'max:1000'],
             'notes' => ['nullable', 'max:1000'],

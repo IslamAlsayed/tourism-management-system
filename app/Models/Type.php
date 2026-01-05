@@ -15,6 +15,7 @@ class Type extends Model
 
     protected $richTextAttributes = [
         'description',
+        'notes',
     ];
 
     protected $fillable = [
@@ -22,19 +23,14 @@ class Type extends Model
         'uuid',
         'name',
         'name_ar',
-        'description',
         'is_active',
-        // 'accommodation_id',
+        'description',
+        'notes',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
     ];
-
-    // public function getRelationshipNames()
-    // {
-    //     return ['accommodation'];
-    // }
 
     public function getExcludedColumns()
     {

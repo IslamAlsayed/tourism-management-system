@@ -27,6 +27,8 @@
                 <form class="space-y-6" method="POST" action="{{ route('rooms.update', $room->id) }}">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="type" value="{{ request()->query('type') }}">
+
                     <div class="grid gap-4 lg:gap-6">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6">
                             {{-- Polymorphic Model Select --}}

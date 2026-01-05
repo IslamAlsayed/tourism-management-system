@@ -17,9 +17,8 @@ class ClientSeeder extends Seeder
         Client::truncate();
         Schema::enableForeignKeyConstraints();
 
-        // Create 50 clients with a mix of types
-        Client::factory()->count(25)->create(); // 25 clients
-        Client::factory()->count(15)->active()->create(); // 15 clients (active)
-        Client::factory()->count(10)->inactive()->create(); // 15 clients (inactive)
+        Client::factory()->count(5)->create(); // 5 clients
+        Client::factory()->count(10)->active()->create(); // 10 clients (active)
+        Client::factory()->count(15)->inactive()->create(); // 15 clients (inactive)
     }
 }

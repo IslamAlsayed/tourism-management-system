@@ -46,20 +46,11 @@
                 <select wire:model.live="filterOperatingDays" class="kt-select h-[40px] w-48 max-w-full"
                     data-kt-select="true" data-kt-select-placeholder="{{ __('main.operating_days') }}">
                     <option value="all">{{ __('main.all') }}</option>
-                    <option value="sunday" {{ $this->filterOperatingDays == 'sunday' ? 'selected' : '' }}>
-                        {{ __('main.sunday') }}</option>
-                    <option value="monday" {{ $this->filterOperatingDays == 'monday' ? 'selected' : '' }}>
-                        {{ __('main.monday') }}</option>
-                    <option value="tuesday" {{ $this->filterOperatingDays == 'tuesday' ? 'selected' : '' }}>
-                        {{ __('main.tuesday') }}</option>
-                    <option value="wednesday" {{ $this->filterOperatingDays == 'wednesday' ? 'selected' : '' }}>
-                        {{ __('main.wednesday') }}</option>
-                    <option value="thursday" {{ $this->filterOperatingDays == 'thursday' ? 'selected' : '' }}>
-                        {{ __('main.thursday') }}</option>
-                    <option value="friday" {{ $this->filterOperatingDays == 'friday' ? 'selected' : '' }}>
-                        {{ __('main.friday') }}</option>
-                    <option value="saturday" {{ $this->filterOperatingDays == 'saturday' ? 'selected' : '' }}>
-                        {{ __('main.saturday') }}</option>
+                    @foreach (['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] as $day)
+                        <option value="{{ $day }}"
+                            {{ $this->filterOperatingDays == $day ? 'selected' : '' }}>
+                            {{ __('main.' . $day) }}</option>
+                    @endforeach
                 </select>
             </div>
 

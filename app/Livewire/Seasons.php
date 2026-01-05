@@ -108,7 +108,7 @@ class Seasons extends Component
 
     public function resetFilters()
     {
-        $this->reset(['search', 'filterAccommodationId', 'filterStatus']);
+        $this->reset(['search', 'filterStatus']);
         $this->resetSort();
         $this->resetPage();
         $this->dispatch('reset-filters');

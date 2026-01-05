@@ -8,7 +8,7 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models">
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view">
 
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
@@ -25,7 +25,7 @@
                     <th class="border px-2">code</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="background divide-y divide-gray-200">
                 <tr>
                     <td class="border px-2">Sample Name</td>
                     <td class="border px-2">SMP</td>
@@ -40,7 +40,7 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :requirements="[
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
         [
             'condition' => \App\Models\Country::count() > 0,
             'route' => route('countries.index'),
@@ -61,7 +61,7 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :requirements="[
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
         [
             'condition' => \App\Models\Currency::count() > 0,
             'route' => route('currencies.index'),
@@ -88,7 +88,8 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :route="route('custom.import.route')" :cancelRoute="route('custom.cancel.route')">
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :route="route('custom.import.route')"
+        :cancelRoute="route('custom.cancel.route')">
 
         {{-- محتوى مخصص --}}
     </x-import-form>
@@ -99,7 +100,7 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-advanced-import-form :title="$title" :description="$description" :models="$models" :hasOptions="true"
+    <x-advanced-import-form :title="$title" :description="$description" :models="$models" :view="$view" :hasOptions="true"
         optionName="accommodationOptions" :options="['types', 'accommodations', 'seasons', 'supplements', 'rates', 'rate_details', 'hotels']" :disabledOptions="['rate_nationalities', 'room_types']" :additionalInputs="[['name' => 'importType', 'id' => 'importType', 'value' => '']]"
         customExportId="exportData">
 
@@ -114,7 +115,7 @@
                             <th class="border px-2">name_ar</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="background divide-y divide-gray-200">
                         <tr>
                             <td class="border px-2">Hotel</td>
                             <td class="border px-2">فندق</td>
@@ -163,7 +164,7 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :showExport="false">
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :showExport="false">
 
         {{-- محتوى مخصص بدون زر التصدير --}}
         <div class="custom-content">

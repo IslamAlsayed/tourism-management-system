@@ -13,58 +13,27 @@ use Illuminate\Support\Facades\Storage;
 
 class ExcelController extends Controller
 {
-    public function import($models)
+    // public function import($model, $models, $view = null)
+    public function import(Request $request)
     {
-        $modelClass = "App\\Models\\" . studlySingular($models);
-        // Special case for media-files
-        if ($models == 'media-files') {
-            $modelName = 'MediaFile';
-        }
-        // Handle accommodations sub-models
-        $modelView = '';
-        if (str_contains($models, 'accommodation')) {
-            $modelView = studyCapitalCaseName($models, '/');
-        }
-        if ($models == 'accommodations-seasons') {
-            // $models = 'seasons';
-            $modelClass = "App\\Models\\" . studlySingular('seasons');
-            $modelView = 'Accommodations/Seasons';
-        }
+        $model = $request->input('model');
+        $modelClass = "App\\Models\\" . str_replace('-', '', studlyCaseName($model));
+        $models = $request->input('models');
+        $view = $request->input('view');
         $title = __('main.import_types', ['types' => __('main.' . $models)]);
         $description = __('main.import_types_description', ['types' => __('main.' . $models)]);
-        // Handle rates imports
-        if ($models == 'accommodations-rates') {
-            $rates = [
-                'rooms' => [
-                    'models' => 'AccommodationRoomRate',
-                    'model' => 'accommodations-rates',
-                    'title' => __('main.import_types', ['types' => __('main.room_rates')]),
-                    'description' => __('main.import_types_description', ['types' => __('main.room_rates')]),
-                ],
-                'meals' => [
-                    'models' => 'AccommodationMealRate',
-                    'model' => 'accommodations-rates',
-                    'title' => __('main.import_types', ['types' => __('main.meal_rates')]),
-                    'description' => __('main.import_types_description', ['types' => __('main.meal_rates')]),
-                ],
-            ];
-            return view("pages.dashboard.accommodations-rates.import", compact('rates', 'models'));
-        }
         // Validate model existence
         if (!class_exists($modelClass)) {
             return back()->withError(__('messages.invalid_model_specified'));
         }
-        if (view()->exists("pages.dashboard.$modelView.import")) {
-            return view("pages.dashboard.$modelView.import", compact('models', 'title', 'description'));
-        }
-        return view("pages.dashboard.$models.import", compact('models', 'title', 'description'));
+        return view("pages.dashboard.$view.import", compact('models', 'view', 'title', 'description'));
     }
 
     public function importData(Request $request, $models)
     {
         $request->validate(['file' => 'required|file|mimes:csv,xlsx']);
         // $models = Str::plural(strtolower($models));
-        $modelClass = "App\\Models\\" . studlySingular($models);
+        $modelClass = "App\\Models\\" . studlyCaseName($models);
 
         // Handle accommodations sub-models
         if ($models == 'accommodations-rates') {

@@ -19,9 +19,9 @@ class TouristSiteSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         // Create different types of tourist sites with specific states
-        TouristSite::factory()->count(15)->active()->create();
-        TouristSite::factory()->count(10)->featured()->create();
-        TouristSite::factory()->count(8)->freeEntry()->create();
+        TouristSite::factory()->count(5)->active()->create();
+        TouristSite::factory()->count(5)->featured()->create();
+        TouristSite::factory()->count(5)->freeEntry()->create();
         TouristSite::factory()->count(5)->historical()->create();
         TouristSite::factory()->count(5)->natural()->create();
         TouristSite::factory()->count(3)->museum()->create();

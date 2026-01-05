@@ -36,15 +36,10 @@ use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\TourGuideTypeController;
 use App\Http\Controllers\Dashboard\TourGuideReviewController;
-use App\Http\Controllers\Dashboard\Transportation\BusTypeController;
 use App\Http\Controllers\Dashboard\Transportation\CompanyController;
 use App\Http\Controllers\Dashboard\Transportation\PricingController;
-use App\Http\Controllers\Dashboard\Transportation\VehicleController;
-use App\Http\Controllers\Dashboard\Transportation\DepartmentController;
 use App\Http\Controllers\Dashboard\Transportation\PricingDefinitionController;
 use App\Http\Controllers\Dashboard\Transportation\VehicleTypeController;
-use App\Http\Controllers\Dashboard\Transportation\CompanyBusTypeController;
-use App\Http\Controllers\Dashboard\Transportation\TransportationController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
 
@@ -253,7 +248,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::delete('/{notification}', [NotificationController::class, 'destroy'])->name('destroy');
     });
 
-    Route::get('import/{models}/data', [ExcelController::class, 'import'])->name('import.data');
+    // Route::get('import/data?{model?}&{models?}&{view?}', [ExcelController::class, 'import'])->name('import.data');
+    Route::get('import/data', [ExcelController::class, 'import'])->name('import.data');
     Route::post('import/{models}/data/{type?}', [ExcelController::class, 'importData'])->name('import.data.post');
     Route::get('export/{models}/data/{type?}', [ExcelController::class, 'exportData'])->name('export.data');
 });

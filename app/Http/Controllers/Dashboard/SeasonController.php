@@ -26,68 +26,51 @@ class SeasonController extends Controller
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
-        if ($request->input('model_type') == 'restaurant' && $request->filled('model_id')) {
-            $validated['model_id'] = $request->input('model_id');
-            $validated['model_type'] = Restaurant::class;
-        } elseif ($request->input('model_type') == 'accommodation' && $request->filled('model_id')) {
-            $validated['model_id'] = $request->input('model_id');
-            $validated['model_type'] = Accommodation::class;
-        }
-        $season = Season::create($validated);
-        if ($season) {
-            if ($request->has('save_and_add')) {
-                return redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.season')]));
-            }
-            return redirect()->route('seasons.index')->withSuccess(__('messages.type_created', ['type' => __('main.season')]));
-        }
-        return redirect()->route('seasons.index')->withError(__('messages.type_creation_failed', ['type' => __('main.season')]));
+        $validated['model_id'] = $request->input('model_id');
+        $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
+        $created = Season::create($validated);
+        return $created
+            ? ($request->has('save_and_add')
+                ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.season')]))
+                : redirect()->route('seasons.index', ['type' => $request->input('type')])->with('success', __('messages.type_created', ['type' => __('main.season')])))
+            : redirect()->route('seasons.index', ['type' => $request->input('type')])->with('error', __('messages.type_creation_failed', ['type' => __('main.season')]));
     }
 
     public function show($id)
     {
         $season = Season::with('model')->find($id);
-        if (!$season) {
+        if (!$season)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
-        }
         return view('pages.dashboard.seasons.show', compact('season'));
     }
 
     public function edit($id)
     {
         $season = Season::with('model')->find($id);
-        if (!$season) {
+        if (!$season)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
-        }
         return view('pages.dashboard.seasons.edit', compact('season'));
     }
 
     public function update(UpdateRequest $request, $id)
     {
         $season = Season::find($id);
-        if (!$season) {
+        if (!$season)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
-        }
         $validated = $request->validated();
-        if ($request->input('model_type') === 'restaurant' && $request->filled('model_id')) {
-            $validated['model_id'] = $request->input('model_id');
-            $validated['model_type'] = Restaurant::class;
-        } elseif ($request->input('model_type') === 'accommodation' && $request->filled('model_id')) {
-            $validated['model_id'] = $request->input('model_id');
-            $validated['model_type'] = Accommodation::class;
-        }
+        $validated['model_id'] = $request->input('model_id');
+        $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
         $updated = $season->update($validated);
-        if ($updated) {
-            return redirect()->route('seasons.index')->withSuccess(__('messages.type_updated', ['type' => __('main.season')]));
-        }
-        return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.season')]));
+        return $updated
+            ? redirect()->route('seasons.index', ['type' => $request->input('type')])->withSuccess(__('messages.type_updated', ['type' => __('main.season')]))
+            : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.season')]));
     }
 
     public function destroy($id)
     {
         $season = Season::find($id);
-        if (!$season) {
+        if (!$season)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
-        }
         $deleted = $season->delete();
         return $deleted
             ? redirect()->route('seasons.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.season')]))

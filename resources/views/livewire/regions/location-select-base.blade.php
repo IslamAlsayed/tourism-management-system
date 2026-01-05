@@ -88,8 +88,9 @@
                 <div class="flex items-center justify-between gap-1">
                     @if (isset($multiple) && in_array('states', $multiple))
                         <input type="hidden" name="all_states" value="0">
-                        <div class="custom-input" wire:ignore>
+                        <div class="custom-input">
                             <input type="checkbox" name="all_states" id="all_states" value="1"
+                                wire:model.live="all_states"
                                 {{ ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'checked' : '' }}
                                 data-kt-datatable-row-check="true">
                             <label for="all_states">{{ __('main.states') }}</label>
@@ -113,7 +114,7 @@
         </label>
         <select name="state_id{{ isset($multiple) && in_array('states', $multiple) ? '[]' : '' }}" id="state_id"
             class="kt-select {{ isset($multiple) && in_array('states', $multiple) ? 'basic-multiple' : 'basic-single' }}"
-            {{ !hasEmpty($filters['country']) || ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'disabled' : '' }}
+            {{ !hasEmpty($filters['country']) || ($all_states ?? 0) == 1 || ($all_states ?? 0) == true || ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'disabled' : '' }}
             {{ isset($multiple) && in_array('states', $multiple) ? 'multiple' : '' }}>
             @if (!isset($multiple) && !in_array('states', (array) $multiple))
                 <option value="" selected>--</option>
@@ -130,7 +131,8 @@
     </div>
 
     {{-- City --}}
-    <div class="align-self-end {{ !hasEmpty($filters['state']) ? 'disabled-option p-2 rounded-sm' : '' }}">
+    <div
+        class="align-self-end {{ !hasEmpty($filters['state']) && !$all_states ? 'disabled-option p-2 rounded-sm' : '' }}">
         <label for="city_id" class="kt-label mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
@@ -153,7 +155,7 @@
                         wire:target="filters.state,updatedFilters"></i>
                 </div>
                 <span id="city_id-info"
-                    class="text-red-600 text-sm span-info {{ !hasEmpty($filters['state']) ? 'show' : '' }}">
+                    class="text-red-600 text-sm span-info {{ !hasEmpty($filters['state']) && !$all_states ? 'show' : '' }}">
                     ({{ __('main.select_type_first', ['type' => __('main.state')]) }})
                 </span>
             </div>
@@ -161,7 +163,7 @@
         </label>
         <select name="city_id{{ isset($multiple) && in_array('cities', $multiple) ? '[]' : '' }}" id="city_id"
             class="kt-select {{ isset($multiple) && in_array('cities', $multiple) ? 'basic-multiple' : 'basic-single' }}"
-            {{ !hasEmpty($filters['state']) || ($record->all_cities ?? 0) == 1 || ($record->all_cities ?? 0) == true ? 'disabled' : '' }}
+            {{ (!hasEmpty($filters['state']) && !$all_states) || ($record->all_cities ?? 0) == 1 || ($record->all_cities ?? 0) == true ? 'disabled' : '' }}
             {{ isset($multiple) && in_array('cities', $multiple) ? 'multiple' : '' }}>
             @if (!isset($multiple) && !in_array('cities', (array) $multiple))
                 <option value="" selected>--</option>
@@ -185,7 +187,6 @@
             initSelect('subregion_id', 'filters.subregion');
             initSelect('country_id', 'filters.country');
             initSelect('state_id', 'filters.state');
-            // initSelect('city_id', 'filters.city');
             Livewire.on('select-options-updated', (e) => {
                 refreshAll();
             });
@@ -198,6 +199,14 @@
             }
             $el.on('change', () => @this.set(model, $el.val()));
         }
+
+        // Initialize city select as well
+        $(document).ready(function() {
+            if ($('#city_id').length && !$('#city_id').hasClass('select2-hidden-accessible')) {
+                $('#city_id').select2();
+                refreshAll();
+            }
+        });
 
         function refreshAll() {
             $(document).ready(function() {
@@ -216,10 +225,8 @@
                 let stateSelect = document.getElementById('state_id');
                 if (this.checked) {
                     stateSelect.setAttribute('disabled', 'disabled');
-                    stateSelect.style.display = 'none';
                 } else {
                     stateSelect.removeAttribute('disabled');
-                    stateSelect.style.display = 'block';
                 }
             });
         }
@@ -230,10 +237,10 @@
                 let citySelect = document.getElementById('city_id');
                 if (this.checked) {
                     citySelect.setAttribute('disabled', 'disabled');
-                    citySelect.style.display = 'none';
+                    // citySelect.style.display = 'none';
                 } else {
                     citySelect.removeAttribute('disabled');
-                    citySelect.style.display = 'block';
+                    // citySelect.style.display = 'block';
                 }
             });
         }

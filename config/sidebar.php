@@ -39,7 +39,7 @@ return [
                     'title' => 'import users',
                     'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
-                    'parameters' => ['models' => 'users'],
+                    'parameters' => ['model' => 'user', 'models' => 'users', 'view' => 'users'],
                 ]
             ],
         ],
@@ -63,7 +63,7 @@ return [
                     'title' => 'import clients',
                     'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
-                    'parameters' => ['models' => 'clients'],
+                    'parameters' => ['model' => 'client', 'models' => 'clients', 'view' => 'clients'],
                 ]
             ],
         ],
@@ -87,7 +87,7 @@ return [
                     'title' => 'import currencies',
                     'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
-                    'parameters' => ['models' => 'currencies'],
+                    'parameters' => ['model' => 'currency', 'models' => 'currencies', 'view' => 'currencies'],
                 ],
             ],
         ],
@@ -113,7 +113,7 @@ return [
                         [
                             'title' => 'import regions',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'regions'],
+                            'parameters' => ['model' => 'region', 'models' => 'regions', 'view' => 'regions'],
                         ],
                     ],
                 ],
@@ -133,7 +133,7 @@ return [
                         [
                             'title' => 'import subregions',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'subregions'],
+                            'parameters' => ['model' => 'subregion', 'models' => 'subregions', 'view' => 'subregions'],
                         ],
                     ],
                 ],
@@ -153,7 +153,7 @@ return [
                         [
                             'title' => 'import countries',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'countries'],
+                            'parameters' => ['model' => 'country', 'models' => 'countries', 'view' => 'countries'],
                         ],
                     ],
                 ],
@@ -173,7 +173,7 @@ return [
                         [
                             'title' => 'import states',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'states'],
+                            'parameters' => ['model' => 'state', 'models' => 'states', 'view' => 'states'],
                         ],
                     ],
                 ],
@@ -194,7 +194,7 @@ return [
                             'title' => 'import cities',
                             'icon' => 'fa-solid fa-square-plus',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'cities'],
+                            'parameters' => ['model' => 'city', 'models' => 'cities', 'view' => 'cities'],
                         ],
                     ],
                 ],
@@ -214,7 +214,7 @@ return [
                         [
                             'title' => 'import nationalities',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'nationalities'],
+                            'parameters' => ['model' => 'nationality', 'models' => 'nationalities', 'view' => 'nationalities'],
                         ],
                     ],
                 ],
@@ -244,7 +244,7 @@ return [
                             'title' => 'import accommodations',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'accommodations'],
+                            'parameters' => ['model' => 'accommodation', 'models' => 'accommodations', 'view' => 'accommodations'],
                         ],
                     ],
                 ],
@@ -266,7 +266,7 @@ return [
                             'title' => 'import types',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'types'],
+                            'parameters' => ['model' => 'type', 'models' => 'types', 'view' => 'types'],
                         ],
                     ],
                 ],
@@ -300,17 +300,19 @@ return [
                             'title' => 'all rooms',
                             'icon' => 'fa-regular fa-door-closed',
                             'route' => 'rooms.index',
+                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create room',
                             'icon' => 'fa-regular fa-square-plus',
                             'route' => 'rooms.create',
+                            'parameters' => ['type' => 'accommodation'],
                         ],
                         [
                             'title' => 'import rooms',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'rooms'],
+                            'parameters' => ['model' => 'room', 'models' => 'rooms', 'view' => 'rooms'],
                         ],
                     ],
                 ],
@@ -322,17 +324,19 @@ return [
                             'title' => 'all seasons',
                             'icon' => 'fa-regular fa-calendar-check',
                             'route' => 'seasons.index',
+                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create season',
                             'icon' => 'fa-regular fa-calendar-plus',
                             'route' => 'seasons.create',
+                            'parameters' => ['type' => 'accommodation'],
                         ],
                         [
                             'title' => 'import seasons',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'seasons'],
+                            'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
                         ],
                     ],
                 ],
@@ -394,12 +398,13 @@ return [
                             'title' => 'create meal',
                             'icon' => 'fa-regular fa-square-plus',
                             'route' => 'meals.create',
+                            'parameters' => ['type' => 'accommodation'],
                         ],
                         [
                             'title' => 'import meals',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'meals'],
+                            'parameters' => ['model' => 'meal', 'models' => 'meals', 'view' => 'meals'],
                         ],
                     ],
                 ],
@@ -417,12 +422,13 @@ return [
                             'title' => 'create supplement',
                             'icon' => 'fa-regular fa-square-plus',
                             'route' => 'supplements.create',
+                            'parameters' => ['type' => 'accommodation'],
                         ],
                         [
                             'title' => 'import supplements',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'supplements'],
+                            'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
                         ],
                     ],
                 ],
@@ -499,7 +505,6 @@ return [
         [
             'title' => 'transportation management',
             'icon' => 'fa-solid fa-hotel',
-            'status' => 'done',
             'children' => [
                 [
                     'title' => 'transportation',
@@ -519,7 +524,7 @@ return [
                             'title' => 'import companies',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'transportation'],
+                            'parameters' => ['model' => 'transportationCompany', 'models' => 'transportation-companies', 'view' => 'transportation.companies'],
                         ],
                     ],
                 ],
@@ -541,7 +546,30 @@ return [
                             'title' => 'import vehicle-types',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'vehicle-types'],
+                            'parameters' => ['model' => 'transportationVehicleType', 'models' => 'transportation-vehicle-types', 'view' => 'transportation.vehicle-types'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'routes',
+                    'icon' => 'fa-regular fa-layer-group',
+                    'fixed' => 'soon',
+                    'children' => [
+                        [
+                            'title' => 'all routes',
+                            'icon' => 'fa-regular fa-list-ul',
+                            'route' => null,
+                        ],
+                        [
+                            'title' => 'create route',
+                            'icon' => 'fa-regular fa-square-plus',
+                            'route' => null,
+                        ],
+                        [
+                            'title' => 'import routes',
+                            'icon' => 'fa-regular fa-file-import',
+                            'route' => null,
+                            'parameters' => ['model' => 'transportationRoute', 'models' => 'transportation-routes', 'view' => 'transportation.routes'],
                         ],
                     ],
                 ],
@@ -563,7 +591,7 @@ return [
                             'title' => 'import pricing',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'pricings'],
+                            'parameters' => ['model' => 'transportationPricing', 'models' => 'transportation-pricings', 'view' => 'transportation.pricings'],
                         ],
                     ],
                 ],
@@ -575,18 +603,19 @@ return [
                             'title' => 'all seasons',
                             'icon' => 'fa-regular fa-bowl-food',
                             'route' => 'seasons.index',
-                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'Transportation'],
+                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'transportation'],
                         ],
                         [
                             'title' => 'create season',
                             'icon' => 'fa-regular fa-square-plus',
                             'route' => 'seasons.create',
+                            'parameters' => ['type' => 'transportation'],
                         ],
                         [
                             'title' => 'import seasons',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'seasons'],
+                            'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
                         ],
                     ],
                 ],
@@ -604,12 +633,13 @@ return [
                             'title' => 'create supplement',
                             'icon' => 'fa-regular fa-square-plus',
                             'route' => 'supplements.create',
+                            'parameters' => ['type' => 'transportation'],
                         ],
                         [
                             'title' => 'import supplements',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'supplements'],
+                            'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
                         ],
                     ],
                 ],
@@ -619,7 +649,8 @@ return [
         // ================= Food & Beverage =================
         [
             // 'title' => 'food & beverage',
-            'title' => 'food management',
+            // 'title' => 'food management',
+            'title' => 'restaurants management',
             'icon' => 'fa-solid fa-mug-hot',
             'children' => [
                 [
@@ -640,7 +671,7 @@ return [
                             'title' => 'import restaurants',
                             'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'restaurants'],
+                            'parameters' => ['model' => 'restaurant', 'models' => 'restaurants', 'view' => 'restaurants'],
                         ],
                     ],
                 ],
@@ -658,12 +689,13 @@ return [
                             'title' => 'create meal',
                             'icon' => 'fa-solid fa-square-plus',
                             'route' => 'meals.create',
+                            'parameters' => ['type' => 'restaurant'],
                         ],
                         [
                             'title' => 'import meals',
                             'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'meals'],
+                            'parameters' => ['model' => 'meal', 'models' => 'meals', 'view' => 'meals'],
                         ],
                     ],
                 ],
@@ -681,12 +713,13 @@ return [
                             'title' => 'create supplement',
                             'icon' => 'fa-regular fa-square-plus',
                             'route' => 'supplements.create',
+                            'parameters' => ['type' => 'restaurant'],
                         ],
                         [
                             'title' => 'import supplements',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'supplements'],
+                            'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
                         ],
                     ],
                 ],
@@ -697,7 +730,6 @@ return [
         [
             'title' => 'topics',
             'icon' => 'fa-solid fa-hotel',
-            'status' => 'new',
             'children' => [
                 [
                     'title' => 'pricing definitions',
@@ -720,72 +752,72 @@ return [
 
         // ================= Tour Guides =================
         [
-            'title' => 'tour guides',
+            'title' => 'tour-guides management',
             'icon' => 'fa-solid fa-person-hiking',
             'children' => [
                 [
-                    'title' => 'tour guides',
+                    'title' => 'tour-guides',
                     'icon' => 'fa-solid fa-person-hiking',
                     'children' => [
                         [
-                            'title' => 'all guides',
+                            'title' => 'all tour-guides',
                             'icon' => 'fa-solid fa-people-group',
                             'route' => 'tour-guides.index'
                         ],
                         [
-                            'title' => 'create guide',
+                            'title' => 'create tour-guide',
                             'icon' => 'fa-solid fa-square-plus',
                             'route' => 'tour-guides.create'
                         ],
                         [
-                            'title' => 'import guides',
+                            'title' => 'import tour-guides',
                             'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'tour-guides'],
+                            'parameters' => ['model' => 'tour-guide', 'models' => 'tour-guides', 'view' => 'tour-guides'],
                         ],
                     ],
                 ],
                 [
-                    'title' => 'guides types',
+                    'title' => 'tour-guides-types',
                     'icon' => 'fa-solid fa-tags',
                     'children' => [
                         [
-                            'title' => 'all guides types',
+                            'title' => 'all tour-guides-types',
                             'icon' => 'fa-solid fa-list',
                             'route' => 'tour-guides-types.index'
                         ],
                         [
-                            'title' => 'create guide type',
+                            'title' => 'create tour-guide-type',
                             'icon' => 'fa-solid fa-square-plus',
                             'route' => 'tour-guides-types.create'
                         ],
                         [
-                            'title' => 'import guides types',
+                            'title' => 'import tour-guides-types',
                             'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'tour-guides-types'],
+                            'parameters' => ['model' => 'tour-guides-type', 'models' => 'tour-guides-types', 'view' => 'tour-guides-types'],
                         ],
                     ],
                 ],
                 [
-                    'title' => 'guides reviews',
+                    'title' => 'tour-guides-reviews',
                     'icon' => 'fa-solid fa-star',
                     'children' => [
                         [
-                            'title' => 'all guides reviews',
+                            'title' => 'all tour-guides-reviews',
                             'icon' => 'fa-solid fa-clipboard-list',
                             'route' => 'tour-guides-reviews.index'
                         ],
                         [
-                            'title' => 'create guide review',
+                            'title' => 'create tour-guide-review',
                             'icon' => 'fa-solid fa-square-plus',
                             'route' => 'tour-guides-reviews.create'
                         ],
                         [
-                            'title' => 'import guides reviews',
+                            'title' => 'import tour-guides-reviews',
                             'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['models' => 'tour-guides-reviews'],
+                            'parameters' => ['model' => 'tour-guide-review', 'models' => 'tour-guides-reviews', 'view' => 'tour-guides-reviews'],
                         ],
                     ],
                 ],
@@ -811,7 +843,7 @@ return [
                     'title' => 'import airlines',
                     'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
-                    'parameters' => ['models' => 'airlines'],
+                    'parameters' => ['model' => 'airline', 'models' => 'airlines', 'view' => 'airlines'],
                 ],
             ],
         ],
@@ -835,7 +867,7 @@ return [
                     'title' => 'import tourist sites',
                     'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
-                    'parameters' => ['models' => 'tourist-sites'],
+                    'parameters' => ['model' => 'tourist-site', 'models' => 'tourist-sites', 'view' => 'tourist-sites'],
                 ],
             ],
         ],
@@ -859,7 +891,7 @@ return [
                     'title' => 'import crossings ports',
                     'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
-                    'parameters' => ['models' => 'crossings-ports'],
+                    'parameters' => ['model' => 'crossings-port', 'models' => 'crossings-ports', 'view' => 'crossings-ports'],
                 ],
                 [
                     'title' => 'airports',

@@ -444,6 +444,7 @@ return [
     'business_type' => 'نوع العمل',
     'business_registration_number' => 'رقم السجل التجاري',
     'tax_id' => 'الرقم الضريبي',
+    'tax' => 'الضريبة',
 
     // Address information
     'box' => 'صندوق البريد',
@@ -1193,6 +1194,8 @@ return [
     'tour_guide_languages' => 'لغات الدليل السياحي',
     'tour-guides-languages' => 'لغات الدليل السياحي',
     'tour_guides_languages' => 'لغات الدليل السياحي',
+    'tourGuideLanguage' => 'لغة الدليل السياحي',
+    'tourGuideLanguages' => 'لغة الدليل السياحي',
 
     // Reports Section
     'reports_dashboard' => 'لوحة التقارير',
@@ -1621,6 +1624,8 @@ return [
     'transportation-company' => 'شركة النقل',
     'transportation_companies' => 'شركات النقل',
     'transportation_company' => 'شركة النقل',
+    'transportation.companies' => 'شركات النقل',
+    'transportation.company' => 'شركة النقل',
     'transportation-departments' => 'فروع شركات النقل',
     'transportation-department' => 'فرع شركة النقل',
     'transportation_departments' => 'فروع شركات النقل',
@@ -1653,8 +1658,12 @@ return [
     'pricing-definition' => 'تعريف التسعير',
     'pricing' => 'السعر',
     'pricings' => 'الأسعار',
-    'pricing_unit' => 'وحدة السعر',
-    'pricing_units' => 'وحدات السعر',
+    'pricing-unit' => 'وحدة التسعير',
+    'pricing-units' => 'وحدات التسعير',
+    'pricing_unit' => 'وحدة التسعير',
+    'pricing_units' => 'وحدات التسعير',
+    'pricingUnit' => 'وحدة التسعير',
+    'pricingUnits' => 'وحدات التسعير',
 
     'no_transportation_companies' => 'لم يتم العثور على شركات النقل',
     'other_services' => 'خدمات أخرى',

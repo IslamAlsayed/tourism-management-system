@@ -17,7 +17,6 @@ class AirlineSeeder extends Seeder
         Airline::truncate();
         Schema::enableForeignKeyConstraints();
 
-        // Create 50 airports with realistic data
-        Airline::factory()->count(50)->create();
+        Airline::factory()->count(10)->create();
     }
 }

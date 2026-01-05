@@ -351,17 +351,27 @@ class TouristSite extends Model
     }
 
     // Get formatted operating hours
-    public function getOperatingHoursAttribute()
+    // public function getOpeningTimeAttribute()
+    // {
+    //     if ($this->is_24_hours) {
+    //         return '24 Hours';
+    //     }
+
+    //     if ($this->opening_time && $this->closing_time) {
+    //         return $this->opening_time->format('H:i') . ' - ' . $this->closing_time->format('H:i');
+    //     }
+
+    //     return 'Not specified';
+    // }
+
+    public function getFormattedOpeningTimeAttribute()
     {
-        if ($this->is_24_hours) {
-            return '24 Hours';
-        }
+        return $this->opening_time ? $this->opening_time->format('H:i') : null;
+    }
 
-        if ($this->opening_time && $this->closing_time) {
-            return $this->opening_time->format('H:i') . ' - ' . $this->closing_time->format('H:i');
-        }
-
-        return 'Not specified';
+    public function getFormattedClosingTimeAttribute()
+    {
+        return $this->closing_time ? $this->closing_time->format('H:i') : null;
     }
 
     // Check if site is open now

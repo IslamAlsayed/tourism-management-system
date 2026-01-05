@@ -42,10 +42,10 @@ class UpdateRequest extends FormRequest
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
 
-            'state_id' => ['nullable', 'integer', 'exists:states,id'],
+            'state_id' => ['nullable', 'exists:states,id'],
             'all_states' => ['boolean'],
 
-            'city_id' => ['nullable', 'integer', 'exists:cities,id'],
+            'city_id' => ['nullable', 'exists:cities,id'],
             'all_cities' => ['boolean'],
 
             'latitude' => ['nullable', 'numeric'],

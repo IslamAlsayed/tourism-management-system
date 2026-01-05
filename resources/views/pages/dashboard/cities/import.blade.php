@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :requirements="[
+    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
         [
             'condition' => \App\Models\Region::count() > 0,
             'route' => route('regions.create'),
@@ -33,7 +33,7 @@
         @if (config('app.db_mode') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
             <table class="border min-w-half divide-y text-center divide-gray-200">
-                <thead class="bg-yellow-200">
+                <thead class="bg-yellow-100">
                     <tr>
                         <th class="border px-2">name</th>
                         <th class="border px-2">name_ar</th>
@@ -43,7 +43,7 @@
                         <th class="border px-2">state_id</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">city</td>
                         <td class="border px-2">مدينة</td>
@@ -57,7 +57,7 @@
 
             <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200">
-                <thead class="bg-yellow-200">
+                <thead class="bg-yellow-100">
                     <tr>
                         <th class="border px-2">latitude</th>
                         <th class="border px-2">longitude</th>
@@ -66,7 +66,7 @@
                         <th class="border px-2">timezone</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">42.50779</td>
                         <td class="border px-2">1.52109</td>
