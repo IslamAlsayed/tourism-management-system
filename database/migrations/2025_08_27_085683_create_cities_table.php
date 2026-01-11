@@ -15,11 +15,9 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
-            $table->unsignedBigInteger('timezone_id')->nullable();
-            $table->unsignedBigInteger('region_id')->nullable();
-            $table->unsignedBigInteger('subregion_id')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
-            $table->unsignedBigInteger('state_id')->nullable();
+            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
+            $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
+            $table->foreignId('state_id')->nullable()->constrained('states')->onDelete('set null');
             $table->boolean('all_states')->nullable()->default(false);
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();

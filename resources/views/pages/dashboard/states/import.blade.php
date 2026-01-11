@@ -41,8 +41,6 @@
                         <th class="border px-2 bg-yellow-100" title="{{ __('main.required') }}">
                             iso3 <span class="text-red-600">*</span>
                         </th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">region_id</th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">subregion_id</th>
                         <th class="border px-2" title="{{ __('main.optional') }}">country_id</th>
                     </tr>
                 </thead>
@@ -52,8 +50,6 @@
                         <td class="border px-2">ولاية</td>
                         <td class="border px-2">ST</td>
                         <td class="border px-2">STA</td>
-                        <td class="border px-2">1</td>
-                        <td class="border px-2">2</td>
                         <td class="border px-2">3</td>
                     </tr>
                 </tbody>
@@ -63,7 +59,7 @@
                     <tr>
                         <th class="border px-2" title="{{ __('main.optional') }}">latitude</th>
                         <th class="border px-2" title="{{ __('main.optional') }}">longitude</th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">timezone</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">timezone_id</th>
                         <th class="border px-2" title="{{ __('main.optional') }}">fips_code</th>
                         <th class="border px-2" title="{{ __('main.optional') }}">type</th>
                         <th class="border px-2" title="{{ __('main.optional') }}">level</th>
@@ -73,7 +69,7 @@
                     <tr>
                         <td class="border px-2">42.50779</td>
                         <td class="border px-2">1.52109</td>
-                        <td class="border px-2">Asia/Kabul</td>
+                        <td class="border px-2">7</td>
                         <td class="border px-2">46</td>
                         <td class="border px-2">province</td>
                         <td class="border px-2">1</td>

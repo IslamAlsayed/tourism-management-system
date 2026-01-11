@@ -227,8 +227,11 @@ class ImportDataJob implements ShouldQueue
             }
 
             // Smart timezone_id lookup: if value is text, search by name/abbreviation
-            if (in_array('timezone_id', $fillable) && !empty($prepared['timezone_id'])) {
-                $timezoneValue = $prepared['timezone_id'];
+            if (
+                in_array('timezone_id', $fillable) && !empty($prepared['timezone_id']) ||
+                in_array('timezone', $fillable) && !empty($prepared['timezone'])
+            ) {
+                $timezoneValue = $prepared['timezone_id'] ?? $prepared['timezone'];
 
                 // If not numeric, try to find timezone by name intelligently
                 if (!is_numeric($timezoneValue)) {
@@ -243,10 +246,17 @@ class ImportDataJob implements ShouldQueue
 
                         // If not found, try case-insensitive partial match
                         if (!$timezone) {
-                            $timezone = \App\Models\Timezone::where('name', 'LIKE', "%{$searchTerm}%")
-                                ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
-                                ->orWhere('abbreviation', 'LIKE', "%{$searchTerm}%")
-                                ->first();
+                            try {
+                                $timezone = \App\Models\Timezone::where('name', 'LIKE', "%{$searchTerm}%")
+                                    ->orWhere('name', 'LIKE', "%{$searchTerm}%")
+                                    ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
+                                    ->orWhere('abbreviation', 'LIKE', "%{$searchTerm}%")
+                                    ->first();
+                                Log::info("Created new timezone: '{$searchTerm}' with ID: {$timezone->id}");
+                            } catch (\Throwable $createError) {
+                                Log::warning("Failed to create new timezone '{$searchTerm}': " . $createError->getMessage());
+                                $prepared['timezone_id'] = null;
+                            }
                         }
 
                         if ($timezone) {

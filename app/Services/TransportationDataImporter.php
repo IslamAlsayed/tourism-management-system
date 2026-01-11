@@ -136,9 +136,7 @@ class TransportationDataImporter
 
             Log::debug("Processing " . count($pendingContacts) . " pending contacts for " . count($uuids) . " unique companies");
 
-            $idMap = TransportationCompany::whereIn('uuid', $uuids)
-                ->pluck('id', 'uuid')
-                ->toArray();
+            $idMap = TransportationCompany::whereIn('uuid', $uuids)->pluck('id', 'uuid')->toArray();
 
             Log::debug("Found " . count($idMap) . " companies in database");
 

@@ -86,7 +86,7 @@
                         <!-- Save Submit -->
                         @include('components.elements.save-submit', [
                             'models' => 'tours.guides-reviews',
-                            'model' => 'tours-guide-review',
+                            'model' => 'tours.guide-review',
                         ])
                     </div>
                 </form>

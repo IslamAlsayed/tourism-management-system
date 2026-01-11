@@ -21,7 +21,8 @@ class AccommodationSeeder extends Seeder
     {
         // حذف بيانات الإقامة القديمة
         Schema::disableForeignKeyConstraints();
-        // Accommodation::truncate();
+        Accommodation::truncate();
+        RichText::where('record_type', Accommodation::class)->delete();
         // foreach ([Meal::class, Room::class, Season::class, Supplement::class] as $modelClass) {
         //     $modelClass::where('model_type', Accommodation::class)->delete();
         // }
@@ -29,6 +30,7 @@ class AccommodationSeeder extends Seeder
         //     RichText::where('record_type', $modelClass)->delete();
         // }
         Schema::enableForeignKeyConstraints();
+        dd('done');
 
         // Get or create types (Hotel, Resort, Villa, Apartment, Hostel, etc.)
         $typeNames = [

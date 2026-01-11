@@ -16,8 +16,6 @@ return new class extends Migration {
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->foreignId('timezone_id')->nullable()->constrained('timezones')->cascadeOnDelete();
-            $table->foreignId('region_id')->nullable()->constrained('regions')->cascadeOnDelete();
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->cascadeOnDelete();
             $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnDelete();
             $table->boolean('all_cities')->nullable()->default(false);
             $table->string('iso2')->nullable();

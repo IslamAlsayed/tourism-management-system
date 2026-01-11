@@ -129,7 +129,7 @@
                         </div>
 
                         <div class="flex items-center gap-4">
-                            <button type="submit" class="kt-btn kt-btn-primary" id="submit-button">
+                            <button type="submit" class="kt-btn kt-btn-primary" id="submit-button" toggle-button>
                                 {{-- disabled --}}
                                 {{ __('main.upload_and_import') }}
                             </button>

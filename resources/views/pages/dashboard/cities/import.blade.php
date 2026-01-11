@@ -24,7 +24,6 @@
                 'label' => __('main.states_'),
             ],
         ]">
-
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}
@@ -40,8 +39,6 @@
                             name <span class="text-red-600">*</span>
                         </th>
                         <th class="border px-2" title="{{ __('main.optional') }}">name_ar</th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">region_id</th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">subregion_id</th>
                         <th class="border px-2" title="{{ __('main.optional') }}">country_id</th>
                         <th class="border px-2" title="{{ __('main.optional') }}">state_id</th>
                     </tr>
@@ -50,8 +47,6 @@
                     <tr>
                         <td class="border px-2">city</td>
                         <td class="border px-2">مدينة</td>
-                        <td class="border px-2">1</td>
-                        <td class="border px-2">2</td>
                         <td class="border px-2">3</td>
                         <td class="border px-2">4</td>
                     </tr>

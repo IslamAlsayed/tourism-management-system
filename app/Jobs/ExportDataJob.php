@@ -109,7 +109,7 @@ class ExportDataJob implements ShouldQueue
 
         // Identify HTML columns (description, notes, etc.)
         $htmlColumns = array_filter($columns, function ($col) {
-            return in_array($col, ['description', 'notes', 'content', 'body', 'details']);
+            return in_array($col, ['description', 'notes', 'review', 'content', 'body', 'details']);
         });
 
         // notify start of storage

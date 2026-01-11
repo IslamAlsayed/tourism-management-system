@@ -26,7 +26,6 @@ class TransportationRouteSeeder extends Seeder
         TransportationRoute::query()->delete();
         RichText::where('record_type', TransportationRoute::class)->delete();
         Schema::enableForeignKeyConstraints();
-        dd('Transportation Routes Seeder Done...');
 
         // جلب المدن المطلوبة
         $cairo = City::where('name', 'Cairo')->first();

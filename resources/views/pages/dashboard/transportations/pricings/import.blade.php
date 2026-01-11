@@ -23,6 +23,11 @@
                 'route' => route('pricing-definitions.index'),
                 'label' => __('main.pricing-definitions'),
             ],
+            [
+                'condition' => \App\Models\TourGuideType::count() > 0,
+                'route' => route('tour-guide-types.index'),
+                'label' => __('main.tour-guide-types'),
+            ],
         ]">
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
