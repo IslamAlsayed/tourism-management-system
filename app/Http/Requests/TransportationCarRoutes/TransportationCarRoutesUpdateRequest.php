@@ -28,7 +28,7 @@ class TransportationCarRoutesUpdateRequest extends FormRequest
             'distance' => ['nullable', 'string', 'min:0.1', 'max:255'],
             'seats' => ['nullable', 'integer', 'min:1'],
             'price' => ['nullable', 'decimal:0,2', 'min:0.1'],
-            'car_route_id' => ['nullable', 'string', 'exists:transportation_car_routes,id'],
+            'car_route_id' => ['nullable', 'string', 'exists:transportations_car_routes,id'],
             'currency_id' => ['nullable', 'string', 'exists:currencies,id'],
         ];
     }

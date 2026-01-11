@@ -25,27 +25,6 @@
         <form action="{{ route('nationalities.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
-                <!-- Location Information -->
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">
-                            {{ __('main.type_information', ['type' => __('main.location')]) }}
-                        </h3>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
-                        <livewire:regions.location-select-base />
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                            ])
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Nationality Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -57,7 +36,10 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Nationality Name (English) -->
                             <div class="">
-                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
+                                <label for="name" class="kt-label required mb-2">
+                                    {{ __('main.name') }}
+                                    <span class="text-red-600">*</span>
+                                </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]" required
                                     value="{{ old('name') }}">
                                 @error('name')
@@ -71,6 +53,26 @@
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ old('name_ar') }}">
                                 @error('name_ar')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Country -->
+                            <div class="">
+                                <label for="country_id" class="kt-label required mb-2">
+                                    {{ __('main.country') }}
+                                    <span class="text-red-600">*</span>
+                                </label>
+                                <select name="country_id" id="country_id" class="kt-input basic-single" required>
+                                    <option value="" selected>--</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ old('country_id') == $country->id ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

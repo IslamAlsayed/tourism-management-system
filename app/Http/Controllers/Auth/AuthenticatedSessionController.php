@@ -70,6 +70,9 @@ class AuthenticatedSessionController extends Controller
 
     public function expired()
     {
+        if (auth()->check()) {
+            return redirect()->route('dashboard');
+        }
         if (session('session_expired')) {
             session()->forget(['login_attempted']);
             showToastWarningMessage(__('messages.session_expired'))->pin();

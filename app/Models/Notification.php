@@ -69,7 +69,7 @@ class Notification extends Model
         parent::boot();
 
         // Auto-set user_id if user is authenticated
-        static::creating(function ($notification) {
+        static::saving(function ($notification) {
             if (Auth::check() && !$notification->user_id) {
                 $notification->user_id = getActiveUser()?->id;
             }

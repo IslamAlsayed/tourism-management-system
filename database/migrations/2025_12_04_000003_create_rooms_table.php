@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('model_id')->nullable();
             $table->string('model_type')->nullable();
-            // $table->foreignId('season_id')->constrained('seasons')->onDelete('cascade');
-            $table->foreignId('currency_id')->constrained('currencies')->onDelete('cascade');
+            // $table->foreignId('season_id')->nullable()->constrained('seasons')->cascadeOnDelete();
+            $table->foreignId('currency_id')->nullable()->constrained('currencies')->cascadeOnDelete();
 
             $table->string('name'); // e.g., Single, Double, Triple, Suite, Quad
             $table->string('name_ar')->nullable();
@@ -31,7 +31,7 @@ return new class extends Migration {
             $table->decimal('extra_bed_price', 10, 2)->nullable(); // سعر سرير إضافي
             $table->decimal('sea_view_supplement', 10, 2)->nullable(); // إضافة إطلالة بحر
 
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

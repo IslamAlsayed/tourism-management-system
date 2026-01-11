@@ -10,7 +10,7 @@ use App\Models\Setting;
 use App\Models\MediaFile;
 use App\Models\TourGuide;
 use App\Models\Restaurant;
-use App\Models\TouristSite;
+use App\Models\TouristService;
 use App\Models\CrossingPort;
 use App\Observers\PhotoObserver;
 use App\Observers\ActivityObserver;
@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         // Register PhotoObserver for all models with photo field
         User::observe(PhotoObserver::class);
         Client::observe(PhotoObserver::class);
-        TouristSite::observe(PhotoObserver::class);
+        TouristService::observe(PhotoObserver::class);
         CrossingPort::observe(PhotoObserver::class);
         Airline::observe(PhotoObserver::class);
         Restaurant::observe(PhotoObserver::class);

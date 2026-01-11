@@ -24,22 +24,24 @@ use App\Http\Controllers\Dashboard\TimezoneController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\MediaFileController;
 use App\Http\Controllers\Dashboard\SubregionController;
-use App\Http\Controllers\Dashboard\TourGuideController;
 use App\Http\Controllers\Admin\SidebarManagerController;
 use App\Http\Controllers\Dashboard\RestaurantController;
 use App\Http\Controllers\Dashboard\SupplementController;
 use App\Http\Controllers\Dashboard\ActivityLogController;
 use App\Http\Controllers\Dashboard\NationalityController;
-use App\Http\Controllers\Dashboard\TouristSiteController;
+use App\Http\Controllers\Dashboard\TouristServiceController;
+use App\Http\Controllers\Dashboard\Tours\GuideController;
 use App\Http\Controllers\Dashboard\CrossingPortController;
 use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
-use App\Http\Controllers\Dashboard\TourGuideTypeController;
-use App\Http\Controllers\Dashboard\TourGuideReviewController;
-use App\Http\Controllers\Dashboard\Transportation\CompanyController;
-use App\Http\Controllers\Dashboard\Transportation\PricingController;
-use App\Http\Controllers\Dashboard\Transportation\PricingDefinitionController;
-use App\Http\Controllers\Dashboard\Transportation\VehicleTypeController;
+use App\Http\Controllers\Dashboard\Tours\GuideTypeController;
+use App\Http\Controllers\Dashboard\Tours\GuideReviewController;
+use App\Http\Controllers\Dashboard\Transportations\RouteController;
+use App\Http\Controllers\Dashboard\Transportations\CompanyController;
+use App\Http\Controllers\Dashboard\Transportations\PricingController;
+use App\Http\Controllers\Dashboard\Transportations\VehicleTypeController;
+use App\Http\Controllers\Dashboard\Transportations\RouteAssignmentController;
+use App\Http\Controllers\Dashboard\Transportations\PricingDefinitionController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
 
@@ -148,17 +150,25 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('restaurants', RestaurantController::class)->names('restaurants');
 
     // === TOUR GUIDES MANAGEMENT ===
-    Route::resource('tour-guides', TourGuideController::class)->names('tour-guides');
-    Route::resource('tour-guides-types', TourGuideTypeController::class)->names('tour-guides-types');
-    Route::resource('tour-guides-reviews', TourGuideReviewController::class)->names('tour-guides-reviews');
+    // Route::resource('tour-guides', GuideController::class)->names('tour-guides');
+    // Route::resource('tour-guides-types', GuideTypeController::class)->names('tour-guides-types');
+    // Route::resource('tour-guides-reviews', GuideReviewController::class)->names('tour-guides-reviews');
+
+    Route::prefix('tours')->name('tours.')->group(function () {
+        Route::resource('guides', GuideController::class)->names('guides');
+        Route::resource('guides-types', GuideTypeController::class)->names('guides-types');
+        Route::resource('guides-reviews', GuideReviewController::class)->names('guides-reviews');
+    });
 
     Route::resource('pricing-definitions', PricingDefinitionController::class)->names('pricing-definitions');
 
-    // === TRANSPORTATION MANAGEMENT ===
-    Route::prefix('transportation')->name('transportation.')->group(function () {
+    // === TRANSPORTATIONS MANAGEMENT ===
+    Route::prefix('transportations')->name('transportations.')->group(function () {
         Route::resource('companies', CompanyController::class)->names('companies');
         Route::resource('vehicle-types', VehicleTypeController::class)->names('vehicle-types');
         Route::resource('pricings', PricingController::class)->names('pricings');
+        Route::resource('routes', RouteController::class)->names('routes');
+        Route::resource('route-assignments', RouteAssignmentController::class)->names('route-assignments');
     });
 
     // Route::resource('transportation/companies', CompanyController::class)->names('transportation-companies');
@@ -167,8 +177,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Route::resource('transportation/company/bus-types', CompanyBusTypeController::class)->names('transportation-company-bus-types');
     // Route::resource('transportation/vehicles', VehicleController::class)->names('transportation-vehicles');
 
-    // === TOURIST SITES MANAGEMENT ===
-    Route::resource('tourist-sites', TouristSiteController::class)->names('tourist-sites');
+    // === TOURIST SERVICES MANAGEMENT ===
+    Route::resource('tourist-services', TouristServiceController::class)->names('tourist-services');
 
     // === ACCOMMODATIONS MANAGEMENT ===
     Route::resource('accommodations', AccommodationController::class)->names('accommodations');

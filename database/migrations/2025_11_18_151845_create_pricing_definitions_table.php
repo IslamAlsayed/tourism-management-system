@@ -23,7 +23,7 @@ return new class extends Migration {
                 'pricing_unit', // per_day / per_trip
             ])->nullable();
 
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

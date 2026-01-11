@@ -8,7 +8,7 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view">
 
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
@@ -40,13 +40,14 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
-        [
-            'condition' => \App\Models\Country::count() > 0,
-            'route' => route('countries.index'),
-            'label' => __('main.countries_'),
-        ],
-    ]">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
+        :requirements="[
+            [
+                'condition' => \App\Models\Country::count() > 0,
+                'route' => route('countries.index'),
+                'label' => __('main.countries_'),
+            ],
+        ]">
 
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
@@ -61,23 +62,24 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
-        [
-            'condition' => \App\Models\Currency::count() > 0,
-            'route' => route('currencies.index'),
-            'label' => __('main.currencies_'),
-        ],
-        [
-            'condition' => \App\Models\Region::count() > 0,
-            'route' => route('regions.index'),
-            'label' => __('main.regions_'),
-        ],
-        [
-            'condition' => \App\Models\Country::count() > 0,
-            'route' => route('countries.index'),
-            'label' => __('main.countries_'),
-        ],
-    ]">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
+        :requirements="[
+            [
+                'condition' => \App\Models\Currency::count() > 0,
+                'route' => route('currencies.index'),
+                'label' => __('main.currencies_'),
+            ],
+            [
+                'condition' => \App\Models\Region::count() > 0,
+                'route' => route('regions.index'),
+                'label' => __('main.regions_'),
+            ],
+            [
+                'condition' => \App\Models\Country::count() > 0,
+                'route' => route('countries.index'),
+                'label' => __('main.countries_'),
+            ],
+        ]">
 
         {{-- محتوى إضافي --}}
     </x-import-form>
@@ -88,8 +90,8 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :route="route('custom.import.route')"
-        :cancelRoute="route('custom.cancel.route')">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
+        :route="route('custom.import.route')" :cancelRoute="route('custom.cancel.route')">
 
         {{-- محتوى مخصص --}}
     </x-import-form>
@@ -100,8 +102,8 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-advanced-import-form :title="$title" :description="$description" :models="$models" :view="$view" :hasOptions="true"
-        optionName="accommodationOptions" :options="['types', 'accommodations', 'seasons', 'supplements', 'rates', 'rate_details', 'hotels']" :disabledOptions="['rate_nationalities', 'room_types']" :additionalInputs="[['name' => 'importType', 'id' => 'importType', 'value' => '']]"
+    <x-advanced-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
+        :hasOptions="true" optionName="accommodationOptions" :options="['types', 'accommodations', 'seasons', 'supplements', 'rates', 'rate_details', 'hotels']" :disabledOptions="['rate_nationalities', 'room_types']" :additionalInputs="[['name' => 'importType', 'id' => 'importType', 'value' => '']]"
         customExportId="exportData">
 
         {{-- جداول ديناميكية حسب الخيار المختار --}}
@@ -164,7 +166,8 @@
 
 @extends('layouts.master')
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :showExport="false">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
+        :showExport="false">
 
         {{-- محتوى مخصص بدون زر التصدير --}}
         <div class="custom-content">

@@ -35,7 +35,7 @@ return [
     'app_email_notification' => env('APP_EMAIL_NOTIFICATION', false),
     'app_push_notification' => env('APP_PUSH_NOTIFICATION', false),
     'app_sms_notification' => env('APP_SMS_NOTIFICATION', false),
-    'app_sidebar_width' => env('APP_SIDEBAR_WIDTH', 310),
+    'app_sidebar_width' => env('APP_SIDEBAR_WIDTH', 290),
     'idle_timeout' => env('IDLE_TIMEOUT', 1800000),
     'ably_key' => env('ABLY_KEY', ''),
 

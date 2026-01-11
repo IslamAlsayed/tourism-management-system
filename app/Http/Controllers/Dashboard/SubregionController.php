@@ -34,7 +34,7 @@ class SubregionController extends Controller
 
     public function show($id)
     {
-        $subregion = Subregion::with('region')->find($id);
+        $subregion = Subregion::with((new Subregion)->getRelationshipNames())->find($id);
         if (!$subregion)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregion')]));
         return view('pages.dashboard.subregions.show', compact('subregion'));

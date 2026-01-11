@@ -367,10 +367,19 @@
     <script>
         const ably_activity = new Ably.Realtime({
             key: '{{ config('app.ably_key') }}',
+            logLevel: 1
         });
         const activityCreated = ably_activity.channels.get('activity-created');
         activityCreated.subscribe('activity.created', (message) => {
             @this.dispatch('activityCreated');
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                ably.close();
+            } else {
+                ably.connect();
+            }
         });
     </script>
 @endpush

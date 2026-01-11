@@ -11,7 +11,6 @@ use App\Models\Supplier;
 use App\Models\HotelRate;
 use App\Models\HotelPolicy;
 use App\Models\HotelSeason;
-use Illuminate\Support\Str;
 use App\Models\OtherService;
 use Illuminate\Http\Request;
 use App\Models\HotelRoomType;
@@ -42,14 +41,14 @@ class DashboardController extends Controller
 
     public function mainForm_old()
     {
-        $currencies = Currency::all()->toArray();
+        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $hotels = Hotel::all()->toArray();
         $hotel_room_types = HotelRoomType::all()->toArray();
         $hotel_seasons = HotelSeason::all()->toArray();
         $hotel_rates = HotelRate::all()->toArray();
         $hotel_supplements = HotelSupplement::all()->toArray();
         $hotel_policies = HotelPolicy::all()->toArray();
-        $transportation_companies = TransportationCompany::all()->toArray();
+        $transportations_companies = TransportationCompany::all()->toArray();
         $other_services = OtherService::all()->toArray();
         $suppliers = Supplier::all()->toArray();
 
@@ -61,7 +60,7 @@ class DashboardController extends Controller
             $hotel_rates,
             $hotel_supplements,
             $hotel_policies,
-            $transportation_companies,
+            $transportations_companies,
             $other_services,
             $suppliers
         );
@@ -69,7 +68,7 @@ class DashboardController extends Controller
 
     public function mainForm()
     {
-        $currencies = Currency::all();
+        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         return view('pages.dashboard.multi-step-form.index', compact('currencies'));
     }
 
@@ -136,8 +135,8 @@ class DashboardController extends Controller
             'supplement_ids.*' => 'exists:hotel_supplements,id',
             'policy_ids' => 'nullable|array',
             'policy_ids.*' => 'exists:hotel_policies,id',
-            'transportation_company_ids' => 'nullable|array',
-            'transportation_company_ids.*' => 'exists:transportation_companies,id',
+            'transportations_company_ids' => 'nullable|array',
+            'transportations_company_ids.*' => 'exists:transportations_companies,id',
             'other_service_ids' => 'nullable|array',
             'other_service_ids.*' => 'exists:other_services,id',
             'supplier_ids' => 'nullable|array',

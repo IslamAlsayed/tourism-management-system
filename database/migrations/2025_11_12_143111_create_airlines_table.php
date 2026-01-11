@@ -13,39 +13,61 @@ return new class extends Migration {
         Schema::create('airlines', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
-            $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
-            $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
-            $table->foreignId('state_id')->nullable()->constrained('states')->onDelete('set null');
-            $table->foreignId('city_id')->nullable()->constrained('cities')->onDelete('set null');
 
-            $table->string('name'); // English name
-            $table->string('name_ar')->nullable(); // Arabic name
-            $table->string('icao', 4)->unique()->nullable(); // ICAO code (4 letters)
-            $table->string('iata', 3)->unique()->nullable(); // IATA code (3 letters)
-            $table->string('lid', 10)->nullable(); // Local identifier
-            // Airport Type/Subdivision
-            $table->string('subd', 50)->nullable(); // Subdivision/Type of airport
-            // Geographic Information
-            $table->decimal('elevation', 10, 2)->nullable(); // Elevation in meters
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
+            // Location References
+            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->cascadeOnDelete();
+            $table->foreignId('region_id')->nullable()->constrained('regions')->cascadeOnDelete();
+            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->cascadeOnDelete();
+            $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnDelete();
+            $table->foreignId('state_id')->nullable()->constrained('states')->cascadeOnDelete();
+            $table->foreignId('city_id')->nullable()->constrained('cities')->cascadeOnDelete();
+            // Airline Identification
+            $table->string('iata_code', 3)->nullable()->unique();
+            $table->string('icao_code', 4)->nullable()->unique();
+            $table->string('parent_airline_icao_code', 4)->nullable();
+
+            // Airline Names & Branding
+            $table->string('marketing_name')->nullable();
+            $table->string('official_full_name')->nullable();
+            $table->string('alliance')->nullable();
+            $table->string('frequent_flyer_program_name')->nullable();
+
+            // Airline Classification
+            $table->string('airline_type')->nullable(); // e.g., "Full Service", "Low Cost", "Regional"
+            $table->string('airline_type_code')->nullable(); // e.g., "FSC", "LCC", "REG"
+            $table->boolean('is_lowcost')->default(false)->nullable();
+
+            // Home Country Information
+            $table->string('airline_home_country')->nullable();
+            $table->string('airline_home_country_alpha_2_code', 2)->nullable(); // ISO 3166-1 alpha-2
+            $table->string('airline_home_country_alpha_3_code', 3)->nullable(); // ISO 3166-1 alpha-3
+            $table->string('airline_home_city_iata_code', 3)->nullable();
+
+            // Organization Details
+            $table->integer('year_of_foundation')->nullable();
+            $table->string('email')->nullable();
+            $table->text('official_website')->nullable();
+            $table->text('baggage_policy_url')->nullable();
+            $table->text('web_check_in_url')->nullable();
+
             // Contact Information
             $table->string('local_phone_number', 20)->nullable();
             $table->string('international_phone_number', 20)->nullable();
-            $table->string('website')->nullable();
-            $table->boolean('is_active')->default(true);
+
+            // Additional Information
+            $table->boolean('is_active')->default(true)->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
+
             $table->timestamps();
 
             // Indexes for better performance
-            $table->index('icao');
-            $table->index('iata');
-            $table->index('name');
+            $table->index('iata_code');
+            $table->index('icao_code');
+            $table->index('airline_home_country_alpha_2_code');
+            $table->index('is_lowcost');
             $table->index(['country_id', 'state_id', 'city_id']);
-            $table->index(['latitude', 'longitude']);
+            $table->index('is_active');
         });
     }
 

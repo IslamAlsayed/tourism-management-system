@@ -14,7 +14,7 @@
     <!-- Container -->
     <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
-            <livewire:transportation.vehicles />
+            <livewire:transportations.vehicles />
         </div>
     </div>
     <!-- End of Container -->

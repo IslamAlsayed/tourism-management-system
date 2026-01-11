@@ -36,7 +36,7 @@ class SupplementController extends Controller
 
     public function show($id)
     {
-        $supplement = Supplement::with('model')->find($id);
+        $supplement = Supplement::with((new Supplement)->getRelationshipNames())->find($id);
         if (!$supplement)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.supplement')]));
         return view('pages.dashboard.supplements.show', compact('supplement'));

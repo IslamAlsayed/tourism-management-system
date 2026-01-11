@@ -27,10 +27,10 @@ class CountryController extends Controller
 
     public function create()
     {
-        $currencies = Currency::orderBy('code')->get();
+        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $languages = Language::orderBy('name')->get();
         $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.countries.create', compact('currencies', 'languages', 'regions', 'timezones'));
     }
 
@@ -65,7 +65,7 @@ class CountryController extends Controller
 
     public function show($id)
     {
-        $country = Country::with(['timezone', 'language', 'currency', 'region', 'subregion', 'states', 'cities'])->find($id);
+        $country = Country::with((new Country)->getRelationshipNames())->find($id);
         if (!$country)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
         return view('pages.dashboard.countries.show', compact('country'));
@@ -76,9 +76,9 @@ class CountryController extends Controller
         $country = Country::find($id);
         if (!$country)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
-        $currencies = Currency::orderBy('code')->get();
+        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $languages = Language::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'languages', 'timezones'));
     }
 

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view">
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}
@@ -17,6 +17,12 @@
                             name <span class="text-red-600">*</span>
                         </th>
                         <th class="border-custom px-2" title="{{ __('main.optional') }}">name_ar</th>
+                        <th class="border-custom px-2 bg-yellow-100" title="{{ __('main.required') }}">
+                            model_id <span class="text-red-600">*</span>
+                        </th>
+                        <th class="border-custom px-2 bg-yellow-100" title="{{ __('main.required') }}">
+                            model_type <span class="text-red-600">*</span>
+                        </th>
                         <th class="border-custom px-2" title="{{ __('main.optional') }}">is_included</th>
                         <th class="border-custom px-2" title="{{ __('main.optional') }}">is_active</th>
                         <th class="border-custom px-2" title="{{ __('main.optional') }}">description</th>
@@ -28,6 +34,8 @@
                         <td class="border-custom px-2">Chicken Salad</td>
                         <td class="border-custom px-2">سلطة دجاج</td>
                         <td class="border-custom px-2">1</td>
+                        <td class="border-custom px-2">restaurant</td>
+                        <td class="border-custom px-2">1</td>
                         <td class="border-custom px-2">1</td>
                         <td class="border-custom px-2">Fresh salad with grilled chicken</td>
                         <td class="border-custom px-2">Served with vinaigrette dressing</td>
@@ -35,6 +43,8 @@
                     <tr>
                         <td class="border-custom px-2">Vegetable Soup</td>
                         <td class="border-custom px-2">شوربة خضار</td>
+                        <td class="border-custom px-2">1</td>
+                        <td class="border-custom px-2">accommodation</td>
                         <td class="border-custom px-2">0</td>
                         <td class="border-custom px-2">1</td>
                         <td class="border-custom px-2">Soup made with seasonal vegetables</td>
@@ -43,6 +53,8 @@
                     <tr>
                         <td class="border-custom px-2">Beef Steak</td>
                         <td class="border-custom px-2">شريحة لحم</td>
+                        <td class="border-custom px-2">1</td>
+                        <td class="border-custom px-2">transportation-company</td>
                         <td class="border-custom px-2">1</td>
                         <td class="border-custom px-2">0</td>
                         <td class="border-custom px-2">Grilled beef steak served with sauce</td>

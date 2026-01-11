@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Region;
 use App\Models\Airline;
-use App\Models\Timezone;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Airline\StoreRequest;
 use App\Http\Requests\Airline\UpdateRequest;
@@ -18,9 +16,7 @@ class AirlineController extends Controller
 
     public function create()
     {
-        $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.airlines.create', compact('regions', 'timezones'));
+        return view('pages.dashboard.airlines.create');
     }
 
     public function store(StoreRequest $request)
@@ -34,7 +30,7 @@ class AirlineController extends Controller
 
     public function show($id)
     {
-        $airline = Airline::with(['timezone', 'region', 'subregion', 'country', 'state', 'city'])->find($id);
+        $airline = Airline::with((new Airline)->getRelationshipNames())->find($id);
         if (!$airline)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
         return view('pages.dashboard.airlines.show', compact('airline'));
@@ -45,9 +41,7 @@ class AirlineController extends Controller
         $airline = Airline::find($id);
         if (!$airline)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.airline')]));
-        $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.airlines.edit', compact('airline', 'regions', 'timezones'));
+        return view('pages.dashboard.airlines.edit', compact('airline'));
     }
 
     public function update(UpdateRequest $request, $id)

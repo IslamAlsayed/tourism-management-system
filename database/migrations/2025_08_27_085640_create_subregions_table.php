@@ -13,11 +13,14 @@ return new class extends Migration {
         Schema::create('subregions', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
+            $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
+
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->string('wiki_data_id')->nullable();
-            $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
-            $table->boolean('is_active')->nullable()->default(true);
+            $table->boolean('is_active')->nullable();
+            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

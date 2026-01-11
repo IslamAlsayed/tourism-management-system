@@ -3,9 +3,10 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Livewire\WithPagination;
 use App\Traits\ExportsData;
 use App\Traits\WithSorting;
+use Illuminate\Support\Str;
+use Livewire\WithPagination;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
 use App\Traits\CustomColumnsLivewireLegacy;
@@ -29,13 +30,15 @@ class PolymorphicModelSelect extends Component
     public function mount($record = null)
     {
         $this->record = $record;
-
         $types = $this->config();
-
-        $this->filterType = request()->type && isset($types[request()->type])
-            ? request()->type
-            : array_key_first($types);
-
+        // $this->filterType = request()->type && isset($types[request()->type]) ? request()->type : array_key_first($types);
+        foreach ($types as $key => $type) {
+            // if ($type['model'] === "App\\Models\\" . studlyCaseName(request()->type)) {
+            if (Str::contains($key, request()->type) && request()->type) {
+                $this->filterType = $key;
+                break;
+            }
+        }
         if ($record && $record->model_type) {
             $this->filterType = $this->resolveTypeFromModel($record->model_type);
         }

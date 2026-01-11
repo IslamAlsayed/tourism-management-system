@@ -6,7 +6,8 @@
             (<span class="font-semibold text-primary">{{ $record->meals->count() }}</span>)
         </h3>
         <div class="kt-card-toolbar">
-            <a href="{{ route('meals.create') }}" class="kt-btn kt-btn-sm kt-btn-primary">
+            <a href="{{ route('meals.create', isset($type) ? ['type' => $type, randomToken()] : []) }}"
+                class="kt-btn kt-btn-sm kt-btn-primary">
                 <i class="ki-filled ki-plus text-sm me-1"></i>
                 {{ __('main.add_type', ['type' => __('main.meal')]) }}
             </a>

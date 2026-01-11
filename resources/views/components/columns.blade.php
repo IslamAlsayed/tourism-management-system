@@ -90,16 +90,23 @@
 
         @if (isset($allColumns) && count($allColumns) > 0)
             <div class="grid grid-cols-2 xl:grid-cols-3 gap-2 pt-1">
+
                 @foreach ($allColumns as $column)
                     @if ($column == 'uuid' && $settings->app_show_uuid_column == 0)
                         @continue
                     @endif
-                    <div class="custom-input" title="{{ __('main.' . $column) }}"
-                        wire:key="col-{{ $column }}-{{ in_array($column, $pendingColumns) ? '1' : '0' }}">
-                        <input type="checkbox" wire:model="pendingColumns" value="{{ $column }}"
-                            id="col-{{ $column }}">
-                        <label for="col-{{ $column }}">
-                            {{ limitedText(ucfirst(__('main.' . $column)), 15) }}
+                    @php
+                        $translated = __('main.' . (string) $column);
+                        $labelText = is_array($translated)
+                            ? ucfirst(str_replace('_', ' ', (string) $column))
+                            : $translated;
+                    @endphp
+                    <div class="custom-input" title="{{ $labelText }}"
+                        wire:key="col-{{ (string) $column }}-{{ in_array($column, $pendingColumns) ? '1' : '0' }}">
+                        <input type="checkbox" wire:model="pendingColumns" value="{{ (string) $column }}"
+                            id="col-{{ (string) $column }}">
+                        <label for="col-{{ (string) $column }}">
+                            {{ limitedText(ucfirst($labelText), 15) }}
                             {!! in_array($column, $relations) ? '<span class="text-red-600">R</span>' : '' !!}
                         </label>
                     </div>

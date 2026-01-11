@@ -460,10 +460,11 @@ if (!function_exists('modelTypeToString')) {
 // تحويل نوع الموديل إلى مسار الراوت
 if (!function_exists('modelTypeToRoute')) {
 
-    function modelTypeToRoute(?string $modelType, bool $plural = true): ?string
+    function modelTypeToRoute(?string $modelType, bool $plural = true, ?string $separator = '.'): string|null
     {
         if (!$modelType)
             return null;
+
         $className = class_basename($modelType);
 
         // Split CamelCase words
@@ -476,11 +477,25 @@ if (!function_exists('modelTypeToRoute')) {
             return $plural ? Str::plural($resource) : Str::singular($resource);
         }
 
-        // Case: Domain + Resource (TransportationCompany)
-        $domain = Str::kebab(array_shift($parts));
-        $resource = Str::kebab(implode('', $parts));
+        // Known domain prefixes that should use dot separator
+        $knownDomains = ['transportation', 'accommodation', 'tour'];
+
+        // Convert all parts to kebab-case
+        $kebabParts = array_map(fn($p) => Str::kebab($p), $parts);
+
+        // Check if first part is a known domain
+        if (in_array($kebabParts[0], $knownDomains)) {
+            // Domain.Resource pattern (e.g., transportation.companies)
+            $domain = pluralLowerCaseName(array_shift($kebabParts));
+            $resource = implode('-', $kebabParts);
+            $resource = $plural ? Str::plural($resource) : Str::singular($resource);
+            return $domain . $separator . $resource;
+        }
+
+        // Default: join all parts with hyphen (e.g., tour-guides, tour-guide-types)
+        $resource = implode('-', $kebabParts);
         $resource = $plural ? Str::plural($resource) : Str::singular($resource);
-        return "{$domain}.{$resource}";
+        return $resource;
     }
 }
 
@@ -720,5 +735,17 @@ if (!function_exists('shouldSendSms')) {
     {
         $settings = Setting::first();
         return $settings && $settings->app_sms_notifications == 1;
+    }
+}
+
+if (!function_exists('randomToken')) {
+    /**
+     * Generate a random token string
+     *
+     * @return string
+     */
+    function randomToken($length = 120)
+    {
+        return Str::random($length);
     }
 }

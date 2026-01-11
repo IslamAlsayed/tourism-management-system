@@ -29,8 +29,17 @@
 <script>
     const ably = new Ably.Realtime({
         key: "{{ config('app.ably_key') }}",
+        logLevel: 1
     });
     window.settings = @json(App\Models\Setting::first());
+
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            ably.close();
+        } else {
+            ably.connect();
+        }
+    });
 </script>
 <script src="{{ asset('assets/plugins/local-ably-cdn/setup.js') }}"></script>
 

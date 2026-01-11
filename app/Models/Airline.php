@@ -21,21 +21,31 @@ class Airline extends Model
     protected $fillable = [
         'id',
         'uuid',
-        'name',
-        'name_ar',
-        'lid',
-        'icao',
-        'iata',
-        'subd',
-        'elevation',
-        'latitude',
-        'longitude',
+        'iata_code',
+        'icao_code',
+        'parent_airline_icao_code',
+        'marketing_name',
+        'official_full_name',
+        'alliance',
+        'frequent_flyer_program_name',
+        'airline_type',
+        'airline_type_code',
+        'is_lowcost',
+        'airline_home_country',
+        'airline_home_country_alpha_2_code',
+        'airline_home_country_alpha_3_code',
+        'airline_home_city_iata_code',
+        'year_of_foundation',
+        'email',
+        'official_website',
+        'baggage_policy_url',
+        'web_check_in_url',
         'local_phone_number',
         'international_phone_number',
-        'website',
         'is_active',
         'description',
         'notes',
+
         'timezone_id',
         'region_id',
         'subregion_id',
@@ -45,10 +55,9 @@ class Airline extends Model
     ];
 
     protected $casts = [
-        'elevation' => 'decimal:2',
-        'latitude' => 'decimal:8',
-        'longitude' => 'decimal:8',
+        'is_lowcost' => 'boolean',
         'is_active' => 'boolean',
+        'year_of_foundation' => 'integer',
     ];
 
     public function getRelationshipNames()
@@ -58,7 +67,20 @@ class Airline extends Model
 
     public function getExcludedColumns()
     {
-        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
+        return [
+            'timezone_id',
+            'region_id',
+            'subregion_id',
+            'country_id',
+            'state_id',
+            'city_id',
+            'description',
+            'notes',
+            'official_website',
+            'baggage_policy_url',
+            'web_check_in_url',
+            'parent_airline_icao_code'
+        ];
     }
 
     public function region()

@@ -20,7 +20,7 @@ class CityController extends Controller
     public function create()
     {
         $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.cities.create', compact('regions', 'timezones'));
     }
 
@@ -47,7 +47,7 @@ class CityController extends Controller
 
     public function show($id)
     {
-        $city = City::with(['timezone', 'region', 'subregion', 'country', 'state', 'states'])->find($id);
+        $city = City::with((new City)->getRelationshipNames())->find($id);
         return $city
             ? view('pages.dashboard.cities.show', compact('city'))
             : redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
@@ -59,7 +59,7 @@ class CityController extends Controller
         if (!$city)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
         $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.cities.edit', compact('city', 'regions', 'timezones'));
     }
 

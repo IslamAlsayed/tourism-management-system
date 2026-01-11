@@ -13,6 +13,8 @@ class TransportationCompany extends Model
 {
     use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole;
 
+    protected $table = 'transportations_companies';
+
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -26,10 +28,6 @@ class TransportationCompany extends Model
         'name_ar',
         'code',
         'rating',
-        'email',
-        'phone',
-        'mobile',
-        'fax',
         'street',
         'box',
         'postal_code',
@@ -48,9 +46,17 @@ class TransportationCompany extends Model
         'city_id',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($item) {
+            $item->code = 'TC-' . fake()->unique()->bothify('??-####');
+        });
+    }
+
     public function getRelationshipNames()
     {
-        return ['currency', 'region', 'subregion', 'country', 'state', 'city', 'vehicleTypes', 'seasons', 'supplements'];
+        return ['currency', 'region', 'subregion', 'country', 'state', 'city', 'vehicleTypes', 'seasons', 'supplements', 'contacts'];
     }
 
     public function getExcludedColumns()
@@ -101,5 +107,10 @@ class TransportationCompany extends Model
     public function supplements()
     {
         return $this->morphMany(Supplement::class, 'model');
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany(TransportationCompanyContact::class, 'company_id');
     }
 }

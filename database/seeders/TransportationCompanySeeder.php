@@ -3,10 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Season;
+use App\Models\RichText;
 use App\Models\Supplement;
 use Illuminate\Database\Seeder;
 use App\Models\PricingDefinition;
 use App\Models\TransportationCompany;
+use App\Models\TransportationCompanyContact;
 use App\Models\TransportationPricing;
 use Illuminate\Support\Facades\Schema;
 use App\Models\TransportationVehicleType;
@@ -21,9 +23,15 @@ class TransportationCompanySeeder extends Seeder
         // حذف بيانات شركات المواصلات القديمة
         Schema::disableForeignKeyConstraints();
         PricingDefinition::query()->delete();
+        RichText::where('record_type', PricingDefinition::class)->delete();
         TransportationCompany::query()->delete();
+        RichText::where('record_type', TransportationCompany::class)->delete();
         TransportationVehicleType::query()->delete();
+        RichText::where('record_type', TransportationCompanyContact::class)->delete();
+        TransportationCompanyContact::query()->delete();
+        RichText::where('record_type', TransportationVehicleType::class)->delete();
         TransportationPricing::query()->delete();
+        RichText::where('record_type', TransportationPricing::class)->delete();
         Schema::enableForeignKeyConstraints();
 
         // تعريفات التسعير
@@ -51,6 +59,23 @@ class TransportationCompanySeeder extends Seeder
         ];
         foreach ($companies as $company) {
             TransportationCompany::factory()->create($company);
+        }
+
+        // جهات اتصال شركات المواصلات
+        $contacts = [
+            ['company_id' => TransportationCompany::inRandomOrder()->first()?->id, 'contact_person' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'mobile' => fake()->phoneNumber(), 'fax' => fake()->phoneNumber()],
+            ['company_id' => TransportationCompany::inRandomOrder()->first()?->id, 'contact_person' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'mobile' => fake()->phoneNumber(), 'fax' => fake()->phoneNumber()],
+            ['company_id' => TransportationCompany::inRandomOrder()->first()?->id, 'contact_person' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'mobile' => fake()->phoneNumber(), 'fax' => fake()->phoneNumber()],
+            ['company_id' => TransportationCompany::inRandomOrder()->first()?->id, 'contact_person' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'mobile' => fake()->phoneNumber(), 'fax' => fake()->phoneNumber()],
+            ['company_id' => TransportationCompany::inRandomOrder()->first()?->id, 'contact_person' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'mobile' => fake()->phoneNumber(), 'fax' => fake()->phoneNumber()],
+            ['company_id' => TransportationCompany::inRandomOrder()->first()?->id, 'contact_person' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'mobile' => fake()->phoneNumber(), 'fax' => fake()->phoneNumber()],
+            ['company_id' => TransportationCompany::inRandomOrder()->first()?->id, 'contact_person' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'mobile' => fake()->phoneNumber(), 'fax' => fake()->phoneNumber()],
+            ['company_id' => TransportationCompany::inRandomOrder()->first()?->id, 'contact_person' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'mobile' => fake()->phoneNumber(), 'fax' => fake()->phoneNumber()],
+            ['company_id' => TransportationCompany::inRandomOrder()->first()?->id, 'contact_person' => fake()->name(), 'email' => fake()->unique()->safeEmail(), 'phone' => fake()->phoneNumber(), 'mobile' => fake()->phoneNumber(), 'fax' => fake()->phoneNumber()],
+        ];
+        foreach ($contacts as $contact) {
+            $contact['department'] = fake()->randomElement(['commercial manager', 'general manager', 'reservation department', 'Accounting manager', 'reservation DEP', 'reservation - sales', 'operation manager', 'Sales reservation', 'reservation manager', 'reservation mange']);
+            TransportationCompanyContact::factory()->create($contact);
         }
 
         // أنواع المركبات المصرية والأردنية
@@ -120,9 +145,9 @@ class TransportationCompanySeeder extends Seeder
             }
 
             // أسعار شركات المواصلات
-            $vehicleType = TransportationVehicleType::where('company_id', $company->id)->inRandomOrder()->first() 
+            $vehicleType = TransportationVehicleType::where('company_id', $company->id)->inRandomOrder()->first()
                 ?? TransportationVehicleType::inRandomOrder()->first();
-            
+
             if ($vehicleType) {
                 TransportationPricing::factory()->create([
                     'price' => fake()->numberBetween(900, 4000),

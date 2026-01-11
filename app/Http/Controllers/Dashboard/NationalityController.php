@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Region;
-use App\Models\Timezone;
+use App\Models\Country;
 use App\Models\Nationality;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Nationality\StoreRequest;
@@ -18,9 +17,8 @@ class NationalityController extends Controller
 
     public function create()
     {
-        $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.nationalities.create', compact('regions', 'timezones'));
+        $countries = Country::orderBy('name')->get();
+        return view('pages.dashboard.nationalities.create', compact('countries'));
     }
 
     public function store(StoreRequest $request)
@@ -36,7 +34,7 @@ class NationalityController extends Controller
 
     public function show($id)
     {
-        $nationality = Nationality::with(['region', 'subregion', 'country', 'state', 'city'])->find($id);
+        $nationality = Nationality::with((new Nationality)->getRelationshipNames())->find($id);
         return $nationality
             ? view('pages.dashboard.nationalities.show', compact('nationality'))
             : redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.nationality')]));
@@ -47,9 +45,8 @@ class NationalityController extends Controller
         $nationality = Nationality::find($id);
         if (!$nationality)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.nationality')]));
-        $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
-        return view('pages.dashboard.nationalities.edit', compact('nationality', 'regions', 'timezones'));
+        $countries = Country::orderBy('name')->get();
+        return view('pages.dashboard.nationalities.edit', compact('nationality', 'countries'));
     }
 
     public function update(UpdateRequest $request, $id)

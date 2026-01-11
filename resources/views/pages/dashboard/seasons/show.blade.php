@@ -134,7 +134,7 @@
                     'record' => $season->model,
                 ])
             @elseif($season->model && Str::contains($season->model_type, 'Transportation'))
-                @include('pages.dashboard.related-components.transportation-company', [
+                @include('pages.dashboard.related-components.transportations-company', [
                     'record' => $season->model,
                 ])
             @else
@@ -160,7 +160,7 @@
                                 'model' => 'restaurant',
                             ])
                             @include('components.elements.create-button', [
-                                'models' => 'transportation.companies',
+                                'models' => 'transportations.companies',
                                 'model' => 'transportation-company',
                             ])
                         </div>

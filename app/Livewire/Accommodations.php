@@ -25,10 +25,10 @@ class Accommodations extends Component
     public $filterTypeId = '';
     public $filterSeasonId = '';
     public $seasons = [];
-    public $filterRoomId = '';
-    public $rooms = [];
-    public $filterMealId = '';
-    public $meals = [];
+    // public $filterRoomId = '';
+    // public $rooms = [];
+    // public $filterMealId = '';
+    // public $meals = [];
     public $filterStatus = '';
     public $filter = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
@@ -70,8 +70,8 @@ class Accommodations extends Component
         $this->mountWithCustomColumns(Accommodation::class);
         $this->types = Type::pluck('name', 'id')->toArray();
         $this->seasons = Season::pluck('name', 'id')->toArray();
-        $this->rooms = Room::pluck('name', 'id')->toArray();
-        $this->meals = Meal::pluck('name', 'id')->toArray();
+        // $this->rooms = Room::pluck('name', 'id')->toArray();
+        // $this->meals = Meal::pluck('name', 'id')->toArray();
         $this->resetPage();
     }
 
@@ -147,23 +147,23 @@ class Accommodations extends Component
         if ($this->filterTypeId && $this->filterTypeId !== 'all') {
             $query->where('type_id', $this->filterTypeId);
         }
-        if ($this->filterSeasonId && $this->filterSeasonId['payload']['value'] !== 'all') {
+        if ($this->filterSeasonId && $this->filterSeasonId !== 'all') {
             $query->whereHas('seasons', function ($q) {
-                $q->where('id', $this->filterSeasonId['payload']['value']);
+                $q->where('id', $this->filterSeasonId);
             });
         }
-        if ($this->filterRoomId && $this->filterRoomId['payload']['value'] !== 'all') {
-            $query->whereHas('rooms', function ($q) {
-                $q->where('id', $this->filterRoomId['payload']['value']);
-            });
-        }
-        if ($this->filterMealId && $this->filterMealId['payload']['value'] !== 'all') {
-            $query->whereHas('meals', function ($q) {
-                $q->where('id', $this->filterMealId['payload']['value']);
-            });
-        }
-        if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
-            $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
+        // if ($this->filterRoomId && $this->filterRoomId['payload']['value'] !== 'all') {
+        //     $query->whereHas('rooms', function ($q) {
+        //         $q->where('id', $this->filterRoomId['payload']['value']);
+        //     });
+        // }
+        // if ($this->filterMealId && $this->filterMealId['payload']['value'] !== 'all') {
+        //     $query->whereHas('meals', function ($q) {
+        //         $q->where('id', $this->filterMealId['payload']['value']);
+        //     });
+        // }
+        if ($this->filterStatus && $this->filterStatus !== 'all') {
+            $query->where('is_active', $this->filterStatus === 'active' ? true : false);
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

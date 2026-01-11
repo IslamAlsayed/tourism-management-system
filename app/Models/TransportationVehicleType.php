@@ -13,6 +13,8 @@ class TransportationVehicleType extends Model
 {
     use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole;
 
+    protected $table = 'transportations_vehicle_types';
+
     protected $richTextAttributes = [
         'description',
         'notes',

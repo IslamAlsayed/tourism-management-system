@@ -26,29 +26,6 @@
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
-                <!-- Location Information -->
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">
-                            {{ __('main.type_information', ['type' => __('main.location')]) }}
-                        </h3>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
-                        <livewire:regions.location-select-base :record="$nationality" />
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                                'record' => $nationality,
-                            ])
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Nationality Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
@@ -73,6 +50,22 @@
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
                                     value="{{ $nationality->name_ar }}">
                                 @error('name_ar')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Country -->
+                            <div class="">
+                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
+                                <select name="country_id" id="country_id" class="kt-input basic-single">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ $nationality->country_id == $country->id ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

@@ -2,6 +2,10 @@
 
 @section('title', __('main.type_details', ['type' => __('main.accommodation')]))
 
+@push('scripts')
+    @include('components.elements.setup-map')
+@endpush
+
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
@@ -424,7 +428,10 @@
 
             <!-- Seasons -->
             @if ($accommodation->seasons && $accommodation->seasons->count() > 0)
-                @include('pages.dashboard.related-components.seasons', ['record' => $accommodation])
+                @include('pages.dashboard.related-components.seasons', [
+                    'record' => $accommodation,
+                    'type' => 'accommodation',
+                ])
             @endif
 
             <!-- Rooms -->
@@ -434,12 +441,18 @@
 
             <!-- Meals -->
             @if ($accommodation->meals && $accommodation->meals->count() > 0)
-                @include('pages.dashboard.related-components.meals', ['record' => $accommodation])
+                @include('pages.dashboard.related-components.meals', [
+                    'record' => $accommodation,
+                    'type' => 'accommodation',
+                ])
             @endif
 
             <!-- Supplements -->
             @if ($accommodation->supplements && $accommodation->supplements->count() > 0)
-                @include('pages.dashboard.related-components.supplements', ['record' => $accommodation])
+                @include('pages.dashboard.related-components.supplements', [
+                    'record' => $accommodation,
+                    'type' => 'accommodation',
+                ])
             @endif
 
             <!-- Actions -->

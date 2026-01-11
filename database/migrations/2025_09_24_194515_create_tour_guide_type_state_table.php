@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('tour_guide_type_id');
             $table->unsignedBigInteger('state_id');
             $table->primary(['tour_guide_type_id', 'state_id']);
-            $table->foreign('tour_guide_type_id')->references('id')->on('tour_guide_types')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+            $table->foreign('tour_guide_type_id')->references('id')->on('tour_guide_types')->cascadeOnDelete();
+            $table->foreign('state_id')->references('id')->on('states')->cascadeOnDelete();
         });
     }
     public function down()

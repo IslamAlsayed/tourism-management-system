@@ -20,57 +20,21 @@ class Nationality extends Model
         'is_active',
         'description',
         'notes',
-        'timezone_id',
-        'region_id',
-        'subregion_id',
         'country_id',
-        'state_id',
-        'city_id',
     ];
 
-    /**
-     * Get relationship names for eager loading
-     */
     public function getRelationshipNames()
     {
-        return ['timezone', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['country'];
     }
 
-    /**
-     * Get columns to exclude from search/display
-     */
     public function getExcludedColumns()
     {
-        return ['timezone_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
-    }
-
-    public function timezone()
-    {
-        return $this->belongsTo(Timezone::class);
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
+        return ['country_id', 'description', 'notes'];
     }
 
     public function country()
     {
         return $this->belongsTo(Country::class);
-    }
-
-    public function state()
-    {
-        return $this->belongsTo(State::class);
-    }
-
-    public function city()
-    {
-        return $this->belongsTo(City::class);
     }
 }

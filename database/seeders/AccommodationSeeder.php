@@ -6,6 +6,7 @@ use App\Models\Meal;
 use App\Models\Room;
 use App\Models\Type;
 use App\Models\Season;
+use App\Models\RichText;
 use App\Models\Supplement;
 use App\Models\Accommodation;
 use Illuminate\Database\Seeder;
@@ -20,13 +21,20 @@ class AccommodationSeeder extends Seeder
     {
         // حذف بيانات الإقامة القديمة
         Schema::disableForeignKeyConstraints();
-        Accommodation::truncate();
+        // Accommodation::truncate();
+        // foreach ([Meal::class, Room::class, Season::class, Supplement::class] as $modelClass) {
+        //     $modelClass::where('model_type', Accommodation::class)->delete();
+        // }
+        // foreach ([Accommodation::class, Meal::class, Room::class, Season::class, Supplement::class] as $modelClass) {
+        //     RichText::where('record_type', $modelClass)->delete();
+        // }
         Schema::enableForeignKeyConstraints();
 
         // Get or create types (Hotel, Resort, Villa, Apartment, Hostel, etc.)
         $typeNames = [
             ['name' => 'Hotel', 'name_ar' => 'فندق'],
             ['name' => 'Resort', 'name_ar' => 'منتجع'],
+            ['name' => 'Restaurant', 'name_ar' => 'مطعم'],
             ['name' => 'Aparthotel', 'name_ar' => 'شقة فندقية'],
             ['name' => 'Apartment', 'name_ar' => 'شقة سياحية'],
             ['name' => 'Villa', 'name_ar' => 'فيلا'],

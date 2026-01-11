@@ -47,10 +47,10 @@
                                 <p class="text-sm text-secondary-foreground">{{ $restaurant->name_ar }}</p>
                             </div>
                         @endif
-                        @if ($restaurant->company_name_ar)
+                        @if ($restaurant->company_name)
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.company_name_ar') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $restaurant->company_name_ar }}</p>
+                                <label class="kt-label mb-1">{{ __('main.company_name') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $restaurant->company_name }}</p>
                             </div>
                         @endif
                         @if ($restaurant->type)
@@ -392,7 +392,7 @@
                         (<span class="font-semibold text-primary">{{ $restaurant->seasons->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('seasons.create', [Str::random(120), 'type' => 'restaurant']) }}"
+                        <a href="{{ route('seasons.create', ['type' => 'restaurant', \Illuminate\Support\Str::random(120)]) }}"
                             class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.season')]) }}

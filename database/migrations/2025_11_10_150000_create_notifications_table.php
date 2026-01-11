@@ -27,10 +27,10 @@ return new class extends Migration {
             $table->boolean('is_global')->default(false);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('performer_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('target_user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('recipient_user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('performer_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('target_user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('recipient_user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->index(['performer_id', 'target_user_id', 'is_read']);
             $table->index(['recipient_user_id', 'is_global']);
             $table->index('created_at');

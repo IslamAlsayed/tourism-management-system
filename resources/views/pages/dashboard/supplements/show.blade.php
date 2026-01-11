@@ -196,7 +196,7 @@
                                 'model' => 'restaurant',
                             ])
                             @include('components.elements.create-button', [
-                                'models' => 'transportation.companies',
+                                'models' => 'transportations.companies',
                                 'model' => 'transportation-company',
                             ])
                         </div>

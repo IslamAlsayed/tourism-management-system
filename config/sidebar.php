@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
     'menu' => [
         [
@@ -22,7 +24,7 @@ return [
 
         // ================= Users =================
         [
-            'title' => 'user management',
+            'title' => 'users',
             'icon' => 'fa-solid fa-users-gear',
             'children' => [
                 [
@@ -46,7 +48,7 @@ return [
 
         // ================= Clients =================
         [
-            'title' => 'client management',
+            'title' => 'clients',
             'icon' => 'fa-solid fa-user-group',
             'children' => [
                 [
@@ -70,7 +72,7 @@ return [
 
         // ================= Currencies =================
         [
-            'title' => 'currency management',
+            'title' => 'currencies',
             'icon' => 'fa-solid fa-dollar-sign',
             'children' => [
                 [
@@ -94,7 +96,7 @@ return [
 
         // ================= Locations =================
         [
-            'title' => 'location management',
+            'title' => 'locations',
             'icon' => 'fa-solid fa-location-dot',
             'children' => [
                 [
@@ -103,15 +105,17 @@ return [
                     'children' => [
                         [
                             'title' => 'all regions',
+                            'icon' => 'fa-solid fa-list',
                             'route' => 'regions.index',
                         ],
                         [
                             'title' => 'create region',
-                            'icon' => 'fa-solid fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'regions.create',
                         ],
                         [
                             'title' => 'import regions',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'region', 'models' => 'regions', 'view' => 'regions'],
                         ],
@@ -123,15 +127,17 @@ return [
                     'children' => [
                         [
                             'title' => 'all subregions',
+                            'icon' => 'fa-solid fa-list',
                             'route' => 'subregions.index',
                         ],
                         [
                             'title' => 'create subregion',
-                            'icon' => 'fa-solid fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'subregions.create',
                         ],
                         [
                             'title' => 'import subregions',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'subregion', 'models' => 'subregions', 'view' => 'subregions'],
                         ],
@@ -143,6 +149,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all countries',
+                            'icon' => 'fa-solid fa-list',
                             'route' => 'countries.index'
                         ],
                         [
@@ -152,6 +159,7 @@ return [
                         ],
                         [
                             'title' => 'import countries',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'country', 'models' => 'countries', 'view' => 'countries'],
                         ],
@@ -163,6 +171,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all states',
+                            'icon' => 'fa-solid fa-list',
                             'route' => 'states.index',
                         ],
                         [
@@ -172,6 +181,7 @@ return [
                         ],
                         [
                             'title' => 'import states',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'state', 'models' => 'states', 'view' => 'states'],
                         ],
@@ -183,16 +193,17 @@ return [
                     'children' => [
                         [
                             'title' => 'all cities',
+                            'icon' => 'fa-solid fa-list',
                             'route' => 'cities.index',
                         ],
                         [
                             'title' => 'create city',
-                            'icon' => 'fa-solid fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'cities.create',
                         ],
                         [
                             'title' => 'import cities',
-                            'icon' => 'fa-solid fa-square-plus',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'city', 'models' => 'cities', 'view' => 'cities'],
                         ],
@@ -204,6 +215,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all nationalities',
+                            'icon' => 'fa-solid fa-list',
                             'route' => 'nationalities.index',
                         ],
                         [
@@ -213,6 +225,7 @@ return [
                         ],
                         [
                             'title' => 'import nationalities',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'nationality', 'models' => 'nationalities', 'view' => 'nationalities'],
                         ],
@@ -223,7 +236,7 @@ return [
 
         // ================= Accommodations =================
         [
-            'title' => 'accommodations management',
+            'title' => 'accommodations',
             'icon' => 'fa-solid fa-hotel',
             'children' => [
                 [
@@ -232,17 +245,17 @@ return [
                     'children' => [
                         [
                             'title' => 'all accommodations',
-                            'icon' => 'fa-regular fa-building',
+                            'icon' => 'fa-solid fa-hotel',
                             'route' => 'accommodations.index',
                         ],
                         [
                             'title' => 'create accommodation',
-                            'icon' => 'fa-regular fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'accommodations.create',
                         ],
                         [
                             'title' => 'import accommodations',
-                            'icon' => 'fa-regular fa-file-import',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'accommodation', 'models' => 'accommodations', 'view' => 'accommodations'],
                         ],
@@ -250,21 +263,21 @@ return [
                 ],
                 [
                     'title' => 'types',
-                    'icon' => 'fa-regular fa-layer-group',
+                    'icon' => 'fa-solid fa-layer-group',
                     'children' => [
                         [
                             'title' => 'all types',
-                            'icon' => 'fa-regular fa-list-ul',
+                            'icon' => 'fa-solid fa-list',
                             'route' => 'types.index',
                         ],
                         [
                             'title' => 'create type',
-                            'icon' => 'fa-regular fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'types.create',
                         ],
                         [
                             'title' => 'import types',
-                            'icon' => 'fa-regular fa-file-import',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'type', 'models' => 'types', 'view' => 'types'],
                         ],
@@ -294,23 +307,23 @@ return [
                 // ],
                 [
                     'title' => 'rooms',
-                    'icon' => 'fa-regular fa-door-closed',
+                    'icon' => 'fa-solid fa-door-closed',
                     'children' => [
                         [
                             'title' => 'all rooms',
-                            'icon' => 'fa-regular fa-door-closed',
+                            'icon' => 'fa-solid fa-door-open',
                             'route' => 'rooms.index',
-                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'accommodation'],
+                            'parameters' => [Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create room',
-                            'icon' => 'fa-regular fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'rooms.create',
                             'parameters' => ['type' => 'accommodation'],
                         ],
                         [
                             'title' => 'import rooms',
-                            'icon' => 'fa-regular fa-file-import',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'room', 'models' => 'rooms', 'view' => 'rooms'],
                         ],
@@ -318,19 +331,19 @@ return [
                 ],
                 [
                     'title' => 'seasons',
-                    'icon' => 'fa-regular fa-calendar-days',
+                    'icon' => 'fa-solid fa-calendar-days',
                     'children' => [
                         [
                             'title' => 'all seasons',
-                            'icon' => 'fa-regular fa-calendar-check',
+                            'icon' => 'fa-solid fa-calendar-check',
                             'route' => 'seasons.index',
-                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'accommodation'],
+                            'parameters' => [Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create season',
-                            'icon' => 'fa-regular fa-calendar-plus',
+                            'icon' => 'fa-solid fa-calendar-plus',
                             'route' => 'seasons.create',
-                            'parameters' => ['type' => 'accommodation'],
+                            'parameters' => ['type' => 'accommodation', Str::random(120)],
                         ],
                         [
                             'title' => 'import seasons',
@@ -386,23 +399,23 @@ return [
                 // ],
                 [
                     'title' => 'meals',
-                    'icon' => 'fa-regular fa-utensils',
+                    'icon' => 'fa-solid fa-utensils',
                     'children' => [
                         [
                             'title' => 'all meals',
-                            'icon' => 'fa-regular fa-bowl-food',
+                            'icon' => 'fa-solid fa-bowl-food',
                             'route' => 'meals.index',
-                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'accommodation'],
+                            'parameters' => [Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create meal',
-                            'icon' => 'fa-regular fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'meals.create',
                             'parameters' => ['type' => 'accommodation'],
                         ],
                         [
                             'title' => 'import meals',
-                            'icon' => 'fa-regular fa-file-import',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'meal', 'models' => 'meals', 'view' => 'meals'],
                         ],
@@ -410,17 +423,17 @@ return [
                 ],
                 [
                     'title' => 'supplements',
-                    'icon' => 'fa-regular fa-utensils',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'children' => [
                         [
                             'title' => 'all supplements',
-                            'icon' => 'fa-regular fa-bowl-food',
+                            'icon' => 'fa-solid fa-list-check',
                             'route' => 'supplements.index',
-                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'accommodation'],
+                            'parameters' => [Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create supplement',
-                            'icon' => 'fa-regular fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'supplements.create',
                             'parameters' => ['type' => 'accommodation'],
                         ],
@@ -503,117 +516,141 @@ return [
 
         // ================= Transportation =================
         [
-            'title' => 'transportation management',
-            'icon' => 'fa-solid fa-hotel',
+            'title' => 'transportations',
+            'icon' => 'fa-solid fa-bus',
+            'status' => 'new',
             'children' => [
                 [
-                    'title' => 'transportation',
-                    'icon' => 'fa-regular fa-building',
+                    'title' => 'companies',
+                    'icon' => 'fa-solid fa-building',
                     'children' => [
                         [
                             'title' => 'all companies',
-                            'icon' => 'fa-regular fa-building',
-                            'route' => 'transportation.companies.index',
+                            'icon' => 'fa-solid fa-building-user',
+                            'route' => 'transportations.companies.index',
                         ],
                         [
                             'title' => 'create company',
-                            'icon' => 'fa-regular fa-square-plus',
-                            'route' => 'transportation.companies.create',
+                            'icon' => 'fa-solid fa-plus',
+                            'route' => 'transportations.companies.create',
                         ],
                         [
                             'title' => 'import companies',
-                            'icon' => 'fa-regular fa-file-import',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'transportationCompany', 'models' => 'transportation-companies', 'view' => 'transportation.companies'],
+                            'parameters' => ['model' => 'transportationCompany', 'models' => 'transportations-companies', 'view' => 'transportations.companies'],
                         ],
                     ],
                 ],
                 [
                     'title' => 'vehicle-types',
-                    'icon' => 'fa-regular fa-layer-group',
+                    'icon' => 'fa-solid fa-car',
                     'children' => [
                         [
                             'title' => 'all vehicle-types',
-                            'icon' => 'fa-regular fa-list-ul',
-                            'route' => 'transportation.vehicle-types.index',
+                            'icon' => 'fa-solid fa-van-shuttle',
+                            'route' => 'transportations.vehicle-types.index',
                         ],
                         [
                             'title' => 'create vehicle-type',
-                            'icon' => 'fa-regular fa-square-plus',
-                            'route' => 'transportation.vehicle-types.create',
+                            'icon' => 'fa-solid fa-plus',
+                            'route' => 'transportations.vehicle-types.create',
                         ],
                         [
                             'title' => 'import vehicle-types',
-                            'icon' => 'fa-regular fa-file-import',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'transportationVehicleType', 'models' => 'transportation-vehicle-types', 'view' => 'transportation.vehicle-types'],
+                            'parameters' => ['model' => 'transportationVehicleType', 'models' => 'transportations-vehicle-types', 'view' => 'transportations.vehicle-types'],
                         ],
                     ],
                 ],
                 [
                     'title' => 'routes',
-                    'icon' => 'fa-regular fa-layer-group',
-                    'fixed' => 'soon',
+                    'icon' => 'fa-solid fa-route',
+                    'status' => 'new',
                     'children' => [
                         [
                             'title' => 'all routes',
-                            'icon' => 'fa-regular fa-list-ul',
-                            'route' => null,
+                            'icon' => 'fa-solid fa-map-marked-alt',
+                            'route' => 'transportations.routes.index',
                         ],
                         [
                             'title' => 'create route',
-                            'icon' => 'fa-regular fa-square-plus',
-                            'route' => null,
+                            'icon' => 'fa-solid fa-plus',
+                            'route' => 'transportations.routes.create',
                         ],
                         [
                             'title' => 'import routes',
-                            'icon' => 'fa-regular fa-file-import',
-                            'route' => null,
-                            'parameters' => ['model' => 'transportationRoute', 'models' => 'transportation-routes', 'view' => 'transportation.routes'],
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'transportationRoute', 'models' => 'transportations-routes', 'view' => 'transportations.routes'],
                         ],
                     ],
                 ],
                 [
-                    'title' => 'pricing',
-                    'icon' => 'fa-regular fa-layer-group',
+                    'title' => 'route assignments',
+                    'icon' => 'fa-solid fa-share-nodes',
+                    'status' => 'new',
                     'children' => [
                         [
-                            'title' => 'all pricing',
-                            'icon' => 'fa-regular fa-list-ul',
-                            'route' => 'transportation.pricings.index',
+                            'title' => 'all route assignments',
+                            'icon' => 'fa-solid fa-list',
+                            'route' => 'transportations.route-assignments.index',
+                        ],
+                        [
+                            'title' => 'create route assignment',
+                            'icon' => 'fa-solid fa-plus',
+                            'route' => 'transportations.route-assignments.create',
+                        ],
+                        [
+                            'title' => 'import route assignments',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'transportationRouteAssignment', 'models' => 'transportations-route-assignments', 'view' => 'transportations.route-assignments'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'pricings',
+                    'icon' => 'fa-solid fa-dollar-sign',
+                    'children' => [
+                        [
+                            'title' => 'all pricings',
+                            'icon' => 'fa-solid fa-tags',
+                            'route' => 'transportations.pricings.index',
                         ],
                         [
                             'title' => 'create pricing',
-                            'icon' => 'fa-regular fa-square-plus',
-                            'route' => 'transportation.pricings.create',
+                            'icon' => 'fa-solid fa-plus',
+                            'route' => 'transportations.pricings.create',
                         ],
                         [
-                            'title' => 'import pricing',
-                            'icon' => 'fa-regular fa-file-import',
+                            'title' => 'import pricings',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'transportationPricing', 'models' => 'transportation-pricings', 'view' => 'transportation.pricings'],
+                            'parameters' => ['model' => 'transportationPricing', 'models' => 'transportations-pricings', 'view' => 'transportations.pricings'],
                         ],
                     ],
                 ],
                 [
                     'title' => 'seasons',
-                    'icon' => 'fa-regular fa-utensils',
+                    'icon' => 'fa-solid fa-calendar-days',
                     'children' => [
                         [
                             'title' => 'all seasons',
-                            'icon' => 'fa-regular fa-bowl-food',
+                            'icon' => 'fa-solid fa-calendar-check',
                             'route' => 'seasons.index',
-                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'transportation'],
+                            'parameters' => [Str::random(120), 'type' => 'transportation'],
                         ],
                         [
                             'title' => 'create season',
-                            'icon' => 'fa-regular fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'seasons.create',
-                            'parameters' => ['type' => 'transportation'],
+                            'parameters' => ['type' => 'transportation', Str::random(120)],
                         ],
                         [
                             'title' => 'import seasons',
-                            'icon' => 'fa-regular fa-file-import',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
                         ],
@@ -621,23 +658,23 @@ return [
                 ],
                 [
                     'title' => 'supplements',
-                    'icon' => 'fa-regular fa-utensils',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'children' => [
                         [
                             'title' => 'all supplements',
-                            'icon' => 'fa-regular fa-bowl-food',
+                            'icon' => 'fa-solid fa-list-check',
                             'route' => 'supplements.index',
-                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'Transportation'],
+                            'parameters' => [Str::random(120), 'type' => 'transportation'],
                         ],
                         [
                             'title' => 'create supplement',
-                            'icon' => 'fa-regular fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'supplements.create',
                             'parameters' => ['type' => 'transportation'],
                         ],
                         [
                             'title' => 'import supplements',
-                            'icon' => 'fa-regular fa-file-import',
+                            'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
                             'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
                         ],
@@ -649,22 +686,22 @@ return [
         // ================= Food & Beverage =================
         [
             // 'title' => 'food & beverage',
-            // 'title' => 'food management',
-            'title' => 'restaurants management',
-            'icon' => 'fa-solid fa-mug-hot',
+            // 'title' => 'food',
+            'title' => 'restaurants',
+            'icon' => 'fa-solid fa-utensils',
             'children' => [
                 [
                     'title' => 'restaurants',
-                    'icon' => 'fa-solid fa-burger',
+                    'icon' => 'fa-solid fa-utensils',
                     'children' => [
                         [
                             'title' => 'all restaurants',
-                            'icon' => 'fa-solid fa-burger',
+                            'icon' => 'fa-solid fa-utensils',
                             'route' => 'restaurants.index',
                         ],
                         [
                             'title' => 'create restaurant',
-                            'icon' => 'fa-solid fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'restaurants.create',
                         ],
                         [
@@ -677,17 +714,17 @@ return [
                 ],
                 [
                     'title' => 'meals',
-                    'icon' => 'fa-solid fa-utensils',
+                    'icon' => 'fa-solid fa-bowl-food',
                     'children' => [
                         [
                             'title' => 'all meals',
-                            'icon' => 'fa-solid fa-bowl-food',
+                            'icon' => 'fa-solid fa-bowl-rice',
                             'route' => 'meals.index',
-                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'restaurant'],
+                            'parameters' => [Str::random(120), 'type' => 'restaurant'],
                         ],
                         [
                             'title' => 'create meal',
-                            'icon' => 'fa-solid fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'meals.create',
                             'parameters' => ['type' => 'restaurant'],
                         ],
@@ -701,17 +738,17 @@ return [
                 ],
                 [
                     'title' => 'supplements',
-                    'icon' => 'fa-regular fa-utensils',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'children' => [
                         [
                             'title' => 'all supplements',
-                            'icon' => 'fa-regular fa-bowl-food',
+                            'icon' => 'fa-solid fa-list-check',
                             'route' => 'supplements.index',
-                            'parameters' => [\Illuminate\Support\Str::random(120), 'type' => 'restaurant'],
+                            'parameters' => [Str::random(120), 'type' => 'restaurant'],
                         ],
                         [
                             'title' => 'create supplement',
-                            'icon' => 'fa-regular fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'supplements.create',
                             'parameters' => ['type' => 'restaurant'],
                         ],
@@ -729,20 +766,20 @@ return [
         // ================= Topics =================
         [
             'title' => 'topics',
-            'icon' => 'fa-solid fa-hotel',
+            'icon' => 'fa-solid fa-book',
             'children' => [
                 [
                     'title' => 'pricing definitions',
-                    'icon' => 'fa-regular fa-layer-group',
+                    'icon' => 'fa-solid fa-money-bill-wave',
                     'children' => [
                         [
                             'title' => 'all pricing definitions',
-                            'icon' => 'fa-regular fa-building',
+                            'icon' => 'fa-solid fa-list',
                             'route' => 'pricing-definitions.index',
                         ],
                         [
                             'title' => 'create pricing definition',
-                            'icon' => 'fa-regular fa-square-plus',
+                            'icon' => 'fa-solid fa-plus',
                             'route' => 'pricing-definitions.create',
                         ],
                     ],
@@ -752,72 +789,98 @@ return [
 
         // ================= Tour Guides =================
         [
-            'title' => 'tour-guides management',
+            'title' => 'tour-guides',
             'icon' => 'fa-solid fa-person-hiking',
+            'status' => 'new',
             'children' => [
                 [
-                    'title' => 'tour-guides',
+                    'title' => 'guides',
                     'icon' => 'fa-solid fa-person-hiking',
                     'children' => [
                         [
-                            'title' => 'all tour-guides',
+                            'title' => 'all guides',
                             'icon' => 'fa-solid fa-people-group',
-                            'route' => 'tour-guides.index'
+                            'route' => 'tours.guides.index'
                         ],
                         [
-                            'title' => 'create tour-guide',
-                            'icon' => 'fa-solid fa-square-plus',
-                            'route' => 'tour-guides.create'
+                            'title' => 'create guide',
+                            'icon' => 'fa-solid fa-plus',
+                            'route' => 'tours.guides.create'
                         ],
                         [
-                            'title' => 'import tour-guides',
+                            'title' => 'import guides',
                             'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'tour-guide', 'models' => 'tour-guides', 'view' => 'tour-guides'],
+                            'parameters' => ['model' => 'tourGuide', 'models' => 'tours-guides', 'view' => 'tours.guides'],
                         ],
                     ],
                 ],
                 [
-                    'title' => 'tour-guides-types',
+                    'title' => 'guides-types',
                     'icon' => 'fa-solid fa-tags',
                     'children' => [
                         [
-                            'title' => 'all tour-guides-types',
-                            'icon' => 'fa-solid fa-list',
-                            'route' => 'tour-guides-types.index'
+                            'title' => 'all guides-types',
+                            'icon' => 'fa-solid fa-layer-group',
+                            'route' => 'tours.guides-types.index'
                         ],
                         [
-                            'title' => 'create tour-guide-type',
-                            'icon' => 'fa-solid fa-square-plus',
-                            'route' => 'tour-guides-types.create'
+                            'title' => 'create guide-type',
+                            'icon' => 'fa-solid fa-plus',
+                            'route' => 'tours.guides-types.create'
                         ],
                         [
-                            'title' => 'import tour-guides-types',
+                            'title' => 'import guides-types',
                             'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'tour-guides-type', 'models' => 'tour-guides-types', 'view' => 'tour-guides-types'],
+                            'parameters' => ['model' => 'tourGuideType', 'models' => 'tours-guides-types', 'view' => 'tours.guides-types'],
                         ],
                     ],
                 ],
                 [
-                    'title' => 'tour-guides-reviews',
-                    'icon' => 'fa-solid fa-star',
+                    'title' => 'guides-reviews',
+                    'icon' => 'fa-solid fa-star-half-stroke',
                     'children' => [
                         [
-                            'title' => 'all tour-guides-reviews',
-                            'icon' => 'fa-solid fa-clipboard-list',
-                            'route' => 'tour-guides-reviews.index'
+                            'title' => 'all guides-reviews',
+                            'icon' => 'fa-solid fa-star',
+                            'route' => 'tours.guides-reviews.index'
                         ],
                         [
-                            'title' => 'create tour-guide-review',
-                            'icon' => 'fa-solid fa-square-plus',
-                            'route' => 'tour-guides-reviews.create'
+                            'title' => 'create guide-review',
+                            'icon' => 'fa-solid fa-plus',
+                            'route' => 'tours.guides-reviews.create'
                         ],
                         [
-                            'title' => 'import tour-guides-reviews',
+                            'title' => 'import guides-reviews',
                             'icon' => 'fa-solid fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'tour-guide-review', 'models' => 'tour-guides-reviews', 'view' => 'tour-guides-reviews'],
+                            'parameters' => ['model' => 'tourGuideReview', 'models' => 'tours-guides-reviews', 'view' => 'tours.guides-reviews'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'seasons',
+                    'icon' => 'fa-solid fa-calendar-days',
+                    'status' => 'new',
+                    'children' => [
+                        [
+                            'title' => 'all seasons',
+                            'icon' => 'fa-solid fa-calendar-check',
+                            'route' => 'seasons.index',
+                            'parameters' => [Str::random(120), 'type' => 'tours'],
+                        ],
+                        [
+                            'title' => 'create season',
+                            'icon' => 'fa-solid fa-plus',
+                            'route' => 'seasons.create',
+                            'parameters' => ['type' => 'tours', Str::random(120)],
+                        ],
+                        [
+                            'title' => 'import seasons',
+                            'icon' => 'fa-solid fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
                         ],
                     ],
                 ],
@@ -827,16 +890,16 @@ return [
         // ================= Air Transport =================
         [
             'title' => 'airlines',
-            'icon' => 'fa-solid fa-plane',
+            'icon' => 'fa-solid fa-plane-departure',
             'children' => [
                 [
                     'title' => 'airlines',
-                    'icon' => 'fa-solid fa-plane',
+                    'icon' => 'fa-solid fa-plane-up',
                     'route' => 'airlines.index'
                 ],
                 [
                     'title' => 'create airline',
-                    'icon' => 'fa-solid fa-square-plus',
+                    'icon' => 'fa-solid fa-plus',
                     'route' => 'airlines.create'
                 ],
                 [
@@ -848,26 +911,26 @@ return [
             ],
         ],
 
-        // ================= Tourist Sites =================
+        // ================= Tourist Service =================
         [
-            'title' => 'tourist sites',
+            'title' => 'tourist services',
             'icon' => 'fa-solid fa-map-location-dot',
             'children' => [
                 [
-                    'title' => 'all tourist sites',
-                    'icon' => 'fa-solid fa-map-location-dot',
-                    'route' => 'tourist-sites.index'
+                    'title' => 'all tourist services',
+                    'icon' => 'fa-solid fa-landmark',
+                    'route' => 'tourist-services.index'
                 ],
                 [
-                    'title' => 'create tourist site',
-                    'icon' => 'fa-solid fa-square-plus',
-                    'route' => 'tourist-sites.create'
+                    'title' => 'create tourist service',
+                    'icon' => 'fa-solid fa-plus',
+                    'route' => 'tourist-services.create'
                 ],
                 [
-                    'title' => 'import tourist sites',
+                    'title' => 'import tourist services',
                     'icon' => 'fa-solid fa-file-import',
                     'route' => 'import.data',
-                    'parameters' => ['model' => 'tourist-site', 'models' => 'tourist-sites', 'view' => 'tourist-sites'],
+                    'parameters' => ['model' => 'tourist-service', 'models' => 'tourist-services', 'view' => 'tourist-services'],
                 ],
             ],
         ],
@@ -875,16 +938,16 @@ return [
         // ================= Crossings & Ports =================
         [
             'title' => 'crossings & ports',
-            'icon' => 'fa-solid fa-map-signs',
+            'icon' => 'fa-solid fa-signs-post',
             'children' => [
                 [
                     'title' => 'all crossings ports',
-                    'icon' => 'fa-solid fa-anchor',
+                    'icon' => 'fa-solid fa-list',
                     'route' => 'crossings-ports.index'
                 ],
                 [
                     'title' => 'create crossing port',
-                    'icon' => 'fa-solid fa-square-plus',
+                    'icon' => 'fa-solid fa-plus',
                     'route' => 'crossings-ports.create'
                 ],
                 [
@@ -899,13 +962,13 @@ return [
                     'children' => [
                         [
                             'title' => 'international airports',
-                            'icon' => 'fa-solid fa-earth-europe',
+                            'icon' => 'fa-solid fa-globe',
                             'route' => 'crossings-ports.type',
                             'parameters' => ['type' => 'international-airports'],
                         ],
                         [
                             'title' => 'domestic airports',
-                            'icon' => 'fa-solid fa-plane-arrival',
+                            'icon' => 'fa-solid fa-plane',
                             'route' => 'crossings-ports.type',
                             'parameters' => ['type' => 'domestic-airports'],
                         ],
@@ -927,17 +990,17 @@ return [
             'children' => [
                 [
                     'title' => 'reports dashboard',
-                    'icon' => 'fa-solid fa-gauge-high',
+                    'icon' => 'fa-solid fa-gauge',
                     'route' => 'reports.index'
                 ],
                 [
                     'title' => 'user reports',
-                    'icon' => 'fa-solid fa-users',
+                    'icon' => 'fa-solid fa-user-chart',
                     'route' => 'reports.users'
                 ],
                 [
                     'title' => 'location reports',
-                    'icon' => 'fa-solid fa-map',
+                    'icon' => 'fa-solid fa-map-marked',
                     'route' => 'reports.locations'
                 ],
                 [
@@ -983,16 +1046,16 @@ return [
         // ================= System Languages =================
         [
             'title' => 'system languages',
-            'icon' => 'fa-solid fa-language',
+            'icon' => 'fa-solid fa-globe',
             'children' => [
                 [
                     'title' => 'all languages',
-                    'icon' => 'fa-solid fa-language',
+                    'icon' => 'fa-solid fa-globe',
                     'route' => 'system-languages.index'
                 ],
                 [
                     'title' => 'create language',
-                    'icon' => 'fa-solid fa-square-plus',
+                    'icon' => 'fa-solid fa-plus',
                     'route' => 'system-languages.create'
                 ]
             ],
@@ -1000,22 +1063,22 @@ return [
 
         // ================= Profile =================
         [
-            'title' => 'profile management',
+            'title' => 'profile',
             'icon' => 'fa-solid fa-id-badge',
             'children' => [
                 [
                     'title' => 'view profile',
-                    'icon' => 'fa-solid fa-user',
+                    'icon' => 'fa-solid fa-circle-user',
                     'route' => 'profile.index'
                 ],
                 [
                     'title' => 'edit profile',
-                    'icon' => 'fa-solid fa-user-pen',
+                    'icon' => 'fa-solid fa-pen-to-square',
                     'route' => 'profile.edit'
                 ],
                 [
                     'title' => 'change password',
-                    'icon' => 'fa-solid fa-lock',
+                    'icon' => 'fa-solid fa-key',
                     'route' => 'profile.change_password'
                 ],
             ],
@@ -1028,12 +1091,12 @@ return [
             'children' => [
                 [
                     'title' => 'all media files',
-                    'icon' => 'fa-solid fa-images',
+                    'icon' => 'fa-solid fa-file-image',
                     'route' => 'media-files.index',
                 ],
                 [
                     'title' => 'upload files',
-                    'icon' => 'fa-solid fa-cloud-arrow-up',
+                    'icon' => 'fa-solid fa-upload',
                     'route' => 'media-files.create',
                 ],
             ],
@@ -1046,10 +1109,12 @@ return [
             'children' => [
                 [
                     'title' => 'general',
+                    'icon' => 'fa-solid fa-sliders',
                     'route' => 'settings.general'
                 ],
                 [
                     'title' => 'security',
+                    'icon' => 'fa-solid fa-shield-halved',
                     'route' => 'settings.security'
                 ],
                 // [
@@ -1058,26 +1123,26 @@ return [
                 // ],
                 [
                     'title' => 'backup',
-                    'icon' => 'fa-solid fa-cloud-arrow-down',
+                    'icon' => 'fa-solid fa-database',
                     'fixed' => 'soon',
                     'route' => '#'
                     // 'route' => 'settings.backup'
                 ],
                 [
                     'title' => 'booking',
-                    'icon' => 'fa-solid fa-calendar-days',
+                    'icon' => 'fa-solid fa-book',
                     'fixed' => 'soon',
                     'route' => '#'
                     // 'route' => 'settings.booking'
                 ],
                 [
                     'title' => 'integration',
-                    'icon' => 'fa-solid fa-share-nodes',
+                    'icon' => 'fa-solid fa-plug',
                     'route' => 'settings.integration'
                 ],
                 [
                     'title' => 'system',
-                    'icon' => 'fa-solid fa-gears',
+                    'icon' => 'fa-solid fa-cog',
                     'route' => 'settings.system'
                 ],
             ],

@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('city_state', function (Blueprint $table) {
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('state_id');
-            $table->primary(['city_id', 'state_id']);
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+            // $table->primary(['city_id', 'state_id']);
+            // $table->foreign('city_id')->references('id')->on('cities')->cascadeOnDelete();
+            // $table->foreign('state_id')->references('id')->on('states')->cascadeOnDelete();
         });
     }
 

@@ -1,13 +1,14 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
-        [
-            'condition' => \App\Models\Country::count() > 0,
-            'route' => route('countries.index'),
-            'label' => __('main.countries_'),
-        ],
-    ]">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
+        :requirements="[
+            [
+                'condition' => \App\Models\Country::count() > 0,
+                'route' => route('countries.index'),
+                'label' => __('main.countries_'),
+            ],
+        ]">
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}
@@ -19,13 +20,13 @@
             <table class="border min-w-half divide-y text-center divide-gray-200">
                 <thead>
                     <tr>
-                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                        <th class="border px-2 bg-yellow-100" title="{{ __('main.required') }}">
                             name <span class="text-red-600">*</span>
                         </th>
-                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                        <th class="border px-2 bg-yellow-100" title="{{ __('main.required') }}">
                             email <span class="text-red-600">*</span>
                         </th>
-                        <th class="border px-2 bg-yellow-200" title="{{ __('main.required') }}">
+                        <th class="border px-2 bg-yellow-100" title="{{ __('main.required') }}">
                             password <span class="text-red-600">*</span>
                         </th>
                     </tr>

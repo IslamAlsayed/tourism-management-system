@@ -36,6 +36,7 @@ class UpdateRequest extends FormRequest
             'city_id' => ['nullable', 'string', 'exists:cities,id'],
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
+            'cat' => ['nullable', 'string', 'max:255'],
 
             // Seasons Array
             'seasons' => 'nullable|array',
@@ -77,7 +78,7 @@ class UpdateRequest extends FormRequest
             'supplements.*.description' => 'nullable|string|max:5000',
             'supplements.*.notes' => 'nullable|string|max:5000',
 
-            'company_name_ar' => ['nullable', 'string', 'max:255'],
+            'company_name' => ['nullable', 'string', 'max:255'],
             'specialty' => ['nullable', 'string', 'max:255'],
             'phone_01' => ['nullable', 'string', 'max:20'],
             'phone_02' => ['nullable', 'string', 'max:20'],

@@ -26,70 +26,98 @@ class ExcelController extends Controller
         if (!class_exists($modelClass)) {
             return back()->withError(__('messages.invalid_model_specified'));
         }
-        return view("pages.dashboard.$view.import", compact('models', 'view', 'title', 'description'));
+        return view("pages.dashboard.$view.import", compact('models', 'model', 'view', 'title', 'description'));
     }
 
     public function importData(Request $request, $models)
     {
         $request->validate(['file' => 'required|file|mimes:csv,xlsx']);
-        // $models = Str::plural(strtolower($models));
-        $modelClass = "App\\Models\\" . studlyCaseName($models);
 
-        // Handle accommodations sub-models
-        if ($models == 'accommodations-rates') {
-            $models = $request->input('model');
-            $modelClass = "App\\Models\\" . $request->input('model');
-        }
+        $model = $request->input('model');
+        $modelClass = "App\\Models\\" . str_replace('-', '', studlyCaseName($model));
 
+        // Validate model existence
         if (!class_exists($modelClass)) {
             return back()->withError(__('messages.invalid_model_specified'));
         }
+
+        // Get fillable columns to inform user what columns are expected
+        try {
+            $modelInstance = new $modelClass;
+            $fillableColumns = $modelInstance->getFillable();
+
+            // Log expected columns for debugging
+            Log::info("Import initiated for model: {$modelClass}");
+            Log::info("Expected fillable columns: " . implode(', ', $fillableColumns));
+        } catch (\Throwable $e) {
+            Log::warning("Failed to get fillable columns for {$modelClass}: " . $e->getMessage());
+        }
+
+        // Store uploaded file
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
         $filename = generateUniqueFilename($models) . '.' . $extension;
         $folder = "excels/imports/" . Str::plural(strtolower($models));
         $filePath = $file->storeAs($folder, $filename, 'public');
         $absolutePath = Storage::disk('public')->path($filePath);
+
         if (!file_exists($absolutePath)) {
             return back()->withError(__('messages.operation_failed'));
         }
-        // attach the current user id to the job so broadcasts can target the correct private channel
+
+        // Dispatch import job with user ID for real-time notifications
         $userId = function_exists('getActiveUser') && getActiveUser() ? getActiveUser()->id : null;
-        // dd($request->all(), get_defined_vars());
+
+        // The ImportDataJob will:
+        // 1. Automatically ignore extra columns from Excel (not in fillable)
+        // 2. Set NULL for missing columns (not in Excel but in fillable)
+        // 3. Protect against primary key insertion
+        // 4. Handle data type conversions (dates, booleans, etc.)
+        // 5. Log ignored and missing columns for transparency
         ImportDataJob::dispatch($modelClass, $absolutePath, 1000, $userId);
-        $modelNameAr = __('main.' . $models);
-        // Broadcast immediate queued notification (so the user gets realtime feedback)
+
+        $modelName = __('main.' . $models);
+
+        // Broadcast immediate queued notification
         try {
-            event(new ImportExportCompleted(__('main.import_queued', ['model' => $modelNameAr]), $userId));
+            event(new ImportExportCompleted(
+                __('main.import_queued', ['model' => $modelName]),
+                $userId
+            ));
         } catch (\Throwable $e) {
-            // swallowing broadcast errors so import still proceeds
             Log::warning('Failed to broadcast import queued: ' . $e->getMessage());
         }
 
-        return back()->withSuccess(__('main.import_queued', ['model' => $modelNameAr]));
+        return back()->withSuccess(__('main.import_queued', ['model' => $modelName]));
     }
 
-    public function exportData($models, $type = null)
+    public function exportData(Request $request, $models)
     {
-        $modelName = studlySingular($models);
-        $modelClass = "App\\Models\\$modelName";
+        $modelClass = "App\\Models\\" . str_replace('-', '', studlyCaseName($models));
         if (!class_exists($modelClass)) {
             return back()->withError(__('messages.invalid_model_specified'));
         }
-        if ($type) {
-            $models = $type;
-        }
-        // Recompute model/class in case $models was overridden by $type
-        $modelName = studlySingular($models);
-        $modelClass = "App\\Models\\{$modelName}";
 
         // Determine filename and run export synchronously so we can return file
         $extension = config('app.excel_export_format', 'xlsx');
         $filename = generateUniqueFilename($models) . '.' . $extension;
 
+        // Get export options from request or use defaults
+        // Only use default hidden columns (id, uuid) - don't add model's excluded columns
+        // The model's excluded columns are meant for table views, not exports
+        $hiddenColumns = $request->input('hidden_columns', ['id', 'uuid']);
+
+        $includeRelations = $request->input('include_relations', true);
+
         try {
-            // Run the export job synchronously (will write the file to storage/public)
-            ExportDataJob::dispatchSync($modelClass, $filename);
+            // Run the export job synchronously with smart options
+            ExportDataJob::dispatchSync(
+                $modelClass,
+                $filename,
+                5000, // chunk size
+                $hiddenColumns,
+                $includeRelations
+            );
 
             // Build expected storage path (matches ExportDataJob behavior)
             $folderName = Str::plural(strtolower(class_basename($modelClass)));
@@ -100,14 +128,14 @@ class ExcelController extends Controller
                 // Return download response
                 return response()->download($absolutePath, $filename, [
                     'Content-Type' => $extension == 'csv' ? 'text/csv' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                ]);
+                ])->deleteFileAfterSend(false); // Keep file for potential re-download
             }
 
             return back()->with('error', __('messages.operation_failed'));
         } catch (\Exception $e) {
             // Log and return error message
             Log::error('Export failed: ' . $e->getMessage());
-            return back()->with('error', __('messages.operation_failed'));
+            return back()->with('error', __('messages.operation_failed') . ': ' . $e->getMessage());
         }
     }
 }

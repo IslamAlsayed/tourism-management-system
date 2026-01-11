@@ -421,7 +421,10 @@
                 </div>
 
                 {{-- Update Submit --}}
-                @include('components.elements.update-submit', ['models' => 'crossings-ports'])
+                @include('components.elements.update-submit', [
+                    'models' => 'crossings-ports',
+                    'model' => 'crossings-port',
+                ])
             </div>
         </form>
     </div>

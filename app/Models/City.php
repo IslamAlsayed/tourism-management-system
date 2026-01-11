@@ -40,6 +40,30 @@ class City extends Model
         'state_id',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($item) {
+            // Auto-fill region_id and subregion_id from country
+            if (empty($item->region_id) && !empty($item->country_id)) {
+                $item->region_id = $item->country->region_id;
+            }
+            if (empty($item->subregion_id) && !empty($item->country_id)) {
+                $item->subregion_id = $item->country->subregion_id;
+            }
+        });
+
+        static::updating(function ($item) {
+            // Auto-fill region_id and subregion_id from country on update too
+            if (empty($item->region_id) && !empty($item->country_id)) {
+                $item->region_id = $item->country->region_id;
+            }
+            if (empty($item->subregion_id) && !empty($item->country_id)) {
+                $item->subregion_id = $item->country->subregion_id;
+            }
+        });
+    }
+
     public function getRelationshipNames()
     {
         return ['timezone', 'region', 'subregion', 'country', 'state', 'states'];

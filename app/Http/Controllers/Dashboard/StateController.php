@@ -20,7 +20,7 @@ class StateController extends Controller
     public function create()
     {
         $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.states.create', compact('regions', 'timezones'));
     }
 
@@ -48,7 +48,7 @@ class StateController extends Controller
 
     public function show($id)
     {
-        $state = State::with(['timezone', 'region', 'subregion', 'country', 'cities'])->find($id);
+        $state = State::with((new State)->getRelationshipNames())->find($id);
         if (!$state) {
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         }
@@ -62,7 +62,7 @@ class StateController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         }
         $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.states.edit', compact('state', 'regions', 'timezones'));
     }
     public function update(UpdateRequest $request, $id)

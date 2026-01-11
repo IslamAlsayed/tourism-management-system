@@ -17,6 +17,10 @@ class Subregion extends Model
         'name',
         'name_ar',
         'wiki_data_id',
+        'is_active',
+        'description',
+        'notes',
+
         'region_id',
     ];
 

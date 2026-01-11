@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Meal;
 use App\Models\Type;
-use App\Models\Region;
 use App\Models\Season;
-use App\Models\Currency;
-use App\Models\Timezone;
 use App\Models\Restaurant;
 use App\Models\Supplement;
 use App\Traits\PhotoUploadTrait;
@@ -26,10 +23,8 @@ class RestaurantController extends Controller
 
     public function create()
     {
-        $currencies = Currency::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         $types = Type::all()->pluck('name', 'id');
-        return view('pages.dashboard.restaurants.create', get_defined_vars());
+        return view('pages.dashboard.restaurants.create', compact('types'));
     }
 
     public function store(StoreRequest $request)
@@ -82,10 +77,8 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::with((new Restaurant())->getRelationshipNames())->find($id);
         if (!$restaurant)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
-        $currencies = Currency::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
         $types = Type::all()->pluck('name', 'id');
-        return view('pages.dashboard.restaurants.edit', get_defined_vars());
+        return view('pages.dashboard.restaurants.edit', compact('restaurant', 'types'));
     }
 
     public function update(UpdateRequest $request, $id)

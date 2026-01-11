@@ -38,7 +38,7 @@ class RoomController extends Controller
 
     public function show($id)
     {
-        $room = Room::with(['model', 'currency'])->find($id);
+        $room = Room::with((new Room)->getRelationshipNames())->find($id);
         if (!$room)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room')]));
         return view('pages.dashboard.rooms.show', compact('room'));

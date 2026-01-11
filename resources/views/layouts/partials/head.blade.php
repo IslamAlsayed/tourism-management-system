@@ -59,13 +59,9 @@
 {{-- Select search CSS --}}
 <link href="{{ asset('assets/css/multi-select.css') }}" rel="stylesheet">
 <link href="{{ asset('metronic/css/styles.css') }}" rel="stylesheet" />
-
-<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" defer>
-</script>
-
 {{-- Dynamic Sidebar Width - Must come after styles.css to override --}}
 @php
-    $sidebarWidth = $settings->app_sidebar_width ?? (config('app.app_sidebar_width') ?? 310);
+    $sidebarWidth = $settings->app_sidebar_width ?? (config('app.app_sidebar_width') ?? 290);
 @endphp
 <style>
     /* Sidebar width when expanded */

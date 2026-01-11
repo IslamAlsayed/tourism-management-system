@@ -27,7 +27,7 @@ class RestaurantFactory extends Factory
             'state_id' => \App\Models\State::inRandomOrder()->first()?->id,
             'city_id' => \App\Models\City::inRandomOrder()->first()?->id,
             'rating' => $this->faker->randomFloat(1, 1, 5),
-            'company_name_ar' => $this->faker->company,
+            'company_name' => $this->faker->company,
             'specialty' => $this->faker->word,
             'phone_01' => $this->faker->phoneNumber,
             'phone_02' => $this->faker->optional()->phoneNumber,

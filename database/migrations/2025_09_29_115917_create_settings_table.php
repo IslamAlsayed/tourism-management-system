@@ -84,7 +84,7 @@ return new class extends Migration {
             $table->integer('app_smtp_port')->nullable();
             $table->string('app_smtp_username')->nullable();
             $table->string('app_smtp_password')->nullable();
-            $table->integer('app_sidebar_width')->nullable()->default(310);
+            $table->integer('app_sidebar_width')->nullable()->default(290);
             $table->boolean('app_show_uuid_column')->nullable()->default(false);
             $table->timestamps();
         });

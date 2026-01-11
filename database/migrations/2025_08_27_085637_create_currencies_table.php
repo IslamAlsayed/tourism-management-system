@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->string('name')->nullable();
             $table->string('code')->nullable();
             $table->string('symbol')->nullable();
-            $table->boolean('is_active')->nullable()->default(true);
+            $table->boolean('is_active')->nullable();
             $table->timestamps();
 
             $table->index(['name', 'code']);

@@ -10,9 +10,9 @@ return new class extends Migration {
         Schema::create('country_state', function (Blueprint $table) {
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('state_id');
-            $table->primary(['country_id', 'state_id']);
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+            // $table->primary(['country_id', 'state_id']);
+            // $table->foreign('country_id')->references('id')->on('countries')->cascadeOnDelete();
+            // $table->foreign('state_id')->references('id')->on('states')->cascadeOnDelete();
         });
     }
 

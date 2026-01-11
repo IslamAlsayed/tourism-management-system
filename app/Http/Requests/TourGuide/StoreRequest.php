@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
             'name_ar' => ['nullable', 'string', 'max:255'],
 
             'currency_id' => ['nullable', 'integer', 'exists:currencies,id'],
-            'guide_type_id' => ['required', 'integer', 'exists:tour_guide_types,id'],
+            'guide_type_id' => ['nullable', 'integer', 'exists:tour_guide_types,id'],
             'region_id' => ['nullable', 'integer', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'integer', 'exists:subregions,id'],
             'country_id' => ['nullable', 'integer', 'exists:countries,id'],

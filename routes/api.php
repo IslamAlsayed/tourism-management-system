@@ -1,5 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AiController;
+use App\Http\Controllers\Api\RouteController;
 use App\Http\Controllers\Api\DashboardController;
 
 /*
@@ -20,4 +22,8 @@ Route::middleware(['web', 'auth'])->group(function () {
     // Location APIs for accommodations
     Route::get('/countries/{countryId}/cities', [\App\Http\Controllers\Api\LocationController::class, 'getCitiesByCountry']);
     Route::get('/regions/{regionId}/subregions', [\App\Http\Controllers\Api\LocationController::class, 'getSubregionsByRegion']);
+
+    Route::post('/ai/correct-text', [AiController::class, 'correctByGpt']);
+
+    Route::get('routes/cities', [RouteController::class, 'getCities'])->name('routes.cities');
 });

@@ -22,13 +22,13 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price' => ['nullable', 'decimal:10,2', 'min:1'],
+            'price' => ['nullable', 'integer', 'min:1'],
             'tax' => ['nullable', 'integer', 'min:0', 'max:100'],
             'is_active' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string', 'max:255'],
             'notes' => ['nullable', 'string', 'max:255'],
-            'company_id' => ['nullable', 'exists:transportation_companies,id'],
-            'vehicle_type_id' => ['nullable', 'exists:transportation_vehicle_types,id'],
+            'company_id' => ['nullable', 'exists:transportations_companies,id'],
+            'vehicle_type_id' => ['nullable', 'exists:transportations_vehicle_types,id'],
             'season_id' => ['nullable', 'exists:seasons,id'],
             'pricing_unit_id' => ['nullable', 'exists:pricing_definitions,id'],
             'currency_id' => ['nullable', 'exists:currencies,id'],

@@ -13,6 +13,8 @@ class TransportationPricing extends Model
 {
     use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole;
 
+    protected $table = 'transportations_pricings';
+
     protected $richTextAttributes = [
         'description',
         'notes',

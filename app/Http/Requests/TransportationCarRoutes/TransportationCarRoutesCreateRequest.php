@@ -28,7 +28,7 @@ class TransportationCarRoutesCreateRequest extends FormRequest
             'distance' => ['required', 'string', 'min:0.1', 'max:255'],
             'seats' => ['required', 'integer', 'min:1'],
             'price' => ['required', 'decimal:0,2', 'min:0.1'],
-            'car_route_id' => ['required', 'string', 'exists:transportation_car_routes,id'],
+            'car_route_id' => ['required', 'string', 'exists:transportations_car_routes,id'],
             'currency_id' => ['required', 'string', 'exists:currencies,id'],
         ];
     }

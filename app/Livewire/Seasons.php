@@ -18,7 +18,6 @@ class Seasons extends Component
     public $search = '';
     public $totalCount = '';
     public $message = [];
-    public $filterAccommodationId = '';
     public $accommodationsForSeasons = [];
     public $filterStatus = '';
     public $type = null;
@@ -26,11 +25,6 @@ class Seasons extends Component
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingFilterAccommodationId()
     {
         $this->resetPage();
     }
@@ -118,14 +112,11 @@ class Seasons extends Component
     {
         $query = Season::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        // if ($this->filterAccommodationId && $this->filterAccommodationId['payload']['value'] !== 'all') {
-        //     $query->where('accommodation_id', $this->filterAccommodationId['payload']['value'] === 'active' ? true : false);
-        // }
         if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
             $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }
         if ($this->type) {
-            $query->where('model_type', 'like', '%' . $this->type . '%');
+            $query->where('model_type', 'like', '%' . studlyCaseName($this->type) . '%');
         }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());

@@ -321,24 +321,34 @@ window.getVal = function (id) {
     );
 };
 
-window.initMap = function () {
-    let mapContainer = document.getElementById("map");
-    let title = mapContainer.getAttribute("data-title");
-    let latitude = mapContainer.getAttribute("data-latitude");
-    let longitude = mapContainer.getAttribute("data-longitude");
-    const latLng = {
-        lat: parseFloat(latitude),
-        lng: parseFloat(longitude),
-    };
-    const mapOptions = {
-        zoom: 15,
-        center: latLng,
-    };
-    const map = new google.maps.Map(mapContainer, mapOptions);
-    new google.maps.Marker({
-        position: latLng,
-        map: map,
-        title: title,
-    });
+// window.initMap = function () {
+//     let mapContainer = document.getElementById("map");
+//     if (mapContainer === null) return;
+//     let title = mapContainer.getAttribute("data-title");
+//     let latitude = mapContainer.getAttribute("data-latitude");
+//     let longitude = mapContainer.getAttribute("data-longitude");
+//     const latLng = {
+//         lat: parseFloat(latitude),
+//         lng: parseFloat(longitude),
+//     };
+//     const mapOptions = {
+//         zoom: 15,
+//         center: latLng,
+//     };
+//     const map = new google.maps.Map(mapContainer, mapOptions);
+//     new google.maps.Marker({
+//         position: latLng,
+//         map: map,
+//         title: title,
+//     });
+// };
+// window.initMap = initMap;
+
+window.generateNewCode = function (element, prefix = null) {
+    function getRandomCode() {
+        const randomNum = Math.floor(Math.random() * 99999) + 1;
+        const paddedNum = String(randomNum).padStart(5, "0");
+        return prefix + paddedNum;
+    }
+    document.getElementById(element).value = getRandomCode();
 };
-window.initMap = initMap;

@@ -183,41 +183,6 @@
                 </div>
             </div>
 
-            <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        @if ($country->creator)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $country->creator->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $country->created_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                        @if ($country->updater)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $country->updater->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $country->updated_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Location Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -230,26 +195,37 @@
                     <div class="flex flex-wrap justify-between gap-10">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $country->region->name ?? __('main.na') }}
-                            </p>
+                            <a href="{{ route('regions.show', $country->region->id) }}"
+                                class="block text-sm text-primary underline">
+                                {{ $country->region->name ?? __('main.na') }}
+                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                            </a>
                         </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                            <a href="{{ route('subregions.show', $country->subregion->id) }}"
+                                class="block text-sm text-primary underline">
+                                {{ $country->subregion->name ?? __('main.na') }}
+                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <label
+                                class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.states')]) }}</label>
                             <p class="text-sm text-secondary-foreground">
                                 <span class="kt-badge kt-badge-info">
-                                    {{ $country->subregion->name ?? __('main.na') }}
+                                    {{ $country->states->count() }}
                                 </span>
                             </p>
                         </div>
                         <div>
                             <label
-                                class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.states')]) }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $country->states->count() }}</p>
-                        </div>
-                        <div>
-                            <label
                                 class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.cities')]) }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $country->cities->count() }}</p>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $country->cities->count() }}
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -300,82 +276,54 @@
 
             <!-- Related States -->
             @if ($country->states && $country->states->count() > 0)
-                <div class="kt-card list-search-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">
-                            <i class="ki-filled ki-map text-success me-2"></i>
-                            {{ __('main.states') }} ({{ $country->states->count() }})
-                        </h3>
-
-                        <div class="flex flex-wrap gap-2 lg:gap-5">
-                            <div class="flex items-center gap-2 text-red-500 no_results_found hidden">
-                                <i class="ki-filled ki-information-2 text-lg"></i>
-                                <p>{{ __('messages.no_results_found') }}</p>
-                            </div>
-                            <div class="flex items-center">
-                                <label class="kt-input">
-                                    <input type="search" class="py-2 rounded-lg search-par" id="search"
-                                        placeholder="{{ __('main.search') }}..." autocomplete="off" />
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <div class="flex flex-wrap gap-3">
-                            @foreach ($country->states as $state)
-                                <a href="{{ route('states.show', $state->id) }}"
-                                    class="kt-btn kt-btn-outline kt-btn-sm bg-info text-white list-item">
-                                    {{ $state->name }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-white"></i>
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
+                @include('components.state-search', [
+                    'models' => 'states',
+                    'records' => $country->states,
+                ])
             @endif
 
             <!-- Related Cities -->
             @if ($country->cities && $country->cities->count() > 0)
-                <div class="kt-card list-search-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">
-                            <i class="ki-filled ki-home-2 text-warning me-2"></i>
-                            {{ __('main.cities') }} ({{ $country->cities->count() }})
-                        </h3>
+                @include('components.state-search', [
+                    'models' => 'cities',
+                    'records' => $country->cities,
+                ])
+            @endif
 
-                        <div class="flex flex-wrap gap-2 lg:gap-5">
-                            <div class="flex items-center gap-2 text-red-500 no_results_found hidden">
-                                <i class="ki-filled ki-information-2 text-lg"></i>
-                                <p>{{ __('messages.no_results_found') }}</p>
-                            </div>
-                            <div class="flex items-center">
-                                <label class="kt-input">
-                                    <input type="search" class="py-2 rounded-lg search-par" id="search"
-                                        placeholder="{{ __('main.search') }}..." autocomplete="off" />
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <div class="flex flex-wrap gap-3">
-                            @foreach ($country->cities->take(20) as $city)
-                                <a href="{{ route('cities.show', $city->id) }}"
-                                    class="kt-btn kt-btn-outline kt-btn-sm bg-info text-white list-item">
-                                    {{ $city->name }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-white"></i>
-                                </a>
-                            @endforeach
-                        </div>
-                        @if ($country->cities->count() > 20)
-                            <div class="mt-4 text-center">
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ __('main.showing_first_items', ['count' => 20, 'total' => $country->cities->count()]) }}
-                                </p>
+            <!-- Metadata -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
+                        @if ($country->creator)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $country->creator->name }}</p>
                             </div>
                         @endif
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $country->created_at?->format('Y-m-d H:i:s') }}
+                            </p>
+                        </div>
+                        @if ($country->updater)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $country->updater->name }}</p>
+                            </div>
+                        @endif
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $country->updated_at?->format('Y-m-d H:i:s') }}
+                            </p>
+                        </div>
                     </div>
                 </div>
-            @endif
+            </div>
 
             <!-- Actions -->
             <div class="flex items-center gap-4">
@@ -394,55 +342,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let listCards = document.querySelectorAll('.list-search-card');
-            listCards.forEach(card => {
-                let searchPar = card.querySelector('.search-par');
-                if (searchPar) {
-                    let listItems = card.querySelectorAll('.list-item');
-                    let cardBody = card.querySelector('.kt-card-body');
-
-                    // Create no results message
-                    let noResultsMsg = card.querySelector('.no_results_found');
-
-                    searchPar.addEventListener('input', function() {
-                        let filter = searchPar.value.toLowerCase();
-                        let hasResults = false;
-
-                        Array.from(listItems).forEach(function(item) {
-                            let text = item.textContent || item.innerText;
-                            if (text.toLowerCase().indexOf(filter) > -1) {
-                                item.style.opacity = "1";
-                                item.classList.remove("user-select-none");
-                                item.classList.add("bg-info", "text-white");
-                                item.classList.remove("bg-white", "text-black");
-                                hasResults = true;
-                            } else {
-                                item.style.opacity = "0.5";
-                                item.classList.add("user-select-none");
-                                item.classList.remove("bg-info", "text-white");
-                                item.classList.add("bg-white", "text-black");
-                            }
-                        });
-
-                        // Show/hide no results message
-                        if (filter && !hasResults) {
-                            Array.from(listItems).forEach((item) => {
-                                item.style.opacity = "1";
-                                item.classList.remove("user-select-none");
-                                item.classList.add("bg-info", "text-white");
-                                item.classList.remove("bg-white", "text-black");
-                            });
-                            noResultsMsg.classList.remove('hidden');
-                        } else {
-                            noResultsMsg.classList.add('hidden');
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-@endpush

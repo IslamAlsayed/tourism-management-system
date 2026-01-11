@@ -21,12 +21,12 @@
         <!-- Filters -->
         <div class="flex flex-wrap gap-2 mb-6 px-2 filterTable">
             <button wire:click="setFilter('roomRate')"
-                class="kt-btn btn-sm {{ $filter == 'roomRate' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
+                class="kt-btn btn-sm {{ $filter == 'roomRate' ? 'bg-gray-300 text-black user-select-none' : 'bg-primary' }}"
                 toggle-button style="user-select: none">
                 {{ __('main.room_rates') }} ({{ $roomRatesCount }})
             </button>
             <button wire:click="setFilter('mealRate')"
-                class="kt-btn btn-sm {{ $filter == 'mealRate' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
+                class="kt-btn btn-sm {{ $filter == 'mealRate' ? 'bg-gray-300 text-black user-select-none' : 'bg-primary' }}"
                 toggle-button style="user-select: none">
                 {{ __('main.meal_rates') }} ({{ $mealRatesCount }})
             </button>

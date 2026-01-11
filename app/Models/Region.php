@@ -15,7 +15,11 @@ class Region extends Model
         'uuid',
         'name',
         'name_ar',
-        'wiki_data_id'
+        'wiki_data_id',
+
+        'is_active',
+        'description',
+        'notes',
     ];
 
     public function subregions()

@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
             $table->string('name')->unique(); // e.g., hotel, transport, tour, other
             $table->string('name_ar')->nullable(); // e.g., فندق، نقل، جولة، أخرى
-            $table->boolean('is_active')->nullable()->default(true);
+            $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

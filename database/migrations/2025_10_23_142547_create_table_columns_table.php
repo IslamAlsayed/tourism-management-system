@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('table_columns', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('model_class'); // e.g., 'App\Models\User'
             $table->json('columns'); // Array of column names in order
             $table->timestamps();

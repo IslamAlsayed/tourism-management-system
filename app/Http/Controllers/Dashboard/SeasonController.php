@@ -38,7 +38,7 @@ class SeasonController extends Controller
 
     public function show($id)
     {
-        $season = Season::with('model')->find($id);
+        $season = Season::with((new Season)->getRelationshipNames())->find($id);
         if (!$season)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
         return view('pages.dashboard.seasons.show', compact('season'));
@@ -46,7 +46,7 @@ class SeasonController extends Controller
 
     public function edit($id)
     {
-        $season = Season::with('model')->find($id);
+        $season = Season::find($id);
         if (!$season)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
         return view('pages.dashboard.seasons.edit', compact('season'));

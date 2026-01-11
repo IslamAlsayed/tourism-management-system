@@ -144,5 +144,5 @@ return [
     'field_deleted_successfully' => ':field has been :status successfully.',
     'data_refreshed_successfully' => 'Data refreshed successfully.',
     'no_seasons_found' => 'No active seasons found.',
-    'no_results_found' => 'No results found.',
+    'no_results_found' => 'No results found',
 ];

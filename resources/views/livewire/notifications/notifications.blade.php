@@ -21,19 +21,19 @@
         <!-- Filters -->
         <div class="flex flex-wrap gap-2 mb-6 filterTable">
             <button wire:click="setFilter('all')"
-                class="kt-btn btn-sm {{ $filter == 'all' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
+                class="kt-btn btn-sm {{ $filter == 'all' ? 'bg-gray-300 text-black user-select-none' : 'bg-primary' }}"
                 toggle-button>
                 {{ __('main.all') }} ({{ $allCount }})
             </button>
 
             <button wire:click="setFilter('unread')"
-                class="kt-btn btn-sm {{ $filter == 'unread' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
+                class="kt-btn btn-sm {{ $filter == 'unread' ? 'bg-gray-300 text-black user-select-none' : 'bg-primary' }}"
                 toggle-button>
                 {{ __('main.unread') }} ({{ $unreadCount }})
             </button>
 
             <button wire:click="setFilter('read')"
-                class="kt-btn btn-sm {{ $filter == 'read' ? 'bg-gray-300 text-block user-select-none' : 'bg-primary' }}"
+                class="kt-btn btn-sm {{ $filter == 'read' ? 'bg-gray-300 text-black user-select-none' : 'bg-primary' }}"
                 toggle-button>
                 {{ __('main.read') }} ({{ $readCount }})
             </button>

@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         RichText::truncate();
-        Supplement::truncate();
-        Meal::truncate();
-        Room::truncate();
-        Season::truncate();
-        Type::truncate();
+        // Supplement::truncate();
+        // Meal::truncate();
+        // Room::truncate();
+        // Season::truncate();
+        // Type::truncate();
         Schema::enableForeignKeyConstraints();
 
         $this->call([
@@ -31,16 +31,17 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             TimezoneSeeder::class,
             CurrencySeeder::class,
-            TouristSiteSeeder::class,
-            CrossingPortSeeder::class,
-            AirlineSeeder::class,
-            CompleteDataSeeder::class,
             MediaFileSeeder::class, // Must be last to store all existing photos
-            AccommodationSeeder::class,
-            RestaurantSeeder::class,
-            TourGuideLanguageSeeder::class,
-            ClientSeeder::class,
-            TransportationCompanySeeder::class,
+            // TouristSiteSeeder::class,
+            // CrossingPortSeeder::class,
+            // AirlineSeeder::class,
+            // CompleteDataSeeder::class,
+            // AccommodationSeeder::class,
+            // RestaurantSeeder::class,
+            // TourGuideLanguageSeeder::class,
+            // ClientSeeder::class,
+            // TransportationCompanySeeder::class,
+            // TransportationRouteSeeder::class,
         ]);
     }
 }

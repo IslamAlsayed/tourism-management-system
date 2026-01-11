@@ -3,16 +3,21 @@
 return [
     'accommodation' => [
         'model' => \App\Models\Accommodation::class,
-        'label' => 'main.accommodation',
+        'label' => 'accommodation',
     ],
 
     'restaurant' => [
         'model' => \App\Models\Restaurant::class,
-        'label' => 'main.restaurant',
+        'label' => 'restaurant',
     ],
 
     'transportation-company' => [
         'model' => \App\Models\TransportationCompany::class,
-        'label' => 'main.transportation',
+        'label' => 'transportation',
+    ],
+
+    'tour-guide' => [
+        'model' => \App\Models\TourGuide::class,
+        'label' => 'tour-guide',
     ],
 ];

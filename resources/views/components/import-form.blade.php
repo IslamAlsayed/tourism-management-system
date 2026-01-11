@@ -2,6 +2,7 @@
     'title',
     'description',
     'models',
+    'model',
     'view',
     'route' => null,
     'cancelRoute' => null,
@@ -66,7 +67,7 @@
                         @endforeach
 
                         @if ($hasUnmetRequirements)
-                            <div class="kt-alert text-white flex items-center mb-4" style="background: #ff6166">
+                            <div class="kt-alert text-white flex items-center mb-4" style="background: #790004">
                                 <i class="fas fa-exclamation-circle"></i>
                                 {{ __('main.you_must_add') }}
 
@@ -97,11 +98,12 @@
                         style="background: var(--color-yellow-100); user-select: none;" --}}
                         @csrf
                         {{ $customLogic ?? '' }}
+                        <input type="hidden" name="model" value="{{ $model }}" />
 
                         <div class="mb-4">
                             <label for="file" class="inline-block text-gray-700 text-sm font-bold mb-2">
                                 {{ __('main.import_file') }}
-                                <strong>only .csv | .xlsx</strong>
+                                <strong>only <span class="text-primary font-semibold">(.csv | .xlsx)</span></strong>
                                 <span
                                     class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
                                     {{ __('sidebar.under_maintenance') }}
@@ -119,8 +121,8 @@
                         <!-- File preview -->
                         <div id="file-preview" class="mb-4 w-full" style="display:none">
                             <h3 class="text-sm font-semibold mb-2">{{ __('main.preview') }}</h3>
-                            <div
-                                style="max-height:300px; overflow:auto; border:1px solid #e5e7eb; padding:8px; border-radius:6px; background:#fafafa">
+                            <div class="background"
+                                style="max-height:300px; overflow:auto; border:1px solid #e5e7eb; padding:8px; border-radius:6px;">
                                 <table id="preview-table" class="min-w-full text-sm"
                                     style="border-collapse:collapse;width:100%"></table>
                             </div>
@@ -152,6 +154,7 @@
             const preview = document.getElementById('file-preview');
             const table = document.getElementById('preview-table');
             table.innerHTML = '';
+            table.classList.add('background');
             if (!rows || rows.length === 0) {
                 preview.style.display = 'none';
                 return;
@@ -161,6 +164,7 @@
             const maxCols = Math.max(...rows.map(r => r.length));
             // header (first row)
             const thead = document.createElement('thead');
+            thead.classList.add('background');
             const headerRow = document.createElement('tr');
             const headers = rows[0];
             for (let c = 0; c < maxCols; c++) {
@@ -168,7 +172,6 @@
                 th.style.border = '1px solid #e5e7eb';
                 th.style.padding = '6px';
                 th.style.textAlign = 'left';
-                th.style.background = '#f3f4f6';
                 th.textContent = headers[c] !== undefined ? headers[c] : '';
                 headerRow.appendChild(th);
             }

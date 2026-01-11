@@ -25,8 +25,8 @@ class TransportationCompanyBusTypesUpdateRequest extends FormRequest
             'min_seats' => ['nullable', 'integer', 'min:0'],
             'max_seats' => ['nullable', 'integer', 'min:0', 'gte:min_seats'],
             'seats' => ['nullable', 'integer', 'max:255'],
-            'company_id' => ['nullable', 'string', 'exists:transportation_companies,id'],
-            'bus_type_id' => ['nullable', 'string', 'exists:transportation_bus_types,id'],
+            'company_id' => ['nullable', 'string', 'exists:transportations_companies,id'],
+            'bus_type_id' => ['nullable', 'string', 'exists:transportations_bus_types,id'],
         ];
     }
 }

@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('country_id')->nullable();
             $table->boolean('all_states')->nullable()->default(false);
             $table->boolean('all_cities')->nullable()->default(false);
-            $table->boolean('is_active')->nullable()->default(true);
+            $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

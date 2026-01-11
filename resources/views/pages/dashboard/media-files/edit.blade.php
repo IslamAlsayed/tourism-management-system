@@ -181,7 +181,10 @@
                     </div>
 
                     {{-- Form Actions --}}
-                    @include('components.elements.update-submit', ['models' => 'media-files'])
+                    @include('components.elements.update-submit', [
+                        'models' => 'media-files',
+                        'model' => 'media-file',
+                    ])
                 </form>
             </div>
         </div>

@@ -39,7 +39,7 @@ class MealController extends Controller
 
     public function show($id)
     {
-        $meal = Meal::with(['model', 'currency'])->find($id);
+        $meal = Meal::with((new Meal)->getRelationshipNames())->find($id);
         if (!$meal)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal')]));
         return view('pages.dashboard.meals.show', compact('meal'));

@@ -25,7 +25,7 @@ class TransportationBusTypesCreateRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'seats' => ['required', 'string', 'max:255'],
             'type' => ['nullable', 'string', 'max:255'],
-            'company_id' => ['required', 'string', 'exists:transportation_companies,id'],
+            'company_id' => ['required', 'string', 'exists:transportations_companies,id'],
         ];
     }
 }

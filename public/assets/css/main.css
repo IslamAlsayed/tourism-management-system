@@ -23,6 +23,14 @@
     grid-template-columns: repeat(5, minmax(250px, 1fr)) !important;
 } */
 
+/* .kt-menu-title {
+    font-size: 10px !important;
+}
+
+.kt-menu-icon {
+    font-size: 12px !important;
+} */
+
 .kt-dropdown-menu {
     left: auto !important;
     top: 60px !important;
@@ -334,6 +342,21 @@ th:has(i, svg) {
     align-items: center;
     background-color: #0b55a8;
     justify-content: center;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+
+    input[type="time"]::-webkit-calendar-picker-indicator,
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
 }
 
 .highlight {

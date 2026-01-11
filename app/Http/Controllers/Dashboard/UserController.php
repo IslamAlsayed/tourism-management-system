@@ -22,7 +22,7 @@ class UserController extends Controller
     public function create()
     {
         $countries = Country::all();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.users.create', compact('countries', 'timezones'));
     }
 
@@ -43,7 +43,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::with(['timezone', 'creator', 'updater'])->find($id);
+        $user = User::with((new User)->getRelationshipNames())->find($id);
         if (!$user)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.user')]));
         return view('pages.dashboard.users.show', compact('user'));
@@ -55,7 +55,7 @@ class UserController extends Controller
         if (!$user)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.user')]));
         $countries = Country::all();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.users.edit', compact('user', 'countries', 'timezones'));
     }
 

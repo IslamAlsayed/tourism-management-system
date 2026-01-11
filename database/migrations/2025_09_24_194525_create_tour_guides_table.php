@@ -15,13 +15,13 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
-            $table->unsignedBigInteger('currency_id')->nullable();
-            $table->unsignedBigInteger('guide_type_id')->nullable();
-            $table->unsignedBigInteger('region_id')->nullable();
-            $table->unsignedBigInteger('subregion_id')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
-            $table->unsignedBigInteger('state_id')->nullable();
-            $table->unsignedBigInteger('city_id')->nullable();
+            $table->foreignId('currency_id')->nullable()->constrained('currencies')->cascadeOnDelete();
+            $table->foreignId('guide_type_id')->nullable()->constrained('tour_guide_types')->cascadeOnDelete();
+            $table->foreignId('region_id')->nullable()->constrained('regions')->cascadeOnDelete();
+            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->cascadeOnDelete();
+            $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnDelete();
+            $table->foreignId('state_id')->nullable()->constrained('states')->cascadeOnDelete();
+            $table->foreignId('city_id')->nullable()->constrained('cities')->cascadeOnDelete();
             $table->string('email')->nullable();
             $table->string('mobile_01')->nullable();
             $table->string('mobile_02')->nullable();
@@ -35,10 +35,23 @@ return new class extends Migration {
             $table->decimal('hd_day_fees', 10, 2)->nullable(); // Half day
             $table->decimal('extra_fees_1', 10, 2)->nullable();
             $table->decimal('extra_fees_2', 10, 2)->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
+
+            $table->index('currency_id');
+            $table->index('guide_type_id');
+            $table->index('region_id');
+            $table->index('subregion_id');
+            $table->index('country_id');
+            $table->index('state_id');
+            $table->index('city_id');
+            $table->index('email');
+            $table->index('mobile_01');
+            $table->index('mobile_02');
+            $table->index('national_guide_id');
+            $table->index('tourism_ministry_code');
         });
 
     }

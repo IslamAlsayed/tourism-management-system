@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Airline;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -23,13 +22,39 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'name_ar' => ['nullable', 'string', 'max:255'],
-            'icao' => ['nullable', 'string', 'max:4', 'unique:airlines,icao'],
-            'iata' => ['nullable', 'string', 'max:3', 'unique:airlines,iata'],
-            'lid' => ['nullable', 'string', 'max:10'],
-            // Airport Type
-            'subd' => ['nullable', 'string', 'max:50'],
+            // Airline Identification
+            'iata_code' => ['nullable', 'string', 'max:3', 'unique:airlines,iata_code'],
+            'icao_code' => ['nullable', 'string', 'max:4', 'unique:airlines,icao_code'],
+            'parent_airline_icao_code' => ['nullable', 'string', 'max:4'],
+
+            // Airline Names & Branding
+            'marketing_name' => ['nullable', 'string', 'max:255'],
+            'official_full_name' => ['nullable', 'string', 'max:255'],
+            'alliance' => ['nullable', 'string', 'max:255'],
+            'frequent_flyer_program_name' => ['nullable', 'string', 'max:255'],
+
+            // Airline Classification
+            'airline_type' => ['nullable', 'string', 'max:255'],
+            'airline_type_code' => ['nullable', 'string', 'max:10'],
+            'is_lowcost' => ['nullable', 'boolean'],
+
+            // Home Country Information
+            'airline_home_country' => ['nullable', 'string', 'max:255'],
+            'airline_home_country_alpha_2_code' => ['nullable', 'string', 'max:2'],
+            'airline_home_country_alpha_3_code' => ['nullable', 'string', 'max:3'],
+            'airline_home_city_iata_code' => ['nullable', 'string', 'max:3'],
+
+            // Organization Details
+            'year_of_foundation' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
+            'email' => ['nullable', 'email', 'max:255'],
+            'official_website' => ['nullable', 'url', 'max:500'],
+            'baggage_policy_url' => ['nullable', 'url', 'max:500'],
+            'web_check_in_url' => ['nullable', 'url', 'max:500'],
+
+            // Contact Information
+            'local_phone_number' => ['nullable', 'string', 'max:20'],
+            'international_phone_number' => ['nullable', 'string', 'max:20'],
+
             // Location Relationships
             'timezone_id' => ['nullable', 'exists:timezones,id'],
             'region_id' => ['nullable', 'exists:regions,id'],
@@ -37,17 +62,11 @@ class StoreRequest extends FormRequest
             'country_id' => ['nullable', 'exists:countries,id'],
             'state_id' => ['nullable', 'exists:states,id'],
             'city_id' => ['nullable', 'exists:cities,id'],
-            // Geographic Information
-            'elevation' => ['nullable', 'numeric'],
-            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
-            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            // Contact Information
-            'local_phone_number' => ['nullable', 'string', 'max:20'],
-            'international_phone_number' => ['nullable', 'string', 'max:20'],
-            'website' => ['nullable', 'url', 'max:255'],
+
+            // Additional Information
             'is_active' => ['nullable', 'boolean'],
-            'description' => ['nullable', 'string', 'max:1000'],
-            'notes' => ['nullable', 'string', 'max:1000'],
+            'description' => ['nullable', 'string'],
+            'notes' => ['nullable', 'string'],
         ];
     }
 }

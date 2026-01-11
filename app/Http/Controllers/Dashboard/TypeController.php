@@ -32,7 +32,7 @@ class TypeController extends Controller
 
     public function show($id)
     {
-        $type = Type::with(['accommodations'])->find($id);
+        $type = Type::with((new Type)->getRelationshipNames())->find($id);
         if (!$type)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.type')]));
         return view('pages.dashboard.types.show', compact('type'));

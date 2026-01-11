@@ -26,7 +26,7 @@ class ClientController extends Controller
         $regions = Region::orderBy('name')->get();
         $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $nationalities = Nationality::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.clients.create', compact('regions', 'currencies', 'nationalities', 'timezones'));
     }
 
@@ -44,7 +44,7 @@ class ClientController extends Controller
 
     public function show($id)
     {
-        $client = Client::with(['timezone', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'nationality', 'creator', 'updater'])->find($id);
+        $client = Client::with((new Client)->getRelationshipNames())->find($id);
         return $client
             ? view('pages.dashboard.clients.show', compact('client'))
             : redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
@@ -58,7 +58,7 @@ class ClientController extends Controller
         $regions = Region::orderBy('name')->get();
         $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $nationalities = Nationality::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.dashboard.clients.edit', compact('client', 'regions', 'currencies', 'nationalities', 'timezones'));
     }
 

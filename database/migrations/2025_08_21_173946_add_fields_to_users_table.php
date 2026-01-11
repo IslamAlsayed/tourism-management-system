@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->string('photo')->nullable();
             $table->string('user_status')->nullable()->default('offline');
             $table->boolean('is_admin')->default(false);
-            $table->boolean('is_active')->nullable()->default(true);
+            $table->boolean('is_active')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->timestamp('password_changed_at')->nullable();
             $table->boolean('force_password_change')->default(false);

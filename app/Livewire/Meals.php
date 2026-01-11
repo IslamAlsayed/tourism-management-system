@@ -37,7 +37,6 @@ class Meals extends Component
         $this->resetPage();
     }
 
-
     public function updatingFilterStatus()
     {
         $this->resetPage();

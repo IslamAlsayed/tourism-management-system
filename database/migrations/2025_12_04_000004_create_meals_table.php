@@ -15,15 +15,15 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('model_id')->nullable();
             $table->string('model_type')->nullable();
-            // $table->foreignId('season_id')->constrained('seasons')->onDelete('cascade');
-            $table->foreignId('currency_id')->constrained('currencies')->onDelete('cascade');
+            // $table->foreignId('season_id')->nullable()->constrained('seasons')->cascadeOnDelete();
+            $table->foreignId('currency_id')->nullable()->constrained('currencies')->cascadeOnDelete();
 
             $table->string('name'); // e.g., Breakfast, Lunch, Dinner, Full Board, Half Board
             $table->string('name_ar')->nullable();
             $table->decimal('price', 10, 2)->nullable(); // سعر الوجبة
             $table->boolean('is_included')->default(false); // هل مشمولة في السعر الأساسي
             $table->boolean('is_supplement')->default(true); // هل هي إضافة أم مشمولة
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

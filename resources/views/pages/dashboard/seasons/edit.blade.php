@@ -103,7 +103,6 @@
                                 'label' => __('main.active'),
                             ])
                         </div>
-
                         <!-- Update Submit -->
                         @include('components.elements.update-submit', ['models' => 'seasons'])
                     </div>

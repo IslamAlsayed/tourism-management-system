@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
-@section('title', __('main.create_type', ['type' => __('main.transportation_company')]))
+@section('title', __('main.create_type', ['type' => __('main.transportations-company')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.create_type', ['type' => __('main.transportation_company')]) }}
+                    {{ __('main.create_type', ['type' => __('main.transportations-company')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.create_type_description', ['type' => __('main.transportation_company')]) }}
+                    {{ __('main.create_type_description', ['type' => __('main.transportations-company')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('transportation-companies.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.transportation_companies')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.transportations_companies')]) }}
                 </a>
             </div>
         </div>
@@ -23,11 +23,11 @@
 
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
-            <!-- transportation_company Form -->
+            <!-- transportations-company Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">
-                        {{ __('main.type_information', ['type' => __('main.transportation_company')]) }}</h3>
+                        {{ __('main.type_information', ['type' => __('main.transportations-company')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('transportation-companies.store') }}" class="space-y-6 p-4">
@@ -37,7 +37,7 @@
                             <!-- Transportation department (Arabic) -->
                             <div class="">
                                 <label for="department"
-                                    class="kt-label required mb-2">{{ __('main.transportation_department') }}</label>
+                                    class="kt-label required mb-2">{{ __('main.transportations-department') }}</label>
                                 <input type="text" name="department" id="department" class="kt-input h-[45px]" required>
                                 @error('department')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

@@ -22,13 +22,13 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price' => ['required', 'decimal:10,2', 'min:1'],
+            'price' => ['required', 'integer', 'min:1'],
             'tax' => ['nullable', 'integer', 'min:0', 'max:100'],
             'is_active' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string', 'max:255'],
             'notes' => ['nullable', 'string', 'max:255'],
-            'company_id' => ['required', 'exists:transportation_companies,id'],
-            'vehicle_type_id' => ['required', 'exists:transportation_vehicle_types,id'],
+            'company_id' => ['required', 'exists:transportations_companies,id'],
+            'vehicle_type_id' => ['required', 'exists:transportations_vehicle_types,id'],
             'season_id' => ['required', 'exists:seasons,id'],
             'pricing_unit_id' => ['required', 'exists:pricing_definitions,id'],
             'currency_id' => ['nullable', 'exists:currencies,id'],

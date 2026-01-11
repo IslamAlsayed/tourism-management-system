@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('name_ar')->nullable();
             $table->date('season_from');
             $table->date('season_to');
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

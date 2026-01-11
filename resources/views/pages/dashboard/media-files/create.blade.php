@@ -144,7 +144,10 @@
                     ])
 
                     {{-- Submit Button --}}
-                    @include('components.elements.save-submit', ['models' => 'media-files'])
+                    @include('components.elements.save-submit', [
+                        'models' => 'media-files',
+                        'model' => 'media-file',
+                    ])
                 </form>
             </div>
         </div>

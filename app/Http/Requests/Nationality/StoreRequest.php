@@ -24,14 +24,7 @@ class StoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['required', 'string', 'max:255'],
-
-            'timezone_id' => ['nullable', 'string', 'exists:timezones,id'],
-            'region_id' => ['nullable', 'string', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
-            'state_id' => ['nullable', 'string', 'exists:states,id'],
-            'city_id' => ['nullable', 'string', 'exists:cities,id'],
-
             'is_active' => ['boolean'],
             'description' => ['nullable', 'string'],
             'notes' => ['nullable', 'string'],

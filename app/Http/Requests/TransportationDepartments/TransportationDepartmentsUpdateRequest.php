@@ -23,7 +23,7 @@ class TransportationDepartmentsUpdateRequest extends FormRequest
     {
         return [
             'department' => ['nullable', 'string', 'max:255'],
-            'company_id' => ['nullable', 'string', 'exists:transportation_companies,id'],
+            'company_id' => ['nullable', 'string', 'exists:transportations_companies,id'],
             'region_id' => ['nullable', 'string', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],

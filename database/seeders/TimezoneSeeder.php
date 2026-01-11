@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RichText;
 use App\Models\Timezone;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,7 @@ class TimezoneSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         Timezone::truncate();
+        RichText::where('record_type', Timezone::class)->delete();
         Schema::enableForeignKeyConstraints();
 
         Timezone::query()->delete();
@@ -122,6 +124,23 @@ class TimezoneSeeder extends Seeder
                 'description' => 'Arabic Standard Time',
                 'is_active' => true,
                 'sort_order' => 15,
+            ],
+            [
+                'name' => 'Asia/Kabul',
+                'name_ar' => 'كابول',
+                'abbreviation' => 'AFT',
+                'abbreviation_dst' => null,
+                'offset' => 16200, // UTC+4:30
+                'offset_dst' => null,
+                'country_code' => 'AF',
+                'gmt_offset_name' => 'UTC+04:30',
+                'gmt_offset_name_dst' => null,
+                'supports_dst' => false,
+                'region' => 'Asia',
+                'city' => 'Kabul',
+                'description' => 'Afghanistan Time',
+                'is_active' => true,
+                'sort_order' => 16,
             ],
 
             // Europe

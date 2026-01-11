@@ -9,7 +9,7 @@ use App\Models\Country;
 use App\Models\MediaFile;
 use App\Models\TourGuide;
 use App\Models\Restaurant;
-use App\Models\TouristSite;
+use App\Models\TouristService;
 use App\Models\CrossingPort;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
@@ -29,7 +29,7 @@ class MediaFileSeeder extends Seeder
         // First: Store photos from models that have photo column
         $this->storeExistingPhotos(User::class, 'users');
         $this->storeExistingPhotos(Client::class, 'clients');
-        $this->storeExistingPhotos(TouristSite::class, 'tourist-sites');
+        $this->storeExistingPhotos(TouristService::class, 'tourist-services');
         $this->storeExistingPhotos(CrossingPort::class, 'crossing-ports');
         $this->storeExistingPhotos(Airline::class, 'airlines');
         $this->storeExistingPhotos(Restaurant::class, 'restaurants');

@@ -55,21 +55,26 @@
                         ) {
                             $hasActiveChild = true;
                         }
-
-                        if (Str::contains($item['title'], 'guide') && Str::contains(key($currentParameters), 'guide')) {
+                        if (Str::contains(request()->segment(2), $item['title'])) {
+                            $hasActiveChild = true;
+                        }
+                        if (
+                            Str::contains($item['title'], 'guides') &&
+                            Str::contains(key($currentParameters), 'guides')
+                        ) {
                             $hasActiveChild = true;
                         }
                     @endphp
 
                     @if ($hasChildren)
                         {{-- Menu with Children --}}
-                        <div class="isActive-{{ $isActive }} hasActiveChild-{{ $hasActiveChild }} kt-menu-item {{ $hasActiveChild ? 'show' : '' }}"
+                        <div class="kt-menu-item {{ $hasActiveChild ? 'show' : '' }}"
                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                             <div
-                                class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[15px] py-[6px] {{ $hasActiveChild ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px]">
+                                class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $hasActiveChild ? 'bg-accent/60' : '' }} hover:bg-accent/60 rounded-[9px] hover:rounded-[9px]">
                                 <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
                                     <i
-                                        class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} text-lg {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
+                                        class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
                                 </span>
 
                                 <span
@@ -77,14 +82,16 @@
                                     {{ __('sidebar.' . $item['title']) }}
                                     @if (isset($item['status']) && env('DB_MODE') != 'production')
                                         <span
-                                            class="inline-block {{ $item['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            class="inline-block {{ $item['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} font-medium px-2 py-0.5 rounded-full ms-2"
+                                            style="font-size: 10px">
                                             {{ __('sidebar.' . $item['status']) }}
                                         </span>
                                     @endif
 
                                     @if (isset($item['fixed']) && env('DB_MODE') != 'production')
                                         <span
-                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            class="inline-block bg-primary/10 text-red-600 font-medium px-2 py-0.5 rounded-full ms-2"
+                                            style="font-size: 10px">
                                             @if (gettype($item['fixed']) == 'boolean')
                                                 <i class="fas fa-xmark"></i>
                                             @elseif (preg_match('/\d/', $item['fixed']))
@@ -138,6 +145,41 @@
                                         ) {
                                             $childHasActiveChild = true;
                                         }
+
+                                        // if (
+                                        //     Str::contains($item['title'], 'transport') &&
+                                        //     is_array(explode('.', $currentRoute)) &&
+                                        //     isset(explode('.', $currentRoute)[1]) &&
+                                        //     $child['title'] == explode('.', $currentRoute)[1]
+                                        // ) {
+                                        //     $childHasActiveChild = true;
+                                        // }
+                                        // if (Str::contains($item['title'], 'transport')) {
+                                        // if (Str::contains($child['title'], 'assignment')) {
+                                        // dd(
+                                        // "route assignments"        $child['title'],
+                                        //         "route-assignments"        request()->segment(3)index: ,
+                                        //         "route-assignment"        str_replace('_', '-', key($currentParameters)),
+                                        //         "route_assignment"        key($currentParameters),
+                                        //                                         $currentRoute,
+                                        //                                         explode('.', $currentRoute),
+                                        //                                     );
+                                        //                                 }
+                                        if (
+                                            Str::contains(
+                                                request()->segment(3),
+                                                str_replace('_', '-', key($currentParameters)),
+                                            ) &&
+                                            Str::contains(request()->segment(3), str_replace(' ', '-', $child['title']))
+                                        ) {
+                                            // dd(request()->segment(3), str_replace('_', '-', key($currentParameters)));
+                                            // && in_array(key($currentParameters), ['company', 'vehicle_type', 'route', 'pricing'])
+                                            $childHasActiveChild = true;
+                                        }
+
+                                        // dd(request()->segment(1), request()->segment(2), request()->segment(3), $item['title']);
+                                        // dd(request()->segment(3), str_replace('_', '-', key($currentParameters)));
+
                                     @endphp
 
                                     @if ($childHasChildren)
@@ -145,7 +187,7 @@
                                         <div class="kt-menu-item {{ $childHasActiveChild ? 'kt-menu-item-show show' : '' }} px-2"
                                             data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
                                             <div
-                                                class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[15px] py-[6px] {{ $childHasActiveChild ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px]">
+                                                class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $childHasActiveChild ? 'bg-accent/60' : '' }} hover:bg-accent/60 rounded-[9px] hover:rounded-[9px]">
                                                 @if (isset($child['icon']))
                                                     <span
                                                         class="kt-menu-icon items-start text-muted-foreground w-[20px]">
@@ -159,14 +201,16 @@
                                                     {{ __('sidebar.' . $child['title']) }}
                                                     @if (isset($child['status']) && env('DB_MODE') != 'production')
                                                         <span
-                                                            class="inline-block {{ $child['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            class="inline-block {{ $child['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} font-medium px-2 py-0.5 rounded-full ms-2"
+                                                            style="font-size: 10px">
                                                             {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif
 
                                                     @if (isset($child['fixed']) && env('DB_MODE') != 'production')
                                                         <span
-                                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            class="inline-block bg-primary/10 text-red-600 font-medium px-2 py-0.5 rounded-full ms-2"
+                                                            style="font-size: 10px">
                                                             @if (gettype($child['fixed']) == 'boolean')
                                                                 <i class="fas fa-xmark"></i>
                                                             @else
@@ -212,14 +256,16 @@
 
                                                                 @if (isset($subChild['status']) && env('DB_MODE') != 'production')
                                                                     <span
-                                                                        class="inline-block {{ $subChild['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                                        class="inline-block {{ $subChild['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} font-medium px-2 py-0.5 rounded-full ms-2"
+                                                                        style="font-size: 10px">
                                                                         {{ __('sidebar.' . $subChild['status']) }}
                                                                     </span>
                                                                 @endif
 
                                                                 @if (isset($subChild['fixed']) && env('DB_MODE') != 'production')
                                                                     <span
-                                                                        class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                                        class="inline-block bg-primary/10 text-red-600 font-medium px-2 py-0.5 rounded-full ms-2"
+                                                                        style="font-size: 10px">
                                                                         @if (gettype($subChild['fixed']) == 'boolean')
                                                                             <i class="fas fa-xmark"></i>
                                                                         @else
@@ -254,14 +300,16 @@
 
                                                     @if (isset($child['status']) && env('DB_MODE') != 'production')
                                                         <span
-                                                            class="inline-block {{ $child['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            class="inline-block {{ $child['status'] == 'inprogress' ? 'bg-yellow-500 text-white' : 'bg-primary/10 text-primary' }} font-medium px-2 py-0.5 rounded-full ms-2"
+                                                            style="font-size: 10px">
                                                             {{ __('sidebar.' . $child['status']) }}
                                                         </span>
                                                     @endif
 
                                                     @if (isset($child['fixed']) && env('DB_MODE') != 'production')
                                                         <span
-                                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                                            class="inline-block bg-primary/10 text-red-600 font-medium px-2 py-0.5 rounded-full ms-2"
+                                                            style="font-size: 10px">
                                                             @if (gettype($child['fixed']) == 'boolean')
                                                                 <i class="fas fa-xmark"></i>
                                                             @else
@@ -279,7 +327,7 @@
                     @else
                         {{-- Simple Menu Item --}}
                         <div class="kt-menu-item">
-                            <a class="kt-menu-link mb-1 flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[15px] py-[6px] {{ $isActive ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px]"
+                            <a class="kt-menu-link mb-1 flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $isActive ? 'bg-accent/60' : '' }} hover:bg-accent/60 rounded-[9px] hover:rounded-[9px]"
                                 href="{{ isset($item['route']) && $item['route'] !== '#' ? route($item['route'], isset($item['parameters']) ? $item['parameters'] : []) : 'javascript:void(0)' }}"
                                 {{ ($item['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                 <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
@@ -293,14 +341,16 @@
 
                                     @if (isset($item['status']) && env('DB_MODE') != 'production')
                                         <span
-                                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            class="inline-block bg-primary/10 text-primary font-medium px-2 py-0.5 rounded-full ms-2"
+                                            style="font-size: 10px">
                                             {{ __('sidebar.' . $item['status']) }}
                                         </span>
                                     @endif
 
                                     @if (isset($item['fixed']) && env('DB_MODE') != 'production')
                                         <span
-                                            class="inline-block bg-primary/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-full ms-2">
+                                            class="inline-block bg-primary/10 text-red-600 font-medium px-2 py-0.5 rounded-full ms-2"
+                                            style="font-size: 10px">
                                             @if (gettype($item['fixed']) == 'boolean')
                                                 <i class="fas fa-xmark"></i>
                                             @else

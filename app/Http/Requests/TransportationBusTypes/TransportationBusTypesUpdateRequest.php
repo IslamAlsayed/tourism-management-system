@@ -25,7 +25,7 @@ class TransportationBusTypesUpdateRequest extends FormRequest
             'name' => ['nullable', 'string', 'max:255'],
             'seats' => ['nullable', 'string', 'max:255'],
             'type' => ['nullable', 'string', 'max:255'],
-            'company_id' => ['nullable', 'string', 'exists:transportation_companies,id'],
+            'company_id' => ['nullable', 'string', 'exists:transportations_companies,id'],
         ];
     }
 }

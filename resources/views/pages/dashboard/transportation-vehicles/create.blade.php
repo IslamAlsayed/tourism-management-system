@@ -1,21 +1,21 @@
 @extends('layouts.master')
 
-@section('title', __('main.create_type', ['type' => __('main.transportation_vehicles')]))
+@section('title', __('main.create_type', ['type' => __('main.transportations-vehicles')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.create_type', ['type' => __('main.transportation_vehicles')]) }}
+                    {{ __('main.create_type', ['type' => __('main.transportations-vehicles')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.create_type_description', ['type' => __('main.transportation_vehicles')]) }}
+                    {{ __('main.create_type_description', ['type' => __('main.transportations-vehicles')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('transportation-vehicles.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.transportation_vehicles')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.transportations-vehicles')]) }}
                 </a>
             </div>
         </div>
@@ -23,11 +23,11 @@
 
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
-            <!-- transportation_vehicles Form -->
+            <!-- transportations-vehicles Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">
-                        {{ __('main.type_information', ['type' => __('main.transportation_vehicles')]) }}</h3>
+                        {{ __('main.type_information', ['type' => __('main.transportations-vehicles')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('transportation-vehicles.store') }}" class="space-y-6 p-4">

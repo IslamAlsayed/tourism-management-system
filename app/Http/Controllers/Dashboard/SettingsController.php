@@ -57,7 +57,7 @@ class SettingsController extends Controller
     public function general()
     {
         $settings = Setting::first();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id'])->toArray();
+        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
         return view('pages.settings.general', compact('settings', 'timezones'));
     }
 

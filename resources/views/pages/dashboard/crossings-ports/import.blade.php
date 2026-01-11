@@ -1,33 +1,34 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :view="$view" :requirements="[
-        [
-            'condition' => \App\Models\Region::count() > 0,
-            'route' => route('regions.index'),
-            'label' => __('main.regions'),
-        ],
-        [
-            'condition' => \App\Models\Subregion::count() > 0,
-            'route' => route('subregions.index'),
-            'label' => __('main.subregions'),
-        ],
-        [
-            'condition' => \App\Models\Country::count() > 0,
-            'route' => route('countries.index'),
-            'label' => __('main.countries'),
-        ],
-        [
-            'condition' => \App\Models\State::count() > 0,
-            'route' => route('states.index'),
-            'label' => __('main.states'),
-        ],
-        [
-            'condition' => \App\Models\City::count() > 0,
-            'route' => route('cities.index'),
-            'label' => __('main.cities'),
-        ],
-    ]">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
+        :requirements="[
+            [
+                'condition' => \App\Models\Region::count() > 0,
+                'route' => route('regions.index'),
+                'label' => __('main.regions'),
+            ],
+            [
+                'condition' => \App\Models\Subregion::count() > 0,
+                'route' => route('subregions.index'),
+                'label' => __('main.subregions'),
+            ],
+            [
+                'condition' => \App\Models\Country::count() > 0,
+                'route' => route('countries.index'),
+                'label' => __('main.countries'),
+            ],
+            [
+                'condition' => \App\Models\State::count() > 0,
+                'route' => route('states.index'),
+                'label' => __('main.states'),
+            ],
+            [
+                'condition' => \App\Models\City::count() > 0,
+                'route' => route('cities.index'),
+                'label' => __('main.cities'),
+            ],
+        ]">
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}

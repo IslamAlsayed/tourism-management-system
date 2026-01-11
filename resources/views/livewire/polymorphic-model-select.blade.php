@@ -1,17 +1,23 @@
-<div class="col-span-2">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="col-span-1">
+    <div class="grid grid-cols-1 gap-6">
         {{-- Type --}}
-        <div wire:ignore>
+        <div wire:ignore class="hidden {{ $record ? 'cursor-not-allowed' : '' }}">
             <label class="kt-label mb-2">
                 {{ __('main.type') }}
                 @if (!$record)
                     <span class="text-red-600">*</span>
+                @else
+                    <i class="fas fa-lock"></i>
                 @endif
             </label>
 
-            <select wire:model="filterType" name="model_type" id="model_type" class="kt-select basic-single">
+            <select wire:model="filterType" name="model_type" id="model_type" class="kt-select basic-single"
+                {{ $record ? 'disabled' : '' }}>
                 @foreach ($types as $key => $type)
-                    <option value="{{ $key }}">{{ __($type['label']) }}</option>
+                    <option value="{{ $key }}"
+                        {{ Str::ucfirst($type['label']) == Str::ucfirst($filterType) ? 'selected' : '' }}>
+                        {{ __('main.' . $type['label']) }}
+                    </option>
                 @endforeach
             </select>
         </div>
@@ -20,7 +26,7 @@
         <div>
             @if (isset($types[$filterType]))
                 <label class="kt-label mb-2">
-                    {{ __($types[$filterType]['label']) }}
+                    {{ __('main.' . $types[$filterType]['label']) }}
                     @if (!$record)
                         <span class="text-red-600">*</span>
                     @endif

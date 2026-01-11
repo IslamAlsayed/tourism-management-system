@@ -1,32 +1,32 @@
 @extends('layouts.master')
 
-@section('title', __('main.edit_type', ['type' => __('main.transportation_bus_type')]))
+@section('title', __('main.edit_type', ['type' => __('main.transportations-bus_type')]))
 
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.edit_type', ['type' => __('main.transportation_bus_type')]) }}
+                    {{ __('main.edit_type', ['type' => __('main.transportations-bus_type')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.edit_type_description', ['type' => __('main.transportation_bus_type')]) }}
+                    {{ __('main.edit_type_description', ['type' => __('main.transportations-bus_type')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('transportation-bus-types.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.transportation_bus_types')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.transportations-bus_types')]) }}
             </div>
         </div>
     </div>
 
     <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
-            <!-- transportation_bus_type Form -->
+            <!-- transportations-bus_type Form -->
             <div class="kt-card">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">
-                        {{ __('main.type_information', ['type' => __('main.transportation_bus_type')]) }}</h3>
+                        {{ __('main.type_information', ['type' => __('main.transportations-bus_type')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
                     <form method="POST" action="{{ route('transportation-bus-types.update', $transportationBusType->id) }}"
@@ -37,7 +37,8 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
                             <!-- Transportation bus type -->
                             <div class="">
-                                <label for="name" class="kt-label mb-2">{{ __('main.transportation_bus_type') }}</label>
+                                <label for="name"
+                                    class="kt-label mb-2">{{ __('main.transportations-bus_type') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $transportationBusType->name }}">
                                 @error('name')
@@ -75,7 +76,7 @@
 
                         <!-- Update Submit Buttons -->
                         @include('components.elements.update-submit', [
-                            'models' => 'transportation-bus-types',
+                            'models' => 'transportations-bus-types',
                         ])
                     </form>
                 </div>

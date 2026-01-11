@@ -1,3 +1,7 @@
+@php
+    $name = isset($name) ? $name : 'currency_id';
+    $currencies = \App\Models\Currency::orderBy('name')->get(['id', 'name', 'code']);
+@endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
         {{ __('main.' . (isset($name) ? str_replace('_id', '', $name) : '')) }}

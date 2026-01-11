@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->enum('price_type', ['per_person', 'per_room', 'per_night', 'one_time'])->nullable();
             $table->date('applicable_date')->nullable();
             $table->boolean('is_mandatory')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();

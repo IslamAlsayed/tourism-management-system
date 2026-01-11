@@ -135,7 +135,7 @@ class PhotoObserver
         return match ($className) {
             'User' => 'users',
             'Client' => 'clients',
-            'TouristSite' => 'tourist-sites',
+            'touristService' => 'tourist-services',
             'CrossingPort' => 'crossing-ports',
             'Airline' => 'airlines',
             'Restaurant' => 'restaurants',

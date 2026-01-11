@@ -2,6 +2,10 @@
 
 @section('title', __('main.view_type', ['type' => __('main.airline')]))
 
+@push('scripts')
+    @include('components.elements.setup-map')
+@endpush
+
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">

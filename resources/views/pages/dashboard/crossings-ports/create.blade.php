@@ -296,7 +296,7 @@
 
                             {{-- Visa Fee Currency --}}
                             @include('components.selects.currency', [
-                                'name' => 'visa_fee_currency',
+                                'name' => 'visa_fee_currency_id',
                                 'currencies' => $currencies,
                             ])
 
@@ -416,7 +416,10 @@
                     ])
                 </div>
 
-                @include('components.elements.save-submit', ['models' => 'crossings-ports'])
+                @include('components.elements.save-submit', [
+                    'models' => 'crossings-ports',
+                    'model' => 'crossing-port',
+                ])
             </div>
         </form>
     </div>

@@ -25,7 +25,7 @@ class Restaurant extends Model
         'name',
         'name_ar',
         'rating',
-        'company_name_ar',
+        'company_name',
         'specialty',
         'phone_01',
         'phone_02',
@@ -40,6 +40,7 @@ class Restaurant extends Model
         'website',
         'latitude',
         'longitude',
+        'cat',
 
         'wheelchair_accessible',
         'free_wifi',
@@ -62,6 +63,40 @@ class Restaurant extends Model
         'state_id',
         'city_id',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($item) {
+            if (empty($item->region_id) && !empty($item->city_id)) {
+                $item->region_id = $item->city->region_id;
+            }
+            if (empty($item->subregion_id) && !empty($item->city_id)) {
+                $item->subregion_id = $item->city->subregion_id;
+            }
+            if (empty($item->country_id) && !empty($item->city_id)) {
+                $item->country_id = $item->city->country_id;
+            }
+            if (empty($item->state_id) && !empty($item->city_id)) {
+                $item->state_id = $item->city->state_id;
+            }
+        });
+
+        static::updating(function ($item) {
+            if (empty($item->region_id) && !empty($item->city_id)) {
+                $item->region_id = $item->city->region_id;
+            }
+            if (empty($item->subregion_id) && !empty($item->city_id)) {
+                $item->subregion_id = $item->city->subregion_id;
+            }
+            if (empty($item->country_id) && !empty($item->city_id)) {
+                $item->country_id = $item->city->country_id;
+            }
+            if (empty($item->state_id) && !empty($item->city_id)) {
+                $item->state_id = $item->city->state_id;
+            }
+        });
+    }
 
     public function getRelationshipNames()
     {

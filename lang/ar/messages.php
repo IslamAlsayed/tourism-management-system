@@ -145,5 +145,5 @@ return [
     'field_deketed_successfully' => 'تم :status :field بنجاح.',
     'data_refreshed_successfully' => 'تم تحديث البيانات بنجاح.',
     'no_seasons_found' => 'لم يتم العثور على مواسم نشطة.',
-    'no_results_found' => 'لم يتم العثور على نتائج.',
+    'no_results_found' => 'لم يتم العثور على نتائج',
 ];

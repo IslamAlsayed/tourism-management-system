@@ -72,7 +72,7 @@
                         @endforeach
 
                         @if ($hasUnmetRequirements)
-                            <div class="kt-alert text-block flex items-center mb-4" style="background: #ff7c7f">
+                            <div class="kt-alert text-black flex items-center mb-4" style="background: #ff7c7f">
                                 <i class="fas fa-exclamation-circle"></i>
                                 {{ __('main.you_must_add') }}
 

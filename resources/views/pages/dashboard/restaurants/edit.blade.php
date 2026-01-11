@@ -144,12 +144,12 @@
                                 @enderror
                             </div>
 
-                            <!-- Company Name Arabic -->
+                            <!-- Company Name -->
                             <div class="align-self-end">
-                                <label for="company_name_ar" class="kt-label">{{ __('main.company_name_ar') }}</label>
-                                <input type="text" name="company_name_ar" id="company_name_ar" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->company_name_ar }}">
-                                @error('company_name_ar')
+                                <label for="company_name" class="kt-label">{{ __('main.company_name') }}</label>
+                                <input type="text" name="company_name" id="company_name" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->company_name }}">
+                                @error('company_name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

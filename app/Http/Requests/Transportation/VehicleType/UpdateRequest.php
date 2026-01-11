@@ -32,7 +32,7 @@ class UpdateRequest extends FormRequest
             'is_active' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string', 'max:255'],
             'notes' => ['nullable', 'string', 'max:255'],
-            'company_id' => ['nullable', 'exists:transportation_companies,id'],
+            'company_id' => ['nullable', 'exists:transportations_companies,id'],
         ];
     }
 }

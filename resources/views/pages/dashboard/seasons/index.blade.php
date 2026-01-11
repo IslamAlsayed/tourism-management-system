@@ -6,7 +6,10 @@
         'title' => __('main.seasons'),
         'description' => __('main.manage_system_types', ['types' => __('main.seasons')]),
         'import_url' => route('import.data', ['models' => 'seasons']),
-        'page_create_url' => route('seasons.create', ['type' => request()->query('type')]),
+        'page_create_url' => route('seasons.create', [
+            'type' => request()->query('type'),
+            \Illuminate\Support\Str::random(120),
+        ]),
         'page_create_title' => __('main.create_type', ['type' => __('main.season')]),
     ])
     <!-- End of Container -->

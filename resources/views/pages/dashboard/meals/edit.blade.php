@@ -92,6 +92,16 @@
 
                         <div class="flex flex-wrap gap-10">
                             <div class="flex items-center gap-3">
+                                <input type="hidden" name="is_active" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'is_active',
+                                    'id' => 'is_active',
+                                    'value' => '1',
+                                    'checked' => $meal->is_active,
+                                    'label' => __('main.is_active'),
+                                ])
+                            </div>
+                            <div class="flex items-center gap-3">
                                 <input type="hidden" name="is_included" value="0">
                                 @include('components.elements.checkbox-button', [
                                     'name' => 'is_included',
@@ -109,16 +119,6 @@
                                     'value' => '1',
                                     'checked' => $meal->is_supplement,
                                     'label' => __('main.is_supplement'),
-                                ])
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_active" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_active',
-                                    'id' => 'is_active',
-                                    'value' => '1',
-                                    'checked' => $meal->is_active,
-                                    'label' => __('main.is_active'),
                                 ])
                             </div>
                         </div>

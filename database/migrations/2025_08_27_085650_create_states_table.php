@@ -15,10 +15,10 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
-            $table->unsignedBigInteger('timezone_id')->nullable();
-            $table->unsignedBigInteger('region_id')->nullable();
-            $table->unsignedBigInteger('subregion_id')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
+            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->cascadeOnDelete();
+            $table->foreignId('region_id')->nullable()->constrained('regions')->cascadeOnDelete();
+            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->cascadeOnDelete();
+            $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnDelete();
             $table->boolean('all_cities')->nullable()->default(false);
             $table->string('iso2')->nullable();
             $table->string('iso3')->nullable();
@@ -30,7 +30,7 @@ return new class extends Migration {
             $table->boolean('is_independent')->nullable()->default(false);
             $table->boolean('is_developed')->nullable()->default(false);
             $table->boolean('is_landlocked')->nullable()->default(false);
-            $table->boolean('is_active')->nullable()->default(true);
+            $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

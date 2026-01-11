@@ -63,6 +63,52 @@ class Accommodation extends Model
         'longitude' => 'decimal:7',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($item) {
+            if (empty($item->region_id) && !empty($item->country_id)) {
+                $item->region_id = $item->country->region_id;
+            }
+            if (empty($item->subregion_id) && !empty($item->country_id)) {
+                $item->subregion_id = $item->country->subregion_id;
+            }
+            if (!isset($item->country_id) || empty($item->country_id)) {
+                if (!empty($item->city_id) && $item->city) {
+                    $item->country_id = $item->city->country_id;
+                } elseif (!empty($item->state_id) && $item->state) {
+                    $item->country_id = $item->state->country_id;
+                }
+            }
+            if (!isset($item->state_id) || empty($item->state_id)) {
+                if (!empty($item->city_id) && $item->city) {
+                    $item->state_id = $item->city->state_id;
+                }
+            }
+        });
+
+        static::updating(function ($item) {
+            if (empty($item->region_id) && !empty($item->country_id)) {
+                $item->region_id = $item->country->region_id;
+            }
+            if (empty($item->subregion_id) && !empty($item->country_id)) {
+                $item->subregion_id = $item->country->subregion_id;
+            }
+            if (!isset($item->country_id) || empty($item->country_id)) {
+                if (!empty($item->city_id) && $item->city) {
+                    $item->country_id = $item->city->country_id;
+                } elseif (!empty($item->state_id) && $item->state) {
+                    $item->country_id = $item->state->country_id;
+                }
+            }
+            if (!isset($item->state_id) || empty($item->state_id)) {
+                if (!empty($item->city_id) && $item->city) {
+                    $item->state_id = $item->city->state_id;
+                }
+            }
+        });
+    }
+
     public function getRelationshipNames()
     {
         return ['type', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'rooms', 'meals', 'supplements'];
