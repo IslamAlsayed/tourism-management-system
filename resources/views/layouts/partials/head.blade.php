@@ -145,6 +145,3 @@
 
 @yield('styles')
 @stack('styles')
-
-{{-- Theme Mode --}}
-@include('components.script-theme')

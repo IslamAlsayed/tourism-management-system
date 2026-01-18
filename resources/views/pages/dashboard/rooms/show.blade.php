@@ -101,22 +101,14 @@
                                 ])
                             </div>
                         </div>
-                        @if ($room->description)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-2">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $room->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($room->notes)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $room->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $room,
+                            'column' => 'description',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $room,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>

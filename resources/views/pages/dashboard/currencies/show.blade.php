@@ -61,7 +61,7 @@
                         @if ($currency->country)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $currency->country->name }}</p>
+                                <p class="text-sm text-secondary-foreground">{{ $currency->country?->name }}</p>
                             </div>
                         @endif
                         <div>

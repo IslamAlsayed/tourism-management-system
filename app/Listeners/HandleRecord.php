@@ -66,7 +66,7 @@ class HandleRecord
 
             if ($onlyInteresting) {
                 // Only notify admins
-                $admins = User::where('is_admin', 1)->get();
+                $admins = User::where('role', 'admin')->orWhere('role', 'superadmin')->get();
                 if ($admins->isEmpty()) {
                     try {
                         $admins = User::whereHas('roles', function ($q) {

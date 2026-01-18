@@ -117,19 +117,15 @@
                             </div>
                         </div>
 
-                        @if ($city->description)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-2">{{ __('main.description') }}</label>
-                                <p class="text-sm text-secondary-foreground">{!! $city->description !!}</p>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $city,
+                            'column' => 'description',
+                        ])
 
-                        @if ($city->notes)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground">{!! $city->notes !!}</div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $city,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>
@@ -144,38 +140,50 @@
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="flex flex-wrap justify-between gap-10">
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            <a href="{{ route('regions.show', $city->region->id) }}"
-                                class="block text-sm text-primary underline">
-                                {{ $city->region->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                            <a href="{{ route('subregions.show', $city->subregion->id) }}"
-                                class="block text-sm text-primary underline">
-                                {{ $city->subregion->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                            <a href="{{ route('countries.show', $city->country->id) }}"
-                                class="block text-sm text-primary underline">
-                                {{ $city->country->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.state') }}</label>
-                            <a href="{{ route('states.show', $city->state->id) }}"
-                                class="block text-sm text-primary underline">
-                                {{ $city->state->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
-                        </div>
+                        @if ($city->region && $city->subregion && $city->country && $city->state)
+                            @if ($city->region)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                                    <a href="{{ route('regions.show', $city->region?->id) }}"
+                                        class="block text-sm text-primary underline">
+                                        {{ $city->region?->name ?? __('main.na') }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            @endif
+                            @if ($city->subregion)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                                    <a href="{{ route('subregions.show', $city->subregion?->id) }}"
+                                        class="block text-sm text-primary underline">
+                                        {{ $city->subregion?->name ?? __('main.na') }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            @endif
+                            @if ($city->country)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.country') }}</label>
+                                    <a href="{{ route('countries.show', $city->country?->id) }}"
+                                        class="block text-sm text-primary underline">
+                                        {{ $city->country?->name ?? __('main.na') }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            @endif
+                            @if ($city->state)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.state') }}</label>
+                                    <a href="{{ route('states.show', $city->state?->id) }}"
+                                        class="block text-sm text-primary underline">
+                                        {{ $city->state?->name ?? __('main.na') }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            @endif
+                        @else
+                            <p class="text-sm text-secondary-foreground">{{ __('main.location_not_complete') }}</p>
+                        @endif
                     </div>
                 </div>
             </div>

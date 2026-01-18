@@ -117,8 +117,8 @@
                                     </div>
 
                                     {{-- <div class="disabled-option"> --}}
-                                    <div class="p-2 rounded-sm"
-                                        style="background: var(--color-{{ $settings->app_activity_log_retention_days == 1 ? '' : 'yellow' }}-100);">
+                                    <div
+                                        class="p-2 rounded-sm {{ $settings->app_activity_log_retention_days == 1 ? '' : 'bg-yellow-100' }}">
                                         <label class="kt-label mb-2">
                                             {{ __('main.log_retention_period') }}
                                             <span
@@ -138,58 +138,59 @@
                         </div>
 
                         <!-- Maintenance Mode -->
-                        <div class="kt-card disabled"
-                            style="background: var(--color-{{ $settings->app_maintenance_mode == 1 ? '' : 'yellow' }}-100);">
-                            <div class="kt-card-header">
-                                <h3 class="kt-card-title">
-                                    {{ __('main.maintenance_mode') }}
-                                    <span
-                                        class="inline-block font-medium px-2 py-0.5 rounded-full ms-2 bg-danger/10 text-red-600">
-                                        {{ __('sidebar.soon') }}
-                                    </span>
-                                </h3>
-                            </div>
-                            <div class="kt-card-body">
-                                <div class="space-y-6 p-6">
-                                    <div class="flex items-center gap-3 mb-6">
-                                        <input type="hidden" name="app_maintenance_mode" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'app_maintenance_mode',
-                                            'id' => 'app_maintenance_mode',
-                                            'checked' => $settings->app_maintenance_mode == 1,
-                                            'value' => 1,
-                                        ])
-                                        <label for="app_maintenance_mode">
-                                            <div class="font-semibold">{{ __('main.enable_maintenance_mode') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.make_site_unavailable') }}
-                                            </div>
-                                        </label>
-                                    </div>
+                        <div class="disabled">
+                            <div
+                                class="kt-card {{ $settings->app_activity_log_retention_days == 1 ? '' : 'bg-yellow-100' }}">
+                                <div class="kt-card-header">
+                                    <h3 class="kt-card-title">
+                                        {{ __('main.maintenance_mode') }}
+                                        <span
+                                            class="inline-block font-medium px-2 py-0.5 rounded-full ms-2 bg-danger/10 text-red-600">
+                                            {{ __('sidebar.soon') }}
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="kt-card-body">
+                                    <div class="space-y-6 p-6">
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <input type="hidden" name="app_maintenance_mode" value="0" />
+                                            @include('components.elements.checkbox-button', [
+                                                'name' => 'app_maintenance_mode',
+                                                'id' => 'app_maintenance_mode',
+                                                'checked' => $settings->app_maintenance_mode == 1,
+                                                'value' => 1,
+                                            ])
+                                            <label for="app_maintenance_mode">
+                                                <div class="font-semibold">{{ __('main.enable_maintenance_mode') }}</div>
+                                                <div class="text-sm text-secondary-foreground">
+                                                    {{ __('main.make_site_unavailable') }}
+                                                </div>
+                                            </label>
+                                        </div>
 
-                                    <div>
-                                        <label class="kt-label mb-2">{{ __('main.maintenance_message') }}</label>
-                                        @include('components.elements.input-text-editor', [
-                                            'column' => 'app_maintenance_message',
-                                            'value' => $settings->app_maintenance_message,
-                                        ])
-                                    </div>
+                                        <div>
+                                            @include('components.elements.input-text-editor', [
+                                                'column' => 'app_maintenance_message',
+                                                'value' => $settings->app_maintenance_message,
+                                            ])
+                                        </div>
 
-                                    @if ($settings->app_maintenance_mode == 1)
-                                        <div class="p-4 rounded bg-warning-light">
-                                            <div class="flex items-center gap-3">
-                                                <i class="fas fa-exclamation-triangle text-xl text-warning"></i>
-                                                <div>
-                                                    <div class="font-semibold">
-                                                        {{ __('main.maintenance_mode_active') }}
-                                                    </div>
-                                                    <div class="text-sm">
-                                                        {{ __('main.site_unavailable_to_visitors') }}
+                                        @if ($settings->app_maintenance_mode == 1)
+                                            <div class="p-4 rounded bg-warning-light">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fas fa-exclamation-triangle text-xl text-warning"></i>
+                                                    <div>
+                                                        <div class="font-semibold">
+                                                            {{ __('main.maintenance_mode_active') }}
+                                                        </div>
+                                                        <div class="text-sm">
+                                                            {{ __('main.site_unavailable_to_visitors') }}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>

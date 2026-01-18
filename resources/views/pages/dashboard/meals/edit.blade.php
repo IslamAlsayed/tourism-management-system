@@ -35,11 +35,7 @@
                             <livewire:polymorphic-model-select :record="$meal" />
 
                             {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                                'record' => $meal,
-                            ])
+                            @include('components.selects.currency', ['record' => $meal])
 
                             {{-- Name (English) --}}
                             <div class="align-self-end">

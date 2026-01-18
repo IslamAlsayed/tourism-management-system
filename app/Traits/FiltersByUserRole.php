@@ -17,7 +17,7 @@ trait FiltersByUserRole
         }
         static::addGlobalScope('filterByUserRole', function (Builder $builder) {
             $user = Auth::user();
-            if (!$user || ($user && $user->is_admin)) {
+            if (!$user || ($user && in_array($user->role, ['superadmin', 'admin']))) {
                 return;
             }
             $builder->where(static::getActiveColumn(), 1);
@@ -27,10 +27,10 @@ trait FiltersByUserRole
     public function scopeFilterByUserRole(Builder $query, $user = null): Builder
     {
         $user ??= Auth::user();
-        if (!$user || !property_exists($user, 'is_admin')) {
+        if (!$user || !property_exists($user, 'role')) {
             return $query;
         }
-        if (!$user->is_admin) {
+        if (!in_array($user->role, ['superadmin', 'admin'])) {
             $query->where(static::getActiveColumn(), 1);
         }
         return $query;

@@ -88,6 +88,14 @@
                                 ])
                             </div>
                         </div>
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $assignment,
+                            'column' => 'description',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $assignment,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>
@@ -207,22 +215,14 @@
             </div>
             <div class="kt-card-body p-4">
                 <div class="grid gap-6">
-                    @if ($assignment->description)
-                        <div class="border-custom p-3 pt-0 rounded-[9px]">
-                            <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $assignment->description !!}
-                            </div>
-                        </div>
-                    @endif
-                    @if ($assignment->notes)
-                        <div class="border-custom p-3 pt-0 rounded-[9px]">
-                            <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $assignment->notes !!}
-                            </div>
-                        </div>
-                    @endif
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $assignment,
+                        'column' => 'description',
+                    ])
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $assignment,
+                        'column' => 'notes',
+                    ])
                 </div>
             </div>
         </div>

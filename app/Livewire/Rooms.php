@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Room;
-use App\Models\Season;
 use Livewire\Component;
 use App\Models\Currency;
 use App\Traits\ExportsData;

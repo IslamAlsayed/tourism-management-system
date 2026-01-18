@@ -71,7 +71,7 @@
                                 </a>
                             @endif
 
-                            @if (isset($models) && getActiveUser()?->is_admin == 1)
+                            @if (isset($models) && in_array(getActiveUser()?->role, ['admin', 'superadmin']))
                                 @include('components.elements.delete-button', [
                                     'id' => $item->id,
                                 ])

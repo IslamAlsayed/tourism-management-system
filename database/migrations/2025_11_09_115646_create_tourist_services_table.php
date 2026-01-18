@@ -14,113 +14,98 @@ return new class extends Migration {
             $table->id();
             $table->uuid('uuid')->unique();
 
-            $table->string('code')->nullable();
-            $table->string('name');
-            $table->string('name_ar')->nullable();
-
+            // Foreign Keys
+            $table->foreignId('site_id')->constrained('tourist_sites')->onDelete('cascade');
             $table->foreignId('currency_id')->nullable()->constrained('currencies')->onDelete('set null');
-            $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
-            $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
-            $table->foreignId('state_id')->nullable()->constrained('states')->onDelete('set null');
-            $table->foreignId('city_id')->nullable()->constrained('cities')->onDelete('set null');
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
 
-            $table->string('site_type')->nullable();
-            $table->string('category')->nullable();
-            $table->boolean('translation')->nullable();
-            $table->boolean('special_events')->nullable();
-            $table->boolean('group_bookings')->nullable();
-            $table->boolean('online_booking')->nullable();
-            $table->boolean('mobile_app')->nullable();
-            $table->boolean('virtual_tours')->nullable();
-            $table->boolean('has_parking')->nullable();
-            $table->boolean('has_restaurant')->nullable();
-            $table->boolean('has_gift_shop')->nullable();
-            $table->boolean('has_restrooms')->nullable();
-            $table->string('photo')->nullable();
-            $table->string('main_image')->nullable();
-            $table->json('gallery_images')->nullable();
-            $table->string('video_url')->nullable();
-            $table->string('virtual_tour_url')->nullable();
-            $table->decimal('rating', 3, 2)->nullable();
-            $table->integer('total_reviews')->nullable();
-            $table->integer('popularity_score')->nullable();
-            $table->integer('estimated_visit_duration')->nullable();
-            $table->string('difficulty_level')->nullable();
-            $table->json('age_restrictions')->nullable();
-            $table->json('best_visit_time')->nullable();
-            $table->json('tags')->nullable();
-            $table->string('address')->nullable();
-            $table->string('area')->nullable();
-            $table->string('zone')->nullable();
-            $table->string('district')->nullable();
-            $table->string('neighborhood')->nullable();
-            $table->string('block')->nullable();
-            $table->string('building')->nullable();
-            $table->string('floor')->nullable();
-            $table->string('apartment')->nullable();
-            $table->string('landmark')->nullable();
-            $table->string('directions')->nullable();
-            $table->string('contact_person')->nullable();
-            $table->string('whatsapp')->nullable();
-            $table->string('telegram')->nullable();
-            $table->string('snapchat')->nullable();
-            $table->string('tiktok')->nullable();
-            $table->string('youtube')->nullable();
-            $table->string('ticket_type')->nullable();
-            $table->decimal('ticket_price', 10, 2)->nullable();
-            $table->decimal('ticket_price_children', 10, 2)->nullable();
-            $table->decimal('ticket_price_students', 10, 2)->nullable();
-            $table->decimal('ticket_price_seniors', 10, 2)->nullable();
-            $table->decimal('ticket_price_groups', 10, 2)->nullable();
-            $table->json('ticket_options')->nullable();
-            $table->json('discounts')->nullable();
-            $table->json('special_offers')->nullable();
-            $table->json('opening_hours')->nullable();
-            $table->json('holiday_hours')->nullable();
-            $table->json('closed_dates')->nullable();
-            $table->json('event_schedules')->nullable();
-            $table->json('facilities')->nullable();
-            $table->json('accessibility_features')->nullable();
-            $table->json('safety_features')->nullable();
-            $table->json('health_measures')->nullable();
-            $table->json('covid_measures')->nullable();
-            $table->json('services')->nullable();
-            $table->json('activities')->nullable();
-            $table->json('events')->nullable();
-            $table->json('workshops')->nullable();
-            $table->json('tours')->nullable();
-            $table->json('programs')->nullable();
-            $table->json('packages')->nullable();
-            $table->json('media_files')->nullable();
-            $table->json('documents')->nullable();
-            $table->json('links')->nullable();
-            $table->json('brochures')->nullable();
-            $table->json('menus')->nullable();
-            $table->json('maps')->nullable();
-            $table->json('translations')->nullable();
-            $table->json('custom_fields')->nullable();
-            $table->json('extra')->nullable();
-            $table->string('slug')->nullable();
-            $table->string('meta_title')->nullable();
-            $table->text('meta_description')->nullable();
-            $table->json('meta_keywords')->nullable();
-            $table->timestamp('last_imported_at')->nullable();
-            $table->timestamp('last_exported_at')->nullable();
-            $table->json('import_metadata')->nullable();
-            $table->json('export_metadata')->nullable();
-            $table->boolean('is_active')->nullable();
-            $table->boolean('is_featured')->nullable();
-            $table->boolean('is_verified')->nullable();
+            // Service Configuration
+            $table->boolean('include_unified_ticket')->default(false);
+            $table->decimal('total_day_visit', 10, 2)->nullable();
+
+            // Pricing - Foreigners
+            $table->decimal('per_adult_foreigners', 10, 2)->nullable();
+            $table->decimal('per_child_foreigners', 10, 2)->nullable();
+
+            // Pricing - Local
+            $table->decimal('per_adult_local', 10, 2)->nullable();
+            $table->decimal('per_child_local', 10, 2)->nullable();
+
+            // Pricing - Arab
+            $table->decimal('per_adult_arab', 10, 2)->nullable();
+            $table->decimal('per_child_arab', 10, 2)->nullable();
+
+            // Pricing - Residents
+            $table->decimal('per_adult_residents', 10, 2)->nullable();
+            $table->decimal('per_child_residents', 10, 2)->nullable();
+
+            // Non-accommodated Visitors
+            $table->decimal('non_accommodated_visitors_adult', 10, 2)->nullable();
+            $table->decimal('non_accommodated_visitors_child', 10, 2)->nullable();
+
+            // Operating Hours
+            $table->string('summer_opening_time')->nullable();
+            $table->string('summer_closing_time')->nullable();
+            $table->string('winter_opening_time')->nullable();
+            $table->string('winter_closing_time')->nullable();
+            $table->json('operating_days')->nullable();
+            $table->json('annual_holidays')->nullable();
+            // $table->json('special_schedules')->nullable();
+
+            // Day Off & Holidays
+            $table->json('day_off')->nullable();
+            $table->json('yearly_holidays')->nullable();
+
+            // Contact Information
+            $table->string('person_name_01')->nullable();
+            $table->string('person_name_02')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('fax')->nullable();
+            $table->string('mobile_01')->nullable();
+            $table->string('mobile_02')->nullable();
+            $table->string('email_01')->nullable();
+            $table->string('email_02')->nullable();
+            $table->string('website')->nullable();
+
+            // Local Guide
+            $table->boolean('local_guide_available')->nullable()->default(false);
+            $table->decimal('local_guide_fees_01', 10, 2)->nullable();
+            $table->decimal('local_guide_fees_02', 10, 2)->nullable();
+            $table->decimal('local_guide_fees_03', 10, 2)->nullable();
+            $table->decimal('local_guide_fees_04', 10, 2)->nullable();
+            $table->decimal('local_guide_fees_05', 10, 2)->nullable();
+
+            // Payment Methods
+            $table->boolean('credit_cards')->nullable()->default(false);
+
+            // Club Cars
+            $table->boolean('club_cars_available')->nullable()->default(false);
+            $table->decimal('club_car_prices_01', 10, 2)->nullable();
+            $table->decimal('club_car_prices_02', 10, 2)->nullable();
+            $table->decimal('club_car_prices_03', 10, 2)->nullable();
+            $table->decimal('club_car_prices_04', 10, 2)->nullable();
+            $table->decimal('club_car_prices_05', 10, 2)->nullable();
+            $table->decimal('club_car_prices_06', 10, 2)->nullable();
+            $table->decimal('club_car_prices_07', 10, 2)->nullable();
+            $table->decimal('club_car_prices_08', 10, 2)->nullable();
+
+            // Additional Fields
+            $table->string('ext1')->nullable();
+            $table->string('ext2')->nullable();
+            $table->string('ext3')->nullable();
+
+            // Description & Notes
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
+
+            // Status
+            $table->integer('sort_order')->default(0);
+            $table->boolean('is_active')->default(true);
+
             $table->timestamps();
 
-            $table->index('name');
+            // Indexes
+            $table->index('site_id');
+            $table->index('is_active');
         });
     }
 

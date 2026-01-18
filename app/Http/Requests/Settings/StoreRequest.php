@@ -36,8 +36,16 @@ class StoreRequest extends FormRequest
                 'integer',
                 'min:0',
                 function ($attribute, $value, $fail) {
-                    if ($value > 0 && $value < 5) {
-                        $fail(__('validation.session_lifetime_min_5_or_0'));
+                    $user = getActiveUser();
+
+                    // Admin and superadmin can set any value: 0 (unlimited/one year) or any duration
+                    if (in_array($user->role, ['superadmin', 'admin'])) {
+                        return;
+                    }
+
+                    // Regular users: must be 0 (unlimited) or >= 5 minutes
+                    if ($value < 5) {
+                        $fail(__('messages.session_lifetime_min_5'));
                     }
                 },
             ],

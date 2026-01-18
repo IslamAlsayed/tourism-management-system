@@ -126,13 +126,10 @@
                             </div>
                         </div>
                     @endif
-                    @if ($room->description)
-                        <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
-                            <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $room->description !!}</div>
-                        </div>
-                    @endif
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $room,
+                        'column' => 'description',
+                    ])
                     <div class="lg:col-span-2 flex gap-2 mt-4">
                         @include('components.elements.show-button', [
                             'models' => 'rooms',

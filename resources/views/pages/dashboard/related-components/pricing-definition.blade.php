@@ -51,14 +51,10 @@
                     </div>
                 </div>
             </div>
-            @if ($record->description)
-                <div class="col-span-full border-custom rounded-lg p-4">
-                    <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                    <div class="text-sm text-secondary-foreground prose max-w-none">
-                        {!! $record->description !!}
-                    </div>
-                </div>
-            @endif
+            @include('components.elements.display-desc-or-notes', [
+                'record' => $record,
+                'column' => 'description',
+            ])
             <div class="lg:col-span-2 flex gap-2 mt-4">
                 @include('components.elements.show-button', [
                     'models' => 'pricing-definitions',

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Client;
-use App\Models\Region;
-use App\Models\Currency;
-use App\Models\Timezone;
 use App\Models\Nationality;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
@@ -23,11 +20,8 @@ class ClientController extends Controller
 
     public function create()
     {
-        $regions = Region::orderBy('name')->get();
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $nationalities = Nationality::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
-        return view('pages.dashboard.clients.create', compact('regions', 'currencies', 'nationalities', 'timezones'));
+        return view('pages.dashboard.clients.create', compact('nationalities'));
     }
 
     public function store(StoreRequest $request)
@@ -55,11 +49,8 @@ class ClientController extends Controller
         $client = Client::find($id);
         if (!$client)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
-        $regions = Region::orderBy('name')->get();
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $nationalities = Nationality::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
-        return view('pages.dashboard.clients.edit', compact('client', 'regions', 'currencies', 'nationalities', 'timezones'));
+        return view('pages.dashboard.clients.edit', compact('client', 'nationalities'));
     }
 
     public function update(UpdateRequest $request, $id)

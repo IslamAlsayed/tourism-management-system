@@ -55,7 +55,7 @@ class HandleUserLogged
             }
 
             // Send notifications only to admins (create per-admin notification and publish targeted Ably message)
-            $admins = User::where('is_admin', 1)->get();
+            $admins = User::where('role', 'admin')->orWhere('role', 'superadmin')->get();
             if ($admins->isEmpty()) {
                 try {
                     $admins = User::whereHas('roles', function ($q) {

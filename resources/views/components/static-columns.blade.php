@@ -1,10 +1,20 @@
 @switch($column)
     @case('id')
-        <td title="{{ $model->id }}">{!! highlightSearch($model->id, $search) !!}</td>
+        <td title="{{ $model->id }}">
+            {!! highlightSearch($model->id, $search) !!}
+        </td>
     @break
 
     @case('uuid' && $settings->app_show_uuid_column != 0)
-        <td title="{{ $model->uuid }}">{!! highlightSearch($model->uuid, $search) !!}</td>
+        <td title="{{ $model->uuid }}">
+            {!! highlightSearch($model->uuid, $search) !!}
+        </td>
+    @break
+
+    @case('role')
+        <td title="{{ $model->role }}">
+            {!! highlightSearch(limitedText($model->role ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('user')
@@ -37,24 +47,133 @@
         </td>
     @break
 
+    @case('main_image')
+        <td title="{{ $model->main_image }}">
+            <div class="relative w-fit">
+                @if (Str::isUrl($model->main_image))
+                    <img src="{{ $model->main_image }}"
+                        alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}"
+                        class="rounded-full size-9 shrink-0">
+                @else
+                    <img src="{{ $model->main_image && checkExistFile($model->main_image) ? asset('storage/' . $model->main_image) : asset('metronic/media/avatars/blank.png') }}"
+                        alt="{{ $model->main_image }}" class="rounded-full size-9 shrink-0">
+                @endif
+            </div>
+        </td>
+    @break
+
+    @case('gallery_images')
+        @php
+            $galleryImages = $model->media->where('collection_name', 'gallery')->all() ?? [];
+        @endphp
+        <td
+            title="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }} - {{ __('main.total_images') }}: {{ count($galleryImages) }}">
+            <div class="relative w-fit">
+                <div class="flex items-center -space-x-2">
+                    @if (count($galleryImages) > 0)
+                        @foreach ($galleryImages as $key => $image)
+                            @if ($key >= 5)
+                                @break
+                            @endif
+                            @if (Str::isUrl($image->file_path))
+                                <img src="{{ $image->file_path }}"
+                                    alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}"
+                                    class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
+                            @else
+                                <img src="{{ $image->file_path && checkExistFile($image->file_path) ? asset('storage/' . $image->file_path) : asset('metronic/media/avatars/blank.png') }}"
+                                    alt="{{ $image->file_path }}"
+                                    class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
+                            @endif
+                        @endforeach
+                        @if (count($galleryImages) > 5)
+                            <div
+                                class="h-fit inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                                +{{ count($galleryImages) - 5 }}
+                            </div>
+                        @endif
+                    @else
+                        <div
+                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                            <i class="opacity-25">null</i>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </td>
+    @break
+
     @case('first_name')
-        <td title="{{ $model->first_name }}">{!! highlightSearch(limitedText($model->first_name ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->first_name }}">
+            {!! highlightSearch(limitedText($model->first_name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('last_name')
-        <td title="{{ $model->last_name }}">{!! highlightSearch(limitedText($model->last_name ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->last_name }}">
+            {!! highlightSearch(limitedText($model->last_name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('name')
-        <td title="{{ $model->name }}">{!! highlightSearch(limitedText($model->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->name }}">
+            {!! highlightSearch(limitedText($model->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('name_ar')
-        <td title="{{ $model->name_ar }}">{!! highlightSearch(limitedText($model->name_ar ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->name_ar }}">
+            {!! highlightSearch(limitedText($model->name_ar ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('email')
-        <td title="{{ $model->email }}">{!! highlightSearch(limitedText($model->email ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->email }}">
+            <a href="mailto:{{ $model->email }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->email ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('email01')
+        <td title="{{ $model->email01 }}">
+            <a href="mailto:{{ $model->email01 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->email01 ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('email_01')
+        <td title="{{ $model->email_01 }}">
+            <a href="mailto:{{ $model->email_01 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->email_01 ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('email02')
+        <td title="{{ $model->email02 }}">
+            <a href="mailto:{{ $model->email02 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->email02 ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('email_02')
+        <td title="{{ $model->email_02 }}">
+            <a href="mailto:{{ $model->email_02 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->email_02 ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
     @break
 
     @case('description')
@@ -149,55 +268,155 @@
     @break
 
     @case('personal_email')
-        <td title="{{ $model->personal_email }}">{!! highlightSearch(limitedText($model->personal_email ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->personal_email }}">
+            {!! highlightSearch(limitedText($model->personal_email ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('email_primary')
-        <td title="{{ $model->email_primary }}">{!! highlightSearch(limitedText($model->email_primary ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->email_primary }}">
+            {!! highlightSearch(limitedText($model->email_primary ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('work_email')
-        <td title="{{ $model->work_email }}">{!! highlightSearch(limitedText($model->work_email ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->work_email }}">
+            {!! highlightSearch(limitedText($model->work_email ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('secondary_email')
-        <td title="{{ $model->secondary_email }}">{!! highlightSearch(limitedText($model->secondary_email ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->secondary_email }}">
+            {!! highlightSearch(limitedText($model->secondary_email ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('whatsapp')
-        <td title="{{ $model->whatsapp }}">{!! highlightSearch(limitedText($model->whatsapp ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->whatsapp }}">
+            {!! highlightSearch(limitedText($model->whatsapp ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('phone')
-        <td title="{{ $model->phone }}">{!! highlightSearch(limitedText($model->phone ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->phone }}">
+            <a href="tel:{{ $model->phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->phone ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
     @break
 
     @case('mobile')
-        <td title="{{ $model->mobile }}">{!! highlightSearch(limitedText($model->mobile ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->mobile }}">
+            <a href="tel:{{ $model->mobile }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->mobile ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('mobile01')
+        <td title="{{ $model->mobile01 }}">
+            <a href="tel:{{ $model->mobile01 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->mobile01 ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('mobile_01')
+        <td title="{{ $model->mobile_01 }}">
+            <a href="tel:{{ $model->mobile_01 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->mobile_01 ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('mobile02')
+        <td title="{{ $model->mobile02 }}">
+            <a href="tel:{{ $model->mobile02 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->mobile02 ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('mobile_02')
+        <td title="{{ $model->mobile_02 }}">
+            <a href="tel:{{ $model->mobile_02 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->mobile_02 ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
     @break
 
     @case('primary_phone')
-        <td title="{{ $model->primary_phone }}">{!! highlightSearch(limitedText($model->primary_phone ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->primary_phone }}">
+            <a href="tel:{{ $model->primary_phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->primary_phone ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
     @break
 
     @case('secondary_phone')
-        <td title="{{ $model->secondary_phone }}">{!! highlightSearch(limitedText($model->secondary_phone ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->secondary_phone }}">
+            <a href="tel:{{ $model->secondary_phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->secondary_phone ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
     @break
 
     @case('home_phone')
-        <td title="{{ $model->home_phone }}">{!! highlightSearch(limitedText($model->home_phone ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->home_phone }}">
+            <a href="tel:{{ $model->home_phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->home_phone ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
     @break
 
     @case('work_phone')
-        <td title="{{ $model->work_phone }}">{!! highlightSearch(limitedText($model->work_phone ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->work_phone }}">
+            <a href="tel:{{ $model->work_phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->work_phone ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
     @break
 
     @case('work_phone_ext')
-        <td title="{{ $model->work_phone_ext }}">{!! highlightSearch(limitedText($model->work_phone_ext ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->work_phone_ext }}">
+            <a href="tel:{{ $model->work_phone_ext }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText($model->work_phone_ext ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('fax')
+        <td title="{{ $model->fax }}">
+            {!! highlightSearch(limitedText($model->fax ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('fax_number')
-        <td title="{{ $model->fax_number }}">{!! highlightSearch(limitedText($model->fax_number ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->fax_number }}">
+            {!! highlightSearch(limitedText($model->fax_number ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('user_status')
@@ -246,71 +465,105 @@
     @break
 
     @case('position')
-        <td title="{{ $model->position }}">{!! highlightSearch(limitedText($model->position ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->position }}">
+            {!! highlightSearch(limitedText($model->position ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('code')
-        <td title="{{ $model->code }}">{!! highlightSearch(limitedText($model->code ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->code }}">
+            {!! highlightSearch(limitedText($model->code ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('passport_number')
-        <td title="{{ $model->passport_number }}">{!! highlightSearch(limitedText($model->passport_number ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->passport_number }}">
+            {!! highlightSearch(limitedText($model->passport_number ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('passport_issue_date')
-        <td title="{{ $model->passport_issue_date }}">{!! highlightSearch(limitedText($model->passport_issue_date ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->passport_issue_date }}">
+            {!! highlightSearch(limitedText($model->passport_issue_date ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('passport_expiry_date')
-        <td title="{{ $model->passport_expiry_date }}">{!! highlightSearch(limitedText($model->passport_expiry_date ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->passport_expiry_date }}">
+            {!! highlightSearch(limitedText($model->passport_expiry_date ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('company_name')
-        <td title="{{ $model->company_name }}">{!! highlightSearch(limitedText($model->company_name ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->company_name }}">
+            {!! highlightSearch(limitedText($model->company_name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('company_phone')
-        <td title="{{ $model->company_phone }}">{!! highlightSearch(limitedText($model->company_phone ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->company_phone }}">
+            {!! highlightSearch(limitedText($model->company_phone ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('company_email')
-        <td title="{{ $model->company_email }}">{!! highlightSearch(limitedText($model->company_email ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->company_email }}">
+            {!! highlightSearch(limitedText($model->company_email ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('job_title')
-        <td title="{{ $model->job_title }}">{!! highlightSearch(limitedText($model->job_title ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->job_title }}">
+            {!! highlightSearch(limitedText($model->job_title ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('sector')
-        <td title="{{ $model->sector }}">{!! highlightSearch(limitedText($model->sector ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->sector }}">
+            {!! highlightSearch(limitedText($model->sector ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('department')
-        <td title="{{ $model->department }}">{!! highlightSearch(limitedText($model->department ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->department }}">
+            {!! highlightSearch(limitedText($model->department ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('business_type')
-        <td title="{{ $model->business_type }}">{!! highlightSearch(limitedText($model->business_type ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->business_type }}">
+            {!! highlightSearch(limitedText($model->business_type ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('business_registration_number')
-        <td title="{{ $model->business_registration_number }}">{!! highlightSearch(limitedText($model->business_registration_number ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->business_registration_number }}">
+            {!! highlightSearch(limitedText($model->business_registration_number ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('box')
-        <td title="{{ $model->box }}">{!! highlightSearch(limitedText($model->box ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->box }}">
+            {!! highlightSearch(limitedText($model->box ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('postal_code')
-        <td title="{{ $model->postal_code }}">{!! highlightSearch(limitedText($model->postal_code ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->postal_code }}">
+            {!! highlightSearch(limitedText($model->postal_code ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('street_address')
-        <td title="{{ $model->street_address }}">{!! highlightSearch(limitedText($model->street_address ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->street_address }}">
+            {!! highlightSearch(limitedText($model->street_address ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('address_line_2')
-        <td title="{{ $model->address_line_2 }}">{!! highlightSearch(limitedText($model->address_line_2 ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->address_line_2 }}">
+            {!! highlightSearch(limitedText($model->address_line_2 ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('website')
@@ -433,79 +686,307 @@
     @break
 
     @case('tax_id')
-        <td title="{{ $model->tax_id }}">{!! highlightSearch(limitedText($model->tax_id ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->tax_id }}">
+            {!! highlightSearch(limitedText($model->tax_id ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('symbol')
-        <td title="{{ $model->symbol }}">{!! highlightSearch(limitedText($model->symbol ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->symbol }}">
+            {!! highlightSearch(limitedText($model->symbol ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('user_id')
-        <td title="{{ optional($model->user)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->user)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->user)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->user)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('recipient_user_id')
-        <td title="{{ optional($model->recipientUser)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->recipientUser)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->recipientUser)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->recipientUser)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('performer_id')
-        <td title="{{ optional($model->performer)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->performer)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->performer)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->performer)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('target_user_id')
-        <td title="{{ optional($model->targetUser)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->targetUser)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->targetUser)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->targetUser)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('route')
-        <td title="{{ optional($model->car_route)->route }}">{!! highlightSearch(limitedText(optional($model->car_route)->route ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->car_route)->route }}">
+            {!! highlightSearch(limitedText(optional($model->car_route)->route ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('route_ar')
-        <td title="{{ optional($model->car_route)->route_ar }}">{!! highlightSearch(limitedText(optional($model->car_route)->route_ar ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->car_route)->route_ar }}">
+            {!! highlightSearch(limitedText(optional($model->car_route)->route_ar ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('duration')
-        <td title="{{ optional($model->car_route)->duration }}">{!! highlightSearch(limitedText(optional($model->car_route)->duration ?? '--', 30), $search) !!} {{ __('main.h') }}</td>
+        <td title="{{ optional($model->car_route)->duration }}">
+            {!! highlightSearch(limitedText(optional($model->car_route)->duration ?? '--', 30), $search) !!} {{ __('main.h') }}
+        </td>
     @break
 
     @case('distance')
-        <td title="{{ optional($model->car_route)->distance }}">{!! highlightSearch(limitedText(optional($model->car_route)->distance ?? '--', 30), $search) !!} {{ __('main.km') }}</td>
+        <td title="{{ optional($model->car_route)->distance }}">
+            {!! highlightSearch(limitedText(optional($model->car_route)->distance ?? '--', 30), $search) !!} {{ __('main.km') }}
+        </td>
     @break
 
     @case('seats')
-        <td title="{{ optional($model)->seats }}">{!! highlightSearch(limitedText(optional($model)->seats ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model)->seats }}">
+            {!! highlightSearch(limitedText(optional($model)->seats ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('min_capacity')
-        <td title="{{ optional($model)->min_capacity . ' ' . __('main.pax') }}">{!! highlightSearch(limitedText(optional($model)->min_capacity . ' ' . __('main.pax') ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model)->min_capacity . ' ' . __('main.pax') }}">
+            {!! highlightSearch(limitedText(optional($model)->min_capacity . ' ' . __('main.pax') ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('max_capacity')
-        <td title="{{ optional($model)->max_capacity . ' ' . __('main.pax') }}">{!! highlightSearch(limitedText(optional($model)->max_capacity . ' ' . __('main.pax') ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model)->max_capacity . ' ' . __('main.pax') }}">
+            {!! highlightSearch(limitedText(optional($model)->max_capacity . ' ' . __('main.pax') ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('price')
-        <td title="{{ optional($model)->price }}">{!! highlightSearch(limitedText(optional($model)->price ?? '--', 30), $search) !!} {{ $settings->app_default_currency }}</td>
+        <td title="{{ optional($model)->price }}">
+            {!! highlightSearch(limitedText(optional($model)->price ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency?->code : $settings->app_default_currency }}
+        </td>
     @break
 
     @case('price_type')
-        <td title="{{ $model->price_type }}">{!! highlightSearch(limitedText(__('main.' . $model->price_type) ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->price_type }}">
+            {!! highlightSearch(limitedText(__('main.' . $model->price_type) ?? '--', 30), $search) !!}
+        </td>
+    @break
+
+    @case('total_day_visit')
+        <td title="{{ optional($model)->total_day_visit }}">
+            {!! highlightSearch(limitedText(optional($model)->total_day_visit ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('per_adult_foreigners')
+        <td title="{{ optional($model)->per_adult_foreigners }}">
+            {!! highlightSearch(limitedText(optional($model)->per_adult_foreigners ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('per_child_foreigners')
+        <td title="{{ optional($model)->per_child_foreigners }}">
+            {!! highlightSearch(limitedText(optional($model)->per_child_foreigners ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('per_adult_local')
+        <td title="{{ optional($model)->per_adult_local }}">
+            {!! highlightSearch(limitedText(optional($model)->per_adult_local ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('per_child_local')
+        <td title="{{ optional($model)->per_child_local }}">
+            {!! highlightSearch(limitedText(optional($model)->per_child_local ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('per_adult_arab')
+        <td title="{{ optional($model)->per_adult_arab }}">
+            {!! highlightSearch(limitedText(optional($model)->per_adult_arab ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('per_child_arab')
+        <td title="{{ optional($model)->per_child_arab }}">
+            {!! highlightSearch(limitedText(optional($model)->per_child_arab ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('per_adult_residents')
+        <td title="{{ optional($model)->per_adult_residents }}">
+            {!! highlightSearch(limitedText(optional($model)->per_adult_residents ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('per_child_residents')
+        <td title="{{ optional($model)->per_child_residents }}">
+            {!! highlightSearch(limitedText(optional($model)->per_child_residents ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('non_accommodated_visitors_adult')
+        <td title="{{ optional($model)->non_accommodated_visitors_adult }}">
+            {!! highlightSearch(limitedText(optional($model)->non_accommodated_visitors_adult ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('non_accommodated_visitors_child')
+        <td title="{{ optional($model)->non_accommodated_visitors_child }}">
+            {!! highlightSearch(limitedText(optional($model)->non_accommodated_visitors_child ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('local_guide_fees_01')
+        <td title="{{ optional($model)->local_guide_fees_01 }}">
+            {!! highlightSearch(limitedText(optional($model)->local_guide_fees_01 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('local_guide_fees_02')
+        <td title="{{ optional($model)->local_guide_fees_02 }}">
+            {!! highlightSearch(limitedText(optional($model)->local_guide_fees_02 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('local_guide_fees_03')
+        <td title="{{ optional($model)->local_guide_fees_03 }}">
+            {!! highlightSearch(limitedText(optional($model)->local_guide_fees_03 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('local_guide_fees_04')
+        <td title="{{ optional($model)->local_guide_fees_04 }}">
+            {!! highlightSearch(limitedText(optional($model)->local_guide_fees_04 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('local_guide_fees_05')
+        <td title="{{ optional($model)->local_guide_fees_05 }}">
+            {!! highlightSearch(limitedText(optional($model)->local_guide_fees_05 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('club_car_prices_01')
+        <td title="{{ optional($model)->club_car_prices_01 }}">
+            {!! highlightSearch(limitedText(optional($model)->club_car_prices_01 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('club_car_prices_02')
+        <td title="{{ optional($model)->club_car_prices_02 }}">
+            {!! highlightSearch(limitedText(optional($model)->club_car_prices_02 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('club_car_prices_03')
+        <td title="{{ optional($model)->club_car_prices_03 }}">
+            {!! highlightSearch(limitedText(optional($model)->club_car_prices_03 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('club_car_prices_04')
+        <td title="{{ optional($model)->club_car_prices_04 }}">
+            {!! highlightSearch(limitedText(optional($model)->club_car_prices_04 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('club_car_prices_05')
+        <td title="{{ optional($model)->club_car_prices_05 }}">
+            {!! highlightSearch(limitedText(optional($model)->club_car_prices_05 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('club_car_prices_06')
+        <td title="{{ optional($model)->club_car_prices_06 }}">
+            {!! highlightSearch(limitedText(optional($model)->club_car_prices_06 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('club_car_prices_07')
+        <td title="{{ optional($model)->club_car_prices_07 }}">
+            {!! highlightSearch(limitedText(optional($model)->club_car_prices_07 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
+    @break
+
+    @case('club_car_prices_08')
+        <td title="{{ optional($model)->club_car_prices_08 }}">
+            {!! highlightSearch(limitedText(optional($model)->club_car_prices_08 ?? '--', 30), $search) !!}
+            {{ isset($model->currency) ? $model->currency->code : $settings->app_default_currency }}
+        </td>
     @break
 
     @case('bus_type')
-        <td title="{{ optional($model->bus_type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->bus_type)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->bus_type)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->bus_type)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('currency')
-        <td title="{{ optional($model->currency)->code ?? '--' }}">{!! highlightSearch(limitedText(optional($model->currency)->code ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->currency)->code ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->currency)->code ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('departure_tax_currency')
-        <td title="{{ optional($model->departure_tax_currency)->code ?? '--' }}">{!! highlightSearch(limitedText(optional($model->departure_tax_currency)->code ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->departure_tax_currency)->code ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->departure_tax_currency)->code ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('visa_fee_currency')
-        <td title="{{ optional($model->visa_fee_currency)->code ?? '--' }}">{!! highlightSearch(limitedText(optional($model->visa_fee_currency)->code ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->visa_fee_currency)->code ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->visa_fee_currency)->code ?? '--', 30), $search) !!}
+        </td>
+    @break
+
+    @case('site')
+        <td title="{{ optional($model->site)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->site)->name ?? '--', 30), $search) !!}
+        </td>
+    @break
+
+    @case('site_type')
+        <td title="{{ __('main.' . $model->site_type) ?? '--' }}">
+            @if ($model->site_type)
+                <span class="inline-block text-white bg-info/30 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    {!! highlightSearch(limitedText(__('main.' . $model->site_type) ?? '--', 30), $search) !!}
+                </span>
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
     @break
 
     @case('creator')
@@ -543,15 +1024,17 @@
     @break
 
     @case('accommodation')
-        <td title="{{ $model->accommodation->id . ' - ' . optional($model->accommodation)->name ?? '--' }}">
-            {!! $model->accommodation->id .
+        <td title="{{ $model->accommodation?->id . ' - ' . optional($model->accommodation)->name ?? '--' }}">
+            {!! $model->accommodation?->id .
                 ' - ' .
                 highlightSearch(limitedText(optional($model->accommodation)->name ?? '--', 30), $search) !!}
         </td>
     @break
 
     @case('accommodation_type')
-        <td title="{{ optional($model->accommodation_type)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->accommodation_type)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->accommodation_type)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->accommodation_type)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('season_from')
@@ -584,11 +1067,15 @@
     @break
 
     @case('room')
-        <td title="{{ optional($model->room)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->room)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->room)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->room)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('meal')
-        <td title="{{ optional($model->meal)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->meal)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->meal)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->meal)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('accommodations')
@@ -603,7 +1090,7 @@
                 @endforeach
                 @if ($model->accommodations->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
+                        +{{ $model->accommodations->count() - 3 }}
                     </div>
                 @endif
             @else
@@ -627,7 +1114,7 @@
                 @endforeach
                 @if ($model->seasons->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
+                        +{{ $model->seasons->count() - 3 }}
                     </div>
                 @endif
             @else
@@ -651,7 +1138,7 @@
                 @endforeach
                 @if ($model->rooms->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
+                        +{{ $model->rooms->count() - 3 }}
                     </div>
                 @endif
             @else
@@ -675,7 +1162,7 @@
                 @endforeach
                 @if ($model->meals->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
+                        +{{ $model->meals->count() - 3 }}
                     </div>
                 @endif
             @else
@@ -699,7 +1186,7 @@
                 @endforeach
                 @if ($model->supplements->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
+                        +{{ $model->supplements->count() - 3 }}
                     </div>
                 @endif
             @else
@@ -724,7 +1211,7 @@
                 @endforeach
                 @if ($model->contacts->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
+                        +{{ $model->contacts->count() - 3 }}
                     </div>
                 @endif
             @else
@@ -758,7 +1245,95 @@
         </td>
     @break
 
+    @case('annual_holidays')
+        <td title="{{ implode(', ', $model->annual_holidays ?? []) }}">
+            @if ($model->annual_holidays && count($model->annual_holidays) > 0)
+                @foreach (array_slice($model->annual_holidays, 0, 3) as $date)
+                    <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($date, 30), $search) !!}
+                    </span>
+                @endforeach
+                @if (count($model->annual_holidays) > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        +{{ count($model->annual_holidays) - 3 }}
+                    </div>
+                @endif
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('day_off')
+        <td title="{{ implode(', ', $model->day_off ?? []) }}">
+            @if ($model->day_off && count($model->day_off) > 0)
+                @foreach (array_slice($model->day_off, 0, 3) as $date)
+                    <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($date, 30), $search) !!}
+                    </span>
+                @endforeach
+                @if (count($model->day_off) > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        +{{ count($model->day_off) - 3 }}
+                    </div>
+                @endif
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('yearly_holidays')
+        <td title="{{ implode(', ', $model->yearly_holidays ?? []) }}">
+            @if ($model->yearly_holidays && count($model->yearly_holidays) > 0)
+                @foreach (array_slice($model->yearly_holidays, 0, 3) as $date)
+                    <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($date, 30), $search) !!}
+                    </span>
+                @endforeach
+                @if (count($model->yearly_holidays) > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        +{{ count($model->yearly_holidays) - 3 }}
+                    </div>
+                @endif
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
     @case('operating_days')
+        <td title="{{ implode(', ', $model->operating_days ?? []) }}">
+            @if ($model->operating_days && count($model->operating_days) > 0)
+                @foreach (array_slice($model->operating_days, 0, 3) as $date)
+                    <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($date, 30), $search) !!}
+                    </span>
+                @endforeach
+                @if (count($model->operating_days) > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        +{{ count($model->operating_days) - 3 }}
+                    </div>
+                @endif
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    {{-- @case('operating_days')
         @php
             $operatingDays = is_array($model->operating_days) ? $model->operating_days : [];
         @endphp
@@ -781,8 +1356,7 @@
                 </div>
             @endif
         </td>
-    @break
-
+    @break --}}
     @case('timezone')
         <td title="{{ optional($model->timezone)->name ?? '--' }}">
             @if ($model->timezone)
@@ -831,7 +1405,9 @@
     @break
 
     @case('language')
-        <td title="{{ optional($model->language)->name ?? '--' }}">{!! highlightSearch(limitedText(optional($model->language)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->language)->name ?? '--' }}">
+            {!! highlightSearch(limitedText(optional($model->language)->name ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('company')
@@ -859,6 +1435,30 @@
                     {!! highlightSearch(limitedText($model->vehicleType->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">null</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('vehicleTypes')
+        <td title="{{ $model->vehicleTypes->pluck('name')->filter()->implode(', ') }}">
+            @if ($model->vehicleTypes->count() > 0)
+                @foreach ($model->vehicleTypes->take(3) as $vehicleType)
+                    <a href="{{ route('transportations.vehicle-types.show', $vehicleType->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        {!! highlightSearch(limitedText($vehicleType->name ?? '--', 30), $search) !!}
+                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+                    </a>
+                @endforeach
+                @if ($model->vehicleTypes->count() > 3)
+                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                        +{{ $model->vehicleTypes->count() - 3 }}
+                    </div>
+                @endif
             @else
                 <div
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
@@ -922,7 +1522,7 @@
     @case('region')
         <td title="{{ optional($model->region)->name ?? '--' }}">
             @if ($model->region)
-                <a href="{{ route('regions.show', $model->region->id) }}"
+                <a href="{{ route('regions.show', $model->region?->id) }}"
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->region)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
@@ -956,7 +1556,7 @@
     @case('country')
         <td title="{{ optional($model->country)->name ?? '--' }}">
             @if ($model->country)
-                <a href="{{ route('countries.show', $model->country->id) }}"
+                <a href="{{ route('countries.show', $model->country?->id) }}"
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->country)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
@@ -973,7 +1573,7 @@
     @case('state')
         <td title="{{ optional($model->state)->name ?? '--' }}">
             @if ($model->state)
-                <a href="{{ route('states.show', $model->state->id) }}"
+                <a href="{{ route('states.show', $model->state?->id) }}"
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->state)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
@@ -990,7 +1590,7 @@
     @case('city')
         <td title="{{ optional($model->city)->name ?? '--' }}">
             @if ($model->city)
-                <a href="{{ route('cities.show', $model->city->id) }}"
+                <a href="{{ route('cities.show', $model->city?->id) }}"
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->city)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
@@ -1068,7 +1668,7 @@
                 @endforeach
                 @if ($languageNames->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
+                        +{{ $languageNames->count() - 3 }}
                     </div>
                 @endif
             @else
@@ -1109,7 +1709,7 @@
                 @endforeach
                 @if ($model->states->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
+                        +{{ $model->states->count() - 3 }}
                     </div>
                 @endif
             @else
@@ -1133,7 +1733,7 @@
                 @endforeach
                 @if ($model->cities->count() > 3)
                     <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
+                        +{{ $model->cities->count() - 3 }}
                     </div>
                 @endif
             @else
@@ -1216,7 +1816,9 @@
     @break
 
     @case('read_at')
-        <td title="{{ $model->human_read_at ?? '--' }}">{!! highlightSearch(limitedText($model->human_read_at ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->human_read_at ?? '--' }}">
+            {!! highlightSearch(limitedText($model->human_read_at ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('rating')
@@ -1311,6 +1913,22 @@
                         : highlightSearch(__('main.inactive'), $search) !!}
                 </span>
             </div>
+        </td>
+    @break
+
+    @case('unesco_site')
+        <td title="{{ $model->unesco_site == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'unesco_site',
+                    'value' => (bool) $model->unesco_site,
+                    'table' => $models,
+                ],
+                key('toggle-' . $model->id . '-unesco_site')
+            )
         </td>
     @break
 
@@ -1634,6 +2252,70 @@
         </td>
     @break
 
+    @case('include_unified_ticket')
+        <td title="{{ $model->include_unified_ticket == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'include_unified_ticket',
+                    'value' => (bool) $model->include_unified_ticket,
+                    'table' => $models,
+                ],
+                key('toggle-' . $model->id . '-include_unified_ticket')
+            )
+        </td>
+    @break
+
+    @case('local_guide_available')
+        <td title="{{ $model->local_guide_available == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'local_guide_available',
+                    'value' => (bool) $model->local_guide_available,
+                    'table' => $models,
+                ],
+                key('toggle-' . $model->id . '-local_guide_available')
+            )
+        </td>
+    @break
+
+    @case('credit_cards')
+        <td title="{{ $model->credit_cards == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'credit_cards',
+                    'value' => (bool) $model->credit_cards,
+                    'table' => $models,
+                ],
+                key('toggle-' . $model->id . '-credit_cards')
+            )
+        </td>
+    @break
+
+    @case('club_cars_available')
+        <td title="{{ $model->club_cars_available == 1 ? __('main.yes') : __('main.no') }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => 'club_cars_available',
+                    'value' => (bool) $model->club_cars_available,
+                    'table' => $models,
+                ],
+                key('toggle-' . $model->id . '-club_cars_available')
+            )
+        </td>
+    @break
+
     @case('code')
         <td title="{{ $model->code }}">
             <span class="text-{{ $model->code == getCurrentLocale() ? 'green' : 'red' }}-600 font-semibold">
@@ -1643,21 +2325,102 @@
     @break
 
     @case('created_at')
-        <td title="{{ $model->created_at?->format('Y-m-d') ?? '--' }}">{!! highlightSearch(limitedText($model->created_at?->format('Y-m-d') ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->created_at?->format('Y-m-d') ?? '--' }}">
+            <a href="{{ route('users.show') }}">
+                {!! highlightSearch(limitedText($model->created_at?->format('Y-m-d') ?? '--', 30), $search) !!}
+            </a>
+        </td>
     @break
 
     @case('updated_at')
-        <td title="{{ $model->updated_at?->format('Y-m-d') ?? '--' }}">{!! highlightSearch(limitedText($model->updated_at?->format('Y-m-d') ?? '--', 30), $search) !!}</td>
+        <td title="{{ $model->updated_at?->format('Y-m-d') ?? '--' }}">
+            {!! highlightSearch(limitedText($model->updated_at?->format('Y-m-d') ?? '--', 30), $search) !!}
+        </td>
     @break
 
     @case('created_by')
-        <td title="{{ optional($model->created_by)->name ?: '' }}">{!! highlightSearch(limitedText(optional($model->created_by)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->created_by)->name ?: '' }}">
+            <a href="{{ route('users.show', $model->created_by->id) }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText(optional($model->created_by)->name ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('createdBy')
+        <td title="{{ optional($model->createdBy)->name ?: '' }}">
+            <a href="{{ route('users.show', $model->createdBy->id) }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText(optional($model->createdBy)->name ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
     @break
 
     @case('updated_by')
-        <td title="{{ optional($model->updated_by)->name ?: '' }}">{!! highlightSearch(limitedText(optional($model->updated_by)->name ?? '--', 30), $search) !!}</td>
+        <td title="{{ optional($model->updated_by)->name ?: '' }}">
+            <a href="{{ route('users.show', $model->updated_by->id) }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText(optional($model->updated_by)->name ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('updatedBy')
+        <td title="{{ optional($model->updatedBy)->name ?: '' }}">
+            <a href="{{ route('users.show', $model->createdBy->id) }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! highlightSearch(limitedText(optional($model->createdBy)->name ?? '--', 30), $search) !!}
+                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
+            </a>
+        </td>
+    @break
+
+    @case('summer_opening_time')
+        <td title="{{ optional($model)->summer_opening_time }}">
+            <span class="inline-block bg-info/30 text-info text-xs font-medium px-2 py-0.5 rounded-[7px]">
+                <i class="fa-duotone fa-clock text-info me-1"></i>
+                {!! highlightSearch(limitedText(optional($model)->summer_opening_time ?? '--', 30), $search) !!}
+            </span>
+        </td>
+    @break
+
+    @case('summer_closing_time')
+        <td title="{{ optional($model)->summer_closing_time }}">
+            <span class="inline-block bg-warning/30 text-warning text-xs font-medium px-2 py-0.5 rounded-[7px]">
+                <i class="fa-duotone fa-clock text-warning me-1"></i>
+                {!! highlightSearch(limitedText(optional($model)->summer_closing_time ?? '--', 30), $search) !!}
+            </span>
+        </td>
+    @break
+
+    @case('winter_opening_time')
+        <td title="{{ optional($model)->winter_opening_time }}">
+            <span class="inline-block bg-info/30 text-info text-xs font-medium px-2 py-0.5 rounded-[7px]">
+                <i class="fa-duotone fa-snowflake text-info me-1"></i>
+                {!! highlightSearch(limitedText(optional($model)->winter_opening_time ?? '--', 30), $search) !!}
+            </span>
+        </td>
+    @break
+
+    @case('winter_closing_time')
+        <td title="{{ optional($model)->winter_closing_time }}">
+            <span class="inline-block bg-warning/30 text-warning text-xs font-medium px-2 py-0.5 rounded-[7px]">
+                <i class="fa-duotone fa-snowflake text-warning me-1"></i>
+                {!! highlightSearch(limitedText(optional($model)->winter_closing_time ?? '--', 30), $search) !!}
+            </span>
+        </td>
     @break
 
     @default
         <td title="{{ $model->$column }}">{{ $model->$column }}</td>
+        {{-- @if (is_array($model->$column))
+            @dump($column, $model->$column)
+        @else
+            <td title="{{ $model->$column }}">
+                {{ $model->$column }}
+            </td>
+        @endif --}}
 @endswitch

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\User;
 use App\Models\Country;
-use App\Models\Timezone;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
@@ -22,8 +21,7 @@ class UserController extends Controller
     public function create()
     {
         $countries = Country::all();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
-        return view('pages.dashboard.users.create', compact('countries', 'timezones'));
+        return view('pages.dashboard.users.create', compact('countries'));
     }
 
     public function store(StoreRequest $request)
@@ -55,8 +53,7 @@ class UserController extends Controller
         if (!$user)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.user')]));
         $countries = Country::all();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
-        return view('pages.dashboard.users.edit', compact('user', 'countries', 'timezones'));
+        return view('pages.dashboard.users.edit', compact('user', 'countries'));
     }
 
     public function update(UpdateRequest $request, $id)

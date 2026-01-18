@@ -40,7 +40,7 @@ class RestaurantFactory extends Factory
             'street' => $this->faker->streetAddress,
             'mobile' => $this->faker->phoneNumber,
             'website' => $this->faker->optional()->url,
-            'photo' => $this->faker->optional()->imageUrl(640, 480, 'food'),
+            'photo' => "https://picsum.photos/seed/" . rand(1, 1000) . "/300/300",
             'is_active' => $this->faker->boolean,
             'wheelchair_accessible' => $this->faker->boolean,
             'free_wifi' => $this->faker->boolean,

@@ -5,7 +5,7 @@
         {{-- Page Header --}}
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">{{ __('main.media_file_details') }}</h1>
+                <h1 class="text-2xl font-bold text-gray-600">{{ __('main.media_file_details') }}</h1>
                 <p class="text-gray-600 mt-1">{{ $mediaFile->file_name }}</p>
             </div>
             <div class="flex items-center gap-3">
@@ -60,54 +60,49 @@
                     <div class="kt-card-body p-6">
                         <dl class="space-y-4">
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">{{ __('main.file_name') }}</dt>
-                                <dd class="text-sm text-gray-900 mt-1 break-all">{{ $mediaFile->file_name }}</dd>
+                                <dt class="text-sm font-medium text-gray-600">{{ __('main.file_name') }}</dt>
+                                <dd class="text-sm text-gray-500 mt-1 break-all">{{ $mediaFile->file_name }}</dd>
                             </div>
 
-                            @if ($mediaFile->title)
-                                <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('main.title') }}</dt>
-                                    <dd class="text-sm text-gray-900 mt-1">{{ $mediaFile->title }}</dd>
-                                </div>
-                            @endif
-
-                            @if ($mediaFile->alt_text)
-                                <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('main.alt_text') }}</dt>
-                                    <dd class="text-sm text-gray-900 mt-1">{{ $mediaFile->alt_text }}</dd>
-                                </div>
-                            @endif
-
-                            @if ($mediaFile->description)
-                                <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('main.description') }}</dt>
-                                    <dd class="text-sm text-gray-900 mt-1">{{ $mediaFile->description }}</dd>
-                                </div>
-                            @endif
+                            <div>
+                                <dt class="text-sm font-medium text-gray-600">{{ __('main.title') }}</dt>
+                                <dd class="text-sm text-gray-500 mt-1">{{ $mediaFile->title ?? __('main.na') }}</dd>
+                            </div>
 
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">{{ __('main.file_type') }}</dt>
-                                <dd class="text-sm text-gray-900 mt-1">
-                                    <span class="px-2 py-1 rounded-full bg-primary text-white">
+                                <dt class="text-sm font-medium text-gray-600">{{ __('main.alt_text') }}</dt>
+                                <dd class="text-sm text-gray-500 mt-1">{{ $mediaFile->alt_text ?? __('main.na') }}</dd>
+                            </div>
+
+                            <div>
+                                <dt class="text-sm font-medium text-gray-600">{{ __('main.description') }}</dt>
+                                <dd class="text-sm text-gray-500 mt-1">{!! $mediaFile->description !!}</dd>
+                            </div>
+
+                            <div>
+                                <dt class="text-sm font-medium text-gray-600">{{ __('main.file_type') }}</dt>
+                                <dd class="text-sm text-gray-500 mt-2">
+                                    <span class="px-2 py-1 rounded-[7px] bg-primary text-white">
                                         {{ strtoupper($mediaFile->extension) }}
                                     </span>
                                 </dd>
                             </div>
 
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">{{ __('main.mime_type') }}</dt>
-                                <dd class="text-sm text-gray-900 mt-1">{{ $mediaFile->mime_type }}</dd>
+                                <dt class="text-sm font-medium text-gray-600">{{ __('main.mime_type') }}</dt>
+                                <dd class="text-sm text-gray-500 mt-1">{{ $mediaFile->mime_type ?? __('main.na') }}</dd>
                             </div>
 
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">{{ __('main.file_size') }}</dt>
-                                <dd class="text-sm text-gray-900 mt-1">{{ $mediaFile->human_file_size }}</dd>
+                                <dt class="text-sm font-medium text-gray-600">{{ __('main.file_size') }}</dt>
+                                <dd class="text-sm text-gray-500 mt-1">{{ $mediaFile->human_file_size ?? __('main.na') }}
+                                </dd>
                             </div>
 
                             @if ($mediaFile->width && $mediaFile->height)
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('main.dimensions') }}</dt>
-                                    <dd class="text-sm text-gray-900 mt-1">{{ $mediaFile->width }} ×
+                                    <dt class="text-sm font-medium text-gray-600">{{ __('main.dimensions') }}</dt>
+                                    <dd class="text-sm text-gray-500 mt-1">{{ $mediaFile->width }} ×
                                         {{ $mediaFile->height }}
                                         px</dd>
                                 </div>
@@ -115,8 +110,8 @@
 
                             @if ($mediaFile->collection_name)
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('main.collection_name') }}</dt>
-                                    <dd class="text-sm text-gray-900 mt-1">
+                                    <dt class="text-sm font-medium text-gray-600">{{ __('main.collection_name') }}</dt>
+                                    <dd class="text-sm text-gray-500 mt-1">
                                         <span class="px-2 py-1 rounded-full bg-primary/30 text-primary">
                                             {{ ucfirst($mediaFile->collection_name) }}
                                         </span>
@@ -125,54 +120,53 @@
                             @endif
 
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">{{ __('main.status') }}</dt>
-                                <dd class="text-sm text-gray-900 mt-1">
-                                    @if ($mediaFile->is_active)
-                                        <span class="px-2 py-1 rounded-full bg-success/30 text-green-600">
-                                            {{ __('main.active') }}
-                                        </span>
-                                    @else
-                                        <span class="px-2 py-1 rounded-full bg-danger text-danger">
-                                            {{ __('main.inactive') }}
-                                        </span>
-                                    @endif
-                                </dd>
+                                <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
+                                <div class="flex items-center gap-2">
+                                    @livewire('toggle-switch', [
+                                        'modelId' => $mediaFile->id,
+                                        'modelType' => '\\App\\Models\\MediaFile',
+                                        'field' => 'is_active',
+                                        'value' => (bool) $mediaFile->is_active,
+                                        'table' => 'media_files',
+                                    ])
+                                </div>
                             </div>
 
-                            @if ($mediaFile->is_featured)
-                                <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('main.featured') }}</dt>
-                                    <dd class="text-sm text-gray-900 mt-1">
-                                        <span class="px-2 py-1 rounded-full bg-warning-light text-warning">
-                                            <i class="ki-filled ki-star"></i>
-                                            {{ __('main.yes') }}
-                                        </span>
-                                    </dd>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.is_featured') }}</label>
+                                <div class="flex items-center gap-2">
+                                    @livewire('toggle-switch', [
+                                        'modelId' => $mediaFile->id,
+                                        'modelType' => '\\App\\Models\\MediaFile',
+                                        'field' => 'is_featured',
+                                        'value' => (bool) $mediaFile->is_featured,
+                                        'table' => 'media_files',
+                                    ])
                                 </div>
-                            @endif
+                            </div>
 
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">{{ __('main.display_order') }}</dt>
-                                <dd class="text-sm text-gray-900 mt-1">{{ $mediaFile->display_order }}</dd>
+                                <dt class="text-sm font-medium text-gray-600">{{ __('main.display_order') }}</dt>
+                                <dd class="text-sm text-gray-500 mt-1">{{ $mediaFile->order }}</dd>
                             </div>
 
                             @if ($mediaFile->uploader)
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('main.uploaded_by') }}</dt>
-                                    <dd class="text-sm text-gray-900 mt-1">{{ $mediaFile->uploader->name }}</dd>
+                                    <dt class="text-sm font-medium text-gray-600">{{ __('main.uploaded_by') }}</dt>
+                                    <dd class="text-sm text-gray-500 mt-1">{{ $mediaFile->uploader->name }}</dd>
                                 </div>
                             @endif
 
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">{{ __('main.uploaded_at') }}</dt>
-                                <dd class="text-sm text-gray-900 mt-1">{{ $mediaFile->created_at->format('Y-m-d H:i') }}
+                                <dt class="text-sm font-medium text-gray-600">{{ __('main.uploaded_at') }}</dt>
+                                <dd class="text-sm text-gray-500 mt-1">{{ $mediaFile->created_at->format('Y-m-d H:i') }}
                                 </dd>
                             </div>
 
                             @if ($mediaFile->updated_at != $mediaFile->created_at)
                                 <div>
-                                    <dt class="text-sm font-medium text-gray-500">{{ __('main.last_updated') }}</dt>
-                                    <dd class="text-sm text-gray-900 mt-1">
+                                    <dt class="text-sm font-medium text-gray-600">{{ __('main.last_updated') }}</dt>
+                                    <dd class="text-sm text-gray-500 mt-1">
                                         {{ $mediaFile->updated_at->format('Y-m-d H:i') }}
                                     </dd>
                                 </div>

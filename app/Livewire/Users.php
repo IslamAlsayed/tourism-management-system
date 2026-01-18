@@ -81,7 +81,7 @@ class Users extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('user.users'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.users'), 'count' => $count]),
         ]);
     }
 
@@ -113,7 +113,7 @@ class Users extends Component
             'sort' => $this->sortField ?? null,
             'dir' => $this->sortDirection ?? null,
             'perPage' => getPaginate(),
-            'is_admin' => getActiveUser()->is_admin,
+            'role' => in_array(getActiveUser()->role, ['superadmin', 'admin']) ? 'admin' : 'user',
         ]));
     }
 
@@ -122,8 +122,8 @@ class Users extends Component
         $cacheKey = $this->getCacheKey();
         $data = Cache::remember($cacheKey, now()->addMinutes(5), function () {
             $query = User::query();
-            if (!getActiveUser()->is_admin) {
-                $query->where('is_admin', 0);
+            if (!getActiveUser()->role) {
+                $query->where('role', '!=', 'superadmin');
             }
             $query->searchWithRelations(
                 search: $this->search,

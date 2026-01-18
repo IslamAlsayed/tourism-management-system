@@ -4,10 +4,8 @@ use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Support\Activity\ActivityMessageFormatter;
-use Illuminate\Support\Arr;
 
 if (!function_exists('getActiveUser')) {
     /**
@@ -747,5 +745,21 @@ if (!function_exists('randomToken')) {
     function randomToken($length = 120)
     {
         return Str::random($length);
+    }
+}
+
+if (!function_exists('hasDisplayableDescAndNotes')) {
+    /**
+     * Check if a record has displayable content in a specific column
+     *
+     * @return bool
+     */
+    function hasDisplayableDescAndNotes($record = null, $column = 'description')
+    {
+        if (!$record || !isset($record->$column)) {
+            return false;
+        }
+        return isset($record->$column->body->fragment->source->textContent) &&
+            !empty($record->$column->body->fragment->source->textContent);
     }
 }

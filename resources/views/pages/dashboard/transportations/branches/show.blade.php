@@ -3,7 +3,7 @@
 @section('title', __('main.type_details', ['type' => __('main.transportations-company')]))
 
 @push('scripts')
-    @include('components.elements.setup-map')
+    @include('components.scripts.setup-map')
 @endpush
 
 @section('content')
@@ -92,22 +92,14 @@
                                 ])
                             </div>
                         </div>
-                        @if ($company->description)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $company->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($company->notes)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $company->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $company,
+                            'column' => 'description',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $company,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>
@@ -122,9 +114,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
                             @if ($company->region)
-                                <a href="{{ route('regions.show', $company->region->id) }}"
+                                <a href="{{ route('regions.show', $company->region?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $company->region->name ?? __('main.na') }}
+                                    {{ $company->region?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -146,9 +138,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
                             @if ($company->country)
-                                <a href="{{ route('countries.show', $company->country->id) }}"
+                                <a href="{{ route('countries.show', $company->country?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $company->country->name ?? __('main.na') }}
+                                    {{ $company->country?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -158,9 +150,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.state') }}</label>
                             @if ($company->state)
-                                <a href="{{ route('states.show', $company->state->id) }}"
+                                <a href="{{ route('states.show', $company->state?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $company->state->name ?? __('main.na') }}
+                                    {{ $company->state?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -170,9 +162,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.city') }}</label>
                             @if ($company->city)
-                                <a href="{{ route('cities.show', $company->city->id) }}"
+                                <a href="{{ route('cities.show', $company->city?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $company->city->name ?? __('main.na') }}
+                                    {{ $company->city?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else

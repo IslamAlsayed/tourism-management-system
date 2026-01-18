@@ -166,19 +166,15 @@
                             </div>
                         </div>
 
-                        @if ($country->description)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-2">{{ __('main.description') }}</label>
-                                <p class="text-sm text-secondary-foreground">{!! $country->description !!}</p>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $country,
+                            'column' => 'description',
+                        ])
 
-                        @if ($country->notes)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground">{!! $country->notes !!}</div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $country,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>
@@ -195,9 +191,9 @@
                     <div class="flex flex-wrap justify-between gap-10">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            <a href="{{ route('regions.show', $country->region->id) }}"
+                            <a href="{{ route('regions.show', $country->region?->id) }}"
                                 class="block text-sm text-primary underline">
-                                {{ $country->region->name ?? __('main.na') }}
+                                {{ $country->region?->name ?? __('main.na') }}
                                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                             </a>
                         </div>

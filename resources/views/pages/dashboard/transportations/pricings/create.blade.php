@@ -82,10 +82,7 @@
                             </div>
 
                             {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                            ])
+                            @include('components.selects.currency')
                         </div>
                     </div>
                 </div>

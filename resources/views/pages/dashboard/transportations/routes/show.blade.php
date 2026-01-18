@@ -3,7 +3,7 @@
 @section('title', __('main.type_details', ['type' => __('main.transportations-route')]))
 
 @push('scripts')
-    @include('components.elements.setup-map')
+    @include('components.scripts.setup-map')
 @endpush
 
 @section('content')
@@ -119,22 +119,14 @@
                                 ])
                             </div>
                         </div>
-                        @if ($route->description)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $route->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($route->notes)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $route->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $routes,
+                            'column' => 'description',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $routes,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>

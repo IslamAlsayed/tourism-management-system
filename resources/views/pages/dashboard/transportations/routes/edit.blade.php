@@ -325,14 +325,13 @@
 
 @push('scripts')
     <script>
-        // Initialize Select2 for cities with AJAX
         document.addEventListener('DOMContentLoaded', function() {
             const citiesSelects = $('.cities-select');
 
+            // Initialize Select2
             citiesSelects.select2({
                 ajax: {
                     url: '{{ route('routes.cities') }}',
-                    type: 'GET',
                     dataType: 'json',
                     delay: 250,
                     data: function(params) {
@@ -352,11 +351,11 @@
                     },
                     cache: true
                 },
-                minimumInputLength: 0,
                 placeholder: '{{ __('main.search') }}...',
                 allowClear: true,
+                minimumInputLength: 0,
                 language: {
-                    inputTooShort: function(args) {
+                    inputTooShort: function() {
                         return '--';
                     },
                     noResults: function() {
@@ -365,28 +364,21 @@
                 }
             });
 
-            // Load initial 25 cities and set selected values
+            // ✅ Handle EDIT MODE for each select
             citiesSelects.each(function() {
-                const select = $(this);
-                const currentValue = select.data('value');
+                const select = $(this); // ✅ مهم
+                const selectedCityId = select.data('value');
+                if (!selectedCityId) return;
                 $.ajax({
-                    url: '{{ route('routes.cities') }}',
+                    url: '{{ url('api/routes/cities') }}/' + selectedCityId,
                     type: 'GET',
-                    data: {
-                        q: '',
-                        page: 1
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        data.results.forEach(function(city) {
-                            const option = new Option(city.text.trim(), city.id);
-                            select.append(option);
-                        });
-                        // Set the selected value
-                        if (currentValue) {
-                            select.val(currentValue).trigger('change');
-                        }
-                    }.bind(this)
+                    dataType: 'json'
+                }).done(function(data) {
+                    if (select.find("option[value='" + data.id + "']").length) {
+                        return;
+                    }
+                    const option = new Option(data.text, data.id, true, true);
+                    select.append(option).trigger('change');
                 });
             });
         });

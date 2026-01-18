@@ -63,7 +63,7 @@ class Guides extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('tour_guide.tour_guides'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.tour_guides'), 'count' => $count]),
         ]);
     }
 

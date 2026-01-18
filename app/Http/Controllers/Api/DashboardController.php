@@ -222,4 +222,39 @@ class DashboardController extends Controller
             'message' => $request->message,
         ]);
     }
+
+    public function download(Request $request)
+    {
+        try {
+            $path = decrypt($request->query('path'));
+        } catch (\Exception $e) {
+            abort(403);
+        }
+
+        $filename = basename($path);
+
+        // 🟢 لو الصورة URL خارجي
+        if (\Illuminate\Support\Str::isUrl($path)) {
+            try {
+                $imageContent = @file_get_contents($path);
+                if ($imageContent === false) {
+                    abort(404);
+                }
+
+                return response($imageContent)
+                    ->header('Content-Type', 'application/octet-stream')
+                    ->header('Content-Disposition', 'attachment; filename="' . $filename . '"')
+                    ->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+            } catch (\Exception $e) {
+                abort(500, 'Failed to download image');
+            }
+        }
+
+        // 🟢 صورة من storage
+        if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+            abort(404);
+        }
+
+        return \Illuminate\Support\Facades\Storage::disk('public')->download($path, $filename);
+    }
 }

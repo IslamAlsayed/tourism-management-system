@@ -58,10 +58,7 @@
                             </div>
 
                             {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                            ])
+                            @include('components.selects.timezone')
                         </div>
                     </div>
                 </div>

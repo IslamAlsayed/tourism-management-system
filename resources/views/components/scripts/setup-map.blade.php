@@ -1,4 +1,4 @@
-@if (env('GOOGLE_MAPS_API_KEY'))
+@if (config('app.app_google_maps_key'))
     <script>
         window.initMap = function() {
             let mapContainer = document.getElementById("map");
@@ -23,6 +23,6 @@
         };
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer>
-    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('app.app_google_maps_key') }}&callback=initMap" async
+        defer></script>
 @endif

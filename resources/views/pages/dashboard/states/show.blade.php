@@ -135,20 +135,14 @@
                                 ])
                             </div>
                         </div>
-
-                        @if ($state->description)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-2">{{ __('main.description') }}</label>
-                                <p class="text-sm text-secondary-foreground">{!! $state->description !!}</p>
-                            </div>
-                        @endif
-
-                        @if ($state->notes)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground">{!! $state->notes !!}</div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $state,
+                            'column' => 'description',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $state,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>
@@ -165,9 +159,9 @@
                     <div class="flex flex-wrap justify-between gap-10">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            <a href="{{ route('regions.show', $state->region->id) }}"
+                            <a href="{{ route('regions.show', $state->region?->id) }}"
                                 class="block text-sm text-primary underline">
-                                {{ $state->region->name ?? __('main.na') }}
+                                {{ $state->region?->name ?? __('main.na') }}
                                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                             </a>
                         </div>
@@ -181,9 +175,9 @@
                         </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                            <a href="{{ route('countries.show', $state->country->id) }}"
+                            <a href="{{ route('countries.show', $state->country?->id) }}"
                                 class="block text-sm text-primary underline">
-                                {{ $state->country->name ?? __('main.na') }}
+                                {{ $state->country?->name ?? __('main.na') }}
                                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                             </a>
                         </div>

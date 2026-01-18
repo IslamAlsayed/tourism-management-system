@@ -105,14 +105,12 @@
         <div class="mb-2.5 flex flex-col gap-3.5 px-2.5 pt-1.5">
             <div class="flex items-center justify-between gap-2">
                 <span class="flex items-center gap-2">
-                    <i class="text-base ki-filled ki-moon text-muted-foreground">
-                    </i>
-                    <span class="font-medium text-2sm">
+                    <i class="text-base ki-filled ki-moon" id="icon-theme-mode"></i>
+                    <span class="font-medium text-2sm" id="text-theme-mode">
                         {{ __('main.dark_mode') }}
                     </span>
                 </span>
-                <input class="kt-switch" data-kt-theme-switch-state="dark" data-kt-theme-switch-toggle="true"
-                    name="check" type="checkbox" value="1" />
+                <input class="kt-switch" id="switch-theme-mode" type="checkbox" value="1" />
             </div>
             <a class="justify-center w-full kt-btn kt-btn-outline cursor-pointer">
                 <form action="{{ route('logout') }}" method="POST" class="w-full">
@@ -124,3 +122,6 @@
     </div>
 </div>
 <!-- End of User -->
+
+{{-- Theme Mode --}}
+@include('components.script-theme')

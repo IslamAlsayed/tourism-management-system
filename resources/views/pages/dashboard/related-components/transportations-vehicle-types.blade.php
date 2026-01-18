@@ -85,20 +85,14 @@
                             </div>
                         </div>
                     </div>
-                    @if ($vehicleType->description)
-                        <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
-                            <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $vehicleType->description !!}</div>
-                        </div>
-                    @endif
-                    @if ($vehicleType->notes)
-                        <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
-                            <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $vehicleType->notes !!}</div>
-                        </div>
-                    @endif
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $vehicleType,
+                        'column' => 'description',
+                    ])
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $vehicleType,
+                        'column' => 'notes',
+                    ])
                     <div class="lg:col-span-2 flex gap-2 mt-4">
                         @include('components.elements.show-button', [
                             'models' => 'transportations.vehicle-types',

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard\Tours;
 
-use App\Models\Currency;
 use App\Models\Language;
 use App\Models\TourGuide;
 use App\Models\TourGuideType;

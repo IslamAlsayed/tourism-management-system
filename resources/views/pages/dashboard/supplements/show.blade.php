@@ -105,22 +105,14 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($supplement->description)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-2">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $supplement->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($supplement->notes)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $supplement->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $supplement,
+                            'column' => 'description',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $supplement,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>

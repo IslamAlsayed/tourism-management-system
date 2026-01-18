@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard\Transportations;
 
-use App\Models\Currency;
 use App\Models\PricingDefinition;
 use App\Http\Controllers\Controller;
 use App\Models\TransportationPricing;
@@ -19,8 +18,7 @@ class PricingController extends Controller
     public function create()
     {
         $pricingUnits = PricingDefinition::orderBy('name')->get();
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.transportations.pricings.create', compact('pricingUnits', 'currencies'));
+        return view('pages.dashboard.transportations.pricings.create', compact('pricingUnits'));
     }
 
     public function store(StoreRequest $request)
@@ -48,8 +46,7 @@ class PricingController extends Controller
         if (!$pricing)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation-pricing')]));
         $pricingUnits = PricingDefinition::orderBy('name')->get();
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.transportations.pricings.edit', compact('pricingUnits', 'pricing', 'currencies'));
+        return view('pages.dashboard.transportations.pricings.edit', compact('pricingUnits', 'pricing'));
     }
 
     public function update(UpdateRequest $request, $id)

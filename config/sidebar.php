@@ -94,6 +94,31 @@ return [
             ],
         ],
 
+        // ================= Timezones =================
+        [
+            'title' => 'timezones',
+            'icon' => 'fa-solid fa-clock',
+            'status' => 'new',
+            'children' => [
+                [
+                    'title' => 'all timezones',
+                    'icon' => 'fa-solid fa-clock',
+                    'route' => 'timezones.index',
+                ],
+                [
+                    'title' => 'create timezone',
+                    'icon' => 'fa-solid fa-square-plus',
+                    'route' => 'timezones.create',
+                ],
+                [
+                    'title' => 'import timezones',
+                    'icon' => 'fa-solid fa-file-import',
+                    'route' => 'import.data',
+                    'parameters' => ['model' => 'timezone', 'models' => 'timezones', 'view' => 'timezones'],
+                ],
+            ],
+        ],
+
         // ================= Locations =================
         [
             'title' => 'locations',
@@ -518,11 +543,12 @@ return [
         [
             'title' => 'transportations',
             'icon' => 'fa-solid fa-bus',
-            'status' => 'new',
+            'status' => 'updated',
             'children' => [
                 [
                     'title' => 'companies',
                     'icon' => 'fa-solid fa-building',
+                    'status' => 'updated',
                     'children' => [
                         [
                             'title' => 'all companies',
@@ -532,6 +558,7 @@ return [
                         [
                             'title' => 'create company',
                             'icon' => 'fa-solid fa-plus',
+                            'status' => 'updated',
                             'route' => 'transportations.companies.create',
                         ],
                         [
@@ -911,10 +938,36 @@ return [
             ],
         ],
 
-        // ================= Tourist Service =================
+        // ================= Tourist Sites =================
+        [
+            'title' => 'tourist sites',
+            'icon' => 'fa-solid fa-map-location-dot',
+            'status' => 'new',
+            'children' => [
+                [
+                    'title' => 'all tourist sites',
+                    'icon' => 'fa-solid fa-landmark',
+                    'route' => 'tourist-sites.index'
+                ],
+                [
+                    'title' => 'create tourist site',
+                    'icon' => 'fa-solid fa-plus',
+                    'route' => 'tourist-sites.create'
+                ],
+                [
+                    'title' => 'import tourist sites',
+                    'icon' => 'fa-solid fa-file-import',
+                    'route' => 'import.data',
+                    'parameters' => ['model' => 'tourist-site', 'models' => 'tourist-sites', 'view' => 'tourist-sites'],
+                ],
+            ],
+        ],
+
+        // ================= Tourist Services =================
         [
             'title' => 'tourist services',
             'icon' => 'fa-solid fa-map-location-dot',
+            'status' => 'updated',
             'children' => [
                 [
                     'title' => 'all tourist services',
@@ -1110,12 +1163,13 @@ return [
                 [
                     'title' => 'general',
                     'icon' => 'fa-solid fa-sliders',
-                    'route' => 'settings.general'
+                    'route' => 'settings.general',
                 ],
                 [
                     'title' => 'security',
                     'icon' => 'fa-solid fa-shield-halved',
-                    'route' => 'settings.security'
+                    'route' => 'settings.security',
+                    'roles' => ['admin', 'superadmin']
                 ],
                 // [
                 //     'title' => 'notifications',
@@ -1138,7 +1192,8 @@ return [
                 [
                     'title' => 'integration',
                     'icon' => 'fa-solid fa-plug',
-                    'route' => 'settings.integration'
+                    'route' => 'settings.integration',
+                    'roles' => ['admin', 'superadmin']
                 ],
                 [
                     'title' => 'system',

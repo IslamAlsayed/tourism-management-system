@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Meal;
 use App\Models\Room;
 use App\Models\Type;
-use App\Models\Region;
 use App\Models\Season;
-use App\Models\Currency;
-use App\Models\Timezone;
 use App\Models\Supplement;
 use App\Models\Accommodation;
 use App\Traits\PhotoUploadTrait;
@@ -28,8 +25,7 @@ class AccommodationController extends Controller
     public function create()
     {
         $types = Type::orderBy('name')->get();
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.accommodations.create', compact('types', 'currencies'));
+        return view('pages.dashboard.accommodations.create', compact('types'));
     }
 
     public function store(StoreRequest $request)
@@ -93,8 +89,7 @@ class AccommodationController extends Controller
         if (!$accommodation)
             return redirect()->route('accommodations.index')->withError(__('messages.type_not_found', ['type' => __('main.accommodation')]));
         $types = Type::orderBy('name')->get();
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.accommodations.edit', compact('accommodation', 'types', 'currencies'));
+        return view('pages.dashboard.accommodations.edit', compact('accommodation', 'types'));
     }
 
     public function update(UpdateRequest $request, $id)

@@ -90,14 +90,10 @@
                             </div>
                         </div>
                     @endif
-                    @if ($meal->description)
-                        <div class="col-span-full border-custom rounded-lg p-4">
-                            <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $meal->description !!}
-                            </div>
-                        </div>
-                    @endif
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $meal,
+                        'column' => 'description',
+                    ])
                     <div class="lg:col-span-2 flex gap-2 mt-4">
                         @include('components.elements.show-button', [
                             'models' => 'meals',

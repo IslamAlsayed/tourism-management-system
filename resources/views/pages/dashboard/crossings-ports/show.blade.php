@@ -168,22 +168,15 @@
                             </div>
                         </div>
                     </div>
-                    @if ($crossingPort->description)
-                        <div class="col-span-full border-custom mb-4 p-3 pt-0 rounded-[9px]">
-                            <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $crossingPort->description !!}
-                            </div>
-                        </div>
-                    @endif
-                    @if ($crossingPort->notes)
-                        <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                            <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $crossingPort->notes !!}
-                            </div>
-                        </div>
-                    @endif
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $crossingPort,
+                        'column' => 'description',
+                    ])
+
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $crossingPort,
+                        'column' => 'notes',
+                    ])
                 </div>
             </div>
 
@@ -199,9 +192,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
                             @if ($crossingPort->region)
-                                <a href="{{ route('regions.show', $crossingPort->region->id) }}"
+                                <a href="{{ route('regions.show', $crossingPort->region?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $crossingPort->region->name ?? __('main.na') }}
+                                    {{ $crossingPort->region?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -223,9 +216,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
                             @if ($crossingPort->country)
-                                <a href="{{ route('countries.show', $crossingPort->country->id) }}"
+                                <a href="{{ route('countries.show', $crossingPort->country?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $crossingPort->country->name ?? __('main.na') }}
+                                    {{ $crossingPort->country?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -235,9 +228,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.state') }}</label>
                             @if ($crossingPort->state)
-                                <a href="{{ route('states.show', $crossingPort->state->id) }}"
+                                <a href="{{ route('states.show', $crossingPort->state?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $crossingPort->state->name ?? __('main.na') }}
+                                    {{ $crossingPort->state?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -247,9 +240,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.city') }}</label>
                             @if ($crossingPort->city)
-                                <a href="{{ route('cities.show', $crossingPort->city->id) }}"
+                                <a href="{{ route('cities.show', $crossingPort->city?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $crossingPort->city->name ?? __('main.na') }}
+                                    {{ $crossingPort->city?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else

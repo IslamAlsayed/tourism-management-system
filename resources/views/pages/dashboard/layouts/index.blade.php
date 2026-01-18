@@ -12,45 +12,45 @@
     <script>
         let toggleScroll = window.innerWidth > 768;
 
-        const dataTargetButton = document.querySelector('[data-target-button="#columnsModal"]');
-        const dataTargetModel = document.getElementById('columnsModal');
+        const buttonColumnModal = document.querySelector('[data-target-button="#columnsModal"]');
+        const columnsModal = document.getElementById('columnsModal');
         const parentWrapper = document.getElementById('parentColumnsModal');
 
-        dataTargetButton?.addEventListener('click', function(event) {
+        buttonColumnModal?.addEventListener('click', function(event) {
             event.stopPropagation();
-            dataTargetModel?.classList.toggle('hidden');
+            columnsModal?.classList.toggle('hidden');
         });
 
         document.addEventListener('click', function(event) {
-            if (dataTargetModel?.classList.contains('hidden')) return;
+            if (columnsModal?.classList.contains('hidden')) return;
             if (!parentWrapper?.contains(event.target)) {}
         });
 
         window.addEventListener('resize', function() {
             toggleScroll = window.innerWidth > 768;
         });
-        // 
-        window.addEventListener('scroll', function(event) {
-            if (dataTargetModel?.classList.contains('hidden')) return;
-            if (isMouseInsideModal) return;
-            if (toggleScroll) {
-                dataTargetModel?.classList.add('hidden');
-            }
-        });
+
+        // window.addEventListener('scroll', function(event) {
+        //     if (columnsModal?.classList.contains('hidden')) return;
+        //     if (isMouseInsideModal) return;
+        //     if (toggleScroll) {
+        //         columnsModal?.classList.add('hidden');
+        //     }
+        // });
 
         let isMouseInsideModal = false;
 
-        dataTargetModel?.addEventListener('mouseenter', function() {
+        columnsModal?.addEventListener('mouseenter', function() {
             isMouseInsideModal = true;
         });
 
-        dataTargetModel?.addEventListener('mouseleave', function() {
+        columnsModal?.addEventListener('mouseleave', function() {
             isMouseInsideModal = false;
         });
 
-        dataTargetModel?.addEventListener('wheel', function(event) {
-            const atTop = dataTargetModel?.scrollTop === 0;
-            const atBottom = dataTargetModel?.scrollTop + dataTargetModel?.clientHeight >= dataTargetModel
+        columnsModal?.addEventListener('wheel', function(event) {
+            const atTop = columnsModal?.scrollTop === 0;
+            const atBottom = columnsModal?.scrollTop + columnsModal?.clientHeight >= columnsModal
                 .scrollHeight;
 
             if (!(atTop && event.deltaY < 0) && !(atBottom && event.deltaY > 0)) {
@@ -70,7 +70,7 @@
             }
 
             if (!insideDropdown) {
-                dataTargetModel?.classList.add('hidden');
+                columnsModal?.classList.add('hidden');
             }
         });
     </script>

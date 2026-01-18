@@ -20,25 +20,6 @@ class RouteController extends Controller
         return view('pages.dashboard.transportations.routes.create');
     }
 
-    public function getCities()
-    {
-        $search = request()->input('q', '');
-        $page = request()->input('page', 1);
-        $perPage = 50;
-
-        $query = City::query()->select('id', 'name')->orderBy('name');
-
-        if (!empty($search)) {
-            $query->where('name', 'like', "%{$search}%");
-        }
-
-        $total = $query->count();
-        $cities = $query->skip(($page - 1) * $perPage)->take($perPage)->get()
-            ->map(fn($city) => ['id' => $city->id, 'text' => $city->name]);
-
-        return response()->json(['results' => $cities, 'pagination' => ['more' => ($page * $perPage) < $total]]);
-    }
-
     public function store(StoreRequest $request)
     {
         $data = $request->validated();

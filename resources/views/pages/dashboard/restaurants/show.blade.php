@@ -56,7 +56,7 @@
                         @if ($restaurant->type)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.type') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $restaurant->type->name }}</p>
+                                <p class="text-sm text-secondary-foreground">{{ $restaurant->type?->name }}</p>
                             </div>
                         @endif
                         @if ($restaurant->rating)
@@ -185,22 +185,14 @@
                             </div>
                         </div>
                     </div>
-                    @if ($restaurant->description)
-                        <div class="col-span-full border-custom rounded-lg mb-4 p-4">
-                            <label class="kt-label mb-2">{{ __('main.description') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $restaurant->description !!}
-                            </div>
-                        </div>
-                    @endif
-                    @if ($restaurant->notes)
-                        <div class="col-span-full border-custom rounded-lg p-4">
-                            <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $restaurant->notes !!}
-                            </div>
-                        </div>
-                    @endif
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $restaurant,
+                        'column' => 'description',
+                    ])
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $restaurant,
+                        'column' => 'notes',
+                    ])
                 </div>
             </div>
 
@@ -214,7 +206,7 @@
                         @if ($restaurant->region)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $restaurant->region->name }}</p>
+                                <p class="text-sm text-secondary-foreground">{{ $restaurant->region?->name }}</p>
                             </div>
                         @endif
                         @if ($restaurant->subregion)
@@ -226,19 +218,19 @@
                         @if ($restaurant->country)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $restaurant->country->name }}</p>
+                                <p class="text-sm text-secondary-foreground">{{ $restaurant->country?->name }}</p>
                             </div>
                         @endif
                         @if ($restaurant->state)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.state') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $restaurant->state->name }}</p>
+                                <p class="text-sm text-secondary-foreground">{{ $restaurant->state?->name }}</p>
                             </div>
                         @endif
                         @if ($restaurant->city)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.city') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $restaurant->city->name }}</p>
+                                <p class="text-sm text-secondary-foreground">{{ $restaurant->city?->name }}</p>
                             </div>
                         @endif
                         @if ($restaurant->street)
@@ -445,13 +437,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($season->description)
-                                    <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
-                                        <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                        <div class="text-sm text-secondary-foreground prose max-w-none">
-                                            {!! $season->description !!}</div>
-                                    </div>
-                                @endif
+                                @include('components.elements.display-desc-or-notes', [
+                                    'record' => $season,
+                                    'column' => 'description',
+                                ])
                                 <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
                                         'models' => 'seasons',
@@ -573,14 +562,10 @@
                                         </div>
                                     </div>
                                 @endif
-
-                                @if ($meal->description)
-                                    <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
-                                        <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                        <div class="text-sm text-secondary-foreground prose max-w-none">
-                                            {!! $meal->description !!}</div>
-                                    </div>
-                                @endif
+                                @include('components.elements.display-desc-or-notes', [
+                                    'record' => $meal,
+                                    'column' => 'description',
+                                ])
                                 <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
                                         'models' => 'meals',
@@ -688,13 +673,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($supplement->description)
-                                    <div class="lg:col-span-2 mt-2 border-custom-t pt-2">
-                                        <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                        <div class="text-sm text-secondary-foreground prose max-w-none">
-                                            {!! $supplement->description !!}</div>
-                                    </div>
-                                @endif
+                                @include('components.elements.display-desc-or-notes', [
+                                    'record' => $supplement,
+                                    'column' => 'description',
+                                ])
                                 <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
                                         'models' => 'supplements',

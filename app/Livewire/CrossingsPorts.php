@@ -83,7 +83,7 @@ class CrossingsPorts extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('crossing_port.crossings_ports'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.crossings_ports'), 'count' => $count]),
         ]);
     }
 

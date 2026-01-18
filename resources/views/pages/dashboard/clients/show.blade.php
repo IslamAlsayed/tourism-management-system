@@ -143,22 +143,15 @@
                                 ])
                             </div>
                         </div>
-                        @if ($client->description)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $client->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($client->notes)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $client->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $client,
+                            'column' => 'description',
+                        ])
+
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $client,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>

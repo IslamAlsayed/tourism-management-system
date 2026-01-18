@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Region;
-use App\Models\Currency;
 use App\Models\CrossingPort;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CrossingPort\StoreRequest;
@@ -18,9 +17,8 @@ class CrossingPortController extends Controller
 
     public function create()
     {
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
-        return view('pages.dashboard.crossings-ports.create', compact('currencies', 'crossing_port_types'));
+        return view('pages.dashboard.crossings-ports.create', compact('crossing_port_types'));
     }
 
     public function store(StoreRequest $request)
@@ -48,9 +46,8 @@ class CrossingPortController extends Controller
         if (!$crossingPort)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.crossing_port')]));
         $regions = Region::orderBy('name')->get();
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $crossing_port_types = array_keys(config('helpers.crossing_port_types'));
-        return view('pages.dashboard.crossings-ports.edit', compact('crossingPort', 'currencies', 'crossing_port_types'));
+        return view('pages.dashboard.crossings-ports.edit', compact('crossingPort', 'crossing_port_types'));
     }
 
     public function update(UpdateRequest $request, $id)

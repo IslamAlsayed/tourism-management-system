@@ -61,22 +61,14 @@
                             </div>
                         </div>
                     </div>
-                    @if ($pricing->description)
-                        <div class="col-span-full border-custom rounded-lg mb-4 p-4">
-                            <label class="kt-label mb-2">{{ __('main.description') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $pricing->description !!}
-                            </div>
-                        </div>
-                    @endif
-                    @if ($pricing->notes)
-                        <div class="col-span-full border-custom rounded-lg p-4">
-                            <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $pricing->notes !!}
-                            </div>
-                        </div>
-                    @endif
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $pricing,
+                        'column' => 'description',
+                    ])
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $pricing,
+                        'column' => 'notes',
+                    ])
                 </div>
             </div>
 

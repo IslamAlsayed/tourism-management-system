@@ -260,7 +260,6 @@
                             {{-- Departure Tax Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'departure_tax_currency_id',
-                                'currencies' => $currencies,
                             ])
                         </div>
 
@@ -297,7 +296,6 @@
                             {{-- Visa Fee Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'visa_fee_currency_id',
-                                'currencies' => $currencies,
                             ])
 
                             {{-- Visa Duration --}}

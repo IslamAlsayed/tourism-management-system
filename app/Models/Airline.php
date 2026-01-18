@@ -129,11 +129,11 @@ class Airline extends Model
         $location = [];
 
         if ($this->city)
-            $location[] = $this->city->display_name;
+            $location[] = $this->city?->display_name;
         if ($this->state)
-            $location[] = $this->state->display_name;
+            $location[] = $this->state?->display_name;
         if ($this->country)
-            $location[] = $this->country->display_name;
+            $location[] = $this->country?->display_name;
 
         return implode(', ', $location);
     }

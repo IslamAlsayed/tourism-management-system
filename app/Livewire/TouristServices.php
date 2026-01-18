@@ -148,12 +148,9 @@ class TouristServices extends Component
             $query->where('is_free_entry', $this->filterFreeEntry);
         $query = $this->applySorting($query);
         $data = $query->paginate(getPaginate());
+        // dd($data->toArray());
+
         $this->totalCount = $data->total();
-        return view('livewire.tourist-services', [
-            'data' => $data,
-            'serviceTypes' => TouristService::getServiceTypes(),
-            'categories' => TouristService::getCategories(),
-            'statuses' => TouristService::getStatuses(),
-        ]);
+        return view('livewire.tourist-services', ['data' => $data]);
     }
 }

@@ -77,14 +77,10 @@
                             </div>
                         </div>
                     </div>
-                    @if ($supplement->description)
-                        <div class="col-span-full border-custom rounded-lg p-4">
-                            <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $supplement->description !!}
-                            </div>
-                        </div>
-                    @endif
+                    @include('components.elements.display-desc-or-notes', [
+                        'record' => $supplement,
+                        'column' => 'description',
+                    ])
                     <div class="lg:col-span-2 flex gap-2 mt-4">
                         @include('components.elements.show-button', [
                             'models' => 'supplements',

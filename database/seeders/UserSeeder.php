@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'hire_date' => '2025-09-20',
             'department' => 'Administration',
             'position' => 'HR Manager',
-            'is_admin' => 1,
+            'role' => 'superadmin',
             'timezone_id' => 2,
             'photo' => 'uploads/users/1/Ak5G29KHP54dNf7PG7syIhE8YUck4yRRPAyJbrNS.png',
         ]);
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
             'hire_date' => '2025-09-20',
             'department' => 'Development',
             'position' => 'Senior Developer',
-            'is_admin' => 1,
+            'role' => 'admin',
             'timezone_id' => 1,
             'photo' => 'uploads/users/2/2W7uER2vMWn6Eeec8NJgGgYfoYw1eSrV64ZfyM7FC96.png',
         ]);
@@ -61,6 +61,7 @@ class UserSeeder extends Seeder
             'address' => 'القاهرة، مصر',
             'department' => 'Users',
             'position' => 'User',
+            'role' => 'user',
             'timezone_id' => 3,
             'photo' => 'uploads/users/3/fhjdy2WvMWn6E8NJgGgYfoYw1eSrV64ZfyM7FC96.png',
         ]);

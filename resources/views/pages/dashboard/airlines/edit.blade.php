@@ -47,11 +47,7 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                                'record' => $airline,
-                            ])
+                            @include('components.selects.timezone', ['record' => $airline])
 
                             {{-- Elevation --}}
                             <div>

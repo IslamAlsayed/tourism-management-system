@@ -22,7 +22,7 @@
     </div>
 
     <!-- Currency -->
-    @include('components.selects.currency', ['name' => 'currency_id'])
+    @include('components.selects.currency')
 
     {{-- Transportation Company --}}
     <div wire:ignore>

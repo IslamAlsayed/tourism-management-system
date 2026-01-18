@@ -67,18 +67,10 @@
                             </div>
 
                             {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                                'record' => $restaurant,
-                            ])
+                            @include('components.selects.timezone', ['record' => $restaurant])
 
                             {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                                'record' => $restaurant,
-                            ])
+                            @include('components.selects.currency', ['record' => $restaurant])
 
                             <!-- Street Address -->
                             <div class="align-self-end">

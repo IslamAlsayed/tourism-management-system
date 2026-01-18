@@ -8,7 +8,6 @@ use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\Settings\UpdateRequest;
-use App\Models\Timezone;
 
 class SettingsController extends Controller
 {
@@ -38,7 +37,7 @@ class SettingsController extends Controller
             $this->uploadPhoto($request, $setting, 'app_mini_photo', "logos");
         }
 
-        $updated = $setting->update($request->all());
+        $updated = $setting->update($validated);
 
         // Update user preferences if button_display_mode is sent
         if ($request->has('button_display_mode')) {
@@ -57,8 +56,7 @@ class SettingsController extends Controller
     public function general()
     {
         $settings = Setting::first();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
-        return view('pages.settings.general', compact('settings', 'timezones'));
+        return view('pages.settings.general', compact('settings'));
     }
 
     public function security()

@@ -49,11 +49,7 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                                'record' => $company,
-                            ])
+                            @include('components.selects.currency', ['record' => $company])
 
                             <!-- Street -->
                             <div class="align-self-end">
@@ -258,6 +254,15 @@
                         ])
                     </div>
                 </div>
+
+                {{-- Vehicles Type Information --}}
+                <livewire:morphic-forms.vehicle-type-form :record="$company" />
+
+                {{-- Seasons Information --}}
+                <livewire:morphic-forms.season-form :record="$company" />
+
+                {{-- Supplements Information --}}
+                <livewire:morphic-forms.supplement-form :record="$company" />
 
                 {{-- Update Buttons --}}
                 @include('components.elements.update-submit', [

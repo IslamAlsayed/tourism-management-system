@@ -51,7 +51,7 @@ class StoreRequest extends FormRequest
             'button_display_mode' => ['nullable', 'string', 'in:icon,text,both'],
 
             // Status Flags
-            'is_admin' => ['nullable', 'boolean'],
+            'role' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
             'is_verified' => ['nullable', 'boolean'],
             'force_password_change' => ['nullable', 'boolean'],

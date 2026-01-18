@@ -223,11 +223,7 @@
                                     </div>
 
                                     {{-- Timezone --}}
-                                    @include('components.selects.timezone', [
-                                        'name' => 'timezone_id',
-                                        'timezones' => $timezones,
-                                        'record' => $user,
-                                    ])
+                                    @include('components.selects.timezone', ['record' => $user])
 
                                     <!-- Button Display Mode -->
                                     <div class="">
@@ -257,16 +253,6 @@
 
                                 <!-- User Flags -->
                                 <div class="flex flex-wrap gap-10 mb-4">
-                                    <div class="flex items-center gap-3">
-                                        <input type="hidden" name="is_admin" value="0">
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'is_admin',
-                                            'id' => 'is_admin',
-                                            'value' => '1',
-                                            'checked' => $user->is_admin == 1,
-                                            'label' => __('main.is_admin'),
-                                        ])
-                                    </div>
                                     <div class="flex items-center gap-3">
                                         <input type="hidden" name="is_active" value="0">
                                         @include('components.elements.checkbox-button', [

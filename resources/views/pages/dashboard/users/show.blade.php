@@ -99,22 +99,14 @@
                                 ])
                             </div>
                         </div>
-                        @if ($user->description)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $user->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($user->notes)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $user->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $user,
+                            'column' => 'description',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $user,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>

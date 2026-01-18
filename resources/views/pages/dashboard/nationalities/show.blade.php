@@ -55,20 +55,15 @@
                                 ])
                             </div>
                         </div>
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $nationality,
+                            'column' => 'description',
+                        ])
 
-                        @if ($nationality->description)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-2">{{ __('main.description') }}</label>
-                                <p class="text-sm text-secondary-foreground">{!! $nationality->description !!}</p>
-                            </div>
-                        @endif
-
-                        @if ($nationality->notes)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground">{!! $nationality->notes !!}</div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $nationality,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>
@@ -121,7 +116,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
                             <p class="text-sm text-secondary-foreground">
-                                {{ $nationality->region->name ?? __('main.na') }}
+                                {{ $nationality->region?->name ?? __('main.na') }}
                             </p>
                         </div>
                         <div>
@@ -133,19 +128,19 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
                             <p class="text-sm text-secondary-foreground">
-                                {{ $nationality->country->name ?? __('main.na') }}
+                                {{ $nationality->country?->name ?? __('main.na') }}
                             </p>
                         </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.state') }}</label>
                             <p class="text-sm text-secondary-foreground">
-                                {{ $nationality->state->name ?? __('main.na') }}
+                                {{ $nationality->state?->name ?? __('main.na') }}
                             </p>
                         </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.city') }}</label>
                             <p class="text-sm text-secondary-foreground">
-                                {{ $nationality->city->name ?? __('main.na') }}
+                                {{ $nationality->city?->name ?? __('main.na') }}
                             </p>
                         </div>
                     </div>

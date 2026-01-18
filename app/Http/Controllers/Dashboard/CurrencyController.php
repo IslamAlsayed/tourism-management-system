@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Country;
 use App\Models\Currency;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Currency\CurrencyCreateRequest;
-use App\Http\Requests\Currency\CurrencyUpdateRequest;
+use App\Http\Requests\Currency\StoreRequest;
+use App\Http\Requests\Currency\UpdateRequest;
 
 class CurrencyController extends Controller
 {
@@ -17,8 +16,18 @@ class CurrencyController extends Controller
 
     public function create()
     {
-        $countries = Country::all();
-        return view('pages.dashboard.currencies.create', compact('countries'));
+        return view('pages.dashboard.currencies.create');
+    }
+
+    public function store(StoreRequest $request)
+    {
+        $validated = $request->validated();
+        $created = Currency::create($validated);
+        return $created
+            ? ($request->has('save_and_add')
+                ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.currency')]))
+                : redirect()->route('currencies.index')->with('success', __('messages.type_created', ['type' => __('main.currency')])))
+            : redirect()->route('currencies.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.currency')]));
     }
 
     public function show($id)
@@ -34,22 +43,10 @@ class CurrencyController extends Controller
         $currency = Currency::find($id);
         if (!$currency)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.currency')]));
-        $countries = Country::all();
-        return view('pages.dashboard.currencies.edit', compact('currency', 'countries'));
+        return view('pages.dashboard.currencies.edit', compact('currency'));
     }
 
-    public function store(CurrencyCreateRequest $request)
-    {
-        $validated = $request->validated();
-        $created = Currency::create($validated);
-        return $created
-            ? ($request->has('save_and_add')
-                ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.currency')]))
-                : redirect()->route('currencies.index')->with('success', __('messages.type_created', ['type' => __('main.currency')])))
-            : redirect()->route('currencies.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.currency')]));
-    }
-
-    public function update(CurrencyUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $currency = Currency::find($id);
         if (!$currency)

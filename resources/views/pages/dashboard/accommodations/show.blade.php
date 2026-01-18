@@ -2,10 +2,6 @@
 
 @section('title', __('main.type_details', ['type' => __('main.accommodation')]))
 
-@push('scripts')
-    @include('components.elements.setup-map')
-@endpush
-
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
@@ -59,9 +55,9 @@
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.type') }}</label>
                                 <div class="flex flex-wrap gap-2">
-                                    <a href="{{ route('types.show', $accommodation->type->id) }}"
+                                    <a href="{{ route('types.show', $accommodation->type?->id) }}"
                                         class="kt-badge kt-badge-primary">
-                                        #{{ $accommodation->type->id }} | {{ $accommodation->type->name }}
+                                        #{{ $accommodation->type?->id }} | {{ $accommodation->type?->name }}
                                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                     </a>
                                 </div>
@@ -115,22 +111,15 @@
                                 ])
                             </div>
                         </div>
-                        @if ($accommodation->description)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $accommodation->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($accommodation->notes)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $accommodation->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $accommodation,
+                            'column' => 'description',
+                        ])
+
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $accommodation,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>
@@ -145,9 +134,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
                             @if ($accommodation->region)
-                                <a href="{{ route('regions.show', $accommodation->region->id) }}"
+                                <a href="{{ route('regions.show', $accommodation->region?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $accommodation->region->name ?? __('main.na') }}
+                                    {{ $accommodation->region?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -169,9 +158,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
                             @if ($accommodation->country)
-                                <a href="{{ route('countries.show', $accommodation->country->id) }}"
+                                <a href="{{ route('countries.show', $accommodation->country?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $accommodation->country->name ?? __('main.na') }}
+                                    {{ $accommodation->country?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -181,9 +170,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.state') }}</label>
                             @if ($accommodation->state)
-                                <a href="{{ route('states.show', $accommodation->state->id) }}"
+                                <a href="{{ route('states.show', $accommodation->state?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $accommodation->state->name ?? __('main.na') }}
+                                    {{ $accommodation->state?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -193,9 +182,9 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.city') }}</label>
                             @if ($accommodation->city)
-                                <a href="{{ route('cities.show', $accommodation->city->id) }}"
+                                <a href="{{ route('cities.show', $accommodation->city?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $accommodation->city->name ?? __('main.na') }}
+                                    {{ $accommodation->city?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else

@@ -70,7 +70,7 @@ class Languages extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('language.languages'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.languages'), 'count' => $count]),
         ]);
     }
 

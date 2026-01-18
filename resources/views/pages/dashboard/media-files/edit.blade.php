@@ -192,6 +192,10 @@
 @endsection
 
 @push('scripts')
+    @include('components.scripts.drag-drop-files')
+@endpush
+
+{{-- @push('scripts')
     <script>
         function displaySelectedFile(input) {
             const filePreview = document.getElementById('file-preview');
@@ -316,4 +320,4 @@
             displaySelectedFile(fileInput);
         }
     </script>
-@endpush
+@endpush --}}

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', __('main.type_details', ['type' => __('main.tours.guide_review')]))
+@section('title', __('main.type_details', ['type' => __('main.tours.guide-review')]))
 
 @section('content')
     <div class="kt-container-fixed">
@@ -21,7 +21,7 @@
                     {{ __('main.edit') }}
                 </a>
                 <a href="{{ route('tours.guides-reviews.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.tours.guides_reviews')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.tours.guides-reviews')]) }}
                 </a>
             </div>
         </div>
@@ -39,7 +39,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         @if ($tourGuideReview->tour_guide->name)
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.tours.guide_name') }}</label>
+                                <label class="kt-label mb-1">{{ __('main.tour_guide_name') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     {{ $tourGuideReview->tour_guide->name ?: __('main.na') }}
                                 </p>
@@ -66,30 +66,18 @@
                                 ])
                             </div>
                         </div>
-                        @if ($tourGuideReview->review)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.review') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $tourGuideReview->review !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($tourGuideReview->description)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $tourGuideReview->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($tourGuideReview->notes)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $tourGuideReview->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $tourGuideReview,
+                            'column' => 'review',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $tourGuideReview,
+                            'column' => 'description',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $tourGuideReview,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>

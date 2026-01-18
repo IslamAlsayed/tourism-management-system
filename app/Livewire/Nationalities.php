@@ -64,7 +64,7 @@ class Nationalities extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('nationality.nationalities'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.nationalities'), 'count' => $count]),
         ]);
     }
 

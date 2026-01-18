@@ -78,7 +78,7 @@ class Clients extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('client.clients'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.clients'), 'count' => $count]),
         ]);
     }
 
@@ -118,7 +118,7 @@ class Clients extends Component
             'sort' => $this->sortField ?? null,
             'dir' => $this->sortDirection ?? null,
             'perPage' => getPaginate(),
-            'is_admin' => getActiveUser()->is_admin,
+            'role' => in_array(getActiveUser()->role, ['superadmin', 'admin']) ? 'admin' : 'user',
             'filterClientGender' => is_array($this->filterClientGender) ? ($this->filterClientGender['payload']['value'] ?? null) : $this->filterClientGender,
             'filterClientStatus' => is_array($this->filterClientStatus) ? ($this->filterClientStatus['payload']['value'] ?? null) : $this->filterClientStatus,
         ]));
@@ -131,8 +131,8 @@ class Clients extends Component
         $filterStatus = is_array($this->filterClientStatus) ? ($this->filterClientStatus['payload']['value'] ?? null) : $this->filterClientStatus;
         $data = Cache::remember($cacheKey, now()->addMinutes(5), function () use ($filterGender, $filterStatus) {
             $query = Client::query();
-            if (!getActiveUser()->is_admin) {
-                $query->where('is_admin', 0);
+            if (!getActiveUser()->role) {
+                $query->where('role', '!=', 'superadmin');
             }
             $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
             if ($filterGender && $filterGender !== 'all') {

@@ -39,18 +39,10 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                                'record' => $client,
-                            ])
+                            @include('components.selects.timezone', ['record' => $client])
 
                             {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                                'record' => $client,
-                            ])
+                            @include('components.selects.currency', ['record' => $client])
 
                             {{-- Box --}}
                             <div>

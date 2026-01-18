@@ -24,7 +24,8 @@
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-lg font-semibold">{{ __('main.room') }} #{{ $index + 1 }}</h4>
                             <button type="button" wire:click="removeRoom({{ $index }})"
-                                class="kt-btn kt-btn-sm bg-danger text-white" toggle-button>
+                                class="kt-btn kt-btn-sm bg-danger text-white {{ count($rooms) > 1 ? '' : 'hidden' }}s"
+                                toggle-button>
 
                                 @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
                                     {!! $text ?? __('main.delete') !!}

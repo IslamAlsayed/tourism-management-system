@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Room;
-use App\Models\Currency;
-use App\Models\Restaurant;
-use App\Models\Accommodation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Room\StoreRequest;
 use App\Http\Requests\Room\UpdateRequest;
@@ -19,8 +16,7 @@ class RoomController extends Controller
 
     public function create()
     {
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.rooms.create', compact('currencies'));
+        return view('pages.dashboard.rooms.create');
     }
 
     public function store(StoreRequest $request)
@@ -49,8 +45,7 @@ class RoomController extends Controller
         $room = Room::find($id);
         if (!$room)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.room')]));
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.rooms.edit', compact('room', 'currencies'));
+        return view('pages.dashboard.rooms.edit', compact('room'));
     }
 
     public function update(UpdateRequest $request, $id)

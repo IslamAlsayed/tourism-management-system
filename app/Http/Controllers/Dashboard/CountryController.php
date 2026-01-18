@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\City;
 use App\Models\State;
-use App\Models\Region;
 use App\Models\Country;
-use App\Models\Currency;
 use App\Models\Language;
-use App\Models\Timezone;
 use App\Models\CityState;
 use Illuminate\Http\Request;
 use App\Traits\PhotoUploadTrait;
@@ -27,11 +24,8 @@ class CountryController extends Controller
 
     public function create()
     {
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $languages = Language::orderBy('name')->get();
-        $regions = Region::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
-        return view('pages.dashboard.countries.create', compact('currencies', 'languages', 'regions', 'timezones'));
+        return view('pages.dashboard.countries.create', compact('languages'));
     }
 
     public function store(StoreRequest $request)
@@ -76,10 +70,8 @@ class CountryController extends Controller
         $country = Country::find($id);
         if (!$country)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
         $languages = Language::orderBy('name')->get();
-        $timezones = Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
-        return view('pages.dashboard.countries.edit', compact('country', 'currencies', 'languages', 'timezones'));
+        return view('pages.dashboard.countries.edit', compact('country', 'languages'));
     }
 
     public function update(UpdateRequest $request, $id)

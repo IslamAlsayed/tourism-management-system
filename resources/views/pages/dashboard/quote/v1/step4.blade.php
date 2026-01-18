@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Hotel (optional)</h4>
-                    <div><strong>Hotel:</strong> {{ $booking->hotel->accommodation->name ?? '-' }}</div>
+                    <div><strong>Hotel:</strong> {{ $booking->hotel->accommodation?->name ?? '-' }}</div>
                     <div><strong>Rooms:</strong>
                         [@foreach ($booking->roomTypes as $key => $room)
                             {{ $room->pivot->quantity . ' x ' . $room->name ?? '-' }} {{ $key > 0 ? ', ' : '' }}
@@ -127,7 +127,7 @@
                         @forelse($booking->itineraries as $itinerary)
                             <tr>
                                 <td>{{ $itinerary->day_number }}</td>
-                                <td>{{ $itinerary->city->name }}</td>
+                                <td>{{ $itinerary->city?->name }}</td>
                                 <td>{{ $itinerary->description ?: '--' }}</td>
                             </tr>
                         @empty

@@ -29,11 +29,12 @@ use App\Http\Controllers\Dashboard\RestaurantController;
 use App\Http\Controllers\Dashboard\SupplementController;
 use App\Http\Controllers\Dashboard\ActivityLogController;
 use App\Http\Controllers\Dashboard\NationalityController;
-use App\Http\Controllers\Dashboard\TouristServiceController;
+use App\Http\Controllers\Dashboard\TouristSiteController;
 use App\Http\Controllers\Dashboard\Tours\GuideController;
 use App\Http\Controllers\Dashboard\CrossingPortController;
 use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
+use App\Http\Controllers\Dashboard\TouristServiceController;
 use App\Http\Controllers\Dashboard\Tours\GuideTypeController;
 use App\Http\Controllers\Dashboard\Tours\GuideReviewController;
 use App\Http\Controllers\Dashboard\Transportations\RouteController;
@@ -176,6 +177,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Route::resource('transportation/bus-types', BusTypeController::class)->names('transportation-bus-types');
     // Route::resource('transportation/company/bus-types', CompanyBusTypeController::class)->names('transportation-company-bus-types');
     // Route::resource('transportation/vehicles', VehicleController::class)->names('transportation-vehicles');
+
+    // === TOURIST SITES MANAGEMENT ===
+    Route::resource('tourist-sites', TouristSiteController::class)->names('tourist-sites');
 
     // === TOURIST SERVICES MANAGEMENT ===
     Route::resource('tourist-services', TouristServiceController::class)->names('tourist-services');

@@ -25,6 +25,7 @@ class SettingSeeder extends Seeder
             'app_two_factor_authentication' => false,
             'app_backup_frequency' => 'weekly',
             'app_ably_key' => 'YfoutQ.0ANKLQ:l9mrZvEjJGo07yZsKnU8XU33MkgnlX9k7JfmsQUKJe4', // islam's key
+            'app_google_maps_key' => 'AIzaSyBPeqtH6bhY7Keyhj10E9IAO2j6siQLBoU', // islam's key
             'app_email_notifications' => true,
             'app_sms_notifications' => false,
             'app_push_notifications' => true,

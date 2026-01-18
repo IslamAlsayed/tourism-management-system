@@ -24,14 +24,13 @@
     <div class="kt-container-fixed">
         <form action="{{ route('countries.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
-            <!-- Country Photo -->
-            @include('components.input-image', [
-                'column' => 'country',
-                'columnName' => 'photo',
-            ])
-
             <div class="grid gap-4 lg:gap-6">
+                <!-- Country Photo -->
+                @include('components.input-image', [
+                    'column' => 'country',
+                    'columnName' => 'photo',
+                ])
+
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -75,16 +74,10 @@
                             </div>
 
                             {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                            ])
+                            @include('components.selects.timezone')
 
                             {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                            ])
+                            @include('components.selects.currency')
 
                             {{-- Language --}}
                             @include('components.selects.language', [

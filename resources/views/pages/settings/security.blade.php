@@ -35,7 +35,6 @@
                     <form method="POST" action="{{ route('settings.update', $settings->id) }}" class="space-y-6 p-4">
                         @csrf
                         @method('PUT')
-
                         <div class="grid lg:grid-cols-2 gap-6 mb-4">
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.session_timeout') }}
@@ -66,20 +65,22 @@
                                     {{ __('main.minimum_password_length_description') }}
                                 </div>
                             </div>
-                            <div class="disabled p-2 rounded-sm"
-                                style="background: var(--color-{{ $settings->app_ip_ban_duration_minutes == 1 ? 'green' : 'yellow' }}-100);">
-                                <label class="kt-label mb-2">
-                                    {{ __('main.ip_ban_duration') }} ({{ __('main.minutes') }})
-                                    <span
-                                        class="inline-block font-medium px-2 py-0.5 rounded-full ms-2 bg-danger/10 text-red-600">
-                                        {{ __('sidebar.soon') }}
-                                    </span>
-                                </label>
+                            <div class="disabled">
+                                <div
+                                    class="p-2 rounded-sm {{ $settings->app_ip_ban_duration_minutes == 1 ? 'bg-success-light' : 'bg-yellow-100' }}">
+                                    <label class="kt-label mb-2">
+                                        {{ __('main.ip_ban_duration') }} ({{ __('main.minutes') }})
+                                        <span
+                                            class="inline-block font-medium px-2 py-0.5 rounded-full ms-2 bg-danger/10 text-red-600">
+                                            {{ __('sidebar.soon') }}
+                                        </span>
+                                    </label>
 
-                                <input type="number" name="app_ip_ban_duration_minutes" class="kt-input h-[45px]"
-                                    value="{{ $settings->app_ip_ban_duration_minutes }}" minLength="1" />
-                                <div class="text-xs text-secondary-foreground mt-1">
-                                    {{ __('main.minutes_to_ban_ip') }}
+                                    <input type="number" name="app_ip_ban_duration_minutes" class="kt-input h-[45px]"
+                                        value="{{ $settings->app_ip_ban_duration_minutes }}" minLength="1" />
+                                    <div class="text-xs text-secondary-foreground mt-1">
+                                        {{ __('main.minutes_to_ban_ip') }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -98,19 +99,21 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-center gap-3 disabled p-2 rounded-sm"
-                                style="background: var(--color-{{ $settings->app_two_factor_authentication == 1 ? 'green' : 'yellow' }}-100);">
-                                <input type="hidden" name="app_two_factor_authentication" value="0">
-                                <input type="checkbox" name="app_two_factor_authentication" class="kt-checkbox"
-                                    id="app_two_factor_authentication" value="1"
-                                    {{ $settings->app_two_factor_authentication == 1 ? 'checked' : '' }}>
-                                <label for="app_two_factor_authentication" class="kt-label mb-0">
-                                    {{ __('main.enable_two_factor') }}
-                                    <span
-                                        class="inline-block font-medium px-2 py-0.5 rounded-full ms-2 bg-danger/10 text-red-600">
-                                        {{ __('sidebar.soon') }}
-                                    </span>
-                                </label>
+                            <div class="disabled">
+                                <div
+                                    class="flex items-center gap-3 p-2 rounded-sm {{ $settings->app_two_factor_authentication == 1 ? 'bg-success-light' : 'bg-yellow-100' }}">
+                                    <input type="hidden" name="app_two_factor_authentication" value="0">
+                                    <input type="checkbox" name="app_two_factor_authentication" class="kt-checkbox"
+                                        id="app_two_factor_authentication" value="1"
+                                        {{ $settings->app_two_factor_authentication == 1 ? 'checked' : '' }}>
+                                    <label for="app_two_factor_authentication" class="kt-label mb-0">
+                                        {{ __('main.enable_two_factor') }}
+                                        <span
+                                            class="inline-block font-medium px-2 py-0.5 rounded-full ms-2 bg-danger/10 text-red-600">
+                                            {{ __('sidebar.soon') }}
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
 

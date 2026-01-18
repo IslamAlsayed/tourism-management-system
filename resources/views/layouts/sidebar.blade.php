@@ -1,5 +1,5 @@
 {{-- Sidebar --}}
-<div class="kt-sidebar bg-background border-e border-e-border fixed top-0 bottom-0 z-20 hidden lg:flex flex-col items-stretch shrink-0 [--kt-drawer-enable:true] lg:[--kt-drawer-enable:false]"
+<div class="kt-sidebar bg-background border-e border-e-border fixed top-0 bottom-0 z-1000 hidden lg:flex flex-col items-stretch shrink-0 [--kt-drawer-enable:true] lg:[--kt-drawer-enable:false]"
     data-kt-drawer="true" data-kt-drawer-class="kt-drawer kt-drawer-start top-0 bottom-0" id="sidebar">
     {{-- Sidebar Header --}}
     <div class="kt-sidebar-header hidden lg:flex text-center justify-center relative px-3 lg:px-4 shrink-0 py-2"
@@ -40,6 +40,9 @@
                 @endphp
 
                 @foreach ($menuItems as $item)
+                    @if (isset($item['roles']) && !in_array(getActiveUser()->role, $item['roles']))
+                        @continue
+                    @endif
                     @php
                         $hasChildren = isset($item['children']);
                         $isActive = isset($item['route'])
@@ -117,6 +120,9 @@
                             <div
                                 class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border {{ $hasActiveChild ? 'show' : '' }}">
                                 @foreach ($item['children'] as $child)
+                                    @if (isset($child['roles']) && !in_array(getActiveUser()->role, $child['roles']))
+                                        @continue
+                                    @endif
                                     @php
                                         $childHasChildren = isset($child['children']);
                                         $childIsActive = isActive(
@@ -234,6 +240,9 @@
                                             <div
                                                 class="kt-menu-accordion gap-1 ps-[10px] relative before:absolute before:start-[20px] before:top-0 before:bottom-0 before:border-s before:border-border">
                                                 @foreach ($child['children'] as $subChild)
+                                                    @if (isset($subChild['roles']) && !in_array(getActiveUser()->role, $subChild['roles']))
+                                                        @continue
+                                                    @endif
                                                     @php $subChildIsActive = isActive($subChild['route'] ?? null, $subChild['parameters'] ?? [], $currentRoute, $currentParameters); @endphp
                                                     <div class="kt-menu-item px-2">
                                                         <a class="{{ $subChild['parameters']['types'] ?? '' }} kt-menu-link border border-transparent items-center grow {{ $subChildIsActive ? 'bg-accent/60 rounded-[9px]' : '' }} hover:bg-accent/60 hover:rounded-[9px] gap-[14px] ps-[10px] pe-[10px] py-[8px]"

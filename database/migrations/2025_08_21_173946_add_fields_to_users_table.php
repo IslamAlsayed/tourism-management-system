@@ -28,7 +28,7 @@ return new class extends Migration {
             $table->string('preferences')->nullable();
             $table->string('photo')->nullable();
             $table->string('user_status')->nullable()->default('offline');
-            $table->boolean('is_admin')->default(false);
+            $table->string('role')->default('user');
             $table->boolean('is_active')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->timestamp('password_changed_at')->nullable();
@@ -66,7 +66,7 @@ return new class extends Migration {
                 'preferred_language',
                 'timezone_id',
                 'preferences',
-                'is_admin',
+                'role',
                 'photo',
                 'is_active',
                 'is_verified',

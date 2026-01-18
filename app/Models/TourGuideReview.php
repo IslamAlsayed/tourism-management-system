@@ -14,6 +14,7 @@ class TourGuideReview extends Model
     use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $richTextAttributes = [
+        'review',
         'description',
         'notes',
     ];
@@ -23,8 +24,8 @@ class TourGuideReview extends Model
         'uuid',
         'tour_guide_id',
         'rating',
-        'review',
         'is_active',
+        'review',
         'description',
         'notes',
     ];

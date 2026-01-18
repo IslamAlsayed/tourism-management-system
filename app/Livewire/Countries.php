@@ -65,7 +65,7 @@ class Countries extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('country.countries'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.countries'), 'count' => $count]),
         ]);
     }
 

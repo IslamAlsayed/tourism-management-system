@@ -55,6 +55,18 @@
     }
 }
 
+.dropzone.drag {
+    border-color: #000;
+    background: #dedede;
+}
+
+html.dark {
+    .dropzone.drag {
+        border-color: #fff;
+        background: #414141;
+    }
+}
+
 html[lang="ar"] {
     & .kt-dropdown-menu {
         left: 20px !important;

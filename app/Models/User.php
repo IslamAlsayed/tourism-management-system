@@ -46,7 +46,7 @@ class User extends Authenticatable
         'preferred_language',
         'timezone_id',
         'preferences',
-        'is_admin',
+        'role',
         'is_active',
         'is_verified',
         'password_changed_at',
@@ -134,12 +134,12 @@ class User extends Authenticatable
 
     public function scopeIsAdmin($query)
     {
-        return $query->where('is_admin', true);
+        return $query->where('role', 'admin')->orWhere('role', 'superadmin');
     }
 
     public function scopeIsNotAdmin($query)
     {
-        return $query->where('is_admin', 0);
+        return $query->where('role', '!=', 'admin')->where('role', '!=', 'superadmin');
     }
 
     public function scopeWithNotMe($query)

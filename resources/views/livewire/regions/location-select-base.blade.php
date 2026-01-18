@@ -81,102 +81,108 @@
         @enderror
     </div>
 
-    {{-- State --}}
-    <div class="align-self-end {{ !hasEmpty($filters['country']) ? 'disabled-option p-2 rounded-sm' : '' }}">
-        <label for="state_id" class="kt-label mb-2 flex items-center justify-between">
-            <div class="flex items-center justify-between gap-1">
-                <div class="flex items-center justify-between gap-1">
-                    @if (isset($multiple) && in_array('states', $multiple))
-                        <input type="hidden" name="all_states" value="0">
-                        <div class="custom-input">
-                            <input type="checkbox" name="all_states" id="all_states" value="1"
-                                wire:model.live="all_states"
-                                {{ ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'checked' : '' }}
-                                data-kt-datatable-row-check="true">
-                            <label for="all_states">{{ __('main.states') }}</label>
+    <div class="col-span-full">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            {{-- State --}}
+            <div class="align-self-end {{ !hasEmpty($filters['country']) ? 'disabled-option p-2 rounded-sm' : '' }}">
+                <label for="state_id" class="kt-label mb-2 flex items-center justify-between">
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="flex items-center justify-between gap-1">
+                            @if (isset($multiple) && in_array('states', $multiple))
+                                <input type="hidden" name="all_states" value="0">
+                                <div class="custom-input">
+                                    <input type="checkbox" name="all_states" id="all_states" value="1"
+                                        wire:model.live="all_states"
+                                        {{ ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'checked' : '' }}
+                                        data-kt-datatable-row-check="true">
+                                    <label for="all_states">{{ __('main.states') }}</label>
+                                </div>
+                            @else
+                                {{ __('main.states') }}
+                            @endif
+
+                            <strong class="dataLength text-primary">
+                                ({{ count($options['states']) ?: 0 }})
+                            </strong>
+                            <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
+                                wire:target="filters.country,updatedFilters"></i>
                         </div>
-                    @else
-                        {{ __('main.states') }}
+                        <span id="state_id-info"
+                            class="text-red-600 text-sm span-info {{ !hasEmpty($filters['country']) ? 'show' : '' }}">
+                            ({{ __('main.select_type_first', ['type' => __('main.country')]) }})
+                        </span>
+                    </div>
+                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+                </label>
+                <select name="state_id{{ isset($multiple) && in_array('states', $multiple) ? '[]' : '' }}"
+                    id="state_id"
+                    class="kt-select {{ isset($multiple) && in_array('states', $multiple) ? 'basic-multiple' : 'basic-single' }}"
+                    {{ !hasEmpty($filters['country']) || ($all_states ?? 0) == 1 || ($all_states ?? 0) == true || ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'disabled' : '' }}
+                    {{ isset($multiple) && in_array('states', $multiple) ? 'multiple' : '' }}>
+                    @if (!isset($multiple) && !in_array('states', (array) $multiple))
+                        <option value="" selected>--</option>
                     @endif
-
-                    <strong class="dataLength text-primary">
-                        ({{ count($options['states']) ?: 0 }})
-                    </strong>
-                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
-                        wire:target="filters.country,updatedFilters"></i>
-                </div>
-                <span id="state_id-info"
-                    class="text-red-600 text-sm span-info {{ !hasEmpty($filters['country']) ? 'show' : '' }}">
-                    ({{ __('main.select_type_first', ['type' => __('main.country')]) }})
-                </span>
+                    @foreach ($options['states'] as $item)
+                        <option value="{{ $item->id }}" @selected((isset($multiple) && in_array('states', $multiple) && in_array($item->id, $selectedStates ?? [])) || $item->id == old('state_id', $record->state_id ?? null))>
+                            {{ $item->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('state_id')
+                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                @enderror
             </div>
-            <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
-        </label>
-        <select name="state_id{{ isset($multiple) && in_array('states', $multiple) ? '[]' : '' }}" id="state_id"
-            class="kt-select {{ isset($multiple) && in_array('states', $multiple) ? 'basic-multiple' : 'basic-single' }}"
-            {{ !hasEmpty($filters['country']) || ($all_states ?? 0) == 1 || ($all_states ?? 0) == true || ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'disabled' : '' }}
-            {{ isset($multiple) && in_array('states', $multiple) ? 'multiple' : '' }}>
-            @if (!isset($multiple) && !in_array('states', (array) $multiple))
-                <option value="" selected>--</option>
-            @endif
-            @foreach ($options['states'] as $item)
-                <option value="{{ $item->id }}" @selected((isset($multiple) && in_array('states', $multiple) && in_array($item->id, $selectedStates ?? [])) || $item->id == old('state_id', $record->state_id ?? null))>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-        @error('state_id')
-            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-        @enderror
-    </div>
 
-    {{-- City --}}
-    <div
-        class="align-self-end {{ !hasEmpty($filters['state']) && !$all_states ? 'disabled-option p-2 rounded-sm' : '' }}">
-        <label for="city_id" class="kt-label mb-2 flex items-center justify-between">
-            <div class="flex items-center justify-between gap-1">
-                <div class="flex items-center justify-between gap-1">
-                    @if (isset($multiple) && in_array('cities', $multiple))
-                        <input type="hidden" name="all_cities" value="0">
-                        <div class="custom-input" wire:ignore>
-                            <input type="checkbox" name="all_cities" id="all_cities" value="1"
-                                {{ ($record->all_cities ?? 0) == 1 || ($record->all_cities ?? 0) == true ? 'checked' : '' }}
-                                data-kt-datatable-row-check="true">
-                            <label for="all_cities">{{ __('main.cities') }}</label>
+            {{-- City --}}
+            <div
+                class="align-self-end {{ !hasEmpty($filters['state']) && !$all_states ? 'disabled-option p-2 rounded-sm' : '' }}">
+                <label for="city_id" class="kt-label mb-2 flex items-center justify-between">
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="flex items-center justify-between gap-1">
+                            @if (isset($multiple) && in_array('cities', $multiple))
+                                <input type="hidden" name="all_cities" value="0">
+                                <div class="custom-input" wire:ignore>
+                                    <input type="checkbox" name="all_cities" id="all_cities" value="1"
+                                        {{ ($record->all_cities ?? 0) == 1 || ($record->all_cities ?? 0) == true ? 'checked' : '' }}
+                                        data-kt-datatable-row-check="true">
+                                    <label for="all_cities">{{ __('main.cities') }}</label>
+                                </div>
+                            @else
+                                {{ __('main.cities') }}
+                            @endif
+
+                            <strong class="dataLength text-primary">
+                                ({{ count($options['cities']) ?: 0 }})
+                            </strong>
+                            <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
+                                wire:target="filters.state,updatedFilters"></i>
                         </div>
-                    @else
-                        {{ __('main.cities') }}
+                        <span id="city_id-info"
+                            class="text-red-600 text-sm span-info {{ !hasEmpty($filters['state']) && !$all_states ? 'show' : '' }}">
+                            ({{ __('main.select_type_first', ['type' => __('main.state')]) }})
+                        </span>
+                    </div>
+                    <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+                </label>
+                <select name="city_id{{ isset($multiple) && in_array('cities', $multiple) ? '[]' : '' }}"
+                    id="city_id"
+                    class="kt-select {{ isset($multiple) && in_array('cities', $multiple) ? 'basic-multiple' : 'basic-single' }}"
+                    {{ (!hasEmpty($filters['state']) && !$all_states) || ($record->all_cities ?? 0) == 1 || ($record->all_cities ?? 0) == true ? 'disabled' : '' }}
+                    {{ isset($multiple) && in_array('cities', $multiple) ? 'multiple' : '' }}>
+                    @if (!isset($multiple) && !in_array('cities', (array) $multiple))
+                        <option value="" selected>--</option>
                     @endif
-
-                    <strong class="dataLength text-primary">
-                        ({{ count($options['cities']) ?: 0 }})
-                    </strong>
-                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
-                        wire:target="filters.state,updatedFilters"></i>
-                </div>
-                <span id="city_id-info"
-                    class="text-red-600 text-sm span-info {{ !hasEmpty($filters['state']) && !$all_states ? 'show' : '' }}">
-                    ({{ __('main.select_type_first', ['type' => __('main.state')]) }})
-                </span>
+                    @foreach ($options['cities'] as $item)
+                        <option value="{{ $item->id }}" @selected((isset($multiple) && in_array('cities', $multiple) && in_array($item->id, $selectedCities ?? [])) || $item->id == old('city_id', $record->city_id ?? null))>
+                            {{ $item->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('city_id')
+                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                @enderror
             </div>
-            <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
-        </label>
-        <select name="city_id{{ isset($multiple) && in_array('cities', $multiple) ? '[]' : '' }}" id="city_id"
-            class="kt-select {{ isset($multiple) && in_array('cities', $multiple) ? 'basic-multiple' : 'basic-single' }}"
-            {{ (!hasEmpty($filters['state']) && !$all_states) || ($record->all_cities ?? 0) == 1 || ($record->all_cities ?? 0) == true ? 'disabled' : '' }}
-            {{ isset($multiple) && in_array('cities', $multiple) ? 'multiple' : '' }}>
-            @if (!isset($multiple) && !in_array('cities', (array) $multiple))
-                <option value="" selected>--</option>
-            @endif
-            @foreach ($options['cities'] as $item)
-                <option value="{{ $item->id }}" @selected((isset($multiple) && in_array('cities', $multiple) && in_array($item->id, $selectedCities ?? [])) || $item->id == old('city_id', $record->city_id ?? null))>
-                    {{ $item->name }}
-                </option>
-            @endforeach
-        </select>
-        @error('city_id')
-            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-        @enderror
+        </div>
     </div>
 </div>
 

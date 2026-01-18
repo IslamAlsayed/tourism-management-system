@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\DashboardController;
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/get-references-test', [DashboardController::class, 'getReferencesForTest'])->name('api.get-references-test');
     Route::post('/get-references', [DashboardController::class, 'getReferences'])->name('api.get-references');
+    Route::get('/image/download', [DashboardController::class, 'download'])->name('image.download');
 
     // Update user status to offline (called when browser/tab closes)
     Route::post('/user-status/offline', [DashboardController::class, 'userOfflineStatus'])->name('user.status.offline');
@@ -26,4 +27,5 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/ai/correct-text', [AiController::class, 'correctByGpt']);
 
     Route::get('routes/cities', [RouteController::class, 'getCities'])->name('routes.cities');
+    Route::get('routes/cities/{id}', [RouteController::class, 'getCityById'])->name('routes.city.show');
 });

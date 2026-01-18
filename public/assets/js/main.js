@@ -158,3 +158,24 @@ if (topScroll && tableWrapper) {
         { passive: true },
     );
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sidebarScrollable = document.querySelector(".kt-scrollable-y-hover");
+    if (!sidebarScrollable) return;
+
+    const activeItem =
+        sidebarScrollable.querySelector(".kt-menu-item.show") ||
+        sidebarScrollable.querySelector(".kt-menu-link.active");
+    if (!activeItem) return;
+
+    // height calculations
+    const sidebarHeight = sidebarScrollable.clientHeight;
+    const itemOffsetTop = activeItem.offsetTop;
+    const itemHeight = activeItem.offsetHeight;
+
+    // Scroll so active item is centered
+    sidebarScrollable.scrollTo({
+        top: itemOffsetTop - sidebarHeight / 2 + itemHeight / 2,
+        behavior: "smooth",
+    });
+});

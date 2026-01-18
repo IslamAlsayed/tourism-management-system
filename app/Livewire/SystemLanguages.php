@@ -68,7 +68,7 @@ class SystemLanguages extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('system_language.system_languages'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.system_languages'), 'count' => $count]),
         ]);
     }
 

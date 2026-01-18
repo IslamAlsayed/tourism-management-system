@@ -25,17 +25,11 @@
         <div class="grid gap-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                 <!-- Google Maps Integration -->
-                <div class="kt-card h-fit"
-                    style="background: var(--color-{{ $settings->app_google_maps_key == 1 ? '' : 'yellow' }}-100);">
+                <div class="kt-card h-fit {{ $settings->app_google_maps_key ? '' : 'bg-yellow-100' }}">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">
-                            {{ __('main.google_maps_api') }}
-                            <span class="inline-block font-medium px-2 py-0.5 rounded-full ms-2 bg-danger/10 text-red-600">
-                                {{ __('sidebar.soon') }}
-                            </span>
-                        </h3>
+                        <h3 class="kt-card-title">{{ __('main.google_maps_api') }}</h3>
                     </div>
-                    <div class="kt-card-body disabled">
+                    <div class="kt-card-body">
                         <div class="space-y-6 p-4">
                             <div class="flex items-center justify-between gap-3">
                                 <div class="p-4 ps-0 rounded bg-info-light">
@@ -44,7 +38,7 @@
                                         <div>
                                             <div class="font-semibold">
                                                 {{ __('main.configured_in_env') }}
-                                                @if (getActiveUser()->is_admin)
+                                                @if (in_array(getActiveUser()->role, ['admin', 'superadmin']))
                                                     <span class="font-semibold text-primary underline cursor-pointer"
                                                         toggle-button style="user-select: none;"
                                                         onclick="document.getElementById('google-maps-api')?.classList.toggle('hidden');">
@@ -57,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="kt-label mb-2">{{ __('main.current_status') }}</label>
+                                    <label class="kt-label mb-2">{{ __('main.status') }}</label>
                                     <div class="flex items-center gap-2">
                                         <div
                                             class="kt-badge kt-badge-{{ $settings->app_google_maps_key ? 'success' : 'danger' }}">
@@ -67,13 +61,13 @@
                                 </div>
                             </div>
 
-                            @if (getActiveUser()->is_admin)
+                            @if (in_array(getActiveUser()->role, ['admin', 'superadmin']))
                                 <form method="POST" action="{{ route('settings.update', $settings->id) }}"
                                     class="mt-4 hidden" id="google-maps-api">
                                     @csrf
                                     @method('PUT')
 
-                                    <!-- Ably Key Integration -->
+                                    <!-- Google Maps API Integration -->
                                     <div class="kt-card">
                                         <div class="kt-card-body p-6">
                                             <div class="space-y-6">
@@ -82,11 +76,12 @@
                                                     <input type="text" name="app_google_maps_key"
                                                         class="kt-input h-[45px]"
                                                         value="{{ isset($settings->app_google_maps_key) && $settings->app_google_maps_key ? $settings->app_google_maps_key : config('app.google_maps_key') }}"
-                                                        placeholder="YfoutQ.XXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
+                                                        placeholder="AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
                                                     <div class="text-xs text-secondary-foreground mt-1">
                                                         {{ __('main.get_key_from_google_cloud') }}
                                                         <a href="https://cloud.google.com/maps-platform/" target="_blank"
-                                                            rel="noopener noreferrer">cloud.google.com</a>
+                                                            rel="noopener noreferrer"
+                                                            class="text-primary underline">cloud.google.com</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,13 +91,25 @@
                                         <div class="flex items-center justify-start gap-4 px-6 pb-6">
                                             <button type="submit" class="kt-btn kt-btn-primary"
                                                 wire:confirm="Are you sure you want to save these changes?">
-                                                <i class="fas fa-check text-sm me-2"></i>
-                                                {{ __('main.save') }}
+                                                @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                                    {{ __('main.save') }}
+                                                @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                                    <i class="fas fa-check text-white"></i>
+                                                @else
+                                                    <i class="fas fa-check text-white"></i>
+                                                    {{ __('main.save') }}
+                                                @endif
                                             </button>
                                             <span class="kt-btn bg-danger"
                                                 onclick="document.getElementById('google-maps-api')?.classList.add('hidden');">
-                                                <i class="fas fa-times text-sm me-2"></i>
-                                                {{ __('main.cancel') }}
+                                                @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                                    {{ __('main.cancel') }}
+                                                @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                                    <i class="fas fa-times text-white"></i>
+                                                @else
+                                                    <i class="fas fa-times text-white"></i>
+                                                    {{ __('main.cancel') }}
+                                                @endif
                                             </span>
                                         </div>
                                     </div>
@@ -127,7 +134,7 @@
                                         <div>
                                             <div class="font-semibold">
                                                 {{ __('main.configured_in_env') }}
-                                                @if (getActiveUser()->is_admin)
+                                                @if (in_array(getActiveUser()->role, ['admin', 'superadmin']))
                                                     <span class="font-semibold text-primary underline cursor-pointer"
                                                         toggle-button style="user-select: none;"
                                                         onclick="document.getElementById('ably-key')?.classList.toggle('hidden');">
@@ -140,7 +147,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="kt-label mb-2">{{ __('main.current_status') }}</label>
+                                    <label class="kt-label mb-2">{{ __('main.status') }}</label>
                                     <div class="flex items-center gap-2">
                                         <div
                                             class="kt-badge kt-badge-{{ $settings->app_ably_key ? 'success' : 'danger' }}">
@@ -150,7 +157,7 @@
                                 </div>
                             </div>
 
-                            @if (getActiveUser()->is_admin)
+                            @if (in_array(getActiveUser()->role, ['admin', 'superadmin']))
                                 <form method="POST" action="{{ route('settings.update', $settings->id) }}"
                                     class="mt-4 hidden" id="ably-key">
                                     @csrf
@@ -167,8 +174,8 @@
                                                         placeholder="YfoutQ.XXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
                                                     <div class="text-xs text-secondary-foreground mt-1">
                                                         {{ __('main.get_key_from_ably') }}
-                                                        <a href="https://ably.com" target="_blank"
-                                                            rel="noopener noreferrer">ably.com</a>
+                                                        <a href="https://ably.com" target="_blank" rel="noopener noreferrer"
+                                                            class="text-primary underline">ably.com</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,13 +185,25 @@
                                         <div class="flex items-center justify-start gap-4 px-6 pb-6">
                                             <button type="submit" class="kt-btn kt-btn-primary"
                                                 wire:confirm="Are you sure you want to save these changes?">
-                                                <i class="fas fa-check text-sm me-2"></i>
-                                                {{ __('main.save') }}
+                                                @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                                    {{ __('main.save') }}
+                                                @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                                    <i class="fas fa-check text-white"></i>
+                                                @else
+                                                    <i class="fas fa-check text-white"></i>
+                                                    {{ __('main.save') }}
+                                                @endif
                                             </button>
                                             <span class="kt-btn bg-danger"
-                                                onclick="document.getElementById('ably-key')?.classList.add('hidden');">
-                                                <i class="fas fa-times text-sm me-2"></i>
-                                                {{ __('main.cancel') }}
+                                                onclick="document.getElementById('google-maps-api')?.classList.add('hidden');">
+                                                @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                                    {{ __('main.cancel') }}
+                                                @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                                    <i class="fas fa-times text-white"></i>
+                                                @else
+                                                    <i class="fas fa-times text-white"></i>
+                                                    {{ __('main.cancel') }}
+                                                @endif
                                             </span>
                                         </div>
                                     </div>
@@ -242,8 +261,14 @@
                     <!-- Submit Button -->
                     <div class="flex items-center justify-start gap-4 px-6 pb-6">
                         <button type="submit" form="smtp-settings-form" class="kt-btn kt-btn-primary">
-                            <i class="fas fa-check text-sm me-2"></i>
-                            {{ __('main.save') }}
+                            @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                {{ __('main.save') }}
+                            @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                <i class="fas fa-check text-white"></i>
+                            @else
+                                <i class="fas fa-check text-white"></i>
+                                {{ __('main.save') }}
+                            @endif
                         </button>
                     </div>
                 </div>
@@ -298,22 +323,24 @@
                                     </div>
                                 </div>
 
-                                <div class="kt-card disabled p-4"
-                                    style="background: var(--color-{{ $settings->app_sms_notifications == 1 ? '' : 'yellow' }}-100);">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.sms_notifications') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.receive_notifications_via_sms') }}
+                                <div class="disabled">
+                                    <div
+                                        class="kt-card p-4 {{ $settings->app_sms_notifications == 1 ? '' : 'bg-yellow-100' }}">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="font-semibold">{{ __('main.sms_notifications') }}</div>
+                                                <div class="text-sm text-secondary-foreground">
+                                                    {{ __('main.receive_notifications_via_sms') }}
+                                                </div>
                                             </div>
+                                            <input type="hidden" name="app_sms_notifications" value="0" />
+                                            @include('components.elements.checkbox-button', [
+                                                'name' => 'app_sms_notifications',
+                                                'id' => 'app_sms_notifications',
+                                                'value' => 1,
+                                                'checked' => $settings->app_sms_notifications == 1,
+                                            ])
                                         </div>
-                                        <input type="hidden" name="app_sms_notifications" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'app_sms_notifications',
-                                            'id' => 'app_sms_notifications',
-                                            'value' => 1,
-                                            'checked' => $settings->app_sms_notifications == 1,
-                                        ])
                                     </div>
                                 </div>
                             </div>
@@ -323,8 +350,14 @@
                     <!-- Submit Button -->
                     <div class="flex items-center justify-start gap-4 px-6 pb-6">
                         <button type="submit" form="notification-channels-form" class="kt-btn kt-btn-primary">
-                            <i class="fas fa-check text-sm me-2"></i>
-                            {{ __('main.save') }}
+                            @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                {{ __('main.save') }}
+                            @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                <i class="fas fa-check text-white"></i>
+                            @else
+                                <i class="fas fa-check text-white"></i>
+                                {{ __('main.save') }}
+                            @endif
                         </button>
                     </div>
                 </div>
@@ -397,41 +430,47 @@
                                     </div>
                                 </div>
 
-                                <div class="kt-card disabled p-4"
-                                    style="background: var(--color-{{ $settings->app_notifications_system_reports == 1 ? '' : 'yellow' }}-100);">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.system_reports') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.periodic_reports_on_system_status') }}
+                                <div class="disabled">
+                                    <div
+                                        class="kt-card p-4 {{ $settings->app_notifications_system_reports == 1 ? '' : 'bg-yellow-100' }}">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="font-semibold">{{ __('main.system_reports') }}</div>
+                                                <div class="text-sm text-secondary-foreground">
+                                                    {{ __('main.periodic_reports_on_system_status') }}
+                                                </div>
                                             </div>
+                                            <input type="hidden" name="app_notifications_system_reports"
+                                                value="0" />
+                                            @include('components.elements.checkbox-button', [
+                                                'name' => 'app_notifications_system_reports',
+                                                'id' => 'app_notifications_system_reports',
+                                                'value' => 1,
+                                                'checked' => $settings->app_notifications_system_reports == 1,
+                                            ])
                                         </div>
-                                        <input type="hidden" name="app_notifications_system_reports" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'app_notifications_system_reports',
-                                            'id' => 'app_notifications_system_reports',
-                                            'value' => 1,
-                                            'checked' => $settings->app_notifications_system_reports == 1,
-                                        ])
                                     </div>
                                 </div>
 
-                                <div class="kt-card disabled p-4"
-                                    style="background: var(--color-{{ $settings->app_notifications_security_updates == 1 ? '' : 'yellow' }}-100);">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <div class="font-semibold">{{ __('main.security_updates') }}</div>
-                                            <div class="text-sm text-secondary-foreground">
-                                                {{ __('main.important_security_notifications') }}
+                                <div class="disabled">
+                                    <div
+                                        class="kt-card p-4 {{ $settings->app_notifications_security_updates == 1 ? '' : 'bg-yellow-100' }}">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="font-semibold">{{ __('main.security_updates') }}</div>
+                                                <div class="text-sm text-secondary-foreground">
+                                                    {{ __('main.important_security_notifications') }}
+                                                </div>
                                             </div>
+                                            <input type="hidden" name="app_notifications_security_updates"
+                                                value="0" />
+                                            @include('components.elements.checkbox-button', [
+                                                'name' => 'app_notifications_security_updates',
+                                                'id' => 'app_notifications_security_updates',
+                                                'value' => 1,
+                                                'checked' => $settings->app_notifications_security_updates == 1,
+                                            ])
                                         </div>
-                                        <input type="hidden" name="app_notifications_security_updates" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'app_notifications_security_updates',
-                                            'id' => 'app_notifications_security_updates',
-                                            'value' => 1,
-                                            'checked' => $settings->app_notifications_security_updates == 1,
-                                        ])
                                     </div>
                                 </div>
                             </div>
@@ -441,54 +480,32 @@
                     <!-- Submit Button -->
                     <div class="flex items-center justify-start gap-4 px-6 pb-6">
                         <button type="submit" form="notification-types-form" class="kt-btn kt-btn-primary">
-                            <i class="fas fa-check text-sm me-2"></i>
-                            {{ __('main.save') }}
+
+                            @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                {{ __('main.save') }}
+                            @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                <i class="fas fa-check text-white"></i>
+                            @else
+                                <i class="fas fa-check text-white"></i>
+                                {{ __('main.save') }}
+                            @endif
                         </button>
                     </div>
                 </div>
             </form>
 
             {{-- Test Send Email --}}
-            <div class="kt-card md:w-full w-half disabled-option" id="test-email-card">
+            <div class="kt-card disabled-option" id="test-email-card">
                 <div class="kt-card-header">
                     <h3 class="kt-card-title">{{ __('main.test_send_email') }}</h3>
                 </div>
-                <div class="kt-card-body p-6 pt-2">
-                    <form action="{{ route('web-push-notifications') }}" method="POST" class="space-y-6"
+                <div class="kt-card-body">
+                    <form action="{{ route('web-push-notifications') }}" method="POST" class="p-6"
                         id="web-push-form">
                         @csrf
 
-                        <!-- Recipient Options -->
-                        <div class="mb-2">
-                            <div class="mb-2 p-2" id="all_users_wrapper">
-                                <input type="hidden" name="" value="0" />
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'all_users',
-                                    'id' => 'all_users',
-                                    'value' => 1,
-                                    'checked' => true,
-                                    'label' => __('main.all_users'),
-                                ])
-                            </div>
-
-                            <div id="recipient_email_wrapper">
-                                <label class="kt-label mb-2">{{ __('main.recipient_email') }}</label>
-                                {{-- <input type="email" name="test_recipient_email" id="test_recipient_email"
-                                    class="kt-input h-[45px]" placeholder="recipient@example.com" /> --}}
-
-                                <select name="recipient_user_id" id="recipient_user_id" class="kt-input h-[45px]"
-                                    special-search>
-                                    <option value="">{{ __('main.select_user') }}</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }} - ({{ $user->email }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
                         <!-- Notification Type -->
-                        <div class="mb-6 p-2" id="notification_type_wrapper">
+                        <div class="mb-4" id="notification_type_wrapper">
                             <label class="kt-label mb-2">{{ __('main.notification_type') }}</label>
                             <div class="flex gap-6">
                                 @if ($settings->app_email_notifications == 1)
@@ -528,6 +545,32 @@
                             </div>
                         </div>
 
+                        <!-- Recipient Options -->
+                        <div class="mb-4">
+                            <div class="mb-4" id="all_users_wrapper">
+                                <input type="hidden" name="" value="0" />
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'all_users',
+                                    'id' => 'all_users',
+                                    'value' => 1,
+                                    'checked' => true,
+                                    'label' => __('main.all_users'),
+                                ])
+                            </div>
+
+                            <div id="recipient_email_wrapper">
+                                <label class="kt-label mb-2">{{ __('main.recipient_email') }}</label>
+                                <select name="recipient_user_id" id="recipient_user_id" class="kt-input basic-single">
+                                    <option value="" selected>--</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }} -
+                                            ({{ $user->email }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         <!-- Subject -->
                         <div class="mb-4">
                             <label class="kt-label mb-2">
@@ -547,7 +590,14 @@
                                 <span class="hidden" id="loading-spinner">
                                     @include('components.load-data', ['color' => 'var(--color-white)'])
                                 </span>
-                                {{ __('main.send') }}
+                                @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                    {{ __('main.send') }}
+                                @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                    <i class="fas fa-paper-plane text-white"></i>
+                                @else
+                                    <i class="fas fa-paper-plane text-white"></i>
+                                    {{ __('main.send') }}
+                                @endif
                             </button>
                         </div>
                     </form>

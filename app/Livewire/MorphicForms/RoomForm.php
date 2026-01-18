@@ -68,6 +68,7 @@ class RoomForm extends Component
             'is_active' => 1,
             'description' => '',
         ];
+        $this->dispatch('record-added');
     }
 
     public function removeRoom($index)

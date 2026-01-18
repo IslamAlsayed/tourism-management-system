@@ -65,7 +65,7 @@ class VehicleTypes extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('main.transportationvehicle_types'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.transportation_vehicle_types'), 'count' => $count]),
         ]);
     }
 

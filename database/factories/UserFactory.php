@@ -45,7 +45,7 @@ class UserFactory extends Factory
             'timezone_id' => \App\Models\Timezone::inRandomOrder()->first()?->id,
             'preferences' => '',
             'photo' => null,
-            'is_admin' => false,
+            'role' => 'user',
             'is_active' => false,
             'is_verified' => true,
             'force_password_change' => false,

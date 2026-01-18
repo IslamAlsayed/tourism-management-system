@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Dashboard\Tours;
 
 use App\Models\City;
 use App\Models\State;
-use App\Models\Region;
-use App\Models\Currency;
 use App\Models\TourGuideType;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
@@ -23,9 +21,7 @@ class GuideTypeController extends Controller
 
     public function create()
     {
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        $regions = Region::all();
-        return view('pages.dashboard.tours.guides-types.create', compact('currencies', 'regions'));
+        return view('pages.dashboard.tours.guides-types.create');
     }
 
     public function store(StoreRequest $request)
@@ -72,8 +68,7 @@ class GuideTypeController extends Controller
         $tourGuideType = TourGuideType::with((new TourGuideType)->getRelationshipNames())->find($id);
         if (!$tourGuideType)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tours.guide-type')]));
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.tours.guides-types.edit', compact('tourGuideType', 'currencies'));
+        return view('pages.dashboard.tours.guides-types.edit', compact('tourGuideType'));
     }
 
     public function update(UpdateRequest $request, $id)

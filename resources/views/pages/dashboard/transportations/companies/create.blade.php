@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('transportations.companies.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.transportations-companies')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.companies')]) }}
                 </a>
             </div>
         </div>
@@ -45,10 +45,7 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                            ])
+                            @include('components.selects.currency')
 
                             <!-- Street -->
                             <div class="align-self-end">
@@ -258,10 +255,19 @@
                     </div>
                 </div>
 
+                {{-- Vehicles Type Information --}}
+                <livewire:morphic-forms.vehicle-type-form />
+
+                {{-- Seasons Information --}}
+                <livewire:morphic-forms.season-form />
+
+                {{-- Supplements Information --}}
+                <livewire:morphic-forms.supplement-form />
+
                 {{-- Save Buttons --}}
                 @include('components.elements.save-submit', [
                     'models' => 'transportations.companies',
-                    'model' => 'transportations-company',
+                    'model' => 'company',
                 ])
             </div>
         </form>

@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('tours.guides-reviews.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.tours.guide-reviews')]) }}
+                    {{ __('main.back_to_types', ['types' => __('main.reviews')]) }}
                 </a>
             </div>
         </div>
@@ -86,7 +86,7 @@
                         <!-- Save Submit -->
                         @include('components.elements.save-submit', [
                             'models' => 'tours.guides-reviews',
-                            'model' => 'tours.guide-review',
+                            'model' => 'review',
                         ])
                     </div>
                 </form>

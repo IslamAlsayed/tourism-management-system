@@ -64,7 +64,7 @@ class Subregions extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('subregion.subregions'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.subregions'), 'count' => $count]),
         ]);
     }
 

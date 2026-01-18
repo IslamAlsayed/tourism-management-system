@@ -58,6 +58,7 @@ class MealForm extends Component
             'is_active' => 1,
             'description' => '',
         ];
+        $this->dispatch('record-added');
     }
 
     public function removeMeal($index)

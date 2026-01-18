@@ -15,7 +15,7 @@ class SeasonForm extends Component
     public function mount($accommodation = null)
     {
         $this->accommodation = $accommodation;
-        // dd($this->accommodation->toArray());
+        // dd($this->accommodation?->toArray());
 
         // If editing and has existing seasons, load them
         if ($accommodation && $accommodation->rooms()->exists()) {

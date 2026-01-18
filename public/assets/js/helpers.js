@@ -91,3 +91,14 @@ window.removeDisabledOptions = function () {
         l.parentElement;
     });
 };
+
+document.addEventListener("livewire:initialized", () => {
+    Livewire.on("record-added", (e) => {
+        $(document).ready(function () {
+            ["basic-single"].forEach((className) => {
+                const $el = $("." + className);
+                if ($el.length) $el.select2();
+            });
+        });
+    });
+});

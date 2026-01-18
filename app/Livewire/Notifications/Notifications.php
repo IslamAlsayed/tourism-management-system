@@ -173,7 +173,7 @@ class Notifications extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('notification.notifications'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.notifications'), 'count' => $count]),
         ]);
     }
 

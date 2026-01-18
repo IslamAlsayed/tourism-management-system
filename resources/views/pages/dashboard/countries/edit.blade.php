@@ -78,18 +78,10 @@
                             </div>
 
                             {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'timezone_id',
-                                'timezones' => $timezones,
-                                'record' => $country,
-                            ])
+                            @include('components.selects.timezone', ['record' => $country])
 
                             {{-- Currency --}}
-                            @include('components.selects.currency', [
-                                'name' => 'currency_id',
-                                'currencies' => $currencies,
-                                'record' => $country,
-                            ])
+                            @include('components.selects.currency', ['record' => $country])
 
                             {{-- Language --}}
                             @include('components.selects.language', [

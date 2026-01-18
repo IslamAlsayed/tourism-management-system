@@ -3,7 +3,7 @@
 @section('title', __('main.view_type', ['type' => __('main.airline')]))
 
 @push('scripts')
-    @include('components.elements.setup-map')
+    @include('components.scripts.setup-map')
 @endpush
 
 @section('content')
@@ -102,22 +102,15 @@
                                 ])
                             </div>
                         </div>
-                        @if ($airline->description)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-2">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $airline->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($airline->notes)
-                            <div class="col-span-full border-custom rounded-lg p-4">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $airline->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $airline,
+                            'column' => 'description',
+                        ])
+
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $airline,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>
@@ -259,7 +252,7 @@
                         @if ($airline->region)
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.region') }}</label>
-                                <p class="mt-1 text-gray-900">{{ $airline->region->name }}</p>
+                                <p class="mt-1 text-gray-900">{{ $airline->region?->name }}</p>
                             </div>
                         @endif
                         @if ($airline->subregion)
@@ -271,19 +264,19 @@
                         @if ($airline->country)
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.country') }}</label>
-                                <p class="mt-1 text-gray-900">{{ $airline->country->name }}</p>
+                                <p class="mt-1 text-gray-900">{{ $airline->country?->name }}</p>
                             </div>
                         @endif
                         @if ($airline->state)
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.state') }}</label>
-                                <p class="mt-1 text-gray-900">{{ $airline->state->name }}</p>
+                                <p class="mt-1 text-gray-900">{{ $airline->state?->name }}</p>
                             </div>
                         @endif
                         @if ($airline->city)
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.city') }}</label>
-                                <p class="mt-1 text-gray-900">{{ $airline->city->name }}</p>
+                                <p class="mt-1 text-gray-900">{{ $airline->city?->name }}</p>
                             </div>
                         @endif
                         @if ($airline->latitude && $airline->longitude)

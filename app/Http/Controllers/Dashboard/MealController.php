@@ -3,10 +3,6 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Meal;
-use App\Models\Season;
-use App\Models\Currency;
-use App\Models\Restaurant;
-use App\Models\Accommodation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Meal\StoreRequest;
 use App\Http\Requests\Meal\UpdateRequest;
@@ -20,8 +16,7 @@ class MealController extends Controller
 
     public function create()
     {
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.meals.create', compact('currencies'));
+        return view('pages.dashboard.meals.create');
     }
 
     public function store(StoreRequest $request)
@@ -50,8 +45,7 @@ class MealController extends Controller
         $meal = Meal::find($id);
         if (!$meal)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.meal')]));
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        return view('pages.dashboard.meals.edit', compact('meal', 'currencies'));
+        return view('pages.dashboard.meals.edit', compact('meal'));
     }
 
     public function update(UpdateRequest $request, $id)

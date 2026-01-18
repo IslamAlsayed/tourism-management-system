@@ -133,36 +133,40 @@
                                 </div>
 
                                 {{-- File Info --}}
-                                <div class="p-3 bg-white">
-                                    <div class="text-xs font-medium text-gray-900 truncate"
+                                <div class="p-3 background">
+                                    <div class="text-xs font-medium text-gray-100 truncate"
                                         title="{{ $file->file_name }}">
                                         {{ $file->file_name }}
                                     </div>
-                                    <div class="text-xs text-gray-500 mt-1">
+                                    <div class="text-xs text-gray-600 mt-1">
                                         {{ $file->human_file_size }}
                                     </div>
                                     <div class="flex items-end justify-between gap-1 mt-2">
                                         @if ($file->collection_name)
                                             <span
-                                                class="px-2 py-1 text-xs bg-primary text-white rounded-full media-file-collection">
+                                                class="h-fit px-2 py-1 text-xs bg-primary text-white rounded-[9px] media-file-collection">
                                                 {{ ucfirst($file->collection_name) }}
                                             </span>
                                         @endif
+
                                         <div class="flex gap-2 media-file-actions">
                                             @include('components.elements.show-button', [
                                                 'models' => 'media-files',
                                                 'id' => $file->id,
-                                                'text' => '<i class="ki-filled ki-eye text-white"></i>',
+                                                'text' => '',
+                                                // 'text' => '<i class="ki-filled ki-eye text-white"></i>',
                                             ])
                                             @include('components.elements.edit-button', [
                                                 'models' => 'media-files',
                                                 'id' => $file->id,
-                                                'text' => '<i class="ki-filled ki-pencil text-white"></i>',
+                                                'text' => '',
+                                                // 'text' => '<i class="ki-filled ki-pencil text-white"></i>',
                                             ])
                                             @include('components.elements.delete-button', [
                                                 'models' => 'media-files',
                                                 'id' => $file->id,
-                                                'text' => '<i class="ki-filled ki-trash text-white"></i>',
+                                                'text' => '',
+                                                // 'text' => '<i class="ki-filled ki-trash text-white"></i>',
                                             ])
                                         </div>
                                     </div>

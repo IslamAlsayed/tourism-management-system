@@ -65,7 +65,7 @@ class Airlines extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('airline.airlines'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.airlines'), 'count' => $count]),
         ]);
     }
 

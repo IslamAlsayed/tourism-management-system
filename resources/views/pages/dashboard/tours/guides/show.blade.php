@@ -141,22 +141,14 @@
                                 ])
                             </div>
                         </div>
-                        @if ($tourGuide->description)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.description') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $tourGuide->description !!}
-                                </div>
-                            </div>
-                        @endif
-                        @if ($tourGuide->notes)
-                            <div class="col-span-full border-custom p-3 pt-0 rounded-[9px]">
-                                <label class="kt-label mb-1">{{ __('main.notes') }}</label>
-                                <div class="text-sm text-secondary-foreground prose max-w-none">
-                                    {!! $tourGuide->notes !!}
-                                </div>
-                            </div>
-                        @endif
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $tourGuide,
+                            'column' => 'description',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $tourGuide,
+                            'column' => 'notes',
+                        ])
                     </div>
                 </div>
             </div>
@@ -171,9 +163,9 @@
                         @if ($tourGuide->region)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                                <a href="{{ route('regions.show', $tourGuide->region->id) }}"
+                                <a href="{{ route('regions.show', $tourGuide->region?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $tourGuide->region->name ?? __('main.na') }}
+                                    {{ $tourGuide->region?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             </div>
@@ -191,9 +183,9 @@
                         @if ($tourGuide->country)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                                <a href="{{ route('countries.show', $tourGuide->country->id) }}"
+                                <a href="{{ route('countries.show', $tourGuide->country?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $tourGuide->country->name ?? __('main.na') }}
+                                    {{ $tourGuide->country?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             </div>
@@ -201,9 +193,9 @@
                         @if ($tourGuide->state)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.state') }}</label>
-                                <a href="{{ route('states.show', $tourGuide->state->id) }}"
+                                <a href="{{ route('states.show', $tourGuide->state?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $tourGuide->state->name ?? __('main.na') }}
+                                    {{ $tourGuide->state?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             </div>
@@ -211,9 +203,9 @@
                         @if ($tourGuide->city)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.city') }}</label>
-                                <a href="{{ route('cities.show', $tourGuide->city->id) }}"
+                                <a href="{{ route('cities.show', $tourGuide->city?->id) }}"
                                     class="block text-sm text-primary underline">
-                                    {{ $tourGuide->city->name ?? __('main.na') }}
+                                    {{ $tourGuide->city?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             </div>
@@ -318,7 +310,7 @@
                     'id' => $tourGuide->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'tour-guides',
+                    'model' => 'tours.guides',
                     'id' => $tourGuide->id,
                 ])
                 <a href="{{ route('tours.guides.index') }}" class="kt-btn kt-btn-outline">

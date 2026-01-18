@@ -65,7 +65,7 @@ class Cities extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('city.cities'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.cities'), 'count' => $count]),
         ]);
     }
 

@@ -101,8 +101,7 @@
                             ? ucfirst(str_replace('_', ' ', (string) $column))
                             : $translated;
                     @endphp
-                    <div class="custom-input" title="{{ $labelText }}"
-                        wire:key="col-{{ (string) $column }}-{{ in_array($column, $pendingColumns) ? '1' : '0' }}">
+                    <div class="custom-input" title="{{ $labelText }}" wire:key="col-{{ (string) $column }}">
                         <input type="checkbox" wire:model="pendingColumns" value="{{ (string) $column }}"
                             id="col-{{ (string) $column }}">
                         <label for="col-{{ (string) $column }}">
@@ -119,6 +118,7 @@
 
             @if (isset($pendingColumns) && count($pendingColumns) < count($allColumns))
                 <div class="kt-btn kt-btn-outline bg-secondary px-3" type="button" wire:click="toggleAll"
+                    onclick="document.getElementById('columnsModal').classList.add('hidden'); setTimeout(() => window.location.reload(), 50)"
                     wire:loading.attr="disabled" toggle-button>
                     <label for="selectAllColumns" class="cursor-pointer">
                         {{ __('main.all_columns') }}
@@ -141,6 +141,7 @@
             {{-- Reset to Default button - shows when user has custom columns --}}
             @if (isset($hasCustomColumns) && $hasCustomColumns)
                 <button type="button" wire:click="resetColumns" wire:loading.attr="disabled"
+                    onclick="setTimeout(() => window.location.reload(), 50)"
                     class="kt-btn kt-btn-outline bg-danger text-white px-3 rounded">
                     <span wire:loading.remove wire:target="resetColumns">
                         {{ __('main.reset_to_default') }}
@@ -152,8 +153,8 @@
             @endif
 
             {{-- Apply button --}}
-            <button type="button" wire:click="applyColumns" wire:loading.attr="disabled"
-                class="kt-btn kt-btn-outline bg-primary text-white px-3 rounded">
+            <button type="button" wire:click="applyColumns" onclick="setTimeout(() => window.location.reload(), 50)"
+                wire:loading.attr="disabled" class="kt-btn kt-btn-outline bg-primary text-white px-3 rounded">
                 <span wire:loading.remove wire:target="applyColumns">
                     {{ __('main.apply') }}
                 </span>

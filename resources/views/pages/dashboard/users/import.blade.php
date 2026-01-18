@@ -96,7 +96,7 @@
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
                 <thead>
                     <tr>
-                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">is_admin</th>
+                        <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">role</th>
                         <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">is_active</th>
                         <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">is_verified</th>
                         <th class="border px-2 bg-blue-100" title="{{ __('main.optional') }}">force_password_change</th>
@@ -109,7 +109,7 @@
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">1</td>
+                        <td class="border px-2">admin or superadmin or user</td>
                         <td class="border px-2">1</td>
                         <td class="border px-2">1</td>
                         <td class="border px-2">0</td>

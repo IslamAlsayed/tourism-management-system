@@ -11,13 +11,14 @@
         </div>
         <div class="kt-card-body {{ count($supplements) > 0 ? 'p-4' : '' }}" wire:target="removeSupplement"
             wire:loading.class="loading">
-            <div class="grid grid-cols-1 lg:grid-cols-2 items-end gap-6">
+            <div class="flex flex-col gap-4">
                 @foreach ($supplements as $index => $supplement)
                     <div class="kt-card p-4 border-2" wire:key="supplement-{{ $index }}">
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-lg font-semibold">{{ __('main.supplement') }} #{{ $index + 1 }}</h4>
                             <button type="button" wire:click="removeSupplement({{ $index }})"
-                                class="kt-btn kt-btn-sm bg-danger text-white" toggle-button>
+                                class="kt-btn kt-btn-sm bg-danger text-white {{ count($supplements) > 1 ? '' : 'hidden' }}"
+                                toggle-button>
 
                                 @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
                                     {!! $text ?? __('main.delete') !!}

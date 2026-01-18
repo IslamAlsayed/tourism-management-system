@@ -51,6 +51,7 @@ return [
     'type_updated_by' => ':record_name from :type_name has been updated by :user_name',
     'type_updated_count' => ':count :type Updated',
     'type_update_failed' => ':type Update Failed',
+    'session_lifetime_min_5' => 'Session lifetime must be at least 5 minutes',
     'session_lifetime_min_5_or_0' => 'Session lifetime must be 0 or at least 5 minutes',
     'type_deleted' => ':type Deleted',
     'type_deleted_by' => ':record_name from :type_name has been deleted by :user_name',

@@ -57,11 +57,7 @@
                             </div>
 
                             {{-- Timezone --}}
-                            @include('components.selects.timezone', [
-                                'name' => 'app_timezone',
-                                'timezones' => $timezones,
-                                'record' => $settings,
-                            ])
+                            @include('components.selects.timezone', ['record' => $settings])
 
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.app_version') }}</label>

@@ -31,8 +31,6 @@ class Timezone extends Model
         'gmt_offset_name',
         'gmt_offset_name_dst',
         'supports_dst',
-        'region',
-        'city',
         'description',
         'is_active',
         'sort_order',

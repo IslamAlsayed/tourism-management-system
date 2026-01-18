@@ -34,29 +34,6 @@
                     </div>
                     <div class="kt-card-body p-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            <!-- Nationality Name (English) -->
-                            <div class="">
-                                <label for="name" class="kt-label required mb-2">
-                                    {{ __('main.name') }}
-                                    <span class="text-red-600">*</span>
-                                </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
-                                    value="{{ old('name') }}">
-                                @error('name')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Nationality Name (Arabic) -->
-                            <div class="">
-                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar') }}">
-                                @error('name_ar')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <!-- Country -->
                             <div class="">
                                 <label for="country_id" class="kt-label required mb-2">
@@ -73,6 +50,29 @@
                                     @endforeach
                                 </select>
                                 @error('country_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Name (English) -->
+                            <div class="">
+                                <label for="name" class="kt-label required mb-2">
+                                    {{ __('main.name') }}
+                                    <span class="text-red-600">*</span>
+                                </label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ old('name') }}">
+                                @error('name')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Name (Arabic) -->
+                            <div class="">
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}">
+                                @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

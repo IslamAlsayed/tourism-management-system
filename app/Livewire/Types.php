@@ -70,7 +70,7 @@ class Types extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('type.types'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.types'), 'count' => $count]),
         ]);
     }
 

@@ -261,7 +261,6 @@
                             {{-- Departure Tax Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'departure_tax_currency_id',
-                                'currencies' => $currencies,
                                 'record' => $crossingPort,
                             ])
                         </div>
@@ -300,7 +299,6 @@
                             {{-- Visa Fee Currency --}}
                             @include('components.selects.currency', [
                                 'name' => 'visa_fee_currency_id',
-                                'currencies' => $currencies,
                                 'record' => $crossingPort,
                             ])
 

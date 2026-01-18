@@ -64,7 +64,7 @@ class Restaurants extends Component
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('restaurant.restaurants'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.restaurants'), 'count' => $count]),
         ]);
     }
 

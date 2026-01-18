@@ -42,26 +42,26 @@ class State extends Model
         static::saving(function ($item) {
             // Auto-fill region_id and subregion_id from country
             if (empty($item->currency_id) && !empty($item->country_id)) {
-                $item->currency_id = $item->country->currency_id;
+                $item->currency_id = $item->country?->currency_id;
             }
             if (empty($item->region_id) && !empty($item->country_id)) {
-                $item->region_id = $item->country->region_id;
+                $item->region_id = $item->country?->region_id;
             }
             if (empty($item->subregion_id) && !empty($item->country_id)) {
-                $item->subregion_id = $item->country->subregion_id;
+                $item->subregion_id = $item->country?->subregion_id;
             }
         });
 
         static::updating(function ($item) {
             // Auto-fill region_id and subregion_id from country on update too
             if (empty($item->currency_id) && !empty($item->country_id)) {
-                $item->currency_id = $item->country->currency_id;
+                $item->currency_id = $item->country?->currency_id;
             }
             if (empty($item->region_id) && !empty($item->country_id)) {
-                $item->region_id = $item->country->region_id;
+                $item->region_id = $item->country?->region_id;
             }
             if (empty($item->subregion_id) && !empty($item->country_id)) {
-                $item->subregion_id = $item->country->subregion_id;
+                $item->subregion_id = $item->country?->subregion_id;
             }
         });
     }
