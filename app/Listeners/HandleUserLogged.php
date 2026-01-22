@@ -68,6 +68,9 @@ class HandleUserLogged
 
             foreach ($admins as $admin) {
                 try {
+                    // Disable activity logging temporarily to prevent infinite loop
+                    activity()->disableLogging();
+                    
                     $notify = Notification::create([
                         'performer_id' => getActiveUser()->id,
                         'target_user_id' => $admin->id,
@@ -79,6 +82,9 @@ class HandleUserLogged
                         'data' => json_encode(['source' => 'status', 'messageMode' => true]),
                         'is_global' => false,
                     ]);
+                    
+                    // Re-enable activity logging
+                    activity()->enableLogging();
 
                     $notify['human_created_at'] = $notify?->human_created_at;
                 } catch (\Exception $e) {

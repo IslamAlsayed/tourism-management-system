@@ -70,7 +70,7 @@ class AuthenticatedSessionController extends Controller
 
     public function expired()
     {
-        if (auth()->check()) {
+        if (Auth::check()) {
             return redirect()->route('dashboard');
         }
         if (session('session_expired')) {

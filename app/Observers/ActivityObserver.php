@@ -9,19 +9,25 @@ class ActivityObserver
 {
     public function created(Activity $activity)
     {
-        // Fire broadcast event
-        event(new ActivityCreated($activity));
+        // Prevent infinite loop: Don't fire event for activity logs about activity logs
+        if ($activity->log_name === 'models' && $activity->subject_type !== Activity::class) {
+            event(new ActivityCreated($activity));
+        }
     }
 
     public function updated(Activity $activity)
     {
-        // you can reuse event class or create ActivityUpdated
-        event(new ActivityCreated($activity)); // أو ActivityUpdated
+        // Prevent infinite loop
+        if ($activity->log_name === 'models' && $activity->subject_type !== Activity::class) {
+            event(new ActivityCreated($activity));
+        }
     }
 
     public function deleted(Activity $activity)
     {
-        // optional
-        event(new ActivityCreated($activity));
+        // Prevent infinite loop
+        if ($activity->log_name === 'models' && $activity->subject_type !== Activity::class) {
+            event(new ActivityCreated($activity));
+        }
     }
 }
