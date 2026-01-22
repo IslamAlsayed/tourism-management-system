@@ -2,7 +2,7 @@ name: 🚀 Deploy to Production
 
 on:
   push:
-    branches: ["production2"]
+    branches: ["production"]
 
 jobs:
   deploy:
