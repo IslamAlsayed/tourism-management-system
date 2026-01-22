@@ -2,13 +2,21 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\FiltersByUserRole;
+use App\Traits\HandlesRichTextAttributes;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TourGuideType extends Model
 {
-    use HasSearch, HasUuid;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    protected $richTextAttributes = [
+        'description',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',
@@ -17,6 +25,10 @@ class TourGuideType extends Model
         'price',
         'all_states',
         'all_cities',
+        'is_active',
+        'description',
+        'notes',
+
         'currency_id',
         'region_id',
         'subregion_id',
@@ -30,7 +42,7 @@ class TourGuideType extends Model
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'region_id', 'subregion_id', 'country_id'];
+        return ['currency_id', 'region_id', 'subregion_id', 'country_id', 'description', 'notes'];
     }
 
     public function currency()

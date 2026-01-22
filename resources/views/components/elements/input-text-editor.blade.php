@@ -1,21 +1,19 @@
 <div class="{{ isset($classes) ? $classes : '' }}">
-    <label for="{{ $name ?? ($column ?? 'description') }}" class="kt-label mb-2">
-        {{ __('main.' . ($name ?? ($column ?? 'description'))) }}
+    <label for="{{ $name ?? $column }}" class="kt-label mb-2">
+        {{ __('main.' . ($name ?? $column)) }}
         @if (isset($placeholder) && $placeholder)
             <span class="text-sm text-primary">({{ $placeholder }})</span>
         @endif
     </label>
 
-    <input id="{{ $name ?? ($column ?? 'description') }}" type="hidden" name="{{ $name ?? ($column ?? 'description') }}"
-        value="{{ $value ?? old($name ?? ($column ?? 'description')) }}">
+    <input id="{{ $name ?? $column }}" type="hidden" name="{{ $name ?? $column }}"
+        value="{{ $value ?? old($name ?? $column) }}">
 
-    <trix-editor input="{{ $name ?? ($column ?? 'description') }}"
-        aria-placeholder="{{ isset($placeholder) && $placeholder ? $placeholder : '' }}"
-        placeholder="{{ isset($placeholder) && $placeholder ? $placeholder : '' }}" spellcheck="true"
-        lang="{{ app()->getLocale() }}">
+    <trix-editor input="{{ $name ?? $column }}"
+        placeholder="{{ isset($placeholder) && $placeholder ? $placeholder : '' }}">
     </trix-editor>
 
-    @error($name ?? ($column ?? 'description'))
+    @error($name ?? $column)
         <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
     @enderror
 </div>

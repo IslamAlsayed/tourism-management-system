@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use App\Traits\HasUuid;
-use App\Traits\HasSearch;
 use App\Traits\FiltersByUserRole;
+use App\Traits\HandlesRichTextAttributes;
+use App\Traits\HasSearch;
+use App\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Restaurant extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole;
-
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, HandlesRichTextAttributes;
     protected $richTextAttributes = [
         'description',
         'notes',

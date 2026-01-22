@@ -57,7 +57,7 @@
                                 ])
                             @endif
 
-                            @if (isset($models) && $models != 'notifications')
+                            @if (isset($models) && $models != 'notifications' && getActiveUser()->can('update', $item))
                                 @include('components.elements.edit-button', [
                                     'models' => $models,
                                     'id' => $item->id,
@@ -71,8 +71,14 @@
                                 </a>
                             @endif
 
-                            @if (isset($models) && in_array(getActiveUser()?->role, ['admin', 'superadmin']))
+                            @if (isset($models) && getActiveUser()->can('delete', $item))
                                 @include('components.elements.delete-button', [
+                                    'id' => $item->id,
+                                ])
+                            @endif
+
+                            @if (isset($models) && getActiveUser()->can('forceDelete', $item))
+                                @include('components.elements.forceDelete-button', [
                                     'id' => $item->id,
                                 ])
                             @endif

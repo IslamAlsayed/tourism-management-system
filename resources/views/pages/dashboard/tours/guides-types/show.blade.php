@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', __('main.type_details', ['type' => __('main.tours.guide_type')]))
+@section('title', __('main.type_details', ['type' => __('main.tours.guides-type')]))
 
 @section('content')
     <div class="kt-container-fixed">
@@ -77,30 +77,6 @@
                             'record' => $tourGuideType,
                             'column' => 'notes',
                         ])
-                        {{-- @if ($tourGuideType->all_states)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.all_states') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    @if ($tourGuideType->all_states)
-                                        <span class="kt-badge kt-badge-success">{{ __('main.yes') }}</span>
-                                    @else
-                                        <span class="kt-badge kt-badge-secondary">{{ __('main.no') }}</span>
-                                    @endif
-                                </p>
-                            </div>
-                        @endif
-                        @if ($tourGuideType->all_cities)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.all_cities') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    @if ($tourGuideType->all_cities)
-                                        <span class="kt-badge kt-badge-success">{{ __('main.yes') }}</span>
-                                    @else
-                                        <span class="kt-badge kt-badge-secondary">{{ __('main.no') }}</span>
-                                    @endif
-                                </p>
-                            </div>
-                        @endif --}}
                     </div>
                 </div>
             </div>

@@ -1338,31 +1338,33 @@
             $operatingDays = is_array($model->operating_days) ? $model->operating_days : [];
         @endphp
         <td title="{{ implode(', ', $operatingDays) }}">
-            @if (count($operatingDays) > 0)
-                @foreach (array_slice($operatingDays, 0, 3) as $day)
-                    <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        {!! highlightSearch(limitedText(__('main.' . $day) ?? '--', 30), $search) !!}
-                    </span>
-                @endforeach
-                @if (count($operatingDays) > 3)
-                    <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        ...
-                    </div>
-                @endif
-            @else
-                <div
-                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
-                    <i class="opacity-25">null</i>
-                </div>
-            @endif
-        </td>
-    @break --}}
+@if (count($operatingDays) > 0)
+@foreach (array_slice($operatingDays, 0, 3) as $day)
+<span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+    {!! highlightSearch(limitedText(__('main.' . $day) ?? '--', 30), $search) !!}
+</span>
+@endforeach
+@if (count($operatingDays) > 3)
+<div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+    ...
+</div>
+@endif
+@else
+<div
+    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+    <i class="opacity-25">null</i>
+</div>
+@endif
+</td>
+@break --}}
     @case('timezone')
         <td title="{{ optional($model->timezone)->name ?? '--' }}">
             @if ($model->timezone)
-                <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('timezones' . '.show', $model->timezone->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(str_replace('_', ' ', optional($model->timezone)->name) ?? '--', 30), $search) !!}
-                </span>
+                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
+                </a>
             @else
                 <div
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
@@ -1841,11 +1843,11 @@
 
     {{-- @case('timezone')
         <td title="{{ $model->timezone }}">
-            <span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! highlightSearch(limitedText(str_replace('_', ' ', $model->timezone) ?? '--', 30), $search) !!}
-            </span>
-        </td>
-    @break --}}
+<span class="inline-block text-white bg-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+    {!! highlightSearch(limitedText(str_replace('_', ' ', $model->timezone) ?? '--', 30), $search) !!}
+</span>
+</td>
+@break --}}
     @case('client_type')
         <td title="{{ __('main.' . $model->client_type == 'individual' ? 'individual' : 'corporate') }}">
             <span
@@ -2325,16 +2327,14 @@
     @break
 
     @case('created_at')
-        <td title="{{ $model->created_at?->format('Y-m-d') ?? '--' }}">
-            <a href="{{ route('users.show') }}">
-                {!! highlightSearch(limitedText($model->created_at?->format('Y-m-d') ?? '--', 30), $search) !!}
-            </a>
+        <td title="{{ $model->created_at?->format('Y-m-d H:i') ?? '--' }}">
+            {!! highlightSearch(limitedText($model->created_at?->format('Y-m-d H:i') ?? '--', 30), $search) !!}
         </td>
     @break
 
     @case('updated_at')
-        <td title="{{ $model->updated_at?->format('Y-m-d') ?? '--' }}">
-            {!! highlightSearch(limitedText($model->updated_at?->format('Y-m-d') ?? '--', 30), $search) !!}
+        <td title="{{ $model->updated_at?->format('Y-m-d H:i') ?? '--' }}">
+            {!! highlightSearch(limitedText($model->updated_at?->format('Y-m-d H:i') ?? '--', 30), $search) !!}
         </td>
     @break
 
@@ -2420,7 +2420,7 @@
             @dump($column, $model->$column)
         @else
             <td title="{{ $model->$column }}">
-                {{ $model->$column }}
-            </td>
-        @endif --}}
+{{ $model->$column }}
+</td>
+@endif --}}
 @endswitch

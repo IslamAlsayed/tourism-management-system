@@ -1,7 +1,7 @@
 <div class="kt-card list-search-card">
     <div class="kt-card-header">
         <h3 class="kt-card-title">
-            <i class="ki-filled ki-home-2 text-warning me-2"></i>
+            <i class="{{ $models == 'states' ? 'fas fa-map' : 'far fa-building'}} text-warning me-2"></i>
             {{ __('main.' . $models) }} ({{ $records->count() }})
         </h3>
 
@@ -39,7 +39,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         let listCards = document.querySelectorAll('.list-search-card');
         if (listCards.length === 0) return;
         listCards.forEach(card => {
@@ -51,11 +51,11 @@
                 // Create no results message
                 let noResultsMsg = card.querySelector('.no_results_found');
 
-                searchPar.addEventListener('input', function() {
+                searchPar.addEventListener('input', function () {
                     let filter = searchPar.value.toLowerCase();
                     let hasResults = false;
 
-                    Array.from(listItems).forEach(function(item) {
+                    Array.from(listItems).forEach(function (item) {
                         let text = item.textContent || item.innerText;
                         if (text.toLowerCase().indexOf(filter) > -1) {
                             item.style.opacity = "1";

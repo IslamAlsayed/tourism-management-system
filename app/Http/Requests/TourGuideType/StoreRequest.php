@@ -37,8 +37,8 @@ class StoreRequest extends FormRequest
             'all_cities' => ['nullable', 'boolean'],
 
             'is_active' => ['nullable', 'boolean'],
-            'description' => ['nullable', 'max:1000'],
-            'notes' => ['nullable', 'max:1000'],
+            'description' => ['nullable', 'string', 'max:1000'],
+            'notes' => ['nullable', 'string', 'max:1000'],
         ];
     }
 }

@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\HandlesRichTextAttributes;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
-use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Room extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents;
-
+    use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents, HandlesRichTextAttributes;
     protected $richTextAttributes = [
         'description',
         'notes',

@@ -377,7 +377,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 
 html.dark {
     .highlight {
-        background-color: #0400ff;
+        /* background-color: #0400ff; */
+        color: var(--background);
     }
 }
 

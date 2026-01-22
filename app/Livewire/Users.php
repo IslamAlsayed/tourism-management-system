@@ -53,6 +53,12 @@ class Users extends Component
         Cache::tags(['users'])->flush();
     }
 
+    public function forceDelete($id)
+    {
+        $this->safeForceDelete($id, User::class, 'user');
+        Cache::tags(['users'])->flush();
+    }
+
     public function updatedSelectPage($value)
     {
         $this->selectedIds = $value ? $this->currentPageDataIds()->toArray() : [];

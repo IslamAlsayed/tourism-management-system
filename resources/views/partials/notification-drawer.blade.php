@@ -3,9 +3,9 @@
 
 <!--Original Drawer for fallback-->
 <div class="hidden kt-drawer kt-drawer-end card flex-col max-w-[90%] w-[450px] top-5 bottom-5 end-5 rounded-xl border border-border"
-    data-kt-drawer="true" data-kt-drawer-container="body" id="notifications_drawer_fallback" x-data="notificationDrawer()"
-    @drawer-opened="markAllAsReadWhenOpened()" @show="markAllAsReadWhenOpened()" @drawer-show="markAllAsReadWhenOpened()"
-    style="display: none !important;">
+    data-kt-drawer="true" data-kt-drawer-container="body" id="notifications_drawer_fallback"
+    x-data="notificationDrawer()" @drawer-opened="markAllAsReadWhenOpened()" @show="markAllAsReadWhenOpened()"
+    @drawer-show="markAllAsReadWhenOpened()" style="display: none !important;">
     <div class="flex items-center justify-between gap-2.5 text-sm text-mono font-semibold px-5 py-2.5 border-b border-b-border"
         id="notifications_header">
         Notifications
@@ -135,59 +135,60 @@
             data-kt-scrollable-max-height="auto" data-kt-scrollable-offset="150px">
             <div class="grow flex flex-col gap-5 pt-3 pb-4 divider-y divider-border">
                 @forelse($notifications as $notification)
-                    <div class="flex grow gap-2.5 px-5 {{ !$notification->is_read ? 'bg-blue-50' : '' }}">
-                        <div class="kt-avatar size-8">
-                            <div
-                                class="kt-avatar-image rounded-full bg-{{ $notification->type === 'success' ? 'green' : ($notification->type === 'error' ? 'red' : ($notification->type === 'warning' ? 'yellow' : 'blue')) }}-500 flex items-center justify-center">
-                                <i class="{{ $notification->icon }} text-white text-sm"></i>
-                            </div>
-                            @if (!$notification->is_read)
-                                <div class="kt-avatar-indicator -end-2 -bottom-2">
-                                    <div class="kt-avatar-status kt-avatar-status-online size-2.5">
-                                    </div>
-                                </div>
-                            @endif
+                <div class="flex grow gap-2.5 px-5 {{ !$notification->is_read ? 'bg-blue-50' : '' }}">
+                    <div class="kt-avatar size-8">
+                        <div
+                            class="kt-avatar-image rounded-full bg-{{ $notification->type === 'success' ? 'green' : ($notification->type === 'error' ? 'red' : ($notification->type === 'warning' ? 'yellow' : 'blue')) }}-500 flex items-center justify-center">
+                            <i class="{{ $notification->icon }} text-white text-sm"></i>
                         </div>
-                        <div class="flex flex-col gap-3.5 flex-1">
-                            <div class="flex flex-col gap-1">
-                                <div class="text-sm font-medium">
-                                    @if ($notification->title)
-                                        <span class="text-mono font-semibold">
-                                            {{ $notification->title }}
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ $notification->message }}
-                                </div>
-                                <span class="flex items-center text-xs font-medium text-muted-foreground">
-                                    {{ $notification->created_at->diffForHumans() }}
-                                    @if ($notification->data && isset($notification->data['source']))
-                                        <span class="rounded-full size-1 bg-mono/30 mx-1.5"></span>
-                                        {{ ucfirst($notification->data['source']) }}
-                                    @endif
+                        @if (!$notification->is_read)
+                        <div class="kt-avatar-indicator -end-2 -bottom-2">
+                            <div class="kt-avatar-status kt-avatar-status-online size-2.5">
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="flex flex-col gap-3.5 flex-1">
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-medium">
+                                @if ($notification->title)
+                                <span class="text-mono font-semibold">
+                                    {{ $notification->title }}
                                 </span>
+                                @endif
                             </div>
-                            @if (!$notification->is_read)
-                                <div class="flex gap-2">
-                                    <button class="kt-btn kt-btn-sm kt-btn-outline text-xs"
-                                        onclick="markSingleAsRead({{ $notification->id }})">
-                                        {{ __('main.mark_read') }}
-                                    </button>
-                                </div>
-                            @endif
+                            <div class="text-sm text-secondary-foreground">
+                                {{ $notification->message }}
+                            </div>
+                            <span class="flex items-center text-xs font-medium text-muted-foreground">
+                                {{ $notification->created_at->diffForHumans() }}
+                                @if ($notification->data && isset($notification->data['source']))
+                                <span class="rounded-full size-1 bg-mono/30 mx-1.5"></span>
+                                {{ ucfirst($notification->data['source']) }}
+                                @endif
+                            </span>
                         </div>
+                        @if (!$notification->is_read)
+                        <div class="flex gap-2">
+                            <button class="kt-btn kt-btn-sm kt-btn-outline text-xs"
+                                onclick="markSingleAsRead({{ $notification->id }})">
+                                {{ __('main.mark_read') }}
+                            </button>
+                        </div>
+                        @endif
                     </div>
-                    @if (!$loop->last)
-                        <div class="border-b border-b-border"></div>
-                    @endif
+                </div>
+                @if (!$loop->last)
+                <div class="border-b border-b-border"></div>
+                @endif
                 @empty
-                    <div class="flex flex-col items-center justify-center py-12 px-5 text-center">
-                        <i class="ki-filled ki-notification-off text-4xl text-muted-foreground mb-4"></i>
-                        <h3 class="text-lg font-semibold text-secondary-foreground mb-2">
-                            {{ __('main.no_notifications') }}</h3>
-                        <p class="text-sm text-muted-foreground">You have no notifications at this time.</p>
-                    </div>
+                <div class="flex flex-col items-center justify-center py-12 px-5 text-center">
+                    <i class="ki-filled ki-notification-off text-4xl text-muted-foreground mb-4"></i>
+                    <h3 class="text-lg font-semibold text-secondary-foreground mb-2">
+                        {{ __('main.no_notifications') }}
+                    </h3>
+                    <p class="text-sm text-muted-foreground">You have no notifications at this time.</p>
+                </div>
                 @endforelse
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
@@ -307,8 +308,7 @@
                     </div>
                     <div class="kt-card shadow-none flex items-center flex-row gap-1.5 p-2.5 rounded-lg bg-muted/70">
                         <img class="h-5" src="{{ asset('metronic/media/file-types/pdf.svg') }}" />
-                        <a class="hover:text-primary font-medium text-secondary-foreground text-xs me-1"
-                            href="#">
+                        <a class="hover:text-primary font-medium text-secondary-foreground text-xs me-1" href="#">
                             Launch_nov24.pptx
                         </a>
                         <span class="font-medium text-muted-foreground text-xs">
@@ -384,8 +384,7 @@
                             class="flex items-center justify-center w-[26px] h-[30px] shrink-0 bg-background rounded-sm border border-border">
                             <img class="h-5" src="{{ asset('metronic/media/file-types/figma.svg') }}" />
                         </div>
-                        <a class="hover:text-primary font-medium text-secondary-foreground text-xs me-1"
-                            href="#">
+                        <a class="hover:text-primary font-medium text-secondary-foreground text-xs me-1" href="#">
                             Launcher-UIkit.fig
                         </a>
                         <span class="font-medium text-muted-foreground text-xs">
@@ -517,8 +516,7 @@
                         <div class="flex items-center gap-1.5">
                             <img class="h-6" src="{{ asset('metronic/media/file-types/xls.svg') }}" />
                             <div class="flex flex-col gap-0.5">
-                                <a class="hover:text-primary font-medium text-secondary-foreground text-xs"
-                                    href="#">
+                                <a class="hover:text-primary font-medium text-secondary-foreground text-xs" href="#">
                                     Redesign-2024.xls
                                 </a>
                                 <span class="font-medium text-muted-foreground text-xs">
@@ -863,8 +861,7 @@
                         <div class="flex items-center gap-1.5">
                             <img class="h-6" src="{{ asset('metronic/media/file-types/word.svg') }}" />
                             <div class="flex flex-col gap-0.5">
-                                <a class="hover:text-primary font-medium text-secondary-foreground text-xs"
-                                    href="#">
+                                <a class="hover:text-primary font-medium text-secondary-foreground text-xs" href="#">
                                     Landing-page.docx
                                 </a>
                                 <span class="font-medium text-muted-foreground text-xs">
@@ -895,8 +892,7 @@
                         <div class="flex items-center gap-1.5">
                             <img class="h-6" src="{{ asset('metronic/media/file-types/svg.svg') }}" />
                             <div class="flex flex-col gap-0.5">
-                                <a class="hover:text-primary font-medium text-secondary-foreground text-xs"
-                                    href="#">
+                                <a class="hover:text-primary font-medium text-secondary-foreground text-xs" href="#">
                                     New-icon.svg
                                 </a>
                                 <span class="font-medium text-muted-foreground text-xs">
@@ -1146,8 +1142,7 @@
                             class="flex items-center justify-center w-[26px] h-[30px] shrink-0 bg-white rounded-sm border border-border">
                             <img class="h-5" src="{{ asset('metronic/media/brand-logos/jira.svg') }}" />
                         </div>
-                        <a class="hover:text-primary font-medium text-secondary-foreground text-xs me-1"
-                            href="#">
+                        <a class="hover:text-primary font-medium text-secondary-foreground text-xs me-1" href="#">
                             User-feedback.jira
                         </a>
                         <span class="font-medium text-muted-foreground text-xs">
@@ -1339,122 +1334,125 @@
 <!--End of Notifications Drawer-->
 
 @push('scripts')
-    <script>
-        function notificationDrawer() {
-            return {
-                hasMarkedAsRead: false,
+<script>
+    function notificationDrawer() {
+        return {
+            hasMarkedAsRead: false,
 
-                init() {
-                    // Listen for drawer show events using KTDrawer events
-                    const drawer = document.getElementById('notifications_drawer');
+            init() {
+                // Listen for drawer show events using KTDrawer events
+                const drawer = document.getElementById('notifications_drawer');
 
-                    if (drawer) {
-                        // Multiple event listeners to catch different ways drawer might open
-                        drawer.addEventListener('shown.kt.drawer', () => {
-                            this.markAllAsReadWhenOpened();
-                        });
+                if (drawer) {
+                    // Multiple event listeners to catch different ways drawer might open
+                    drawer.addEventListener('shown.kt.drawer', () => {
+                        this.markAllAsReadWhenOpened();
+                    });
 
-                        // Also listen for class changes (when drawer becomes visible)
-                        const observer = new MutationObserver((mutations) => {
-                            mutations.forEach((mutation) => {
-                                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                                    const target = mutation.target;
-                                    if (target.classList.contains('kt-drawer-on') && !this
-                                        .hasMarkedAsRead) {
-                                        this.markAllAsReadWhenOpened();
-                                    } else if (!target.classList.contains('kt-drawer-on')) {
-                                        // Reset flag when drawer closes
-                                        this.hasMarkedAsRead = false;
-                                    }
+                    // Also listen for class changes (when drawer becomes visible)
+                    const observer = new MutationObserver((mutations) => {
+                        mutations.forEach((mutation) => {
+                            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                                const target = mutation.target;
+                                if (target.classList.contains('kt-drawer-on') && !this
+                                    .hasMarkedAsRead) {
+                                    this.markAllAsReadWhenOpened();
+                                } else if (!target.classList.contains('kt-drawer-on')) {
+                                    // Reset flag when drawer closes
+                                    this.hasMarkedAsRead = false;
                                 }
-                            });
-                        });
-
-                        observer.observe(drawer, {
-                            attributes: true,
-                            attributeFilter: ['class']
-                        });
-                    }
-                },
-
-                markAllAsReadWhenOpened() {
-                    // Only mark as read once per drawer opening
-                    if (this.hasMarkedAsRead) {
-                        return;
-                    }
-
-                    this.hasMarkedAsRead = true;
-
-                    // Only mark as read if user is authenticated and has unread notifications
-                    @if (Auth::check() && $unreadNotificationsCount > 0)
-                        this.markAllAsRead();
-                    @endif
-                },
-
-                async markAllAsRead() {
-                    try {
-                        const response = await fetch('/dashboard/notifications/mark-all-read', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                             }
                         });
+                    });
 
-                        if (response.ok) {
-                            // Update notification badge/count in real-time
-                            const badges = document.querySelectorAll('[data-notification-count]');
-                            badges.forEach(badge => {
-                                badge.textContent = '0';
-                                badge.style.display = 'none';
-                            });
+                    observer.observe(drawer, {
+                        attributes: true,
+                        attributeFilter: ['class']
+                    });
+                }
+            },
 
-                            // Update notification button indicator
-                            const indicators = document.querySelectorAll(
-                                '.notification-indicator, [class*="notification"][class*="indicator"]');
-                            indicators.forEach(indicator => {
-                                indicator.style.display = 'none';
-                            });
+            markAllAsReadWhenOpened() {
+                // Only mark as read once per drawer opening
+                if (this.hasMarkedAsRead) {
+                    return;
+                }
 
-                            console.log('All notifications marked as read');
-                        } else {
-                            console.error('Failed to mark notifications as read');
+                this.hasMarkedAsRead = true;
+
+                // Only mark as read if user is authenticated and has unread notifications
+                @if(Auth::check() && $unreadNotificationsCount > 0)
+                this.markAllAsRead();
+                @endif
+            },
+
+            async markAllAsRead() {
+                try {
+                    const response = await fetch('/dashboard/notifications/mark-all-read', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                         }
-                    } catch (error) {
+                    });
+
+                    if (response.ok) {
+                        // Update notification badge/count in real-time
+                        const badges = document.querySelectorAll('[data-notification-count]');
+                        badges.forEach(badge => {
+                            badge.textContent = '0';
+                            badge.style.display = 'none';
+                        });
+
+                        // Update notification button indicator
+                        const indicators = document.querySelectorAll(
+                            '.notification-indicator, [class*="notification"][class*="indicator"]');
+                        indicators.forEach(indicator => {
+                            indicator.style.display = 'none';
+                        });
+                        if (window.APP_DEBUG)
+                            console.log('All notifications marked as read');
+                    } else {
+                        if (window.APP_DEBUG)
+                            console.error('Failed to mark notifications as read');
+                    }
+                } catch (error) {
+                    if (window.APP_DEBUG)
                         console.error('Error marking notifications as read:', error);
-                    }
                 }
             }
         }
+    }
 
-        // Global function for single notification mark as read
-        async function markSingleAsRead(notificationId) {
-            try {
-                const response = await fetch(`/dashboard/notifications/${notificationId}/mark-read`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    }
-                });
-
-                if (response.ok) {
-                    // Refresh the drawer content or remove visual indicators
-                    location.reload();
+    // Global function for single notification mark as read
+    async function markSingleAsRead(notificationId) {
+        try {
+            const response = await fetch(`/dashboard/notifications/${notificationId}/mark-read`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 }
-            } catch (error) {
+            });
+
+            if (response.ok) {
+                // Refresh the drawer content or remove visual indicators
+                location.reload();
+            }
+        } catch (error) {
+            if (window.APP_DEBUG)
                 console.error('Error marking notification as read:', error);
-            }
         }
+    }
 
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if drawer exists and initialize
-            const drawer = document.getElementById('notifications_drawer');
-            if (drawer && typeof Alpine !== 'undefined') {
-                // Make sure Alpine.js handles the x-data
-                Alpine.initTree(drawer);
-            }
-        });
-    </script>
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if drawer exists and initialize
+        const drawer = document.getElementById('notifications_drawer');
+        if (drawer && typeof Alpine !== 'undefined') {
+            // Make sure Alpine.js handles the x-data
+            Alpine.initTree(drawer);
+        }
+    });
+</script>
 @endpush

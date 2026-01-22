@@ -102,7 +102,7 @@
                 {{-- Save Buttons --}}
                 @include('components.elements.save-submit', [
                     'models' => 'tours.guides-types',
-                    'model' => 'tours-guide-type',
+                    'model' => 'tours.guide-type',
                 ])
             </div>
         </form>

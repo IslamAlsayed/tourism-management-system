@@ -45,6 +45,8 @@ use App\Http\Controllers\Dashboard\Transportations\RouteAssignmentController;
 use App\Http\Controllers\Dashboard\Transportations\PricingDefinitionController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
+use App\Http\Controllers\Dashboard\RoleController;
+use App\Http\Controllers\Dashboard\PermissionController;
 
 /*
 |----------------------|
@@ -62,36 +64,36 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::delete('delete-all-selected-items', [DashboardController::class, 'deleteAll'])->name('deleteAll');
 
     // Legacy multi-step form routes (keeping for reference)
-    Route::prefix('quote/v1')->group(function () {
-        Route::get('step1', [QuoteControllerV1::class, 'step1'])->name('dashboard.quote.v1.step1');
-        Route::post('step1', [QuoteControllerV1::class, 'postStep1'])->name('dashboard.quote.v1.postStep1');
+    // Route::prefix('quote/v1')->group(function () {
+    //     Route::get('step1', [QuoteControllerV1::class, 'step1'])->name('dashboard.quote.v1.step1');
+    //     Route::post('step1', [QuoteControllerV1::class, 'postStep1'])->name('dashboard.quote.v1.postStep1');
 
-        Route::get('{id}/step2', [QuoteControllerV1::class, 'step2'])->name('dashboard.quote.v1.step2');
-        Route::post('{id}/step2', [QuoteControllerV1::class, 'postStep2'])->name('dashboard.quote.v1.postStep2');
+    //     Route::get('{id}/step2', [QuoteControllerV1::class, 'step2'])->name('dashboard.quote.v1.step2');
+    //     Route::post('{id}/step2', [QuoteControllerV1::class, 'postStep2'])->name('dashboard.quote.v1.postStep2');
 
-        Route::get('{id}/step3', [QuoteControllerV1::class, 'step3'])->name('dashboard.quote.v1.step3');
-        Route::post('{id}/step3', [QuoteControllerV1::class, 'postStep3'])->name('dashboard.quote.v1.postStep3');
+    //     Route::get('{id}/step3', [QuoteControllerV1::class, 'step3'])->name('dashboard.quote.v1.step3');
+    //     Route::post('{id}/step3', [QuoteControllerV1::class, 'postStep3'])->name('dashboard.quote.v1.postStep3');
 
-        Route::get('{id}/step4', [QuoteControllerV1::class, 'step4'])->name('dashboard.quote.v1.step4');
-        Route::post('{id}/submit', [QuoteControllerV1::class, 'submit'])->name('dashboard.quote.v1.submit');
-    });
+    //     Route::get('{id}/step4', [QuoteControllerV1::class, 'step4'])->name('dashboard.quote.v1.step4');
+    //     Route::post('{id}/submit', [QuoteControllerV1::class, 'submit'])->name('dashboard.quote.v1.submit');
+    // });
 
-    Route::prefix('quote/v2')->group(function () {
-        Route::get('/', [QuoteControllerV2::class, 'index'])->name('dashboard.quote.v2.index');
-        Route::get('step1', [QuoteControllerV2::class, 'step1'])->name('dashboard.quote.v2.step1');
-        Route::post('step1', [QuoteControllerV2::class, 'postStep1'])->name('dashboard.quote.v2.postStep1');
-        Route::get('step2', [QuoteControllerV2::class, 'step2'])->name('dashboard.quote.v2.step2');
-        Route::post('step2', [QuoteControllerV2::class, 'postStep2'])->name('dashboard.quote.v2.postStep2');
-        Route::get('step3', [QuoteControllerV2::class, 'step3'])->name('dashboard.quote.v2.step3');
-        Route::post('step3', [QuoteControllerV2::class, 'postStep3'])->name('dashboard.quote.v2.postStep3');
-        Route::get('step4', [QuoteControllerV2::class, 'step4'])->name('dashboard.quote.v2.step4');
-        Route::post('step4', [QuoteControllerV2::class, 'postStep4'])->name('dashboard.quote.v2.postStep4');
-        Route::get('submit', [QuoteControllerV2::class, 'submit'])->name('dashboard.quote.v2.submit');
-        Route::post('get-hotels-by-countries-and-cities', [QuoteControllerV2::class, 'getHotelsByCountriesAndCities']);
-        Route::post('get-transportation', [QuoteControllerV2::class, 'getTransportation']);
-    });
+    // Route::prefix('quote/v2')->group(function () {
+    //     Route::get('/', [QuoteControllerV2::class, 'index'])->name('dashboard.quote.v2.index');
+    //     Route::get('step1', [QuoteControllerV2::class, 'step1'])->name('dashboard.quote.v2.step1');
+    //     Route::post('step1', [QuoteControllerV2::class, 'postStep1'])->name('dashboard.quote.v2.postStep1');
+    //     Route::get('step2', [QuoteControllerV2::class, 'step2'])->name('dashboard.quote.v2.step2');
+    //     Route::post('step2', [QuoteControllerV2::class, 'postStep2'])->name('dashboard.quote.v2.postStep2');
+    //     Route::get('step3', [QuoteControllerV2::class, 'step3'])->name('dashboard.quote.v2.step3');
+    //     Route::post('step3', [QuoteControllerV2::class, 'postStep3'])->name('dashboard.quote.v2.postStep3');
+    //     Route::get('step4', [QuoteControllerV2::class, 'step4'])->name('dashboard.quote.v2.step4');
+    //     Route::post('step4', [QuoteControllerV2::class, 'postStep4'])->name('dashboard.quote.v2.postStep4');
+    //     Route::get('submit', [QuoteControllerV2::class, 'submit'])->name('dashboard.quote.v2.submit');
+    //     Route::post('get-hotels-by-countries-and-cities', [QuoteControllerV2::class, 'getHotelsByCountriesAndCities']);
+    //     Route::post('get-transportation', [QuoteControllerV2::class, 'getTransportation']);
+    // });
 
-    Route::get('/main-form', [DashboardController::class, 'mainForm'])->name('dashboard.mainForm');
+    // Route::get('/main-form', [DashboardController::class, 'mainForm'])->name('dashboard.mainForm');
 
     // === COLUMN PREFERENCES ===
     Route::prefix('columns')->name('columns.')->group(function () {
@@ -107,6 +109,10 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === USER MANAGEMENT ===
     Route::resource('users', UserController::class)->names('users');
+
+    // === ROLES & PERMISSIONS MANAGEMENT ===
+    Route::resource('roles', RoleController::class)->names('roles');
+    Route::resource('permissions', PermissionController::class)->names('permissions');
 
     // === CLIENT MANAGEMENT ===
     Route::resource('clients', ClientController::class)->names('clients');
@@ -178,10 +184,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Route::resource('transportation/company/bus-types', CompanyBusTypeController::class)->names('transportation-company-bus-types');
     // Route::resource('transportation/vehicles', VehicleController::class)->names('transportation-vehicles');
 
-    // === TOURIST SITES MANAGEMENT ===
+    // === TOURIST MANAGEMENT ===
     Route::resource('tourist-sites', TouristSiteController::class)->names('tourist-sites');
-
-    // === TOURIST SERVICES MANAGEMENT ===
     Route::resource('tourist-services', TouristServiceController::class)->names('tourist-services');
 
     // === ACCOMMODATIONS MANAGEMENT ===

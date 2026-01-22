@@ -19,6 +19,7 @@
         "livewire/livewire": "^3.6",
         "maatwebsite/excel": "3.1.67",
         "spatie/laravel-activitylog": "^4.10",
+        "spatie/laravel-permission": "^6.24",
         "spatie/simple-excel": "^3.7",
         "tonysm/rich-text-laravel": "^3.3"
     },

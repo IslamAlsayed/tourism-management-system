@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use App\Traits\HasUuid;
-use App\Traits\HasSearch;
 use App\Traits\FiltersByUserRole;
+use App\Traits\HandlesRichTextAttributes;
+use App\Traits\HasSearch;
+use App\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TransportationRouteAssignment extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole;
-
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, HandlesRichTextAttributes;
     protected $table = 'transportations_route_assignments';
-
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -96,7 +95,7 @@ class TransportationRouteAssignment extends Model
         if (!$this->available_days || !is_array($this->available_days)) {
             return [];
         }
-        return array_map(function($day) {
+        return array_map(function ($day) {
             return config('helpers.daysMap.' . $day) ?? '--';
         }, $this->available_days);
     }

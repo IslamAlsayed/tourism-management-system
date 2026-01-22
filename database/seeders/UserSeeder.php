@@ -14,9 +14,11 @@ class UserSeeder extends Seeder
         User::truncate();
         Schema::enableForeignKeyConstraints();
 
-        // Create users with hardcoded photos
+        // Create users with hardcoded photos and assign roles
         // PhotoObserver will automatically create MediaFile records
-        User::factory()->create([
+
+        // Superadmin User
+        $tawfiq = User::factory()->create([
             'name' => 'tawfiq',
             'email' => 'tawfiq@example.com',
             'bio' => 'Administrator account',
@@ -33,8 +35,10 @@ class UserSeeder extends Seeder
             'timezone_id' => 2,
             'photo' => 'uploads/users/1/Ak5G29KHP54dNf7PG7syIhE8YUck4yRRPAyJbrNS.png',
         ]);
+        $tawfiq->assignRole('superadmin');
 
-        User::factory()->create([
+        // Admin User
+        $islam = User::factory()->create([
             'name' => 'islam',
             'email' => 'islam@example.com',
             'bio' => 'developer account',
@@ -51,8 +55,10 @@ class UserSeeder extends Seeder
             'timezone_id' => 1,
             'photo' => 'uploads/users/2/2W7uER2vMWn6Eeec8NJgGgYfoYw1eSrV64ZfyM7FC96.png',
         ]);
+        $islam->assignRole('admin');
 
-        User::factory()->create([
+        // Regular User
+        $ahmed = User::factory()->create([
             'name' => 'ahmed',
             'email' => 'ahmed@example.com',
             'bio' => 'normal user account',
@@ -65,5 +71,6 @@ class UserSeeder extends Seeder
             'timezone_id' => 3,
             'photo' => 'uploads/users/3/fhjdy2WvMWn6E8NJgGgYfoYw1eSrV64ZfyM7FC96.png',
         ]);
+        $ahmed->assignRole('user');
     }
 }

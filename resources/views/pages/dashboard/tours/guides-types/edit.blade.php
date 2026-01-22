@@ -103,7 +103,7 @@
                 {{-- Update Buttons --}}
                 @include('components.elements.update-submit', [
                     'models' => 'tours.guides-types',
-                    'model' => 'tours-guide-type',
+                    'model' => 'tours.guide-type',
                 ])
             </div>
         </form>

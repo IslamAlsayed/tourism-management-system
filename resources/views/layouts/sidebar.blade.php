@@ -1,5 +1,5 @@
 {{-- Sidebar --}}
-<div class="kt-sidebar bg-background border-e border-e-border fixed top-0 bottom-0 z-1000 hidden lg:flex flex-col items-stretch shrink-0 [--kt-drawer-enable:true] lg:[--kt-drawer-enable:false]"
+<div class="kt-sidebar bg-background border-e border-e-border fixed top-0 bottom-0 z-2001 hidden lg:flex flex-col items-stretch shrink-0 [--kt-drawer-enable:true] lg:[--kt-drawer-enable:false]"
     data-kt-drawer="true" data-kt-drawer-class="kt-drawer kt-drawer-start top-0 bottom-0" id="sidebar">
     {{-- Sidebar Header --}}
     <div class="kt-sidebar-header hidden lg:flex text-center justify-center relative px-3 lg:px-4 shrink-0 py-2"
@@ -153,24 +153,24 @@
                                         }
 
                                         // if (
-                                        //     Str::contains($item['title'], 'transport') &&
-                                        //     is_array(explode('.', $currentRoute)) &&
-                                        //     isset(explode('.', $currentRoute)[1]) &&
-                                        //     $child['title'] == explode('.', $currentRoute)[1]
+                                        // Str::contains($item['title'], 'transport') &&
+                                        // is_array(explode('.', $currentRoute)) &&
+                                        // isset(explode('.', $currentRoute)[1]) &&
+                                        // $child['title'] == explode('.', $currentRoute)[1]
                                         // ) {
-                                        //     $childHasActiveChild = true;
+                                        // $childHasActiveChild = true;
                                         // }
                                         // if (Str::contains($item['title'], 'transport')) {
                                         // if (Str::contains($child['title'], 'assignment')) {
                                         // dd(
-                                        // "route assignments"        $child['title'],
-                                        //         "route-assignments"        request()->segment(3)index: ,
-                                        //         "route-assignment"        str_replace('_', '-', key($currentParameters)),
-                                        //         "route_assignment"        key($currentParameters),
-                                        //                                         $currentRoute,
-                                        //                                         explode('.', $currentRoute),
-                                        //                                     );
-                                        //                                 }
+                                        // "route assignments" $child['title'],
+                                        // "route-assignments" request()->segment(3)index: ,
+                                        // "route-assignment" str_replace('_', '-', key($currentParameters)),
+                                        // "route_assignment" key($currentParameters),
+                                        // $currentRoute,
+                                        // explode('.', $currentRoute),
+                                        // );
+                                        // }
                                         if (
                                             Str::contains(
                                                 request()->segment(3),
@@ -251,7 +251,7 @@
 
                                                             {{-- <span
                                                                 class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $subChildIsActive ? 'before:bg-primary' : '' }}">
-                                                            </span> --}}
+                                        </span> --}}
 
                                                             <span
                                                                 class="kt-menu-icon items-start text-muted-foreground w-[10px]">
@@ -296,7 +296,7 @@
                                                 {{ ($child['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                                 {{-- <span
                                                     class="kt-menu-bullet flex w-[6px] -start-[3px] relative before:absolute before:top-0 before:size-[6px] before:rounded-full {{ $childIsActive ? 'before:bg-primary' : '' }}">
-                                                </span> --}}
+                                </span> --}}
 
                                                 <span class="kt-menu-icon items-start text-muted-foreground w-[10px]">
                                                     <i

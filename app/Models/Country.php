@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use App\Traits\HasUuid;
-use App\Traits\HasSearch;
-use App\Traits\FiltersByUserRole;
 use App\Traits\BroadcastsRecordEvents;
+use App\Traits\FiltersByUserRole;
+use App\Traits\HandlesRichTextAttributes;
+use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Country extends Model
 {
-    use HasSearch, HasRichText, HasUuid, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasSearch, HasRichText, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes;
     protected $richTextAttributes = [
         'description',
         'notes',

@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\HandlesRichTextAttributes;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TouristSite extends Model
 {
-    use HasSearch, HasUuid, HasRichText, HasFactory;
-
+    use HasSearch, HasUuid, HasRichText, HasFactory, BroadcastsRecordEvents, HandlesRichTextAttributes;
     protected $table = 'tourist_sites';
-
     protected $richTextAttributes = [
         'nearby_attractions',
         'description',

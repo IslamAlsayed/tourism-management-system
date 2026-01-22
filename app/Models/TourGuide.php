@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\FiltersByUserRole;
+use App\Traits\HandlesRichTextAttributes;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
-use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TourGuide extends Model
 {
-    use HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents;
-
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes;
     protected $richTextAttributes = [
         'description',
         'notes',

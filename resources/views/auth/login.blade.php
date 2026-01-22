@@ -19,7 +19,7 @@
     <div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg" style="height: 100svh">
         <div class="kt-card max-w-[370px] w-full">
             <form action="{{ route('login') }}" class="kt-card-content flex flex-col gap-5 p-6" id="kt_sign_in_form"
-                method="post">
+                method="post" autocomplete="off">
                 @csrf
                 <div class="text-center mb-2.5">
                     <h3 class="text-lg font-medium text-mono leading-none mb-2.5">
@@ -49,20 +49,22 @@
                     </a>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span class="border-t border-border w-full">
-                    </span>
+                    <span class="border-t border-border w-full"></span>
                     <span class="text-xs text-muted-foreground font-medium uppercase">
                         Or
-                    </span>
-                    <span class="border-t border-border w-full">
-                    </span>
+                    </span><span class="border-t border-border w-full"></span>
                 </div>
                 <div class="flex flex-col gap-1">
                     <label class="kt-form-label font-normal text-mono">
                         Email
                     </label>
-                    <input class="kt-input h-[45px]" placeholder="email@email.com" type="email" name="email"
-                        value="{{ request()->ip() == '156.210.211.81' ? 'tawfiq@example.com' : (request()->ip() == '156.211.118.168' ? 'islam@example.com' : 'islam@example.com') }}" />
+                    <input class="kt-input h-[45px]" placeholder="e@e.com" type="email" name="email" autocomplete="off"
+                        list="emails" />
+                    <datalist id="emails">
+                        <option value="tawfiq@example.com">
+                        <option value="islam@example.com">
+                        <option value="ahmed@example.com">
+                    </datalist>
                 </div>
                 <div class="flex flex-col gap-1">
                     <div class="flex items-center justify-between gap-1">
@@ -74,17 +76,14 @@
                         </a>
                     </div>
                     <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                        <input name="password" placeholder="Enter Password" type="password" value="12345678"
-                            autocomplete="off" />
+                        <input name="password" type="password" value="" autocomplete="off" />
                         <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                             data-kt-toggle-password-trigger="true" type="button">
                             <span class="kt-toggle-password-active:hidden">
-                                <i class="ki-filled ki-eye text-muted-foreground">
-                                </i>
+                                <i class="ki-filled ki-eye text-muted-foreground"></i>
                             </span>
                             <span class="hidden kt-toggle-password-active:block">
-                                <i class="ki-filled ki-eye-slash text-muted-foreground">
-                                </i>
+                                <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
                             </span>
                         </button>
                     </div>
@@ -111,7 +110,8 @@
         <script>
             window.showToast({
                 type: 'info',
-                message: '{{ __('messages.session_expired') }}'
+                message: '{{ __('
+                                                    messages.session_expired ') }}'
             });
         </script>
     @endif

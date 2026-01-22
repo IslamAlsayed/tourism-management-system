@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\FiltersByUserRole;
+use App\Traits\HandlesRichTextAttributes;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
-use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TouristService extends Model
 {
-    use HasSearch, HasUuid, HasRichText, HasFactory;
-
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, HandlesRichTextAttributes;
     protected $table = 'tourist_services';
-
     protected $richTextAttributes = [
         'description',
         'notes',

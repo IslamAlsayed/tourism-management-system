@@ -26,9 +26,9 @@ class GuideTypeController extends Controller
 
     public function store(StoreRequest $request)
     {
-        $data = $request->validated();
-        unset($data['state_id'], $data['city_id']);
-        $tourGuideType = TourGuideType::create($data);
+        $validated = $request->validated();
+        unset($validated['state_id'], $validated['city_id']);
+        $tourGuideType = TourGuideType::create($validated);
         if (!$tourGuideType)
             return back()->withError(__('messages.type_creation_failed', ['type' => __('main.tours.guide')]));
         // States
@@ -41,7 +41,7 @@ class GuideTypeController extends Controller
         $tourGuideType->states()->sync($stateIds);
         // Cities
         $cityIds = [];
-        if ($request->boolean('all_cities')) {
+        if ($request->boolean('all_cities') && $request->filled('country_id')) {
             if (!empty($stateIds))
                 $cityIds = City::whereIn('state_id', $stateIds)->pluck('id')->toArray();
         } elseif ($request->filled('city_id')) {
@@ -76,8 +76,8 @@ class GuideTypeController extends Controller
         $tourGuideType = TourGuideType::find($id);
         if (!$tourGuideType)
             return redirect()->route('tours.guides-types.index')->withError(__('messages.type_creation_failed', ['type' => __('main.tours.guide-type')]));
-        $data = $request->validated();
-        unset($data['state_id'], $data['city_id']);
+        $validated = $request->validated();
+        unset($validated['state_id'], $validated['city_id']);
         // States
         $stateIds = [];
         if ($request->boolean('all_states') && $request->filled('country_id')) {
@@ -88,14 +88,14 @@ class GuideTypeController extends Controller
         $tourGuideType->states()->sync($stateIds);
         // Cities
         $cityIds = [];
-        if ($request->boolean('all_cities')) {
+        if ($request->boolean('all_cities') && $request->filled('country_id')) {
             if (!empty($stateIds))
                 $cityIds = City::whereIn('state_id', $stateIds)->pluck('id')->toArray();
         } elseif ($request->filled('city_id')) {
             $cityIds = array_unique((array) $request->input('city_id'));
         }
         $tourGuideType->cities()->sync($cityIds);
-        $updated = $tourGuideType->update($data);
+        $updated = $tourGuideType->update($validated);
         return $updated
             ? redirect()->route('tours.guides-types.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tours.guide-type')]))
             : redirect()->route('tours.guides-types.index')->withError(__('messages.type_update_failed', ['type' => __('main.tours.guide-type')]));

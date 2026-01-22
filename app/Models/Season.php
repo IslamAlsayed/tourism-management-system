@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
+use App\Traits\HandlesRichTextAttributes;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,8 +12,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Season extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents;
-
+    use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents, HandlesRichTextAttributes;
     protected $richTextAttributes = [
         'description',
         'notes'

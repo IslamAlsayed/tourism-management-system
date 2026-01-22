@@ -1,7 +1,7 @@
 <div class="flex-wrap gap-2 p-2">
     <div class="w-full flex justify-between items-start">
         {{-- Pagination Info --}}
-        @if (isset($data))
+        @if (isset($data) && !empty($data) && $data->count() > 0)
             <div class="pagination-showing">
                 <p class="text-sm text-gray-600 p-2">
                     {{ __('main.showing') }} {{ $data->firstItem() ?? 0 }} -
@@ -13,6 +13,8 @@
                     @endif
                 </p>
             </div>
+        @else
+            <div></div>
         @endif
 
         {{-- selected items count --}}
@@ -31,12 +33,12 @@
             @if (isset($sortField) && !empty($sortField))
                 <div class="flex items-center">
                     <button type="button" wire:click="resetSort" title="{{ __('main.reset_sort') }}" toggle-button
-                        class="kt-btn kt-btn-outline bg-white px-3 h-[45px] hover:bg-gray-50 transition-colors">
-                        <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
-                        <span class="text-sm">{{ __('main.reset_sort') }}</span>
-                    </button>
-                </div>
-            @endif --}}
+            class="kt-btn kt-btn-outline bg-white px-3 h-[45px] hover:bg-gray-50 transition-colors">
+            <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
+            <span class="text-sm">{{ __('main.reset_sort') }}</span>
+            </button>
+        </div>
+        @endif --}}
 
             @isset($slot)
                 {{ $slot }}
@@ -68,7 +70,11 @@
     </div>
 
     {{-- Progress bar showing current page position --}}
-    @if (isset($data) && getPaginate() != config('app.paginate_max') && $data->hasPages() && $data->lastPage() > 1)
+    @if (isset($data) &&
+            !empty($data) &&
+            getPaginate() != config('app.paginate_max') &&
+            $data->hasPages() &&
+            $data->lastPage() > 1)
         <div class="w-full mt-3">
             <div class="flex items-center gap-2 text-xs text-gray-500">
                 <span>{{ __('main.progress') }}:</span>
