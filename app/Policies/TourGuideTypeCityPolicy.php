@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\TourGuideTypeCity;
 
-class TourGuidTypeCityPolicy
+class TourGuideTypeCityPolicy
 {
     public function viewAny(User $user): bool
     {

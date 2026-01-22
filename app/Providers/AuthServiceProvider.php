@@ -78,7 +78,7 @@ use App\Policies\TourGuidePolicy;
 use App\Policies\TourGuideLanguagePolicy;
 use App\Policies\TourGuideReviewPolicy;
 use App\Policies\TourGuideTypePolicy;
-use App\Policies\TourGuidTypeCityPolicy;
+use App\Policies\TourGuideTypeCityPolicy;
 use App\Policies\TourGuideTypeStatePolicy;
 use App\Policies\TouristServicePolicy;
 use App\Policies\TouristSitePolicy;
@@ -142,7 +142,7 @@ class AuthServiceProvider extends ServiceProvider
         TourGuideLanguage::class => TourGuideLanguagePolicy::class,
         TourGuideReview::class => TourGuideReviewPolicy::class,
         TourGuideType::class => TourGuideTypePolicy::class,
-        TourGuideTypeCity::class => TourGuidTypeCityPolicy::class,
+        TourGuideTypeCity::class => TourGuideTypeCityPolicy::class,
         TourGuideTypeState::class => TourGuideTypeStatePolicy::class,
         TouristService::class => TouristServicePolicy::class,
         TouristSite::class => TouristSitePolicy::class,
