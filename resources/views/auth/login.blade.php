@@ -110,8 +110,7 @@
         <script>
             window.showToast({
                 type: 'info',
-                message: '{{ __('
-                                                    messages.session_expired ') }}'
+                message: '{{ __('messages.session_expired ') }}',
             });
         </script>
     @endif
