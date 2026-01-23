@@ -71,22 +71,23 @@ class HandleUserLogged
                     // Disable activity logging temporarily to prevent infinite loop
                     activity()->disableLogging();
                     
-                    $notify = Notification::create([
-                        'performer_id' => getActiveUser()->id,
-                        'target_user_id' => $admin->id,
-                        'type' => 'info',
-                        'notification_type' => 'system',
-                        'title' => __('main.user_status'),
-                        'message' => $message,
-                        'is_read' => false,
-                        'data' => json_encode(['source' => 'status', 'messageMode' => true]),
-                        'is_global' => false,
-                    ]);
+                    $notify = [];
+                    // $notify = Notification::create([
+                    //     'performer_id' => getActiveUser()->id,
+                    //     'target_user_id' => $admin->id,
+                    //     'type' => 'info',
+                    //     'notification_type' => 'system',
+                    //     'title' => __('main.user_status'),
+                    //     'message' => $message,
+                    //     'is_read' => false,
+                    //     'data' => json_encode(['source' => 'status', 'messageMode' => true]),
+                    //     'is_global' => false,
+                    // ]);
                     
                     // Re-enable activity logging
                     activity()->enableLogging();
 
-                    $notify['human_created_at'] = $notify?->human_created_at;
+                    $notify['human_created_at'] = $notify?->human_created_at ?? null;
                 } catch (\Exception $e) {
                     Log::error('Failed to create Notification: ' . $e->getMessage());
                     continue;
@@ -111,7 +112,7 @@ class HandleUserLogged
                                 'user_name' => $event->user->name,
                                 'message' => $message,
                                 'performer_id' => getActiveUser()->id,
-                                'notification_id' => $notify->id,
+                                'notification_id' => $notify?->id ?? null,
                                 'target_user_id' => $admin->id,
                                 'is_global' => false,
                                 'activities_logs_count' => Activity::count() ?? 0,

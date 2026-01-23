@@ -31,24 +31,24 @@ class ViewServiceProvider extends ServiceProvider
 
             // Get notifications for authenticated user
             $notifications = collect();
-            $unreadNotificationsCount = 0;
+            // $unreadNotificationsCount = 0;
 
-            if ($activeUser && class_exists(Notification::class)) {
-                try {
-                    $notifications = Notification::targetMe($activeUser->id)->orderBy('created_at', 'desc')->limit(10)->get();
-                    $unreadNotificationsCount = Notification::targetMe($activeUser->id)->unread()->count();
-                } catch (\Exception $e) {
-                    Log::error('Error fetching notifications: ' . $e->getMessage());
-                    $notifications = collect();
-                    $unreadNotificationsCount = 0;
-                }
-            }
+            // if ($activeUser && class_exists(Notification::class)) {
+            //     try {
+            //         $notifications = Notification::targetMe($activeUser->id)->orderBy('created_at', 'desc')->limit(10)->get();
+            //         $unreadNotificationsCount = Notification::targetMe($activeUser->id)->unread()->count();
+            //     } catch (\Exception $e) {
+            //         Log::error('Error fetching notifications: ' . $e->getMessage());
+            //         $notifications = collect();
+            //         $unreadNotificationsCount = 0;
+            //     }
+            // }
 
             $view->with('activeUser', $activeUser);
             $view->with('system_languages', $system_languages);
             $view->with('settings', $settings);
-            $view->with('notifications', $notifications);
-            $view->with('unreadNotificationsCount', $unreadNotificationsCount);
+            // $view->with('notifications', $notifications);
+            // $view->with('unreadNotificationsCount', $unreadNotificationsCount);
         });
     }
 }

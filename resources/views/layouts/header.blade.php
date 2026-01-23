@@ -25,7 +25,7 @@
         <div class="flex items-center gap-2.5">
             @include('partials.topbar-search-modal')
             {{-- @include('partials.topbar-notification-dropdown') --}}
-            @livewire('notifications.notification-dropdown')
+            {{-- @livewire('notifications.notification-dropdown') --}}
             {{-- @include('components.notification-dropdown') --}}
             @include('partials.topbar-chat')
             {{-- @include('partials.topbar-apps') --}}

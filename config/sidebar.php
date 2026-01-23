@@ -1101,11 +1101,11 @@ return [
         ],
 
         // ================= Notifications =================
-        [
-            'title' => 'notifications',
-            'icon' => 'fas fa-bell',
-            'route' => 'notifications.index',
-        ],
+        // [
+        //     'title' => 'notifications',
+        //     'icon' => 'fas fa-bell',
+        //     'route' => 'notifications.index',
+        // ],
 
         // ================= Languages =================
         [

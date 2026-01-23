@@ -87,19 +87,20 @@ class HandleRecord
 
         foreach ($users as $notifyUser) {
             try {
-                $notify = Notification::create([
-                    'performer_id' => getActiveUser()->id,
-                    'target_user_id' => $notifyUser->id,
-                    'type' => 'success',
-                    'notification_type' => 'system',
-                    'title' => __('main.' . strtolower(class_basename($record ?? $type ?? 'record'))),
-                    'message' => $message,
-                    'is_read' => false,
-                    'data' => json_encode(['source' => 'toast', 'messageMode' => true, 'event_type' => $status]),
-                    'is_global' => false,
-                ]);
+                $notify = [];
+                // $notify = Notification::create([
+                //     'performer_id' => getActiveUser()->id,
+                //     'target_user_id' => $notifyUser->id,
+                //     'type' => 'success',
+                //     'notification_type' => 'system',
+                //     'title' => __('main.' . strtolower(class_basename($record ?? $type ?? 'record'))),
+                //     'message' => $message,
+                //     'is_read' => false,
+                //     'data' => json_encode(['source' => 'toast', 'messageMode' => true, 'event_type' => $status]),
+                //     'is_global' => false,
+                // ]);
 
-                $notify['human_created_at'] = $notify?->human_created_at;
+                // $notify['human_created_at'] = $notify?->human_created_at;
             } catch (\Exception $e) {
                 Log::error('Failed to create Notification: ' . $e->getMessage());
                 continue;
@@ -121,7 +122,7 @@ class HandleRecord
                         'user_name' => getActiveUser()->name,
                         'message' => $message,
                         'performer_id' => getActiveUser()->id,
-                        'notification_id' => $notify->id,
+                        'notification_id' => $notify?->id ?? null,
                         'target_user_id' => $notifyUser->id,
                         'is_global' => false,
                         'activities_logs_count' => Activity::count() ?? 0,

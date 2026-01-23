@@ -33,8 +33,6 @@ class Notification extends Model
         'is_global',
         'read_at',
         'notification_type',
-        'user_id',
-        'recipient_user_id',
         'data',
     ];
 
@@ -68,10 +66,10 @@ class Notification extends Model
     {
         parent::boot();
 
-        // Auto-set user_id if user is authenticated
+        // Auto-set performer_id if user is authenticated
         static::saving(function ($notification) {
-            if (Auth::check() && !$notification->user_id) {
-                $notification->user_id = getActiveUser()?->id;
+            if (Auth::check() && !$notification->performer_id) {
+                $notification->performer_id = getActiveUser()?->id;
             }
         });
     }
@@ -79,16 +77,6 @@ class Notification extends Model
     /**
      * Relationship with User
      */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function recipientUser()
-    {
-        return $this->belongsTo(User::class, 'recipient_user_id');
-    }
-
     public function performer()
     {
         return $this->belongsTo(User::class, 'performer_id');
