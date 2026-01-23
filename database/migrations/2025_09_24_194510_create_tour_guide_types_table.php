@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('tour_guide_types', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
             $table->string('type')->nullable();
             $table->decimal('price', 10, 2)->nullable();

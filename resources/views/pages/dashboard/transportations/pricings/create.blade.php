@@ -19,6 +19,35 @@
                 </a>
             </div>
         </div>
+
+        @include('components.must-add-first', [
+            'requirements' => [
+                [
+                    'condition' => \App\Models\TransportationCompany::count() > 0,
+                    'route' => route('transportations.companies.index'),
+                    'label' => __('main.transportations-companies'),
+                ],
+                [
+                    'condition' => \App\Models\TransportationVehicleType::count() > 0,
+                    'route' => route('transportations.vehicle-types.index'),
+                    'label' => __('main.transportations-vehicle-types'),
+                ],
+                [
+                    'condition' => \App\Models\Season::count() > 0,
+                    'route' => route('seasons.index'),
+                    'label' => __('main.seasons'),
+                ],
+                [
+                    'condition' => \App\Models\PricingDefinition::count() > 0,
+                    'route' => route('pricing-definitions.index'),
+                    'label' => __('main.pricing-definitions'),
+                ],
+                [
+                    'condition' => \App\Models\TourGuideType::count() > 0,
+                    'route' => route('tour-guide-types.index'),
+                ],
+            ],
+        ])
     </div>
 
     <div class="kt-container-fixed">

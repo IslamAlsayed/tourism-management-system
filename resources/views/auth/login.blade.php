@@ -21,7 +21,7 @@
             <form action="{{ route('login') }}" class="kt-card-content flex flex-col gap-5 p-6" id="kt_sign_in_form"
                 method="post" autocomplete="off">
                 @csrf
-                <div class="text-center mb-2.5">
+                <div class="text-center ">
                     <h3 class="text-lg font-medium text-mono leading-none mb-2.5">
                         Sign in
                     </h3>
@@ -34,32 +34,12 @@
                         </a>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-2.5">
-                    <a class="kt-btn kt-btn-outline justify-center" href="#">
-                        <img alt="" class="size-3.5 shrink-0"
-                            src="{{ asset('metronic/media/brand-logos/google.svg') }}" />
-                        Use Google
-                    </a>
-                    <a class="kt-btn kt-btn-outline justify-center" href="#">
-                        <img alt="" class="size-3.5 shrink-0 dark:hidden"
-                            src="{{ asset('metronic/media/brand-logos/apple-black.svg') }}" />
-                        <img alt="" class="size-3.5 shrink-0 light:hidden"
-                            src="{{ asset('metronic/media/brand-logos/apple-white.svg') }}" />
-                        Use Apple
-                    </a>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="border-t border-border w-full"></span>
-                    <span class="text-xs text-muted-foreground font-medium uppercase">
-                        Or
-                    </span><span class="border-t border-border w-full"></span>
-                </div>
                 <div class="flex flex-col gap-1">
                     <label class="kt-form-label font-normal text-mono">
                         Email
                     </label>
                     <input class="kt-input h-[45px]" placeholder="e@e.com" type="email" name="email" autocomplete="off"
-                        list="emails" />
+                    value="{{ old('email') }}" list="emails" />
                     <datalist id="emails">
                         <option value="tawfiq@example.com">
                         <option value="islam@example.com">
@@ -67,7 +47,7 @@
                     </datalist>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <div class="flex items-center justify-between gap-1">
+                    <div class="flex items-center justify-between gap-1 disabled opacity-50">
                         <label class="kt-form-label font-normal text-mono">
                             Password
                         </label>
@@ -88,14 +68,6 @@
                         </button>
                     </div>
                 </div>
-                <label class="kt-label">
-                    @include('components.elements.checkbox-button', [
-                        'name' => 'remember',
-                        'id' => 'remember-me',
-                        'value' => '1',
-                        'label' => 'Remember me',
-                    ])
-                </label>
                 <button class="kt-btn kt-btn-primary flex justify-center grow" type="submit" toggle-button>
                     Sign In
                 </button>

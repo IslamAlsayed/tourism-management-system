@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('sidebar_menu_orders', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
             $table->string('menu_key')->unique(); // unique identifier for menu item
             $table->integer('order')->default(0); // sort order

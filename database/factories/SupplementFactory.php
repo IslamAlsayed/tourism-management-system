@@ -29,10 +29,10 @@ class SupplementFactory extends Factory
             ['name' => 'Pool View Supplement', 'name_ar' => 'إضافة إطلالة حمام سباحة', 'category' => 'accommodation'],
         ];
 
-        $supplement = fake()->randomElement($supplements);
+        $supplement = $this->faker->randomElement($supplements);
 
         // Randomly choose between Restaurant or Accommodation
-        $modelType = fake()->randomElement([
+        $modelType = $this->faker->randomElement([
             \App\Models\Restaurant::class,
             \App\Models\Accommodation::class,
         ]);
@@ -44,16 +44,16 @@ class SupplementFactory extends Factory
 
             'name' => $supplement['name'],
             'name_ar' => $supplement['name_ar'],
-            'description' => fake()->paragraph(2),
-            // 'description_ar' => fake()->paragraph(2),
+            'description' => $this->faker->paragraph(2),
+            // 'description_ar' => $this->faker->paragraph(2),
             // 'category' => $supplement['category'],
-            'price' => fake()->randomFloat(2, 10, 200),
-            // 'is_per_person' => fake()->boolean(60),
-            'price_type' => fake()->randomElement(['per_person', 'per_room', 'per_night', 'one_time']),
-            'is_mandatory' => fake()->boolean(20),
-            'applicable_date' => fake()->optional()->dateTimeBetween('now', '+1 year'),
-            'is_active' => fake()->boolean(90),
-            'notes' => fake()->optional()->paragraph(1),
+            'price' => $this->faker->randomFloat(2, 10, 200),
+            // 'is_per_person' => $this->faker->boolean(60),
+            'price_type' => $this->faker->randomElement(['per_person', 'per_room', 'per_night', 'one_time']),
+            'is_mandatory' => $this->faker->boolean(20),
+            'applicable_date' => $this->faker->optional()->dateTimeBetween('now', '+1 year'),
+            'is_active' => $this->faker->boolean(90),
+            'notes' => $this->faker->optional()->paragraph(1),
             'created_by' => \App\Models\User::inRandomOrder()->first()?->id ?? null,
             'updated_by' => null,
         ];

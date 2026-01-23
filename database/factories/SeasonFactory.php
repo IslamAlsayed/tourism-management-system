@@ -24,10 +24,10 @@ class SeasonFactory extends Factory
             ['name' => 'Holiday Season', 'name_ar' => 'موسم الأعياد', 'from' => '2024-12-20', 'to' => '2025-01-10'],
         ];
 
-        $season = fake()->unique()->randomElement($seasons);
+        $season = $this->faker->unique()->randomElement($seasons);
 
         // Randomly choose between Restaurant or Accommodation
-        $modelType = fake()->randomElement([
+        $modelType = $this->faker->randomElement([
             \App\Models\Restaurant::class,
             \App\Models\Accommodation::class,
         ]);
@@ -41,9 +41,9 @@ class SeasonFactory extends Factory
             'name_ar' => $season['name_ar'],
             'season_from' => $season['from'],
             'season_to' => $season['to'],
-            'is_active' => fake()->boolean(90),
-            'description' => fake()->paragraph(2),
-            'notes' => fake()->optional()->paragraph(1),
+            'is_active' => $this->faker->boolean(90),
+            'description' => $this->faker->paragraph(2),
+            'notes' => $this->faker->optional()->paragraph(1),
         ];
     }
 }

@@ -17,11 +17,11 @@ class TransportationPricingFactory extends Factory
     public function definition(): array
     {
         return [
-            'price' => fake()->numberBetween(900, 4000),
-            'tax' => fake()->randomFloat(2, 0, 100),
-            'is_active' => fake()->boolean(80),
-            'description' => fake()->paragraph(3),
-            'notes' => fake()->optional()->sentence(),
+            'price' => $this->faker->numberBetween(900, 4000),
+            'tax' => $this->faker->randomFloat(2, 0, 100),
+            'is_active' => $this->faker->boolean(80),
+            'description' => $this->faker->paragraph(3),
+            'notes' => $this->faker->optional()->sentence(),
             'company_id' => \App\Models\TransportationCompany::inRandomOrder()->first()?->id ?? \App\Models\TransportationCompany::factory(),
             'vehicle_type_id' => \App\Models\TransportationVehicleType::inRandomOrder()->first()?->id ?? null,
             'season_id' => \App\Models\Season::inRandomOrder()->first()?->id ?? null,

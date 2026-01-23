@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('media_files', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
             $table->string('file_name')->unique();
             $table->string('file_path')->nullable();

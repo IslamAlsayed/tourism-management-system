@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('transportations_vehicle_types', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
 
             $table->foreignId('company_id')->nullable()->constrained('transportations_companies')->cascadeOnDelete();

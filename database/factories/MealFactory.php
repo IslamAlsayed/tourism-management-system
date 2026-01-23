@@ -24,10 +24,10 @@ class MealFactory extends Factory
             ['name' => 'Full Board', 'name_ar' => 'إقامة كاملة', 'included' => true],
         ];
 
-        $type = fake()->unique()->randomElement($types);
+        $type = $this->faker->unique()->randomElement($types);
 
         // Randomly choose between Restaurant or Accommodation
-        $modelType = fake()->randomElement([
+        $modelType = $this->faker->randomElement([
             \App\Models\Restaurant::class,
             \App\Models\Accommodation::class,
         ]);
@@ -40,12 +40,12 @@ class MealFactory extends Factory
             'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? null,
             'name' => $type['name'],
             'name_ar' => $type['name_ar'],
-            'price' => fake()->randomFloat(2, 10, 100),
+            'price' => $this->faker->randomFloat(2, 10, 100),
             'is_included' => $type['included'],
-            'is_supplement' => fake()->boolean(60),
-            'is_active' => fake()->boolean(90),
-            'description' => fake()->optional()->paragraph(2),
-            'notes' => fake()->optional()->paragraph(1),
+            'is_supplement' => $this->faker->boolean(60),
+            'is_active' => $this->faker->boolean(90),
+            'description' => $this->faker->optional()->paragraph(2),
+            'notes' => $this->faker->optional()->paragraph(1),
         ];
     }
 }

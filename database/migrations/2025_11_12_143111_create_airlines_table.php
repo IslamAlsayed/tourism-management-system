@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('airlines', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
 
             // Location References

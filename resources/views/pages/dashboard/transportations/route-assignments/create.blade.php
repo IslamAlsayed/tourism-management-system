@@ -19,6 +19,26 @@
                 </a>
             </div>
         </div>
+
+        @include('components.must-add-first', [
+            'requirements' => [
+                [
+                    'condition' => \App\Models\TransportationRoute::count() > 0,
+                    'route' => route('transportations.routes.index'),
+                    'label' => __('main.transportations-routes'),
+                ],
+                [
+                    'condition' => \App\Models\TransportationCompany::count() > 0,
+                    'route' => route('transportations.companies.index'),
+                    'label' => __('main.transportations-companies'),
+                ],
+                [
+                    'condition' => \App\Models\TransportationVehicleType::count() > 0,
+                    'route' => route('transportations.vehicle-types.index'),
+                    'label' => __('main.transportations-vehicle-types'),
+                ],
+            ],
+        ])
     </div>
 
     <div class="kt-container-fixed">

@@ -19,6 +19,21 @@
                 </a>
             </div>
         </div>
+
+        @include('components.must-add-first', [
+            'requirements' => [
+                [
+                    'condition' => \App\Models\TouristSite::count() > 0,
+                    'route' => route('tourist-sites.index'),
+                    'label' => __('main.tourist_sites'),
+                ],
+                [
+                    'condition' => \App\Models\Currency::count() > 0,
+                    'route' => route('currencies.index'),
+                    'label' => __('main.currencies'),
+                ],
+            ],
+        ])
     </div>
 
     <div class="kt-container-fixed">

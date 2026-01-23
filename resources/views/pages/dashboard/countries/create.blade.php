@@ -19,6 +19,26 @@
                 </a>
             </div>
         </div>
+
+        @include('components.must-add-first', [
+            'requirements' => [
+                [
+                    'condition' => \App\Models\Currency::count() > 0,
+                    'route' => route('currencies.index'),
+                    'label' => __('main.currencies_'),
+                ],
+                [
+                    'condition' => \App\Models\Region::count() > 0,
+                    'route' => route('regions.index'),
+                    'label' => __('main.regions_'),
+                ],
+                [
+                    'condition' => \App\Models\Subregion::count() > 0,
+                    'route' => route('subregions.index'),
+                    'label' => __('main.subregions_'),
+                ],
+            ],
+        ])
     </div>
 
     <div class="kt-container-fixed">

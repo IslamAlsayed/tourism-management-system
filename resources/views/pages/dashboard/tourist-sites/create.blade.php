@@ -19,6 +19,16 @@
                 </a>
             </div>
         </div>
+
+        @include('components.must-add-first', [
+            'requirements' => [
+                [
+                    'condition' => \App\Models\City::count() > 0,
+                    'route' => route('cities.index'),
+                    'label' => __('main.cities'),
+                ],
+            ],
+        ])
     </div>
 
     <div class="kt-container-fixed">

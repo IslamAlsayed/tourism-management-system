@@ -22,10 +22,10 @@ class CurrencyFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'code' => fake()->unique()->currencyCode(),
+            'name' => $this->faker->name(),
+            'code' => $this->faker->unique()->currencyCode(),
             'symbol' => $this->faker->lexify('???'),
-            'is_active' => fake()->boolean(80),
+            'is_active' => $this->faker->boolean(80),
         ];
     }
 }

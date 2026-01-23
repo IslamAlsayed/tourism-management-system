@@ -19,6 +19,16 @@
                 </a>
             </div>
         </div>
+
+        @include('components.must-add-first', [
+            'requirements' => [
+                [
+                    'condition' => \App\Models\Currency::count() > 0,
+                    'route' => route('currencies.index'),
+                    'label' => __('main.currencies_'),
+                ],
+            ],
+        ])
     </div>
 
     <div class="kt-container-fixed">

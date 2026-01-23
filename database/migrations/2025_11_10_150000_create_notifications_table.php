@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('notifications', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('performer_id')->nullable(); // من قام بالفعل
             $table->unsignedBigInteger('target_user_id')->nullable(); // من يستلم الإشعار

@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('table_columns', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('model_class'); // e.g., 'App\Models\User'

@@ -55,12 +55,12 @@ class TouristServiceFactory extends Factory
             'summer_closing_time' => $this->faker->randomElement(['17:00', '18:00', '19:00', '20:00']),
             'winter_opening_time' => $this->faker->randomElement(['07:00', '08:00', '09:00', '10:00']),
             'winter_closing_time' => $this->faker->randomElement(['16:00', '17:00', '18:00', '19:00']),
-            'operating_days' => fake()->randomElements(
+            'operating_days' => $this->faker->randomElements(
                 ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
                 $this->faker->numberBetween(5, 7)
             ),
-            'annual_holidays' => array_map(fn() => fake()->dateTimeBetween('-1 year', 'now')->format('Y-m-d'), range(1, rand(1, 10))),
-            'day_off' => fake()->randomElements(
+            'annual_holidays' => array_map(fn() => $this->faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'), range(1, rand(1, 10))),
+            'day_off' => $this->faker->randomElements(
                 ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
                 $this->faker->numberBetween(0, 2)
             ),

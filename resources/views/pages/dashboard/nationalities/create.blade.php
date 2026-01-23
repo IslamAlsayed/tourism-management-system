@@ -19,6 +19,36 @@
                 </a>
             </div>
         </div>
+
+        @include('components.must-add-first', [
+            'requirements' => [
+                [
+                    'condition' => \App\Models\Region::count() > 0,
+                    'route' => route('regions.index'),
+                    'label' => __('main.regions_'),
+                ],
+                [
+                    'condition' => \App\Models\Subregion::count() > 0,
+                    'route' => route('subregions.index'),
+                    'label' => __('main.subregions_'),
+                ],
+                [
+                    'condition' => \App\Models\Country::count() > 0,
+                    'route' => route('countries.index'),
+                    'label' => __('main.countries_'),
+                ],
+                [
+                    'condition' => \App\Models\State::count() > 0,
+                    'route' => route('states.index'),
+                    'label' => __('main.states_'),
+                ],
+                [
+                    'condition' => \App\Models\City::count() > 0,
+                    'route' => route('cities.index'),
+                    'label' => __('main.cities_'),
+                ],
+            ],
+        ])
     </div>
 
     <div class="kt-container-fixed">

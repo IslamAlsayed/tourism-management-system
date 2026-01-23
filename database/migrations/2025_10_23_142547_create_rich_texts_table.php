@@ -9,7 +9,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('rich_texts', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->default(DB::raw('(UUID())'))->unique();
             $table->morphs('record');
             $table->string('field');

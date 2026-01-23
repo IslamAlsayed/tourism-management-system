@@ -24,10 +24,10 @@ class RoomFactory extends Factory
             ['name' => 'Junior suite', 'name_ar' => 'جناح صغير', 'max_occupancy' => 2, 'occupancy_details' => '1A+1C'],
         ];
 
-        $type = fake()->unique()->randomElement($types);
+        $type = $this->faker->unique()->randomElement($types);
 
         // Randomly choose between Restaurant or Accommodation
-        $modelType = fake()->randomElement([
+        $modelType = $this->faker->randomElement([
             \App\Models\Restaurant::class,
             \App\Models\Accommodation::class,
         ]);
@@ -43,15 +43,15 @@ class RoomFactory extends Factory
             'name_ar' => $type['name_ar'],
             'max_occupancy' => $type['max_occupancy'],
             'occupancy_details' => $type['occupancy_details'],
-            'price_per_person_double' => fake()->randomFloat(2, 50, 500),
-            'single_room_supplement' => fake()->randomFloat(2, 20, 100),
-            'triple_room_discount' => fake()->randomFloat(2, 10, 50),
-            'third_person_price' => fake()->randomFloat(2, 30, 200),
-            'extra_bed_price' => fake()->randomFloat(2, 25, 150),
-            'sea_view_supplement' => fake()->randomFloat(2, 30, 100),
-            'is_active' => fake()->boolean(90),
-            'description' => fake()->paragraph(2),
-            'notes' => fake()->optional()->paragraph(1),
+            'price_per_person_double' => $this->faker->randomFloat(2, 50, 500),
+            'single_room_supplement' => $this->faker->randomFloat(2, 20, 100),
+            'triple_room_discount' => $this->faker->randomFloat(2, 10, 50),
+            'third_person_price' => $this->faker->randomFloat(2, 30, 200),
+            'extra_bed_price' => $this->faker->randomFloat(2, 25, 150),
+            'sea_view_supplement' => $this->faker->randomFloat(2, 30, 100),
+            'is_active' => $this->faker->boolean(90),
+            'description' => $this->faker->paragraph(2),
+            'notes' => $this->faker->optional()->paragraph(1),
         ];
     }
 }

@@ -27,7 +27,7 @@ class TimezoneFactory extends Factory
             ['name' => 'Africa/Cairo', 'offset' => 7200, 'abbreviation' => 'EET', 'city' => 'Cairo', 'region' => 'Africa'],
         ];
 
-        $timezone = fake()->unique()->randomElement($timezones);
+        $timezone = $this->faker->unique()->randomElement($timezones);
 
         $hours = floor(abs($timezone['offset']) / 3600);
         $sign = $timezone['offset'] >= 0 ? '+' : '-';
@@ -43,7 +43,7 @@ class TimezoneFactory extends Factory
             'country_code' => null,
             'gmt_offset_name' => $gmtOffsetName,
             'gmt_offset_name_dst' => null,
-            'supports_dst' => fake()->boolean(30),
+            'supports_dst' => $this->faker->boolean(30),
             'region' => $timezone['region'],
             'city' => $timezone['city'],
             'is_active' => true,

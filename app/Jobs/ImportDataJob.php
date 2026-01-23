@@ -333,15 +333,15 @@ class ImportDataJob implements ShouldQueue
                         }
 
                         if ($currency) {
-                            $prepared['currency_id'] = $currency->id;
+                            $prepared['currency_id'] = $currency->id ?? 138;
                             Log::debug("Resolved currency '{$searchTerm}' to ID: {$currency->id} ({$currency->name})");
                         } else {
                             Log::warning("Could not resolve currency: '{$searchTerm}' - setting to null");
-                            $prepared['currency_id'] = null;
+                            $prepared['currency_id'] = 138;
                         }
                     } catch (\Throwable $e) {
                         Log::warning('Failed to resolve currency: ' . $e->getMessage());
-                        $prepared['currency_id'] = null;
+                        $prepared['currency_id'] = 138;
                     }
                 }
             }

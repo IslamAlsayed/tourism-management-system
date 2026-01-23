@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('pricing_definitions', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
 
             $table->string('key')->unique(); // per_person, per_day, fixed, per_trip, per_km

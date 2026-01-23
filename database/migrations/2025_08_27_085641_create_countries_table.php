@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
             $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
             $table->foreignId('language_id')->nullable()->constrained('languages')->onDelete('set null');
