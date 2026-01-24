@@ -4,15 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Language;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class LanguageSeeder extends Seeder
 {
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Language::truncate();
-        Schema::enableForeignKeyConstraints();
+        truncateWithReset(Language::class);
 
         if (config('languages.en_langs') && count(config('languages.en_langs')) > 0) {
             foreach (config('languages.en_langs') as $key => $language) {

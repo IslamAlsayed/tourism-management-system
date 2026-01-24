@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\CrossingPort;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class CrossingPortSeeder extends Seeder
 {
@@ -13,9 +12,7 @@ class CrossingPortSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        CrossingPort::truncate();
-        Schema::enableForeignKeyConstraints();
+        truncateWithReset(CrossingPort::class);
 
         // Create specific crossing ports and airports
         CrossingPort::factory()->internationalAirport()->count(5)->create();

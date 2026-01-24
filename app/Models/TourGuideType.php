@@ -28,7 +28,6 @@ class TourGuideType extends Model
         'is_active',
         'description',
         'notes',
-
         'currency_id',
         'region_id',
         'subregion_id',

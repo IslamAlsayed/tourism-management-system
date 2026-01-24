@@ -5,27 +5,27 @@
         :requirements="[
             [
                 'condition' => \App\Models\Region::count() > 0,
-                'route' => route('regions.index'),
+                'route' => route('regions.create'),
                 'label' => __('main.regions_'),
             ],
             [
                 'condition' => \App\Models\Subregion::count() > 0,
-                'route' => route('subregions.index'),
+                'route' => route('subregions.create'),
                 'label' => __('main.subregions_'),
             ],
             [
                 'condition' => \App\Models\Country::count() > 0,
-                'route' => route('countries.index'),
+                'route' => route('countries.create'),
                 'label' => __('main.countries_'),
             ],
             [
                 'condition' => \App\Models\State::count() > 0,
-                'route' => route('states.index'),
+                'route' => route('states.create'),
                 'label' => __('main.states_'),
             ],
             [
                 'condition' => \App\Models\City::count() > 0,
-                'route' => route('cities.index'),
+                'route' => route('cities.create'),
                 'label' => __('main.cities_'),
             ],
         ]">

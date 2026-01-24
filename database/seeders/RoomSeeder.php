@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Room;
 use App\Models\RichText;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class RoomSeeder extends Seeder
 {
@@ -14,9 +13,7 @@ class RoomSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Room::truncate();
+        truncateWithReset(Room::class);
         RichText::where('record_type', Room::class)->delete();
-        Schema::enableForeignKeyConstraints();
     }
 }

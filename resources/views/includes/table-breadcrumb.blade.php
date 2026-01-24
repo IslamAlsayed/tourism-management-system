@@ -2,6 +2,9 @@
     <div class="flex flex-col justify-center gap-1 lg:gap-2">
         <h1 class="text-xl font-medium leading-none text-mono">
             {{ isset($title) ? $title : '' }}
+            @if (isset($fake_data))
+                {{ $fake_data }}
+            @endif
         </h1>
         <div class="flex items-center flex-wrap gap-1.5 font-medium">
             <span class="text-base text-secondary-foreground">

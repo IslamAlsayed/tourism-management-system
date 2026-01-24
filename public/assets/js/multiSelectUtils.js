@@ -344,11 +344,9 @@ window.getVal = function (id) {
 // };
 // window.initMap = initMap;
 
-window.generateNewCode = function (element, prefix = null) {
-    function getRandomCode() {
-        const randomNum = Math.floor(Math.random() * 99999) + 1;
-        const paddedNum = String(randomNum).padStart(5, "0");
-        return prefix + paddedNum;
-    }
-    document.getElementById(element).value = getRandomCode();
+window.generateCode = function (element, prefix = null, length = 5) {
+    const randomNum = Math.floor(Math.random() * Math.pow(10, length)) + 1;
+    const paddedNum = String(randomNum).padStart(length, "0");
+    const code = prefix + paddedNum;
+    document.getElementById(element).value = code;
 };

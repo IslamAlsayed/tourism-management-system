@@ -160,7 +160,7 @@ class TouristService extends Model
 
     public function getExcludedColumns()
     {
-        return ['site_id', 'currency_id', 'created_by', 'updated_by', 'sort_order', 'description', 'note'];
+        return ['site_id', 'currency_id', 'created_by', 'updated_by', 'sort_order', 'description', 'notes'];
     }
 
     /**

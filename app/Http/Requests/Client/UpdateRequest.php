@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
         $clientId = $this->route('client');
 
         return [
-            'client_code' => ['nullable', 'string', 'max:50', Rule::unique('clients', 'client_code')->ignore($clientId)],
+            'code' => ['nullable', 'string', 'max:50', Rule::unique('clients', 'code')->ignore($clientId)],
 
             // Location information
             'currency_id' => ['nullable', 'exists:currencies,id'],

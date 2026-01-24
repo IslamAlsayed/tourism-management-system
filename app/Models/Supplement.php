@@ -7,11 +7,16 @@ use App\Traits\HasSearch;
 use App\Traits\FiltersByUserRole;
 use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Supplement extends Model
 {
-    use HasFactory, HasSearch, HasUuid, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents;
+    protected $richTextAttributes = [
+        'description',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',

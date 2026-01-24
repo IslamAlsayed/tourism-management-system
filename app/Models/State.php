@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
-use App\Traits\FiltersByUserRole;
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class State extends Model
 {
-    use HasSearch, HasUuid, FiltersByUserRole;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole;
+    protected $richTextAttributes = [
+        'description',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',

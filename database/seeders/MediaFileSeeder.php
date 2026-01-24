@@ -22,9 +22,7 @@ class MediaFileSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        MediaFile::truncate();
-        Schema::enableForeignKeyConstraints();
+        truncateWithReset(MediaFile::class);
 
         // First: Store photos from models that have photo column
         $this->storeExistingPhotos(User::class, 'users');

@@ -16,11 +16,15 @@ class Region extends Model
         'name',
         'name_ar',
         'wiki_data_id',
-
         'is_active',
         'description',
         'notes',
     ];
+
+    public function getExcludedColumns()
+    {
+        return ['description', 'notes'];
+    }
 
     public function subregions()
     {

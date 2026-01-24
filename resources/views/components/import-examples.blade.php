@@ -44,7 +44,7 @@
         :requirements="[
             [
                 'condition' => \App\Models\Country::count() > 0,
-                'route' => route('countries.index'),
+                'route' => route('countries.create'),
                 'label' => __('main.countries_'),
             ],
         ]">
@@ -66,17 +66,17 @@
         :requirements="[
             [
                 'condition' => \App\Models\Currency::count() > 0,
-                'route' => route('currencies.index'),
+                'route' => route('currencies.create'),
                 'label' => __('main.currencies_'),
             ],
             [
                 'condition' => \App\Models\Region::count() > 0,
-                'route' => route('regions.index'),
+                'route' => route('regions.create'),
                 'label' => __('main.regions_'),
             ],
             [
                 'condition' => \App\Models\Country::count() > 0,
-                'route' => route('countries.index'),
+                'route' => route('countries.create'),
                 'label' => __('main.countries_'),
             ],
         ]">

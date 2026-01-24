@@ -5,28 +5,28 @@
         :requirements="[
             [
                 'condition' => \App\Models\TransportationCompany::count() > 0,
-                'route' => route('transportations.companies.index'),
+                'route' => route('transportations.companies.create'),
                 'label' => __('main.transportations-companies'),
             ],
             [
                 'condition' => \App\Models\TransportationVehicleType::count() > 0,
-                'route' => route('transportations.vehicle-types.index'),
+                'route' => route('transportations.vehicle-types.create'),
                 'label' => __('main.transportations-vehicle-types'),
             ],
             [
                 'condition' => \App\Models\Season::count() > 0,
-                'route' => route('seasons.index'),
+                'route' => route('seasons.create'),
                 'label' => __('main.seasons'),
             ],
             [
                 'condition' => \App\Models\PricingDefinition::count() > 0,
-                'route' => route('pricing-definitions.index'),
+                'route' => route('pricing-definitions.create'),
                 'label' => __('main.pricing-definitions'),
             ],
             [
                 'condition' => \App\Models\TourGuideType::count() > 0,
-                'route' => route('tour-guide-types.index'),
-                'label' => __('main.tour-guide-types'),
+                'route' => route('tours.guides-types.create'),
+                'label' => __('main.tours.guides-types'),
             ],
         ]">
         <div class="mt-4">

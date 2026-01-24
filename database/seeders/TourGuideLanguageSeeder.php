@@ -7,15 +7,12 @@ use App\Models\TourGuide;
 use Illuminate\Database\Seeder;
 use App\Models\TourGuideLanguage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Schema;
 
 class TourGuideLanguageSeeder extends Seeder
 {
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        TourGuideLanguage::truncate();
-        Schema::enableForeignKeyConstraints();
+        truncateWithReset(TourGuideLanguage::class);
 
         $guide_languages = [
             'Spanish',

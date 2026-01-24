@@ -15,12 +15,12 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             // Relations
-            $table->foreignId('route_id')->nullable()->constrained('transportations_routes')->cascadeOnDelete();
-            $table->foreignId('company_id')->nullable()->constrained('transportations_companies')->cascadeOnDelete();
-            $table->foreignId('vehicle_type_id')->nullable()->constrained('transportations_vehicle_types')->nullOnDelete();
+            $table->foreignId('route_id')->nullable();
+            $table->foreignId('company_id')->nullable();
+            $table->foreignId('vehicle_type_id')->nullable();
 
             // Pricing for this route assignment
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->cascadeOnDelete();
+            $table->foreignId('currency_id')->nullable();
             $table->decimal('base_price', 10, 2)->nullable(); // Base price for the route
             $table->decimal('price_per_km', 10, 2)->nullable(); // Price per kilometer
             $table->decimal('price_per_person', 10, 2)->nullable(); // Price per person

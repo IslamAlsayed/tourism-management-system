@@ -5,7 +5,7 @@
         :requirements="[
             [
                 'condition' => \App\Models\TransportationCompany::count() > 0,
-                'route' => route('transportations.companies.index'),
+                'route' => route('transportations.companies.create'),
                 'label' => __('main.transportations-companies'),
             ],
         ]">

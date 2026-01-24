@@ -20,8 +20,7 @@ class AccommodationSeeder extends Seeder
     public function run()
     {
         // حذف بيانات الإقامة القديمة
-        Schema::disableForeignKeyConstraints();
-        Accommodation::truncate();
+        truncateWithReset(Accommodation::class);
         RichText::where('record_type', Accommodation::class)->delete();
         // foreach ([Meal::class, Room::class, Season::class, Supplement::class] as $modelClass) {
         //     $modelClass::where('model_type', Accommodation::class)->delete();

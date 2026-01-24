@@ -34,7 +34,7 @@ class Type extends Model
 
     public function getExcludedColumns()
     {
-        return ['description'];
+        return ['description', 'notes'];
     }
 
     public function accommodations()

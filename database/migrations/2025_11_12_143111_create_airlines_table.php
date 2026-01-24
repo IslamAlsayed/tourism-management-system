@@ -15,12 +15,12 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             // Location References
-            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->cascadeOnDelete();
-            $table->foreignId('region_id')->nullable()->constrained('regions')->cascadeOnDelete();
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->cascadeOnDelete();
-            $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnDelete();
-            $table->foreignId('state_id')->nullable()->constrained('states')->cascadeOnDelete();
-            $table->foreignId('city_id')->nullable()->constrained('cities')->cascadeOnDelete();
+            $table->foreignId('timezone_id')->nullable();
+            $table->foreignId('region_id')->nullable();
+            $table->foreignId('subregion_id')->nullable();
+            $table->foreignId('country_id')->nullable();
+            $table->foreignId('state_id')->nullable();
+            $table->foreignId('city_id')->nullable();
             // Airline Identification
             $table->string('iata_code', 3)->nullable()->unique();
             $table->string('icao_code', 4)->nullable()->unique();

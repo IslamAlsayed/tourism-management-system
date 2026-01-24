@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('tour_guide_languages', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
-            $table->foreignId('tour_guide_id')->nullable()->constrained('tour_guides')->cascadeOnDelete();
-            $table->foreignId('language_id')->nullable()->constrained('languages')->cascadeOnDelete();
+            $table->foreignId('tour_guide_id')->nullable();
+            $table->foreignId('language_id')->nullable();
             $table->timestamps();
         });
     }

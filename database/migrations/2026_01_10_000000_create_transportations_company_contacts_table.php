@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
 
-            $table->foreignId('company_id')->nullable()->constrained('transportations_companies')->cascadeOnDelete();
+            $table->foreignId('company_id')->nullable();
             $table->string('department')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('email')->nullable();

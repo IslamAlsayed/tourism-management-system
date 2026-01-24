@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
             $table->string('star_rating')->default(3); // 1, 2, 3, 4, 5
-            $table->unsignedBigInteger('foreign_id')->nullable();
+            $table->foreignId('foreign_id')->nullable();
             $table->timestamps();
         });
     }

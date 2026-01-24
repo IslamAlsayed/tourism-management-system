@@ -13,10 +13,9 @@ return new class extends Migration {
         Schema::create('meals', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
-            $table->unsignedBigInteger('model_id')->nullable();
+            $table->foreignId('model_id')->nullable();
             $table->string('model_type')->nullable();
-            // $table->foreignId('season_id')->nullable()->constrained('seasons')->cascadeOnDelete();
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->cascadeOnDelete();
+            $table->foreignId('currency_id')->nullable();
 
             $table->string('name'); // e.g., Breakfast, Lunch, Dinner, Full Board, Half Board
             $table->string('name_ar')->nullable();

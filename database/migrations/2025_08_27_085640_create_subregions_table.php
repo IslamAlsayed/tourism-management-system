@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('subregions', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
-            $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
+            $table->foreignId('region_id')->nullable();
 
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();

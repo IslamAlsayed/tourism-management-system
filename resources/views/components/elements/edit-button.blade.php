@@ -3,13 +3,20 @@
     $route = $routeName ? Route::getRoutes()->getByName($routeName) : null;
     $parameterName = $route ? collect($route->parameterNames())->first() : null;
 
-    $routeParams = array_filter(
-        [
-            $parameterName => $id ?? null,
-            'type' => request()->query('type'),
-        ],
-        fn($value) => !is_null($value),
-    );
+    $routeParams = [];
+
+    // Add the main parameter (id or similar)
+    if ($parameterName && isset($id)) {
+        $routeParams[$parameterName] = $id;
+    }
+
+    // Add type parameter only if it exists in the request
+    if (request()->has('type')) {
+        $routeParams['type'] = request()->query('type');
+    }
+
+    // Filter out null values
+    $routeParams = array_filter($routeParams, fn($value) => !is_null($value));
 @endphp
 
 @if ($routeName)

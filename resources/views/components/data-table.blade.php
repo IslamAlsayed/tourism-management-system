@@ -72,15 +72,11 @@
                             @endif
 
                             @if (isset($models) && getActiveUser()->can('delete', $item))
-                                @include('components.elements.delete-button', [
-                                    'id' => $item->id,
-                                ])
+                                @include('components.elements.delete-button', ['id' => $item->id])
                             @endif
 
                             @if (isset($models) && getActiveUser()->can('forceDelete', $item))
-                                @include('components.elements.forceDelete-button', [
-                                    'id' => $item->id,
-                                ])
+                                @include('components.elements.forceDelete-button', ['id' => $item->id])
                             @endif
                         </div>
                     </td>

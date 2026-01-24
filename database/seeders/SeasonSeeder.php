@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Season;
 use App\Models\RichText;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class SeasonSeeder extends Seeder
 {
@@ -14,9 +13,7 @@ class SeasonSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Season::truncate();
+        truncateWithReset(Season::class);
         RichText::where('record_type', Season::class)->delete();
-        Schema::enableForeignKeyConstraints();
     }
 }

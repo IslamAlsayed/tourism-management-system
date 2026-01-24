@@ -3,13 +3,19 @@
 namespace App\Models;
 
 
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
 use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Subregion extends Model
 {
-    use HasSearch, HasUuid;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole;
+    protected $richTextAttributes = [
+        'description',
+        'notes',
+    ];
 
     protected $fillable = [
         'id',
@@ -20,24 +26,17 @@ class Subregion extends Model
         'is_active',
         'description',
         'notes',
-
         'region_id',
     ];
 
-    /**
-     * Get relationship names for eager loading
-     */
     public function getRelationshipNames()
     {
         return ['region'];
     }
 
-    /**
-     * Get columns to exclude from search/display
-     */
     public function getExcludedColumns()
     {
-        return ['region_id'];
+        return ['region_id', 'description', 'notes'];
     }
 
     public function region()

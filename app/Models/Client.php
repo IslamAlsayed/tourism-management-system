@@ -21,7 +21,7 @@ class Client extends Model
     protected $fillable = [
         'id',
         'uuid',
-        'client_code',
+        'code',
         'first_name',
         'last_name',
         'gender',
@@ -72,17 +72,22 @@ class Client extends Model
         'updated_by',
     ];
 
-    /**
-     * Get relationship names for eager loading
-     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($item) {
+            // Auto-fill code
+            if (empty($item->code)) {
+                $item->code = generateCode('CLT-', 5);
+            }
+        });
+    }
+
     public function getRelationshipNames()
     {
         return ['timezone', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'nationality', 'creator', 'updater'];
     }
 
-    /**
-     * Get columns to exclude from search/display
-     */
     public function getExcludedColumns()
     {
         return [

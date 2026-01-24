@@ -88,9 +88,6 @@ class TouristSiteFactory extends Factory
 
             // Descriptions
             'description' => $this->faker->paragraphs(3, true),
-            'description_01' => $this->faker->paragraph(),
-            'description_02' => $this->faker->paragraph(),
-            'description_03' => $this->faker->paragraph(),
             'nearby_attractions' => $this->faker->randomElement([
                 'Ancient temples, museums, and cultural centers nearby',
                 'Beautiful beaches and water sports facilities',
@@ -99,6 +96,7 @@ class TouristSiteFactory extends Factory
                 'Archaeological sites and historical monuments',
                 'Wildlife sanctuaries and nature reserves',
             ]),
+            'notes' => $this->faker->paragraphs(3, true),
 
             // Photos (Media file IDs)
             'main_image' => "https://picsum.photos/seed/" . rand(1, 1000) . "/300/300",

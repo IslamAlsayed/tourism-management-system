@@ -6,7 +6,6 @@ use App\Models\RichText;
 use App\Models\TouristService;
 use App\Models\TouristSite;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class TouristServiceSeeder extends Seeder
 {
@@ -15,10 +14,8 @@ class TouristServiceSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        TouristService::truncate();
+        truncateWithReset(TouristService::class);
         RichText::where('record_type', TouristService::class)->delete();
-        Schema::enableForeignKeyConstraints();
 
         // Make sure we have tourist sites first
         $sites = TouristSite::count();

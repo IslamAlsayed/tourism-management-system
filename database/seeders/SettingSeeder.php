@@ -9,7 +9,7 @@ class SettingSeeder extends Seeder
 {
     public function run(): void
     {
-        Setting::truncate();
+        truncateWithReset(Setting::class);
 
         Setting::create([
             'app_name' => env('APP_NAME', 'laravel'),

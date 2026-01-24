@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('department')->nullable();
             $table->string('position')->nullable();
             $table->string('preferred_language', 5)->nullable()->default('en');
-            $table->unsignedBigInteger('timezone_id')->nullable();
+            $table->foreignId('timezone_id')->nullable();
             $table->string('preferences')->nullable();
             $table->string('photo')->nullable();
             $table->string('user_status')->nullable()->default('offline');
@@ -37,8 +37,8 @@ return new class extends Migration {
             $table->string('last_login_ip')->nullable();
             $table->enum('button_display_mode', ['icon', 'text', 'both'])->default('icon');
             $table->text('notes')->nullable();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable()->default(2);
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable()->default(2);
 
             $table->index('phone');
         });

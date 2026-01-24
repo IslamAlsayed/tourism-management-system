@@ -49,7 +49,10 @@ class TransportationCompany extends Model
     {
         parent::boot();
         static::saving(function ($item) {
-            $item->code = 'TC-' . fake()->unique()->bothify('??-####');
+            // Auto-fill code
+            if (empty($item->code)) {
+                $item->code = generateCode('TC-', 5);
+            }
         });
     }
 

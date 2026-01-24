@@ -5,17 +5,17 @@
         :requirements="[
             [
                 'condition' => \App\Models\Currency::count() > 0,
-                'route' => route('currencies.index'),
+                'route' => route('currencies.create'),
                 'label' => __('main.currencies_'),
             ],
             [
                 'condition' => \App\Models\Region::count() > 0,
-                'route' => route('regions.index'),
+                'route' => route('regions.create'),
                 'label' => __('main.regions_'),
             ],
             [
                 'condition' => \App\Models\Subregion::count() > 0,
-                'route' => route('subregions.index'),
+                'route' => route('subregions.create'),
                 'label' => __('main.subregions_'),
             ],
         ]">

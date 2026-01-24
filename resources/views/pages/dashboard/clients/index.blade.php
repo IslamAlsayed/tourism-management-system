@@ -2,13 +2,19 @@
 
 @section('table-content')
     <!-- Container -->
-    @include('includes.table-breadcrumb', [
+    @component('includes.table-breadcrumb', [
         'title' => __('main.clients'),
         'description' => __('main.manage_system_types', ['types' => __('main.clients')]),
         'import_url' => route('import.data', ['models' => 'clients']),
         'page_create_url' => route('clients.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.client')]),
     ])
+        @slot('fake_data')
+            <span class="inline-block bg-danger text-white font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {{ __('main.fake_data') }}
+            </span>
+        @endslot
+    @endcomponent
     <!-- End of Container -->
 
     <!-- Container -->

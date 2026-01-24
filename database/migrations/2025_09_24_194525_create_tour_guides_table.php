@@ -15,13 +15,13 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->cascadeOnDelete();
-            $table->foreignId('guide_type_id')->nullable()->constrained('tour_guide_types')->cascadeOnDelete();
-            $table->foreignId('region_id')->nullable()->constrained('regions')->cascadeOnDelete();
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->cascadeOnDelete();
-            $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnDelete();
-            $table->foreignId('state_id')->nullable()->constrained('states')->cascadeOnDelete();
-            $table->foreignId('city_id')->nullable()->constrained('cities')->cascadeOnDelete();
+            $table->foreignId('currency_id')->nullable();
+            $table->foreignId('guide_type_id')->nullable();
+            $table->foreignId('region_id')->nullable();
+            $table->foreignId('subregion_id')->nullable();
+            $table->foreignId('country_id')->nullable();
+            $table->foreignId('state_id')->nullable();
+            $table->foreignId('city_id')->nullable();
             $table->string('email')->nullable();
             $table->string('mobile_01')->nullable();
             $table->string('mobile_02')->nullable();
@@ -53,7 +53,6 @@ return new class extends Migration {
             $table->index('national_guide_id');
             $table->index('tourism_ministry_code');
         });
-
     }
 
     /**

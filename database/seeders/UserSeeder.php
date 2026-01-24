@@ -10,9 +10,7 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        User::truncate();
-        Schema::enableForeignKeyConstraints();
+        truncateWithReset(User::class);
 
         // Create users with hardcoded photos and assign roles
         // PhotoObserver will automatically create MediaFile records

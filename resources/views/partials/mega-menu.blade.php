@@ -80,6 +80,18 @@
                                                 </span>
                                             </a>
                                         </div>
+                                        <div
+                                            class="kt-menu-item {{ isActive('accommodations.index', [], $currentRoute) ? 'active' : '' }}">
+                                            <a class="kt-menu-link" href="{{ route('accommodations.index') }}"
+                                                tabindex="0">
+                                                <span class="kt-menu-icon">
+                                                    <i class="fas fa-hotel"></i>
+                                                </span>
+                                                <span class="kt-menu-title grow-0">
+                                                    accommodations
+                                                </span>
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <div

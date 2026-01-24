@@ -5,32 +5,32 @@
         :requirements="[
             [
                 'condition' => \App\Models\Currency::count() > 0,
-                'route' => route('currencies.index'),
+                'route' => route('currencies.create'),
                 'label' => __('main.currencies'),
             ],
             [
                 'condition' => \App\Models\Region::count() > 0,
-                'route' => route('regions.index'),
+                'route' => route('regions.create'),
                 'label' => __('main.regions'),
             ],
             [
                 'condition' => \App\Models\Subregion::count() > 0,
-                'route' => route('subregions.index'),
+                'route' => route('subregions.create'),
                 'label' => __('main.subregions'),
             ],
             [
                 'condition' => \App\Models\Country::count() > 0,
-                'route' => route('countries.index'),
+                'route' => route('countries.create'),
                 'label' => __('main.countries'),
             ],
             [
                 'condition' => \App\Models\State::count() > 0,
-                'route' => route('states.index'),
+                'route' => route('states.create'),
                 'label' => __('main.states'),
             ],
             [
                 'condition' => \App\Models\City::count() > 0,
-                'route' => route('cities.index'),
+                'route' => route('cities.create'),
                 'label' => __('main.cities'),
             ],
         ]">
@@ -42,7 +42,7 @@
 
         @if (env('DB_MODE') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
-            <table class="border min-w-full divide-y text-center divide-gray-200">
+            <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
                 <thead class="bg-blue-100">
                     <tr>
                         <th class="border px-2 bg-yellow-100" title="{{ __('main.required') }}">
@@ -55,8 +55,6 @@
                         <th class="border px-2" title="{{ __('main.optional') }}">region_id</th>
                         <th class="border px-2" title="{{ __('main.optional') }}">subregion_id</th>
                         <th class="border px-2" title="{{ __('main.optional') }}">country_id</th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">state_id</th>
-                        <th class="border px-2" title="{{ __('main.optional') }}">city_id</th>
                     </tr>
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
@@ -67,24 +65,24 @@
                         <td class="border px-2">2</td>
                         <td class="border px-2">3</td>
                         <td class="border px-2">4</td>
-                        <td class="border px-2">5 or 5,6,7,...</td>
-                        <td class="border px-2">6 or 6,7,8,...</td>
                     </tr>
                 </tbody>
             </table>
-
-            <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }}</strong>
-            <table class="border min-w-half divide-y text-center divide-gray-200">
+            <table class="border min-w-full divide-y text-center divide-gray-200">
                 <thead class="bg-blue-100">
                     <tr>
+                        <th class="border px-2" title="{{ __('main.optional') }}">state_id</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">city_id</th>
                         <th class="border px-2">all_states</th>
                         <th class="border px-2">all_cities</th>
                     </tr>
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">null</td>
-                        <td class="border px-2">all</td>
+                        <td class="border px-2">[5] or [5,6,7]</td>
+                        <td class="border px-2">[6] or [6,7,8]</td>
+                        <td class="border px-2">1 or 0 or null</td>
+                        <td class="border px-2">1 or 0 or null</td>
                     </tr>
                 </tbody>
             </table>

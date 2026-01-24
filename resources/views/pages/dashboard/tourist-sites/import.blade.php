@@ -5,7 +5,7 @@
         :requirements="[
             [
                 'condition' => \App\Models\City::count() > 0,
-                'route' => route('cities.index'),
+                'route' => route('cities.create'),
                 'label' => __('main.cities'),
             ],
         ]">

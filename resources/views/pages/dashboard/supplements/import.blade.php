@@ -5,7 +5,7 @@
         :requirements="[
             [
                 'condition' => \App\Models\Accommodation::count() > 0,
-                'route' => route('accommodations.index'),
+                'route' => route('accommodations.create'),
                 'label' => __('main.accommodations'),
             ],
         ]">

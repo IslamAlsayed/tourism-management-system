@@ -8,7 +8,6 @@ use App\Models\RichText;
 use Illuminate\Database\Seeder;
 use App\Models\TransportationRoute;
 use App\Models\TransportationCompany;
-use Illuminate\Support\Facades\Schema;
 use App\Models\TransportationVehicleType;
 use App\Models\TransportationRouteAssignment;
 
@@ -20,12 +19,11 @@ class TransportationRouteSeeder extends Seeder
     public function run()
     {
         // حذف البيانات القديمة
-        Schema::disableForeignKeyConstraints();
-        TransportationRouteAssignment::query()->delete();
-        RichText::where('record_type', TransportationRouteAssignment::class)->delete();
-        TransportationRoute::query()->delete();
+        truncateWithReset(TransportationRoute::class);
         RichText::where('record_type', TransportationRoute::class)->delete();
-        Schema::enableForeignKeyConstraints();
+
+        truncateWithReset(TransportationRouteAssignment::class);
+        RichText::where('record_type', TransportationRouteAssignment::class)->delete();
 
         // جلب المدن المطلوبة
         $cairo = City::where('name', 'Cairo')->first();
@@ -182,6 +180,7 @@ class TransportationRouteSeeder extends Seeder
         foreach ($allRoutes as $routeData) {
             if (isset($routeData['origin_city_id']) && isset($routeData['destination_city_id'])) {
                 $route = TransportationRoute::create($routeData);
+                $this->command->info("Created route: {$route->name}");
 
                 // إنشاء تعيينات للمسار (ربط بشركات ومركبات)
                 $this->createRouteAssignments($route);
@@ -218,7 +217,7 @@ class TransportationRouteSeeder extends Seeder
                     'base_price' => $basePrice,
                     'price_per_km' => round($basePrice / $route->distance, 2),
                     'price_per_person' => round($basePrice / $vehicleType->max_capacity, 2),
-                    'available_days' => [0, 1, 2, 3, 4, 5, 6], // All week
+                    'available_days' => fake()->randomElements([0, 1, 2, 3, 4, 5, 6], fake()->numberBetween(4, 6)),
                     'departure_time' => '08:00:00',
                     'arrival_time' => $this->calculateArrivalTime('08:00:00', $route->estimated_duration),
                     'frequency_per_day' => rand(1, 3),
@@ -226,6 +225,7 @@ class TransportationRouteSeeder extends Seeder
                     'valid_from' => now(),
                     'valid_to' => now()->addYear(),
                 ]);
+                $this->command->info("Created assignment for route {$route->name} with company {$company->name} and vehicle type {$vehicleType->name}.");
             }
         }
     }

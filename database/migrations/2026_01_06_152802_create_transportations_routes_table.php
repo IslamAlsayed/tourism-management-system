@@ -20,13 +20,13 @@ return new class extends Migration {
             $table->string('code')->unique()->nullable(); // e.g., CAI-ALX-001
 
             // Origin Location
-            $table->foreignId('origin_city_id')->nullable()->constrained('cities')->cascadeOnDelete();
+            $table->foreignId('origin_city_id')->nullable();
             $table->string('origin_address')->nullable();
             $table->decimal('origin_latitude', 10, 7)->nullable();
             $table->decimal('origin_longitude', 10, 7)->nullable();
 
             // Destination Location
-            $table->foreignId('destination_city_id')->nullable()->constrained('cities')->cascadeOnDelete();
+            $table->foreignId('destination_city_id')->nullable();
             $table->string('destination_address')->nullable();
             $table->decimal('destination_latitude', 10, 7)->nullable();
             $table->decimal('destination_longitude', 10, 7)->nullable();

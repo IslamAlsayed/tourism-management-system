@@ -5,12 +5,12 @@
         :requirements="[
             [
                 'condition' => \App\Models\TouristSite::count() > 0,
-                'route' => route('tourist-sites.index'),
+                'route' => route('tourist-sites.create'),
                 'label' => __('main.tourist_sites'),
             ],
             [
                 'condition' => \App\Models\Currency::count() > 0,
-                'route' => route('currencies.index'),
+                'route' => route('currencies.create'),
                 'label' => __('main.currencies'),
             ],
         ]">

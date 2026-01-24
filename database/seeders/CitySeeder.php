@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\City;
 use App\Models\RichText;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class CitySeeder extends Seeder
 {
@@ -14,9 +13,7 @@ class CitySeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        City::truncate();
+        truncateWithReset(City::class);
         RichText::where('record_type', City::class)->delete();
-        Schema::enableForeignKeyConstraints();
     }
 }

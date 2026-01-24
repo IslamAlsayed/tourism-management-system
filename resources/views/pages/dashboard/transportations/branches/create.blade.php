@@ -168,9 +168,8 @@
                                 <div class="relative">
                                     <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
                                         value="{{ old('code', fake()->numerify('TC-#####')) }}" required readonly>
-
-                                    <button type="button" onclick="generateNewCode()" toggle-button
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer hover:text-gray-700">
+                                    <button type="button" toggle-button onclick="window.generateCode('code', 'TC-',5)"
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </div>
@@ -294,16 +293,3 @@
         </form>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        function generateNewCode() {
-            function getRandomCode() {
-                const randomNum = Math.floor(Math.random() * 99999) + 1;
-                const paddedNum = String(randomNum).padStart(5, '0');
-                return 'TC-' + paddedNum;
-            }
-            document.getElementById('code').value = getRandomCode();
-        }
-    </script>
-@endpush

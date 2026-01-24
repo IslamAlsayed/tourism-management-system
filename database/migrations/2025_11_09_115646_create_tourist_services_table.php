@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             // Foreign Keys
-            $table->foreignId('site_id')->constrained('tourist_sites')->onDelete('cascade');
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->onDelete('set null');
+            $table->foreignId('site_id')->nullable();
+            $table->foreignId('currency_id')->nullable();
 
             // Service Configuration
             $table->boolean('include_unified_ticket')->default(false);

@@ -5,7 +5,7 @@
         :requirements="[
             [
                 'condition' => \App\Models\Country::count() > 0,
-                'route' => route('countries.index'),
+                'route' => route('countries.create'),
                 'label' => __('main.countries_'),
             ],
         ]">

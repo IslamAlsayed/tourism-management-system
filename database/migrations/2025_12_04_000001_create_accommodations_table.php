@@ -15,24 +15,13 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             // Foreign Keys
-            $table->unsignedBigInteger('type_id')->nullable();
-            $table->unsignedBigInteger('currency_id')->nullable();
-
-            // Location
-            $table->unsignedBigInteger('region_id')->nullable();
-            $table->unsignedBigInteger('subregion_id')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
-            $table->unsignedBigInteger('state_id')->nullable();
-            $table->unsignedBigInteger('city_id')->nullable();
-
-            // Foreign Keys
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
-            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
-            $table->foreign('region_id')->references('id')->on('regions')->onDelete('set null');
-            $table->foreign('subregion_id')->references('id')->on('subregions')->onDelete('set null');
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('set null');
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('set null');
+            $table->foreignId('type_id')->nullable();
+            $table->foreignId('currency_id')->nullable();
+            $table->foreignId('region_id')->nullable();
+            $table->foreignId('subregion_id')->nullable();
+            $table->foreignId('country_id')->nullable();
+            $table->foreignId('state_id')->nullable();
+            $table->foreignId('city_id')->nullable();
 
             // Basic info
             $table->string('name')->nullable(); // e.g., Hilton Cairo, Bedouin Camp, other

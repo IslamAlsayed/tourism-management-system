@@ -17,18 +17,16 @@ class TourGuideTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        TourGuideType::truncate();
+        truncateWithReset(TourGuideType::class);
         RichText::where('record_type', TourGuideType::class)->delete();
-        Schema::enableForeignKeyConstraints();
 
-        $types = [
-            ['type' => 'Standard Guide', 'price' => 100.00, 'currency_id' => Currency::inRandomOrder()->first()?->id, 'region_id' => Currency::inRandomOrder()->first()?->id, 'subregion_id' => Subregion::inRandomOrder()->first()?->id, 'country_id' => Country::inRandomOrder()->first()?->id],
-            ['type' => 'Specialized Guide', 'price' => 150.00, 'currency_id' => Currency::inRandomOrder()->first()?->id, 'region_id' => Currency::inRandomOrder()->first()?->id, 'subregion_id' => Subregion::inRandomOrder()->first()?->id, 'country_id' => Country::inRandomOrder()->first()?->id],
-            ['type' => 'Private Guide', 'price' => 200.00, 'currency_id' => Currency::inRandomOrder()->first()?->id, 'region_id' => Currency::inRandomOrder()->first()?->id, 'subregion_id' => Subregion::inRandomOrder()->first()?->id, 'country_id' => Country::inRandomOrder()->first()?->id]
-        ];
-        foreach ($types as $typeData) {
-            TourGuideType::updateOrCreate($typeData);
-        }
+        // $types = [
+        //     ['type' => 'Standard Guide', 'price' => 100.00, 'currency_id' => Currency::inRandomOrder()->first()?->id, 'region_id' => Currency::inRandomOrder()->first()?->id, 'subregion_id' => Subregion::inRandomOrder()->first()?->id, 'country_id' => Country::inRandomOrder()->first()?->id],
+        //     ['type' => 'Specialized Guide', 'price' => 150.00, 'currency_id' => Currency::inRandomOrder()->first()?->id, 'region_id' => Currency::inRandomOrder()->first()?->id, 'subregion_id' => Subregion::inRandomOrder()->first()?->id, 'country_id' => Country::inRandomOrder()->first()?->id],
+        //     ['type' => 'Private Guide', 'price' => 200.00, 'currency_id' => Currency::inRandomOrder()->first()?->id, 'region_id' => Currency::inRandomOrder()->first()?->id, 'subregion_id' => Subregion::inRandomOrder()->first()?->id, 'country_id' => Country::inRandomOrder()->first()?->id]
+        // ];
+        // foreach ($types as $typeData) {
+        //     TourGuideType::updateOrCreate($typeData);
+        // }
     }
 }

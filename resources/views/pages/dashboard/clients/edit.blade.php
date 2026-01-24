@@ -109,17 +109,17 @@
 
                             {{-- Client Code --}}
                             <div>
-                                <label for="client_code" class="kt-label mb-2">{{ __('main.client_code') }}</label>
+                                <label for="code" class="kt-label mb-2">{{ __('main.code') }}</label>
                                 <div class="relative">
-                                    <input type="text" name="client_code" id="client_code"
-                                        class="kt-input h-[45px] pr-10" value="{{ $client->client_code }}" readonly>
+                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
+                                        value="{{ $client->code }}" readonly>
 
                                     <button type="button" onclick="generateNewClientCode()" toggle-button
                                         class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer hover:text-gray-700">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </div>
-                                @error('client_code')
+                                @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

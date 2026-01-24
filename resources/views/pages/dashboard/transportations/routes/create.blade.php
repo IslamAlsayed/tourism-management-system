@@ -70,10 +70,9 @@
                                 <label for="code" class="kt-label">{{ __('main.code') }}</label>
                                 <div class="relative">
                                     <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
-                                        value="{{ old('code', fake()->numerify('RT-#####')) }}" required readonly>
-
-                                    <button type="button" onclick="generateNewCode()" toggle-button
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer hover:text-gray-700">
+                                        value="{{ old('code', fake()->numerify('TR-#####')) }}" required readonly>
+                                    <button type="button" toggle-button onclick="window.generateCode('code', 'TR-',5)"
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </div>
@@ -345,15 +344,6 @@
 
 @push('scripts')
     <script>
-        function generateNewCode() {
-            function getRandomCode() {
-                const randomNum = Math.floor(Math.random() * 99999) + 1;
-                const paddedNum = String(randomNum).padStart(5, '0');
-                return 'RT-' + paddedNum;
-            }
-            document.getElementById('code').value = getRandomCode();
-        }
-
         // Initialize Select2 for cities with AJAX
         document.addEventListener('DOMContentLoaded', function() {
             const citiesSelects = $('.cities-select');

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Meal;
 use App\Models\RichText;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class MealSeeder extends Seeder
 {
@@ -14,9 +13,7 @@ class MealSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Meal::truncate();
+        truncateWithReset(Meal::class);
         RichText::where('record_type', Meal::class)->delete();
-        Schema::enableForeignKeyConstraints();
     }
 }

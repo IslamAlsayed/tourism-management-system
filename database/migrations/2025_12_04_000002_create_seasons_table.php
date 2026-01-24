@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('seasons', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
-            $table->unsignedBigInteger('model_id')->nullable();
+            $table->foreignId('model_id')->nullable();
             $table->string('model_type')->nullable();
 
             $table->string('name'); // e.g., Winter, Summer, High Season, Low Season

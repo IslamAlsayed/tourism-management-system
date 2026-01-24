@@ -15,12 +15,12 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             // Foreign Keys
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->nullOnDelete();
-            $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->nullOnDelete();
-            $table->foreignId('country_id')->nullable()->constrained('countries')->nullOnDelete();
-            $table->foreignId('state_id')->nullable()->constrained('states')->nullOnDelete();
-            $table->foreignId('city_id')->nullable()->constrained('cities')->nullOnDelete();
+            $table->foreignId('currency_id')->nullable();
+            $table->foreignId('region_id')->nullable();
+            $table->foreignId('subregion_id')->nullable();
+            $table->foreignId('country_id')->nullable();
+            $table->foreignId('state_id')->nullable();
+            $table->foreignId('city_id')->nullable();
             $table->string('name')->nullable(); // e.g., Hilton Cairo, Bedouin Camp, other
             $table->string('name_ar')->nullable(); // e.g., هيلتون القاهرة، مخيم بدوي، أخرى
             $table->string('code')->nullable();

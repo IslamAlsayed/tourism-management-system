@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\RichText;
 use App\Models\TourGuide;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class TourGuideSeeder extends Seeder
 {
@@ -14,9 +13,7 @@ class TourGuideSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        TourGuide::truncate();
+        truncateWithReset(TourGuide::class);
         RichText::where('record_type', TourGuide::class)->delete();
-        Schema::enableForeignKeyConstraints();
     }
 }

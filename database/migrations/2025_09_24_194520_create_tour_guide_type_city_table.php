@@ -8,11 +8,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('tour_guide_type_city', function (Blueprint $table) {
-            $table->unsignedBigInteger('tour_guide_type_id');
-            $table->unsignedBigInteger('city_id');
-            $table->primary(['tour_guide_type_id', 'city_id']);
-            $table->foreign('tour_guide_type_id')->references('id')->on('tour_guide_types')->cascadeOnDelete();
-            $table->foreign('city_id')->references('id')->on('cities')->cascadeOnDelete();
+            $table->foreignId('tour_guide_type_id')->nullable();
+            $table->foreignId('city_id')->nullable();
         });
     }
     public function down()

@@ -81,17 +81,22 @@ class CrossingPort extends Model
         'notes',
     ];
 
-    /**
-     * Get relationship names for eager loading
-     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($item) {
+            // Auto-fill code
+            if (empty($item->code)) {
+                $item->code = generateCode('CLT-', 5);
+            }
+        });
+    }
+
     public function getRelationshipNames()
     {
         return ['departure_tax_currency', 'visa_fee_currency', 'region', 'subregion', 'country', 'state', 'city'];
     }
 
-    /**
-     * Get columns to exclude from search/display
-     */
     public function getExcludedColumns()
     {
         return [

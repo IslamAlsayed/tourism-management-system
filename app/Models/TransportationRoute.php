@@ -58,6 +58,17 @@ class TransportationRoute extends Model
         'waypoints' => 'array',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($item) {
+            // Auto-fill code
+            if (empty($item->code)) {
+                $item->code = generateCode('TR-', 5);
+            }
+        });
+    }
+
     public function getRelationshipNames()
     {
         return ['originCity', 'destinationCity', 'assignments'];

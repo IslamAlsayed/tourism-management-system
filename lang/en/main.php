@@ -122,6 +122,7 @@ return [
     'departure_date' => 'Departure Date',
     'nights' => 'Nights',
     'grand_total' => 'Grand Total',
+    'fake_data' => 'Fake Data',
 
     // Form and UI Components
     'actions' => 'Actions',

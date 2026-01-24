@@ -32,3 +32,5 @@ app/Helpers
 /resources/views/pages/dashboard/vehicles
 SYSTEM_READY.txt
 mixjo2025_ORDERED.sql
+mixjo2025_OREADY.sql
+jsconfig.json

@@ -14,11 +14,11 @@ return new class extends Migration {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
 
-            $table->foreignId('company_id')->nullable()->constrained('transportations_companies')->cascadeOnDelete();
-            $table->foreignId('vehicle_type_id')->nullable()->constrained('transportations_vehicle_types')->cascadeOnDelete();
-            $table->foreignId('season_id')->nullable()->constrained('seasons')->cascadeOnDelete();
-            $table->foreignId('pricing_unit_id')->nullable()->constrained('pricing_definitions');
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->cascadeOnDelete();
+            $table->foreignId('company_id')->nullable();
+            $table->foreignId('vehicle_type_id')->nullable();
+            $table->foreignId('season_id')->nullable();
+            $table->foreignId('pricing_unit_id')->nullable();
+            $table->foreignId('currency_id')->nullable();
             $table->decimal('price', 10, 2);
             $table->integer('tax')->nullable();
             $table->boolean('is_active')->nullable();

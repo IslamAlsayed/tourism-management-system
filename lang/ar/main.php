@@ -122,6 +122,7 @@ return [
     'departure_date' => 'موعد الرجوع',
     'nights' => 'الليالي',
     'grand_total' => 'الإجمالي الكلي',
+    'fake_data' => 'بيانات تجريبية',
 
     // Form and UI Components
     'actions' => 'الإجراءات',

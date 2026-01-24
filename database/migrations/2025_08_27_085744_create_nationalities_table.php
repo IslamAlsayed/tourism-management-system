@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
-            $table->foreignId('country_id')->nullable()->constrained('countries')->cascadeOnDelete();
+            $table->foreignId('country_id')->nullable();
             $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Airline;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class AirlineSeeder extends Seeder
 {
@@ -13,9 +12,7 @@ class AirlineSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Airline::truncate();
-        Schema::enableForeignKeyConstraints();
+        truncateWithReset(Airline::class);
 
         Airline::factory()->count(10)->create();
     }

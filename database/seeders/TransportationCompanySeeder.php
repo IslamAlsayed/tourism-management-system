@@ -21,18 +21,16 @@ class TransportationCompanySeeder extends Seeder
     public function run()
     {
         // حذف بيانات شركات المواصلات القديمة
-        Schema::disableForeignKeyConstraints();
-        PricingDefinition::truncate();
+        truncateWithReset(PricingDefinition::class);
         RichText::where('record_type', PricingDefinition::class)->delete();
-        TransportationCompany::truncate();
+        truncateWithReset(TransportationCompany::class);
         RichText::where('record_type', TransportationCompany::class)->delete();
-        TransportationCompanyContact::truncate();
+        truncateWithReset(TransportationCompanyContact::class);
         RichText::where('record_type', TransportationCompanyContact::class)->delete();
-        TransportationVehicleType::truncate();
+        truncateWithReset(TransportationVehicleType::class);
         RichText::where('record_type', TransportationVehicleType::class)->delete();
-        TransportationPricing::truncate();
+        truncateWithReset(TransportationPricing::class);
         RichText::where('record_type', TransportationPricing::class)->delete();
-        Schema::enableForeignKeyConstraints();
 
         // تعريفات التسعير
         $pricingDefinitions = [

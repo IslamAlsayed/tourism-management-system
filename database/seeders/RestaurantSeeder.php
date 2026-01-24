@@ -4,18 +4,19 @@ namespace Database\Seeders;
 
 use App\Models\Meal;
 use App\Models\Season;
+use App\Models\RichText;
 use App\Models\Restaurant;
 use App\Models\Supplement;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class RestaurantSeeder extends Seeder
 {
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Restaurant::truncate();
-        Schema::enableForeignKeyConstraints();
+        truncateWithReset(Restaurant::class);
+        RichText::where('record_type', Restaurant::class)->delete();
+        $this->command->info('RestaurantSeeder is deprecated. Please use dedicated seeders for Meals, Seasons, and Supplements.');
+        return;
 
         // Create 5 Restaurants (مطاعم مستقلة عن restaurants)
         $restaurants = [

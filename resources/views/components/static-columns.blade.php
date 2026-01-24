@@ -2318,14 +2318,13 @@
         </td>
     @break
 
-    @case('code')
+    {{-- @case('code')
         <td title="{{ $model->code }}">
             <span class="text-{{ $model->code == getCurrentLocale() ? 'green' : 'red' }}-600 font-semibold">
                 {{ $model->code == getCurrentLocale() ? __('main.active') : __('main.inactive') }}
             </span>
         </td>
-    @break
-
+    @break --}}
     @case('created_at')
         <td title="{{ $model->created_at?->format('Y-m-d H:i') ?? '--' }}">
             {!! highlightSearch(limitedText($model->created_at?->format('Y-m-d H:i') ?? '--', 30), $search) !!}

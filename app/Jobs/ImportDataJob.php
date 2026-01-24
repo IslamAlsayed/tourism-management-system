@@ -26,6 +26,7 @@ class ImportDataJob implements ShouldQueue
     protected int $chunkSize;
     protected array $pendingTransportationContacts = [];
     protected array $transportationCompanyUuidMap = [];
+    protected array $tourGuideTypePivotData = []; // Store pivot data for TourGuideType
 
     public function __construct(string $modelClass, string $filePath, int $chunkSize = 1000, ?int $userId = null)
     {
@@ -149,6 +150,49 @@ class ImportDataJob implements ShouldQueue
                 $cleaned[$k] = $v;
             }
 
+            // Capture TourGuideType pivot data BEFORE filtering by fillable
+            // This is necessary because state_id and city_id are NOT columns in tour_guide_types table
+            if ($this->modelClass === \App\Models\TourGuideType::class) {
+                $pivotData = [];
+
+                // Extract state_id from cleaned data
+                foreach ($headerMap as $normKey => $origKey) {
+                    if ($normKey === 'state_id' && isset($cleaned[$origKey])) {
+                        // Clean the value - remove brackets and whitespace
+                        $value = $cleaned[$origKey];
+                        if (is_string($value)) {
+                            $value = str_replace(['[', ']', ' '], '', $value);
+                        }
+                        $pivotData['state_id'] = $value;
+                    }
+                    if ($normKey === 'city_id' && isset($cleaned[$origKey])) {
+                        // Clean the value - remove brackets and whitespace
+                        $value = $cleaned[$origKey];
+                        if (is_string($value)) {
+                            $value = str_replace(['[', ']', ' '], '', $value);
+                        }
+                        $pivotData['city_id'] = $value;
+                    }
+                }
+
+                // We'll store this and match it later using type or uuid
+                if (!empty($pivotData)) {
+                    // Try to get identifying info (including row index as fallback)
+                    foreach ($headerMap as $normKey => $origKey) {
+                        if ($normKey === 'uuid' && isset($cleaned[$origKey])) {
+                            $pivotData['uuid'] = $cleaned[$origKey];
+                        }
+                        if ($normKey === 'type' && isset($cleaned[$origKey])) {
+                            $pivotData['type'] = $cleaned[$origKey];
+                        }
+                    }
+                    // Add row index to ensure we can match even if UUID is missing
+                    $pivotData['row_index'] = $totalRows;
+                    $this->tourGuideTypePivotData[] = $pivotData;
+                    Log::debug('Captured TourGuideType pivot data: ' . json_encode($pivotData));
+                }
+            }
+
             // Build a row aligned with $fillable using lookup when possible
             $prepared = [];
             foreach ($fillable as $col) {
@@ -180,6 +224,12 @@ class ImportDataJob implements ShouldQueue
             // Generate UUID if column exists in fillable and value is empty/null
             if (in_array('uuid', $fillable) && empty($prepared['uuid'])) {
                 $prepared['uuid'] = (string) Str::uuid();
+            }
+
+            // Generate code for Client model if column exists and value is empty
+            if ($this->modelClass === \App\Models\Client::class && in_array('code', $fillable) && empty($prepared['code'])) {
+                $prepared['code'] = generateCode('CLT-', 5);
+                Log::debug("Auto-generated Client code: {$prepared['code']}");
             }
 
             // Convert model_type from simple name to full namespace
@@ -271,6 +321,8 @@ class ImportDataJob implements ShouldQueue
                         $prepared['timezone_id'] = null;
                     }
                 }
+            } else {
+                $prepared['timezone_id'] = 1;
             }
 
             // Smart language_id lookup: if value is text, search by name/code
@@ -344,49 +396,75 @@ class ImportDataJob implements ShouldQueue
                         $prepared['currency_id'] = 138;
                     }
                 }
+            } else {
+                $prepared['currency_id'] = 138;
             }
 
             // Smart type_id lookup: if value is text, search by name/code, or create if not found
-            if (in_array('type_id', $fillable) && !empty($prepared['type_id'])) {
-                $typeValue = $prepared['type_id'];
+            // Also supports 'type' column as alias for 'type_id'
+            // Handles both numeric IDs and text names
+            if (in_array('type_id', $fillable)) {
+                // Check if type_id exists in prepared data, otherwise try 'type' column from Excel
+                $typeValue = null;
 
-                if (!is_numeric($typeValue)) {
-                    try {
-                        $searchTerm = trim((string) $typeValue);
-
-                        // Try exact match first (name, name_ar, code, or symbol)
-                        $type = \App\Models\Type::where('name', $searchTerm)
-                            ->orWhere('name_ar', $searchTerm)
-                            ->first();
-
-                        // If not found, try partial match
-                        if (!$type) {
-                            $type = \App\Models\Type::where('name', 'LIKE', "%{$searchTerm}%")
-                                ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
-                                ->first();
+                if (!empty($prepared['type_id'])) {
+                    $typeValue = $prepared['type_id'];
+                } else {
+                    // Try to find 'type' column in cleaned data (Excel might have 'type' instead of 'type_id')
+                    foreach ($headerMap as $normKey => $origKey) {
+                        if ($normKey === 'type' && isset($cleaned[$origKey])) {
+                            $typeValue = $cleaned[$origKey];
+                            Log::debug("Using 'type' column value for type_id: {$typeValue}");
+                            break;
                         }
+                    }
+                }
 
-                        // If still not found, create new type
-                        if (!$type) {
-                            try {
-                                $type = \App\Models\Type::create(['name' => $searchTerm, 'name_ar' => $searchTerm]);
-                                Log::info("Created new type: '{$searchTerm}' with ID: {$type->id}");
-                            } catch (\Throwable $createError) {
-                                Log::warning("Failed to create new type '{$searchTerm}': " . $createError->getMessage());
+                // Process the type value if it exists
+                if (!empty($typeValue)) {
+                    // If it's numeric, use it as ID directly
+                    if (is_numeric($typeValue)) {
+                        $prepared['type_id'] = (int) $typeValue;
+                        Log::debug("Using numeric type_id: {$typeValue}");
+                    } else {
+                        // If it's text, search for it in the database
+                        try {
+                            $searchTerm = trim((string) $typeValue);
+
+                            // Try exact match first (name, name_ar)
+                            $type = \App\Models\Type::where('name', $searchTerm)
+                                ->orWhere('name_ar', $searchTerm)
+                                ->first();
+
+                            // If not found, try partial match
+                            if (!$type) {
+                                $type = \App\Models\Type::where('name', 'LIKE', "%{$searchTerm}%")
+                                    ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
+                                    ->first();
+                            }
+
+                            // If still not found, create new type
+                            if (!$type) {
+                                try {
+                                    $type = \App\Models\Type::create(['name' => $searchTerm, 'name_ar' => $searchTerm]);
+                                    Log::info("Created new type: '{$searchTerm}' with ID: {$type->id}");
+                                } catch (\Throwable $createError) {
+                                    Log::warning("Failed to create new type '{$searchTerm}': " . $createError->getMessage());
+                                    $prepared['type_id'] = null;
+                                }
+                            }
+
+                            if ($type) {
+                                $prepared['type_id'] = $type->id;
+                                Log::debug("Resolved type '{$searchTerm}' to ID: {$type->id} ({$type->name})");
+                            } else {
+                                Log::warning("Could not resolve or create type: '{$searchTerm}' - setting to null");
                                 $prepared['type_id'] = null;
                             }
-                        }
-
-                        if ($type) {
-                            $prepared['type_id'] = $type->id;
-                            Log::debug("Resolved type '{$searchTerm}' to ID: {$type->id} ({$type->name})");
-                        } else {
-                            Log::warning("Could not resolve or create type: '{$searchTerm}' - setting to null");
+                        } catch (\Throwable $e) {
+                            Log::warning('Failed to resolve type: ' . $e->getMessage());
                             $prepared['type_id'] = null;
                         }
-                    } catch (\Throwable $e) {
-                        Log::warning('Failed to resolve type: ' . $e->getMessage());
-                        $prepared['type_id'] = null;
                     }
                 }
             }
@@ -447,15 +525,19 @@ class ImportDataJob implements ShouldQueue
                 }
             }
 
-            // Smart country_id lookup: if value is text, search by name/iso codes
+            $country = null;
+            // Resolve country_id (text → id)
             if (in_array('country_id', $fillable) && !empty($prepared['country_id'])) {
-                $countryValue = $prepared['country_id'];
+                try {
+                    $countryValue = $prepared['country_id'];
 
-                if (!is_numeric($countryValue)) {
-                    try {
+                    if (is_numeric($countryValue)) {
+                        $country = \App\Models\Country::find($countryValue);
+                    } else {
                         $searchTerm = trim((string) $countryValue);
 
-                        $country = \App\Models\Country::where('name', $searchTerm)
+                        $country = \App\Models\Country::query()
+                            ->where('name', $searchTerm)
                             ->orWhere('name_ar', $searchTerm)
                             ->orWhere('iso2', $searchTerm)
                             ->orWhere('iso3', $searchTerm)
@@ -465,15 +547,28 @@ class ImportDataJob implements ShouldQueue
 
                         if ($country) {
                             $prepared['country_id'] = $country->id;
-                            Log::debug("Resolved country '{$searchTerm}' to ID: {$country->id} ({$country->name})");
+                            Log::debug("Resolved country '{$searchTerm}' to ID {$country->id} ({$country->name})");
                         } else {
-                            Log::warning("Could not resolve country: '{$searchTerm}' - setting to null");
+                            Log::warning("Could not resolve country '{$searchTerm}', setting country_id to null");
                             $prepared['country_id'] = null;
                         }
-                    } catch (\Throwable $e) {
-                        Log::warning('Failed to resolve country: ' . $e->getMessage());
-                        $prepared['country_id'] = null;
                     }
+                } catch (\Throwable $e) {
+                    Log::warning('Country resolution failed: ' . $e->getMessage());
+                    $prepared['country_id'] = null;
+                }
+            }
+
+            // Auto-fill region & subregion from resolved country
+            if ($country) {
+                if (in_array('region_id', $fillable) && empty($prepared['region_id']) && $country->region_id) {
+                    $prepared['region_id'] = $country->region_id;
+                    Log::debug("Auto-filled region_id from country: {$country->region_id}");
+                }
+
+                if (in_array('subregion_id', $fillable) && empty($prepared['subregion_id']) && $country->subregion_id) {
+                    $prepared['subregion_id'] = $country->subregion_id;
+                    Log::debug("Auto-filled subregion_id from country: {$country->subregion_id}");
                 }
             }
 
@@ -514,31 +609,6 @@ class ImportDataJob implements ShouldQueue
                     }
                 } catch (\Throwable $e) {
                     Log::debug('Failed to auto-fill country from state: ' . $e->getMessage());
-                }
-            }
-
-            // Auto-fill region_id and subregion_id from country if not provided
-            if (!empty($prepared['country_id']) && is_numeric($prepared['country_id'])) {
-                try {
-                    // If region_id is missing, get it from country
-                    if (in_array('region_id', $fillable) && empty($prepared['region_id'])) {
-                        $country = \App\Models\Country::find($prepared['country_id']);
-                        if ($country && $country->region_id) {
-                            $prepared['region_id'] = $country->region_id;
-                            Log::debug("Auto-filled region_id from country: {$country->region_id}");
-                        }
-                    }
-
-                    // If subregion_id is missing, get it from country
-                    if (in_array('subregion_id', $fillable) && empty($prepared['subregion_id'])) {
-                        $country = $country ?? \App\Models\Country::find($prepared['country_id']);
-                        if ($country && $country->subregion_id) {
-                            $prepared['subregion_id'] = $country->subregion_id;
-                            Log::debug("Auto-filled subregion_id from country: {$country->subregion_id}");
-                        }
-                    }
-                } catch (\Throwable $e) {
-                    Log::debug('Failed to auto-fill region/subregion from country: ' . $e->getMessage());
                 }
             }
 
@@ -596,6 +666,7 @@ class ImportDataJob implements ShouldQueue
                     $this->pendingTransportationContacts[] = $contactRow;
                 }
             }
+
             // prevent duplicate primary-key insertion (CSV might contain `id` column)
             try {
                 $pk = $model->getKeyName();
@@ -903,6 +974,11 @@ class ImportDataJob implements ShouldQueue
             Log::debug('Transportation import completed: ' . count($this->transportationCompanyUuidMap) . ' UUID mappings, ' . count($this->pendingTransportationContacts) . ' contacts processed');
         }
 
+        // Sync TourGuideType relationships (states and cities)
+        if ($this->modelClass === \App\Models\TourGuideType::class) {
+            $this->syncTourGuideTypeRelationships();
+        }
+
         // Log summary
         Log::debug("ImportDataJob completed: Total rows read: {$totalRows}, Records inserted: {$counter}");
 
@@ -1029,6 +1105,89 @@ class ImportDataJob implements ShouldQueue
 
         } catch (\Throwable $e) {
             Log::warning('Failed to auto-sync relationships: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Sync TourGuideType states and cities from imported data
+     */
+    protected function syncTourGuideTypeRelationships(): void
+    {
+        try {
+            if (empty($this->tourGuideTypePivotData)) {
+                Log::info('No TourGuideType pivot data to sync.');
+                return;
+            }
+
+            Log::info('Syncing TourGuideType states and cities from import...');
+
+            $syncedStates = 0;
+            $syncedCities = 0;
+
+            // Get all tour guide types ordered by ID (should match import order)
+            $allTypes = \App\Models\TourGuideType::orderBy('id')->get();
+
+            foreach ($this->tourGuideTypePivotData as $pivotData) {
+                // Find the TourGuideType by UUID, type name, or row index
+                $type = null;
+
+                if (!empty($pivotData['uuid'])) {
+                    $type = \App\Models\TourGuideType::where('uuid', $pivotData['uuid'])->first();
+                }
+
+                if (!$type && !empty($pivotData['type'])) {
+                    $type = \App\Models\TourGuideType::where('type', $pivotData['type'])->first();
+                }
+
+                // Fallback: use row index to match (since records are inserted in order)
+                if (!$type && isset($pivotData['row_index'])) {
+                    $index = $pivotData['row_index'] - 1; // Convert to 0-based index
+                    if (isset($allTypes[$index])) {
+                        $type = $allTypes[$index];
+                        Log::debug("Matched TourGuideType by row index: {$index}");
+                    }
+                }
+
+                if (!$type) {
+                    Log::warning('Could not find TourGuideType for pivot sync: ' . json_encode($pivotData));
+                    continue;
+                }
+
+                // Handle state_id
+                if (!empty($pivotData['state_id'])) {
+                    // Handle comma-separated IDs or single ID
+                    $stateIds = is_string($pivotData['state_id'])
+                        ? array_filter(array_map('trim', explode(',', $pivotData['state_id'])))
+                        : [$pivotData['state_id']];
+                    $stateIds = array_filter($stateIds, 'is_numeric');
+
+                    if (!empty($stateIds)) {
+                        $type->states()->sync($stateIds);
+                        $syncedStates += count($stateIds);
+                        Log::debug("Synced " . count($stateIds) . " states (" . implode(',', $stateIds) . ") for TourGuideType ID: {$type->id}, Type: {$type->type}");
+                    }
+                }
+
+                // Handle city_id
+                if (!empty($pivotData['city_id'])) {
+                    // Handle comma-separated IDs or single ID
+                    $cityIds = is_string($pivotData['city_id'])
+                        ? array_filter(array_map('trim', explode(',', $pivotData['city_id'])))
+                        : [$pivotData['city_id']];
+                    $cityIds = array_filter($cityIds, 'is_numeric');
+
+                    if (!empty($cityIds)) {
+                        $type->cities()->sync($cityIds);
+                        $syncedCities += count($cityIds);
+                        Log::debug("Synced " . count($cityIds) . " cities (" . implode(',', $cityIds) . ") for TourGuideType ID: {$type->id}, Type: {$type->type}");
+                    }
+                }
+            }
+
+            Log::info("TourGuideType sync completed: {$syncedStates} state relationships and {$syncedCities} city relationships synced.");
+        } catch (\Throwable $e) {
+            Log::warning('Failed to sync TourGuideType relationships: ' . $e->getMessage());
+            Log::warning('Stack trace: ' . $e->getTraceAsString());
         }
     }
 }

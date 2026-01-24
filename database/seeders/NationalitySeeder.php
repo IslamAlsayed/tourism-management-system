@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Nationality;
 use App\Models\RichText;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class NationalitySeeder extends Seeder
 {
@@ -14,9 +13,7 @@ class NationalitySeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Nationality::truncate();
+        truncateWithReset(Nationality::class);
         RichText::where('record_type', Nationality::class)->delete();
-        Schema::enableForeignKeyConstraints();
     }
 }

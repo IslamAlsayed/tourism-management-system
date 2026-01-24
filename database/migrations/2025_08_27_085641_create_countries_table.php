@@ -13,11 +13,11 @@ return new class extends Migration {
         Schema::create('countries', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
-            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
-            $table->foreignId('language_id')->nullable()->constrained('languages')->onDelete('set null');
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->onDelete('set null');
-            $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
+            $table->foreignId('timezone_id')->nullable();
+            $table->foreignId('language_id')->nullable();
+            $table->foreignId('currency_id')->nullable();
+            $table->foreignId('region_id')->nullable();
+            $table->foreignId('subregion_id')->nullable();
 
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();

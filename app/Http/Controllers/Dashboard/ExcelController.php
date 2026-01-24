@@ -20,8 +20,8 @@ class ExcelController extends Controller
         $modelClass = "App\\Models\\" . str_replace('-', '', studlyCaseName($model));
         $models = $request->input('models');
         $view = $request->input('view');
-        $title = __('main.import_types', ['types' => __('main.' . $models)]);
-        $description = __('main.import_types_description', ['types' => __('main.' . $models)]);
+        $title = __('main.import_types', ['types' => __('main.' . preg_replace('/-/', '.', $models, 1))]);
+        $description = __('main.import_types_description', ['types' => __('main.' . preg_replace('/-/', '.', $models, 1))]);
         // Validate model existence
         if (!class_exists($modelClass)) {
             return back()->withError(__('messages.invalid_model_specified'));

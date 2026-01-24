@@ -5,17 +5,17 @@
         :requirements="[
             [
                 'condition' => \App\Models\TransportationRoute::count() > 0,
-                'route' => route('transportations.routes.index'),
+                'route' => route('transportations.routes.create'),
                 'label' => __('main.transportations-routes'),
             ],
             [
                 'condition' => \App\Models\TransportationCompany::count() > 0,
-                'route' => route('transportations.companies.index'),
+                'route' => route('transportations.companies.create'),
                 'label' => __('main.transportations-companies'),
             ],
             [
                 'condition' => \App\Models\TransportationVehicleType::count() > 0,
-                'route' => route('transportations.vehicle-types.index'),
+                'route' => route('transportations.vehicle-types.create'),
                 'label' => __('main.transportations-vehicle-types'),
             ],
         ]">

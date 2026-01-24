@@ -5,16 +5,13 @@ namespace Database\Seeders;
 use App\Models\Currency;
 use App\Models\RichText;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class CurrencySeeder extends Seeder
 {
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Currency::truncate();
+        truncateWithReset(Currency::class);
         RichText::where('record_type', Currency::class)->delete();
-        Schema::enableForeignKeyConstraints();
 
         $currencies = [
             ['Albanian lek', 'ALL', 'Lek', true],

@@ -16,6 +16,7 @@ class Timezone extends Model
     use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes;
     protected $richTextAttributes = [
         'description',
+        'notes',
     ];
 
     protected $fillable = [
@@ -31,8 +32,9 @@ class Timezone extends Model
         'gmt_offset_name',
         'gmt_offset_name_dst',
         'supports_dst',
-        'description',
         'is_active',
+        'description',
+        'notes',
         'sort_order',
     ];
 

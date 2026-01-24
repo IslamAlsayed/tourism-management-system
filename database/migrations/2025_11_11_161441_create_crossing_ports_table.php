@@ -15,11 +15,11 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             // Location relationships
-            $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
-            $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
-            $table->foreignId('state_id')->nullable()->constrained('states')->onDelete('set null');
-            $table->foreignId('city_id')->nullable()->constrained('cities')->onDelete('set null');
+            $table->foreignId('region_id')->nullable();
+            $table->foreignId('subregion_id')->nullable();
+            $table->foreignId('country_id')->nullable();
+            $table->foreignId('state_id')->nullable();
+            $table->foreignId('city_id')->nullable();
             $table->string('address')->nullable();
 
             // Basic information
@@ -44,7 +44,7 @@ return new class extends Migration {
             $table->boolean('allows_visa_on_arrival')->default(false);
             $table->json('nationality_policy')->nullable(); // Policies per nationality
             $table->decimal('departure_tax', 8, 2)->nullable();
-            $table->foreignId('departure_tax_currency_id')->nullable()->constrained('currencies')->onDelete('set null');
+            $table->foreignId('departure_tax_currency_id')->nullable();
 
             // Contact information
             $table->string('contact_phone')->nullable();
@@ -58,7 +58,7 @@ return new class extends Migration {
             // Visa requirements
             $table->boolean('visa_required')->default(false);
             $table->decimal('visa_fee', 8, 2)->nullable();
-            $table->foreignId('visa_fee_currency_id')->nullable()->constrained('currencies')->onDelete('set null');
+            $table->foreignId('visa_fee_currency_id')->nullable();
             $table->integer('visa_duration')->nullable(); // Days
             $table->text('visa_conditions')->nullable();
             $table->string('visa_application_url')->nullable();

@@ -296,6 +296,16 @@ if (!function_exists('generateUniqueFilename')) {
     }
 }
 
+if (!function_exists('generateCode')) {
+    function generateCode($prefix = 'CODE-', $length = 5)
+    {
+        $max = (int) str_repeat('9', $length);
+        $randomNum = random_int(1, $max);
+        $paddedNum = str_pad($randomNum, $length, '0', STR_PAD_LEFT);
+        return $prefix . $paddedNum;
+    }
+}
+
 if (!function_exists('getPaginate')) {
     function getPaginate()
     {
@@ -761,5 +771,55 @@ if (!function_exists('hasDisplayableDescAndNotes')) {
         }
         return isset($record->$column->body->fragment->source->textContent) &&
             !empty($record->$column->body->fragment->source->textContent);
+    }
+}
+
+if (!function_exists('truncateWithReset')) {
+    /**
+     * Truncate a model's table and reset AUTO_INCREMENT to 1
+     * 
+     * Note: This function tries multiple approaches to reset AUTO_INCREMENT:
+     * 1. DELETE FROM table (recommended for InnoDB with persistent AUTO_INCREMENT)
+     * 2. ALTER TABLE to reset AUTO_INCREMENT value
+     * 3. TRUNCATE TABLE as fallback
+     *
+     * @param string|object $model Model class name or instance
+     * @param bool $disableForeignKeys Whether to disable foreign key checks
+     * @return void
+     */
+    function truncateWithReset($model, $disableForeignKeys = true)
+    {
+        // Get model instance if class name was provided
+        if (is_string($model)) {
+            $model = new $model;
+        }
+
+        $tableName = $model->getTable();
+
+        if ($disableForeignKeys) {
+            \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+        }
+
+        try {
+            // Method 1: Use DELETE instead of TRUNCATE for better AUTO_INCREMENT reset
+            // This works better with InnoDB's persistent AUTO_INCREMENT
+            \Illuminate\Support\Facades\DB::table($tableName)->delete();
+
+            // Reset AUTO_INCREMENT to 1
+            \Illuminate\Support\Facades\DB::statement("ALTER TABLE `{$tableName}` AUTO_INCREMENT = 1");
+        } catch (\Exception $e) {
+            // Fallback: Try traditional truncate if delete fails
+            try {
+                $model::truncate();
+                \Illuminate\Support\Facades\DB::statement("ALTER TABLE `{$tableName}` AUTO_INCREMENT = 1");
+            } catch (\Exception $innerException) {
+                // Log the error but don't throw - let the seeder continue
+                \Illuminate\Support\Facades\Log::warning("Failed to truncate table {$tableName}: " . $innerException->getMessage());
+            }
+        }
+
+        if ($disableForeignKeys) {
+            \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+        }
     }
 }

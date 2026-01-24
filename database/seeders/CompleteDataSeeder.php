@@ -25,18 +25,16 @@ class CompleteDataSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        City::truncate();
-        Country::truncate();
-        Nationality::truncate();
-        Region::truncate();
-        Restaurant::truncate();
-        State::truncate();
-        Subregion::truncate();
-        TourGuide::truncate();
-        TourGuideType::truncate();
-        Type::truncate();
-        Schema::enableForeignKeyConstraints();
+        truncateWithReset(City::class);
+        truncateWithReset(Country::class);
+        truncateWithReset(Nationality::class);
+        truncateWithReset(Region::class);
+        truncateWithReset(Restaurant::class);
+        truncateWithReset(State::class);
+        truncateWithReset(Subregion::class);
+        truncateWithReset(TourGuide::class);
+        truncateWithReset(TourGuideType::class);
+        truncateWithReset(Type::class);
 
         // Types
         $types = [
@@ -124,7 +122,7 @@ class CompleteDataSeeder extends Seeder
         foreach ($states as $stateData) {
             $createdStates[] = State::create($stateData);
         }
-        
+
         // Cities
         $cities = [
             // Cairo State Cities

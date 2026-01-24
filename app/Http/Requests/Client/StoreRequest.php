@@ -22,7 +22,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'client_code' => ['required', 'string', 'max:50', 'unique:clients,client_code'],
+            'code' => ['required', 'string', 'max:50', 'unique:clients,code'],
 
             // Location information
             'currency_id' => ['nullable', 'exists:currencies,id'],

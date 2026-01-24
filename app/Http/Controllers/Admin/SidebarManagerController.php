@@ -169,7 +169,7 @@ class SidebarManagerController extends Controller
     public function resetToDefault()
     {
         try {
-            SidebarMenuOrder::truncate();
+            truncateWithReset(SidebarMenuOrder::class);
             Cache::forget('sidebar_menu_ordered');
 
             return response()->json([

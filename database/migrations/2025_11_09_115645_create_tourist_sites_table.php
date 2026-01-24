@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             // Location Information
-            $table->foreignId('city_id')->nullable()->constrained('cities')->onDelete('set null');
+            $table->foreignId('city_id')->nullable();
 
             // Site Information
             $table->string('name');
@@ -33,6 +33,7 @@ return new class extends Migration {
             // Description & Nearby
             $table->text('description')->nullable();
             $table->text('nearby_attractions')->nullable();
+            $table->text('notes')->nullable();
 
             // Images
             $table->string('main_image')->nullable();

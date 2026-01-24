@@ -5,7 +5,7 @@
         :requirements="[
             [
                 'condition' => \App\Models\Currency::count() > 0,
-                'route' => route('currencies.index'),
+                'route' => route('currencies.create'),
                 'label' => __('main.currencies_'),
             ],
         ]">

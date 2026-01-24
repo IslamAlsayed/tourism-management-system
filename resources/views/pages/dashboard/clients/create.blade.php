@@ -142,19 +142,16 @@
 
                             {{-- Client Code --}}
                             <div>
-                                <label for="client_code"
-                                    class="kt-label required mb-2">{{ __('main.client_code') }}</label>
+                                <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>
                                 <div class="relative">
-                                    <input type="text" name="client_code" id="client_code"
-                                        class="kt-input h-[45px] pr-10"
-                                        value="{{ old('client_code', fake()->numerify('C-#####')) }}" required readonly>
-
-                                    <button type="button" onclick="generateNewClientCode()" toggle-button
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer hover:text-gray-700">
+                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
+                                        value="{{ old('code', fake()->numerify('CLT-#####')) }}" required readonly>
+                                    <button type="button" toggle-button onclick="window.generateCode('code','CLT-',5)"
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </div>
-                                @error('client_code')
+                                @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -570,15 +567,6 @@
 
 @push('scripts')
     <script>
-        function generateNewClientCode() {
-            function getRandomCode() {
-                const randomNum = Math.floor(Math.random() * 99999) + 1;
-                const paddedNum = String(randomNum).padStart(5, '0');
-                return 'C-' + paddedNum;
-            }
-            document.getElementById('client_code').value = getRandomCode();
-        }
-
         document.getElementById('passport_expiry_date').addEventListener('change', function() {
             const issueDate = document.getElementById('passport_issue_date').value;
             const expiryDate = this.value;

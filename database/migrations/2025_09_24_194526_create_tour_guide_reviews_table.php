@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('tour_guide_reviews', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
-            $table->foreignId('tour_guide_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('tour_guide_id')->nullable();
             $table->tinyInteger('rating')->checkBetween([1, 5])->default(3);
             $table->text('review')->nullable();
             $table->timestamps();

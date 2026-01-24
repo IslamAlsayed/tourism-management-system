@@ -10,10 +10,7 @@ class SystemLanguageSeeder extends Seeder
 {
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::enableForeignKeyConstraints();
-
-        SystemLanguage::truncate();
+        truncateWithReset(SystemLanguage::class);
         foreach (config('languages.system_languages') as $key => $language) {
             SystemLanguage::updateOrCreate(['code' => $key], ['name' => $language]);
         }

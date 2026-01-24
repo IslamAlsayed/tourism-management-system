@@ -33,7 +33,7 @@
             @include('components.elements.reset-button')
         </div>
 
-        <div data-kt-datatable-state-save="false" id="accommodation-types_table">
+        <div data-kt-datatable-state-save="false" id="types_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
                     'data' => $data,

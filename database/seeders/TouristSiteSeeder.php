@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\RichText;
 use App\Models\TouristSite;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema;
 
 class TouristSiteSeeder extends Seeder
 {
@@ -14,10 +13,8 @@ class TouristSiteSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        TouristSite::truncate();
+        truncateWithReset(TouristSite::class);
         RichText::where('record_type', TouristSite::class)->delete();
-        Schema::enableForeignKeyConstraints();
 
         // Create different types of tourist sites
         TouristSite::factory()->count(5)->active()->historical()->create();

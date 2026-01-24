@@ -13,10 +13,9 @@ return new class extends Migration {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
-            $table->unsignedBigInteger('model_id')->nullable();
+            $table->foreignId('model_id')->nullable();
             $table->string('model_type')->nullable();
-            // $table->foreignId('season_id')->nullable()->constrained('seasons')->cascadeOnDelete();
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->cascadeOnDelete();
+            $table->foreignId('currency_id')->nullable();
 
             $table->string('name'); // e.g., Single, Double, Triple, Suite, Quad
             $table->string('name_ar')->nullable();

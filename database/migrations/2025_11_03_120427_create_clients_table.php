@@ -13,17 +13,17 @@ return new class extends Migration {
         Schema::create('clients', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
-            $table->string('client_code')->unique()->nullable();
+            $table->string('code')->unique()->nullable();
 
             // Location information
-            $table->foreignId('currency_id')->nullable()->constrained('currencies')->onDelete('set null');
-            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('set null');
-            $table->foreignId('region_id')->nullable()->constrained('regions')->onDelete('set null');
-            $table->foreignId('subregion_id')->nullable()->constrained('subregions')->onDelete('set null');
-            $table->foreignId('country_id')->nullable()->constrained('countries')->onDelete('set null');
-            $table->foreignId('state_id')->nullable()->constrained('states')->onDelete('set null');
-            $table->foreignId('city_id')->nullable()->constrained('cities')->onDelete('set null');
-            $table->foreignId('nationality_id')->nullable()->constrained('nationalities')->onDelete('set null');
+            $table->foreignId('currency_id')->nullable();
+            $table->foreignId('timezone_id')->nullable();
+            $table->foreignId('region_id')->nullable();
+            $table->foreignId('subregion_id')->nullable();
+            $table->foreignId('country_id')->nullable();
+            $table->foreignId('state_id')->nullable();
+            $table->foreignId('city_id')->nullable();
+            $table->foreignId('nationality_id')->nullable();
 
             // Personal name information
             $table->string('first_name')->nullable();
@@ -82,8 +82,8 @@ return new class extends Migration {
             $table->text('notes')->nullable();
 
             // Tracking
-            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
 
             $table->timestamps();
 
