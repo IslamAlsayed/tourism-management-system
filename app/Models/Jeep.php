@@ -133,6 +133,20 @@ class Jeep extends Model
         ];
     }
 
+    public function getRouteItineraryAttribute($value)
+    {
+        return collect(json_decode($value ?? '[]'));
+    }
+
+    public function setRouteItineraryAttribute($value)
+    {
+        if (is_string($value)) {
+            $value = json_decode($value, true);
+        }
+
+        $this->attributes['route_itinerary'] = json_encode(collect($value)->map(fn($item) => is_array($item) ? ($item['value'] ?? null) : $item)->filter()->values()->all());
+    }
+
     // Geographical Relations
     public function region()
     {

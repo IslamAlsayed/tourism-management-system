@@ -185,11 +185,12 @@
                             </div>
                         </div>
                     </div>
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $restaurant,
                         'column' => 'description',
+                        'classes' => 'mb-4',
                     ])
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $restaurant,
                         'column' => 'notes',
                     ])
@@ -394,7 +395,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @include('components.elements.display-desc-or-notes', [
+                                @include('components.elements.displayable-rich-text', [
                                     'record' => $season,
                                     'column' => 'description',
                                 ])
@@ -513,7 +514,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                @include('components.elements.display-desc-or-notes', [
+                                @include('components.elements.displayable-rich-text', [
                                     'record' => $meal,
                                     'column' => 'description',
                                 ])
@@ -621,7 +622,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @include('components.elements.display-desc-or-notes', [
+                                @include('components.elements.displayable-rich-text', [
                                     'record' => $supplement,
                                     'column' => 'description',
                                 ])
@@ -645,7 +646,7 @@
                         @empty
                             <div class="col-span-2 text-center py-8 text-secondary-foreground">
                                 <i class="ki-filled ki-information text-4xl mb-2"></i>
-                                <p>{{ __('main.no_supplements_available') }}</p>
+                                <p>{{ __('main.no_data_available') }}</p>
                             </div>
                         @endforelse
                     </div>

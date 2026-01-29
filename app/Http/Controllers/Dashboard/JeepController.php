@@ -36,16 +36,6 @@ class JeepController extends Controller
         $validated['created_by'] = getActiveUserId();
         unset($validated['photo'], $validated['gallery']);
 
-        // Extract & prepare route itinerary
-        if (!empty($validated['route_itinerary'])) {
-            $decoded = json_decode($validated['route_itinerary'], true);
-
-            $validated['route_itinerary'] =
-                json_last_error() === JSON_ERROR_NONE && is_array($decoded)
-                ? array_column($decoded, 'value')
-                : array_filter(explode(',', $validated['route_itinerary']));
-        }
-
         // Extract seasons
         $seasons = $validated['seasons'] ?? [];
         unset($validated['seasons']);

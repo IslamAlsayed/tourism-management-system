@@ -67,6 +67,11 @@ html.dark {
     }
 }
 
+.refresh-code {
+    right: 10px;
+    left: auto;
+}
+
 html[lang="ar"] {
     & .kt-dropdown-menu {
         left: 20px !important;
@@ -86,6 +91,11 @@ html[lang="ar"] {
             right: auto;
             left: 20px;
         }
+    }
+
+    & .refresh-code {
+        right: auto;
+        left: 10px;
     }
 }
 

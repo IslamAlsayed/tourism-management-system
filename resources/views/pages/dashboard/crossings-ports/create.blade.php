@@ -2,6 +2,10 @@
 
 @section('title', __('main.create_type', ['type' => __('main.crossing-port')]))
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/tagify/tagify.css') }}">
+@endpush
+
 @section('content')
     <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
@@ -22,16 +26,6 @@
 
         @include('components.must-add-first', [
             'requirements' => [
-                [
-                    'condition' => \App\Models\Region::count() > 0,
-                    'route' => route('regions.index'),
-                    'label' => __('main.regions'),
-                ],
-                [
-                    'condition' => \App\Models\Subregion::count() > 0,
-                    'route' => route('subregions.index'),
-                    'label' => __('main.subregions'),
-                ],
                 [
                     'condition' => \App\Models\Country::count() > 0,
                     'route' => route('countries.index'),
@@ -64,15 +58,14 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
-                        <livewire:regions.location-select-base />
+                        {{-- Regions [country, state, city] --}}
+                        <livewire:regions.location-select-base2 />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             {{-- Latitude --}}
                             <div>
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]"
-                                    value="{{ old('latitude') }}" step="any" min="-90" max="90"
+                                <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ old('latitude') }}" step="any" min="-90" max="90"
                                     placeholder="24.9576" />
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -82,8 +75,7 @@
                             {{-- Longitude --}}
                             <div>
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]"
-                                    value="{{ old('longitude') }}" step="any" min="-180" max="180"
+                                <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ old('longitude') }}" step="any" min="-180" max="180"
                                     placeholder="46.6988" />
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -111,8 +103,7 @@
                             {{-- Name --}}
                             <div>
                                 <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ old('name') }}" required>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ old('name') }}" required>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -121,8 +112,7 @@
                             {{-- Arabic Name --}}
                             <div>
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar') }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -132,10 +122,9 @@
                             <div>
                                 <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>
                                 <div class="relative">
-                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
-                                        value="{{ old('code', fake()->numerify('CP-#####')) }}" required readonly>
-                                    <button type="button" toggle-button onclick="window.generateCode('code', 'CP-',5)"
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer">
+                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10" value="{{ old('code', fake()->numerify('CPORT-#####')) }}" required readonly>
+                                    <button type="button" toggle-button onclick="window.generateCode('code', 'CPORT-',5)"
+                                        class="absolute top-1/2 -translate-y-1/2 text-primary cursor-pointer refresh-code refresh-code">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </div>
@@ -146,8 +135,10 @@
 
                             {{-- Type --}}
                             <div>
-                                <label for="crossings-ports-type"
-                                    class="kt-label required mb-2">{{ __('main.type') }}</label>
+                                <label for="crossings-ports-type" class="kt-label required mb-2">
+                                    {{ __('main.type') }}
+                                    <strong class="dataLength text-primary">({{ count($crossing_port_types) ?: 0 }})</strong>
+                                </label>
                                 <select name="type" id="crossings-ports-type" class="kt-input basic-single" required>
                                     <option value="" selected disabled></option>
                                     @foreach ($crossing_port_types as $type)
@@ -160,110 +151,122 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Operating Information --}}
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.operating_information') }}</h3>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            {{-- Operating days --}}
-                            <div>
-                                <label for="operating_days" class="kt-label mb-2">{{ __('main.operating_days') }}</label>
-                                <select name="operating_days[]" id="operating_days" class="kt-select basic-multiple"
-                                    multiple>
-                                    @foreach (['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] as $days)
-                                        <option value="{{ $days }}"
-                                            {{ in_array($days, old('operating_days', [])) ? 'selected' : '' }}>
-                                            {{ __('main.' . $days) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('operating_days')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- Operating Hours --}}
-                            <div>
-                                <label for="operating_hours" class="kt-label mb-2">{{ __('main.operating_hours') }}</label>
-                                <input type="text" name="operating_hours" id="operating_hours"
-                                    class="kt-input h-[45px]" value="{{ old('operating_hours') }}"
-                                    placeholder="e.g., 24/7, 08:00-18:00">
-                                @error('operating_hours')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
 
                             {{-- Sort Order --}}
                             <div>
                                 <label for="sort_order" class="kt-label mb-2">{{ __('main.sort_order') }}</label>
-                                <input type="number" name="sort_order" id="sort_order" class="kt-input h-[45px]"
-                                    value="{{ old('sort_order', 0) }}" min="0">
+                                <input type="number" name="sort_order" id="sort_order" class="kt-input h-[45px]" value="{{ old('sort_order', 0) }}" min="0">
                                 @error('sort_order')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="flex flex-wrap" style="gap: 10px 40px;">
-                            {{-- Is 24/7 --}}
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_24_7" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_24_7',
-                                    'id' => 'is_24_7',
-                                    'value' => '1',
-                                    'label' => __('main.is_24_7'),
-                                ])
+                <!-- Operating Hours -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.operating_hours') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            <div class="col-span-full">
+                                <div class="flex items-center gap-4">
+                                    <input type="hidden" name="is_24_7" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_24_7',
+                                        'id' => 'is_24_7',
+                                        'value' => '1',
+                                        'checked' => old('is_24_7', 0) == 1,
+                                        'label' => __('main.is_24_7'),
+                                    ])
+                                </div>
                             </div>
-
-                            {{-- Is Commercial --}}
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_commercial" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_commercial',
-                                    'id' => 'is_commercial',
-                                    'value' => '1',
-                                    'label' => __('main.is_commercial'),
-                                ])
+                            <div class="disabled" id="opening_time">
+                                <label for="opening_time" class="kt-label">{{ __('main.opening_time') }}</label>
+                                <input type="time" name="opening_time" id="opening_time" class="kt-input h-[45px]" value="{{ old('opening_time') }}">
                             </div>
-
-                            {{-- Is Passenger --}}
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_passenger" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_passenger',
-                                    'id' => 'is_passenger',
-                                    'value' => '1',
-                                    'label' => __('main.is_passenger'),
-                                ])
+                            <div class="disabled" id="closing_time">
+                                <label for="closing_time" class="kt-label">{{ __('main.closing_time') }}</label>
+                                <input type="time" name="closing_time" id="closing_time" class="kt-input h-[45px]" value="{{ old('closing_time') }}">
                             </div>
-
-                            {{-- Is International --}}
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_international" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_international',
-                                    'id' => 'is_international',
-                                    'value' => '1',
-                                    'label' => __('main.is_international'),
-                                ])
+                            <div class="col-span-full border-custom-b pb-4">
+                                <label for="operating_days" class="kt-label">{{ __('main.operating_days') }}</label>
+                                <div class="flex flex-wrap gap-4 mt-2 ps-8">
+                                    @foreach (['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'] as $day)
+                                        <div class="flex items-center gap-4">
+                                            <input type="hidden" name="" value="">
+                                            @include('components.elements.checkbox-button', [
+                                                'name' => 'operating_days[]',
+                                                'id' => 'operating_day_' . $day,
+                                                'value' => $day,
+                                                'checked' => old('operating_days', []) && in_array($day, old('operating_days', [])),
+                                                'label' => __('main.' . $day),
+                                            ])
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
+                        </div>
 
-                            {{-- Is Major --}}
-                            <div class="flex items-center gap-3">
-                                <input type="hidden" name="is_major" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'is_major',
-                                    'id' => 'is_major',
-                                    'value' => '1',
-                                    'label' => __('main.is_major'),
-                                ])
+                        <div class="col-span-full">
+                            <label class="kt-label mb-3">{{ __('main.additional_options') }}</label>
+                            <div class="flex flex-wrap ps-8" style="gap: 10px 40px;">
+                                {{-- Is 24/7 --}}
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_24_7" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_24_7',
+                                        'id' => 'is_24_7',
+                                        'value' => '1',
+                                        'label' => __('main.is_24_7'),
+                                    ])
+                                </div>
+
+                                {{-- Is Commercial --}}
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_commercial" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_commercial',
+                                        'id' => 'is_commercial',
+                                        'value' => '1',
+                                        'label' => __('main.is_commercial'),
+                                    ])
+                                </div>
+
+                                {{-- Is Passenger --}}
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_passenger" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_passenger',
+                                        'id' => 'is_passenger',
+                                        'value' => '1',
+                                        'label' => __('main.is_passenger'),
+                                    ])
+                                </div>
+
+                                {{-- Is International --}}
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_international" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_international',
+                                        'id' => 'is_international',
+                                        'value' => '1',
+                                        'label' => __('main.is_international'),
+                                    ])
+                                </div>
+
+                                {{-- Is Major --}}
+                                <div class="flex items-center gap-3">
+                                    <input type="hidden" name="is_major" value="0">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'is_major',
+                                        'id' => 'is_major',
+                                        'value' => '1',
+                                        'label' => __('main.is_major'),
+                                    ])
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -276,11 +279,18 @@
                     </div>
                     <div class="kt-card-body p-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                            <!-- Nationality Policy (Tagify) -->
+                            <div class="col-span-full">
+                                <label for="nationality_policy" class="kt-label">{{ __('main.nationality_policy') }}</label>
+                                <input type="text" name="nationality_policy" id="nationality_policy" class="kt-input h-fit tagify-container" value="{{ old('nationality_policy') }}"
+                                    placeholder="Stop 1, Stop 2, ...">
+                                <span class="text-xs text-gray-500 mt-1">{{ __('main.tagify_desc') }}</span>
+                            </div>
+
                             {{-- Departure Tax --}}
                             <div>
                                 <label for="departure_tax" class="kt-label mb-2">{{ __('main.departure_tax') }}</label>
-                                <input type="number" name="departure_tax" id="departure_tax" class="kt-input h-[45px]"
-                                    value="{{ old('departure_tax') }}" step="0.01" min="0">
+                                <input type="number" name="departure_tax" id="departure_tax" class="kt-input h-[45px]" value="{{ old('departure_tax') }}" step="0.01" min="0">
                                 @error('departure_tax')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -315,8 +325,7 @@
                             {{-- Visa Fee --}}
                             <div>
                                 <label for="visa_fee" class="kt-label mb-2">{{ __('main.visa_fee') }}</label>
-                                <input type="number" name="visa_fee" id="visa_fee" class="kt-input h-[45px]"
-                                    value="{{ old('visa_fee') }}" step="0.01" min="0">
+                                <input type="number" name="visa_fee" id="visa_fee" class="kt-input h-[45px]" value="{{ old('visa_fee') }}" step="0.01" min="0">
                                 @error('visa_fee')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -331,8 +340,7 @@
                             <div>
                                 <label for="visa_duration" class="kt-label mb-2">{{ __('main.visa_duration') }}
                                     ({{ __('main.days') }})</label>
-                                <input type="number" name="visa_duration" id="visa_duration" class="kt-input h-[45px]"
-                                    value="{{ old('visa_duration') }}" min="1">
+                                <input type="number" name="visa_duration" id="visa_duration" class="kt-input h-[45px]" value="{{ old('visa_duration') }}" min="1">
                                 @error('visa_duration')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -340,10 +348,8 @@
 
                             {{-- Visa Application URL --}}
                             <div>
-                                <label for="visa_application_url"
-                                    class="kt-label mb-2">{{ __('main.visa_application_url') }}</label>
-                                <input type="url" name="visa_application_url" id="visa_application_url"
-                                    class="kt-input h-[45px]" value="{{ old('visa_application_url') }}">
+                                <label for="visa_application_url" class="kt-label mb-2">{{ __('main.visa_application_url') }}</label>
+                                <input type="url" name="visa_application_url" id="visa_application_url" class="kt-input h-[45px]" value="{{ old('visa_application_url') }}">
                                 @error('visa_application_url')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -351,10 +357,8 @@
 
                             {{-- Visa Policy Source --}}
                             <div>
-                                <label for="visa_policy_source"
-                                    class="kt-label mb-2">{{ __('main.visa_policy_source') }}</label>
-                                <input type="url" name="visa_policy_source" id="visa_policy_source"
-                                    class="kt-input h-[45px]" value="{{ old('visa_policy_source') }}">
+                                <label for="visa_policy_source" class="kt-label mb-2">{{ __('main.visa_policy_source') }}</label>
+                                <input type="url" name="visa_policy_source" id="visa_policy_source" class="kt-input h-[45px]" value="{{ old('visa_policy_source') }}">
                                 @error('visa_policy_source')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -362,21 +366,23 @@
 
                             {{-- Visa Last Update --}}
                             <div>
-                                <label for="visa_last_update"
-                                    class="kt-label mb-2">{{ __('main.visa_last_update') }}</label>
-                                <input type="date" name="visa_last_update" id="visa_last_update"
-                                    class="kt-input h-[45px]" value="{{ old('visa_last_update') }}">
+                                <label for="visa_last_update" class="kt-label mb-2">{{ __('main.visa_last_update') }}</label>
+                                <input type="date" name="visa_last_update" id="visa_last_update" class="kt-input h-[45px]" value="{{ old('visa_last_update') }}">
                                 @error('visa_last_update')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
-                        {{-- Visa Conditions --}}
-                        @include('components.elements.input-text-editor', [
-                            'column' => 'visa_conditions',
-                            'value' => old('visa_conditions'),
-                        ])
+
+                        {{-- Visa Last Update --}}
+                        <div>
+                            <label for="visa_conditions" class="kt-label mb-2">{{ __('main.visa_conditions') }}</label>
+                            <textarea name="visa_conditions" id="visa_conditions" class="kt-textarea">{{ old('visa_conditions') }}</textarea>
+                            @error('visa_conditions')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
 
@@ -390,8 +396,7 @@
                             {{-- Email --}}
                             <div>
                                 <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
-                                <input type="email" name="email" id="email" class="kt-input h-[45px]"
-                                    value="{{ old('email') }}">
+                                <input type="email" name="email" id="email" class="kt-input h-[45px]" value="{{ old('email') }}">
                                 @error('email')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -399,10 +404,9 @@
 
                             {{-- Contact Phone --}}
                             <div>
-                                <label for="contact_phone" class="kt-label mb-2">{{ __('main.contact_phone') }}</label>
-                                <input type="text" name="contact_phone" id="contact_phone" class="kt-input h-[45px]"
-                                    value="{{ old('contact_phone') }}">
-                                @error('contact_phone')
+                                <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
+                                <input type="text" name="phone" id="phone" class="kt-input h-[45px]" value="{{ old('phone') }}">
+                                @error('phone')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -410,8 +414,7 @@
                             {{-- Website --}}
                             <div>
                                 <label for="website" class="kt-label mb-2">{{ __('main.website') }}</label>
-                                <input type="url" name="website" id="website" class="kt-input h-[45px]"
-                                    value="{{ old('website') }}">
+                                <input type="url" name="website" id="website" class="kt-input h-[45px]" value="{{ old('website') }}">
                                 @error('website')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -443,6 +446,7 @@
                     ])
                 </div>
 
+                {{-- Save Submit --}}
                 @include('components.elements.save-submit', [
                     'models' => 'crossings-ports',
                     'model' => 'crossing-port',
@@ -451,3 +455,37 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('assets/plugins/tagify/tagify.js') }}"></script>
+    <script>
+        // Initialize Tagify on Route Itinerary
+        var inputs = document.querySelectorAll('.tagify-container');
+        if (inputs) {
+            inputs.forEach(input => {
+                new Tagify(input, {
+                    maxTags: 20,
+                    dropdown: {
+                        maxItems: 20, // <- mixumum allowed rendered suggestions
+                        classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                        enabled: 0, // <- show suggestions on focus
+                        closeOnSelect: false // <- do not hide the suggestions dropdown once an item has been selected
+                    }
+                });
+            });
+        }
+
+        const is_24_7Checkbox = document.getElementById('is_24_7');
+        const openingTimeInput = document.getElementById('opening_time');
+        const closingTimeInput = document.getElementById('closing_time');
+        is_24_7Checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                openingTimeInput.classList.add('disabled');
+                closingTimeInput.classList.add('disabled');
+            } else {
+                openingTimeInput.classList.remove('disabled');
+                closingTimeInput.classList.remove('disabled');
+            }
+        });
+    </script>
+@endpush

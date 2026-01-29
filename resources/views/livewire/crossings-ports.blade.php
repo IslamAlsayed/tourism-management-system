@@ -16,48 +16,7 @@
         @endif
     @endcomponent
 
-    <div class="kt-card-content" wire:loading.class="loading"
-        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,filterType,filterIsActive,filterOperatingDays,resetFilter">
-        <!-- Filters -->
-        <div class="mb-4 px-4 grid grid-cols-1 md-grid-cols-2 gap-4 filterTable">
-            <div>
-                <select wire:model.live="filterType" id="type" class="kt-select h-[40px] w-48 max-w-full"
-                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.type') }}">
-                    <option value="all">{{ __('main.all') }}</option>
-                    @foreach (config('helpers.crossing_port_types') as $typeValue => $typeLabel)
-                        <option value="{{ $typeValue }}" {{ $this->filterType == $typeValue ? 'selected' : '' }}>
-                            {{ __('main.' . $typeLabel) }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div>
-                <select wire:model.live="filterIsActive" class="kt-select h-[40px] w-48 max-w-full"
-                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.status') }}">
-                    <option value="all">{{ __('main.all') }}</option>
-                    <option value="active" {{ $this->filterIsActive == 'active' ? 'selected' : '' }}>
-                        {{ __('main.active') }}</option>
-                    <option value="inactive" {{ $this->filterIsActive == 'inactive' ? 'selected' : '' }}>
-                        {{ __('main.inactive') }}</option>
-                </select>
-            </div>
-
-            <div>
-                <select wire:model.live="filterOperatingDays" class="kt-select h-[40px] w-48 max-w-full"
-                    data-kt-select="true" data-kt-select-placeholder="{{ __('main.operating_days') }}">
-                    <option value="all">{{ __('main.all') }}</option>
-                    @foreach (['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] as $day)
-                        <option value="{{ $day }}"
-                            {{ $this->filterOperatingDays == $day ? 'selected' : '' }}>
-                            {{ __('main.' . $day) }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            {{-- Reset Button --}}
-            @include('components.elements.reset-button')
-        </div>
-
+    <div class="kt-card-content" wire:loading.class="loading" wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel">
         <div data-kt-datatable-state-save="false" id="crossings-ports_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [

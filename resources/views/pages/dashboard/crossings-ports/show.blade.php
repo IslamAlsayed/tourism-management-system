@@ -35,7 +35,7 @@
                     </h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-4">
                         @if ($crossingPort->name)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -72,20 +72,12 @@
                                 <p class="text-sm text-secondary-foreground">{{ $crossingPort->sort_order }}</p>
                             </div>
                         @endif
-                        @if ($crossingPort->operating_hours)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.operating_hours') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <span class="kt-badge kt-badge-info">{{ $crossingPort->operating_hours }}</span>
-                                </p>
-                            </div>
-                        @endif
                         @if ($crossingPort->operating_days)
                             <div class="col-span-full">
                                 <label class="kt-label mb-2">{{ __('main.operating_days') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     @foreach ($crossingPort->operating_days as $day)
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <span class="inline-flex bg-success/10 text-green-600 items-center px-2.5 py-0.5 rounded-full text-xs font-medium">
                                             {{ ucfirst(str_replace('_', ' ', $day)) }}
                                         </span>
                                     @endforeach
@@ -167,12 +159,12 @@
                             </div>
                         </div>
                     </div>
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $crossingPort,
                         'column' => 'description',
+                        'classes' => 'mb-4',
                     ])
-
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $crossingPort,
                         'column' => 'notes',
                     ])
@@ -188,28 +180,6 @@
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="flex flex-wrap justify-between gap-10">
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            @if ($crossingPort->region)
-                                <a href="{{ route('regions.show', $crossingPort->region?->id) }}" class="block text-sm text-primary underline">
-                                    {{ $crossingPort->region?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            @else
-                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
-                            @endif
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                            @if ($crossingPort->subregion)
-                                <a href="{{ route('subregions.show', $crossingPort->subregion->id) }}" class="block text-sm text-primary underline">
-                                    {{ $crossingPort->subregion->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            @else
-                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
-                            @endif
-                        </div>
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
                             @if ($crossingPort->country)
@@ -244,25 +214,14 @@
                             @endif
                         </div>
                         <div>
-                            <label class="font-medium text-gray-900">{{ __('main.coordinates') }}</label>
+                            <label class="font-medium text-gray-600">{{ __('main.coordinates') }}</label>
                             <p class="mt-1 text-gray-500">{{ $crossingPort->coordinates ?? '-' }}</p>
                         </div>
-                        @if ($crossingPort->elevation)
-                            <div>
-                                <label class="font-medium text-gray-900">{{ __('main.elevation') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->elevation }}</p>
-                            </div>
-                        @endif
                     </div>
-
-                    @if ($crossingPort->address)
-                        <div class="mt-6">
-                            <label class="kt-label mb-1">{{ __('main.address') }}</label>
-                            <div class="text-sm text-secondary-foreground prose max-w-none">
-                                {!! $crossingPort->address !!}
-                            </div>
-                        </div>
-                    @endif
+                    @include('components.elements.displayable-rich-text', [
+                        'record' => $crossingPort,
+                        'column' => 'address',
+                    ])
                 </div>
             </div>
 
@@ -385,31 +344,31 @@
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div>
-                            <label class="font-medium text-gray-900">{{ __('main.24_hours') }}</label>
+                            <label class="font-medium text-gray-600">{{ __('main.24_hours') }}</label>
                             <span
                                 class="mt-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                {{ $crossingPort->is_24_hours ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                {{ $crossingPort->is_24_hours ? __('main.yes') : __('main.no') }}
+                                {{ $crossingPort->is_24_7 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                {{ $crossingPort->is_24_7 ? __('main.yes') : __('main.no') }}
                             </span>
                         </div>
 
                         @if ($crossingPort->opening_time)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.opening_time') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->opening_time->format('H:i') }}</p>
+                                <label class="font-medium text-gray-600">{{ __('main.opening_time') }}</label>
+                                <p class="mt-1 text-gray-500">{{ $crossingPort->opening_time }}</p>
                             </div>
                         @endif
 
                         @if ($crossingPort->closing_time)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.closing_time') }}</label>
-                                <p class="mt-1 text-gray-500">{{ $crossingPort->closing_time->format('H:i') }}</p>
+                                <label class="font-medium text-gray-600">{{ __('main.closing_time') }}</label>
+                                <p class="mt-1 text-gray-500">{{ $crossingPort->closing_time }}</p>
                             </div>
                         @endif
 
                         @if ($crossingPort->capacity)
                             <div>
-                                <label class="font-medium text-gray-900">{{ __('main.capacity') }}</label>
+                                <label class="font-medium text-gray-600">{{ __('main.capacity') }}</label>
                                 <p class="mt-1 text-gray-500">{{ number_format($crossingPort->capacity) }}
                                     {{ __('main.passengers_per_hour') }}</p>
                             </div>
@@ -418,7 +377,7 @@
 
                     @if ($crossingPort->facilities && count($crossingPort->facilities) > 0)
                         <div class="mt-6">
-                            <label class="font-medium text-gray-900">{{ __('main.facilities') }}</label>
+                            <label class="font-medium text-gray-600">{{ __('main.facilities') }}</label>
                             <div class="mt-2 flex flex-wrap gap-2">
                                 @foreach ($crossingPort->facilities as $facility)
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -431,7 +390,7 @@
 
                     @if ($crossingPort->services && count($crossingPort->services) > 0)
                         <div class="mt-6">
-                            <label class="font-medium text-gray-900">{{ __('main.services') }}</label>
+                            <label class="font-medium text-gray-600">{{ __('main.services') }}</label>
                             <div class="mt-2 flex flex-wrap gap-2">
                                 @foreach ($crossingPort->services as $service)
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
@@ -445,7 +404,7 @@
             </div>
 
             {{-- Contact Information --}}
-            @if ($crossingPort->contact_phone || $crossingPort->email || $crossingPort->website)
+            @if ($crossingPort->phone || $crossingPort->email || $crossingPort->website)
                 <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
@@ -462,12 +421,12 @@
                                     </p>
                                 </div>
                             @endif
-                            @if ($crossingPort->contact_phone)
+                            @if ($crossingPort->phone)
                                 <div>
-                                    <label class="kt-label mb-1">{{ __('main.contact_phone') }}</label>
+                                    <label class="kt-label mb-1">{{ __('main.phone') }}</label>
                                     <p class="text-sm text-secondary-foreground">
-                                        <a href="tel:{{ $crossingPort->contact_phone }}" class="text-blue-600 hover:underline">
-                                            {{ $crossingPort->contact_phone }}
+                                        <a href="tel:{{ $crossingPort->phone }}" class="text-blue-600 hover:underline">
+                                            {{ $crossingPort->phone }}
                                         </a>
                                     </p>
                                 </div>

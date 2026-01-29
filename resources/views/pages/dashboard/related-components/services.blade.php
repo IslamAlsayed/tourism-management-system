@@ -250,7 +250,7 @@
                         </div>
 
                         <!-- Description -->
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $service,
                             'column' => 'description',
                         ])

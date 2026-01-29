@@ -88,11 +88,11 @@
                                 ])
                             </div>
                         </div>
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $assignment,
                             'column' => 'description',
                         ])
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $assignment,
                             'column' => 'notes',
                         ])
@@ -213,11 +213,11 @@
             </div>
             <div class="kt-card-body p-4">
                 <div class="grid gap-6">
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $assignment,
                         'column' => 'description',
                     ])
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $assignment,
                         'column' => 'notes',
                     ])

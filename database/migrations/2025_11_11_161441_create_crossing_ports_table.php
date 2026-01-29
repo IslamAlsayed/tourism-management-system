@@ -15,12 +15,9 @@ return new class extends Migration {
             $table->uuid('uuid')->unique();
 
             // Location relationships
-            $table->foreignId('region_id')->nullable();
-            $table->foreignId('subregion_id')->nullable();
             $table->foreignId('country_id')->nullable();
             $table->foreignId('state_id')->nullable();
             $table->foreignId('city_id')->nullable();
-            $table->string('address')->nullable();
 
             // Basic information
             $table->string('name');
@@ -31,10 +28,12 @@ return new class extends Migration {
             // Geographic coordinates
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
+            $table->text('address')->nullable();
 
             // Operating information
             $table->json('operating_days')->nullable();
-            $table->string('operating_hours')->nullable();
+            $table->time('opening_time')->nullable();
+            $table->time('closing_time')->nullable();
             $table->boolean('is_24_7')->default(false);
             $table->boolean('is_commercial')->default(false);
             $table->boolean('is_passenger')->default(true);
@@ -47,8 +46,8 @@ return new class extends Migration {
             $table->foreignId('departure_tax_currency_id')->nullable();
 
             // Contact information
-            $table->string('contact_phone')->nullable();
             $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->string('website')->nullable();
 
             // Display and classification
@@ -65,7 +64,7 @@ return new class extends Migration {
             $table->string('visa_policy_source')->nullable();
             $table->timestamp('visa_last_update')->nullable();
 
-            $table->boolean('is_active')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
 

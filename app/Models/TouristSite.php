@@ -125,7 +125,7 @@ class TouristSite extends Model
         'unesco_site',
         'has_unified_ticket',
         'is_free_entry',
-        'is_24_hours',
+        'is_24_7',
         'is_featured',
         'is_verified',
         'is_active',
@@ -143,7 +143,7 @@ class TouristSite extends Model
         // Booleans
         'unesco_site' => 'boolean',
         'is_free_entry' => 'boolean',
-        'is_24_hours' => 'boolean',
+        'is_24_7' => 'boolean',
         'wheelchair_accessible' => 'boolean',
         'free_wifi' => 'boolean',
         'parking' => 'boolean',

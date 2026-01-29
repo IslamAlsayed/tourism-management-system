@@ -224,21 +224,21 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <div class="col-span-full">
                                 <div class="flex items-center gap-4">
-                                    <input type="hidden" name="is_24_hours" value="0">
+                                    <input type="hidden" name="is_24_7" value="0">
                                     @include('components.elements.checkbox-button', [
-                                        'name' => 'is_24_hours',
-                                        'id' => 'is_24_hours',
+                                        'name' => 'is_24_7',
+                                        'id' => 'is_24_7',
                                         'value' => '1',
-                                        'checked' => $touristSite->is_24_hours,
-                                        'label' => __('main.is_24_hours'),
+                                        'checked' => $touristSite->is_24_7,
+                                        'label' => __('main.is_24_7'),
                                     ])
                                 </div>
                             </div>
-                            <div class="{{ $touristSite->is_24_hours == 1 ? 'disabled' : '' }}" id="opening_time">
+                            <div class="{{ $touristSite->is_24_7 == 1 ? 'disabled' : '' }}" id="opening_time">
                                 <label for="opening_time" class="kt-label">{{ __('main.opening_time') }}</label>
                                 <input type="time" name="opening_time" id="opening_time" class="kt-input h-[45px]" value="{{ $touristSite->opening_time }}">
                             </div>
-                            <div class="{{ $touristSite->is_24_hours == 1 ? 'disabled' : '' }}" id="closing_time">
+                            <div class="{{ $touristSite->is_24_7 == 1 ? 'disabled' : '' }}" id="closing_time">
                                 <label for="closing_time" class="kt-label">{{ __('main.closing_time') }}</label>
                                 <input type="time" name="closing_time" id="closing_time" class="kt-input h-[45px]" value="{{ $touristSite->closing_time }}">
                             </div>
@@ -553,10 +553,10 @@
     @include('components.scripts.drag-drop-images', ['fieldsMap' => ['photo' => 'photo', 'gallery' => 'gallery']])
 
     <script>
-        const is_24_hoursCheckbox = document.getElementById('is_24_hours');
+        const is_24_7Checkbox = document.getElementById('is_24_7');
         const openingTimeInput = document.getElementById('opening_time');
         const closingTimeInput = document.getElementById('closing_time');
-        is_24_hoursCheckbox.addEventListener('change', function() {
+        is_24_7Checkbox.addEventListener('change', function() {
             if (this.checked) {
                 openingTimeInput.classList.add('disabled');
                 closingTimeInput.classList.add('disabled');

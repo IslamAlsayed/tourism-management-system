@@ -15,8 +15,7 @@
     <div class="kt-card-body p-4">
         <div class="grid lg:grid-cols-2 gap-4">
             @forelse($record->rooms as $room)
-                <div wire:key="room-{{ $room->id }}"
-                    class="kt-card background rounded-lg p-4 pt-2 record-rooms-{{ $room->id }}">
+                <div wire:key="room-{{ $room->id }}" class="kt-card background rounded-lg p-4 pt-2 record-rooms-{{ $room->id }}">
                     <div class="grid lg:grid-cols-2 gap-4">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -62,48 +61,41 @@
                     {{-- Room Pricing Information --}}
                     @if ($room->season || $room->price_per_person_double)
                         <div class="lg:col-span-2 mt-3 border-custom-t pt-3">
-                            <label
-                                class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
+                            <label class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
                             <div class="bg-blue-100 p-3 rounded-lg">
                                 @if ($room->season)
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">{{ $room->season->name }}</span>
-                                        <span
-                                            class="text-xs text-gray-500">{{ $room->season->season_from->format('Y-m-d') }}
+                                        <span class="text-xs text-gray-500">{{ $room->season->season_from->format('Y-m-d') }}
                                             → {{ $room->season->season_to->format('Y-m-d') }}</span>
                                     </div>
                                 @endif
                                 <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 text-xs">
                                     @if ($room->price_per_person_double)
                                         <div>
-                                            <span
-                                                class="text-gray-600">{{ __('main.price_per_person_double') }}:</span>
-                                            <span
-                                                class="font-semibold">{{ number_format($room->price_per_person_double, 2) }}
+                                            <span class="text-gray-600">{{ __('main.price_per_person_double') }}:</span>
+                                            <span class="font-semibold">{{ number_format($room->price_per_person_double, 2) }}
                                                 {{ $room->currency?->code }}</span>
                                         </div>
                                     @endif
                                     @if ($room->single_room_supplement)
                                         <div>
                                             <span class="text-gray-600">{{ __('main.single_room_supplement') }}:</span>
-                                            <span
-                                                class="font-semibold">{{ number_format($room->single_room_supplement, 2) }}
+                                            <span class="font-semibold">{{ number_format($room->single_room_supplement, 2) }}
                                                 {{ $room->currency?->code }}</span>
                                         </div>
                                     @endif
                                     @if ($room->triple_room_discount)
                                         <div>
                                             <span class="text-gray-600">{{ __('main.triple_room_discount') }}:</span>
-                                            <span
-                                                class="font-semibold">{{ number_format($room->triple_room_discount, 2) }}
+                                            <span class="font-semibold">{{ number_format($room->triple_room_discount, 2) }}
                                                 {{ $room->currency?->code }}</span>
                                         </div>
                                     @endif
                                     @if ($room->third_person_price)
                                         <div>
                                             <span class="text-gray-600">{{ __('main.third_person_price') }}:</span>
-                                            <span
-                                                class="font-semibold">{{ number_format($room->third_person_price, 2) }}
+                                            <span class="font-semibold">{{ number_format($room->third_person_price, 2) }}
                                                 {{ $room->currency?->code }}</span>
                                         </div>
                                     @endif
@@ -117,8 +109,7 @@
                                     @if ($room->sea_view_supplement)
                                         <div>
                                             <span class="text-gray-600">{{ __('main.sea_view_supplement') }}:</span>
-                                            <span
-                                                class="font-semibold">{{ number_format($room->sea_view_supplement, 2) }}
+                                            <span class="font-semibold">{{ number_format($room->sea_view_supplement, 2) }}
                                                 {{ $room->currency?->code }}</span>
                                         </div>
                                     @endif
@@ -126,7 +117,7 @@
                             </div>
                         </div>
                     @endif
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $room,
                         'column' => 'description',
                     ])

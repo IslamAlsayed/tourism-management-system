@@ -86,9 +86,9 @@
                             <!-- Route Itinerary (Tagify) -->
                             <div class="col-span-full">
                                 <label for="route_itinerary" class="kt-label">{{ __('main.route_itinerary') }}</label>
-                                <input type="text" name="route_itinerary" id="route_itinerary" class="kt-input h-fit"
-                                    value="{{ is_array($jeep->route_itinerary) ? implode(',', $jeep->route_itinerary) : $jeep->route_itinerary }}" placeholder="Stop 1, Stop 2, ...">
-                                <span class="text-xs text-gray-500 mt-1">{{ __('main.route_itinerary_desc') }}</span>
+                                <input type="text" name="route_itinerary" id="route_itinerary" class="kt-input h-fit tagify-container"
+                                    value="{{ $jeep->route_itinerary->implode(',') ?? '' }}">
+                                <span class="text-xs text-gray-500 mt-1">{{ __('main.tagify_desc') }}</span>
                             </div>
 
                             <div class="col-span-full">
@@ -509,8 +509,23 @@
     @include('components.scripts.drag-drop-images')
 
     <script src="{{ asset('assets/plugins/tagify/tagify.js') }}"></script>
-
     <script>
+        // Initialize Tagify on Route Itinerary
+        var inputs = document.querySelectorAll('.tagify-container');
+        if (inputs) {
+            inputs.forEach(input => {
+                new Tagify(input, {
+                    maxTags: 20,
+                    dropdown: {
+                        maxItems: 20, // <- mixumum allowed rendered suggestions
+                        classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                        enabled: 0, // <- show suggestions on focus
+                        closeOnSelect: false // <- do not hide the suggestions dropdown once an item has been selected
+                    }
+                });
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             let seasonIndex = 0;
             const seasonsContainer = document.getElementById('seasons-container');
@@ -606,20 +621,6 @@
                     card.querySelector('.season-title').textContent = e.target.value || 'New Season';
                 }
             });
-
-            // Initialize Tagify on Route Itinerary
-            var input = document.querySelector('#route_itinerary');
-            if (input) {
-                new Tagify(input, {
-                    maxTags: 20,
-                    dropdown: {
-                        maxItems: 20, // <- mixumum allowed rendered suggestions
-                        classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
-                        enabled: 0, // <- show suggestions on focus
-                        closeOnSelect: false // <- do not hide the suggestions dropdown once an item has been selected
-                    }
-                });
-            }
         });
     </script>
 

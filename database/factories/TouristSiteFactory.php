@@ -110,7 +110,7 @@ class TouristSiteFactory extends Factory
             'closing_time' => $this->faker->time('H:i'),
             'operating_days' => json_encode(['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']),
             'special_hours' => json_encode(['Holiday' => '09:00-14:00']),
-            'is_24_hours' => $this->faker->boolean(5),
+            'is_24_7' => $this->faker->boolean(5),
 
             // ========== Contact Information ==========
             'phone' => $this->faker->phoneNumber(),

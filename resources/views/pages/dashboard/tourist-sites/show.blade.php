@@ -97,15 +97,15 @@
                                 ])
                             </div>
                         </div>
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $touristSite,
                             'column' => 'nearby_attractions',
                         ])
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $touristSite,
                             'column' => 'description',
                         ])
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $touristSite,
                             'column' => 'notes',
                         ])
@@ -178,7 +178,7 @@
                             <label class="kt-label mb-1">{{ __('main.postal_code') }}</label>
                             <p class="text-sm text-secondary-foreground">{{ $touristSite->postal_code ?: __('main.na') }}</p>
                         </div>
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $touristSite,
                             'column' => 'address',
                         ])
@@ -215,18 +215,18 @@
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <div>
-                            <label class="kt-label mb-1">{{ __('main.is_24_hours') }}</label>
+                            <label class="kt-label mb-1">{{ __('main.is_24_7') }}</label>
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristSite->id,
                                     'modelType' => '\\App\\Models\\TouristSite',
-                                    'field' => 'is_24_hours',
-                                    'value' => (bool) $touristSite->is_24_hours,
+                                    'field' => 'is_24_7',
+                                    'value' => (bool) $touristSite->is_24_7,
                                     'table' => 'tourist_sites',
                                 ])
                             </div>
                         </div>
-                        @if (!$touristSite->is_24_hours)
+                        @if (!$touristSite->is_24_7)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.opening_time') }}</label>
                                 <p class="text-sm text-secondary-foreground">{{ $touristSite->opening_time ?: __('main.na') }}</p>

@@ -22,16 +22,15 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['nullable', 'string', 'max:10', 'unique:crossing_ports,code'],
+            'code' => ['nullable', 'string', 'max:12', 'unique:crossing_ports,code'],
 
             // Location information
-            'region_id' => ['nullable', 'string', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
-            'country_id' => ['nullable', 'string', 'exists:countries,id'],
+            'country_id' => ['nullable', 'integer', 'exists:countries,id'],
             'state_id' => ['nullable', 'integer', 'exists:states,id'],
             'city_id' => ['nullable', 'integer', 'exists:cities,id'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
+            'address' => ['nullable', 'string', 'max:1000'],
 
             // Basic information
             'name' => ['required', 'string', 'max:255'],
@@ -41,7 +40,8 @@ class StoreRequest extends FormRequest
             // Operating information
             'operating_days' => ['nullable', 'array'],
             'operating_days.*' => ['string', 'in:sunday,monday,tuesday,wednesday,thursday,friday,saturday'],
-            'operating_hours' => ['nullable', 'string', 'max:255'],
+            'opening_time' => ['nullable'],
+            'closing_time' => ['nullable'],
             'is_24_7' => ['nullable', 'boolean'],
             'is_commercial' => ['nullable', 'boolean'],
             'is_passenger' => ['nullable', 'boolean'],
@@ -49,12 +49,12 @@ class StoreRequest extends FormRequest
 
             // Visa and immigration policies
             'allows_visa_on_arrival' => ['nullable', 'boolean'],
-            'nationality_policy' => ['nullable', 'array'],
+            'nationality_policy' => 'nullable', // JSON string from Tagify
             'departure_tax' => ['nullable', 'numeric', 'min:0'],
-            'departure_tax_currency_id' => ['nullable', 'exists:currencies,id'],
+            'departure_tax_currency_id' => ['nullable', 'integer', 'exists:currencies,id'],
 
             // Contact information
-            'contact_phone' => ['nullable', 'string', 'max:20'],
+            'phone' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
             'website' => ['nullable', 'url', 'max:255'],
 

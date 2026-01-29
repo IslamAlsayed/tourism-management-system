@@ -98,11 +98,11 @@
                                 </div>
                             </div>
                         @endif
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $company,
                             'column' => 'description',
                         ])
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $company,
                             'column' => 'notes',
                         ])

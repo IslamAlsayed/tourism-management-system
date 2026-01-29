@@ -67,7 +67,7 @@ class CrossingPortFactory extends Factory
             'departure_tax_currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id,
 
             // Contact information
-            'contact_phone' => $this->faker->optional(0.8)->phoneNumber(),
+            'phone' => $this->faker->optional(0.8)->phoneNumber(),
             'email' => $this->faker->optional(0.6)->companyEmail(),
             'website' => $this->faker->optional(0.5)->url(),
 

@@ -66,8 +66,8 @@ class StoreRequest extends FormRequest
             'opening_time' => ['nullable', 'date_format:H:i'],
             'closing_time' => ['nullable', 'date_format:H:i'],
             'operating_days' => ['nullable', 'array'],
-            'special_hours' => ['nullable', 'json'],
-            'is_24_hours' => ['nullable', 'boolean'],
+            // 'special_hours' => ['nullable', 'json'],
+            'is_24_7' => ['nullable', 'boolean'],
 
             // ========== Contact Information ==========
             'phone' => ['nullable', 'string', 'max:20'],

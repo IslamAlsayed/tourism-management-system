@@ -180,7 +180,7 @@
                             <th class="border px-2" title="{{ __('main.optional') }}">entry_fee_local_child</th>
                             <th class="border px-2" title="{{ __('main.optional') }}">entry_fee_resident_adult</th>
                             <th class="border px-2" title="{{ __('main.optional') }}">entry_fee_resident_child</th>
-                            <th class="border px-2" title="{{ __('main.optional') }}">is_24_hours</th>
+                            <th class="border px-2" title="{{ __('main.optional') }}">is_24_7</th>
                             <th class="border px-2" title="{{ __('main.optional') }}">opening_time</th>
                             <th class="border px-2" title="{{ __('main.optional') }}">closing_time</th>
                         </tr>

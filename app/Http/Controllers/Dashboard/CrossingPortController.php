@@ -74,16 +74,16 @@ class CrossingPortController extends Controller
     }
 
     /**
-     * Show specific type of crossing ports (land, airports, seaports)
+     * Show specific filtered of crossing ports (land, airports, seaports)
      */
-    public function type($type)
+    public function filtered($filtered)
     {
-        $type = singularLowerCaseName($type, '_');
+        $filtered = singularLowerCaseName($filtered, '_');
         $validTypes = config('helpers.crossing_port_types');
-        if (!isset($validTypes[$type]))
+        if (!isset($validTypes[$filtered]))
             return redirect()->route('crossings-ports.index')->withError(__('messages.invalid_type'));
-        $typeValue = $validTypes[$type];
+        $typeValue = $validTypes[$filtered];
         $typeLabel = ucfirst(str_replace('_', ' ', $typeValue));
-        return view('pages.dashboard.crossings-ports.type', compact('type', 'typeValue', 'typeLabel'));
+        return view('pages.dashboard.crossings-ports.filtered', compact('filtered', 'typeValue', 'typeLabel'));
     }
 }

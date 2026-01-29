@@ -6,8 +6,7 @@
             (<span class="font-semibold text-primary">{{ $company->vehicleTypes->count() }}</span>)
         </h3>
         <div class="kt-card-toolbar">
-            <a href="{{ route('transportations.vehicle-types.create', [Str::random(120), 'type' => 'transportation']) }}"
-                class="kt-btn kt-btn-sm kt-btn-primary">
+            <a href="{{ route('transportations.vehicle-types.create', [Str::random(120), 'type' => 'transportation']) }}" class="kt-btn kt-btn-sm kt-btn-primary">
                 <i class="ki-filled ki-plus text-sm me-1"></i>
                 {{ __('main.add_type', ['type' => __('main.vehicle-type')]) }}
             </a>
@@ -16,8 +15,7 @@
     <div class="kt-card-body p-4">
         <div class="grid lg:grid-cols-2 gap-4">
             @forelse($company->vehicleTypes as $vehicleType)
-                <div wire:key="vehicleType-{{ $vehicleType->id }}"
-                    class="kt-card background rounded-lg p-4 pt-2 record-transportation-vehicle-types-{{ $vehicleType->id }}">
+                <div wire:key="vehicleType-{{ $vehicleType->id }}" class="kt-card background rounded-lg p-4 pt-2 record-transportation-vehicle-types-{{ $vehicleType->id }}">
                     <div class="grid lg:grid-cols-2 gap-4">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -85,11 +83,11 @@
                             </div>
                         </div>
                     </div>
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $vehicleType,
                         'column' => 'description',
                     ])
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $vehicleType,
                         'column' => 'notes',
                     ])

@@ -89,7 +89,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === CROSSING PORTS MANAGEMENT ===
     Route::resource('crossings-ports', CrossingPortController::class)->names('crossings-ports');
-    Route::get('crossings-ports/type/{type}', [CrossingPortController::class, 'type'])->name('crossings-ports.type');
+    Route::get('crossings-ports/filtered/{filtered}', [CrossingPortController::class, 'filtered'])->name('crossings-ports.filtered');
 
     // === AIR TRANSPORT MANAGEMENT ===
     Route::resource('airlines', AirlineController::class)->names('airlines');

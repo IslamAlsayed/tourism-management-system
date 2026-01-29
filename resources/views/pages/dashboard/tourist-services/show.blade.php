@@ -81,11 +81,11 @@
                                 ])
                             </div>
                         </div>
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $touristService,
                             'column' => 'description',
                         ])
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $touristService,
                             'column' => 'notes',
                         ])

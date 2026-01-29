@@ -159,23 +159,130 @@ if (topScroll && tableWrapper) {
     );
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const sidebarScrollable = document.querySelector(".kt-scrollable-y-hover");
-    if (!sidebarScrollable) return;
+// Sidebar scroll to active - on page load
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(scrollSidebarToActive, 50);
+});
 
-    const activeItem =
-        sidebarScrollable.querySelector(".kt-menu-item.show") ||
-        sidebarScrollable.querySelector(".kt-menu-link.active");
-    if (!activeItem) return;
+// Sidebar scroll to active - on navigation
+window.addEventListener("load", () => {
+    setTimeout(scrollSidebarToActive, 200);
+});
 
-    // height calculations
-    const sidebarHeight = sidebarScrollable.clientHeight;
-    const itemOffsetTop = activeItem.offsetTop;
-    const itemHeight = activeItem.offsetHeight;
+// Add click listeners to all sidebar links
+document.addEventListener("DOMContentLoaded", () => {
+    const sidebarLinks = document.querySelectorAll("#sidebar .kt-menu-link");
+    sidebarLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            // Wait for page navigation
+            setTimeout(scrollSidebarToActive, 100);
+        });
+    });
+});
 
-    // Scroll so active item is centered
-    sidebarScrollable.scrollTo({
-        top: itemOffsetTop - sidebarHeight / 2 + itemHeight / 2,
+function scrollSidebarToActive() {
+    const activeLink = document.querySelector(".kt-menu-link.active");
+    if (!activeLink) {
+        console.warn("No active link found");
+        return;
+    }
+
+    console.log("activeLink", activeLink);
+
+    // افتح الـ accordion لو مقفول
+    let parentItem = activeLink.closest(".kt-menu-item");
+    while (parentItem) {
+        if (!parentItem.classList.contains("show")) {
+            parentItem.classList.add("show");
+        }
+        // افتح كل الـ parents لحد ما نوصل للـ sidebar root
+        parentItem = parentItem.parentElement?.closest(".kt-menu-item");
+    }
+
+    // خُد العنصر اللي فعليًا بيعمل scroll
+    const scrollContainer = getScrollableParent(activeLink);
+    if (!scrollContainer) {
+        console.warn("No scrollable parent found");
+        return;
+    }
+
+    console.log("scrollContainer", scrollContainer);
+
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+
+    const offset =
+        linkRect.top -
+        containerRect.top +
+        scrollContainer.scrollTop -
+        scrollContainer.clientHeight / 2 +
+        linkRect.height / 2;
+
+    console.log("Scrolling to offset:", offset);
+
+    scrollContainer.scrollTo({
+        top: offset,
         behavior: "smooth",
     });
+}
+
+function getScrollableParent(el) {
+    while (el) {
+        const style = getComputedStyle(el);
+        if (
+            (style.overflowY === "auto" || style.overflowY === "scroll") &&
+            el.scrollHeight > el.clientHeight
+        ) {
+            return el;
+        }
+        el = el.parentElement;
+    }
+    return null;
+}
+
+
+
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     const sidebarScrollable = document.querySelector(".kt-scrollable-y-hover");
+//     if (!sidebarScrollable) return;
+
+//     const activeItem =
+//         sidebarScrollable.querySelector(".kt-menu-item.show") ||
+//         sidebarScrollable.querySelector(".kt-menu-item-show") ||
+//         sidebarScrollable.querySelector(".active.bg-accent\\/60") ||
+//         sidebarScrollable.querySelector(".kt-menu-item-show.show") ||
+//         sidebarScrollable.querySelector(".kt-menu-link.active");
+//     if (!activeItem) return;
+
+//     // height calculations
+//     const sidebarHeight = sidebarScrollable.clientHeight;
+//     const itemOffsetTop = activeItem.offsetTop;
+//     const itemHeight = activeItem.offsetHeight;
+
+//     // Scroll so active item is centered
+//     sidebarScrollable.scrollTo({
+//         top: itemOffsetTop - sidebarHeight / 2 + itemHeight / 2,
+//         behavior: "smooth",
+//     });
+// });
+
+// Submit form with Ctrl+Enter on create/edit pages
+document.addEventListener("keydown", function (e) {
+    // Check if Ctrl/Cmd + Enter was pressed
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        // Check if current page is create or edit page
+        const currentUrl = window.location.pathname;
+        const isCreateOrEditPage =
+            currentUrl.includes("/create") || currentUrl.includes("/edit");
+
+        if (isCreateOrEditPage) {
+            // Find and submit the form
+            const form = document.querySelector("form");
+            if (form) {
+                e.preventDefault();
+                form.submit();
+            }
+        }
+    }
 });

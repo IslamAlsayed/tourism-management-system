@@ -367,7 +367,7 @@ return [
                             'title' => 'all rooms',
                             'icon' => 'fas fa-door-open',
                             'route' => 'rooms.index',
-                            'parameters' => [Str::random(120), 'type' => 'accommodation'],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create room',
@@ -391,7 +391,7 @@ return [
                             'title' => 'all seasons',
                             'icon' => 'fas fa-calendar-check',
                             'route' => 'seasons.index',
-                            'parameters' => [Str::random(120), 'type' => 'accommodation'],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create season',
@@ -459,7 +459,7 @@ return [
                             'title' => 'all meals',
                             'icon' => 'fas fa-bowl-food',
                             'route' => 'meals.index',
-                            'parameters' => [Str::random(120), 'type' => 'accommodation'],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create meal',
@@ -483,7 +483,7 @@ return [
                             'title' => 'all supplements',
                             'icon' => 'fas fa-list-check',
                             'route' => 'supplements.index',
-                            'parameters' => [Str::random(120), 'type' => 'accommodation'],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
                         ],
                         [
                             'title' => 'create supplement',
@@ -696,13 +696,13 @@ return [
                             'title' => 'all seasons',
                             'icon' => 'fas fa-calendar-check',
                             'route' => 'seasons.index',
-                            'parameters' => [Str::random(120), 'type' => 'transportation'],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
                         ],
                         [
                             'title' => 'create season',
                             'icon' => 'fas fa-plus',
                             'route' => 'seasons.create',
-                            'parameters' => ['type' => 'transportation', Str::random(120)],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
                         ],
                         [
                             'title' => 'import seasons',
@@ -720,7 +720,7 @@ return [
                             'title' => 'all supplements',
                             'icon' => 'fas fa-list-check',
                             'route' => 'supplements.index',
-                            'parameters' => [Str::random(120), 'type' => 'transportation'],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
                         ],
                         [
                             'title' => 'create supplement',
@@ -776,7 +776,7 @@ return [
                             'title' => 'all meals',
                             'icon' => 'fas fa-bowl-rice',
                             'route' => 'meals.index',
-                            'parameters' => [Str::random(120), 'type' => 'restaurant'],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'restaurant'],
                         ],
                         [
                             'title' => 'create meal',
@@ -800,7 +800,7 @@ return [
                             'title' => 'all supplements',
                             'icon' => 'fas fa-list-check',
                             'route' => 'supplements.index',
-                            'parameters' => [Str::random(120), 'type' => 'restaurant'],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'restaurant'],
                         ],
                         [
                             'title' => 'create supplement',
@@ -924,13 +924,13 @@ return [
                             'title' => 'all seasons',
                             'icon' => 'fas fa-calendar-check',
                             'route' => 'seasons.index',
-                            'parameters' => [Str::random(120), 'type' => 'tours'],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'tours'],
                         ],
                         [
                             'title' => 'create season',
                             'icon' => 'fas fa-plus',
                             'route' => 'seasons.create',
-                            'parameters' => ['type' => 'tours', Str::random(120)],
+                            'parameters' => ['t' => Str::random(120), 'type' => 'tours'],
                         ],
                         [
                             'title' => 'import seasons',
@@ -1121,22 +1121,22 @@ return [
                         [
                             'title' => 'international airports',
                             'icon' => 'fas fa-globe',
-                            'route' => 'crossings-ports.type',
-                            'parameters' => ['type' => 'international-airports'],
+                            'route' => 'crossings-ports.filtered',
+                            'parameters' => ['t' => Str::random(120), 'filtered' => 'international-airports'],
                         ],
                         [
                             'title' => 'domestic airports',
                             'icon' => 'fas fa-plane',
-                            'route' => 'crossings-ports.type',
-                            'parameters' => ['type' => 'domestic-airports'],
+                            'route' => 'crossings-ports.filtered',
+                            'parameters' => ['t' => Str::random(120), 'filtered' => 'domestic-airports'],
                         ],
                     ],
                 ],
                 [
                     'title' => 'seaports',
                     'icon' => 'fas fa-ship',
-                    'route' => 'crossings-ports.type',
-                    'parameters' => ['type' => 'seaports'],
+                    'route' => 'crossings-ports.filtered',
+                    'parameters' => ['t' => Str::random(120), 'filtered' => 'seaports'],
                 ],
             ],
         ],

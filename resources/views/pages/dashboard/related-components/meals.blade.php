@@ -6,8 +6,7 @@
             (<span class="font-semibold text-primary">{{ $record->meals->count() }}</span>)
         </h3>
         <div class="kt-card-toolbar">
-            <a href="{{ route('meals.create', isset($type) ? ['type' => $type, randomToken()] : []) }}"
-                class="kt-btn kt-btn-sm kt-btn-primary">
+            <a href="{{ route('meals.create', isset($type) ? ['type' => $type, randomToken()] : []) }}" class="kt-btn kt-btn-sm kt-btn-primary">
                 <i class="ki-filled ki-plus text-sm me-1"></i>
                 {{ __('main.add_type', ['type' => __('main.meal')]) }}
             </a>
@@ -16,8 +15,7 @@
     <div class="kt-card-body p-4">
         <div class="grid lg:grid-cols-2 gap-4">
             @forelse($record->meals as $meal)
-                <div wire:key="meal-{{ $meal->id }}"
-                    class="kt-card background rounded-lg p-4 pt-2 record-meals-{{ $meal->id }}">
+                <div wire:key="meal-{{ $meal->id }}" class="kt-card background rounded-lg p-4 pt-2 record-meals-{{ $meal->id }}">
                     <div class="grid lg:grid-cols-2 gap-4">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -61,14 +59,12 @@
                     {{-- Meal Pricing Information --}}
                     @if ($meal->season || $meal->price)
                         <div class="lg:col-span-2 mt-3 border-custom-t pt-3">
-                            <label
-                                class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
+                            <label class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
                             <div class="bg-blue-100 p-3 rounded-lg">
                                 @if ($meal->season)
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">{{ $meal->season->name }}</span>
-                                        <span
-                                            class="text-xs text-gray-500">{{ $meal->season->season_from->format('Y-m-d') }}
+                                        <span class="text-xs text-gray-500">{{ $meal->season->season_from->format('Y-m-d') }}
                                             → {{ $meal->season->season_to->format('Y-m-d') }}</span>
                                     </div>
                                 @endif
@@ -90,7 +86,7 @@
                             </div>
                         </div>
                     @endif
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $meal,
                         'column' => 'description',
                     ])

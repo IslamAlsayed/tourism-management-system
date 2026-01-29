@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\City;
-use App\Models\MediaFile;
 use App\Models\TouristSite;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +50,7 @@ class TouristSiteController extends Controller
         }
 
         // Handle 24 hours - nullify opening and closing times
-        if ($validated['is_24_hours'] ?? false) {
+        if ($validated['is_24_7'] ?? false) {
             $validated['opening_time'] = null;
             $validated['closing_time'] = null;
         }
@@ -126,7 +124,7 @@ class TouristSiteController extends Controller
             }
 
             // Handle 24 hours - nullify opening and closing times
-            if ($validated['is_24_hours'] ?? false) {
+            if ($validated['is_24_7'] ?? false) {
                 $validated['opening_time'] = null;
                 $validated['closing_time'] = null;
             }

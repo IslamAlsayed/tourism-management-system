@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
             $table->string('site_type')->nullable();
+            $table->string('category')->nullable();
             $table->boolean('unesco_site')->default(false);
             $table->string('supplier_type')->nullable();
             $table->string('sites_theme')->nullable();
@@ -55,7 +56,7 @@ return new class extends Migration {
             $table->time('closing_time')->nullable();
             $table->json('operating_days')->nullable();
             $table->json('special_hours')->nullable();
-            $table->boolean('is_24_hours')->default(false);
+            $table->boolean('is_24_7')->default(false);
 
             // ========== Contact Information ==========
             $table->string('phone')->nullable();
@@ -135,7 +136,6 @@ return new class extends Migration {
             $table->index('name_ar');
             $table->index('code');
             $table->index('city_id');
-            $table->index('country_id');
             $table->index('is_active');
             $table->index('status');
         });

@@ -1,34 +1,23 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
-        :requirements="[
-            [
-                'condition' => \App\Models\Region::count() > 0,
-                'route' => route('regions.create'),
-                'label' => __('main.regions'),
-            ],
-            [
-                'condition' => \App\Models\Subregion::count() > 0,
-                'route' => route('subregions.create'),
-                'label' => __('main.subregions'),
-            ],
-            [
-                'condition' => \App\Models\Country::count() > 0,
-                'route' => route('countries.create'),
-                'label' => __('main.countries'),
-            ],
-            [
-                'condition' => \App\Models\State::count() > 0,
-                'route' => route('states.create'),
-                'label' => __('main.states'),
-            ],
-            [
-                'condition' => \App\Models\City::count() > 0,
-                'route' => route('cities.create'),
-                'label' => __('main.cities'),
-            ],
-        ]">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
+        [
+            'condition' => \App\Models\Country::count() > 0,
+            'route' => route('countries.create'),
+            'label' => __('main.countries'),
+        ],
+        [
+            'condition' => \App\Models\State::count() > 0,
+            'route' => route('states.create'),
+            'label' => __('main.states'),
+        ],
+        [
+            'condition' => \App\Models\City::count() > 0,
+            'route' => route('cities.create'),
+            'label' => __('main.cities'),
+        ],
+    ]">
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}
@@ -37,211 +26,165 @@
 
         @if (env('DB_MODE') != 'production')
             <strong class="block mt-6 mb-2">{{ __('main.fields') }}</strong>
-            <table class="border min-w-half divide-y text-center divide-gray-200">
-                <thead class="bg-yellow-100">
+            <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
+                <thead class="bg-blue-100">
                     <tr>
-                        <th class="border px-2">first_name</th>
-                        <th class="border px-2">last_name</th>
-                        <th class="border px-2">email_primary</th>
-                        <th class="border px-2">primary_phone</th>
+                        <th class="border px-2 bg-yellow-100" title="{{ __('main.required') }}">
+                            name
+                            <span class="text-red-600">*</span>
+                        </th>
+                        <th class="border px-2 bg-yellow-100" title="{{ __('main.required') }}">
+                            type
+                            <span class="text-red-600">*</span>
+                        </th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">code</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">name_ar</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">sort_order</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">is_major</th>
                     </tr>
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">John</td>
-                        <td class="border px-2">Doe</td>
-                        <td class="border px-2">john.doe@example.com</td>
-                        <td class="border px-2">+1234567890</td>
+                        <td class="border px-2">Taba Crossing</td>
+                        <td class="border px-2">land</td>
+                        <td class="border px-2">TABA</td>
+                        <td class="border px-2">معبر طابا</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">1</td>
                     </tr>
                 </tbody>
             </table>
-
-            <strong class="block mt-6 mb-2">{{ __('main.optional_fields') }} -
-                {{ __('main.personal_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
+                <thead class="bg-blue-100">
                     <tr>
-                        <th class="border px-2">gender</th>
-                        <th class="border px-2">nationality</th>
-                        <th class="border px-2">birth_date</th>
-                    </tr>
-                </thead>
-                <tbody class="background divide-y divide-gray-200">
-                    <tr>
-                        <td class="border px-2">male</td>
-                        <td class="border px-2">American</td>
-                        <td class="border px-2">1990-01-15</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <strong class="block mt-6 mb-2">{{ __('main.passport_information') }}</strong>
-            <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
-                    <tr>
-                        <th class="border px-2">passport_number</th>
-                        <th class="border px-2">passport_issue_date</th>
-                        <th class="border px-2">passport_expiry_date</th>
-                    </tr>
-                </thead>
-                <tbody class="background divide-y divide-gray-200">
-                    <tr>
-                        <td class="border px-2">A12345678</td>
-                        <td class="border px-2">2020-05-10</td>
-                        <td class="border px-2">2030-05-10</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <strong class="block mt-6 mb-2">{{ __('main.contact_information') }}</strong>
-            <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
-                    <tr>
-                        <th class="border px-2">personal_email</th>
-                        <th class="border px-2">work_email</th>
-                        <th class="border px-2">secondary_email</th>
-                        <th class="border px-2">secondary_phone</th>
-                        <th class="border px-2">mobile_phone</th>
-                    </tr>
-                </thead>
-                <tbody class="background divide-y divide-gray-200">
-                    <tr>
-                        <td class="border px-2">personal@example.com</td>
-                        <td class="border px-2">work@company.com</td>
-                        <td class="border px-2">secondary@example.com</td>
-                        <td class="border px-2">+0987654321</td>
-                        <td class="border px-2">+1122334455</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
-                    <tr>
-                        <th class="border px-2">home_phone</th>
-                        <th class="border px-2">work_phone</th>
-                        <th class="border px-2">work_phone_ext</th>
-                        <th class="border px-2">fax_number</th>
-                    </tr>
-                </thead>
-                <tbody class="background divide-y divide-gray-200">
-                    <tr>
-                        <td class="border px-2">+2233445566</td>
-                        <td class="border px-2">+3344556677</td>
-                        <td class="border px-2">123</td>
-                        <td class="border px-2">+4455667788</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <strong class="block mt-6 mb-2">{{ __('main.location_information') }}</strong>
-            <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
-                    <tr>
-                        <th class="border px-2">region_id</th>
-                        <th class="border px-2">subregion_id</th>
-                        <th class="border px-2">country_id</th>
-                        <th class="border px-2">state_id</th>
-                        <th class="border px-2">city_id</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">country_id</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">state_id</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">city_id</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">latitude</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">longitude</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">address</th>
                     </tr>
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
                         <td class="border px-2">1</td>
-                        <td class="border px-2">2</td>
-                        <td class="border px-2">3</td>
-                        <td class="border px-2">4</td>
-                        <td class="border px-2">5</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">29.5866</td>
+                        <td class="border px-2">34.7589</td>
+                        <td class="border px-2">Taba, South Sinai Governorate, Egypt</td>
                     </tr>
                 </tbody>
             </table>
-
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
+                <thead class="bg-blue-100">
                     <tr>
-                        <th class="border px-2">box</th>
-                        <th class="border px-2">postal_code</th>
-                        <th class="border px-2">street_address</th>
-                        <th class="border px-2">address_line_2</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">operating_days</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">opening_time</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">closing_time</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">operating_hours</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">is_24_7</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">is_commercial</th>
                     </tr>
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">P.O. Box 1234</td>
-                        <td class="border px-2">12345</td>
-                        <td class="border px-2">123 Main Street</td>
-                        <td class="border px-2">Apt 4B</td>
+                        <td class="border px-2">sunday,monday,tuesday</td>
+                        <td class="border px-2">08:00</td>
+                        <td class="border px-2">18:00</td>
+                        <td class="border px-2">24/7 or custom hours</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">1</td>
                     </tr>
                 </tbody>
             </table>
-
-            <strong class="block mt-6 mb-2">{{ __('main.company_information') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
+                <thead class="bg-blue-100">
                     <tr>
-                        <th class="border px-2">company_name</th>
-                        <th class="border px-2">job_title</th>
-                        <th class="border px-2">sector</th>
-                        <th class="border px-2">department</th>
-                        <th class="border px-2">business_type</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">is_passenger</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">is_international</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">allows_visa_on_arrival</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">visa_required</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">nationality_policy</th>
                     </tr>
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">ABC Company</td>
-                        <td class="border px-2">Manager</td>
-                        <td class="border px-2">Tourism</td>
-                        <td class="border px-2">Sales</td>
-                        <td class="border px-2">B2B</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">["US", "UK", "CA"]</td>
                     </tr>
                 </tbody>
             </table>
-
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
+                <thead class="bg-blue-100">
                     <tr>
-                        <th class="border px-2">business_registration_number</th>
-                        <th class="border px-2">tax_id</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">departure_tax</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">departure_tax_currency_id</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">visa_fee</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">visa_fee_currency_id</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">visa_duration</th>
                     </tr>
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">CR-1234567890</td>
-                        <td class="border px-2">TAX-9876543210</td>
+                        <td class="border px-2">25.00</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">75.00</td>
+                        <td class="border px-2">1</td>
+                        <td class="border px-2">30</td>
                     </tr>
                 </tbody>
             </table>
-
-            <strong class="block mt-6 mb-2">{{ __('main.online_presence') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
+                <thead class="bg-blue-100">
                     <tr>
-                        <th class="border px-2">website_url</th>
-                        <th class="border px-2">linkedin_url</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">visa_conditions</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">visa_application_url</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">visa_policy_source</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">visa_last_update</th>
                     </tr>
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">https://example.com</td>
-                        <td class="border px-2">https://linkedin.com/in/johndoe</td>
+                        <td class="border px-2">Valid passport required</td>
+                        <td class="border px-2">https://visa.example.com</td>
+                        <td class="border px-2">https://government.example.com/visa</td>
+                        <td class="border px-2">2025-01-15</td>
                     </tr>
                 </tbody>
             </table>
-
-            <strong class="block mt-6 mb-2">{{ __('main.additional_settings') }}</strong>
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
-                <thead class="bg-yellow-100">
+                <thead class="bg-blue-100">
                     <tr>
-                        <th class="border px-2">status</th>
-                        <th class="border px-2">timezone</th>
-                        <th class="border px-2">notes</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">phone</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">email</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">website</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">is_active</th>
                     </tr>
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">active</td>
-                        <td class="border px-2">UTC</td>
-                        <td class="border px-2">Important client notes here...</td>
+                        <td class="border px-2">+20690123456</td>
+                        <td class="border px-2">info@taba.gov.eg</td>
+                        <td class="border px-2">https://www.taba.gov.eg</td>
+                        <td class="border px-2">1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="border px-2" title="{{ __('main.optional') }}">description</th>
+                        <th class="border px-2" title="{{ __('main.optional') }}">notes</th>
+                    </tr>
+                </thead>
+                <tbody class="background divide-y divide-gray-200">
+                    <tr>
+                        <td class="border px-2">Primary crossing point between Egypt and Israel</td>
+                        <td class="border px-2">Important transit hub</td>
                     </tr>
                 </tbody>
             </table>

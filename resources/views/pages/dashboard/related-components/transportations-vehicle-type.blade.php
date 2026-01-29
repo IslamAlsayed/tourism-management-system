@@ -1,6 +1,5 @@
 <!-- Vehicle Type -->
-<div wire:key="vehicleType-{{ $record->id }}"
-    class="kt-card bg-violet-100 record-transportation-vehicle-type-{{ $record->id }}">
+<div wire:key="vehicleType-{{ $record->id }}" class="kt-card bg-violet-100 record-transportation-vehicle-type-{{ $record->id }}">
     <div class="kt-card-header">
         <h3 class="kt-card-title">
             {{ __('main.type_information', ['type' => __('main.vehicle-type')]) }}
@@ -76,11 +75,11 @@
                     </div>
                 </div>
             </div>
-            @include('components.elements.display-desc-or-notes', [
+            @include('components.elements.displayable-rich-text', [
                 'record' => $record,
                 'column' => 'description',
             ])
-            @include('components.elements.display-desc-or-notes', [
+            @include('components.elements.displayable-rich-text', [
                 'record' => $record,
                 'column' => 'notes',
             ])

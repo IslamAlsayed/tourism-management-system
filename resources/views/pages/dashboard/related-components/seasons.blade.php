@@ -6,8 +6,7 @@
             (<span class="font-semibold text-primary">{{ $record->seasons->count() }}</span>)
         </h3>
         <div class="kt-card-toolbar">
-            <a href="{{ route('seasons.create', isset($type) ? ['type' => $type, randomToken()] : []) }}"
-                class="kt-btn kt-btn-sm kt-btn-primary">
+            <a href="{{ route('seasons.create', isset($type) ? ['type' => $type, randomToken()] : []) }}" class="kt-btn kt-btn-sm kt-btn-primary">
                 <i class="ki-filled ki-plus text-sm me-1"></i>
                 {{ __('main.add_type', ['type' => __('main.season')]) }}
             </a>
@@ -16,8 +15,7 @@
     <div class="kt-card-body p-4">
         <div class="grid lg:grid-cols-2 gap-4">
             @forelse($record->seasons as $season)
-                <div wire:key="season-{{ $season->id }}"
-                    class="kt-card background rounded-lg p-4 pt-2 record-seasons-{{ $season->id }}">
+                <div wire:key="season-{{ $season->id }}" class="kt-card background rounded-lg p-4 pt-2 record-seasons-{{ $season->id }}">
                     <div class="grid lg:grid-cols-2 gap-4">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -59,7 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    @include('components.elements.display-desc-or-notes', [
+                    @include('components.elements.displayable-rich-text', [
                         'record' => $season,
                         'column' => 'description',
                     ])

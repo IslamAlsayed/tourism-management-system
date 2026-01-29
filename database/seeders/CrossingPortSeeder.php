@@ -51,7 +51,7 @@ class CrossingPortSeeder extends Seeder
                 'allows_visa_on_arrival' => true,
                 'departure_tax' => 75.00,
                 'departure_tax_currency_id' => \App\Models\Currency::where('code', 'SAR')->first()?->id,
-                'contact_phone' => '+966 11 221 1000',
+                'phone' => '+966 11 221 1000',
                 'website' => 'https://www.riyadhairport.com',
                 'visa_required' => false,
                 'sort_order' => 1,
@@ -80,7 +80,7 @@ class CrossingPortSeeder extends Seeder
                 'allows_visa_on_arrival' => true,
                 'departure_tax' => 75.00,
                 'departure_tax_currency_id' => \App\Models\Currency::where('code', 'SAR')->first()?->id,
-                'contact_phone' => '+966 12 684 2222',
+                'phone' => '+966 12 684 2222',
                 'website' => 'https://www.jeddahairport.com',
                 'visa_required' => false,
                 'sort_order' => 2,
@@ -107,7 +107,7 @@ class CrossingPortSeeder extends Seeder
                 'is_international' => true,
                 'is_major' => true,
                 'allows_visa_on_arrival' => false,
-                'contact_phone' => '+966 12 603 4444',
+                'phone' => '+966 12 603 4444',
                 'website' => 'https://www.ports.gov.sa',
                 'visa_required' => true,
                 'sort_order' => 3
@@ -128,7 +128,7 @@ class CrossingPortSeeder extends Seeder
                 'is_international' => true,
                 'is_major' => false,
                 'allows_visa_on_arrival' => false,
-                'contact_phone' => '+966 13 123 4567',
+                'phone' => '+966 13 123 4567',
                 'visa_required' => true,
                 'sort_order' => 4
             ]

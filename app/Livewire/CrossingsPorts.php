@@ -43,7 +43,7 @@ class CrossingsPorts extends Component
         $this->resetPage();
     }
 
-    public function mount()
+    public function mount($filtered = null)
     {
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(CrossingPort::class);

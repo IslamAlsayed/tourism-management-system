@@ -780,20 +780,37 @@ if (!function_exists('randomToken')) {
     }
 }
 
-if (!function_exists('hasDisplayableDescAndNotes')) {
+if (!function_exists('hasDisplayableRichText')) {
     /**
      * Check if a record has displayable content in a specific column
      *
      * @return bool
      */
-    function hasDisplayableDescAndNotes($record = null, $column = 'description')
+    function hasDisplayableRichText($record = null, string $column = 'description'): bool
     {
-        if (!$record || !isset($record->$column)) {
+        if (! $record || ! isset($record->$column)) {
             return false;
         }
-        return isset($record->$column->body->fragment->source->textContent) &&
-            !empty($record->$column->body->fragment->source->textContent);
+
+        $body = $record->$column->body ?? '';
+
+        // شيل HTML
+        $text = strip_tags($body);
+
+        // شيل &nbsp; والمسافات الغير مرئية
+        $text = preg_replace('/\xc2\xa0|\s+/u', '', $text);
+
+        return $text !== '';
     }
+
+    // function hasDisplayableDescAndNotes($record = null, $column = 'description')
+    // {
+    //     if (!$record || !isset($record->$column)) {
+    //         return false;
+    //     }
+    //     return isset($record->$column->body->fragment->source->textContent) &&
+    //         !empty($record->$column->body->fragment->source->textContent);
+    // }
 }
 
 if (!function_exists('truncateWithReset')) {

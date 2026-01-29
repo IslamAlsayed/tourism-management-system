@@ -55,12 +55,12 @@
                                 ])
                             </div>
                         </div>
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $nationality,
                             'column' => 'description',
                         ])
 
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $nationality,
                             'column' => 'notes',
                         ])

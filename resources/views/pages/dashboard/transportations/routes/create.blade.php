@@ -48,8 +48,7 @@
                                     {{ __('main.name') }}
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ old('name') }}" required>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ old('name') }}" required>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -58,8 +57,7 @@
                             <!-- Name Arabic -->
                             <div>
                                 <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar') }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -69,10 +67,9 @@
                             <div>
                                 <label for="code" class="kt-label">{{ __('main.code') }}</label>
                                 <div class="relative">
-                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
-                                        value="{{ old('code', fake()->numerify('TR-#####')) }}" required readonly>
+                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10" value="{{ old('code', fake()->numerify('TR-#####')) }}" required readonly>
                                     <button type="button" toggle-button onclick="window.generateCode('code', 'TR-',5)"
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer">
+                                        class="absolute top-1/2 -translate-y-1/2 text-primary cursor-pointer refresh-code refresh-code">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </div>
@@ -110,8 +107,7 @@
                                     {{ __('main.distance') }}
                                     <span class="text-primary font-semibold">(km)</span>
                                 </label>
-                                <input type="number" name="distance" id="distance" step="0.01"
-                                    class="kt-input h-[45px]" value="{{ old('distance') }}" placeholder="150.5">
+                                <input type="number" name="distance" id="distance" step="0.01" class="kt-input h-[45px]" value="{{ old('distance') }}" placeholder="150.5">
                                 @error('distance')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -123,8 +119,7 @@
                                     {{ __('main.estimated_duration') }}
                                     <span class="text-primary font-semibold">({{ __('main.minutes') }})</span>
                                 </label>
-                                <input type="number" name="estimated_duration" id="estimated_duration"
-                                    class="kt-input h-[45px]" value="{{ old('estimated_duration') }}" placeholder="120">
+                                <input type="number" name="estimated_duration" id="estimated_duration" class="kt-input h-[45px]" value="{{ old('estimated_duration') }}" placeholder="120">
                                 @error('estimated_duration')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -158,8 +153,7 @@
                             <!-- Origin Address -->
                             <div>
                                 <label for="origin_address" class="kt-label">{{ __('main.address') }}</label>
-                                <input type="text" name="origin_address" id="origin_address" class="kt-input h-[45px]"
-                                    value="{{ old('origin_address') }}" placeholder="Central Bus Station">
+                                <input type="text" name="origin_address" id="origin_address" class="kt-input h-[45px]" value="{{ old('origin_address') }}" placeholder="Central Bus Station">
                                 @error('origin_address')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -168,8 +162,7 @@
                             <!-- Origin Latitude -->
                             <div>
                                 <label for="origin_latitude" class="kt-label">{{ __('main.latitude') }}</label>
-                                <input type="number" name="origin_latitude" id="origin_latitude" step="0.0000001"
-                                    class="kt-input h-[45px]" value="{{ old('origin_latitude') }}"
+                                <input type="number" name="origin_latitude" id="origin_latitude" step="0.0000001" class="kt-input h-[45px]" value="{{ old('origin_latitude') }}"
                                     placeholder="30.0444">
                                 @error('origin_latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -179,8 +172,7 @@
                             <!-- Origin Longitude -->
                             <div>
                                 <label for="origin_longitude" class="kt-label">{{ __('main.longitude') }}</label>
-                                <input type="number" name="origin_longitude" id="origin_longitude" step="0.0000001"
-                                    class="kt-input h-[45px]" value="{{ old('origin_longitude') }}"
+                                <input type="number" name="origin_longitude" id="origin_longitude" step="0.0000001" class="kt-input h-[45px]" value="{{ old('origin_longitude') }}"
                                     placeholder="31.2357">
                                 @error('origin_longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -204,8 +196,7 @@
                                     {{ __('main.city') }}
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <select name="destination_city_id" id="destination_city_id"
-                                    class="kt-select cities-select" required>
+                                <select name="destination_city_id" id="destination_city_id" class="kt-select cities-select" required>
                                     <option value="" selected>--</option>
                                 </select>
                                 @error('destination_city_id')
@@ -216,8 +207,7 @@
                             <!-- Destination Address -->
                             <div>
                                 <label for="destination_address" class="kt-label">{{ __('main.address') }}</label>
-                                <input type="text" name="destination_address" id="destination_address"
-                                    class="kt-input h-[45px]" value="{{ old('destination_address') }}"
+                                <input type="text" name="destination_address" id="destination_address" class="kt-input h-[45px]" value="{{ old('destination_address') }}"
                                     placeholder="Main Terminal">
                                 @error('destination_address')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -227,8 +217,7 @@
                             <!-- Destination Latitude -->
                             <div>
                                 <label for="destination_latitude" class="kt-label">{{ __('main.latitude') }}</label>
-                                <input type="number" name="destination_latitude" id="destination_latitude"
-                                    step="0.0000001" class="kt-input h-[45px]" value="{{ old('destination_latitude') }}"
+                                <input type="number" name="destination_latitude" id="destination_latitude" step="0.0000001" class="kt-input h-[45px]" value="{{ old('destination_latitude') }}"
                                     placeholder="31.2001">
                                 @error('destination_latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -238,9 +227,8 @@
                             <!-- Destination Longitude -->
                             <div>
                                 <label for="destination_longitude" class="kt-label">{{ __('main.longitude') }}</label>
-                                <input type="number" name="destination_longitude" id="destination_longitude"
-                                    step="0.0000001" class="kt-input h-[45px]"
-                                    value="{{ old('destination_longitude') }}" placeholder="29.9187">
+                                <input type="number" name="destination_longitude" id="destination_longitude" step="0.0000001" class="kt-input h-[45px]" value="{{ old('destination_longitude') }}"
+                                    placeholder="29.9187">
                                 @error('destination_longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -262,8 +250,7 @@
                                 <label for="road_condition" class="kt-label">{{ __('main.road_condition') }}</label>
                                 <select name="road_condition" id="road_condition" class="kt-select basic-single">
                                     <option value="" selected>--</option>
-                                    <option value="excellent"
-                                        {{ old('road_condition') == 'excellent' ? 'selected' : '' }}>
+                                    <option value="excellent" {{ old('road_condition') == 'excellent' ? 'selected' : '' }}>
                                         {{ __('main.excellent') }}
                                     </option>
                                     <option value="good" {{ old('road_condition') == 'good' ? 'selected' : '' }}>
@@ -284,8 +271,7 @@
                             <!-- Toll Fee -->
                             <div>
                                 <label for="toll_fee" class="kt-label">{{ __('main.toll_fee') }}</label>
-                                <input type="number" name="toll_fee" id="toll_fee" step="0.01"
-                                    class="kt-input h-[45px]" value="{{ old('toll_fee') }}" placeholder="0.00">
+                                <input type="number" name="toll_fee" id="toll_fee" step="0.01" class="kt-input h-[45px]" value="{{ old('toll_fee') }}" placeholder="0.00">
                                 @error('toll_fee')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

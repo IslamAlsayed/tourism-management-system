@@ -50,8 +50,7 @@
                                     {{ __('main.name') }}
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <input type="text" class="kt-input h-[45px]" id="name" name="name"
-                                    value="{{ old('name') }}" required>
+                                <input type="text" class="kt-input h-[45px]" id="name" name="name" value="{{ old('name') }}" required>
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -60,8 +59,7 @@
                             {{-- Name (Arabic) --}}
                             <div class="align-self-end">
                                 <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                                <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
-                                    value="{{ old('name_ar') }}">
+                                <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar" value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -71,11 +69,10 @@
                             <div>
                                 <label for="key" class="kt-label required mb-2">{{ __('main.key') }}</label>
                                 <div class="relative">
-                                    <input type="text" name="key" id="key" class="kt-input h-[45px] pr-10"
-                                        value="{{ old('key', fake()->numerify('PD-#####')) }}" required readonly>
+                                    <input type="text" name="key" id="key" class="kt-input h-[45px] pr-10" value="{{ old('key', fake()->numerify('PD-#####')) }}" required readonly>
 
                                     <button type="button" onclick="generateNewKey()" toggle-button
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-primary cursor-pointer hover:text-gray-700">
+                                        class="absolute top-1/2 -translate-y-1/2 text-primary cursor-pointer refresh-code refresh-code hover:text-gray-700">
                                         <i class="fas fa-sync-alt"></i>
                                     </button>
                                 </div>
@@ -87,8 +84,7 @@
                             <!-- Category -->
                             <div class="align-self-end">
                                 <label for="category" class="kt-label">{{ __('main.category') }}</label>
-                                <input type="text" name="category" id="category" class="kt-input h-[45px]"
-                                    value="{{ old('category') }}">
+                                <input type="text" name="category" id="category" class="kt-input h-[45px]" value="{{ old('category') }}">
                                 @error('category')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror

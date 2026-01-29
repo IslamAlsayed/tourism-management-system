@@ -99,11 +99,11 @@
                                 ])
                             </div>
                         </div>
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $user,
                             'column' => 'description',
                         ])
-                        @include('components.elements.display-desc-or-notes', [
+                        @include('components.elements.displayable-rich-text', [
                             'record' => $user,
                             'column' => 'notes',
                         ])

@@ -2,37 +2,37 @@
 
 namespace App\Models;
 
-use App\Traits\BroadcastsRecordEvents;
-use App\Traits\FiltersByUserRole;
-use App\Traits\HandlesRichTextAttributes;
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
+use App\Traits\ClearsEmptyRichText;
+use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HandlesRichTextAttributes;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CrossingPort extends Model
 {
-    use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes, ClearsEmptyRichText;
+    protected $table = 'crossing_ports';
     protected $richTextAttributes = [
-        'description',
         'address',
+        'description',
         'notes',
     ];
 
     protected $fillable = [
         'id',
         'uuid',
+        'code',
 
         // Basic Information
         'name',
         'name_ar',
         'type',
-        'code',
 
         // Location Information
-        'region_id',
-        'subregion_id',
         'country_id',
         'state_id',
         'city_id',
@@ -44,7 +44,8 @@ class CrossingPort extends Model
 
         // Operating Information
         'operating_days',
-        'operating_hours',
+        'opening_time',
+        'closing_time',
         'is_24_7',
         'is_commercial',
         'is_passenger',
@@ -58,7 +59,7 @@ class CrossingPort extends Model
 
         // Contact Information
         'email',
-        'contact_phone',
+        'phone',
         'website',
 
         // Display and Classification
@@ -77,6 +78,7 @@ class CrossingPort extends Model
 
         // Administrative
         'is_active',
+        'address',
         'description',
         'notes',
     ];
@@ -87,14 +89,14 @@ class CrossingPort extends Model
         static::saving(function ($item) {
             // Auto-fill code
             if (empty($item->code)) {
-                $item->code = generateCode('CLT-', 5);
+                $item->code = generateCode('CPORT-', 5);
             }
         });
     }
 
     public function getRelationshipNames()
     {
-        return ['departure_tax_currency', 'visa_fee_currency', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['departure_tax_currency', 'visa_fee_currency', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
@@ -102,13 +104,12 @@ class CrossingPort extends Model
         return [
             'departure_tax_currency_id',
             'visa_fee_currency_id',
-            'region_id',
-            'subregion_id',
             'country_id',
             'state_id',
             'city_id',
             'created_by',
             'updated_by',
+            'address',
             'description',
             'notes'
         ];
@@ -125,6 +126,7 @@ class CrossingPort extends Model
         'is_commercial' => 'boolean',
         'is_passenger' => 'boolean',
         'is_international' => 'boolean',
+        'operating_days' => 'json',
         'allows_visa_on_arrival' => 'boolean',
         'nationality_policy' => 'array',
         'departure_tax' => 'decimal:2',
@@ -151,16 +153,6 @@ class CrossingPort extends Model
         return $this->belongsTo(Currency::class, 'visa_fee_currency_id');
     }
 
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
-    }
-
     public function country()
     {
         return $this->belongsTo(Country::class);
@@ -176,9 +168,24 @@ class CrossingPort extends Model
         return $this->belongsTo(City::class);
     }
 
-    /**
-     * Scopes
-     */
+    public function getTypeAttribute()
+    {
+        return __('main.' . $this->attributes['type']) ?? $this->attributes['type'];
+    }
+
+    public function getNationalityPolicyAttribute($value)
+    {
+        return collect(json_decode($value ?? '[]'));
+    }
+
+    public function setNationalityPolicyAttribute($value)
+    {
+        if (is_string($value)) {
+            $value = json_decode($value, true);
+        }
+
+        $this->attributes['nationality_policy'] = json_encode(collect($value)->map(fn($item) => is_array($item) ? ($item['value'] ?? null) : $item)->filter()->values()->all());
+    }
 
     // Filter by crossing port type
     public function scopeOfType($query, $type)
@@ -245,12 +252,12 @@ class CrossingPort extends Model
     public function getTypeLabel()
     {
         $types = [
-            'land_crossing' => 'Land Crossing',
-            'international_airport' => 'International Airport',
-            'domestic_airport' => 'Domestic Airport',
-            'seaport' => 'Seaport',
-            'river_port' => 'River Port',
-            'border_crossing' => 'Border Crossing',
+            'land_crossing' => __('main.land_crossing'),
+            'international_airport' => __('main.international_airport'),
+            'domestic_airport' => __('main.domestic_airport'),
+            'seaport' => __('main.seaport'),
+            'river_port' => __('main.river_port'),
+            'border_crossing' => __('main.border_crossing'),
         ];
 
         return $types[$this->type] ?? $this->type;
@@ -259,7 +266,7 @@ class CrossingPort extends Model
     // Get active status label
     public function getStatusLabel()
     {
-        return $this->is_active ? 'Active' : 'Inactive';
+        return $this->is_active ? __('main.active') : __('main.inactive');
     }
 
     // Get operating days formatted
@@ -274,7 +281,7 @@ class CrossingPort extends Model
         if ($this->is_24_7) {
             return '24/7';
         }
-        return $this->operating_hours ?? 'Not specified';
+        return $this->operating_hours ?? __('main.not_specified');
     }
 
     public function getFormattedVisaLastUpdateAttribute()
