@@ -26,7 +26,7 @@
     </div>
 
     {{-- Transportation Vehicle Type --}}
-    <div class="align-self-end {{ !hasEmpty($filters['company']) ? 'disabled-option p-2 rounded-sm' : '' }}">
+    <div class="align-self-end {{ !hasEmpty($filters['company']) ? 'disabled-option rounded-sm' : '' }}">
         <label for="vehicle_type_id" class="kt-label mb-2 flex items-center justify-between">
             <div>
                 {{ __('main.vehicle-types') }}
@@ -63,7 +63,7 @@
     </div>
 
     {{-- Season --}}
-    <div class="align-self-end {{ !hasEmpty($filters['company']) ? 'disabled-option p-2 rounded-sm' : '' }}">
+    <div class="align-self-end {{ !hasEmpty($filters['company']) ? 'disabled-option rounded-sm' : '' }}">
         <label for="season_id" class="kt-label mb-2 flex items-center justify-between">
             <div>
                 {{ __('main.seasons') }}

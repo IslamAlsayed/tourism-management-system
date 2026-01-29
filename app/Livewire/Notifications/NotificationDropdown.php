@@ -28,8 +28,8 @@ class NotificationDropdown extends Component
     public function refreshNotifications()
     {
         if (Auth::check()) {
-            $this->notifications = Notification::targetMe(getActiveUser()->id)->orderBy('created_at', 'desc')->limit(10)->get();
-            $this->unreadNotificationsCount = Notification::targetMe(getActiveUser()->id)->unread()->count();
+            $this->notifications = Notification::targetMe(getActiveUserId())->orderBy('created_at', 'desc')->limit(10)->get();
+            $this->unreadNotificationsCount = Notification::targetMe(getActiveUserId())->unread()->count();
         } else {
             $this->notifications = collect();
             $this->unreadNotificationsCount = 0;
@@ -41,7 +41,7 @@ class NotificationDropdown extends Component
         try {
             $notification = Notification::find($notificationId);
             if ($notification) {
-                if ($notification->user_id == getActiveUser()?->id) {
+                if ($notification->user_id == getActiveUserId()) {
                     $notification->markAsRead();
                     $this->refreshNotifications();
 
@@ -65,7 +65,7 @@ class NotificationDropdown extends Component
     public function markAllAsRead()
     {
         try {
-            $updated = Notification::targetMe(getActiveUser()->id)->unread()->update([
+            $updated = Notification::targetMe(getActiveUserId())->unread()->update([
                 'is_read' => true,
                 'read_at' => now()
             ]);
@@ -84,7 +84,7 @@ class NotificationDropdown extends Component
     public function markAllAsReadWhenOpened()
     {
         if ($this->unreadNotificationsCount > 0) {
-            Notification::targetMe(getActiveUser()->id)->unread()->update(['is_read' => true, 'read_at' => now()]);
+            Notification::targetMe(getActiveUserId())->unread()->update(['is_read' => true, 'read_at' => now()]);
             $this->refreshNotifications();
             $this->dispatch('notification-readed', id: 'all');
 
@@ -98,7 +98,7 @@ class NotificationDropdown extends Component
         try {
             $notification = Notification::find($notificationId);
             if ($notification) {
-                if ($notification->user_id == getActiveUser()?->id) {
+                if ($notification->user_id == getActiveUserId()) {
                     $notification->delete();
                     $this->refreshNotifications();
 

@@ -46,7 +46,7 @@ class Notifications extends Component
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(ModelsNotification::class);
 
-        $this->typeUsers = ModelsNotification::targetMe(getActiveUser()->id)->select('user_id')->distinct()->with([
+        $this->typeUsers = ModelsNotification::targetMe(getActiveUserId())->select('user_id')->distinct()->with([
             'user' => fn($query) => $query->select('id', 'name'),
         ])->get()->map(function ($notification) {
             return [
@@ -58,9 +58,9 @@ class Notifications extends Component
 
     public function refreshNotifications()
     {
-        $this->allCount = ModelsNotification::targetMe(getActiveUser()->id)->count();
-        $this->unreadCount = ModelsNotification::targetMe(getActiveUser()->id)->unread()->count();
-        $this->readCount = ModelsNotification::targetMe(getActiveUser()->id)->read()->count();
+        $this->allCount = ModelsNotification::targetMe(getActiveUserId())->count();
+        $this->unreadCount = ModelsNotification::targetMe(getActiveUserId())->unread()->count();
+        $this->readCount = ModelsNotification::targetMe(getActiveUserId())->read()->count();
     }
 
     public function setFilter($filter)
@@ -79,7 +79,7 @@ class Notifications extends Component
     {
         $notification = ModelsNotification::find($notificationId);
 
-        if ($notification && $notification->user_id == getActiveUser()?->id) {
+        if ($notification && $notification->user_id == getActiveUserId()) {
             $notification->markAsRead();
             $this->refreshNotifications();
 
@@ -94,7 +94,7 @@ class Notifications extends Component
     {
         $notification = ModelsNotification::find($notificationId);
 
-        if ($notification && $notification->user_id == getActiveUser()?->id) {
+        if ($notification && $notification->user_id == getActiveUserId()) {
             $notification->markAsUnread();
             $this->refreshNotifications();
 
@@ -107,7 +107,7 @@ class Notifications extends Component
 
     public function markAllAsRead()
     {
-        ModelsNotification::targetMe(getActiveUser()->id)->unread()->update([
+        ModelsNotification::targetMe(getActiveUserId())->unread()->update([
             'is_read' => true,
             'read_at' => now()
         ]);
@@ -134,7 +134,7 @@ class Notifications extends Component
     {
         $notification = ModelsNotification::find($notificationId);
 
-        if ($notification && $notification->user_id == getActiveUser()?->id) {
+        if ($notification && $notification->user_id == getActiveUserId()) {
             $notification->delete();
             $this->refreshNotifications();
 
@@ -204,7 +204,7 @@ class Notifications extends Component
 
     public function getNotificationsProperty()
     {
-        $query = ModelsNotification::targetMe(getActiveUser()->id)->with([
+        $query = ModelsNotification::targetMe(getActiveUserId())->with([
             'user' => fn($query) => $query->select('id', 'name'),
         ])->orderBy('created_at', 'desc');
 
@@ -233,7 +233,7 @@ class Notifications extends Component
 
     public function getNotificationTypesProperty()
     {
-        return ModelsNotification::notMe(getActiveUser()?->id)->select('type')->distinct()->pluck('type')->filter()->toArray();
+        return ModelsNotification::notMe(getActiveUserId())->select('type')->distinct()->pluck('type')->filter()->toArray();
     }
 
     public function resetFilters()

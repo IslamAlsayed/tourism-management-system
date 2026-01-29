@@ -256,15 +256,7 @@
             </div>
 
             <!-- Contact Information -->
-            @if (
-                $restaurant->phone_01 ||
-                    $restaurant->phone_02 ||
-                    $restaurant->email_01 ||
-                    $restaurant->email_02 ||
-                    $restaurant->mobile ||
-                    $restaurant->fax ||
-                    $restaurant->contact_person ||
-                    $restaurant->website)
+            @if ($restaurant->phone_01 || $restaurant->phone_02 || $restaurant->email_01 || $restaurant->email_02 || $restaurant->mobile || $restaurant->fax || $restaurant->contact_person || $restaurant->website)
                 <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.contact')]) }}</h3>
@@ -317,8 +309,7 @@
                                 <div class="lg:col-span-2">
                                     <label class="kt-label mb-1">{{ __('main.website') }}</label>
                                     <p class="text-sm text-secondary-foreground">
-                                        <a href="{{ $restaurant->website }}" target="_blank"
-                                            class="text-primary hover:underline">
+                                        <a href="{{ $restaurant->website }}" target="_blank" class="text-primary hover:underline">
                                             {{ $restaurant->website }}
                                         </a>
                                     </p>
@@ -342,39 +333,7 @@
             @endif --}}
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        @if ($restaurant->creator)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $restaurant->creator->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $restaurant->created_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                        @if ($restaurant->updater)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $restaurant->updater->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $restaurant->updated_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $restaurant])
 
             <!-- Seasons for this restaurant -->
             <div class="kt-card bg-blue-100">
@@ -384,8 +343,7 @@
                         (<span class="font-semibold text-primary">{{ $restaurant->seasons->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('seasons.create', ['type' => 'restaurant', \Illuminate\Support\Str::random(120)]) }}"
-                            class="kt-btn kt-btn-sm kt-btn-primary">
+                        <a href="{{ route('seasons.create', ['type' => 'restaurant', \Illuminate\Support\Str::random(120)]) }}" class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.season')]) }}
                         </a>
@@ -394,8 +352,7 @@
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($restaurant->seasons as $season)
-                            <div wire:key="season-{{ $season->id }}"
-                                class="kt-card bg-white rounded-lg p-4 pt-2 record-seasons-{{ $season->id }}">
+                            <div wire:key="season-{{ $season->id }}" class="kt-card bg-white rounded-lg p-4 pt-2 record-seasons-{{ $season->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -485,8 +442,7 @@
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($restaurant->meals as $meal)
-                            <div wire:key="meal-{{ $meal->id }}"
-                                class="kt-card bg-white rounded-lg p-4 pt-2 record-meals-{{ $meal->id }}">
+                            <div wire:key="meal-{{ $meal->id }}" class="kt-card bg-white rounded-lg p-4 pt-2 record-meals-{{ $meal->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -530,14 +486,12 @@
                                 {{-- Meal Pricing Information --}}
                                 @if ($meal->season || $meal->price)
                                     <div class="lg:col-span-2 mt-3 border-custom-t pt-3">
-                                        <label
-                                            class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
+                                        <label class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
                                         <div class="bg-blue-50 p-3 rounded-lg">
                                             @if ($meal->season)
                                                 <div class="flex items-center justify-between mb-2">
                                                     <span class="font-medium text-sm">{{ $meal->season->name }}</span>
-                                                    <span
-                                                        class="text-xs text-gray-500">{{ $meal->season->season_from->format('Y-m-d') }}
+                                                    <span class="text-xs text-gray-500">{{ $meal->season->season_from->format('Y-m-d') }}
                                                         → {{ $meal->season->season_to->format('Y-m-d') }}</span>
                                                 </div>
                                             @endif
@@ -545,18 +499,15 @@
                                                 @if ($meal->price)
                                                     <div>
                                                         <span class="text-gray-600">{{ __('main.price') }}:</span>
-                                                        <span
-                                                            class="font-semibold text-lg">{{ number_format($meal->price, 2) }}
+                                                        <span class="font-semibold text-lg">{{ number_format($meal->price, 2) }}
                                                             {{ $meal->currency?->code }}</span>
                                                     </div>
                                                 @endif
                                                 @if ($meal->is_included)
-                                                    <span
-                                                        class="kt-badge kt-badge-success">{{ __('main.included') }}</span>
+                                                    <span class="kt-badge kt-badge-success">{{ __('main.included') }}</span>
                                                 @endif
                                                 @if ($meal->is_supplement)
-                                                    <span
-                                                        class="kt-badge kt-badge-info">{{ __('main.supplement') }}</span>
+                                                    <span class="kt-badge kt-badge-info">{{ __('main.supplement') }}</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -601,8 +552,7 @@
                         (<span class="font-semibold text-primary">{{ $restaurant->supplements->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('supplements.create', ['accommodation_id' => $restaurant->id]) }}"
-                            class="kt-btn kt-btn-sm kt-btn-primary">
+                        <a href="{{ route('supplements.create', ['accommodation_id' => $restaurant->id]) }}" class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.supplement')]) }}
                         </a>
@@ -611,8 +561,7 @@
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($restaurant->supplements as $supplement)
-                            <div wire:key="supplement-{{ $supplement->id }}"
-                                class="kt-card bg-white rounded-lg p-4 pt-2 record-supplements-{{ $supplement->id }}">
+                            <div wire:key="supplement-{{ $supplement->id }}" class="kt-card bg-white rounded-lg p-4 pt-2 record-supplements-{{ $supplement->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -642,8 +591,7 @@
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.price_type') }}</label>
                                         <div class="flex flex-wrap gap-2">
-                                            <span
-                                                class="kt-badge kt-badge-info">{{ __('main.' . $supplement->price_type) }}</span>
+                                            <span class="kt-badge kt-badge-info">{{ __('main.' . $supplement->price_type) }}</span>
                                         </div>
                                     </div>
                                     <div class="col-span-2 flex items-center gap-10 mb-2">

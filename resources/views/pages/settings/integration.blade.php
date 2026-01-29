@@ -495,112 +495,117 @@
             </form>
 
             {{-- Test Send Email --}}
-            <div class="kt-card disabled-option" id="test-email-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.test_send_email') }}</h3>
-                </div>
-                <div class="kt-card-body">
-                    <form action="{{ route('web-push-notifications') }}" method="POST" class="p-6"
-                        id="web-push-form">
-                        @csrf
+            <div class="disabled-option">
+                <div class="kt-card" id="test-email-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.test_send_email') }}</h3>
+                    </div>
+                    <div class="kt-card-body">
+                        <form action="{{ route('web-push-notifications') }}" method="POST" class="p-6"
+                            id="web-push-form">
+                            @csrf
 
-                        <!-- Notification Type -->
-                        <div class="mb-4" id="notification_type_wrapper">
-                            <label class="kt-label mb-2">{{ __('main.notification_type') }}</label>
-                            <div class="flex gap-6">
-                                @if ($settings->app_email_notifications == 1)
-                                    <div class="flex items-center gap-4">
-                                        <input type="hidden" name="email" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'notification_type[email]',
-                                            'id' => 'email',
-                                            'value' => 1,
-                                            'label' => __('main.email'),
-                                        ])
-                                    </div>
-                                @endif
-                                @if ($settings->app_push_notifications == 1)
-                                    <div class="flex items-center gap-4">
-                                        <input type="hidden" name="notification" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'notification_type[notification]',
-                                            'id' => 'notification',
-                                            'value' => 1,
-                                            'checked' => true,
-                                            'label' => __('main.notification'),
-                                        ])
-                                    </div>
-                                @endif
-                                @if ($settings->app_sms_notifications == 1)
-                                    <div class="flex items-center gap-4">
-                                        <input type="hidden" name="sms" value="0" />
-                                        @include('components.elements.checkbox-button', [
-                                            'name' => 'notification_type[sms]',
-                                            'id' => 'sms',
-                                            'value' => 1,
-                                            'label' => __('main.sms'),
-                                        ])
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <!-- Recipient Options -->
-                        <div class="mb-4">
-                            <div class="mb-4" id="all_users_wrapper">
-                                <input type="hidden" name="" value="0" />
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'all_users',
-                                    'id' => 'all_users',
-                                    'value' => 1,
-                                    'checked' => true,
-                                    'label' => __('main.all_users'),
-                                ])
+                            <!-- Notification Type -->
+                            <div class="mb-4" id="notification_type_wrapper">
+                                <label class="kt-label mb-2">{{ __('main.notification_type') }}</label>
+                                <div class="flex gap-6">
+                                    @if ($settings->app_email_notifications == 1)
+                                        <div class="flex items-center gap-4">
+                                            <input type="hidden" name="email" value="0" />
+                                            @include('components.elements.checkbox-button', [
+                                                'name' => 'notification_type[email]',
+                                                'id' => 'email',
+                                                'value' => 1,
+                                                'label' => __('main.email'),
+                                            ])
+                                        </div>
+                                    @endif
+                                    @if ($settings->app_push_notifications == 1)
+                                        <div class="flex items-center gap-4">
+                                            <input type="hidden" name="notification" value="0" />
+                                            @include('components.elements.checkbox-button', [
+                                                'name' => 'notification_type[notification]',
+                                                'id' => 'notification',
+                                                'value' => 1,
+                                                'checked' => true,
+                                                'label' => __('main.notification'),
+                                            ])
+                                        </div>
+                                    @endif
+                                    @if ($settings->app_sms_notifications == 1)
+                                        <div class="flex items-center gap-4">
+                                            <input type="hidden" name="sms" value="0" />
+                                            @include('components.elements.checkbox-button', [
+                                                'name' => 'notification_type[sms]',
+                                                'id' => 'sms',
+                                                'value' => 1,
+                                                'label' => __('main.sms'),
+                                            ])
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
 
-                            <div id="recipient_email_wrapper">
-                                <label class="kt-label mb-2">{{ __('main.recipient_email') }}</label>
-                                <select name="recipient_user_id" id="recipient_user_id" class="kt-input basic-single">
-                                    <option value="" selected>--</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }} -
-                                            ({{ $user->email }})
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <!-- Recipient Options -->
+                            <div class="mb-4">
+                                <div class="mb-4" id="all_users_wrapper">
+                                    <input type="hidden" name="" value="0" />
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'all_users',
+                                        'id' => 'all_users',
+                                        'value' => 1,
+                                        'checked' => true,
+                                        'label' => __('main.all_users'),
+                                    ])
+                                </div>
+
+                                <div id="recipient_email_wrapper">
+                                    <label class="kt-label mb-2">{{ __('main.recipient_email') }}</label>
+                                    <select name="recipient_user_id" id="recipient_user_id"
+                                        class="kt-input basic-single">
+                                        <option value="" selected>--</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }} -
+                                                ({{ $user->email }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Subject -->
-                        <div class="mb-4">
-                            <label class="kt-label mb-2">
-                                {{ __('main.subject') }}</label>
-                            <input type="text" name="subject" class="kt-input h-[45px]" placeholder="Test Subject"
-                                value="صباح الخير" />
-                        </div>
+                            <!-- Subject -->
+                            <div class="mb-4">
+                                <label class="kt-label mb-2">
+                                    {{ __('main.subject') }}</label>
+                                <input type="text" name="subject" class="kt-input h-[45px]"
+                                    placeholder="Test Subject" value="صباح الخير" />
+                            </div>
 
-                        <!-- Message Body -->
-                        <div class="mb-4">
-                            <label class="kt-label mb-2">{{ __('main.message') }}</label>
-                            <textarea name="message" id="message" class="kt-textarea pt-1" rows="3" placeholder="Test message...">صباح الخير يا مهندسين، انا الادمن هنا فاهمين!</textarea>
-                        </div>
+                            <!-- Message Body -->
+                            <div class="mb-4">
+                                <label class="kt-label mb-2">{{ __('main.message') }}</label>
+                                <textarea name="message" id="message" class="kt-textarea pt-1" rows="3" placeholder="Test message...">صباح الخير يا مهندسين، انا الادمن هنا فاهمين!</textarea>
+                            </div>
 
-                        <div class="flex items-center gap-4">
-                            <button type="submit" form="web-push-form" class="kt-btn kt-btn-primary">
-                                <span class="hidden" id="loading-spinner">
-                                    @include('components.load-data', ['color' => 'var(--color-white)'])
-                                </span>
-                                @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
-                                    {{ __('main.send') }}
-                                @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
-                                    <i class="fas fa-paper-plane text-white"></i>
-                                @else
-                                    <i class="fas fa-paper-plane text-white"></i>
-                                    {{ __('main.send') }}
-                                @endif
-                            </button>
-                        </div>
-                    </form>
+                            <div class="flex items-center gap-4">
+                                <button type="submit" form="web-push-form" class="kt-btn kt-btn-primary">
+                                    <span class="hidden" id="loading-spinner">
+                                        @include('components.load-data', [
+                                            'color' => 'var(--color-white)',
+                                        ])
+                                    </span>
+                                    @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
+                                        {{ __('main.send') }}
+                                    @elseif (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'icon')
+                                        <i class="fas fa-paper-plane text-white"></i>
+                                    @else
+                                        <i class="fas fa-paper-plane text-white"></i>
+                                        {{ __('main.send') }}
+                                    @endif
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

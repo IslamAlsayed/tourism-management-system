@@ -55,8 +55,7 @@
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.code') }}</label>
                                 <p class="mt-1 text-gray-900">
-                                    <span
-                                        class="kt-badge kt-badge-outline kt-badge-primary">{{ $airline->code ?? '-' }}</span>
+                                    <span class="kt-badge kt-badge-outline kt-badge-primary">{{ $airline->code ?? '-' }}</span>
                                 </p>
                             </div>
                         @endif
@@ -182,13 +181,11 @@
                         </div>
                         <div class="col-span-full mt-4">
                             <label class="kt-label block mb-1">{{ __('main.map') }}</label>
-                            <a href="https://maps.google.com?q={{ $airline->latitude }},{{ $airline->longitude }}"
-                                target="_blank" class="text-sm text-primary hover:underline">
+                            <a href="https://maps.google.com?q={{ $airline->latitude }},{{ $airline->longitude }}" target="_blank" class="text-sm text-primary hover:underline">
                                 {{ __('main.view_on_google_maps') }}
                             </a>
                             <div class="w-full bg-white p-4 rounded-lg shadow-lg">
-                                <div id="map" data-title="{{ $airline->title }}"
-                                    data-latitude="{{ $airline->latitude }}" data-longitude="{{ $airline->longitude }}"
+                                <div id="map" data-title="{{ $airline->title }}" data-latitude="{{ $airline->latitude }}" data-longitude="{{ $airline->longitude }}"
                                     class="rounded-md overflow-hidden shadow"></div>
                             </div>
                         </div>
@@ -207,8 +204,7 @@
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.local_phone_number') }}</label>
                                 <p class="mt-1 text-gray-900">
-                                    <a href="tel:{{ $airline->local_phone_number }}"
-                                        class="text-blue-600 hover:text-blue-800">
+                                    <a href="tel:{{ $airline->local_phone_number }}" class="text-blue-600 hover:text-blue-800">
                                         {{ $airline->local_phone_number }}
                                     </a>
                                 </p>
@@ -216,11 +212,9 @@
                         @endif
                         @if ($airline->international_phone_number)
                             <div>
-                                <label
-                                    class="font-medium text-gray-700">{{ __('main.international_phone_number') }}</label>
+                                <label class="font-medium text-gray-700">{{ __('main.international_phone_number') }}</label>
                                 <p class="mt-1 text-gray-900">
-                                    <a href="tel:{{ $airline->international_phone_number }}"
-                                        class="text-blue-600 hover:text-blue-800">
+                                    <a href="tel:{{ $airline->international_phone_number }}" class="text-blue-600 hover:text-blue-800">
                                         {{ $airline->international_phone_number }}
                                     </a>
                                 </p>
@@ -230,8 +224,7 @@
                             <div>
                                 <label class="font-medium text-gray-700">{{ __('main.website') }}</label>
                                 <p class="mt-1 text-gray-900">
-                                    <a href="{{ $airline->website }}" target="_blank"
-                                        class="text-blue-600 hover:text-blue-800">
+                                    <a href="{{ $airline->website }}" target="_blank" class="text-blue-600 hover:text-blue-800">
                                         {{ $airline->website }}
                                         <i class="fas fa-external-link-alt text-xs ml-1"></i>
                                     </a>
@@ -284,8 +277,7 @@
                                 <label class="font-medium text-gray-700">{{ __('main.coordinates') }}</label>
                                 <p class="mt-1 text-gray-900">
                                     {{ $airline->latitude }}, {{ $airline->longitude }}
-                                    <a href="https://maps.google.com/?q={{ $airline->latitude }},{{ $airline->longitude }}"
-                                        target="_blank" class="text-blue-600 hover:text-blue-800 ml-2">
+                                    <a href="https://maps.google.com/?q={{ $airline->latitude }},{{ $airline->longitude }}" target="_blank" class="text-blue-600 hover:text-blue-800 ml-2">
                                         <i class="fas fa-map-marker-alt"></i> {{ __('main.view_on_map') }}
                                     </a>
                                 </p>
@@ -391,39 +383,7 @@
             </div> --}}
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        @if ($airline->creator)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $airline->creator->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $airline->created_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                        @if ($airline->updater)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $airline->updater->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $airline->updated_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $airline])
 
             <!-- Actions -->
             <div class="flex items-center gap-4">

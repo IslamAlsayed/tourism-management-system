@@ -16,8 +16,8 @@ return [
         'label' => 'transportation',
     ],
 
-    'tour-guide' => [
+    'tours' => [
         'model' => \App\Models\TourGuide::class,
-        'label' => 'tour-guide',
+        'label' => 'tours.guide',
     ],
 ];

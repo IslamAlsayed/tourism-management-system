@@ -14,8 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('transportations.vehicle-types.edit', $vehicleType->id) }}"
-                    class="kt-btn kt-btn-primary md:hidden">
+                <a href="{{ route('transportations.vehicle-types.edit', $vehicleType->id) }}" class="kt-btn kt-btn-primary md:hidden">
                     <i class="ki-filled ki-pencil text-sm me-2"></i>
                     {{ __('main.edit') }}
                 </a>
@@ -116,39 +115,7 @@
             </div>
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        @if ($vehicleType->creator)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $vehicleType->creator->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $vehicleType->created_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                        @if ($vehicleType->updater)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $vehicleType->updater->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $vehicleType->updated_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $vehicleType])
 
             <!-- Company -->
             @if ($vehicleType->company)

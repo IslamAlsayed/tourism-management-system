@@ -66,7 +66,7 @@ class ExcelController extends Controller
         }
 
         // Dispatch import job with user ID for real-time notifications
-        $userId = function_exists('getActiveUser') && getActiveUser() ? getActiveUser()->id : null;
+        $userId = function_exists('getActiveUserId') && getActiveUserId() ? getActiveUserId() : null;
 
         // The ImportDataJob will:
         // 1. Automatically ignore extra columns from Excel (not in fillable)

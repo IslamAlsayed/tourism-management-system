@@ -11,11 +11,9 @@
                 @endif
             </label>
 
-            <select wire:model="filterType" name="model_type" id="model_type" class="kt-select basic-single"
-                {{ $record ? 'disabled' : '' }}>
+            <select wire:model="filterType" name="model_type" id="model_type" class="kt-select basic-single" {{ $record ? 'disabled' : '' }}>
                 @foreach ($types as $key => $type)
-                    <option value="{{ $key }}"
-                        {{ Str::ucfirst($type['label']) == Str::ucfirst($filterType) ? 'selected' : '' }}>
+                    <option value="{{ $key }}" {{ Str::ucfirst($type['label']) == Str::ucfirst($filterType) ? 'selected' : '' }}>
                         {{ __('main.' . $type['label']) }}
                     </option>
                 @endforeach
@@ -37,8 +35,7 @@
             <select name="model_id" id="model_id" class="kt-select basic-single">
                 <option value="" disabled selected></option>
                 @foreach ($models as $model)
-                    <option value="{{ $model['id'] }}"
-                        {{ old('model_id', optional($record)->model_id) == $model['id'] ? 'selected' : '' }}>
+                    <option value="{{ $model['id'] }}" {{ old('model_id', optional($record)->model_id) == $model['id'] ? 'selected' : '' }}>
                         {{ $model['name'] }}
                     </option>
                 @endforeach

@@ -145,7 +145,7 @@ class User extends Authenticatable
 
     public function scopeWithNotMe($query)
     {
-        return $query->where('id', '!=', getActiveUser()?->id);
+        return $query->where('id', '!=', getActiveUserId());
     }
 
     public function setPasswordAttribute($value)

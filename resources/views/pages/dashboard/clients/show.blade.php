@@ -121,7 +121,10 @@
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.currency') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    {{ $client->currency->name . ' - ' . $client->currency->code }}
+                                    {{ $client->currency->name }}
+                                    <span class="text-primary font-semibold">
+                                        ({{ $client->currency->code }})
+                                    </span>
                                 </p>
                             </div>
                         @endif
@@ -216,39 +219,7 @@
             </div>
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $client->creator->name ?? __('main.unknown') }}
-                            </p>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $client->created_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $client->updater->name ?? __('main.unknown') }}
-                            </p>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $client->updated_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $client])
 
             <!-- Actions -->
             <div class="flex items-center gap-4">

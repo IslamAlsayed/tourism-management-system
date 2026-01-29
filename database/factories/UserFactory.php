@@ -52,8 +52,8 @@ class UserFactory extends Factory
             'last_login_at' => null,
             'last_login_ip' => null,
             'notes' => null,
-            'created_by' => getActiveUser()->id ?? 2,
-            'updated_by' => getActiveUser()->id ?? null,
+            'created_by' => getActiveUserId() ?? 2,
+            'updated_by' => getActiveUserId() ?? null,
         ];
     }
 

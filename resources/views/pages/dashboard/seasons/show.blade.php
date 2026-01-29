@@ -82,39 +82,7 @@
             </div>
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        @if ($season->creator)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $season->creator->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $season->created_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                        @if ($season->updater)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $season->updater->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $season->updated_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $season])
 
             <!-- Season Related Components -->
             @if ($season->model && Str::contains($season->model_type, 'Accommodation'))

@@ -171,6 +171,30 @@ return [
     'create tourist site' => 'Create Tourist Site',
     'import tourist sites' => 'Import Tourist Sites',
     'hostel sites' => 'Hostel Sites',
+
+    'all jeeps' => 'All Jeep',
+    'create jeep' => 'Create Jeep',
+    'import jeeps' => 'Import Jeeps',
+
+    'all visa requirements' => 'All Visa Requirements',
+    'create visa requirement' => 'Create Visa Requirement',
+    'import visa requirements' => 'Import Visa Requirements',
+
+    'all travel passes' => 'All Travel Passes',
+    'create travel pass' => 'Create Travel Pass',
+    'import travel passes' => 'Import Travel Passes',
+
+    'travel_passes' => 'Travel Passes',
+    'travel passes' => 'Travel Passes',
+    'all travel passes' => 'All Travel Passes',
+    'create travel pass' => 'Create Travel Pass',
+    'import travel passes' => 'Import Travel Passes',
+
+    'jeep_safari' => 'Jeep Safari',
+    'all_jeeps' => 'All Jeeps',
+    'create_jeep' => 'Create Jeep',
+    'import_jeeps' => 'Import Jeeps',
+
     'site entrance fees' => 'Service Entrance Fees',
     'services' => 'Services',
     'group services' => 'Group Services',

@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Dashboard\CityController;
+use App\Http\Controllers\Dashboard\JeepController;
 use App\Http\Controllers\Dashboard\MealController;
+use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\RoomController;
 use App\Http\Controllers\Dashboard\TypeController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -25,8 +27,10 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\MediaFileController;
 use App\Http\Controllers\Dashboard\SubregionController;
 use App\Http\Controllers\Admin\SidebarManagerController;
+use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\RestaurantController;
 use App\Http\Controllers\Dashboard\SupplementController;
+use App\Http\Controllers\Dashboard\TravelPassController;
 use App\Http\Controllers\Dashboard\ActivityLogController;
 use App\Http\Controllers\Dashboard\NationalityController;
 use App\Http\Controllers\Dashboard\TouristSiteController;
@@ -36,6 +40,7 @@ use App\Http\Controllers\Dashboard\NotificationController;
 use App\Http\Controllers\Dashboard\AccommodationController;
 use App\Http\Controllers\Dashboard\TouristServiceController;
 use App\Http\Controllers\Dashboard\Tours\GuideTypeController;
+use App\Http\Controllers\Dashboard\VisaRequirementController;
 use App\Http\Controllers\Dashboard\Tours\GuideReviewController;
 use App\Http\Controllers\Dashboard\Transportations\RouteController;
 use App\Http\Controllers\Dashboard\Transportations\CompanyController;
@@ -45,8 +50,6 @@ use App\Http\Controllers\Dashboard\Transportations\RouteAssignmentController;
 use App\Http\Controllers\Dashboard\Transportations\PricingDefinitionController;
 use App\Http\Controllers\Dashboard\Quotes\v1\QuoteController as QuoteControllerV1;
 use App\Http\Controllers\Dashboard\Quotes\v2\QuoteController as QuoteControllerV2;
-use App\Http\Controllers\Dashboard\RoleController;
-use App\Http\Controllers\Dashboard\PermissionController;
 
 /*
 |----------------------|
@@ -60,40 +63,7 @@ Route::get('/', fn() => view('welcome'));
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Dashboard Main
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::delete('delete-all-selected-items', [DashboardController::class, 'deleteAll'])->name('deleteAll');
-
-    // Legacy multi-step form routes (keeping for reference)
-    // Route::prefix('quote/v1')->group(function () {
-    //     Route::get('step1', [QuoteControllerV1::class, 'step1'])->name('dashboard.quote.v1.step1');
-    //     Route::post('step1', [QuoteControllerV1::class, 'postStep1'])->name('dashboard.quote.v1.postStep1');
-
-    //     Route::get('{id}/step2', [QuoteControllerV1::class, 'step2'])->name('dashboard.quote.v1.step2');
-    //     Route::post('{id}/step2', [QuoteControllerV1::class, 'postStep2'])->name('dashboard.quote.v1.postStep2');
-
-    //     Route::get('{id}/step3', [QuoteControllerV1::class, 'step3'])->name('dashboard.quote.v1.step3');
-    //     Route::post('{id}/step3', [QuoteControllerV1::class, 'postStep3'])->name('dashboard.quote.v1.postStep3');
-
-    //     Route::get('{id}/step4', [QuoteControllerV1::class, 'step4'])->name('dashboard.quote.v1.step4');
-    //     Route::post('{id}/submit', [QuoteControllerV1::class, 'submit'])->name('dashboard.quote.v1.submit');
-    // });
-
-    // Route::prefix('quote/v2')->group(function () {
-    //     Route::get('/', [QuoteControllerV2::class, 'index'])->name('dashboard.quote.v2.index');
-    //     Route::get('step1', [QuoteControllerV2::class, 'step1'])->name('dashboard.quote.v2.step1');
-    //     Route::post('step1', [QuoteControllerV2::class, 'postStep1'])->name('dashboard.quote.v2.postStep1');
-    //     Route::get('step2', [QuoteControllerV2::class, 'step2'])->name('dashboard.quote.v2.step2');
-    //     Route::post('step2', [QuoteControllerV2::class, 'postStep2'])->name('dashboard.quote.v2.postStep2');
-    //     Route::get('step3', [QuoteControllerV2::class, 'step3'])->name('dashboard.quote.v2.step3');
-    //     Route::post('step3', [QuoteControllerV2::class, 'postStep3'])->name('dashboard.quote.v2.postStep3');
-    //     Route::get('step4', [QuoteControllerV2::class, 'step4'])->name('dashboard.quote.v2.step4');
-    //     Route::post('step4', [QuoteControllerV2::class, 'postStep4'])->name('dashboard.quote.v2.postStep4');
-    //     Route::get('submit', [QuoteControllerV2::class, 'submit'])->name('dashboard.quote.v2.submit');
-    //     Route::post('get-hotels-by-countries-and-cities', [QuoteControllerV2::class, 'getHotelsByCountriesAndCities']);
-    //     Route::post('get-transportation', [QuoteControllerV2::class, 'getTransportation']);
-    // });
-
-    // Route::get('/main-form', [DashboardController::class, 'mainForm'])->name('dashboard.mainForm');
 
     // === COLUMN PREFERENCES ===
     Route::prefix('columns')->name('columns.')->group(function () {
@@ -157,10 +127,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::resource('restaurants', RestaurantController::class)->names('restaurants');
 
     // === TOUR GUIDES MANAGEMENT ===
-    // Route::resource('tour-guides', GuideController::class)->names('tour-guides');
-    // Route::resource('tour-guides-types', GuideTypeController::class)->names('tour-guides-types');
-    // Route::resource('tour-guides-reviews', GuideReviewController::class)->names('tour-guides-reviews');
-
     Route::prefix('tours')->name('tours.')->group(function () {
         Route::resource('guides', GuideController::class)->names('guides');
         Route::resource('guides-types', GuideTypeController::class)->names('guides-types');
@@ -178,15 +144,18 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::resource('route-assignments', RouteAssignmentController::class)->names('route-assignments');
     });
 
-    // Route::resource('transportation/companies', CompanyController::class)->names('transportation-companies');
-    // Route::resource('transportation/departments', DepartmentController::class)->names('transportation-departments');
-    // Route::resource('transportation/bus-types', BusTypeController::class)->names('transportation-bus-types');
-    // Route::resource('transportation/company/bus-types', CompanyBusTypeController::class)->names('transportation-company-bus-types');
-    // Route::resource('transportation/vehicles', VehicleController::class)->names('transportation-vehicles');
-
     // === TOURIST MANAGEMENT ===
     Route::resource('tourist-sites', TouristSiteController::class)->names('tourist-sites');
     Route::resource('tourist-services', TouristServiceController::class)->names('tourist-services');
+
+    // === JEEPS MANAGEMENT ===
+    Route::resource('jeeps', JeepController::class)->names('jeeps');
+
+    // === VISA REQUIREMENTS MANAGEMENT ===
+    Route::resource('visa-requirements', VisaRequirementController::class)->names('visa-requirements');
+
+    // === TRAVEL PASSES MANAGEMENT ===
+    Route::resource('travel-passes', TravelPassController::class)->names('travel-passes');
 
     // === ACCOMMODATIONS MANAGEMENT ===
     Route::resource('accommodations', AccommodationController::class)->names('accommodations');
@@ -255,8 +224,8 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === NOTIFICATIONS ===
     Route::prefix('notifications')->name('notifications.')->group(function () {
-        // Route::get('/', App\Livewire\NotificationIndex::class)->name('index');
         Route::get('/', [NotificationController::class, 'index'])->name('index');
+
         // Keep API routes for any AJAX calls if needed
         Route::get('/recent', [NotificationController::class, 'getRecent'])->name('recent');
         Route::get('/unread-count', [NotificationController::class, 'getUnreadCount'])->name('unread-count');

@@ -28,6 +28,28 @@ if (!function_exists('getActiveUser')) {
         return Auth::user();
     }
 }
+if (!function_exists('getActiveUserId')) {
+    /**
+     * Get the currently authenticated user's ID.
+     * Checks authentication first.
+     *
+     * @param int|null $id
+     * @return \App\Models\User|null
+     */
+    function getActiveUserId($id = null)
+    {
+        if (!Auth::check()) {
+            return null;
+        }
+
+        if ($id != null) {
+            $user = User::find($id);
+            return $user ? $user->id : null;
+        }
+
+        return Auth::id();
+    }
+}
 
 // تحديث حالة المستخدم (متصل/غير متصل)
 if (!function_exists('setUserStatus')) {

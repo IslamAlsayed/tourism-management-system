@@ -38,8 +38,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.site') }}</label>
                             <p class="text-sm text-secondary-foreground">
-                                <a href="{{ route('tourist-sites.show', $touristService->site->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('tourist-sites.show', $touristService->site->id) }}" class="block text-sm text-primary underline">
                                     {{ $touristService->site->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -236,8 +235,7 @@
                             <div class="kt-card-body p-4 flex flex-wrap justify-between gap-6">
                                 @if ($touristService->non_accommodated_visitors_adult)
                                     <div>
-                                        <label
-                                            class="kt-label mb-1">{{ __('main.non_accommodated_visitors_adult') }}</label>
+                                        <label class="kt-label mb-1">{{ __('main.non_accommodated_visitors_adult') }}</label>
                                         <p class="text-sm text-secondary-foreground">
                                             {{ $touristService->non_accommodated_visitors_adult }}
                                             {{ $touristService->currency->code ?? '' }}</p>
@@ -245,8 +243,7 @@
                                 @endif
                                 @if ($touristService->non_accommodated_visitors_child)
                                     <div>
-                                        <label
-                                            class="kt-label mb-1">{{ __('main.non_accommodated_visitors_child') }}</label>
+                                        <label class="kt-label mb-1">{{ __('main.non_accommodated_visitors_child') }}</label>
                                         <p class="text-sm text-secondary-foreground">
                                             {{ $touristService->non_accommodated_visitors_child }}
                                             {{ $touristService->currency->code ?? '' }}</p>
@@ -444,8 +441,7 @@
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.email_01') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    <a href="mailto:{{ $touristService->email_01 }}"
-                                        class="text-primary hover:underline">
+                                    <a href="mailto:{{ $touristService->email_01 }}" class="text-primary hover:underline">
                                         {{ $touristService->email_01 }}
                                     </a>
                                 </p>
@@ -455,8 +451,7 @@
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.email_02') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    <a href="mailto:{{ $touristService->email_02 }}"
-                                        class="text-primary hover:underline">
+                                    <a href="mailto:{{ $touristService->email_02 }}" class="text-primary hover:underline">
                                         {{ $touristService->email_02 }}
                                     </a>
                                 </p>
@@ -466,8 +461,7 @@
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.website') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    <a href="{{ $touristService->website }}" target="_blank"
-                                        class="text-primary hover:underline">
+                                    <a href="{{ $touristService->website }}" target="_blank" class="text-primary hover:underline">
                                         {{ $touristService->website }}
                                     </a>
                                 </p>
@@ -615,39 +609,7 @@
             @endif
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        @if ($touristService->creator)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $touristService->creator->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $touristService->created_at?->diffForHumans() }}
-                            </p>
-                        </div>
-                        @if ($touristService->updater)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $touristService->updater->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $touristService->updated_at?->diffForHumans() }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $touristService])
 
             <!-- Actions -->
             <div class="flex items-center gap-4">

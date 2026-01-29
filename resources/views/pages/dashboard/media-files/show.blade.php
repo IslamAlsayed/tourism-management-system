@@ -30,8 +30,7 @@
                     <div class="kt-card-body p-6">
                         @if ($mediaFile->is_image)
                             <div class="text-center">
-                                <img class="max-w-full mx-auto rounded-lg shadow-lg" src="{{ $mediaFile->url }}"
-                                    alt="{{ $mediaFile->alt_text }}">
+                                <img class="max-w-full mx-auto rounded-lg shadow-lg" src="{{ $mediaFile->url }}" alt="{{ $mediaFile->alt_text }}">
                             </div>
                         @else
                             <div class="flex flex-col items-center justify-center py-12">
@@ -39,8 +38,7 @@
                                 <p class="text-xl font-medium text-gray-700 mt-4">{{ strtoupper($mediaFile->extension) }}
                                     {{ __('main.file') }}</p>
                                 <p class="text-gray-600 mt-2">{{ $mediaFile->human_file_size }}</p>
-                                <a href="{{ $mediaFile->url }}" download="{{ $mediaFile->file_name }}"
-                                    class="kt-btn kt-btn-primary mt-6">
+                                <a href="{{ $mediaFile->url }}" download="{{ $mediaFile->file_name }}" class="kt-btn kt-btn-primary mt-6">
                                     <i class="ki-filled ki-download"></i>
                                     {{ __('main.download') }}
                                 </a>
@@ -186,20 +184,17 @@
                             {{ __('main.view_original') }}
                         </a>
 
-                        <a href="{{ $mediaFile->url }}" download="{{ $mediaFile->file_name }}"
-                            class="kt-btn kt-btn-light w-full">
+                        <a href="{{ $mediaFile->url }}" download="{{ $mediaFile->file_name }}" class="kt-btn kt-btn-light w-full">
                             <i class="ki-filled ki-download"></i>
                             {{ __('main.download') }}
                         </a>
 
-                        <button type="button" data-url="{{ $mediaFile->url }}" class="kt-btn kt-btn-light w-full"
-                            id="copyToClipboard">
+                        <button type="button" data-url="{{ $mediaFile->url }}" class="kt-btn kt-btn-light w-full" id="copyToClipboard">
                             <i class="ki-filled ki-copy"></i>
                             {{ __('main.copy_url') }}
                         </button>
 
-                        <form action="{{ route('media-files.destroy', $mediaFile->id) }}" method="POST"
-                            onsubmit="return confirm('{{ __('main.are_you_sure') }}')">
+                        <form action="{{ route('media-files.destroy', $mediaFile->id) }}" method="POST" onsubmit="return confirm('{{ __('main.are_you_sure') }}')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="kt-btn bg-danger w-full">

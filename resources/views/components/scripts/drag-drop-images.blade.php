@@ -1,148 +1,169 @@
 <script>
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => {
-        document.addEventListener(e, ev => {
-            ev.preventDefault();
-            ev.stopPropagation();
-        });
-    });
+    document.addEventListener('DOMContentLoaded', function() {
 
-    document.querySelectorAll('.dropzone').forEach(zone => {
-        const input = document.getElementById(zone.dataset.input);
-        const preview = document.getElementById('preview-' + zone.dataset.input);
-        zone.addEventListener('click', () => input.click());
-        ['dragenter', 'dragover'].forEach(e =>
-            zone.addEventListener(e, () => zone.classList.add('drag'))
-        );
-        ['dragleave', 'drop'].forEach(e =>
-            zone.addEventListener(e, () => zone.classList.remove('drag'))
-        );
-        zone.addEventListener('drop', e => {
-            zone.classList.remove('drag');
-            input.files = e.dataTransfer.files;
-            renderFiles(input, preview);
+        /* ================= GLOBAL DRAG ================= */
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => {
+            document.addEventListener(e, ev => {
+                ev.preventDefault();
+                ev.stopPropagation();
+            });
         });
 
-        input.addEventListener('change', () => renderFiles(input, preview));
-    });
+        /* ================= DROPZONE ================= */
+        const dropzones = document.querySelectorAll('.dropzone');
 
-    function formatFileSize(bytes) {
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        if (!bytes) return '0 Bytes';
-        const i = Math.floor(Math.log(bytes) / Math.log(1024));
-        return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
-    }
+        dropzones.forEach(zone => {
+            const inputId = zone.dataset.input;
+            const input = document.getElementById(inputId);
+            const previewId = 'preview-' + inputId;
+            const preview = document.getElementById(previewId);
 
-    function renderFiles(input, preview) {
-        preview.innerHTML = '';
-        preview.classList.remove('hidden');
 
-        const dt = new DataTransfer();
-
-        [...input.files].forEach((file, index) => {
-            dt.items.add(file);
-
-            const div = document.createElement('div');
-            div.className = 'relative border-custom rounded-lg p-3 text-center';
-
-            div.innerHTML = `
-                ${file.type.startsWith('image')
-                    ? `<img src="${URL.createObjectURL(file)}" class="rounded-lg shadow-md w-full h-24 object-cover mb-2">`
-                    : `<i class="ki-filled ki-file text-3xl text-gray-300"></i>`
-                }
-                <button type="button" class="absolute -top-2 -right-2 z-20 bg-danger text-white cursor-pointer rounded-full w-6 h-6 text-center" data-index="${index}">x</button>
-                <div class="text-xs mt-1 truncate">${file.name}</div>
-                <div class="text-xs text-gray-300">${formatFileSize(file.size)}</div>
-            `;
-
-            preview.appendChild(div);
-        });
-    }
-
-    // Handle delete buttons - both new files and existing images
-    document.addEventListener('click', function(e) {
-        const btn = e.target.closest('button[data-index]');
-        if (!btn) return;
-
-        e.preventDefault();
-
-        const preview = btn.closest('[id^="preview-"]');
-        if (!preview) return;
-
-        const inputId = preview.id.replace('preview-', '');
-        const input = document.getElementById(inputId);
-
-        // 🟢 حالة الصورة الرئيسية القديمة (Main Image - Edit Mode)
-        if (btn.closest('#existing_main_image')) {
-            const mainImageDiv = document.getElementById('existing_main_image');
-            if (mainImageDiv) {
-                mainImageDiv.remove();
-                const removeInput = document.getElementById('remove_main_image');
-                if (removeInput) {
-                    removeInput.value = '1';
-                }
+            if (!input) {
+                console.error('Input not found for:', inputId);
+                return;
             }
-            return;
-        }
 
-        // 🟢 صور المعرض القديمة (Gallery Images - Edit Mode)
-        const existingGalleryMatch = btn.closest('[id^="existing_gallery_"]');
-        if (existingGalleryMatch) {
-            const index = existingGalleryMatch.id.replace('existing_gallery_', '');
-            const galleryDiv = document.getElementById('existing_gallery_' + index);
-            if (galleryDiv) {
-                galleryDiv.remove();
-
-                // Create or update hidden input to track removed images
-                let removedInput = document.getElementById('remove_gallery_images');
-                if (!removedInput) {
-                    removedInput = document.createElement('input');
-                    removedInput.type = 'hidden';
-                    removedInput.id = 'remove_gallery_images';
-                    removedInput.name = 'remove_gallery_images';
-                    removedInput.value = '[]';
-                    document.querySelector('form').appendChild(removedInput);
-                }
-
-                let removed = JSON.parse(removedInput.value);
-                if (!removed.includes(index)) {
-                    removed.push(index);
-                    removedInput.value = JSON.stringify(removed);
-                }
+            if (!preview) {
+                console.error('Preview not found for:', previewId);
+                return;
             }
-            return;
-        }
 
-        // 🟢 صور مضافة حديثًا (New Files)
-        const removeIndex = +btn.dataset.index;
-        const newDT = new DataTransfer();
 
-        [...input.files].forEach((file, i) => {
-            if (i !== removeIndex) newDT.items.add(file);
+            // Click handler to open file dialog
+            zone.addEventListener('click', (e) => {
+                input.click();
+            });
+
+            // drag UI only (no file injection for single)
+            ['dragenter', 'dragover'].forEach(e =>
+                zone.addEventListener(e, () => {
+                    zone.classList.add('drag');
+                })
+            );
+            ['dragleave', 'drop'].forEach(e =>
+                zone.addEventListener(e, () => {
+                    zone.classList.remove('drag');
+                })
+            );
+
+            // Handle drop للـ single و multiple files
+            zone.addEventListener('drop', e => {
+                const files = e.dataTransfer.files;
+                if (!files.length) return;
+
+                // للـ single photo: خذ أول ملف فقط
+                if (!input.multiple) {
+                    const dt = new DataTransfer();
+                    dt.items.add(files[0]);
+                    input.files = dt.files;
+                } else {
+                    // للـ gallery: خذ كل الملفات
+                    input.files = files;
+                }
+                renderFiles(input, preview);
+            });
+
+            // File change event (when user selects via dialog)
+            input.addEventListener('change', () => {
+
+                // إذا كان هذا الـ photo input وفيه ملفات جديدة، حذف الصورة القديمة
+                if (inputId === 'photo' && input.files.length > 0) {
+                    const existingPhoto = document.getElementById('existing-photo');
+                    if (existingPhoto) {
+                        existingPhoto.remove();
+                        const removePhotoInput = document.getElementById('remove_photo');
+                        if (removePhotoInput) {
+                            removePhotoInput.value = 1;
+                        }
+                    }
+                }
+
+                renderFiles(input, preview);
+            });
         });
 
-        input.files = newDT.files;
 
-        if (input.files.length) {
-            renderFiles(input, preview);
-        } else {
-            preview.classList.add('hidden');
+        /* ================= RENDER FILES ================= */
+        function renderFiles(input, preview) {
             preview.innerHTML = '';
+            preview.classList.remove('hidden');
+
+            const files = [...input.files];
+
+            if (files.length === 0) {
+                preview.classList.add('hidden');
+                return;
+            }
+
+            // استخدم DataTransfer لحفظ الملفات في الـ input
+            const dt = new DataTransfer();
+            files.forEach(file => dt.items.add(file));
+            input.files = dt.files;
+
+            files.forEach((file, index) => {
+                const div = document.createElement('div');
+                div.className = 'relative w-fit';
+
+                const displayIndex = input.multiple ? index : 0;
+
+                div.innerHTML = `
+            <img src="${URL.createObjectURL(file)}"
+                 class="h-24 w-24 object-cover rounded">
+            <button type="button"
+                    class="remove-new absolute -top-2 -right-2 bg-danger text-white w-6 h-6 rounded-full"
+                    data-index="${displayIndex}"
+                    data-input-id="${input.id}">
+                ×
+            </button>
+        `;
+                preview.appendChild(div);
+            });
         }
+
+        /* ================= REMOVE LOGIC ================= */
+        document.addEventListener('click', function(e) {
+
+            /* ---- remove existing photo ---- */
+            if (e.target.classList.contains('remove-existing-photo')) {
+                document.getElementById('existing-photo')?.remove();
+                document.getElementById('remove_photo').value = 1;
+                return;
+            }
+
+            /* ---- remove existing gallery ---- */
+            if (e.target.classList.contains('remove-existing-gallery')) {
+                const index = e.target.dataset.index;
+                const path = e.target.dataset.path;
+
+                document.getElementById('existing_gallery_' + index)?.remove();
+
+                const input = document.getElementById('removed_gallery');
+                const data = JSON.parse(input.value);
+                data.push(path);
+                input.value = JSON.stringify(data);
+                return;
+            }
+
+            /* ================= REMOVE NEW UPLOADED FILE ================= */
+            if (e.target.classList.contains('remove-new')) {
+                const index = +e.target.dataset.index;
+                const inputId = e.target.dataset.inputId;
+                const input = document.getElementById(inputId);
+                if (!input) return;
+
+                const preview = document.getElementById('preview-' + inputId);
+                if (!preview) return;
+
+
+                const dt = new DataTransfer();
+                [...input.files].forEach((file, i) => {
+                    if (i !== index) dt.items.add(file);
+                });
+
+                input.files = dt.files;
+                renderFiles(input, preview);
+            }
+        });
     });
-
-    // Track removed gallery images
-    let removedGalleryImages = [];
-
-    // Remove existing main image
-    function removeExistingMainImage() {
-        document.getElementById('existing_main_image').style.display = 'none';
-        document.getElementById('remove_main_image').value = '1';
-    }
-
-    // Remove existing gallery image
-    function removeExistingGalleryImage(index, imagePath) {
-        document.getElementById('existing_gallery_' + index).style.display = 'none';
-        removedGalleryImages.push(imagePath);
-        document.getElementById('remove_gallery_images').value = JSON.stringify(removedGalleryImages);
-    }
 </script>

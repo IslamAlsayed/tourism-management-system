@@ -19,7 +19,7 @@
     </div>
 
     {{-- Subregion --}}
-    <div class="align-self-end {{ !hasEmpty($filters['region']) ? 'disabled-option p-2 rounded-sm' : '' }}">
+    <div class="align-self-end {{ !hasEmpty($filters['region']) ? 'disabled-option rounded-sm' : '' }}">
         <label for="subregion_id" class="kt-label mb-2 flex items-center justify-between">
             <div> {{ __('main.subregions') }}
                 <strong class="dataLength text-primary">
@@ -51,7 +51,7 @@
     </div>
 
     {{-- country --}}
-    <div class="align-self-end {{ !hasEmpty($filters['subregion']) ? 'disabled-option p-2 rounded-sm' : '' }}">
+    <div class="align-self-end {{ !hasEmpty($filters['subregion']) ? 'disabled-option rounded-sm' : '' }}">
         <label for="country_id" class="kt-label mb-2 flex items-center justify-between">
             <div> {{ __('main.countries') }}
                 <strong class="dataLength text-primary">
@@ -84,7 +84,7 @@
     <div class="col-span-full">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6">
             {{-- State --}}
-            <div class="align-self-end {{ !hasEmpty($filters['country']) ? 'disabled-option p-2 rounded-sm' : '' }}">
+            <div class="align-self-end {{ !hasEmpty($filters['country']) ? 'disabled-option rounded-sm' : '' }}">
                 <label for="state_id" class="kt-label mb-2 flex items-center justify-between">
                     <div class="flex items-center justify-between gap-1">
                         <div class="flex items-center justify-between gap-1">
@@ -135,7 +135,7 @@
 
             {{-- City --}}
             <div
-                class="align-self-end {{ !hasEmpty($filters['state']) && !$all_states ? 'disabled-option p-2 rounded-sm' : '' }}">
+                class="align-self-end {{ !hasEmpty($filters['state']) && !$all_states ? 'disabled-option rounded-sm' : '' }}">
                 <label for="city_id" class="kt-label mb-2 flex items-center justify-between">
                     <div class="flex items-center justify-between gap-1">
                         <div class="flex items-center justify-between gap-1">

@@ -1017,6 +1017,82 @@ return [
             ],
         ],
 
+
+        // ================= Jeep Safari =================
+        [
+            'title' => 'jeep_safari',
+            'icon' => 'fa-solid fa-truck-monster',
+            'status' => 'new',
+            'children' => [
+                [
+                    'title' => 'all_jeeps',
+                    'icon' => 'fa-solid fa-list',
+                    'route' => 'jeeps.index'
+                ],
+                [
+                    'title' => 'create_jeep',
+                    'icon' => 'fa-solid fa-square-plus',
+                    'route' => 'jeeps.create'
+                ],
+                // [
+                //     'title' => 'import jeeps',
+                //     'icon' => 'fas fa-file-import',
+                //     'route' => 'import.data',
+                //     'parameters' => ['model' => 'jeep', 'models' => 'jeeps', 'view' => 'jeeps'],
+                // ]
+            ]
+        ],
+
+        // ================= Visa Requirements =================
+        [
+            'title' => 'visa requirements',
+            'icon' => 'fa-solid fa-passport',
+            'status' => 'new',
+            'children' => [
+                [
+                    'title' => 'all visa requirements',
+                    'icon' => 'fa-solid fa-list',
+                    'route' => 'visa-requirements.index'
+                ],
+                [
+                    'title' => 'create visa requirement',
+                    'icon' => 'fa-solid fa-square-plus',
+                    'route' => 'visa-requirements.create'
+                ],
+                // [
+                //     'title' => 'import visa requirements',
+                //     'icon' => 'fas fa-file-import',
+                //     'route' => 'import.data',
+                //     'parameters' => ['model' => 'visa-requirement', 'models' => 'visa-requirements', 'view' => 'visa-requirements'],
+                // ]
+            ],
+        ],
+
+        // ================= Travel Passes =================
+        [
+            'title' => 'travel passes',
+            'icon' => 'fa-solid fa-ticket',
+            'status' => 'new',
+            'children' => [
+                [
+                    'title' => 'all travel passes',
+                    'icon' => 'fa-solid fa-list',
+                    'route' => 'travel-passes.index'
+                ],
+                [
+                    'title' => 'create travel pass',
+                    'icon' => 'fa-solid fa-square-plus',
+                    'route' => 'travel-passes.create'
+                ],
+                // [
+                //     'title' => 'import travel passes',
+                //     'icon' => 'fa-solid fa-file-import',
+                //     'route' => 'import.data',
+                //     'parameters' => ['models' => 'travel-passes'],
+                // ],
+            ],
+        ],
+
         // ================= Crossings & Ports =================
         [
             'title' => 'crossings & ports',

@@ -178,7 +178,7 @@ class DashboardController extends Controller
             if (!empty($request->message)) {
                 if ($request->input('all_users') == '1') {
                     Notification::create([
-                        'user_id' => getActiveUser()?->id, // sender
+                        'user_id' => getActiveUserId(), // sender
                         'type' => 'success',
                         'message' => $request->message,
                         'is_read' => 0,
@@ -187,7 +187,7 @@ class DashboardController extends Controller
                     ]);
                 } elseif ($recipientUser) {
                     Notification::create([
-                        'user_id' => getActiveUser()?->id, // sender
+                        'user_id' => getActiveUserId(), // sender
                         'recipient_user_id' => $recipientUser->id,
                         'type' => 'success',
                         'message' => $request->message,
@@ -203,7 +203,7 @@ class DashboardController extends Controller
                 'subject' => $request->subject,
                 'message' => $request->message,
                 'sent_by' => $userName,
-                'performer_id' => getActiveUser()->id,
+                'performer_id' => getActiveUserId(),
                 'activities_logs_count' => Activity::count() ?? 0,
                 'users_count' => User::count() ?? 0,
                 'notification_count' => Notification::count() ?? 0,
@@ -256,5 +256,40 @@ class DashboardController extends Controller
         }
 
         return \Illuminate\Support\Facades\Storage::disk('public')->download($path, $filename);
+    }
+
+    public function toggleField(Request $request)
+    {
+        $validated = $request->validate([
+            'model' => 'required|string',
+            'id'    => 'required|integer',
+            'field' => 'required|string',
+            'value' => 'nullable',
+        ]);
+
+        $modelClass = "App\\Models\\" . str_replace('-', '', studlyCaseName($request->model));
+
+        if (!class_exists($modelClass)) {
+            return response()->json(['success' => false, 'message' => __('messages.invalid_model_specified')], 400);
+        }
+
+        $record = $modelClass::find($validated['id']);
+
+        if (!$record) {
+            return response()->json(['success' => false, 'message' => __('messages.record_not_found')], 404);
+        }
+
+        if (!array_key_exists($validated['field'], $record->getAttributes())) {
+            return response()->json(['success' => false, 'message' => __('messages.invalid_field')], 422);
+        }
+
+        if ($request->has('value')) {
+            $record->{$validated['field']} = $validated['value'];
+        } else {
+            $record->{$validated['field']} = ! (bool) $record->{$validated['field']};
+        }
+
+        $record->save();
+        return response()->json(['success'   => true, 'new_value' => $record->{$validated['field']}, 'message'   => __('messages.updated_successfully')]);
     }
 }

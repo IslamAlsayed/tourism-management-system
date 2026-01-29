@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AiController;
 use App\Http\Controllers\Api\RouteController;
@@ -15,6 +16,9 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/get-references', [DashboardController::class, 'getReferences'])->name('api.get-references');
     Route::get('/image/download', [DashboardController::class, 'download'])->name('image.download');
 
+    // Route::patch('patch/toggleStatus', [DashboardController::class, 'toggleStatus'])->name('patch.toggleStatus');
+    Route::patch('/toggle-field', [DashboardController::class, 'toggleField'])->name('patch.toggleField');
+
     // Update user status to offline (called when browser/tab closes)
     Route::post('/user-status/offline', [DashboardController::class, 'userOfflineStatus'])->name('user.status.offline');
     Route::post('/translate-record-event', [DashboardController::class, 'translateRecordEvent'])->name('api.translate-record-event');
@@ -28,4 +32,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     Route::get('routes/cities', [RouteController::class, 'getCities'])->name('routes.cities');
     Route::get('routes/cities/{id}', [RouteController::class, 'getCityById'])->name('routes.city.show');
+
+    Route::get('routes/nationalities', [RouteController::class, 'getNationalities'])->name('routes.nationalities');
+    Route::get('routes/nationalities/{id}', [RouteController::class, 'getNationalityById'])->name('routes.nationality.show');
 });

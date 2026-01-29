@@ -85,8 +85,7 @@
                                 <label class="kt-label mb-2">{{ __('main.operating_days') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     @foreach ($crossingPort->operating_days as $day)
-                                        <span
-                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                             {{ ucfirst(str_replace('_', ' ', $day)) }}
                                         </span>
                                     @endforeach
@@ -192,8 +191,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
                             @if ($crossingPort->region)
-                                <a href="{{ route('regions.show', $crossingPort->region?->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('regions.show', $crossingPort->region?->id) }}" class="block text-sm text-primary underline">
                                     {{ $crossingPort->region?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -204,8 +202,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
                             @if ($crossingPort->subregion)
-                                <a href="{{ route('subregions.show', $crossingPort->subregion->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('subregions.show', $crossingPort->subregion->id) }}" class="block text-sm text-primary underline">
                                     {{ $crossingPort->subregion->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -216,8 +213,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
                             @if ($crossingPort->country)
-                                <a href="{{ route('countries.show', $crossingPort->country?->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('countries.show', $crossingPort->country?->id) }}" class="block text-sm text-primary underline">
                                     {{ $crossingPort->country?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -228,8 +224,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.state') }}</label>
                             @if ($crossingPort->state)
-                                <a href="{{ route('states.show', $crossingPort->state?->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('states.show', $crossingPort->state?->id) }}" class="block text-sm text-primary underline">
                                     {{ $crossingPort->state?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -240,8 +235,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.city') }}</label>
                             @if ($crossingPort->city)
-                                <a href="{{ route('cities.show', $crossingPort->city?->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('cities.show', $crossingPort->city?->id) }}" class="block text-sm text-primary underline">
                                     {{ $crossingPort->city?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -347,8 +341,7 @@
                                 <div>
                                     <label class="kt-label mb-1">{{ __('main.visa_application_url') }}</label>
                                     <p class="text-sm text-secondary-foreground">
-                                        <a href="{{ $crossingPort->visa_application_url }}" target="_blank"
-                                            class="text-blue-600 hover:underline">
+                                        <a href="{{ $crossingPort->visa_application_url }}" target="_blank" class="text-blue-600 hover:underline">
                                             {{ $crossingPort->visa_application_url }}
                                         </a>
                                     </p>
@@ -358,8 +351,7 @@
                                 <div>
                                     <label class="kt-label mb-1">{{ __('main.visa_policy_source') }}</label>
                                     <p class="text-sm text-secondary-foreground">
-                                        <a href="{{ $crossingPort->visa_policy_source }}" target="_blank"
-                                            class="text-blue-600 hover:underline">
+                                        <a href="{{ $crossingPort->visa_policy_source }}" target="_blank" class="text-blue-600 hover:underline">
                                             {{ __('main.view_source') }}
                                         </a>
                                     </p>
@@ -429,8 +421,7 @@
                             <label class="font-medium text-gray-900">{{ __('main.facilities') }}</label>
                             <div class="mt-2 flex flex-wrap gap-2">
                                 @foreach ($crossingPort->facilities as $facility)
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                         {{ ucfirst(str_replace('_', ' ', $facility)) }}
                                     </span>
                                 @endforeach
@@ -443,8 +434,7 @@
                             <label class="font-medium text-gray-900">{{ __('main.services') }}</label>
                             <div class="mt-2 flex flex-wrap gap-2">
                                 @foreach ($crossingPort->services as $service)
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                                         {{ ucfirst(str_replace('_', ' ', $service)) }}
                                     </span>
                                 @endforeach
@@ -466,8 +456,7 @@
                                 <div>
                                     <label class="kt-label mb-1">{{ __('main.email') }}</label>
                                     <p class="text-sm text-secondary-foreground">
-                                        <a href="mailto:{{ $crossingPort->email }}"
-                                            class="text-blue-600 hover:underline">
+                                        <a href="mailto:{{ $crossingPort->email }}" class="text-blue-600 hover:underline">
                                             {{ $crossingPort->email }}
                                         </a>
                                     </p>
@@ -477,8 +466,7 @@
                                 <div>
                                     <label class="kt-label mb-1">{{ __('main.contact_phone') }}</label>
                                     <p class="text-sm text-secondary-foreground">
-                                        <a href="tel:{{ $crossingPort->contact_phone }}"
-                                            class="text-blue-600 hover:underline">
+                                        <a href="tel:{{ $crossingPort->contact_phone }}" class="text-blue-600 hover:underline">
                                             {{ $crossingPort->contact_phone }}
                                         </a>
                                     </p>
@@ -488,8 +476,7 @@
                                 <div>
                                     <label class="kt-label mb-1">{{ __('main.website') }}</label>
                                     <p class="text-sm text-secondary-foreground">
-                                        <a href="{{ $crossingPort->website }}" target="_blank"
-                                            class="text-blue-600 hover:underline">
+                                        <a href="{{ $crossingPort->website }}" target="_blank" class="text-blue-600 hover:underline">
                                             {{ $crossingPort->website }}
                                         </a>
                                     </p>
@@ -501,39 +488,7 @@
             @endif
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        @if ($crossingPort->creator)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $crossingPort->creator->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $crossingPort->created_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                        @if ($crossingPort->updater)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $crossingPort->updater->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $crossingPort->updated_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $crossingPort])
 
             <!-- Actions -->
             <div class="flex items-center gap-4">

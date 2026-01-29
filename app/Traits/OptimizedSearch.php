@@ -48,7 +48,7 @@ trait OptimizedSearch
     protected function getSearchCacheKey($modelClass, $search, $perPage)
     {
         $page = request()->get('page', 1);
-        $userId = getActiveUser()?->id ?? 'guest';
+        $userId = getActiveUserId() ?? 'guest';
 
         return sprintf(
             'search:%s:%s:%s:%d:%d',

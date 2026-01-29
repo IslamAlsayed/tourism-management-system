@@ -1,25 +1,25 @@
 .multi-select-tag,
 .search-select-tag {
     /* all: revert !important; */
-    font-family: inherit !important
+    font-family: inherit !important;
 }
 
 .multi-select-tag .wrapper,
 .search-select-tag .wrapper {
-    position: relative
+    position: relative;
 }
 
 .multi-select-tag .tag-container,
 .search-select-tag .tag-container {
     display: flex;
-    padding: .5rem;
+    padding: 0.5rem;
     flex-wrap: wrap;
-    gap: .5rem;
+    gap: 0.5rem;
     border: 1px solid #e5e7eb;
-    border-radius: .25rem;
-    font-size: .875rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
     line-height: 1.25rem;
-    background-color: #fff
+    background-color: #fff;
 }
 
 .multi-select-tag .tag-input,
@@ -29,13 +29,13 @@
 
 .multi-select-tag .tag-input,
 .search-select-tag .tag-input {
-    padding: .25rem;
+    padding: 0.25rem;
     flex-grow: 1;
     outline: 2px solid transparent;
     outline-offset: 2px;
     background-color: #fff;
     margin: 0;
-    line-height: 1.25rem
+    line-height: 1.25rem;
 }
 
 .multi-select-tag .dropdown,
@@ -44,64 +44,67 @@
     position: absolute;
     z-index: 10;
     padding: 0;
-    margin-top: .25rem;
-    border-radius: .25rem;
+    margin-top: 0.25rem;
+    border-radius: 0.25rem;
     border: 1px solid #e5e7eb;
     width: 100%;
     max-height: 15rem;
     background-color: #fff;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -2px rgba(0, 0, 0, .05)
+    box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .multi-select-tag .li,
 .search-select-tag .li {
-    padding: .5rem;
+    padding: 0.5rem;
     cursor: pointer;
     user-select: none;
-    list-style-type: none
+    list-style-type: none;
 }
 
 .multi-select-tag .li:hover,
 .search-select-tag .li:hover {
-    background-color: #e5e7eb
+    background-color: #e5e7eb;
 }
 
 .multi-select-tag .li-arrow,
 .search-select-tag .li-arrow {
-    background-color: #d1d5db
+    background-color: #d1d5db;
 }
 
 .multi-select-tag .tag-item,
 .search-select-tag .tag-item {
     display: flex;
-    padding-top: .25rem;
-    padding-bottom: .25rem;
-    padding-left: .5rem;
-    padding-right: .5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     align-items: center;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     color: #1e40af;
     user-select: none;
-    background-color: #dbeafe
+    background-color: #dbeafe;
 }
 
 .multi-select-tag .cross,
 .search-select-tag .cross {
-    margin-left: .25rem;
-    cursor: pointer
+    margin-left: 0.25rem;
+    cursor: pointer;
 }
 
 .multi-select-tag .hidden,
 .search-select-tag .hidden {
-    display: none
+    display: none;
 }
 
 [data-value="no-data"],
 .disabled,
 .disabled-option {
+    opacity: 0.7;
     color: #6b7280;
     pointer-events: none;
-    background-color: var(--background);
+    /* background-color: var(--background); */
 }
 
 .disabled {
@@ -163,7 +166,7 @@
 }
 
 #containerHotels .loader::after {
-    content: '';
+    content: "";
     width: 20px;
     height: 20px;
     border-radius: 50%;

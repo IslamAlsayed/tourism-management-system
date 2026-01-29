@@ -45,7 +45,7 @@ class TransportationImportExportController extends Controller
             }
 
             // Get user for notifications
-            $userId = getActiveUser()->id ?? null;
+            $userId = getActiveUserId() ?? null;
 
             // Dispatch import job
             ImportDataJob::dispatch(\App\Models\TransportationCompany::class, $absolutePath, 1000, $userId);
@@ -145,7 +145,7 @@ class TransportationImportExportController extends Controller
             }
 
             // Get user for notifications
-            $userId = getActiveUser()->id ?? null;
+            $userId = getActiveUserId() ?? null;
 
             // Dispatch import job
             ImportDataJob::dispatch(\App\Models\TransportationCompanyContact::class, $absolutePath, 1000, $userId);

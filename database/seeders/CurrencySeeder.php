@@ -70,8 +70,6 @@ class CurrencySeeder extends Seeder
             ['Haitian gourde', 'HTG', 'G', true],
             ['Hungarian forint', 'HUF', 'Ft', true],
             ['Indonesian rupiah', 'IDR', 'Rp', true],
-            ['Israeli new shekel', 'ILS', '₪', true],
-            ['Israeli new shekel', 'ILS', '₪', true],
             ['Indian rupee', 'INR', '₹', true],
             ['Iraqi dinar', 'IQD', 'د.ع', true],
             ['Iranian rial', 'IRR', '﷼', true],

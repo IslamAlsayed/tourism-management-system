@@ -114,8 +114,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.region') }}</label>
                             @if ($company->region)
-                                <a href="{{ route('regions.show', $company->region?->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('regions.show', $company->region?->id) }}" class="block text-sm text-primary underline">
                                     {{ $company->region?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -126,8 +125,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
                             @if ($company->subregion)
-                                <a href="{{ route('subregions.show', $company->subregion->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('subregions.show', $company->subregion->id) }}" class="block text-sm text-primary underline">
                                     {{ $company->subregion->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -138,8 +136,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
                             @if ($company->country)
-                                <a href="{{ route('countries.show', $company->country?->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('countries.show', $company->country?->id) }}" class="block text-sm text-primary underline">
                                     {{ $company->country?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -150,8 +147,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.state') }}</label>
                             @if ($company->state)
-                                <a href="{{ route('states.show', $company->state?->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('states.show', $company->state?->id) }}" class="block text-sm text-primary underline">
                                     {{ $company->state?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -162,8 +158,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.city') }}</label>
                             @if ($company->city)
-                                <a href="{{ route('cities.show', $company->city?->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('cities.show', $company->city?->id) }}" class="block text-sm text-primary underline">
                                     {{ $company->city?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -203,13 +198,11 @@
                         </div>
                         <div class="col-span-full mt-4">
                             <label class="kt-label block mb-1">{{ __('main.map') }}</label>
-                            <a href="https://maps.google.com?q={{ $company->latitude }},{{ $company->longitude }}"
-                                target="_blank" class="text-sm text-primary hover:underline">
+                            <a href="https://maps.google.com?q={{ $company->latitude }},{{ $company->longitude }}" target="_blank" class="text-sm text-primary hover:underline">
                                 {{ __('main.view_on_google_maps') }}
                             </a>
                             <div class="w-full bg-white p-4 rounded-lg shadow-lg">
-                                <div id="map" data-title="{{ $company->title }}"
-                                    data-latitude="{{ $company->latitude }}" data-longitude="{{ $company->longitude }}"
+                                <div id="map" data-title="{{ $company->title }}" data-latitude="{{ $company->latitude }}" data-longitude="{{ $company->longitude }}"
                                     class="rounded-md overflow-hidden shadow"></div>
                             </div>
                         </div>
@@ -270,8 +263,7 @@
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.website') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    <a href="{{ $company->website }}" target="_blank"
-                                        class="text-primary hover:underline">
+                                    <a href="{{ $company->website }}" target="_blank" class="text-primary hover:underline">
                                         {{ $company->website }}
                                     </a>
                                 </p>
@@ -282,39 +274,7 @@
             </div>
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        @if ($company->creator)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $company->creator->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $company->created_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                        @if ($company->updater)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $company->updater->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $company->updated_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $company])
 
             <!-- Vehicle Types -->
             @if ($company->vehicleTypes->count() > 0)

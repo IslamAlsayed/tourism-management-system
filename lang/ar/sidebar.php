@@ -171,6 +171,30 @@ return [
     'create tourist site' => 'إنشاء موقع سياحي جديد',
     'import tourist sites' => 'استيراد المواقع السياحية',
     'hostel sites' => 'مواقع النزل',
+
+    'all jeeps' => 'جميع سيارات الجيب',
+    'create jeep' => 'إنشاء سيارة جيب',
+    'import jeeps' => 'استيراد سيارات الجيب',
+
+    'all visa requirements' => 'جميع متطلبات التأشيرة',
+    'create visa requirement' => 'إنشاء متطلب تأشيرة',
+    'import visa requirements' => 'استيراد متطلبات التأشيرة',
+
+    'all travel passes' => 'جميع تصاريح السفر',
+    'create travel pass' => 'إنشاء تصريح سفر',
+    'import travel passes' => 'استيراد تصاريح السفر',
+
+    'travel_passes' => 'تصاريح السفر',
+    'travel passes' => 'تصاريح السفر',
+    'all travel passes' => 'جميع تصاريح السفر',
+    'create travel pass' => 'إنشاء تصريح سفر',
+    'import travel passes' => 'استيراد تصاريح السفر',
+
+    'jeep_safari' => 'سفاري جيب',
+    'all_jeeps' => 'جميع سيارات الجيب',
+    'create_jeep' => 'إضافة سيارة',
+    'import_jeeps' => 'استيراد السيارت والرحلات',
+
     'site entrance fees' => 'رسوم دخول المواقع',
     'services' => 'الخدمات',
     'group services' => 'خدمات المجموعات',

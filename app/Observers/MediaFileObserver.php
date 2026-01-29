@@ -22,7 +22,7 @@ class MediaFileObserver
                 $mediaFile->update([
                     'width' => $width,
                     'height' => $height,
-                    'uploaded_by' => getActiveUser()?->id,
+                    'uploaded_by' => getActiveUserId(),
                     'uploaded_at' => now(),
                     'is_featured' => request()->is_featured ?? true,
                     'is_active' => request()->is_active ?? true,

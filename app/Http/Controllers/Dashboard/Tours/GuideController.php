@@ -78,7 +78,7 @@ class GuideController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tours.guide')]));
         $data = $request->validated();
         $data = array_merge($data, $request->safe()->except(['photo']));
-        $data['updated_by'] = getActiveUser()->id;
+        $data['updated_by'] = getActiveUserId();
         $updated = $tourGuide->update($data);
 
         if ($tourGuide && $request['language_id']) {

@@ -51,7 +51,7 @@
     </div>
 
     {{-- Transportation Vehicle Type --}}
-    <div class="{{ !hasEmpty($filters['company']) ? 'disabled-option p-2 rounded-sm' : '' }}">
+    <div class="{{ !hasEmpty($filters['company']) ? 'disabled-option rounded-sm' : '' }}">
         <label for="vehicle_type_id" class="kt-label mb-2 flex items-center justify-between">
             <div>
                 {{ __('main.vehicle-types') }}

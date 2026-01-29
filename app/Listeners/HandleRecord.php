@@ -82,14 +82,14 @@ class HandleRecord
 
         // إذا لم يتم تحديد مستخدمين مستهدفين بعد، فاستهدف الجميع ما عدا المستخدم الحالي
         if ($users->isEmpty()) {
-            $users = User::where('id', '!=', getActiveUser()->id)->get();
+            $users = User::where('id', '!=', getActiveUserId())->get();
         }
 
         foreach ($users as $notifyUser) {
             try {
                 $notify = [];
                 // $notify = Notification::create([
-                //     'performer_id' => getActiveUser()->id,
+                //     'performer_id' => getActiveUserId(),
                 //     'target_user_id' => $notifyUser->id,
                 //     'type' => 'success',
                 //     'notification_type' => 'system',
@@ -121,7 +121,7 @@ class HandleRecord
                         'type' => $type ?? class_basename($record),
                         'user_name' => getActiveUser()->name,
                         'message' => $message,
-                        'performer_id' => getActiveUser()->id,
+                        'performer_id' => getActiveUserId(),
                         'notification_id' => $notify?->id ?? null,
                         'target_user_id' => $notifyUser->id,
                         'is_global' => false,
@@ -138,7 +138,7 @@ class HandleRecord
                     // Log::info('Event Type: ' . $status);
                     // Log::info('Model Type: ' . ($type ?? class_basename($record)));
                     // Log::info('Target User ID: ' . $notifyUser->id);
-                    // Log::info('Performer: ' . getActiveUser()->name . ' (ID: ' . getActiveUser()->id . ')');
+                    // Log::info('Performer: ' . getActiveUser()->name . ' (ID: ' . getActiveUserId() . ')');
                     // Log::info('===================================');
 
                     $ably->channel('web.push.notifications')->publish('web.push.notifications', $data);

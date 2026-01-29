@@ -2,8 +2,12 @@
 
 namespace App\Traits;
 
+use App\Models\MediaFile;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
 
 trait PhotoUploadTrait
 {
@@ -70,5 +74,106 @@ trait PhotoUploadTrait
                 Storage::disk('public')->deleteDirectory('uploads/' . $folderPath);
             }
         }
+    }
+
+    /**
+     * Upload media file to MediaFile table
+     */
+    public function uploadMediaFile($file, $folder, $model, $collection)
+    {
+        try {
+            $filename = time() . '_' . Str::random(10) . '.' . $file->extension();
+            $path = $file->storeAs('uploads/' . $folder . '/' . $model->id . ($collection ? '/' . $collection : ''), $filename, 'public');
+            $mimeType = $file->getMimeType();
+            $fileType = strpos($mimeType, 'image') !== false ? 'image' : 'file';
+            \Illuminate\Support\Facades\Log::info("path: " . $path);
+            // Get image dimensions if it's an image
+            $dimensions = [];
+            if ($fileType === 'image') {
+                try {
+                    $imageInfo = getimagesize($file->getRealPath());
+                    if ($imageInfo) {
+                        $dimensions = ['width' => $imageInfo[0], 'height' => $imageInfo[1]];
+                    }
+                } catch (\Exception $e) {
+                    // If we can't get dimensions, continue without them
+                }
+            }
+
+            MediaFile::create([
+                'file_name' => $file->getClientOriginalName(),
+                'file_path' => $path,
+                'file_type' => $fileType,
+                'mime_type' => $mimeType,
+                'file_size' => $file->getSize(),
+                'disk' => 'public',
+                'collection_name' => $collection,
+                'model_type' => get_class($model),
+                'model_id' => $model->id,
+                'width' => $dimensions['width'] ?? null,
+                'height' => $dimensions['height'] ?? null,
+                'uploaded_by' => getActiveUserId(),
+                'uploaded_at' => now(),
+                'is_active' => true,
+            ]);
+
+            return true;
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Media upload failed: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function deleteMedia($model, $collection)
+    {
+        $model->media()->where('collection_name', $collection)->get()->each(function ($media) {
+            if ($media->file_path && Storage::disk('public')->exists($media->file_path)) {
+                Storage::disk('public')->delete($media->file_path);
+            }
+            $media->delete();
+        });
+    }
+
+    public function uploadSinglePhoto(Request $request, Model $model, string $column = 'photo', string $folder = 'other')
+    {
+        if (!$request->hasFile($column)) {
+            return;
+        }
+
+        // delete old photo
+        if (!empty($model->{$column})) {
+            Storage::disk('public')->delete($model->{$column});
+        }
+
+        $path = $request->file($column)->store("uploads/{$folder}/{$model->id}", 'public');
+
+        $model->update([$column => $path]);
+    }
+
+    public function uploadGallery(Request $request, Model $model, string $column = 'gallery', string $folder = 'other')
+    {
+        if (!$request->hasFile($column)) {
+            return;
+        }
+
+        $gallery = $model->{$column} ?? [];
+
+        foreach ($request->file($column) as $file) {
+            $gallery[] = $file->store("uploads/{$folder}/{$model->id}/gallery", 'public');
+        }
+
+        $model->update([$column => array_values($gallery),]);
+    }
+
+    public function deleteGalleryImages(Model $model, array $removedImages, string $column = 'gallery')
+    {
+        $gallery = $model->{$column} ?? [];
+
+        foreach ($removedImages as $image) {
+            Storage::disk('public')->delete($image);
+            $gallery = array_diff($gallery, [$image]);
+        }
+
+        $model->update([$column => array_values($gallery),]);
     }
 }

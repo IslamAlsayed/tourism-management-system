@@ -54,7 +54,7 @@
                                     </p>
                                 </div>
 
-                                @if (getActiveUser()?->id == $notification->recipient_user_id)
+                                @if (getActiveUserId() == $notification->recipient_user_id)
                                     <div class="flex-shrink-0 flex space-x-1">
                                         <div class="shrink-0 relative">
                                             <div class="cursor-pointer shrink-0 notification-actions-toggle"

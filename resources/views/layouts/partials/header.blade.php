@@ -15,7 +15,7 @@
 
         {{-- begin::Mobile logo --}}
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-            <a href="#" class="d-lg-none">
+            <a href="{{ route('dashboard') }}" class="d-lg-none">
                 <img alt="Logo" src="{{ asset('assets/media/logos/default.svg') }}" class="h-30px" />
             </a>
         </div>

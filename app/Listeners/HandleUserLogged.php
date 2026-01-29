@@ -70,10 +70,10 @@ class HandleUserLogged
                 try {
                     // Disable activity logging temporarily to prevent infinite loop
                     activity()->disableLogging();
-                    
+
                     $notify = [];
                     // $notify = Notification::create([
-                    //     'performer_id' => getActiveUser()->id,
+                    //     'performer_id' => getActiveUserId(),
                     //     'target_user_id' => $admin->id,
                     //     'type' => 'info',
                     //     'notification_type' => 'system',
@@ -83,7 +83,7 @@ class HandleUserLogged
                     //     'data' => json_encode(['source' => 'status', 'messageMode' => true]),
                     //     'is_global' => false,
                     // ]);
-                    
+
                     // Re-enable activity logging
                     activity()->enableLogging();
 
@@ -111,7 +111,7 @@ class HandleUserLogged
                                 'type' => 'user',
                                 'user_name' => $event->user->name,
                                 'message' => $message,
-                                'performer_id' => getActiveUser()->id,
+                                'performer_id' => getActiveUserId(),
                                 'notification_id' => $notify?->id ?? null,
                                 'target_user_id' => $admin->id,
                                 'is_global' => false,

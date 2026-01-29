@@ -1,0 +1,197 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use Illuminate\Support\Str;
+
+class Jeep extends Model
+{
+    use HasFactory, SoftDeletes, HasUuid, HasSearch;
+
+    protected $fillable = [
+        'id',
+        'uuid',
+        'photo',
+        'gallery',
+        'route',
+        'route_ar',
+        'slug',
+        'origin_city_id',
+        'destination_city_id',
+        'region_id',
+        'subregion_id',
+        'country_id',
+        'state_id',
+        'city_id',
+        'company_id',
+        'duration',
+        'duration_unit',
+        'distance',
+        'distance_unit',
+        'car_seats',
+        'price',
+        'currency_id',
+        'price_type',
+        'vehicle_model',
+        'model_year',
+        'license_plate',
+        'has_ac',
+        'has_driver',
+        'is_4x4',
+        'has_camping_gear',
+        'status',
+        'is_active',
+        'is_featured',
+        'description',
+        'notes',
+        'created_by',
+        'updated_by',
+        'route_itinerary',
+    ];
+
+    const PRICE_TYPES = [
+        'per_person' => 'Per Person',
+        'per_trip' => 'Per Trip',
+        'per_vehicle' => 'Per Vehicle',
+        'per_hour' => 'Per Hour'
+    ];
+
+    const DURATION_UNITS = [
+        'minutes' => 'Minutes',
+        'hours' => 'Hours',
+        'days' => 'Days'
+    ];
+
+    const DISTANCE_UNITS = [
+        'km' => 'KM',
+        'miles' => 'Miles'
+    ];
+
+    protected $casts = [
+        'has_ac' => 'boolean',
+        'has_driver' => 'boolean',
+        'is_4x4' => 'boolean',
+        'has_camping_gear' => 'boolean',
+        'is_featured' => 'boolean',
+        'is_active' => 'boolean',
+        'gallery' => 'array',
+        'duration' => 'float',
+        'distance' => 'float',
+        'route_itinerary' => 'array',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (!$model->slug) {
+                $model->slug = Str::slug($model->route);
+            }
+        });
+        static::updating(function ($model) {
+            if (!$model->slug) {
+                $model->slug = Str::slug($model->route);
+            }
+        });
+    }
+
+    /**
+     * Get relationship names for eager loading
+     */
+    public function getRelationshipNames()
+    {
+        return ['currency', 'country', 'city', 'originCity', 'destinationCity', 'creator', 'company'];
+    }
+
+    /**
+     * Get columns to exclude from search/display
+     */
+    public function getExcludedColumns()
+    {
+        return [
+            'created_by',
+            'updated_by',
+            'deleted_at',
+            'notes',
+            'description',
+            'duration_unit',
+            'distance_unit',
+            'origin_city_id',
+            'destination_city_id',
+            'region_id',
+            'subregion_id',
+            'country_id',
+            'state_id',
+            'city_id',
+            'company_id',
+            'currency_id',
+        ];
+    }
+
+    // Geographical Relations
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function originCity()
+    {
+        return $this->belongsTo(City::class, 'origin_city');
+    }
+
+    public function destinationCity()
+    {
+        return $this->belongsTo(City::class, 'destination_city');
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+
+    // New: Company Relation
+    public function company()
+    {
+        return $this->belongsTo(TransportationCompany::class, 'company_id');
+    }
+
+    public function seasons()
+    {
+        return $this->hasMany(JeepSeason::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+}

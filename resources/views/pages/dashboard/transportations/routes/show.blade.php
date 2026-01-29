@@ -141,8 +141,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.city') }}</label>
                             @if ($route->originCity)
-                                <a href="{{ route('cities.show', $route->originCity->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('cities.show', $route->originCity->id) }}" class="block text-sm text-primary underline">
                                     {{ $route->originCity->name }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -178,8 +177,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.city') }}</label>
                             @if ($route->destinationCity)
-                                <a href="{{ route('cities.show', $route->destinationCity->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('cities.show', $route->destinationCity->id) }}" class="block text-sm text-primary underline">
                                     {{ $route->destinationCity->name }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -219,28 +217,22 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             {{ __('main.company') }}
                                         </th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             {{ __('main.vehicle_type') }}
                                         </th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             {{ __('main.price') }}
                                         </th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             {{ __('main.schedule') }}
                                         </th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             {{ __('main.status') }}
                                         </th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             {{ __('main.actions') }}
                                         </th>
                                     </tr>
@@ -249,8 +241,7 @@
                                     @foreach ($route->assignments as $assignment)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                <a href="{{ route('transportations.companies.show', $assignment->company_id) }}"
-                                                    class="text-primary hover:underline">
+                                                <a href="{{ route('transportations.companies.show', $assignment->company_id) }}" class="text-primary hover:underline">
                                                     {{ $assignment->company->name }}
                                                 </a>
                                             </td>
@@ -272,13 +263,11 @@
                                                 @if ($assignment->is_active && $assignment->isCurrentlyValid())
                                                     <span class="kt-badge kt-badge-success">{{ __('main.active') }}</span>
                                                 @else
-                                                    <span
-                                                        class="kt-badge kt-badge-secondary">{{ __('main.inactive') }}</span>
+                                                    <span class="kt-badge kt-badge-secondary">{{ __('main.inactive') }}</span>
                                                 @endif
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                                <a href="{{ route('transportations.route-assignments.show', $assignment->id) }}"
-                                                    class="text-primary hover:underline">
+                                                <a href="{{ route('transportations.route-assignments.show', $assignment->id) }}" class="text-primary hover:underline">
                                                     {{ __('main.view') }}
                                                 </a>
                                             </td>
@@ -292,39 +281,7 @@
             @endif
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-                        @if ($route->creator)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $route->creator->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $route->created_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                        @if ($route->updater)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $route->updater->name }}</p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $route->updated_at?->format('Y-m-d H:i:s') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $route])
 
             <!-- Actions -->
             <div class="flex items-center gap-4">

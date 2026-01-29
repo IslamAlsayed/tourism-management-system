@@ -16,8 +16,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('transportations.route-assignments.edit', $assignment->id) }}"
-                    class="kt-btn kt-btn-primary md:hidden">
+                <a href="{{ route('transportations.route-assignments.edit', $assignment->id) }}" class="kt-btn kt-btn-primary md:hidden">
                     <i class="ki-filled ki-pencil text-sm me-2"></i>
                     {{ __('main.edit') }}
                 </a>
@@ -40,8 +39,7 @@
                         @if ($assignment->route)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.route') }}</label>
-                                <a href="{{ route('transportations.routes.show', $assignment->route->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('transportations.routes.show', $assignment->route->id) }}" class="block text-sm text-primary underline">
                                     {{ $assignment->route->name }}
                                     ({{ $assignment->route->originCity->name }} →
                                     {{ $assignment->route->destinationCity->name }})
@@ -52,8 +50,7 @@
                         @if ($assignment->company)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.company') }}</label>
-                                <a href="{{ route('transportations.companies.show', $assignment->company->id) }}"
-                                    class="block text-sm text-primary underline">
+                                <a href="{{ route('transportations.companies.show', $assignment->company->id) }}" class="block text-sm text-primary underline">
                                     {{ $assignment->company->name }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
@@ -72,7 +69,10 @@
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.currency') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    {{ $assignment->currency->name }} ({{ $assignment->currency->code }})
+                                    {{ $assignment->currency->name }}
+                                    <span class="text-primary font-semibold">
+                                        ({{ $assignment->currency->code }})
+                                    </span>
                                 </p>
                             </div>
                         @endif
@@ -163,9 +163,7 @@
             </div>
 
             @php
-                $availableDays = is_array($assignment->available_days)
-                    ? $assignment->available_days
-                    : json_decode($assignment->available_days ?? '[]', true);
+                $availableDays = is_array($assignment->available_days) ? $assignment->available_days : json_decode($assignment->available_days ?? '[]', true);
             @endphp
             @if (!empty($availableDays))
                 <div class="mt-4">

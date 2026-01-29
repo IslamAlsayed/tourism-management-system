@@ -29,11 +29,11 @@ class NotificationController extends Controller
         }
         $notifications = $query->paginate(50);
 
-        // $notifications = Notification::targetMe(getActiveUser()->id)->orderBy('created_at', 'desc')->limit(10)->get();
+        // $notifications = Notification::targetMe(getActiveUserId())->orderBy('created_at', 'desc')->limit(10)->get();
         $unreadNotificationsCount = Notification::unread()->count();
 
         return view('pages.dashboard.notifications.index', compact('notifications', 'unreadNotificationsCount'));
-        // return response()->json(['notifications' => $notifications, 'unread_count' => Notification::targetMe(getActiveUser()->id)->unread()->count()]);
+        // return response()->json(['notifications' => $notifications, 'unread_count' => Notification::targetMe(getActiveUserId())->unread()->count()]);
     }
 
     /**
@@ -67,7 +67,7 @@ class NotificationController extends Controller
      */
     public function markAllAsRead()
     {
-        Notification::targetMe(getActiveUser()->id)->unread()->update(['is_read' => true, 'read_at' => now()]);
+        Notification::targetMe(getActiveUserId())->unread()->update(['is_read' => true, 'read_at' => now()]);
         return response()->json(['success' => true, 'message' => __('messages.all_notifications_marked_read')]);
     }
 
@@ -89,7 +89,7 @@ class NotificationController extends Controller
      */
     public function getUnreadCount()
     {
-        $count = Notification::targetMe(getActiveUser()->id)->unread()->count();
+        $count = Notification::targetMe(getActiveUserId())->unread()->count();
         return response()->json(['unread_count' => $count]);
     }
 
@@ -98,7 +98,7 @@ class NotificationController extends Controller
      */
     public function getRecent()
     {
-        $notifications = Notification::targetMe(getActiveUser()->id)->orderBy('created_at', 'desc')->limit(5)->get();
-        return response()->json(['notifications' => $notifications, 'unread_count' => Notification::targetMe(getActiveUser()->id)->unread()->count()]);
+        $notifications = Notification::targetMe(getActiveUserId())->orderBy('created_at', 'desc')->limit(5)->get();
+        return response()->json(['notifications' => $notifications, 'unread_count' => Notification::targetMe(getActiveUserId())->unread()->count()]);
     }
 }

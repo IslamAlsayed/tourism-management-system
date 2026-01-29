@@ -3,7 +3,7 @@
 <meta charset="utf-8" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script>
-    window.USERID = "{{ getActiveUser()?->id }}";
+    window.USERID = "{{ getActiveUserId() }}";
     window.APP_LANG = "{{ app()->getLocale() }}";
     window.APP_DEBUG = {{ config('app.debug') ? 'true' : 'false' }};
 </script>

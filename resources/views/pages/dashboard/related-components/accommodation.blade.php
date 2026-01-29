@@ -47,8 +47,7 @@
                         <label class="kt-label mb-1">{{ __('main.star_rating') }}</label>
                         <div class="flex items-center gap-1">
                             @for ($i = 1; $i <= 5; $i++)
-                                <i
-                                    class="fas fa-star {{ $i <= $record->stars ? 'text-yellow-500' : 'text-gray-300' }} text-sm"></i>
+                                <i class="fas fa-star {{ $i <= $record->stars ? 'text-yellow-500' : 'text-gray-300' }} text-sm"></i>
                             @endfor
                         </div>
                     </div>
@@ -57,8 +56,11 @@
                     <div>
                         <label class="kt-label mb-1">{{ __('main.currency') }}</label>
                         <p class="text-sm text-secondary-foreground">
-                            {{ $record->currency->code }} -
-                            {{ $record->currency->name }}</p>
+                            {{ $record->currency->name }}
+                            <span class="text-primary font-semibold">
+                                ({{ $record->currency->code }})
+                            </span>
+                        </p>
                     </div>
                 @endif
                 @if ($record->city || $record->country)

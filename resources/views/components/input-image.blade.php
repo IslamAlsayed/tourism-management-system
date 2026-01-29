@@ -9,7 +9,7 @@
     $photoUrl = isset($record) && $record && checkExistFile($record->photo) ? asset('storage/' . $record->photo) : '';
 @endphp
 
-<div class="text-center mb-4">
+<div class="text-center">
     <div class="inline-block mb-4">
         <div class="relative flex justify-center">
             @php

@@ -99,8 +99,7 @@
                     <div class="kt-card-body p-4">
                         <div class="flex flex-col gap-4">
                             @foreach ($type->accommodations as $accommodation)
-                                <div wire:key="accommodation-{{ $accommodation->id }}"
-                                    class="kt-card p-4 record-accommodations-{{ $accommodation->id }}">
+                                <div wire:key="accommodation-{{ $accommodation->id }}" class="kt-card p-4 record-accommodations-{{ $accommodation->id }}">
                                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                         <div>
                                             <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -130,8 +129,7 @@
                                                 <label class="kt-label mb-1">{{ __('main.star_rating') }}</label>
                                                 <div class="flex items-center gap-1">
                                                     @for ($i = 1; $i <= 5; $i++)
-                                                        <i
-                                                            class="fas fa-star {{ $i <= $accommodation->stars ? 'text-yellow-500' : 'text-gray-300' }} text-sm"></i>
+                                                        <i class="fas fa-star {{ $i <= $accommodation->stars ? 'text-yellow-500' : 'text-gray-300' }} text-sm"></i>
                                                     @endfor
                                                 </div>
                                             </div>
@@ -140,8 +138,11 @@
                                             <div>
                                                 <label class="kt-label mb-1">{{ __('main.currency') }}</label>
                                                 <p class="text-sm text-secondary-foreground">
-                                                    {{ $accommodation->currency->code }} -
-                                                    {{ $accommodation->currency->name }}</p>
+                                                    {{ $accommodation->currency->name }}
+                                                    <span class="text-primary font-semibold">
+                                                        ({{ $accommodation->currency->code }})
+                                                    </span>
+                                                </p>
                                             </div>
                                         @endif
                                         @if ($accommodation->city || $accommodation->country)
@@ -234,8 +235,7 @@
                         </h3>
 
                         <div class="flex items-center gap-4">
-                            <a href="{{ route('accommodations.create') }}" class="kt-btn bg-primary text-white"
-                                toggle-button>
+                            <a href="{{ route('accommodations.create') }}" class="kt-btn bg-primary text-white" toggle-button>
                                 {{ __('main.create_type', ['type' => __('main.accommodation')]) }}
                             </a>
                             <a href="{{ route('restaurants.create') }}" class="kt-btn bg-primary text-white" toggle-button>

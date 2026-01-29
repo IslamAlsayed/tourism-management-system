@@ -27,7 +27,7 @@ class ClientController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $data['created_by'] = getActiveUser()->id;
+        $data['created_by'] = getActiveUserId();
         $client = Client::create($data);
         if (!$client)
             return redirect()->route('clients.index')->withError(__('messages.type_creation_failed', ['type' => __('main.client')]));
@@ -59,7 +59,7 @@ class ClientController extends Controller
         if (!$client)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
         $data = $request->validated();
-        $data['updated_by'] = getActiveUser()->id;
+        $data['updated_by'] = getActiveUserId();
         $updated = $client->update($data);
         return $updated
             ? redirect()->route('clients.index')->withSuccess(__('messages.type_updated', ['type' => __('main.client')]))

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tagify Example - مثال على Tagify</title>
+
+    <!-- Tagify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .example-title::before {
+            content: "📝";
+            font-size: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .description {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #6c757d;
+            line-height: 1.6;
+        }
+
+        .output {
+            background: white;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            min-height: 50px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #495057;
+        }
+
+        .output-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .features {
+            background: #e7f3ff;
+            border-right: 4px solid #2196F3;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .features h3 {
+            color: #2196F3;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .features ul {
+            margin-right: 20px;
+            color: #495057;
+        }
+
+        .features li {
+            margin-bottom: 5px;
+            line-height: 1.6;
+        }
+
+        /* Custom Tagify styling */
+        .tagify {
+            border-color: #dee2e6;
+            border-radius: 8px;
+        }
+
+        .tagify:hover {
+            border-color: #667eea;
+        }
+
+        .tagify--focus {
+            border-color: #667eea !important;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🏷️ مثال عملي على Tagify</h1>
+        <p class="subtitle">مكتبة JavaScript لتحويل حقول الإدخال إلى Tags تفاعلية</p>
+
+        <!-- Example 1: Cities -->
+        <div class="example-box">
+            <div class="example-title">مثال 1: المدن المفضلة</div>
+            <label>أضف المدن المفضلة لديك:</label>
+            <input id="cities" name="cities" placeholder="اكتب اسم مدينة واضغط Enter">
+            <p class="description">
+                💡 جرب كتابة: القاهرة، الإسكندرية، دبي، الرياض، عمان، بيروت
+            </p>
+            <div class="output">
+                <div class="output-title">القيم المحفوظة:</div>
+                <div id="cities-output">[]</div>
+            </div>
+        </div>
+
+        <!-- Example 2: Route Itinerary (Like in your code) -->
+        <div class="example-box">
+            <div class="example-title">مثال 2: محطات الرحلة (مثل الكود الخاص بك)</div>
+            <label>أضف محطات الرحلة بالترتيب:</label>
+            <input id="route_itinerary" name="route_itinerary" placeholder="المحطة 1، المحطة 2، ...">
+            <p class="description">
+                💡 هذا هو نفس الـ Tagify المستخدم في صفحة الـ Jeeps
+            </p>
+            <div class="output">
+                <div class="output-title">المحطات:</div>
+                <div id="route-output">[]</div>
+            </div>
+        </div>
+
+        <!-- Example 3: Email Tags -->
+        <div class="example-box">
+            <div class="example-title">مثال 3: البريد الإلكتروني (مع التحقق)</div>
+            <label>أضف عناوين البريد الإلكتروني:</label>
+            <input id="emails" name="emails" placeholder="example@domain.com">
+            <p class="description">
+                ✅ سيقبل فقط عناوين البريد الصحيحة
+            </p>
+            <div class="output">
+                <div class="output-title">الإيميلات:</div>
+                <div id="emails-output">[]</div>
+            </div>
+        </div>
+
+        <!-- Example 4: Colors with suggestions -->
+        <div class="example-box">
+            <div class="example-title">مثال 4: الألوان (مع اقتراحات)</div>
+            <label>اختر الألوان المفضلة:</label>
+            <input id="colors" name="colors" placeholder="ابدأ الكتابة...">
+            <p class="description">
+                🎨 ابدأ الكتابة لرؤية الاقتراحات
+            </p>
+            <div class="output">
+                <div class="output-title">الألوان المختارة:</div>
+                <div id="colors-output">[]</div>
+            </div>
+        </div>
+
+        <!-- Features Box -->
+        <div class="features">
+            <h3>✨ مميزات Tagify:</h3>
+            <ul>
+                <li>تحويل أي input عادي إلى حقل Tags تفاعلي</li>
+                <li>إضافة وحذف Tags بسهولة</li>
+                <li>دعم الاقتراحات التلقائية (Autocomplete)</li>
+                <li>التحقق من صحة البيانات (Email, URL, etc.)</li>
+                <li>تخصيص كامل للتصميم والسلوك</li>
+                <li>دعم السحب والإفلات لإعادة الترتيب</li>
+                <li>خفيف الحجم وسريع الأداء</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Tagify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+
+    <script>
+        // Example 1: Cities
+        var citiesInput = document.querySelector('#cities');
+        var citiesTagify = new Tagify(citiesInput, {
+            maxTags: 10,
+            placeholder: "اكتب اسم مدينة...",
+            dropdown: {
+                maxItems: 20,
+                classname: "tags-look",
+                enabled: 0,
+                closeOnSelect: false
+            }
+        });
+
+        citiesTagify.on('change', function (e) {
+            document.getElementById('cities-output').textContent =
+                JSON.stringify(citiesTagify.value, null, 2);
+        });
+
+        // Example 2: Route Itinerary (Same as your code)
+        var routeInput = document.querySelector('#route_itinerary');
+        var routeTagify = new Tagify(routeInput, {
+            maxTags: 20,
+            placeholder: "أضف محطة...",
+            dropdown: {
+                maxItems: 20,
+                classname: "tags-look",
+                enabled: 0,
+                closeOnSelect: false
+            }
+        });
+
+        routeTagify.on('change', function (e) {
+            document.getElementById('route-output').textContent =
+                JSON.stringify(routeTagify.value, null, 2);
+        });
+
+        // Example 3: Email validation
+        var emailsInput = document.querySelector('#emails');
+        var emailsTagify = new Tagify(emailsInput, {
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            placeholder: "example@domain.com",
+            dropdown: {
+                enabled: 0
+            },
+            callbacks: {
+                "invalid": function (e) {
+                    alert('❌ البريد الإلكتروني غير صحيح: ' + e.detail.data.value);
+                }
+            }
+        });
+
+        emailsTagify.on('change', function (e) {
+            document.getElementById('emails-output').textContent =
+                JSON.stringify(emailsTagify.value, null, 2);
+        });
+
+        // Example 4: Colors with whitelist (suggestions)
+        var colorsInput = document.querySelector('#colors');
+        var colorsTagify = new Tagify(colorsInput, {
+            whitelist: [
+                'أحمر', 'أزرق', 'أخضر', 'أصفر', 'برتقالي', 'بنفسجي',
+                'وردي', 'أسود', 'أبيض', 'رمادي', 'بني', 'سماوي',
+                'Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Purple'
+            ],
+            maxTags: 5,
+            dropdown: {
+                maxItems: 10,
+                classname: "colors-look",
+                enabled: 1, // show suggestions on focus
+                closeOnSelect: true
+            }
+        });
+
+        colorsTagify.on('change', function (e) {
+            document.getElementById('colors-output').textContent =
+                JSON.stringify(colorsTagify.value, null, 2);
+        });
+
+        // Add some initial values for demonstration
+        setTimeout(function () {
+            citiesTagify.addTags(['القاهرة', 'دبي']);
+            routeTagify.addTags(['محطة البداية', 'المحطة الوسطى', 'نقطة النهاية']);
+        }, 500);
+    </script>
+</body>
+
+</html>

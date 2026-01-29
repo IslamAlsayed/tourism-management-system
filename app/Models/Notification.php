@@ -69,7 +69,7 @@ class Notification extends Model
         // Auto-set performer_id if user is authenticated
         static::saving(function ($notification) {
             if (Auth::check() && !$notification->performer_id) {
-                $notification->performer_id = getActiveUser()?->id;
+                $notification->performer_id = getActiveUserId();
             }
         });
     }

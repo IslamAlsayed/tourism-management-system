@@ -27,7 +27,7 @@ class TouristServiceController extends Controller
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
-        $validated['created_by'] = getActiveUser()->id;
+        $validated['created_by'] = getActiveUserId();
         $created = TouristService::create($validated);
         if ($created) {
             return $request->has('save_and_add')
@@ -60,7 +60,7 @@ class TouristServiceController extends Controller
         if (!$touristService)
             return redirect()->route('tourist-services.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-service')]));
         $validated = $request->validated();
-        $validated['updated_by'] = getActiveUser()->id;
+        $validated['updated_by'] = getActiveUserId();
         $updated = $touristService->update($validated);
         return $updated
             ? redirect()->route('tourist-services.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tourist-service')]))

@@ -2,45 +2,6 @@
 
 @section('title', __('main.type_details', ['type' => __('main.tourist-site')]))
 
-@push('styles')
-    <style>
-        .image-container {
-            position: relative;
-            display: inline-block;
-            border-radius: 0.5rem;
-            overflow: hidden;
-        }
-
-        .image-container img {
-            display: block;
-        }
-
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .image-container:hover .image-overlay {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .image-overlay a {
-            text-decoration: none;
-        }
-    </style>
-@endpush
-
 @push('scripts')
     @include('components.scripts.setup-map')
 @endpush
@@ -86,17 +47,30 @@
                             <label class="kt-label mb-1">{{ __('main.name_ar') }}</label>
                             <p class="text-sm text-secondary-foreground">{{ $touristSite->name_ar ?: __('main.na') }}</p>
                         </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.city') }}</label>
-                            <a href="{{ route('cities.show', $touristSite->city?->id) }}"
-                                class="block text-sm text-primary underline">
-                                {{ $touristSite->city?->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
-                        </div>
+                        @if ($touristSite->city)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.city') }}</label>
+                                <a href="{{ route('cities.show', $touristSite->city->id) }}" class="block text-sm text-primary underline">
+                                    {{ $touristSite->city->name }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                        @endif
+                        @if ($touristSite->currency)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.currency') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ $touristSite->currency->name }}
+                                    <span class="text-primary font-semibold">
+                                        ({{ $touristSite->currency->code }})
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
                         <div>
                             <label class="kt-label mb-1">{{ __('main.sort_order') }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $touristSite->sort_order ?: __('main.na') }}
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $touristSite->sort_order ?: __('main.na') }}
                             </p>
                         </div>
                         <div>
@@ -125,6 +99,10 @@
                         </div>
                         @include('components.elements.display-desc-or-notes', [
                             'record' => $touristSite,
+                            'column' => 'nearby_attractions',
+                        ])
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $touristSite,
                             'column' => 'description',
                         ])
                         @include('components.elements.display-desc-or-notes', [
@@ -142,6 +120,33 @@
                 </div>
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        @if ($touristSite->city || $touristSite->country)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.country') }}</label>
+                                <a href="{{ route('countries.show', $touristSite->city->country->id) }}" class="block text-sm text-primary underline">
+                                    {{ $touristSite->city->country?->name ?? '' }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                        @endif
+                        @if ($touristSite->city || $touristSite->state)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.state') }}</label>
+                                <a href="{{ route('states.show', $touristSite->city->state->id) }}" class="block text-sm text-primary underline">
+                                    {{ $touristSite->city->state?->name ?? '' }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                        @endif
+                        @if ($touristSite->city)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.city') }}</label>
+                                <a href="{{ route('cities.show', $touristSite->city->id) }}" class="block text-sm text-primary underline">
+                                    {{ $touristSite->city?->name ?? '' }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                        @endif
                         <div>
                             <label class="kt-label mb-1">{{ __('main.latitude') }}</label>
                             <p class="text-sm text-secondary-foreground">{{ $touristSite->latitude ?: __('main.na') }}</p>
@@ -169,93 +174,410 @@
                             <p class="text-sm text-secondary-foreground">{{ $touristSite->supplier_name ?: __('main.na') }}
                             </p>
                         </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.postal_code') }}</label>
+                            <p class="text-sm text-secondary-foreground">{{ $touristSite->postal_code ?: __('main.na') }}</p>
+                        </div>
+                        @include('components.elements.display-desc-or-notes', [
+                            'record' => $touristSite,
+                            'column' => 'address',
+                        ])
                     </div>
                 </div>
             </div>
 
-            <!-- Nearby Attractions -->
-            @if ($touristSite->nearby_attractions)
+            <!-- Entry Fees -->
+            @if ($touristSite->is_free_entry || $touristSite->entry_fee_adult || $touristSite->entry_fee_child || $touristSite->entry_fee_foreigner_adult)
                 <div class="kt-card">
                     <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.nearby_attractions') }}</h3>
+                        <h3 class="kt-card-title">{{ __('main.entry_fees') }}</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="text-sm text-secondary-foreground prose max-w-none">
-                            {!! $touristSite->nearby_attractions !!}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            @foreach (['entry_fee_adult', 'entry_fee_child', 'entry_fee_student', 'entry_fee_senior', 'entry_fee_group', 'entry_fee_foreigner_adult', 'entry_fee_foreigner_child', 'entry_fee_arab_adult', 'entry_fee_arab_child', 'entry_fee_local_adult', 'entry_fee_local_child', 'entry_fee_resident_adult', 'entry_fee_resident_child'] as $fee)
+                                @if ($touristSite->$fee)
+                                    <div>
+                                        <label class="kt-label mb-1">{{ __('main.' . $fee) }}</label>
+                                        <p class="text-sm text-secondary-foreground">{{ $touristSite->$fee }} {{ $touristSite->currency?->code ?? '' }}</p>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
             @endif
 
-            <!-- Media Files -->
-            @if ($touristSite->media && $touristSite->media->isNotEmpty())
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">{{ __('main.media_resources') }}</h3>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <div class="flex flex-col gap-6">
-                            @if ($mainImage = $touristSite->media->where('collection_name', 'main_image')->first())
-                                <div class="flex flex-col w-fit">
-                                    <label class="kt-label mb-2">{{ __('main.main_image') }}</label>
-                                    <div class="image-container">
-                                        @if ($mainImage->file_path)
-                                            <img src="{{ asset('storage/' . $mainImage->file_path) }}" alt="Main Image"
-                                                class="h-40 object-cover shadow" loading="lazy">
-                                        @else
-                                            <div class="h-40 bg-gray-200 flex items-center justify-center">
-                                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
-                                            </div>
-                                        @endif
-                                        <div class="image-overlay">
-                                            <a href="{{ $mainImage->file_path ? asset('storage/' . $mainImage->file_path) : '#' }}"
-                                                download="{{ $mainImage->file_name }}"
-                                                class="kt-btn kt-btn-sm kt-btn-primary">
-                                                <i class="ki-filled ki-download text-sm me-1"></i>
-                                                {{ __('main.download') }}
-                                            </a>
+            <!-- Operating Hours -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.operating_hours') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.is_24_hours') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'is_24_hours',
+                                    'value' => (bool) $touristSite->is_24_hours,
+                                    'table' => 'tourist_sites',
+                                ])
+                            </div>
+                        </div>
+                        @if (!$touristSite->is_24_hours)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.opening_time') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $touristSite->opening_time ?: __('main.na') }}</p>
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.closing_time') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $touristSite->closing_time ?: __('main.na') }}</p>
+                            </div>
+                        @endif
+                        @if ($touristSite->operating_days)
+                            <div class="col-span-full">
+                                <label class="kt-label mb-2">{{ __('main.operating_days') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    @php
+                                        $days = is_array($touristSite->operating_days) ? $touristSite->operating_days : json_decode($touristSite->operating_days, true) ?? [];
+                                    @endphp
+                                <div class="flex flex-wrap gap-4">
+                                    @foreach ($days as $day)
+                                        <span class="kt-badge kt-badge-info">{{ __('main.' . $day) }}</span>
+                                    @endforeach
+                                </div>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($touristSite->special_hours)
+                            <div class="col-span-full">
+                                <label class="kt-label mb-2">{{ __('main.special_hours') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    @php
+                                        $hours = is_array($touristSite->special_hours) ? $touristSite->special_hours : json_decode($touristSite->special_hours, true) ?? [];
+                                    @endphp
+                                <div class="flex flex-wrap" style="gap: 10px 20px;">
+                                    @foreach ($hours as $hourDate => $time)
+                                        <div class="border-custom p-2 rounded-md">
+                                            <strong class="text-primary">{{ __('main.' . $hourDate) }}</strong>
+                                            <strong>{{ \Carbon\Carbon::parse($hourDate)->format('F j, Y') }}:</strong>
+                                            @if (isset($time['closed']) && $time['closed'])
+                                                <span class="text-danger font-semibold">{{ __('main.closed') }}</span>
+                                            @else
+                                                <span>{{ $time['opening'] ?? __('main.na') }} - {{ $time['closing'] ?? __('main.na') }}</span>
+                                            @endif
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                            @endif
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
 
-                            @if ($galleryImages = $touristSite->media->where('collection_name', 'gallery')->all())
+            <!-- Contact Information -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        @if ($touristSite->contact_person)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.contact_person') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $touristSite->contact_person }}</p>
+                            </div>
+                        @endif
+                        @if ($touristSite->phone)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.phone') }}</label>
                                 <div>
-                                    <label class="kt-label mb-3">{{ __('main.gallery_images') }}
-                                        <span class="text-xs text-secondary-foreground">
-                                            ({{ count($galleryImages) }} {{ __('main.images') }})
-                                        </span>
-                                    </label>
-                                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                        @foreach ($galleryImages as $index => $image)
-                                            <div class="image-container">
-                                                @if ($image->file_path)
-                                                    <img src="{{ asset('storage/' . $image->file_path) }}"
-                                                        alt="Gallery {{ $index + 1 }}" class="w-full h-32 object-cover"
-                                                        loading="lazy">
-                                                @else
-                                                    <div class="w-full h-32 bg-gray-200 flex items-center justify-center">
-                                                        <p class="text-xs text-secondary-foreground">{{ __('main.na') }}
-                                                        </p>
-                                                    </div>
-                                                @endif
-                                                <div class="image-overlay">
-                                                    <a href="{{ $image->file_path ? asset('storage/' . $image->file_path) : '#' }}"
-                                                        download="{{ $image->file_name }}"
-                                                        class="kt-btn kt-btn-sm kt-btn-primary">
-                                                        <i class="ki-filled ki-download text-sm me-1"></i>
-                                                        {{ __('main.download') }}
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                    <a href="tel:{{ $touristSite->phone }}" class="text-sm text-primary underline">
+                                        {{ $touristSite->phone }}
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($touristSite->mobile)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.mobile') }}</label>
+                                <div>
+                                    <a href="tel:{{ $touristSite->mobile }}" class="text-sm text-primary underline">
+                                        {{ $touristSite->mobile }}
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($touristSite->email)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.email') }}</label>
+                                <div>
+                                    <a href="mailto:{{ $touristSite->email }}" class="text-sm text-primary underline">
+                                        {{ $touristSite->email }}
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($touristSite->website_url)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.website_url') }}</label>
+                                <div>
+                                    <a href="{{ $touristSite->website_url }}" target="_blank" class="text-sm text-primary underline">
+                                        {{ $touristSite->website_url }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($touristSite->facebook_url)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.facebook_url') }}</label>
+                                <div>
+                                    <a href="{{ $touristSite->facebook_url }}" target="_blank" class="text-sm text-primary underline">
+                                        Facebook
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($touristSite->instagram_url)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.instagram_url') }}</label>
+                                <div>
+                                    <a href="{{ $touristSite->instagram_url }}" target="_blank" class="text-sm text-primary underline">
+                                        Instagram
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($touristSite->twitter_url)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.twitter_url') }}</label>
+                                <div>
+                                    <a href="{{ $touristSite->twitter_url }}" target="_blank" class="text-sm text-primary underline">
+                                        Twitter
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($touristSite->fax)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.fax') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $touristSite->fax }}</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facilities & Services -->
+            @php
+                $facilities = [
+                    'wheelchair_accessible',
+                    'free_wifi',
+                    'parking',
+                    'restrooms',
+                    'restaurants',
+                    'gift_shop',
+                    'guided_tours',
+                    'audio_guide',
+                    'photography',
+                    'hiking',
+                    'swimming',
+                    'camping',
+                    'shopping',
+                    'dining',
+                    'entertainment',
+                    'educational_tours',
+                    'translation',
+                    'special_events',
+                    'group_bookings',
+                    'online_booking',
+                    'mobile_app',
+                    'virtual_tours',
+                ];
+                $hasFacilities = collect($facilities)->some(fn($f) => $touristSite->$f);
+            @endphp
+            @if ($hasFacilities)
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.facilities_services') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            @foreach ($facilities as $facility)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.' . $facility) }}</label>
+                                    <div class="flex items-center gap-2">
+                                        @livewire('toggle-switch', [
+                                            'modelId' => $touristSite->id,
+                                            'modelType' => '\\App\\Models\\TouristSite',
+                                            'field' => $facility,
+                                            'value' => (bool) $touristSite->$facility,
+                                            'table' => 'tourist_sites',
+                                        ])
                                     </div>
                                 </div>
-                            @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
             @endif
+
+            <!-- Additional Information -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">{{ __('main.additional_information') }}</h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        @if ($touristSite->local_guide_price)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.local_guide_price') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $touristSite->local_guide_price }} {{ $touristSite->currency?->code ?? '' }}</p>
+                            </div>
+                        @endif
+                        @if ($touristSite->club_car_price)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.club_car_price') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $touristSite->club_car_price }} {{ $touristSite->currency?->code ?? '' }}</p>
+                            </div>
+                        @endif
+                        @if ($touristSite->video_url)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.video_url') }}</label>
+                                <div>
+                                    <a href="{{ $touristSite->video_url }}" target="_blank" class="text-sm text-primary underline">
+                                        Video
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($touristSite->virtual_tour_url)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.virtual_tour_url') }}</label>
+                                <div>
+                                    <a href="{{ $touristSite->virtual_tour_url }}" target="_blank" class="text-sm text-primary underline">
+                                        Virtual Tour
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($touristSite->average_rating)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.average_rating') }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    {{ number_format($touristSite->average_rating, 0) }}/5
+                                    <i class="fas fa-star" style="color: #ffdd00"></i>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($touristSite->total_reviews)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_reviews') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $touristSite->total_reviews }}</p>
+                            </div>
+                        @endif
+                        @if ($touristSite->popularity_score)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.popularity_score') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $touristSite->popularity_score }}%</p>
+                            </div>
+                        @endif
+                        @if ($touristSite->estimated_visit_duration)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.estimated_visit_duration') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ $touristSite->estimated_visit_duration }} {{ __('main.minutes') }}</p>
+                            </div>
+                        @endif
+                        @if ($touristSite->difficulty_level)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.difficulty_level') }}</label>
+                                <p class="text-sm text-secondary-foreground">{{ __('main.' . strtolower($touristSite->difficulty_level)) }}</p>
+                            </div>
+                        @endif
+                        @if ($touristSite->tags)
+                            <div class="col-span-full">
+                                <label class="kt-label mb-1">{{ __('main.tags') }}</label>
+                                <div class="flex flex-wrap gap-2">
+                                    @php
+                                        $tags = is_array($touristSite->tags) ? $touristSite->tags : json_decode($touristSite->tags, true) ?? [];
+                                    @endphp
+                                    @foreach ($tags as $tag)
+                                        <span class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                                            {{ $tag }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.is_featured') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'is_featured',
+                                    'value' => (bool) $touristSite->is_featured,
+                                    'table' => 'tourist_sites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.is_verified') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'is_verified',
+                                    'value' => (bool) $touristSite->is_verified,
+                                    'table' => 'tourist_sites',
+                                ])
+                            </div>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.has_unified_ticket') }}</label>
+                            <div class="flex items-center gap-2">
+                                @livewire('toggle-switch', [
+                                    'modelId' => $touristSite->id,
+                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'field' => 'has_unified_ticket',
+                                    'value' => (bool) $touristSite->has_unified_ticket,
+                                    'table' => 'tourist_sites',
+                                ])
+                            </div>
+                        </div>
+                        @if ($touristSite->status)
+                            <div>
+                                <label class="kt-label mb-1">
+                                    {{ __('main.status') }}
+                                    <div class="hidden search-load">
+                                        @include('components.load-data', ['width' => '15px', 'height' => '15px'])
+                                    </div>
+                                </label>
+                                <select class="kt-input kt-input-sm basic-single disabled-option js-async-field" data-model="touristSites" data-id="{{ $touristSite->id }}" data-field="status">
+                                    <option value="active" {{ $touristSite->status === 'active' ? 'selected' : '' }}>
+                                        {{ __('main.active') }}
+                                    </option>
+                                    <option value="maintenance" {{ $touristSite->status === 'maintenance' ? 'selected' : '' }}>
+                                        {{ __('main.maintenance') }}
+                                    </option>
+                                    <option value="retired" {{ $touristSite->status === 'retired' ? 'selected' : '' }}>
+                                        {{ __('main.retired') }}
+                                    </option>
+                                </select>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
 
             <!-- Services -->
             @if ($touristSite->services && $touristSite->services->count() > 0)
@@ -266,25 +588,7 @@
             @endif
 
             <!-- Metadata -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $touristSite->created_at?->format('Y-m-d H:i') ?? __('main.na') }}</p>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.updated_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $touristSite->updated_at?->format('Y-m-d H:i') ?? __('main.na') }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.metadata', ['record' => $touristSite])
 
             <!-- Actions -->
             <div class="flex items-center gap-4">
@@ -303,3 +607,70 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.basic-single').select2();
+
+            $(document).on('focus', '.js-async-field', function() {
+                $(this).data('old-value', this.value);
+            });
+
+            $(document).on('change', '.js-async-field', async function() {
+                const $select = $(this);
+                const wrapper = $select.closest('div');
+                const searchLoad = document.querySelector('.search-load');
+                const asyncField = document.querySelector('.js-async-field');
+
+                const payload = {
+                    model: $select.data('model'),
+                    id: $select.data('id'),
+                    field: $select.data('field'),
+                    value: $select.val(),
+                };
+
+                searchLoad.classList.remove('hidden');
+                asyncField.classList.add('disabled');
+                $select.prop('disabled', true);
+
+                try {
+                    const res = await fetch('{{ route('patch.toggleField') }}', {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document
+                                .querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content'),
+                        },
+                        body: JSON.stringify(payload),
+                    });
+
+                    const data = await res.json();
+
+                    if (!res.ok || !data.success) {
+                        throw data;
+                    }
+
+                    searchLoad.classList.add('hidden');
+                    asyncField.classList.remove('disabled');
+                    window.showToast({
+                        type: 'success',
+                        message: data.message || `{{ __('messages.field_updated_successfully', ['field' => ':field', 'status' => ':status']) }}`.replace(':field', payload
+                            .field).replace(':status', payload.value)
+                    });
+                } catch (e) {
+                    $select.val($select.data('old-value')).trigger('change.select2');
+                    window.showToast({
+                        type: 'error',
+                        message: e.message || '{{ __('messages.something_went_wrong') }}'
+                    });
+                } finally {
+                    searchLoad.classList.add('hidden');
+                    asyncField.classList.remove('disabled');
+                    $select.prop('disabled', false);
+                }
+            });
+        });
+    </script>
+@endpush
