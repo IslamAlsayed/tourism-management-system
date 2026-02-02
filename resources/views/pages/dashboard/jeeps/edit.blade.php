@@ -38,7 +38,7 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4 pb-0">
-                        {{-- Regions [region, subregion, country, state, city] --}}
+                        {{-- Regions [country, state, city] --}}
                         <livewire:regions.location-select-base :record="$jeep" />
                     </div>
                 </div>
@@ -126,7 +126,8 @@
                                     <div class="flex gap-2">
                                         <div class="flex-grow">
                                             <label for="duration" class="kt-label">{{ __('main.duration') }}</label>
-                                            <input type="number" step="0.1" name="duration" id="duration" class="kt-input h-[45px]" value="{{ $jeep->duration }}">
+                                            <input type="number" step="0.1" name="duration" id="duration" class="kt-input h-[45px]"
+                                                value="{{ $jeep->duration }}">
                                         </div>
                                         <div class="w-1/3">
                                             <label for="duration_unit" class="kt-label">{{ __('main.unit') }}</label>
@@ -142,7 +143,8 @@
                                     <div class="flex gap-2">
                                         <div class="flex-grow">
                                             <label for="distance" class="kt-label">{{ __('main.distance') }}</label>
-                                            <input type="number" step="0.1" name="distance" id="distance" class="kt-input h-[45px]" value="{{ $jeep->distance }}">
+                                            <input type="number" step="0.1" name="distance" id="distance" class="kt-input h-[45px]"
+                                                value="{{ $jeep->distance }}">
                                         </div>
                                         <div class="w-1/3">
                                             <label for="distance_unit" class="kt-label">{{ __('main.unit') }}</label>
@@ -170,7 +172,8 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
                                 <label class="kt-label">{{ __('main.vehicle_model') }}</label>
-                                <input type="text" name="vehicle_model" class="kt-input h-[45px]" value="{{ $jeep->vehicle_model }}" placeholder="e.g. Toyota Land Cruiser">
+                                <input type="text" name="vehicle_model" class="kt-input h-[45px]" value="{{ $jeep->vehicle_model }}"
+                                    placeholder="e.g. Toyota Land Cruiser">
                             </div>
                             <div>
                                 <label class="kt-label">{{ __('main.model_year') }}</label>
@@ -208,7 +211,8 @@
                                     <label class="kt-label mb-2 block">{{ __('main.price') }}</label>
                                     <div class="flex">
                                         <div class="w-full">
-                                            <input type="number" step="0.01" name="price" id="price" class="h-full rounded-none bg-gray-50 text-gray-600 flex-1 min-w-0 w-full text-sm p-2.5"
+                                            <input type="number" step="0.01" name="price" id="price"
+                                                class="h-full rounded-none bg-gray-50 text-gray-600 flex-1 min-w-0 w-full text-sm p-2.5"
                                                 style="border: 1px var(--tw-border-style) var(--input)" placeholder="0.00" value="{{ $jeep->price }}">
                                         </div>
 
@@ -305,7 +309,8 @@
                                 <button type="button" class="text-gray-500 hover:text-primary transition-colors toggle-season">
                                     <i class="ki-outline ki-arrow-down fs-2"></i>
                                 </button>
-                                <button type="button" class="text-red-500 hover:text-red-700 transition-colors remove-season" title="{{ __('main.remove_season') }}">
+                                <button type="button" class="text-red-500 hover:text-red-700 transition-colors remove-season"
+                                    title="{{ __('main.remove_season') }}">
                                     <i class="ki-outline ki-trash fs-2"></i>
                                 </button>
                             </div>
@@ -314,7 +319,8 @@
                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
                                 <div class="w-full">
                                     <label class="block text-sm font-medium mb-1">{{ __('main.season_name') }}</label>
-                                    <input type="text" name="seasons[INDEX][name]" class="kt-input h-[38px] season-name-input w-full" placeholder="Summer 2026">
+                                    <input type="text" name="seasons[INDEX][name]" class="kt-input h-[38px] season-name-input w-full"
+                                        placeholder="Summer 2026">
                                 </div>
                                 <div class="w-full">
                                     <label class="block text-sm font-medium mb-1">{{ __('main.start_date') }}</label>
@@ -334,7 +340,8 @@
                                     <div class="background p-2 rounded border border-gray-200">
                                         <label class="block text-xs font-semibold mb-1 text-gray-600">{{ __('main.price_local') }}</label>
                                         <div class="flex">
-                                            <span class="inline-flex items-center px-2 text-xs text-gray-600 bg-gray-50 border border-e-0 border-gray-200 rounded-s-md">
+                                            <span
+                                                class="inline-flex items-center px-2 text-xs text-gray-600 bg-gray-50 border border-e-0 border-gray-200 rounded-s-md">
                                                 $
                                             </span>
                                             <input type="number" step="0.01" name="seasons[INDEX][price_local]"
@@ -345,7 +352,8 @@
                                     <div class="background p-2 rounded border border-gray-200">
                                         <label class="block text-xs font-semibold mb-1 text-gray-600">{{ __('main.price_arab') }}</label>
                                         <div class="flex">
-                                            <span class="inline-flex items-center px-2 text-xs text-gray-600 bg-gray-50 border border-e-0 border-gray-200 rounded-s-md">
+                                            <span
+                                                class="inline-flex items-center px-2 text-xs text-gray-600 bg-gray-50 border border-e-0 border-gray-200 rounded-s-md">
                                                 $
                                             </span>
                                             <input type="number" step="0.01" name="seasons[INDEX][price_arab]"
@@ -356,7 +364,8 @@
                                     <div class="background p-2 rounded border border-gray-200">
                                         <label class="block text-xs font-semibold mb-1 text-gray-600">{{ __('main.price_foreigner') }}</label>
                                         <div class="flex">
-                                            <span class="inline-flex items-center px-2 text-xs text-gray-600 bg-gray-50 border border-e-0 border-gray-200 rounded-s-md">
+                                            <span
+                                                class="inline-flex items-center px-2 text-xs text-gray-600 bg-gray-50 border border-e-0 border-gray-200 rounded-s-md">
                                                 $
                                             </span>
                                             <input type="number" step="0.01" name="seasons[INDEX][price_foreigner]"
@@ -373,7 +382,8 @@
                                     <h4 class="text-xs font-bold uppercase text-gray-500 tracking-wider">
                                         {{ __('main.nationality_exceptions') }}
                                     </h4>
-                                    <button type="button" class="text-xs text-primary font-medium hover:underline add-nationality-price" data-season-index="INDEX">
+                                    <button type="button" class="text-xs text-primary font-medium hover:underline add-nationality-price"
+                                        data-season-index="INDEX">
                                         + {{ __('main.add_exception') }}
                                     </button>
                                 </div>
@@ -389,7 +399,8 @@
                 <template id="nationality-price-template">
                     <div class="flex gap-2 items-center nationality-price-row bg-gray-50 p-2 rounded border border-dashed border-gray-200">
                         <div class="w-full">
-                            <select name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][nationality_id]" class="kt-select nationality-select text-sm" id="nationality_id">
+                            <select name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][nationality_id]" class="kt-select nationality-select text-sm"
+                                id="nationality_id">
                                 <option value="" selected>--</option>
                             </select>
                         </div>
@@ -401,8 +412,8 @@
                             </select>
                         </div>
                         <div class="w-full">
-                            <input type="number" step="0.01" name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][price]" class="kt-input h-[45px] text-sm"
-                                placeholder="{{ __('main.price') }}">
+                            <input type="number" step="0.01" name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][price]"
+                                class="kt-input h-[45px] text-sm" placeholder="{{ __('main.price') }}">
                         </div>
                         <button type="button" class="text-red-500 hover:text-red-700 remove-nationality-price p-1">
                             <i class="ki-outline ki-cross fs-3"></i>
@@ -424,8 +435,8 @@
                                 <label for="photo" class="kt-label">
                                     {{ __('main.main_image') }}
                                 </label>
-                                <div class="dropzone mt-2 border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer" data-input="photo"
-                                    data-preview="preview-photo">
+                                <div class="dropzone mt-2 border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer"
+                                    data-input="photo" data-preview="preview-photo">
                                     <i class="far fa-cloud-arrow-up text-5xl text-gray-600"></i>
                                     <p class="mt-4">{{ __('main.click_or_drag_image_here') }}</p>
                                 </div>
@@ -436,7 +447,8 @@
                                 @if (!empty($jeep->photo))
                                     <div id="existing-photo" class="relative w-fit mt-3">
                                         <img src="{{ asset('storage/' . $jeep->photo) }}" class="h-32 w-32 rounded">
-                                        <button type="button" class="remove-existing-photo absolute -top-2 -right-2 bg-danger cursor-pointer text-white w-6 h-6 rounded-full">
+                                        <button type="button"
+                                            class="remove-existing-photo absolute -top-2 -right-2 bg-danger cursor-pointer text-white w-6 h-6 rounded-full">
                                             ×
                                         </button>
                                     </div>
@@ -450,8 +462,8 @@
                                 <label for="gallery" class="kt-label">
                                     {{ __('main.gallery_images') }}
                                 </label>
-                                <div class="dropzone mt-2 border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer" data-input="gallery"
-                                    data-preview="preview-gallery">
+                                <div class="dropzone mt-2 border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer"
+                                    data-input="gallery" data-preview="preview-gallery">
                                     <i class="far fa-cloud-arrow-up text-5xl text-gray-600"></i>
                                     <p class="mt-4">{{ __('main.click_or_drag_image_here_multiple') }}</p>
                                 </div>
@@ -464,7 +476,8 @@
                                         @foreach ($jeep->gallery as $index => $img)
                                             <div id="existing_gallery_{{ $index }}" class="relative">
                                                 <img src="{{ asset('storage/' . $img) }}" class="h-32 w-32 rounded">
-                                                <button type="button" class="remove-existing-gallery absolute -top-2 -right-2 bg-danger cursor-pointer text-white w-6 h-6 rounded-full"
+                                                <button type="button"
+                                                    class="remove-existing-gallery absolute -top-2 -right-2 bg-danger cursor-pointer text-white w-6 h-6 rounded-full"
                                                     data-index="{{ $index }}" data-path="{{ $img }}">
                                                     ×
                                                 </button>

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TouristSite extends Model
 {
-    use HasSearch, HasUuid, HasRichText, HasFactory, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    use HasSearch, HasUuid, HasRichText, HasFactory, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $table = 'tourist_sites';
     protected $richTextAttributes = [
         'address',
@@ -25,9 +25,9 @@ class TouristSite extends Model
         // Basic Information
         'id',
         'uuid',
+        'code',
         'photo',
         'gallery',
-        'code',
         'name',
         'name_ar',
         'site_type',

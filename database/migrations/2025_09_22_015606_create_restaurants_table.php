@@ -18,8 +18,6 @@ return new class extends Migration {
             $table->foreignId('type_id')->nullable();
             $table->foreignId('timezone_id')->nullable();
             $table->foreignId('currency_id')->nullable();
-            $table->foreignId('region_id')->nullable();
-            $table->foreignId('subregion_id')->nullable();
             $table->foreignId('country_id')->nullable();
             $table->foreignId('state_id')->nullable();
             $table->foreignId('city_id')->nullable();
@@ -60,8 +58,6 @@ return new class extends Migration {
             $table->index('type_id');
             $table->index('timezone_id');
             $table->index('currency_id');
-            $table->index('region_id');
-            $table->index('subregion_id');
             $table->index('country_id');
             $table->index('state_id');
             $table->index('city_id');

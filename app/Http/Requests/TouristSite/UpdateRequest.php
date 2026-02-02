@@ -37,8 +37,6 @@ class UpdateRequest extends FormRequest
 
             // ========== Location Information ==========
             'currency_id' => ['nullable', 'integer', 'exists:currencies,id'],
-            'region_id' => ['nullable', 'integer', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'integer', 'exists:subregions,id'],
             'country_id' => ['nullable', 'integer', 'exists:countries,id'],
             'state_id' => ['nullable', 'integer', 'exists:states,id'],
             'city_id' => ['nullable', 'integer', 'exists:cities,id'],

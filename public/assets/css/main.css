@@ -60,7 +60,23 @@
     background: #dedede;
 }
 
+.light-logo {
+    display: flex;
+}
+
+.dark-logo {
+    display: none;
+}
+
 html.dark {
+    .dark-logo {
+        display: flex;
+    }
+
+    .light-logo {
+        display: none;
+    }
+
     .dropzone.drag {
         border-color: #fff;
         background: #414141;

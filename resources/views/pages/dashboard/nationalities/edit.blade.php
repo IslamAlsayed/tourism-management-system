@@ -36,7 +36,14 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Country -->
                             <div class="">
-                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
+                                <label for="country_id" class="kt-label mb-2">
+                                    <div>
+                                        {{ __('main.country') }}
+                                        <strong class="dataLength text-primary">
+                                            ({{ count($countries) ?: 0 }})
+                                        </strong>
+                                    </div>
+                                </label>
                                 <select name="country_id" id="country_id" class="kt-input basic-single">
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}"

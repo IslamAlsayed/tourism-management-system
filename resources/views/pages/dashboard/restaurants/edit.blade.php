@@ -42,15 +42,14 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
+                        {{-- Regions [country, state, city] --}}
                         <livewire:regions.location-select-base :record="$restaurant" />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Latitude -->
                             <div class="">
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" step="0.00000001" name="latitude" id="latitude"
-                                    class="kt-input h-[45px]" value="{{ $restaurant->latitude }}">
+                                <input type="number" step="0.00000001" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ $restaurant->latitude }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -59,8 +58,7 @@
                             <!-- Longitude -->
                             <div class="">
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" step="0.00000001" name="longitude" id="longitude"
-                                    class="kt-input h-[45px]" value="{{ $restaurant->longitude }}">
+                                <input type="number" step="0.00000001" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ $restaurant->longitude }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -75,8 +73,7 @@
                             <!-- Street Address -->
                             <div class="align-self-end">
                                 <label for="street" class="kt-label">{{ __('main.street') }}</label>
-                                <input type="text" name="street" id="street" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->street }}">
+                                <input type="text" name="street" id="street" class="kt-input h-[45px]" value="{{ $restaurant->street }}">
                                 @error('street')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -85,8 +82,7 @@
                             <!-- Postal Code -->
                             <div class="align-self-end">
                                 <label for="postal_code" class="kt-label">{{ __('main.postal_code') }}</label>
-                                <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->postal_code }}">
+                                <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]" value="{{ $restaurant->postal_code }}">
                                 @error('postal_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -95,8 +91,7 @@
                             <!-- Box -->
                             <div class="align-self-end">
                                 <label for="box" class="kt-label">{{ __('main.box') }}</label>
-                                <input type="text" name="box" id="box" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->box }}">
+                                <input type="text" name="box" id="box" class="kt-input h-[45px]" value="{{ $restaurant->box }}">
                                 @error('box')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -119,8 +114,7 @@
                                 <label for="name" class="kt-label">
                                     {{ __('main.name') }}
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $restaurant->name }}">
                                 @error('name')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -129,8 +123,7 @@
                             <!-- Name Arabic -->
                             <div class="align-self-end">
                                 <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->name_ar }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $restaurant->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -139,33 +132,14 @@
                             <!-- Company Name -->
                             <div class="align-self-end">
                                 <label for="company_name" class="kt-label">{{ __('main.company_name') }}</label>
-                                <input type="text" name="company_name" id="company_name" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->company_name }}">
+                                <input type="text" name="company_name" id="company_name" class="kt-input h-[45px]" value="{{ $restaurant->company_name }}">
                                 @error('company_name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Type -->
-                            <div class="align-self-end">
-                                <label for="type_id" class="kt-label flex items-center justify-between mb-2">
-                                    <div>{{ __('main.type') }}</div>
-                                    <a href="{{ route('types.create') }}"
-                                        class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
-                                </label>
-                                <select name="type_id" id="type_id" class="kt-select basic-single">
-                                    <option value="" disabled selected></option>
-                                    @foreach ($types as $key => $type)
-                                        <option value="{{ $key }}"
-                                            {{ $restaurant->type_id == $key ? 'selected' : '' }}>
-                                            {{ $type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('type_id')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- Type --}}
+                            @include('components.selects.type', ['record' => $restaurant])
 
                             <!-- Rating -->
                             <div class="align-self-end">
@@ -173,8 +147,7 @@
                                 <select name="rating" id="rating" class="kt-select basic-single">
                                     <option value="" disabled selected></option>
                                     @foreach (range(1, 5) as $item)
-                                        <option value="{{ $item }}"
-                                            {{ $restaurant->rating == $item ? 'selected' : '' }}>
+                                        <option value="{{ $item }}" {{ $restaurant->rating == $item ? 'selected' : '' }}>
                                             {{ $item }} {{ __('main.stars') }}
                                         </option>
                                     @endforeach
@@ -187,8 +160,7 @@
                             <!-- Specialty -->
                             <div class="align-self-end">
                                 <label for="specialty" class="kt-label">{{ __('main.specialty') }}</label>
-                                <input type="text" name="specialty" id="specialty" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->specialty }}">
+                                <input type="text" name="specialty" id="specialty" class="kt-input h-[45px]" value="{{ $restaurant->specialty }}">
                                 @error('specialty')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -222,8 +194,7 @@
                             <!-- Email 01 -->
                             <div class="align-self-end">
                                 <label for="email_01" class="kt-label">{{ __('main.email_01') }}</label>
-                                <input type="email" name="email_01" id="email_01" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->email_01 }}">
+                                <input type="email" name="email_01" id="email_01" class="kt-input h-[45px]" value="{{ $restaurant->email_01 }}">
                                 @error('email_01')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -232,8 +203,7 @@
                             <!-- Email 02 -->
                             <div class="align-self-end">
                                 <label for="email_02" class="kt-label">{{ __('main.email_02') }}</label>
-                                <input type="email" name="email_02" id="email_02" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->email_02 }}">
+                                <input type="email" name="email_02" id="email_02" class="kt-input h-[45px]" value="{{ $restaurant->email_02 }}">
                                 @error('email_02')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -242,8 +212,7 @@
                             <!-- Phone 01 -->
                             <div class="align-self-end">
                                 <label for="phone_01" class="kt-label">{{ __('main.phone_01') }}</label>
-                                <input type="tel" name="phone_01" id="phone_01" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->phone_01 }}">
+                                <input type="tel" name="phone_01" id="phone_01" class="kt-input h-[45px]" value="{{ $restaurant->phone_01 }}">
                                 @error('phone_01')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -252,8 +221,7 @@
                             <!-- Phone 02 -->
                             <div class="align-self-end">
                                 <label for="phone_02" class="kt-label">{{ __('main.phone_02') }}</label>
-                                <input type="tel" name="phone_02" id="phone_02" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->phone_02 }}">
+                                <input type="tel" name="phone_02" id="phone_02" class="kt-input h-[45px]" value="{{ $restaurant->phone_02 }}">
                                 @error('phone_02')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -262,8 +230,7 @@
                             <!-- Mobile -->
                             <div class="align-self-end">
                                 <label for="mobile" class="kt-label">{{ __('main.mobile') }}</label>
-                                <input type="tel" name="mobile" id="mobile" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->mobile }}">
+                                <input type="tel" name="mobile" id="mobile" class="kt-input h-[45px]" value="{{ $restaurant->mobile }}">
                                 @error('mobile')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -272,8 +239,7 @@
                             <!-- Fax -->
                             <div class="align-self-end">
                                 <label for="fax" class="kt-label">{{ __('main.fax') }}</label>
-                                <input type="text" name="fax" id="fax" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->fax }}">
+                                <input type="text" name="fax" id="fax" class="kt-input h-[45px]" value="{{ $restaurant->fax }}">
                                 @error('fax')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -282,8 +248,7 @@
                             {{-- Contact Person --}}
                             <div class="align-self-end">
                                 <label for="contact_person" class="kt-label">{{ __('main.contact_person') }}</label>
-                                <input type="text" name="contact_person" id="contact_person"
-                                    class="kt-input h-[45px]" value="{{ $restaurant->contact_person }}">
+                                <input type="text" name="contact_person" id="contact_person" class="kt-input h-[45px]" value="{{ $restaurant->contact_person }}">
                                 @error('contact_person')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -292,8 +257,7 @@
                             {{-- Website --}}
                             <div class="align-self-end">
                                 <label for="website" class="kt-label">{{ __('main.website') }}</label>
-                                <input type="url" name="website" id="website" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->website }}">
+                                <input type="url" name="website" id="website" class="kt-input h-[45px]" value="{{ $restaurant->website }}">
                                 @error('website')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror

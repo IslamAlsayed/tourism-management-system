@@ -26,8 +26,6 @@ class UpdateRequest extends FormRequest
             'price' => ['nullable', 'numeric', 'min:0'],
             'currency_id' => ['nullable', 'exists:currencies,id'],
 
-            'region_id' => ['nullable', 'integer', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'integer', 'exists:subregions,id'],
             'country_id' => ['nullable', 'integer', 'exists:countries,id'],
             'state_id' => ['nullable', 'array'],
             'state_id.*' => ['integer', 'exists:states,id'],

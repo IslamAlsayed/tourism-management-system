@@ -11,7 +11,7 @@
     overflow: hidden;
     border-radius: var(--h);
     outline: 4px solid #9991;
-    animation: glow 4s infinite ease-in-out;
+    animation: glow 4s infinite linear;
 }
 
 @keyframes glow {
@@ -19,8 +19,16 @@
         outline: 4px solid #9991
     }
 
+    25% {
+        outline: 4.5px solid #9991
+    }
+
     50% {
         outline: 5px solid #9992
+    }
+
+    75% {
+        outline: 4.5px solid #9991
     }
 
     100% {

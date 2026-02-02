@@ -27,8 +27,6 @@ class StoreRequest extends FormRequest
             // Location information
             'currency_id' => ['nullable', 'exists:currencies,id'],
             'timezone_id' => ['nullable', 'exists:timezones,id'],
-            'region_id' => ['nullable', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'exists:subregions,id'],
             'country_id' => ['nullable', 'exists:countries,id'],
             'state_id' => ['nullable', 'exists:states,id'],
             'city_id' => ['nullable', 'exists:cities,id'],

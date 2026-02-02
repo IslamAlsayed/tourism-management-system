@@ -33,6 +33,8 @@ class JeepController extends Controller
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
+        dd($request->all(), $validated);
+
         $validated['created_by'] = getActiveUserId();
         unset($validated['photo'], $validated['gallery']);
 

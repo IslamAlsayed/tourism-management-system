@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use App\Traits\FiltersByUserRole;
-use App\Traits\HandlesRichTextAttributes;
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
+use App\Traits\ClearsEmptyRichText;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TouristService extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, HandlesRichTextAttributes;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
     protected $table = 'tourist_services';
     protected $richTextAttributes = [
         'description',
@@ -23,239 +23,193 @@ class TouristService extends Model
     protected $fillable = [
         'id',
         'uuid',
-        'include_unified_ticket',
-        'total_day_visit',
-
-        // Pricing - Foreigners
-        'per_adult_foreigners',
-        'per_child_foreigners',
-
-        // Pricing - Local
-        'per_adult_local',
-        'per_child_local',
-
-        // Pricing - Arab
-        'per_adult_arab',
-        'per_child_arab',
-
-        // Pricing - Residents
-        'per_adult_residents',
-        'per_child_residents',
-
-        // Non-accommodated Visitors
-        'non_accommodated_visitors_adult',
-        'non_accommodated_visitors_child',
-
-        // Operating Hours
-        'summer_opening_time',
-        'summer_closing_time',
-        'winter_opening_time',
-        'winter_closing_time',
+        'photo',
+        'gallery',
+        'code',
+        'name',
+        'name_ar',
+        'service_type',
+        'category',
+        'supplier_type',
+        'supplier_name',
+        'sort_order',
+        'address',
+        'latitude',
+        'longitude',
+        'pricing_model',
+        'pricing_type',
+        'pricing_unit',
+        'pricing_unit_value',
+        'cost_adult',
+        'cost_child',
+        'price_adult',
+        'price_child',
+        'service_seasons',
+        'seasonal_prices',
+        'child_min_age',
+        'child_max_age',
+        'price_foreigner_adult',
+        'price_foreigner_child',
+        'price_arab_adult',
+        'price_arab_child',
+        'price_local_adult',
+        'price_local_child',
+        'price_resident_adult',
+        'price_resident_child',
+        'target_modules',
+        'is_tax_inclusive',
+        'tax_configuration',
+        'commission_configuration',
+        'opening_time',
+        'closing_time',
         'operating_days',
-        'annual_holidays',
-        // 'special_schedules',
-
-        // Day Off & Holidays
-        'day_off',
-        'yearly_holidays',
-
-        // Contact Information
-        'person_name_01',
-        'person_name_02',
-        'email_01',
-        'email_02',
+        'special_hours',
+        'is_24_7',
+        'min_participants',
+        'max_participants',
+        'email',
         'phone',
-        'mobile_01',
-        'mobile_02',
-        'fax',
-        'website',
-
-        // Local Guide
-        'local_guide_available',
-        'local_guide_fees_01',
-        'local_guide_fees_02',
-        'local_guide_fees_03',
-        'local_guide_fees_04',
-        'local_guide_fees_05',
-
-        // Payment Methods
-        'credit_cards',
-
-        // Club Cars
-        'club_cars_available',
-        'club_car_prices_01',
-        'club_car_prices_02',
-        'club_car_prices_03',
-        'club_car_prices_04',
-        'club_car_prices_05',
-        'club_car_prices_06',
-        'club_car_prices_07',
-        'club_car_prices_08',
-
-        // Additional Fields
-        'ext1',
-        'ext2',
-        'ext3',
-
-        // Description & Notes
+        'mobile',
+        'contact_person',
+        'booking_required',
+        'cancellation_policy',
+        'is_refundable',
+        'is_mandatory',
+        'is_free',
+        'is_verified',
+        'video_url',
+        'rating',
+        'total_reviews',
+        'duration_minutes',
+        'difficulty_level',
+        'tags',
+        'is_active',
+        'is_featured',
         'description',
         'notes',
-
-        // Status
-        'sort_order',
-        'is_active',
-
-        'site_id',
-        'currency_id',
         'created_by',
         'updated_by',
+        'currency_id',
+        'country_id',
+        'state_id',
+        'city_id',
     ];
 
     protected $casts = [
-        'include_unified_ticket' => 'boolean',
-        'local_guide_available' => 'boolean',
-        'local_guide_not_available' => 'boolean',
-        'credit_cards' => 'boolean',
-        'club_cars_available' => 'boolean',
+        'latitude' => 'decimal:8',
+        'longitude' => 'decimal:8',
+        'cost_adult' => 'decimal:2',
+        'cost_child' => 'decimal:2',
+        'price_adult' => 'decimal:2',
+        'price_child' => 'decimal:2',
+        'price_foreigner_adult' => 'decimal:2',
+        'price_foreigner_child' => 'decimal:2',
+        'price_arab_adult' => 'decimal:2',
+        'price_arab_child' => 'decimal:2',
+        'price_local_adult' => 'decimal:2',
+        'price_local_child' => 'decimal:2',
+        'price_resident_adult' => 'decimal:2',
+        'price_resident_child' => 'decimal:2',
+        'rating' => 'decimal:2',
+        'service_seasons' => 'array',
+        'seasonal_prices' => 'array',
+        'target_modules' => 'array',
+        'tax_configuration' => 'array',
+        'commission_configuration' => 'array',
+        'operating_days' => 'array',
+        'special_hours' => 'array',
+        'gallery' => 'array',
+        'tags' => 'array',
+        'is_tax_inclusive' => 'boolean',
+        'is_24_7' => 'boolean',
+        'booking_required' => 'boolean',
+        'is_refundable' => 'boolean',
+        'is_mandatory' => 'boolean',
+        'is_free' => 'boolean',
+        'is_verified' => 'boolean',
         'is_active' => 'boolean',
-
-        'total_day_visit' => 'decimal:2',
-        'per_adult_foreigners' => 'decimal:2',
-        'per_child_foreigners' => 'decimal:2',
-        'per_adult_local' => 'decimal:2',
-        'per_child_local' => 'decimal:2',
-        'per_adult_arab' => 'decimal:2',
-        'per_child_arab' => 'decimal:2',
-        'per_adult_residents' => 'decimal:2',
-        'per_child_residents' => 'decimal:2',
-        'non_accommodated_visitors_adult' => 'decimal:2',
-        'non_accommodated_visitors_child' => 'decimal:2',
-        'local_guide_fees_01' => 'decimal:2',
-        'local_guide_fees_02' => 'decimal:2',
-        'local_guide_fees_03' => 'decimal:2',
-        'local_guide_fees_04' => 'decimal:2',
-        'local_guide_fees_05' => 'decimal:2',
-        'club_car_prices_01' => 'decimal:2',
-        'club_car_prices_02' => 'decimal:2',
-        'club_car_prices_03' => 'decimal:2',
-        'club_car_prices_04' => 'decimal:2',
-        'club_car_prices_05' => 'decimal:2',
-        'club_car_prices_06' => 'decimal:2',
-        'club_car_prices_07' => 'decimal:2',
-        'club_car_prices_08' => 'decimal:2',
-
-        'operating_days' => 'json',
-        'annual_holidays' => 'json',
-        // 'special_schedules' => 'json',
-        'day_off' => 'json',
-        'yearly_holidays' => 'json',
-
-        'sort_order' => 'integer',
+        'is_featured' => 'boolean',
     ];
 
     public function getRelationshipNames()
     {
-        return ['site', 'currency', 'creator', 'updater'];
+        return ['currency', 'country', 'state', 'city', 'creator', 'updater', 'taxConfigurations', 'commissionConfigurations', 'modules', 'seasonalPrices', 'operatingSchedules', 'specialHours'];
     }
 
     public function getExcludedColumns()
     {
-        return ['site_id', 'currency_id', 'created_by', 'updated_by', 'sort_order', 'description', 'notes'];
+        return ['currency_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
-    /**
-     * Boot method for model events
-     */
     protected static function boot()
     {
         parent::boot();
 
         // Set created_by/updated_by
-        static::saving(function ($model) {
+        static::saving(function ($item) {
+            // Auto-fill code
+            if (empty($item->code)) {
+                $item->code = generateCode('TSERV-', 5);
+            }
             if (Auth::check()) {
-                $model->created_by = Auth::id();
+                $item->created_by = Auth::id();
             }
         });
 
-        static::updating(function ($model) {
+        static::updating(function ($item) {
+            if (empty($item->code)) {
+                $item->code = generateCode('TSERV-', 5);
+            }
             if (Auth::check()) {
-                $model->updated_by = Auth::id();
+                $item->updated_by = Auth::id();
             }
         });
     }
 
-    /**
-     * JSON Accessors - Convert JSON strings to arrays
-     */
-    public function getOperatingDaysAttribute($value)
+    public function getTagsAttribute($value)
     {
-        return is_string($value) ? json_decode($value, true) ?? [] : ($value ?? []);
+        return collect(json_decode($value ?? '[]'));
     }
 
-    public function getAnnualHolidaysAttribute($value)
+    public function setTagsAttribute($value)
     {
-        return is_string($value) ? json_decode($value, true) ?? [] : ($value ?? []);
+        if (is_string($value)) {
+            $value = json_decode($value, true);
+        }
+
+        $this->attributes['tags'] = json_encode(collect($value)->map(fn($item) => is_array($item) ? ($item['value'] ?? null) : $item)->filter()->values()->all());
     }
 
-    // public function getSpecialSchedulesAttribute($value)
-    // {
-    //     return is_string($value) ? json_decode($value, true) ?? [] : ($value ?? []);
-    // }
-
-    public function getDayOffAttribute($value)
+    public static function getDifficultyLevels()
     {
-        return is_string($value) ? json_decode($value, true) ?? [] : ($value ?? []);
-    }
-
-    public function getYearlyHolidaysAttribute($value)
-    {
-        return is_string($value) ? json_decode($value, true) ?? [] : ($value ?? []);
-    }
-
-    /**
-     * Mutators - Clean and prepare array fields before storage
-     */
-    public function setOperatingDaysAttribute($value)
-    {
-        $cleaned = array_values(array_filter($value ?? []));
-        $this->attributes['operating_days'] = json_encode($cleaned);
-    }
-
-    public function setAnnualHolidaysAttribute($value)
-    {
-        $cleaned = array_values(array_filter($value ?? []));
-        $this->attributes['annual_holidays'] = json_encode($cleaned);
-    }
-
-    // public function setSpecialSchedulesAttribute($value)
-    // {
-    //     $cleaned = array_values(array_filter($value ?? []));
-    //     $this->attributes['special_schedules'] = json_encode($cleaned);
-    // }
-
-    public function setDayOffAttribute($value)
-    {
-        $cleaned = array_values(array_filter($value ?? []));
-        $this->attributes['day_off'] = json_encode($cleaned);
-    }
-
-    public function setYearlyHolidaysAttribute($value)
-    {
-        $cleaned = array_values(array_filter($value ?? []));
-        $this->attributes['yearly_holidays'] = json_encode($cleaned);
+        return [
+            'easy' => __('main.easy'),
+            'medium' => __('main.medium'),
+            'hard' => __('main.hard'),
+        ];
     }
 
     /**
      * Relationships
      */
-    public function site()
-    {
-        return $this->belongsTo(TouristSite::class, 'site_id');
-    }
-
     public function currency()
     {
         return $this->belongsTo(Currency::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 
     public function creator()
@@ -266,5 +220,79 @@ class TouristService extends Model
     public function updater()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    // === NEW RELATIONSHIPS FOR NORMALIZED TABLES ===
+
+    /**
+     * Get all seasonal prices for this service
+     */
+    public function seasonalPrices()
+    {
+        return $this->hasMany(SeasonalPrice::class);
+    }
+
+    /**
+     * Get all tax configurations
+     */
+    public function taxConfigurations()
+    {
+        return $this->hasMany(TaxConfiguration::class);
+    }
+
+    /**
+     * Get all commission configurations
+     */
+    public function commissionConfigurations()
+    {
+        return $this->hasMany(CommissionConfiguration::class);
+    }
+
+    /**
+     * Get all target modules
+     */
+    public function modules()
+    {
+        return $this->hasMany(TouristServiceModule::class);
+    }
+
+    /**
+     * Get all media files (photos, videos, gallery)
+     */
+    // public function media()
+    // {
+    //     return $this->hasMany(TouristServiceMedia::class);
+    // }
+
+    /**
+     * Get primary photo
+     */
+    // public function primaryPhoto()
+    // {
+    //     return $this->hasOne(TouristServiceMedia::class)->where('is_primary', true)->where('file_type', 'image');
+    // }
+
+    /**
+     * Get gallery images
+     */
+    // public function gallery()
+    // {
+    //     return $this->hasMany(TouristServiceMedia::class)->where('file_type', 'image')->where('is_primary', false)->orderBy('sort_order');
+    // }
+
+    /**
+     * Get operating schedules
+     */
+    public function operatingSchedules()
+    {
+        return $this->hasMany(OperatingSchedule::class);
+    }
+
+    /**
+     * Get special hours (holidays, temporary closures, etc.)
+     */
+    public function specialHours()
+    {
+        return $this->hasMany(SpecialHour::class);
     }
 }

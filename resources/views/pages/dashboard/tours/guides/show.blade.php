@@ -162,52 +162,34 @@
                     <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.location')]) }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="flex flex-wrap justify-between gap-10">
-                        @if ($tourGuide->region)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                                <a href="{{ route('regions.show', $tourGuide->region?->id) }}" class="block text-sm text-primary underline">
-                                    {{ $tourGuide->region?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
-                        @endif
-                        @if ($tourGuide->subregion)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                                <a href="{{ route('subregions.show', $tourGuide->subregion->id) }}" class="block text-sm text-primary underline">
-                                    {{ $tourGuide->subregion->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
-                        @endif
+                    <div class="flex flex-wrap" style="gap: 20px 80px;">
                         @if ($tourGuide->country)
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.country') }}</label>
+                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                                <a href="{{ route('regions.show', $tourGuide->country?->region?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $tourGuide->country?->region?->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                                <a href="{{ route('subregions.show', $tourGuide->country?->subregion?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $tourGuide->country?->subregion?->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                        @endif
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.country') }}</label>
+                            @if ($tourGuide->country)
                                 <a href="{{ route('countries.show', $tourGuide->country?->id) }}" class="block text-sm text-primary underline">
                                     {{ $tourGuide->country?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            </div>
-                        @endif
-                        @if ($tourGuide->state)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.state') }}</label>
-                                <a href="{{ route('states.show', $tourGuide->state?->id) }}" class="block text-sm text-primary underline">
-                                    {{ $tourGuide->state?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
-                        @endif
-                        @if ($tourGuide->city)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.city') }}</label>
-                                <a href="{{ route('cities.show', $tourGuide->city?->id) }}" class="block text-sm text-primary underline">
-                                    {{ $tourGuide->city?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
-                        @endif
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
+                        </div>
                         <div class="col-span-2">
                             <label class="kt-label mb-1">{{ __('main.street_address') }}</label>
                             <p class="text-sm text-secondary-foreground">{{ $tourGuide->street ?? __('main.na') }}</p>

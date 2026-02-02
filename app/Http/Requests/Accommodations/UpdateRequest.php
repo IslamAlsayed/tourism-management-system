@@ -118,8 +118,6 @@ class UpdateRequest extends FormRequest
             'country_id' => 'nullable|exists:countries,id',
             'state_id' => 'nullable|exists:states,id',
             'city_id' => 'nullable|exists:cities,id',
-            'region_id' => 'nullable|exists:regions,id',
-            'subregion_id' => 'nullable|exists:subregions,id',
             'street' => 'nullable|string|max:500',
             'box' => 'nullable|string|max:50',
             'postal_code' => 'nullable|string|max:20',

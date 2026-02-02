@@ -37,7 +37,7 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4 pb-0">
-                        {{-- Regions [region, subregion, country, state, city] --}}
+                        {{-- Regions [country, state, city] --}}
                         <livewire:regions.location-select-base />
                     </div>
                 </div>

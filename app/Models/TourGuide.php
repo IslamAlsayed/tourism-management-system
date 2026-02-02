@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\FiltersByUserRole;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +12,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TourGuide extends Model
 {
-    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -41,8 +41,6 @@ class TourGuide extends Model
         'notes',
         'currency_id',
         'guide_type_id',
-        'region_id',
-        'subregion_id',
         'country_id',
         'state_id',
         'city_id',
@@ -52,12 +50,6 @@ class TourGuide extends Model
     {
         parent::boot();
         static::saving(function ($item) {
-            if (empty($item->region_id) && !empty($item->city_id)) {
-                $item->region_id = $item->city?->region_id;
-            }
-            if (empty($item->subregion_id) && !empty($item->city_id)) {
-                $item->subregion_id = $item->city?->subregion_id;
-            }
             if (empty($item->country_id) && !empty($item->city_id)) {
                 $item->country_id = $item->city?->country_id;
             }
@@ -67,12 +59,6 @@ class TourGuide extends Model
         });
 
         static::updating(function ($item) {
-            if (empty($item->region_id) && !empty($item->city_id)) {
-                $item->region_id = $item->city?->region_id;
-            }
-            if (empty($item->subregion_id) && !empty($item->city_id)) {
-                $item->subregion_id = $item->city?->subregion_id;
-            }
             if (empty($item->country_id) && !empty($item->city_id)) {
                 $item->country_id = $item->city?->country_id;
             }
@@ -85,12 +71,12 @@ class TourGuide extends Model
 
     public function getRelationshipNames()
     {
-        return ['currency', 'guide_type', 'tourGuideLanguages', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['currency', 'guide_type', 'tourGuideLanguages', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'guide_type_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
+        return ['currency_id', 'guide_type_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
     public function currency()
@@ -106,16 +92,6 @@ class TourGuide extends Model
     public function tourGuideLanguages()
     {
         return $this->hasMany(TourGuideLanguage::class, 'tour_guide_id')->with('language');
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
     }
 
     public function country()

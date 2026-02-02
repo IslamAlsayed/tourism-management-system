@@ -22,23 +22,25 @@ class StateController extends Controller
 
     public function store(StoreRequest $request)
     {
-        $data = $request->validated();
-        unset($data['city_id']);
-        $state = State::create($data);
+        $validated = $request->validated();
+        unset($validated['city_id']);
+        $state = State::create($validated);
         if (!$state)
             return redirect()->route('states.index')->withError(__('messages.type_creation_failed', ['type' => __('main.state')]));
         $cityIds = [];
-        if ($request->boolean('all_cities') && isset($data['country_id'])) {
-            $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
+        if ($request->boolean('all_cities') && isset($validated['country_id'])) {
+            $cityIds = City::where('country_id', $validated['country_id'])->pluck('id')->toArray();
         } elseif ($request->filled('city_id')) {
             $cityIds = array_unique((array) $request->input('city_id'));
         }
         if (!empty($cityIds)) {
             $state->cities()->sync($cityIds);
         }
-        return $request->has('save_and_add')
-            ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.state')]))
-            : redirect()->route('states.index')->withSuccess(__('messages.type_created', ['type' => __('main.state')]));
+        return $state
+            ? ($request->has('save_and_add')
+                ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.state')]))
+                : redirect()->route('states.index')->withSuccess(__('messages.type_created', ['type' => __('main.state')])))
+            : redirect()->back()->withError(__('messages.type_creation_failed', ['type' => __('main.state')]));
     }
 
     public function show($id)
@@ -56,17 +58,18 @@ class StateController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         return view('pages.dashboard.states.edit', compact('state'));
     }
+
     public function update(UpdateRequest $request, $id)
     {
         $state = State::find($id);
         if (!$state)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
-        $data = $request->validated();
-        unset($data['city_id']);
-        $state->update($data);
+        $validated = $request->validated();
+        unset($validated['city_id']);
+        $state->update($validated);
         $cityIds = [];
-        if ($request->boolean('all_cities') && isset($data['country_id'])) {
-            $cityIds = City::where('country_id', $data['country_id'])->pluck('id')->toArray();
+        if ($request->boolean('all_cities') && isset($validated['country_id'])) {
+            $cityIds = City::where('country_id', $validated['country_id'])->pluck('id')->toArray();
         } elseif ($request->filled('city_id')) {
             $cityIds = array_unique((array) $request->input('city_id'));
         }

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\FiltersByUserRole;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TransportationVehicleType extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, HandlesRichTextAttributes;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
     protected $table = 'transportations_vehicle_types';
     protected $richTextAttributes = [
         'description',

@@ -35,8 +35,6 @@ class TransportationCompanyFactory extends Factory
             'description' => $this->faker->paragraph(3),
             'notes' => $this->faker->optional()->sentence(),
             'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? \App\Models\Currency::factory(),
-            'region_id' => \App\Models\Region::inRandomOrder()->first()?->id ?? null,
-            'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id ?? null,
             'country_id' => \App\Models\Country::inRandomOrder()->first()?->id ?? \App\Models\Country::factory(),
             'state_id' => \App\Models\State::inRandomOrder()->first()?->id ?? null,
             'city_id' => \App\Models\City::inRandomOrder()->first()?->id ?? null,

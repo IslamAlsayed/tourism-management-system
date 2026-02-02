@@ -23,26 +23,21 @@
         @include('components.must-add-first', [
             'requirements' => [
                 [
-                    'condition' => \App\Models\Region::count() > 0,
-                    'route' => route('regions.create'),
-                    'label' => __('main.regions_'),
-                ],
-                [
-                    'condition' => \App\Models\Subregion::count() > 0,
-                    'route' => route('subregions.create'),
-                    'label' => __('main.subregions_'),
-                ],
-                [
                     'condition' => \App\Models\Country::count() > 0,
                     'route' => route('countries.create'),
                     'label' => __('main.countries_'),
+                ],
+                [
+                    'condition' => \App\Models\City::count() > 0,
+                    'route' => route('cities.create'),
+                    'label' => __('main.cities_'),
                 ],
             ],
         ])
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('states.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('states.store') }}" method="POST">
             @csrf
             <div class="grid gap-4 lg:gap-6">
                 <!-- Location Information -->
@@ -53,25 +48,23 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, country, city] --}}
+                        {{-- Regions [country, city] --}}
                         <livewire:regions.location-to-state :multiple="['cities']" />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Latitude -->
-                            <div class="">
+                            <div>
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" step="0.00000001" name="latitude" id="latitude"
-                                    class="kt-input h-[45px]" value="{{ old('latitude') }}">
+                                <input type="number" step="0.00000001" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ old('latitude') }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Longitude -->
-                            <div class="">
+                            <div>
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" step="0.00000001" name="longitude" id="longitude"
-                                    class="kt-input h-[45px]" value="{{ old('longitude') }}">
+                                <input type="number" step="0.00000001" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ old('longitude') }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -93,70 +86,63 @@
                     <div class="kt-card-body p-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- State Name (English) -->
-                            <div class="">
+                            <div>
                                 <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
-                                    value="{{ old('name') }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- State Name (Arabic) -->
-                            <div class="">
+                            <div>
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar') }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- FIPS Code -->
-                            <div class="">
+                            <div>
                                 <label for="fips_code" class="kt-label mb-2">{{ __('main.fips_code') }}</label>
-                                <input type="text" name="fips_code" id="fips_code" class="kt-input h-[45px]"
-                                    maxLength="2" value="{{ old('fips_code') }}">
+                                <input type="text" name="fips_code" id="fips_code" class="kt-input h-[45px]" maxLength="2" value="{{ old('fips_code') }}">
                                 @error('fips_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- State Code (ISO 2) -->
-                            <div class="">
+                            <div>
                                 <label for="iso2" class="kt-label required mb-2">{{ __('main.iso2') }}</label>
-                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" required
-                                    maxLength="2" value="{{ old('iso2') }}">
+                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" required value="{{ old('iso2') }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- State Code (ISO 3) -->
-                            <div class="">
+                            <div>
                                 <label for="iso3" class="kt-label required mb-2">{{ __('main.iso3') }}</label>
-                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" required
-                                    maxLength="3" value="{{ old('iso3') }}">
+                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" required value="{{ old('iso3') }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Type -->
-                            <div class="">
+                            <div>
                                 <label for="type" class="kt-label mb-2">{{ __('main.type') }}</label>
-                                <input type="text" name="type" id="type" class="kt-input h-[45px]"
-                                    value="{{ old('type') }}">
+                                <input type="text" name="type" id="type" class="kt-input h-[45px]" value="{{ old('type') }}">
                                 @error('type')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Level -->
-                            <div class="">
+                            <div>
                                 <label for="level" class="kt-label mb-2">{{ __('main.level') }}</label>
-                                <input type="number" name="level" id="level" class="kt-input h-[45px]"
-                                    minLength="1" value="{{ old('level') }}">
+                                <input type="number" name="level" id="level" class="kt-input h-[45px]" minLength="1" value="{{ old('level') }}">
                                 @error('level')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

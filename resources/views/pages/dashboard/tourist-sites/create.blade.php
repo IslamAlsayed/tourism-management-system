@@ -23,16 +23,6 @@
         @include('components.must-add-first', [
             'requirements' => [
                 [
-                    'condition' => \App\Models\Region::count() > 0,
-                    'route' => route('regions.index'),
-                    'label' => __('main.regions'),
-                ],
-                [
-                    'condition' => \App\Models\Subregion::count() > 0,
-                    'route' => route('subregions.index'),
-                    'label' => __('main.subregions'),
-                ],
-                [
                     'condition' => \App\Models\Country::count() > 0,
                     'route' => route('countries.index'),
                     'label' => __('main.countries'),
@@ -63,7 +53,7 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
+                        {{-- Regions [country, state, city] --}}
                         <livewire:regions.location-select-base />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">

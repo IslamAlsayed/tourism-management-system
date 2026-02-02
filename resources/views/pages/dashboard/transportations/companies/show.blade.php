@@ -116,29 +116,23 @@
                     <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="flex flex-wrap justify-between gap-10">
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            @if ($company->region)
-                                <a href="{{ route('regions.show', $company->region?->id) }}" class="block text-sm text-primary underline">
-                                    {{ $company->region?->name ?? __('main.na') }}
+                    <div class="flex flex-wrap" style="gap: 20px 80px;">
+                        @if ($company->country)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                                <a href="{{ route('regions.show', $company->country?->region?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $company->country?->region?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            @else
-                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
-                            @endif
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                            @if ($company->subregion)
-                                <a href="{{ route('subregions.show', $company->subregion->id) }}" class="block text-sm text-primary underline">
-                                    {{ $company->subregion->name ?? __('main.na') }}
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                                <a href="{{ route('subregions.show', $company->country?->subregion?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $company->country?->subregion?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            @else
-                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
                             @if ($company->country)

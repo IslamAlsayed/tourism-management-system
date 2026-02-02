@@ -26,16 +26,13 @@ class UpdateRequest extends FormRequest
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
 
-            'region_id' => ['nullable', 'string', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
-
             'city_id' => ['nullable'],
             'city_id.*' => ['integer', 'exists:cities,id'],
             'all_cities' => ['nullable'],
 
-            'iso2' => ['nullable', 'string', 'min:2', 'max:2', Rule::unique('states', 'iso2')->ignore($this->route('state'))],
-            'iso3' => ['nullable', 'string', 'min:3', 'max:3', Rule::unique('states', 'iso3')->ignore($this->route('state'))],
+            'iso2' => ['nullable', 'string', 'min:2', 'max:3'],
+            'iso3' => ['nullable', 'string', 'min:2', 'max:3'],
             'fips_code' => ['nullable', 'string', 'max:2'],
             'type' => ['nullable', 'string', 'max:255'],
             'level' => ['nullable', 'integer'],

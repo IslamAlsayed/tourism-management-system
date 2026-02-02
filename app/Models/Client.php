@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Client extends Model
 {
-    use HasSearch, HasRichText, HasUuid, HasFactory, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    use HasSearch, HasRichText, HasUuid, HasFactory, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -62,8 +62,6 @@ class Client extends Model
         'notes',
         'currency_id',
         'timezone_id',
-        'region_id',
-        'subregion_id',
         'country_id',
         'state_id',
         'city_id',
@@ -85,7 +83,7 @@ class Client extends Model
 
     public function getRelationshipNames()
     {
-        return ['timezone', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'nationality', 'creator', 'updater'];
+        return ['timezone', 'currency', 'country', 'state', 'city', 'nationality', 'creator', 'updater'];
     }
 
     public function getExcludedColumns()
@@ -93,8 +91,6 @@ class Client extends Model
         return [
             'timezone_id',
             'currency_id',
-            'region_id',
-            'subregion_id',
             'country_id',
             'state_id',
             'city_id',
@@ -142,16 +138,6 @@ class Client extends Model
     public function currency()
     {
         return $this->belongsTo(Currency::class);
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
     }
 
     public function country()

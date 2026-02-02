@@ -28,16 +28,6 @@
                     'label' => __('main.currencies'),
                 ],
                 [
-                    'condition' => \App\Models\Region::count() > 0,
-                    'route' => route('regions.index'),
-                    'label' => __('main.regions'),
-                ],
-                [
-                    'condition' => \App\Models\Subregion::count() > 0,
-                    'route' => route('subregions.index'),
-                    'label' => __('main.subregions'),
-                ],
-                [
                     'condition' => \App\Models\Country::count() > 0,
                     'route' => route('countries.index'),
                     'label' => __('main.countries'),
@@ -57,8 +47,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('tours.guides-types.store') }}"
-            enctype="multipart/form-data">
+        <form class="space-y-6" method="POST" action="{{ route('tours.guides-types.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
                 {{-- Location Information --}}
@@ -69,7 +58,7 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
+                        {{-- Regions [country, state, city] --}}
                         <livewire:regions.location-select-base :multiple="['states', 'cities']" />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
@@ -91,8 +80,7 @@
                             {{-- Type --}}
                             <div class="">
                                 <label for="type" class="kt-label required mb-2">{{ __('main.type') }}</label>
-                                <input type="text" name="type" id="type" class="kt-input h-[45px]" required
-                                    value="{{ old('type') }}">
+                                <input type="text" name="type" id="type" class="kt-input h-[45px]" required value="{{ old('type') }}">
                                 @error('type')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -101,8 +89,7 @@
                             {{-- Price --}}
                             <div class="">
                                 <label for="price" class="kt-label required mb-2">{{ __('main.price') }}</label>
-                                <input type="text" name="price" min="1" id="price" class="kt-input h-[45px]"
-                                    required value="{{ old('price') }}">
+                                <input type="text" name="price" min="1" id="price" class="kt-input h-[45px]" required value="{{ old('price') }}">
                                 @error('price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

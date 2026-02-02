@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\FiltersByUserRole;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +13,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Accommodation extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -49,8 +49,6 @@ class Accommodation extends Model
 
         'type_id',
         'currency_id',
-        'region_id',
-        'subregion_id',
         'country_id',
         'state_id',
         'city_id',
@@ -67,12 +65,6 @@ class Accommodation extends Model
     {
         parent::boot();
         static::saving(function ($item) {
-            if (empty($item->region_id) && !empty($item->country_id)) {
-                $item->region_id = $item->country?->region_id;
-            }
-            if (empty($item->subregion_id) && !empty($item->country_id)) {
-                $item->subregion_id = $item->country?->subregion_id;
-            }
             if (!isset($item->country_id) || empty($item->country_id)) {
                 if (!empty($item->city_id) && $item->city) {
                     $item->country_id = $item->city?->country_id;
@@ -88,12 +80,6 @@ class Accommodation extends Model
         });
 
         static::updating(function ($item) {
-            if (empty($item->region_id) && !empty($item->country_id)) {
-                $item->region_id = $item->country?->region_id;
-            }
-            if (empty($item->subregion_id) && !empty($item->country_id)) {
-                $item->subregion_id = $item->country?->subregion_id;
-            }
             if (!isset($item->country_id) || empty($item->country_id)) {
                 if (!empty($item->city_id) && $item->city) {
                     $item->country_id = $item->city?->country_id;
@@ -111,12 +97,12 @@ class Accommodation extends Model
 
     public function getRelationshipNames()
     {
-        return ['type', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'rooms', 'meals', 'supplements'];
+        return ['type', 'currency', 'country', 'state', 'city', 'seasons', 'rooms', 'meals', 'supplements'];
     }
 
     public function getExcludedColumns()
     {
-        return ['type_id', 'currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
+        return ['type_id', 'currency_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
     public function type()
@@ -127,16 +113,6 @@ class Accommodation extends Model
     public function currency()
     {
         return $this->belongsTo(Currency::class);
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
     }
 
     public function country()

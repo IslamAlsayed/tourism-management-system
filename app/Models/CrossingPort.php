@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use App\Traits\HasUuid;
-use App\Traits\HasSearch;
-use App\Traits\FiltersByUserRole;
-use App\Traits\ClearsEmptyRichText;
 use App\Traits\BroadcastsRecordEvents;
-use Illuminate\Database\Eloquent\Model;
-use App\Traits\HandlesRichTextAttributes;
-use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use App\Traits\ClearsEmptyRichText;
+use App\Traits\FiltersByUserRole;
+use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class CrossingPort extends Model
 {
-    use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes, ClearsEmptyRichText;
+    use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $table = 'crossing_ports';
     protected $richTextAttributes = [
         'address',

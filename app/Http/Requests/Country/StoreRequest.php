@@ -24,8 +24,8 @@ class StoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
-            'iso2' => ['required', 'string', 'unique:countries,iso2'],
-            'iso3' => ['required', 'string', 'unique:countries,iso3'],
+            'iso2' => ['required', 'string', 'min:2', 'max:3'],
+            'iso3' => ['required', 'string', 'min:2', 'max:3'],
             'numeric_code' => ['nullable', 'integer'],
             'phone_code' => ['nullable', 'string'],
             'capital' => ['nullable', 'string', 'max:255'],
@@ -38,8 +38,8 @@ class StoreRequest extends FormRequest
             'population' => ['nullable', 'integer'],
             'area' => ['nullable', 'numeric'],
 
-            'region_id' => ['nullable', 'string', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
+            'region_id' => ['nullable', 'integer', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'integer', 'exists:subregions,id'],
 
             'state_id' => ['nullable', 'exists:states,id'],
             'all_states' => ['boolean'],

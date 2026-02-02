@@ -18,8 +18,6 @@ return new class extends Migration {
             // Location information
             $table->foreignId('currency_id')->nullable();
             $table->foreignId('timezone_id')->nullable();
-            $table->foreignId('region_id')->nullable();
-            $table->foreignId('subregion_id')->nullable();
             $table->foreignId('country_id')->nullable();
             $table->foreignId('state_id')->nullable();
             $table->foreignId('city_id')->nullable();
@@ -92,7 +90,7 @@ return new class extends Migration {
             $table->index('personal_email');
             $table->index('passport_number');
             $table->index('client_status');
-            $table->index(['region_id', 'subregion_id', 'country_id', 'state_id', 'city_id']);
+            $table->index(['country_id', 'state_id', 'city_id']);
         });
     }
 

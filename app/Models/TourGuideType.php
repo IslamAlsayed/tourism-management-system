@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\FiltersByUserRole;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +12,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TourGuideType extends Model
 {
-    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -29,34 +29,22 @@ class TourGuideType extends Model
         'description',
         'notes',
         'currency_id',
-        'region_id',
-        'subregion_id',
         'country_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['currency', 'region', 'subregion', 'country', 'states', 'cities'];
+        return ['currency', 'country', 'states', 'cities'];
     }
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'region_id', 'subregion_id', 'country_id', 'description', 'notes'];
+        return ['currency_id', 'country_id', 'description', 'notes'];
     }
 
     public function currency()
     {
         return $this->belongsTo(Currency::class);
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
     }
 
     public function country()

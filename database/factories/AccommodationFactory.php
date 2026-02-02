@@ -42,8 +42,6 @@ class AccommodationFactory extends Factory
             'is_active' => $this->faker->boolean(80),
             'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id ?? \App\Models\Currency::factory(),
             'type_id' => \App\Models\Type::inRandomOrder()->first()?->id ?? null,
-            'region_id' => \App\Models\Region::inRandomOrder()->first()?->id ?? null,
-            'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id ?? null,
             'country_id' => \App\Models\Country::inRandomOrder()->first()?->id ?? \App\Models\Country::factory(),
             'state_id' => \App\Models\State::inRandomOrder()->first()?->id ?? null,
             'city_id' => \App\Models\City::inRandomOrder()->first()?->id ?? null,

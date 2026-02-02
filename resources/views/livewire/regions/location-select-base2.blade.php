@@ -27,7 +27,7 @@
         <label for="state_id" class="kt-label mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
-                    @if (isset($multiple) && in_array('states', $multiple))
+                    @if (isset($multiple) && in_array('states', $multiple) && false)
                         <input type="hidden" name="all_states" value="0">
                         <div class="custom-input">
                             <input type="checkbox" name="all_states" id="all_states" value="1" wire:model.live="all_states"
@@ -72,7 +72,7 @@
         <label for="city_id" class="kt-label mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
-                    @if (isset($multiple) && in_array('cities', $multiple))
+                    @if (isset($multiple) && in_array('cities', $multiple) && false)
                         <input type="hidden" name="all_cities" value="0">
                         <div class="custom-input" wire:ignore>
                             <input type="checkbox" name="all_cities" id="all_cities" value="1" {{ ($record->all_cities ?? 0) == 1 || ($record->all_cities ?? 0) == true ? 'checked' : '' }}

@@ -170,15 +170,15 @@ window.addEventListener("load", () => {
 });
 
 // Add click listeners to all sidebar links
-document.addEventListener("DOMContentLoaded", () => {
-    const sidebarLinks = document.querySelectorAll("#sidebar .kt-menu-link");
-    sidebarLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-            // Wait for page navigation
-            setTimeout(scrollSidebarToActive, 100);
-        });
-    });
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     const sidebarLinks = document.querySelectorAll("#sidebar .kt-menu-link");
+//     sidebarLinks.forEach((link) => {
+//         link.addEventListener("click", () => {
+//             // Wait for page navigation
+//             setTimeout(scrollSidebarToActive, 100);
+//         });
+//     });
+// });
 
 function scrollSidebarToActive() {
     const activeLink = document.querySelector(".kt-menu-link.active");
@@ -186,8 +186,6 @@ function scrollSidebarToActive() {
         console.warn("No active link found");
         return;
     }
-
-    console.log("activeLink", activeLink);
 
     // افتح الـ accordion لو مقفول
     let parentItem = activeLink.closest(".kt-menu-item");
@@ -206,8 +204,6 @@ function scrollSidebarToActive() {
         return;
     }
 
-    console.log("scrollContainer", scrollContainer);
-
     const containerRect = scrollContainer.getBoundingClientRect();
     const linkRect = activeLink.getBoundingClientRect();
 
@@ -218,12 +214,7 @@ function scrollSidebarToActive() {
         scrollContainer.clientHeight / 2 +
         linkRect.height / 2;
 
-    console.log("Scrolling to offset:", offset);
-
-    scrollContainer.scrollTo({
-        top: offset,
-        behavior: "smooth",
-    });
+    scrollContainer.scrollTo({ top: offset, behavior: "smooth" });
 }
 
 function getScrollableParent(el) {
@@ -278,10 +269,10 @@ document.addEventListener("keydown", function (e) {
 
         if (isCreateOrEditPage) {
             // Find and submit the form
-            const form = document.querySelector("form");
-            if (form) {
+            const formButtonSaveRecord = document.getElementById("formButtonSaveRecord");
+            if (formButtonSaveRecord) {
                 e.preventDefault();
-                form.submit();
+                formButtonSaveRecord.click();
             }
         }
     }

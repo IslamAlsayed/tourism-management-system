@@ -14,98 +14,105 @@ return new class extends Migration {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();
 
-            // Foreign Keys
-            $table->foreignId('site_id')->nullable();
+            // === 1. BASIC IDENTIFICATION ===
+            $table->string('code')->unique()->nullable();
+            $table->string('name')->nullable();
+            $table->string('name_ar')->nullable();
+            $table->string('service_type')->nullable(); // Renamed from site_type
+            $table->string('category')->nullable();
+            $table->string('supplier_type')->nullable();
+            $table->string('supplier_name')->nullable();
+            $table->integer('sort_order')->default(0);
+
+            // === 2. LOCATION & GEOGRAPHY ===
             $table->foreignId('currency_id')->nullable();
+            $table->foreignId('country_id')->nullable();
+            $table->foreignId('state_id')->nullable();
+            $table->foreignId('city_id')->nullable();
+            $table->text('address')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
 
-            // Service Configuration
-            $table->boolean('include_unified_ticket')->default(false);
-            $table->decimal('total_day_visit', 10, 2)->nullable();
+            // === 3. PRICING & OPERATIONS ===
+            $table->string('pricing_model')->default('per_person'); // per_person, per_group
+            $table->string('pricing_type')->default('flat'); // flat vs seasonal
+            $table->string('pricing_unit')->nullable(); // person, ticket, vehicle
+            $table->integer('pricing_unit_value')->default(1);
 
-            // Pricing - Foreigners
-            $table->decimal('per_adult_foreigners', 10, 2)->nullable();
-            $table->decimal('per_child_foreigners', 10, 2)->nullable();
+            // Base Costs & Prices
+            $table->decimal('cost_adult', 8, 2)->nullable();
+            $table->decimal('cost_child', 8, 2)->nullable();
+            $table->decimal('price_adult', 8, 2)->nullable();
+            $table->decimal('price_child', 8, 2)->nullable();
 
-            // Pricing - Local
-            $table->decimal('per_adult_local', 10, 2)->nullable();
-            $table->decimal('per_child_local', 10, 2)->nullable();
+            // Date Logic
+            $table->json('service_seasons')->nullable(); // Array of defined seasons
+            $table->json('seasonal_prices')->nullable(); // The big pricing matrix
 
-            // Pricing - Arab
-            $table->decimal('per_adult_arab', 10, 2)->nullable();
-            $table->decimal('per_child_arab', 10, 2)->nullable();
+            // Child Policy
+            $table->integer('child_min_age')->nullable();
+            $table->integer('child_max_age')->nullable();
 
-            // Pricing - Residents
-            $table->decimal('per_adult_residents', 10, 2)->nullable();
-            $table->decimal('per_child_residents', 10, 2)->nullable();
+            // === 4. DETAILED PRICING (Legacy Columns kept for easy queries) ===
+            $table->decimal('price_foreigner_adult', 8, 2)->nullable();
+            $table->decimal('price_foreigner_child', 8, 2)->nullable();
+            $table->decimal('price_arab_adult', 8, 2)->nullable();
+            $table->decimal('price_arab_child', 8, 2)->nullable();
+            $table->decimal('price_local_adult', 8, 2)->nullable();
+            $table->decimal('price_local_child', 8, 2)->nullable();
+            $table->decimal('price_resident_adult', 8, 2)->nullable();
+            $table->decimal('price_resident_child', 8, 2)->nullable();
 
-            // Non-accommodated Visitors
-            $table->decimal('non_accommodated_visitors_adult', 10, 2)->nullable();
-            $table->decimal('non_accommodated_visitors_child', 10, 2)->nullable();
+            // === 5. MODULES & INTEGRATION ===
+            $table->json('target_modules')->nullable(); // ['tours', 'hotels', ...]
 
-            // Operating Hours
-            $table->string('summer_opening_time')->nullable();
-            $table->string('summer_closing_time')->nullable();
-            $table->string('winter_opening_time')->nullable();
-            $table->string('winter_closing_time')->nullable();
+            // === 6. TAXES & COMMISSION ===
+            $table->boolean('is_tax_inclusive')->default(false);
+            $table->json('tax_configuration')->nullable();
+            $table->json('commission_configuration')->nullable();
+
+            // === 7. OPERATIONS ===
+            $table->time('opening_time')->nullable();
+            $table->time('closing_time')->nullable();
             $table->json('operating_days')->nullable();
-            $table->json('annual_holidays')->nullable();
-            // $table->json('special_schedules')->nullable();
+            $table->json('special_hours')->nullable();
+            $table->boolean('is_24_7')->default(false);
+            $table->integer('min_participants')->nullable();
+            $table->integer('max_participants')->nullable();
 
-            // Day Off & Holidays
-            $table->json('day_off')->nullable();
-            $table->json('yearly_holidays')->nullable();
-
-            // Contact Information
-            $table->string('person_name_01')->nullable();
-            $table->string('person_name_02')->nullable();
+            // === 8. CONTACT & FLAGS ===
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('fax')->nullable();
-            $table->string('mobile_01')->nullable();
-            $table->string('mobile_02')->nullable();
-            $table->string('email_01')->nullable();
-            $table->string('email_02')->nullable();
-            $table->string('website')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('contact_person')->nullable();
+            $table->boolean('booking_required')->default(false);
+            $table->text('cancellation_policy')->nullable();
+            $table->boolean('is_refundable')->default(true);
+            $table->boolean('is_mandatory')->default(false);
+            $table->boolean('is_free')->default(false);
+            $table->boolean('is_verified')->default(false);
 
-            // Local Guide
-            $table->boolean('local_guide_available')->nullable()->default(false);
-            $table->decimal('local_guide_fees_01', 10, 2)->nullable();
-            $table->decimal('local_guide_fees_02', 10, 2)->nullable();
-            $table->decimal('local_guide_fees_03', 10, 2)->nullable();
-            $table->decimal('local_guide_fees_04', 10, 2)->nullable();
-            $table->decimal('local_guide_fees_05', 10, 2)->nullable();
-
-            // Payment Methods
-            $table->boolean('credit_cards')->nullable()->default(false);
-
-            // Club Cars
-            $table->boolean('club_cars_available')->nullable()->default(false);
-            $table->decimal('club_car_prices_01', 10, 2)->nullable();
-            $table->decimal('club_car_prices_02', 10, 2)->nullable();
-            $table->decimal('club_car_prices_03', 10, 2)->nullable();
-            $table->decimal('club_car_prices_04', 10, 2)->nullable();
-            $table->decimal('club_car_prices_05', 10, 2)->nullable();
-            $table->decimal('club_car_prices_06', 10, 2)->nullable();
-            $table->decimal('club_car_prices_07', 10, 2)->nullable();
-            $table->decimal('club_car_prices_08', 10, 2)->nullable();
-
-            // Additional Fields
-            $table->string('ext1')->nullable();
-            $table->string('ext2')->nullable();
-            $table->string('ext3')->nullable();
-
-            // Description & Notes
+            // === 9. MEDIA & META ===
+            $table->string('photo')->nullable();
+            $table->json('gallery')->nullable();
+            $table->text('video_url')->nullable();
+            $table->decimal('rating', 3, 2)->default(0.00);
+            $table->integer('total_reviews')->default(0);
+            $table->integer('duration_minutes')->nullable();
+            $table->string('difficulty_level')->default('easy');
+            $table->json('tags')->nullable();
+            $table->boolean('is_active')->default(false);
+            $table->boolean('is_featured')->default(false);
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
 
-            // Status
-            $table->integer('sort_order')->default(0);
-            $table->boolean('is_active')->default(true);
-
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
             $table->timestamps();
 
             // Indexes
-            $table->index('site_id');
-            $table->index('is_active');
+            $table->index('name');
+            $table->index('name_ar');
         });
     }
 

@@ -21,8 +21,6 @@ class RestaurantFactory extends Factory
             'name_ar' => $this->faker->company,
             'type_id' => \App\Models\Type::where('name', 'restaurant')->first()->id ?? 7,
             'currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id,
-            'region_id' => \App\Models\Region::inRandomOrder()->first()?->id,
-            'subregion_id' => \App\Models\Subregion::inRandomOrder()->first()?->id,
             'country_id' => \App\Models\Country::inRandomOrder()->first()?->id,
             'state_id' => \App\Models\State::inRandomOrder()->first()?->id,
             'city_id' => \App\Models\City::inRandomOrder()->first()?->id,

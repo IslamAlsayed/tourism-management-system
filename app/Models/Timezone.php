@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\FiltersByUserRole;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +13,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Timezone extends Model
 {
-    use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
         'notes',

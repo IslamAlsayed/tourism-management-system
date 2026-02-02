@@ -128,34 +128,39 @@
                     <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="flex flex-wrap justify-between gap-10">
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            @if ($accommodation->region)
-                                <a href="{{ route('regions.show', $accommodation->region?->id) }}" class="block text-sm text-primary underline">
-                                    {{ $accommodation->region?->name ?? __('main.na') }}
+                    <div class="flex flex-wrap" style="gap: 20px 80px;">
+                        @if ($accommodation->country)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                                <a href="{{ route('regions.show', $accommodation->country?->region?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $accommodation->country?->region?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            @else
-                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
-                            @endif
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                            @if ($accommodation->subregion)
-                                <a href="{{ route('subregions.show', $accommodation->subregion->id) }}" class="block text-sm text-primary underline">
-                                    {{ $accommodation->subregion->name ?? __('main.na') }}
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                                <a href="{{ route('subregions.show', $accommodation->country?->subregion?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $accommodation->country?->subregion?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
-                            @else
-                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
                             @if ($accommodation->country)
                                 <a href="{{ route('countries.show', $accommodation->country?->id) }}" class="block text-sm text-primary underline">
                                     {{ $accommodation->country?->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.state') }}</label>
+                            @if ($accommodation->state)
+                                <a href="{{ route('states.show', $accommodation->state?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $accommodation->state?->name ?? __('main.na') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                 </a>
                             @else
@@ -202,12 +207,12 @@
             </div>
 
             <!-- Map -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.map') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    @if ($accommodation->latitude && $accommodation->longitude)
+            @if ($accommodation->latitude && $accommodation->longitude)
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.map') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.coordinates') }}</label>
                             <p class="text-sm text-secondary-foreground">
@@ -224,179 +229,142 @@
                                     class="rounded-md overflow-hidden shadow"></div>
                             </div>
                         </div>
-                    @endif
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <!-- Contact Information -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        @if ($accommodation->general_mobile)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.general_mobile') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <a href="tel:{{ $accommodation->general_mobile }}" class="text-primary hover:underline">
-                                        {{ $accommodation->general_mobile }}
-                                    </a>
-                                </p>
-                            </div>
-                        @endif
-                        @if ($accommodation->general_email)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.general_email') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <a href="mailto:{{ $accommodation->general_email }}" class="text-primary hover:underline">
-                                        {{ $accommodation->general_email }}
-                                    </a>
-                                </p>
-                            </div>
-                        @endif
-                        @if ($accommodation->phone)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.phone') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <a href="tel:{{ $accommodation->phone }}" class="text-primary hover:underline">
-                                        {{ $accommodation->phone }}
-                                    </a>
-                                </p>
-                            </div>
-                        @endif
-                        @if ($accommodation->phone_ext)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.phone_ext') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $accommodation->phone_ext }}</p>
-                            </div>
-                        @endif
-                        @if ($accommodation->fax)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.fax') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $accommodation->fax }}</p>
-                            </div>
-                        @endif
-                        @if ($accommodation->email)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.email') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <a href="mailto:{{ $accommodation->email }}" class="text-primary hover:underline">
-                                        {{ $accommodation->email }}
-                                    </a>
-                                </p>
-                            </div>
-                        @endif
-                        @if ($accommodation->website)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.website') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <a href="{{ $accommodation->website }}" target="_blank" class="text-primary hover:underline">
-                                        {{ $accommodation->website }}
-                                    </a>
-                                </p>
-                            </div>
-                        @endif
+            @if (
+                $accommodation->general_mobile ||
+                    $accommodation->general_email ||
+                    $accommodation->phone ||
+                    $accommodation->phone_ext ||
+                    $accommodation->fax ||
+                    $accommodation->email ||
+                    $accommodation->website ||
+                    $accommodation->contact_person ||
+                    $accommodation->contact_position ||
+                    $accommodation->contact_mobile ||
+                    $accommodation->contact_email)
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
                     </div>
-
-                    @if ($accommodation->contact_person || $accommodation->contact_position || $accommodation->contact_mobile || $accommodation->contact_email)
-                        <div class="border-custom-t pt-4 mt-4">
-                            <h4 class="text-lg font-medium mb-4">{{ __('main.contact_person') }}</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                                @if ($accommodation->contact_person)
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.name') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            {{ $accommodation->contact_person }}
-                                        </p>
-                                    </div>
-                                @endif
-                                @if ($accommodation->contact_position)
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.position') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            {{ $accommodation->contact_position }}
-                                        </p>
-                                    </div>
-                                @endif
-                                @if ($accommodation->contact_mobile)
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.mobile') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            <a href="tel:{{ $accommodation->contact_mobile }}" class="text-primary hover:underline">
-                                                {{ $accommodation->contact_mobile }}
-                                            </a>
-                                        </p>
-                                    </div>
-                                @endif
-                                @if ($accommodation->contact_email)
-                                    <div>
-                                        <label class="kt-label mb-1">{{ __('main.email') }}</label>
-                                        <p class="text-sm text-secondary-foreground">
-                                            <a href="mailto:{{ $accommodation->contact_email }}" class="text-primary hover:underline">
-                                                {{ $accommodation->contact_email }}
-                                            </a>
-                                        </p>
-                                    </div>
-                                @endif
-                            </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            @if ($accommodation->general_mobile)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.general_mobile') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        <a href="tel:{{ $accommodation->general_mobile }}" class="text-primary hover:underline">
+                                            {{ $accommodation->general_mobile }}
+                                        </a>
+                                    </p>
+                                </div>
+                            @endif
+                            @if ($accommodation->general_email)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.general_email') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        <a href="mailto:{{ $accommodation->general_email }}" class="text-primary hover:underline">
+                                            {{ $accommodation->general_email }}
+                                        </a>
+                                    </p>
+                                </div>
+                            @endif
+                            @if ($accommodation->phone)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.phone') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        <a href="tel:{{ $accommodation->phone }}" class="text-primary hover:underline">
+                                            {{ $accommodation->phone }}
+                                        </a>
+                                    </p>
+                                </div>
+                            @endif
+                            @if ($accommodation->phone_ext)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.phone_ext') }}</label>
+                                    <p class="text-sm text-secondary-foreground">{{ $accommodation->phone_ext }}</p>
+                                </div>
+                            @endif
+                            @if ($accommodation->fax)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.fax') }}</label>
+                                    <p class="text-sm text-secondary-foreground">{{ $accommodation->fax }}</p>
+                                </div>
+                            @endif
+                            @if ($accommodation->email)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.email') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        <a href="mailto:{{ $accommodation->email }}" class="text-primary hover:underline">
+                                            {{ $accommodation->email }}
+                                        </a>
+                                    </p>
+                                </div>
+                            @endif
+                            @if ($accommodation->website)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.website') }}</label>
+                                    <p class="text-sm text-secondary-foreground">
+                                        <a href="{{ $accommodation->website }}" target="_blank" class="text-primary hover:underline">
+                                            {{ $accommodation->website }}
+                                        </a>
+                                    </p>
+                                </div>
+                            @endif
                         </div>
-                    @endif
-                </div>
-            </div>
 
-            <!-- Additional Information -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.metadata') }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        @if ($accommodation->uuid)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.uuid') }}</label>
-                                <p class="text-sm text-secondary-foreground font-mono">
-                                    {{ $accommodation->uuid }}
-                                </p>
-                            </div>
-                        @endif
-                        @if ($accommodation->currency_id)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.currency') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $accommodation->currency->name }}
-                                    <span class="text-primary font-semibold">
-                                        ({{ $accommodation->currency->code }})
-                                    </span>
-                                </p>
-                            </div>
-                        @endif
-                        @if ($accommodation->contract_file_path)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.contract_file') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <a href="{{ Storage::url($accommodation->contract_file_path) }}" target="_blank" class="text-primary hover:underline">
-                                        <i class="fas fa-file-pdf me-1"></i>
-                                        {{ __('main.view_contract') }}
-                                    </a>
-                                </p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $accommodation->created_at->format('d M Y, H:i') }}</p>
-                        </div>
-                        @if ($accommodation->updated_at != $accommodation->created_at)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.last_updated') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $accommodation->updated_at->format('d M Y, H:i') }}</p>
+                        @if ($accommodation->contact_person || $accommodation->contact_position || $accommodation->contact_mobile || $accommodation->contact_email)
+                            <div class="border-custom-t pt-4 mt-4">
+                                <h4 class="text-lg font-medium mb-4">{{ __('main.contact_person') }}</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                    @if ($accommodation->contact_person)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.name') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                {{ $accommodation->contact_person }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->contact_position)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.position') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                {{ $accommodation->contact_position }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->contact_mobile)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.mobile') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                <a href="tel:{{ $accommodation->contact_mobile }}" class="text-primary hover:underline">
+                                                    {{ $accommodation->contact_mobile }}
+                                                </a>
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if ($accommodation->contact_email)
+                                        <div>
+                                            <label class="kt-label mb-1">{{ __('main.email') }}</label>
+                                            <p class="text-sm text-secondary-foreground">
+                                                <a href="mailto:{{ $accommodation->contact_email }}" class="text-primary hover:underline">
+                                                    {{ $accommodation->contact_email }}
+                                                </a>
+                                            </p>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         @endif
                     </div>
                 </div>
-            </div>
+            @endif
+
+            <!-- Metadata -->
+            @include('components.metadata', ['record' => $accommodation])
 
             <!-- Seasons -->
             @if ($accommodation->seasons && $accommodation->seasons->count() > 0)

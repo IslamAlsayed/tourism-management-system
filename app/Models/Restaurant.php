@@ -57,8 +57,6 @@ class Restaurant extends Model
         'type_id',
         'timezone_id',
         'currency_id',
-        'region_id',
-        'subregion_id',
         'country_id',
         'state_id',
         'city_id',
@@ -68,12 +66,6 @@ class Restaurant extends Model
     {
         parent::boot();
         static::saving(function ($item) {
-            if (empty($item->region_id) && !empty($item->city_id)) {
-                $item->region_id = $item->city?->region_id;
-            }
-            if (empty($item->subregion_id) && !empty($item->city_id)) {
-                $item->subregion_id = $item->city?->subregion_id;
-            }
             if (empty($item->country_id) && !empty($item->city_id)) {
                 $item->country_id = $item->city?->country_id;
             }
@@ -83,12 +75,6 @@ class Restaurant extends Model
         });
 
         static::updating(function ($item) {
-            if (empty($item->region_id) && !empty($item->city_id)) {
-                $item->region_id = $item->city?->region_id;
-            }
-            if (empty($item->subregion_id) && !empty($item->city_id)) {
-                $item->subregion_id = $item->city?->subregion_id;
-            }
             if (empty($item->country_id) && !empty($item->city_id)) {
                 $item->country_id = $item->city?->country_id;
             }
@@ -100,12 +86,12 @@ class Restaurant extends Model
 
     public function getRelationshipNames()
     {
-        return ['type', 'timezone', 'currency', 'region', 'subregion', 'country', 'state', 'city', 'seasons', 'meals', 'supplements'];
+        return ['type', 'timezone', 'currency', 'country', 'state', 'city', 'seasons', 'meals', 'supplements'];
     }
 
     public function getExcludedColumns()
     {
-        return ['type_id', 'timezone_id', 'currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
+        return ['type_id', 'timezone_id', 'currency_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
     public function type()
@@ -121,16 +107,6 @@ class Restaurant extends Model
     public function currency()
     {
         return $this->belongsTo(Currency::class);
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
     }
 
     public function country()

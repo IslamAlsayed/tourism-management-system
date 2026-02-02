@@ -28,8 +28,7 @@ class StoreRequest extends FormRequest
             'type_id' => ['required', 'string', 'max:50', 'exists:types,id'],
             'timezone_id' => ['nullable', 'string', 'exists:timezones,id'],
             'currency_id' => ['nullable', 'string', 'exists:currencies,id'],
-            'region_id' => ['nullable', 'string', 'exists:regions,id'],
-            'subregion_id' => ['nullable', 'string', 'exists:subregions,id'],
+
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
             'state_id' => ['nullable', 'string', 'exists:states,id'],
             'city_id' => ['nullable', 'string', 'exists:cities,id'],

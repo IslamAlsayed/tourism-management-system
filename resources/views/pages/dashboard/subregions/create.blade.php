@@ -46,7 +46,12 @@
                             <!-- Region id -->
                             <div class="">
                                 <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
-                                    {{ __('main.region') }}
+                                    <div>
+                                        {{ __('main.region') }}
+                                        <strong class="dataLength text-primary">
+                                            ({{ count($regions) ?: 0 }})
+                                        </strong>
+                                    </div>
                                     <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
@@ -64,8 +69,7 @@
 
                             <!-- Subregion Name (Arabic) -->
                             <div class="">
-                                <label for="name_ar"
-                                    class="kt-label required mb-2">{{ __('main.type_name_arabic', ['type' => __('main.subregion')]) }}</label>
+                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.type_name_arabic', ['type' => __('main.subregion')]) }}</label>
                                 <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required>
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -74,8 +78,7 @@
 
                             <!-- Subregion Name (English) -->
                             <div class="">
-                                <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.type_name_english', ['type' => __('main.subregion')]) }}</label>
+                                <label for="name" class="kt-label required mb-2">{{ __('main.type_name_english', ['type' => __('main.subregion')]) }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]" required>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

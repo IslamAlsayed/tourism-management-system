@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Type extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
         'notes',

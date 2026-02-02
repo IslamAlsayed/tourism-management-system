@@ -16,8 +16,6 @@ return new class extends Migration {
             $table->string('type')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->foreignId('currency_id')->nullable();
-            $table->foreignId('region_id')->nullable();
-            $table->foreignId('subregion_id')->nullable();
             $table->foreignId('country_id')->nullable();
             $table->boolean('all_states')->nullable()->default(false);
             $table->boolean('all_cities')->nullable()->default(false);

@@ -34,14 +34,20 @@
                         @method('PUT')
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
-                            <!-- Region id -->
+                            <!-- Region -->
                             <div class="">
-                                <label for="region_id" class="kt-label mb-2">{{ __('main.region') }}</label>
+                                <label for="region_id" class="kt-label mb-2">
+                                    <div>
+                                        {{ __('main.region') }}
+                                        <strong class="dataLength text-primary">
+                                            ({{ count($regions) ?: 0 }})
+                                        </strong>
+                                    </div>
+                                </label>
                                 <select name="region_id" id="region_id" class="kt-input basic-single">
                                     <option value="" selected disabled></option>
                                     @foreach ($regions as $region)
-                                        <option value="{{ $region->id }}"
-                                            {{ $region->id == $subregion->region_id ? 'selected' : '' }}>
+                                        <option value="{{ $region->id }}" {{ $region->id == $subregion->region_id ? 'selected' : '' }}>
                                             {{ $region->name }}</option>
                                     @endforeach
                                 </select>
@@ -52,10 +58,8 @@
 
                             <!-- Subregion Name (Arabic) -->
                             <div class="">
-                                <label for="name_ar"
-                                    class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.subregion')]) }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ $subregion->name_ar }}">
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.subregion')]) }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $subregion->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -63,10 +67,8 @@
 
                             <!-- Subregion Name (English) -->
                             <div class="">
-                                <label for="name"
-                                    class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.subregion')]) }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ $subregion->name }}">
+                                <label for="name" class="kt-label mb-2">{{ __('main.type_name_english', ['type' => __('main.subregion')]) }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $subregion->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -75,8 +77,7 @@
                             <!-- Wiki data id -->
                             <div class="">
                                 <label for="wiki_data_id" class="kt-label mb-2">{{ __('main.wiki_data_id') }}</label>
-                                <input type="text" name="wiki_data_id" id="wiki_data_id" class="kt-input h-[45px]"
-                                    value="{{ $subregion->wiki_data_id }}">
+                                <input type="text" name="wiki_data_id" id="wiki_data_id" class="kt-input h-[45px]" value="{{ $subregion->wiki_data_id }}">
                                 @error('wiki_data_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

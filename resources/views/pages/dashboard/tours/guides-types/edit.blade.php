@@ -22,8 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('tours.guides-types.update', $tourGuideType->id) }}"
-            enctype="multipart/form-data">
+        <form class="space-y-6" method="POST" action="{{ route('tours.guides-types.update', $tourGuideType->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
@@ -35,7 +34,7 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
+                        {{-- Regions [country, state, city] --}}
                         <livewire:regions.location-select-base :record="$tourGuideType" :multiple="['states', 'cities']" />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
@@ -57,8 +56,7 @@
                             {{-- Type --}}
                             <div class="">
                                 <label for="type" class="kt-label mb-2">{{ __('main.type') }}</label>
-                                <input type="text" name="type" id="type" class="kt-input h-[45px]"
-                                    value="{{ $tourGuideType->type }}">
+                                <input type="text" name="type" id="type" class="kt-input h-[45px]" value="{{ $tourGuideType->type }}">
                                 @error('type')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -67,8 +65,7 @@
                             {{-- Price --}}
                             <div class="">
                                 <label for="price" class="kt-label mb-2">{{ __('main.price') }}</label>
-                                <input type="text" name="price" min="1" id="price" class="kt-input h-[45px]"
-                                    value="{{ $tourGuideType->price }}">
+                                <input type="text" name="price" min="1" id="price" class="kt-input h-[45px]" value="{{ $tourGuideType->price }}">
                                 @error('price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

@@ -23,8 +23,6 @@ return new class extends Migration {
             $table->string('gmt_offset_name')->nullable()->comment('e.g., UTC+02:00');
             $table->string('gmt_offset_name_dst')->nullable()->comment('DST GMT offset name');
             $table->boolean('supports_dst')->default(false)->comment('Does it support daylight saving time?');
-            // $table->string('region')->nullable()->comment('Continent/Region');
-            // $table->string('city')->nullable()->comment('Main city');
             $table->boolean('is_active')->nullable();
             $table->integer('sort_order')->default(0);
             $table->text('description')->nullable();

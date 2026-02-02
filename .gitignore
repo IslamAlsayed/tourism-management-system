@@ -3,6 +3,7 @@
 .env
 .env.backup
 .env.production
+.env.testing
 .phpactor.json
 .phpunit.result.cache
 /.fleet
@@ -22,6 +23,7 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 *.md
+*.md
 *copy.php
 storage/app/private
 *copy.*
@@ -34,3 +36,6 @@ SYSTEM_READY.txt
 mixjo2025_ORDERED.sql
 mixjo2025_OREADY.sql
 jsconfig.json
+border_crossings_guide.html
+.env.testing
+CROSSING_PORTS_UPDATE.md

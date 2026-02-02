@@ -17,14 +17,14 @@ class TimezoneFactory extends Factory
     public function definition(): array
     {
         $timezones = [
-            ['name' => 'America/New_York', 'offset' => -18000, 'abbreviation' => 'EST', 'city' => 'New York', 'region' => 'America'],
-            ['name' => 'America/Los_Angeles', 'offset' => -28800, 'abbreviation' => 'PST', 'city' => 'Los Angeles', 'region' => 'America'],
-            ['name' => 'Europe/London', 'offset' => 0, 'abbreviation' => 'GMT', 'city' => 'London', 'region' => 'Europe'],
-            ['name' => 'Europe/Paris', 'offset' => 3600, 'abbreviation' => 'CET', 'city' => 'Paris', 'region' => 'Europe'],
-            ['name' => 'Asia/Tokyo', 'offset' => 32400, 'abbreviation' => 'JST', 'city' => 'Tokyo', 'region' => 'Asia'],
-            ['name' => 'Asia/Dubai', 'offset' => 14400, 'abbreviation' => 'GST', 'city' => 'Dubai', 'region' => 'Asia'],
-            ['name' => 'Asia/Riyadh', 'offset' => 10800, 'abbreviation' => 'AST', 'city' => 'Riyadh', 'region' => 'Asia'],
-            ['name' => 'Africa/Cairo', 'offset' => 7200, 'abbreviation' => 'EET', 'city' => 'Cairo', 'region' => 'Africa'],
+            ['name' => 'America/New_York', 'offset' => -18000, 'abbreviation' => 'EST'],
+            ['name' => 'America/Los_Angeles', 'offset' => -28800, 'abbreviation' => 'PST'],
+            ['name' => 'Europe/London', 'offset' => 0, 'abbreviation' => 'GMT'],
+            ['name' => 'Europe/Paris', 'offset' => 3600, 'abbreviation' => 'CET'],
+            ['name' => 'Asia/Tokyo', 'offset' => 32400, 'abbreviation' => 'JST'],
+            ['name' => 'Asia/Dubai', 'offset' => 14400, 'abbreviation' => 'GST'],
+            ['name' => 'Asia/Riyadh', 'offset' => 10800, 'abbreviation' => 'AST'],
+            ['name' => 'Africa/Cairo', 'offset' => 7200, 'abbreviation' => 'EET'],
         ];
 
         $timezone = $this->faker->unique()->randomElement($timezones);
@@ -44,8 +44,6 @@ class TimezoneFactory extends Factory
             'gmt_offset_name' => $gmtOffsetName,
             'gmt_offset_name_dst' => null,
             'supports_dst' => $this->faker->boolean(30),
-            'region' => $timezone['region'],
-            'city' => $timezone['city'],
             'is_active' => true,
             'sort_order' => 0,
         ];

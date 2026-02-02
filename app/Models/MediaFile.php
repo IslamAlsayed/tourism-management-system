@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\FiltersByUserRole;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +15,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class MediaFile extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, SoftDeletes, FiltersByUserRole, HandlesRichTextAttributes;
+    use HasFactory, HasSearch, HasUuid, HasRichText, SoftDeletes, FiltersByUserRole, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
     ];

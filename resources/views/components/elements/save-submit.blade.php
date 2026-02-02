@@ -1,5 +1,5 @@
 <div class="flex items-center gap-4">
-    <button type="submit" class="kt-btn kt-btn-primary">
+    <button id="formButtonSaveRecord" type="submit" class="kt-btn kt-btn-primary">
         <i class="ki-filled ki-check text-sm me-2"></i>
         {{ __('main.save_type', ['type' => __('main.' . (isset($model) ? $model : singularLowerCaseName($models)))]) }}
     </button>

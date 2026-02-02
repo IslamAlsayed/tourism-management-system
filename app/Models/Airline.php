@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\BroadcastsRecordEvents;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Airline extends Model
 {
-    use HasFactory, HasSearch, HasRichText, HasUuid, BroadcastsRecordEvents, HandlesRichTextAttributes;
+    use HasFactory, HasSearch, HasRichText, HasUuid, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -47,8 +47,6 @@ class Airline extends Model
         'notes',
 
         'timezone_id',
-        'region_id',
-        'subregion_id',
         'country_id',
         'state_id',
         'city_id',
@@ -62,15 +60,13 @@ class Airline extends Model
 
     public function getRelationshipNames()
     {
-        return ['timezone', 'region', 'subregion', 'country', 'state', 'city'];
+        return ['timezone', 'country', 'state', 'city'];
     }
 
     public function getExcludedColumns()
     {
         return [
             'timezone_id',
-            'region_id',
-            'subregion_id',
             'country_id',
             'state_id',
             'city_id',
@@ -81,16 +77,6 @@ class Airline extends Model
             'web_check_in_url',
             'parent_airline_icao_code'
         ];
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
     }
 
     public function country()

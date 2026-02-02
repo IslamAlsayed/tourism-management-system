@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\FiltersByUserRole;
-use App\Traits\HandlesRichTextAttributes;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TransportationCompany extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, HandlesRichTextAttributes;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
     protected $table = 'transportations_companies';
     protected $richTextAttributes = [
         'description',
@@ -38,8 +38,6 @@ class TransportationCompany extends Model
         'notes',
 
         'currency_id',
-        'region_id',
-        'subregion_id',
         'country_id',
         'state_id',
         'city_id',
@@ -58,27 +56,17 @@ class TransportationCompany extends Model
 
     public function getRelationshipNames()
     {
-        return ['currency', 'region', 'subregion', 'country', 'state', 'city', 'vehicleTypes', 'seasons', 'supplements', 'contacts'];
+        return ['currency', 'country', 'state', 'city', 'vehicleTypes', 'seasons', 'supplements', 'contacts'];
     }
 
     public function getExcludedColumns()
     {
-        return ['currency_id', 'region_id', 'subregion_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
+        return ['currency_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
     }
 
     public function currency()
     {
         return $this->belongsTo(Currency::class);
-    }
-
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
     }
 
     public function country()

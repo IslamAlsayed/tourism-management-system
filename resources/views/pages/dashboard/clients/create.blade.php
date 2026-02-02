@@ -23,16 +23,6 @@
         @include('components.must-add-first', [
             'requirements' => [
                 [
-                    'condition' => \App\Models\Region::count() > 0,
-                    'route' => route('regions.index'),
-                    'label' => __('main.regions'),
-                ],
-                [
-                    'condition' => \App\Models\Subregion::count() > 0,
-                    'route' => route('subregions.index'),
-                    'label' => __('main.subregions'),
-                ],
-                [
                     'condition' => \App\Models\Country::count() > 0,
                     'route' => route('countries.index'),
                     'label' => __('main.countries'),
@@ -67,7 +57,7 @@
                         <h3 class="kt-card-title">{{ __('main.location_information') }}</h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, country, state, city] --}}
+                        {{-- Regions [country, state, city] --}}
                         <livewire:regions.location-select-base />
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
@@ -150,9 +140,7 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             {{-- Gender --}}
                             <div>
                                 <label for="gender" class="kt-label mb-2">{{ __('main.gender') }}</label>
@@ -170,20 +158,7 @@
                             </div>
 
                             {{-- Nationality --}}
-                            <div>
-                                <label for="nationality_id" class="kt-label mb-2">{{ __('main.nationality') }}</label>
-                                <select name="nationality_id" id="nationality_id" class="kt-select basic-single">
-                                    <option value="" selected disabled></option>
-                                    @foreach ($nationalities as $nationality)
-                                        <option value="{{ $nationality->id }}" {{ old('nationality_id') == $nationality->id ? 'selected' : '' }}>
-                                            {{ getCurrentLocale() == 'ar' ? $nationality->name_ar : $nationality->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('nationality_id')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.selects.nationality')
 
                             {{-- Birth Date --}}
                             <div>
@@ -514,6 +489,19 @@
                         @error('client_status')
                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                         @enderror
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap" style="gap: 10px 40px;">
+                    <div class="flex items-center gap-3">
+                        <input type="hidden" name="is_active" value="0">
+                        @include('components.elements.checkbox-button', [
+                            'name' => 'is_active',
+                            'id' => 'is_active',
+                            'value' => '1',
+                            'checked' => old('is_active', 1),
+                            'label' => __('main.active'),
+                        ])
                     </div>
                 </div>
 

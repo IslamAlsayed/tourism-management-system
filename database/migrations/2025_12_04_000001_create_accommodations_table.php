@@ -17,8 +17,6 @@ return new class extends Migration {
             // Foreign Keys
             $table->foreignId('type_id')->nullable();
             $table->foreignId('currency_id')->nullable();
-            $table->foreignId('region_id')->nullable();
-            $table->foreignId('subregion_id')->nullable();
             $table->foreignId('country_id')->nullable();
             $table->foreignId('state_id')->nullable();
             $table->foreignId('city_id')->nullable();

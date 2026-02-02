@@ -37,16 +37,6 @@
                     'route' => route('cities.index'),
                     'label' => __('main.cities'),
                 ],
-                [
-                    'condition' => \App\Models\Region::count() > 0,
-                    'route' => route('regions.index'),
-                    'label' => __('main.regions'),
-                ],
-                [
-                    'condition' => \App\Models\Subregion::count() > 0,
-                    'route' => route('subregions.index'),
-                    'label' => __('main.subregions'),
-                ],
             ],
         ])
     </div>
@@ -66,8 +56,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
                             <!-- Transportation department (Arabic) -->
                             <div class="">
-                                <label for="department"
-                                    class="kt-label required mb-2">{{ __('main.transportations-department') }}</label>
+                                <label for="department" class="kt-label required mb-2">{{ __('main.transportations-department') }}</label>
                                 <input type="text" name="department" id="department" class="kt-input h-[45px]" required>
                                 @error('department')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -77,8 +66,7 @@
                             <!-- Contact Person -->
                             <div class="">
                                 <label for="contact_person" class="kt-label required mb-2">Contact Person</label>
-                                <input type="text" name="contact_person" id="contact_person" class="kt-input h-[45px]"
-                                    name" required>
+                                <input type="text" name="contact_person" id="contact_person" class="kt-input h-[45px]" name" required>
                             </div>
 
                             <!-- Mobile -->
@@ -211,8 +199,7 @@
 
                             <!-- Subregions -->
                             <div class="">
-                                <label for="subregion_id"
-                                    class="kt-label required mb-2 flex items-center justify-between">
+                                <label for="subregion_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Subregions
                                     <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}

@@ -27,8 +27,6 @@ return new class extends Migration {
             $table->json('route_itinerary')->nullable();
 
             // Location Relations
-            $table->foreignId('region_id')->nullable();
-            $table->foreignId('subregion_id')->nullable();
             $table->foreignId('country_id')->nullable();
             $table->foreignId('state_id')->nullable();
             $table->foreignId('city_id')->nullable();

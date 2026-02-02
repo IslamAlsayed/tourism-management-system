@@ -23,29 +23,9 @@
         @include('components.must-add-first', [
             'requirements' => [
                 [
-                    'condition' => \App\Models\Region::count() > 0,
-                    'route' => route('regions.index'),
-                    'label' => __('main.regions_'),
-                ],
-                [
-                    'condition' => \App\Models\Subregion::count() > 0,
-                    'route' => route('subregions.index'),
-                    'label' => __('main.subregions_'),
-                ],
-                [
                     'condition' => \App\Models\Country::count() > 0,
                     'route' => route('countries.index'),
                     'label' => __('main.countries_'),
-                ],
-                [
-                    'condition' => \App\Models\State::count() > 0,
-                    'route' => route('states.index'),
-                    'label' => __('main.states_'),
-                ],
-                [
-                    'condition' => \App\Models\City::count() > 0,
-                    'route' => route('cities.index'),
-                    'label' => __('main.cities_'),
                 ],
             ],
         ])
@@ -67,14 +47,18 @@
                             <!-- Country -->
                             <div class="">
                                 <label for="country_id" class="kt-label required mb-2">
-                                    {{ __('main.country') }}
+                                    <div>
+                                        {{ __('main.country') }}
+                                        <strong class="dataLength text-primary">
+                                            ({{ count($countries) ?: 0 }})
+                                        </strong>
+                                    </div>
                                     <span class="text-red-600">*</span>
                                 </label>
                                 <select name="country_id" id="country_id" class="kt-input basic-single" required>
                                     <option value="" selected>--</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ old('country_id') == $country->id ? 'selected' : '' }}>
+                                        <option value="{{ $country->id }}" {{ old('country_id') == $country->id ? 'selected' : '' }}>
                                             {{ $country->name }}
                                         </option>
                                     @endforeach
@@ -90,8 +74,7 @@
                                     {{ __('main.name') }}
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
-                                    value="{{ old('name') }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -100,8 +83,7 @@
                             <!-- Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
-                                    value="{{ old('name_ar') }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

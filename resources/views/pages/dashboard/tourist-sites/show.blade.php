@@ -241,7 +241,9 @@
                                 <label class="kt-label mb-2">{{ __('main.operating_days') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     @php
-                                        $days = is_array($touristSite->operating_days) ? $touristSite->operating_days : json_decode($touristSite->operating_days, true) ?? [];
+                                        $days = is_array($touristSite->operating_days)
+                                            ? $touristSite->operating_days
+                                            : json_decode($touristSite->operating_days, true) ?? [];
                                     @endphp
                                 <div class="flex flex-wrap gap-4">
                                     @foreach ($days as $day)
@@ -256,7 +258,9 @@
                                 <label class="kt-label mb-2">{{ __('main.special_hours') }}</label>
                                 <p class="text-sm text-secondary-foreground">
                                     @php
-                                        $hours = is_array($touristSite->special_hours) ? $touristSite->special_hours : json_decode($touristSite->special_hours, true) ?? [];
+                                        $hours = is_array($touristSite->special_hours)
+                                            ? $touristSite->special_hours
+                                            : json_decode($touristSite->special_hours, true) ?? [];
                                     @endphp
                                 <div class="flex flex-wrap" style="gap: 10px 20px;">
                                     @foreach ($hours as $hourDate => $time)
@@ -562,7 +566,8 @@
                                         @include('components.load-data', ['width' => '15px', 'height' => '15px'])
                                     </div>
                                 </label>
-                                <select class="kt-input kt-input-sm basic-single disabled-option js-async-field" data-model="touristSites" data-id="{{ $touristSite->id }}" data-field="status">
+                                <select class="kt-input kt-input-sm basic-single disabled-option js-async-field" data-model="touristSites"
+                                    data-id="{{ $touristSite->id }}" data-field="status">
                                     <option value="active" {{ $touristSite->status === 'active' ? 'selected' : '' }}>
                                         {{ __('main.active') }}
                                     </option>
@@ -581,7 +586,7 @@
 
             <!-- Services -->
             @if ($touristSite->services && $touristSite->services->count() > 0)
-                @include('pages.dashboard.related-components.services', [
+                @include('pages.dashboard.related-pages.dashboard.tourist-services.services', [
                     'record' => $touristSite,
                     'type' => 'tourist-sites',
                 ])
@@ -656,8 +661,10 @@
                     asyncField.classList.remove('disabled');
                     window.showToast({
                         type: 'success',
-                        message: data.message || `{{ __('messages.field_updated_successfully', ['field' => ':field', 'status' => ':status']) }}`.replace(':field', payload
-                            .field).replace(':status', payload.value)
+                        message: data.message ||
+                            `{{ __('messages.field_updated_successfully', ['field' => ':field', 'status' => ':status']) }}`.replace(
+                                ':field', payload
+                                .field).replace(':status', payload.value)
                     });
                 } catch (e) {
                     $select.val($select.data('old-value')).trigger('change.select2');

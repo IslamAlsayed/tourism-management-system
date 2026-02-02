@@ -188,21 +188,23 @@
                     </h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="flex flex-wrap justify-between gap-10">
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            <a href="{{ route('regions.show', $country->region?->id) }}" class="block text-sm text-primary underline">
-                                {{ $country->region?->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                            <a href="{{ route('subregions.show', $country->subregion->id) }}" class="block text-sm text-primary underline">
-                                {{ $country->subregion->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
-                        </div>
+                    <div class="flex flex-wrap" style="gap: 20px 80px;">
+                        @if ($country)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                                <a href="{{ route('regions.show', $country?->region?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $country?->region?->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                                <a href="{{ route('subregions.show', $country?->subregion?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $country?->subregion?->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                        @endif
                         <div>
                             <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.states')]) }}</label>
                             <p class="text-sm text-secondary-foreground">
@@ -281,6 +283,7 @@
                     'records' => $country->cities,
                 ])
             @endif
+
             <!-- Metadata -->
             @include('components.metadata', ['record' => $country])
 

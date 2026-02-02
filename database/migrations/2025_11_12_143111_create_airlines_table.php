@@ -16,8 +16,6 @@ return new class extends Migration {
 
             // Location References
             $table->foreignId('timezone_id')->nullable();
-            $table->foreignId('region_id')->nullable();
-            $table->foreignId('subregion_id')->nullable();
             $table->foreignId('country_id')->nullable();
             $table->foreignId('state_id')->nullable();
             $table->foreignId('city_id')->nullable();

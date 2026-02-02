@@ -44,7 +44,8 @@
                 ],
                 [
                     'condition' => \App\Models\TourGuideType::count() > 0,
-                    'route' => route('tour-guide-types.index'),
+                    'route' => route('tours.guides-types.index'),
+                    'label' => __('main.tours.guide-types'),
                 ],
             ],
         ])
@@ -71,8 +72,7 @@
                                     {{ __('main.price') }}
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <input type="number" name="price" id="price" class="kt-input h-[45px]" required
-                                    value="{{ old('price') }}" minlength="1">
+                                <input type="number" name="price" id="price" class="kt-input h-[45px]" required value="{{ old('price') }}" minlength="1">
                                 @error('price')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -83,8 +83,7 @@
                                 <label for="tax" class="kt-label">{{ __('main.tax') }}
                                     <span class="text-primary font-semibold">(%)</span>
                                 </label>
-                                <input type="number" name="tax" id="tax" class="kt-input h-[45px]"
-                                    value="{{ old('tax') }}" minlength="0" maxlength="100">
+                                <input type="number" name="tax" id="tax" class="kt-input h-[45px]" value="{{ old('tax') }}" minlength="0" maxlength="100">
                                 @error('tax')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -99,8 +98,7 @@
                                 <select name="pricing_unit_id" id="pricing_unit_id" class="kt-input basic-single" required>
                                     <option value="" disabled selected>--</option>
                                     @foreach ($pricingUnits as $unit)
-                                        <option value="{{ $unit->id }}"
-                                            {{ old('pricing_unit_id') == $unit->id ? 'selected' : '' }}>
+                                        <option value="{{ $unit->id }}" {{ old('pricing_unit_id') == $unit->id ? 'selected' : '' }}>
                                             {{ $unit->name }}
                                         </option>
                                     @endforeach

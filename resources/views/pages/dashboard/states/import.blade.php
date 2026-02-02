@@ -1,24 +1,13 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
-        :requirements="[
-            [
-                'condition' => \App\Models\Region::count() > 0,
-                'route' => route('regions.create'),
-                'label' => __('main.regions_'),
-            ],
-            [
-                'condition' => \App\Models\Subregion::count() > 0,
-                'route' => route('subregions.create'),
-                'label' => __('main.subregions_'),
-            ],
-            [
-                'condition' => \App\Models\Country::count() > 0,
-                'route' => route('countries.create'),
-                'label' => __('main.countries_'),
-            ],
-        ]">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
+        [
+            'condition' => \App\Models\Country::count() > 0,
+            'route' => route('countries.create'),
+            'label' => __('main.countries_'),
+        ],
+    ]">
 
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">

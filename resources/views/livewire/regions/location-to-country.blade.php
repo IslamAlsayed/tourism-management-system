@@ -2,14 +2,18 @@
     {{-- Region --}}
     <div class="align-self-end" wire:ignore>
         <label for="region_id" class="kt-label mb-2 flex items-center justify-between">
-            {{ __('main.regions') }}
+            <div>
+                {{ __('main.regions') }}
+                <strong class="dataLength text-primary">
+                    ({{ count($options['regions']) ?: 0 }})
+                </strong>
+            </div>
             <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
         <select name="region_id" id="region_id" class="kt-select basic-single">
             <option value="" selected>--</option>
             @foreach ($options['regions'] as $item)
-                <option value="{{ $item->id }}"
-                    {{ old('region_id', $record->region_id ?? null) == $item->id ? 'selected' : '' }}>
+                <option value="{{ $item->id }}" {{ old('region_id', $record->region_id ?? null) == $item->id ? 'selected' : '' }}>
                     {{ $item->name }}</option>
             @endforeach
         </select>
@@ -25,23 +29,19 @@
                 <strong class="dataLength text-primary">
                     ({{ count($options['subregions']) ?: 0 }})
                 </strong>
-                <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
-                    wire:target="filters.region,updatedFilters">
+                <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading wire:target="filters.region,updatedFilters">
                 </i>
-                <span id="subregion_id-info"
-                    class="text-red-600 text-sm span-info {{ !hasEmpty($filters['region']) ? 'show' : '' }}">
+                <span id="subregion_id-info" class="text-red-600 text-sm span-info {{ !hasEmpty($filters['region']) ? 'show' : '' }}">
                     ({{ __('main.select_type_first', ['type' => __('main.region')]) }})
                 </span>
             </div>
 
             <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
-        <select name="subregion_id" id="subregion_id" class="kt-select basic-single"
-            {{ !hasEmpty($filters['region']) ? 'disabled' : '' }}>
+        <select name="subregion_id" id="subregion_id" class="kt-select basic-single" {{ !hasEmpty($filters['region']) ? 'disabled' : '' }}>
             <option value="" selected>--</option>
             @foreach ($options['subregions'] as $item)
-                <option value="{{ $item->id }}"
-                    {{ old('subregion_id', $record->subregion_id ?? null) == $item->id ? 'selected' : '' }}>
+                <option value="{{ $item->id }}" {{ old('subregion_id', $record->subregion_id ?? null) == $item->id ? 'selected' : '' }}>
                     {{ $item->name }}</option>
             @endforeach
         </select>
@@ -55,7 +55,7 @@
         <label for="state_id" class="kt-label mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
-                    @if (isset($multiple) && in_array('states', $multiple))
+                    @if (isset($multiple) && in_array('states', $multiple) && false)
                         <input type="hidden" name="all_states" value="0">
                         <div class="custom-input" wire:ignore>
                             <input type="checkbox" name="all_states" id="all_states" value="1"
@@ -70,11 +70,9 @@
                     <strong class="dataLength text-primary">
                         ({{ count($options['states']) ?: 0 }})
                     </strong>
-                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
-                        wire:target="filters.subregion,updatedFilters"></i>
+                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading wire:target="filters.subregion,updatedFilters"></i>
                 </div>
-                <span id="state_id-info"
-                    class="text-red-600 text-sm span-info {{ !hasEmpty($filters['subregion']) ? 'show' : '' }}">
+                <span id="state_id-info" class="text-red-600 text-sm span-info {{ !hasEmpty($filters['subregion']) ? 'show' : '' }}">
                     ({{ __('main.select_type_first', ['type' => __('main.subregion')]) }})
                 </span>
             </div>
@@ -88,8 +86,7 @@
                 <option value="" selected>--</option>
             @endif
             @foreach ($options['states'] as $item)
-                <option value="{{ $item->id }}"
-                    {{ in_array($item->id, $selectedStates ?? []) ? 'selected' : '' }}>
+                <option value="{{ $item->id }}" {{ in_array($item->id, $selectedStates ?? []) ? 'selected' : '' }}>
                     {{ $item->name }}
                 </option>
             @endforeach
@@ -104,7 +101,7 @@
         <label for="city_id" class="kt-label mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
-                    @if (isset($multiple) && in_array('cities', $multiple))
+                    @if (isset($multiple) && in_array('cities', $multiple) && false)
                         <input type="hidden" name="all_cities" value="0">
                         <div class="custom-input" wire:ignore>
                             <input type="checkbox" name="all_cities" id="all_cities" value="1"
@@ -119,11 +116,9 @@
                     <strong class="dataLength text-primary">
                         ({{ count($options['cities']) ?: 0 }})
                     </strong>
-                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
-                        wire:target="filters.state,updatedFilters"></i>
+                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading wire:target="filters.state,updatedFilters"></i>
                 </div>
-                <span id="city_id-info"
-                    class="text-red-600 text-sm span-info {{ !hasEmpty($filters['state']) ? 'show' : '' }}">
+                <span id="city_id-info" class="text-red-600 text-sm span-info {{ !hasEmpty($filters['state']) ? 'show' : '' }}">
                     ({{ __('main.select_type_first', ['type' => __('main.state')]) }})
                 </span>
             </div>
@@ -137,8 +132,7 @@
                 <option value="" selected>--</option>
             @endif
             @foreach ($options['cities'] as $item)
-                <option value="{{ $item->id }}"
-                    {{ in_array($item->id, $selectedCities ?? []) ? 'selected' : '' }}>
+                <option value="{{ $item->id }}" {{ in_array($item->id, $selectedCities ?? []) ? 'selected' : '' }}>
                     {{ $item->name }}
                 </option>
             @endforeach

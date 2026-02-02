@@ -13,11 +13,9 @@ class LocationToState extends Component
     public $record;
     public $multiple;
     public $selectedCities = [];
-    public $filters = ['region' => null, 'subregion' => null, 'country' => null, 'city' => null];
-    public $options = ['regions' => [], 'subregions' => [], 'countries' => [], 'cities' => []];
+    public $filters = ['country' => null, 'city' => null];
+    public $options = ['countries' => [], 'cities' => []];
     protected array $map = [
-        'region' => ['model' => Subregion::class, 'foreign' => 'region_id', 'target' => 'subregions'],
-        'subregion' => ['model' => Country::class, 'foreign' => 'subregion_id', 'target' => 'countries'],
         'country' => ['model' => City::class, 'foreign' => 'country_id', 'target' => 'cities'],
     ];
 
@@ -26,7 +24,7 @@ class LocationToState extends Component
         $this->record = $record;
         $this->multiple = $multiple;
         $this->selectedCities = $record?->cities?->pluck('id')->toArray() ?? [];
-        $this->options['regions'] = Region::orderBy('name')->get(['id', 'name']);
+        $this->options['countries'] = Country::orderBy('name')->get(['id', 'name']);
         if ($record) {
             foreach (array_keys($this->filters) as $key) {
                 if ($key == 'city') {
@@ -69,8 +67,8 @@ class LocationToState extends Component
 
     protected function resetBelow(string $key)
     {
-        $order = ['region', 'subregion', 'country', 'city'];
-        $optionKeys = ['region' => 'regions', 'subregion' => 'subregions', 'country' => 'countries', 'city' => 'cities'];
+        $order = ['country', 'city'];
+        $optionKeys = ['country' => 'countries', 'city' => 'cities'];
         $index = array_search($key, $order);
         if ($index === false) {
             return;

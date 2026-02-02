@@ -156,27 +156,33 @@
                     </h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="flex flex-wrap justify-between gap-10">
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                            <a href="{{ route('regions.show', $state->region?->id) }}" class="block text-sm text-primary underline">
-                                {{ $state->region?->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                            <a href="{{ route('subregions.show', $state->subregion->id) }}" class="block text-sm text-primary underline">
-                                {{ $state->subregion->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
-                        </div>
+                    <div class="flex flex-wrap" style="gap: 20px 80px;">
+                        @if ($state->country)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                                <a href="{{ route('regions.show', $state->country?->region?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $state->country?->region?->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                                <a href="{{ route('subregions.show', $state->country?->subregion?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $state->country?->subregion?->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            </div>
+                        @endif
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                            <a href="{{ route('countries.show', $state->country?->id) }}" class="block text-sm text-primary underline">
-                                {{ $state->country?->name ?? __('main.na') }}
-                                <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                            </a>
+                            @if ($state->country)
+                                <a href="{{ route('countries.show', $state->country?->id) }}" class="block text-sm text-primary underline">
+                                    {{ $state->country?->name ?? __('main.na') }}
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                </a>
+                            @else
+                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                            @endif
                         </div>
                         @if ($state->cities && $state->cities->count() > 0)
                             <div>

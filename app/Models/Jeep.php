@@ -23,8 +23,6 @@ class Jeep extends Model
         'slug',
         'origin_city_id',
         'destination_city_id',
-        'region_id',
-        'subregion_id',
         'country_id',
         'state_id',
         'city_id',
@@ -123,8 +121,6 @@ class Jeep extends Model
             'distance_unit',
             'origin_city_id',
             'destination_city_id',
-            'region_id',
-            'subregion_id',
             'country_id',
             'state_id',
             'city_id',
@@ -148,16 +144,6 @@ class Jeep extends Model
     }
 
     // Geographical Relations
-    public function region()
-    {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function subregion()
-    {
-        return $this->belongsTo(Subregion::class);
-    }
-
     public function country()
     {
         return $this->belongsTo(Country::class);
@@ -175,12 +161,12 @@ class Jeep extends Model
 
     public function originCity()
     {
-        return $this->belongsTo(City::class, 'origin_city');
+        return $this->belongsTo(City::class, 'origin_city_id');
     }
 
     public function destinationCity()
     {
-        return $this->belongsTo(City::class, 'destination_city');
+        return $this->belongsTo(City::class, 'destination_city_id');
     }
 
     public function currency()
