@@ -2,7 +2,7 @@
 
 namespace App\Livewire\MorphicForms;
 
-use App\Models\Currency;
+use Modules\Localization\Entities\Currency;
 use Livewire\Component;
 
 class MealForm extends Component

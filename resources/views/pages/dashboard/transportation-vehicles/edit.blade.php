@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('transportation-vehicles.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.transportation.vehicles.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.transportations-vehicles')]) }}
                 </a>
             </div>
@@ -30,8 +30,7 @@
                         {{ __('main.type_information', ['type' => __('main.transportations-vehicles')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('transportation-vehicles.update', $transportationCarRoute->id) }}"
-                        class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.transportation.vehicles.update', $transportationCarRoute->id) }}" class="space-y-6 p-4">
                         @csrf
                         @method('PUT')
 
@@ -39,8 +38,7 @@
                             <!-- Route -->
                             <div class="">
                                 <label for="route" class="kt-label mb-2">{{ __('main.route') }}</label>
-                                <input type="text" name="route" id="route" class="kt-input h-[45px]"
-                                    value="{{ $transportationCarRoute->route }}">
+                                <input type="text" name="route" id="route" class="kt-input h-[45px]" value="{{ $transportationCarRoute->route }}">
                                 @error('route')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -49,8 +47,7 @@
                             <!-- Route ar -->
                             <div class="">
                                 <label for="route_ar" class="kt-label mb-2">{{ __('main.route_ar') }}</label>
-                                <input type="text" name="route_ar" id="route_ar" class="kt-input h-[45px]"
-                                    value="{{ $transportationCarRoute->route_ar }}">
+                                <input type="text" name="route_ar" id="route_ar" class="kt-input h-[45px]" value="{{ $transportationCarRoute->route_ar }}">
                                 @error('route_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -60,8 +57,7 @@
                             <div class="">
                                 <label for="duration" class="kt-label mb-2">{{ __('main.duration') }}
                                     ({{ __('main.hours') }})</label>
-                                <input type="number" name="duration" id="duration" class="kt-input h-[45px]"
-                                    value="{{ $transportationCarRoute->duration }}">
+                                <input type="number" name="duration" id="duration" class="kt-input h-[45px]" value="{{ $transportationCarRoute->duration }}">
                                 @error('duration')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -71,8 +67,7 @@
                             <div class="">
                                 <label for="distance" class="kt-label mb-2">{{ __('main.distance') }}
                                     ({{ __('main.kilometers') }})</label>
-                                <input type="number" name="distance" id="distance" class="kt-input h-[45px]"
-                                    value="{{ $transportationCarRoute->distance }}">
+                                <input type="number" name="distance" id="distance" class="kt-input h-[45px]" value="{{ $transportationCarRoute->distance }}">
                                 @error('distance')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

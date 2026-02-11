@@ -1,0 +1,11 @@
+{
+    "name": "TourGuides",
+    "alias": "tourguides",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\TourGuides\\Providers\\TourGuidesServiceProvider"
+    ],
+    "files": []
+}

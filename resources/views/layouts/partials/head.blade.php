@@ -28,18 +28,18 @@
 <meta content="{{ asset('metronic/media/app/og-image.png') }}" property="og:image" />
 
 <link
-    href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
+    href="{{ isset($settings->app_mini_photo) && $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
     rel="apple-touch-icon" sizes="180x180" />
 <link
-    href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
+    href="{{ isset($settings->app_mini_photo) && $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
     rel="icon" sizes="32x32" type="image/png" />
 <link
-    href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
+    href="{{ isset($settings->app_mini_photo) && $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
     rel="icon" sizes="16x16" type="image/png" />
 
 {{-- <link href="{{ asset('metronic/media/app/favicon.ico') }}" rel="shortcut icon" /> --}}
 <link
-    href="{{ $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
+    href="{{ isset($settings->app_mini_photo) && $settings->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('metronic/media/app/favicon.ico') }}"
     rel="shortcut icon" />
 {{-- Metronic plugins --}}
 <link href="{{ asset('metronic/vendors/apexcharts/apexcharts.css') }}" rel="stylesheet" />

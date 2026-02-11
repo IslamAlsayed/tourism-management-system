@@ -8,7 +8,7 @@
             <div>
                 <label class="kt-label mb-1">{{ __('main.created_by') }}</label>
                 @if ($record->creator)
-                    <a href="{{ route('users.show', $record->creator?->id) }}" class="block text-sm text-primary underline">
+                    <a href="{{ route('dashboard.core.users.show', $record->creator?->id) }}" class="block text-sm text-primary underline">
                         {{ $record->creator?->name ?? __('main.na') }}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                     </a>
@@ -25,7 +25,7 @@
             <div>
                 <label class="kt-label mb-1">{{ __('main.updated_by') }}</label>
                 @if ($record->updater)
-                    <a href="{{ route('users.show', $record->updater?->id) }}" class="block text-sm text-primary underline">
+                    <a href="{{ route('dashboard.core.users.show', $record->updater?->id) }}" class="block text-sm text-primary underline">
                         {{ $record->updater?->name ?? __('main.na') }}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                     </a>

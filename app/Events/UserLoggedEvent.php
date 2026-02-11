@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\User;
+use Modules\Core\Entities\User;
 
 class UserLoggedEvent
 {

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard\Transportation;
 
-use App\Jobs\ImportDataJob;
 use App\Jobs\ExportDataJob;
-use App\Events\ImportExportCompleted;
+use App\Jobs\ImportDataJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Events\ImportExportCompleted;
 use Illuminate\Support\Facades\Storage;
+use Modules\Transportation\Entities\Company;
+use Modules\Transportation\Entities\CompanyContact;
 
 class TransportationImportExportController extends Controller
 {
@@ -48,7 +50,7 @@ class TransportationImportExportController extends Controller
             $userId = getActiveUserId() ?? null;
 
             // Dispatch import job
-            ImportDataJob::dispatch(\App\Models\TransportationCompany::class, $absolutePath, 1000, $userId);
+            ImportDataJob::dispatch(Company::class, $absolutePath, 1000, $userId);
 
             $modelName = __('main.transportations_companies');
 
@@ -75,7 +77,7 @@ class TransportationImportExportController extends Controller
     public function exportCompanies(Request $request)
     {
         try {
-            $modelClass = \App\Models\TransportationCompany::class;
+            $modelClass = Company::class;
             $extension = config('app.excel_export_format', 'xlsx');
             $filename = generateUniqueFilename('transportations-companies') . '.' . $extension;
 
@@ -148,7 +150,7 @@ class TransportationImportExportController extends Controller
             $userId = getActiveUserId() ?? null;
 
             // Dispatch import job
-            ImportDataJob::dispatch(\App\Models\TransportationCompanyContact::class, $absolutePath, 1000, $userId);
+            ImportDataJob::dispatch(CompanyContact::class, $absolutePath, 1000, $userId);
 
             $modelName = __('main.transportations_company_contacts');
 
@@ -175,7 +177,7 @@ class TransportationImportExportController extends Controller
     public function exportContacts(Request $request)
     {
         try {
-            $modelClass = \App\Models\TransportationCompanyContact::class;
+            $modelClass = CompanyContact::class;
             $extension = config('app.excel_export_format', 'xlsx');
             $filename = generateUniqueFilename('transportations-company-contacts') . '.' . $extension;
 

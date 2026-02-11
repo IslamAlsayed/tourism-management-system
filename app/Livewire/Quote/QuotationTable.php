@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Livewire\Quote;
+
 use App\Models\Booking;
 use App\Models\Country;
 use Livewire\Component;
-use App\Models\Currency;
+use Modules\Localization\Entities\Currency;
 use App\Models\Subregion;
 use App\Models\Nationality;
 

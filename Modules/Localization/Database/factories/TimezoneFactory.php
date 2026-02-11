@@ -1,0 +1,51 @@
+<?php
+
+namespace Modules\Localization\Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\Localization\Entities\Timezone>
+ */
+class TimezoneFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        $timezones = [
+            ['name' => 'America/New_York', 'offset' => -18000, 'abbreviation' => 'EST'],
+            ['name' => 'America/Los_Angeles', 'offset' => -28800, 'abbreviation' => 'PST'],
+            ['name' => 'Europe/London', 'offset' => 0, 'abbreviation' => 'GMT'],
+            ['name' => 'Europe/Paris', 'offset' => 3600, 'abbreviation' => 'CET'],
+            ['name' => 'Asia/Tokyo', 'offset' => 32400, 'abbreviation' => 'JST'],
+            ['name' => 'Asia/Dubai', 'offset' => 14400, 'abbreviation' => 'GST'],
+            ['name' => 'Asia/Riyadh', 'offset' => 10800, 'abbreviation' => 'AST'],
+            ['name' => 'Africa/Cairo', 'offset' => 7200, 'abbreviation' => 'EET'],
+        ];
+
+        $timezone = $this->faker->unique()->randomElement($timezones);
+
+        $hours = floor(abs($timezone['offset']) / 3600);
+        $sign = $timezone['offset'] >= 0 ? '+' : '-';
+        $gmtOffsetName = sprintf('UTC%s%02d:00', $sign, $hours);
+
+        return [
+            'name' => $timezone['name'],
+            'name_ar' => null,
+            'abbreviation' => $timezone['abbreviation'],
+            'abbreviation_dst' => null,
+            'offset' => $timezone['offset'],
+            'offset_dst' => null,
+            'country_code' => null,
+            'gmt_offset_name' => $gmtOffsetName,
+            'gmt_offset_name_dst' => null,
+            'supports_dst' => $this->faker->boolean(30),
+            'is_active' => true,
+            'sort_order' => 0,
+        ];
+    }
+}

@@ -28,17 +28,17 @@
             'requirements' => [
                 [
                     'condition' => \App\Models\Country::count() > 0,
-                    'route' => route('countries.index'),
+                    'route' => route('dashboard.geography.countries.index'),
                     'label' => __('main.countries'),
                 ],
                 [
                     'condition' => \App\Models\State::count() > 0,
-                    'route' => route('states.index'),
+                    'route' => route('dashboard.geography.states.index'),
                     'label' => __('main.states'),
                 ],
                 [
                     'condition' => \App\Models\City::count() > 0,
-                    'route' => route('cities.index'),
+                    'route' => route('dashboard.geography.cities.index'),
                     'label' => __('main.cities'),
                 ],
             ],
@@ -65,8 +65,8 @@
                             {{-- Latitude --}}
                             <div>
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ old('latitude') }}" step="any" min="-90" max="90"
-                                    placeholder="24.9576" />
+                                <input type="number" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ old('latitude') }}" step="any"
+                                    min="-90" max="90" placeholder="24.9576" />
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -75,8 +75,8 @@
                             {{-- Longitude --}}
                             <div>
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ old('longitude') }}" step="any" min="-180" max="180"
-                                    placeholder="46.6988" />
+                                <input type="number" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ old('longitude') }}" step="any"
+                                    min="-180" max="180" placeholder="46.6988" />
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -122,7 +122,8 @@
                             <div>
                                 <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>
                                 <div class="relative">
-                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10" value="{{ old('code', fake()->numerify('CPORT-#####')) }}" required readonly>
+                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
+                                        value="{{ old('code', fake()->numerify('CPORT-#####')) }}" required readonly>
                                     <button type="button" toggle-button onclick="window.generateCode('code', 'CPORT-',5)"
                                         class="absolute top-1/2 -translate-y-1/2 text-primary cursor-pointer refresh-code refresh-code">
                                         <i class="fas fa-sync-alt"></i>
@@ -155,7 +156,8 @@
                             {{-- Sort Order --}}
                             <div>
                                 <label for="sort_order" class="kt-label mb-2">{{ __('main.sort_order') }}</label>
-                                <input type="number" name="sort_order" id="sort_order" class="kt-input h-[45px]" value="{{ old('sort_order', 0) }}" min="0">
+                                <input type="number" name="sort_order" id="sort_order" class="kt-input h-[45px]" value="{{ old('sort_order', 0) }}"
+                                    min="0">
                                 @error('sort_order')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -282,15 +284,16 @@
                             <!-- Nationality Policy (Tagify) -->
                             <div class="col-span-full">
                                 <label for="nationality_policy" class="kt-label">{{ __('main.nationality_policy') }}</label>
-                                <input type="text" name="nationality_policy" id="nationality_policy" class="kt-input h-fit tagify-container" value="{{ old('nationality_policy') }}"
-                                    placeholder="Stop 1, Stop 2, ...">
+                                <input type="text" name="nationality_policy" id="nationality_policy" class="kt-input h-fit tagify-container"
+                                    value="{{ old('nationality_policy') }}" placeholder="Stop 1, Stop 2, ...">
                                 <span class="text-xs text-gray-500 mt-1">{{ __('main.tagify_desc') }}</span>
                             </div>
 
                             {{-- Departure Tax --}}
                             <div>
                                 <label for="departure_tax" class="kt-label mb-2">{{ __('main.departure_tax') }}</label>
-                                <input type="number" name="departure_tax" id="departure_tax" class="kt-input h-[45px]" value="{{ old('departure_tax') }}" step="0.01" min="0">
+                                <input type="number" name="departure_tax" id="departure_tax" class="kt-input h-[45px]" value="{{ old('departure_tax') }}"
+                                    step="0.01" min="0">
                                 @error('departure_tax')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -325,7 +328,8 @@
                             {{-- Visa Fee --}}
                             <div>
                                 <label for="visa_fee" class="kt-label mb-2">{{ __('main.visa_fee') }}</label>
-                                <input type="number" name="visa_fee" id="visa_fee" class="kt-input h-[45px]" value="{{ old('visa_fee') }}" step="0.01" min="0">
+                                <input type="number" name="visa_fee" id="visa_fee" class="kt-input h-[45px]" value="{{ old('visa_fee') }}" step="0.01"
+                                    min="0">
                                 @error('visa_fee')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -340,7 +344,8 @@
                             <div>
                                 <label for="visa_duration" class="kt-label mb-2">{{ __('main.visa_duration') }}
                                     ({{ __('main.days') }})</label>
-                                <input type="number" name="visa_duration" id="visa_duration" class="kt-input h-[45px]" value="{{ old('visa_duration') }}" min="1">
+                                <input type="number" name="visa_duration" id="visa_duration" class="kt-input h-[45px]" value="{{ old('visa_duration') }}"
+                                    min="1">
                                 @error('visa_duration')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -349,7 +354,8 @@
                             {{-- Visa Application URL --}}
                             <div>
                                 <label for="visa_application_url" class="kt-label mb-2">{{ __('main.visa_application_url') }}</label>
-                                <input type="url" name="visa_application_url" id="visa_application_url" class="kt-input h-[45px]" value="{{ old('visa_application_url') }}">
+                                <input type="url" name="visa_application_url" id="visa_application_url" class="kt-input h-[45px]"
+                                    value="{{ old('visa_application_url') }}">
                                 @error('visa_application_url')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -358,7 +364,8 @@
                             {{-- Visa Policy Source --}}
                             <div>
                                 <label for="visa_policy_source" class="kt-label mb-2">{{ __('main.visa_policy_source') }}</label>
-                                <input type="url" name="visa_policy_source" id="visa_policy_source" class="kt-input h-[45px]" value="{{ old('visa_policy_source') }}">
+                                <input type="url" name="visa_policy_source" id="visa_policy_source" class="kt-input h-[45px]"
+                                    value="{{ old('visa_policy_source') }}">
                                 @error('visa_policy_source')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -367,7 +374,8 @@
                             {{-- Visa Last Update --}}
                             <div>
                                 <label for="visa_last_update" class="kt-label mb-2">{{ __('main.visa_last_update') }}</label>
-                                <input type="date" name="visa_last_update" id="visa_last_update" class="kt-input h-[45px]" value="{{ old('visa_last_update') }}">
+                                <input type="date" name="visa_last_update" id="visa_last_update" class="kt-input h-[45px]"
+                                    value="{{ old('visa_last_update') }}">
                                 @error('visa_last_update')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

@@ -2,22 +2,22 @@
 
 return [
     'accommodation' => [
-        'model' => \App\Models\Accommodation::class,
+        'model' => \Modules\Accommodations\Entities\Accommodation::class,
         'label' => 'accommodation',
     ],
 
     'restaurant' => [
-        'model' => \App\Models\Restaurant::class,
+        'model' => \Modules\Restaurants\Entities\Restaurant::class,
         'label' => 'restaurant',
     ],
 
     'transportation-company' => [
-        'model' => \App\Models\TransportationCompany::class,
+        'model' => \Modules\Transportation\Entities\Company::class,
         'label' => 'transportation',
     ],
 
     'tours' => [
-        'model' => \App\Models\TourGuide::class,
+        'model' => \Modules\TourGuides\Entities\TourGuide::class,
         'label' => 'tours.guide',
     ],
 ];

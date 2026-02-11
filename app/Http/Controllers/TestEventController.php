@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Ably\AblyRest;
-use App\Models\User;
+use Modules\Core\Entities\User;
 use App\Events\UserLoggedIn;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

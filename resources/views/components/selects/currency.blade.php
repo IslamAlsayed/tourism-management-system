@@ -1,6 +1,6 @@
 @php
     $name = isset($name) ? $name : 'currency_id';
-    $currencies = \App\Models\Currency::orderBy('name')->get(['id', 'name', 'code']);
+    $currencies = \Modules\Localization\Entities\Currency::orderBy('name')->get(['id', 'name', 'code']);
 @endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
@@ -10,7 +10,7 @@
                 ({{ count($currencies) ?: 0 }})
             </strong>
         </div>
-        <a href="{{ route('currencies.create') }}" class="text-blue-600 text-2sm">
+        <a href="{{ route('dashboard.localization.currencies.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>
     </label>
@@ -19,7 +19,8 @@
             <option value="" selected disabled></option>
         @endif
         @forelse ($currencies as $currency)
-            <option value="{{ $currency->id }}" {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $currency->id ? 'selected' : '' }}>
+            <option value="{{ $currency->id }}"
+                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $currency->id ? 'selected' : '' }}>
                 {{ $currency->code }} - {{ $currency->name }}
             </option>
         @empty

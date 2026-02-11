@@ -4,7 +4,7 @@ namespace App\Livewire\Quote\v1\Step2;
 
 use App\Models\Booking;
 use Livewire\Component;
-use App\Models\Currency;
+use Modules\Localization\Entities\Currency;
 use App\Models\OtherService;
 use App\Models\BookingOtherService;
 

@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\City;
-use App\Models\User;
-use App\Models\Hotel;
-use App\Models\Country;
-use App\Models\Currency;
-use App\Models\Supplier;
-use App\Models\HotelRate;
-use App\Models\HotelPolicy;
-use App\Models\HotelSeason;
-use App\Models\OtherService;
-use Illuminate\Http\Request;
-use App\Models\HotelRoomType;
-use App\Models\HotelSupplement;
 use App\Http\Controllers\Controller;
-use App\Models\TransportationCompany;
+use App\Models\Hotel;
+use App\Models\HotelPolicy;
+use App\Models\HotelRate;
+use App\Models\HotelRoomType;
+use App\Models\HotelSeason;
+use App\Models\HotelSupplement;
+use App\Models\OtherService;
+use App\Models\Supplier;
+use Illuminate\Http\Request;
+use Modules\Core\Entities\User;
+use Modules\Geography\Entities\City;
+use Modules\Geography\Entities\Country;
+use Modules\Localization\Entities\Currency;
+use Modules\Transportation\Entities\Company;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        // dd(\Illuminate\Support\Facades\DB::table('migrations')->pluck('migration', 'id')->toArray());
+
         // بيانات ثابتة مؤقتة بدلاً من قاعدة البيانات
         $stats = [
             'countries' => Country::count(),
@@ -30,7 +32,7 @@ class DashboardController extends Controller
             'users' => User::count(),
         ];
 
-        // showToastSuccessMessage('Welcome to the Dashboard!');
+        // showToastSuccessMessage('Welcome to the Dashboard!')->pin();
         // showToastSuccessMessage('Great to see you again!');
         // showToastSuccessMessage('Ready to manage your data?');
         // showToastSuccessMessage('Let\'s get started!');
@@ -48,7 +50,7 @@ class DashboardController extends Controller
         $hotel_rates = HotelRate::all()->toArray();
         $hotel_supplements = HotelSupplement::all()->toArray();
         $hotel_policies = HotelPolicy::all()->toArray();
-        $transportations_companies = TransportationCompany::all()->toArray();
+        $transportations_companies = Company::all()->toArray();
         $other_services = OtherService::all()->toArray();
         $suppliers = Supplier::all()->toArray();
 
@@ -115,7 +117,7 @@ class DashboardController extends Controller
             'policy_ids.*' => 'exists:hotel_policies,id'
         ]);
 
-        $transportationCompanies = TransportationCompany::all();
+        $transportationCompanies = Company::all();
         $otherServices = OtherService::all();
         $suppliers = Supplier::all();
 

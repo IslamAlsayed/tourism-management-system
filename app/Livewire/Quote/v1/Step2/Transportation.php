@@ -5,7 +5,7 @@ namespace App\Livewire\Quote\v1\Step2;
 use App\Models\Booking;
 use App\Models\BookingTransportationCompany;
 use Livewire\Component;
-use App\Models\Currency;
+use Modules\Localization\Entities\Currency;
 use App\Models\TransportationRate;
 use App\Models\TransportationCompany;
 

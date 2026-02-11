@@ -1,0 +1,11 @@
+{
+    "name": "TravelDocuments",
+    "alias": "traveldocuments",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\TravelDocuments\\Providers\\TravelDocumentsServiceProvider"
+    ],
+    "files": []
+}

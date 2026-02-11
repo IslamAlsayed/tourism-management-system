@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('transportation-bus-types.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.transportation.bus-types.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.transportations-bus_types')]) }}
                 </a>
             </div>
@@ -24,7 +24,7 @@
             'requirements' => [
                 [
                     'condition' => \App\Models\State::count() > 0,
-                    'route' => route('states.create'),
+                    'route' => route('dashboard.geography.states.create'),
                     'label' => __('main.states_'),
                 ],
             ],
@@ -40,14 +40,13 @@
                         {{ __('main.type_information', ['type' => __('main.transportations-bus_type')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('transportation-bus-types.store') }}" class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.transportation.bus-types.store') }}" class="space-y-6 p-4">
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
                             <!-- Transportation bus type -->
                             <div class="">
-                                <label for="name"
-                                    class="kt-label required mb-2">{{ __('main.transportations-bus_type') }}</label>
+                                <label for="name" class="kt-label required mb-2">{{ __('main.transportations-bus_type') }}</label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]" required>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -70,7 +69,7 @@
                             <div class="">
                                 <label for="company_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Transportation Company
-                                    <a href="{{ route('transportation-companies.create') }}" class="text-blue-600 text-2sm">
+                                    <a href="{{ route('dashboard.transportation.companies.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>

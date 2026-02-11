@@ -17,7 +17,7 @@ trait ExportsData
      * Export selected model records to PDF.
      *
      * @param array $selectedIds
-     * @param string $modelClass — full class name (e.g. App\Models\User::class)
+     * @param string $modelClass — full class name (e.g. Modules\Core\Entities\User::class)
      * @param array|null $columns — columns to include (keys order). If null uses model fillable.
      * @param string|null $filenamePrefix
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|null

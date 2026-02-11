@@ -12,13 +12,13 @@ class DatabaseSeeder extends Seeder
         truncateWithReset(RichText::class);
 
         $this->call([
-            RolePermissionSeeder::class,
-            SettingSeeder::class,
-            UserSeeder::class,
-            SystemLanguageSeeder::class,
-            LanguageSeeder::class,
-            TimezoneSeeder::class,
-            CurrencySeeder::class,
+            // RolePermissionSeeder::class,
+            // SettingSeeder::class,
+            // UserSeeder::class,
+            // SystemLanguageSeeder::class,
+            // LanguageSeeder::class,
+            // TimezoneSeeder::class,
+            // CurrencySeeder::class,
             MediaFileSeeder::class, // Must be last to store all existing photos
             // TouristSiteSeeder::class,
             // TouristServiceSeeder::class,

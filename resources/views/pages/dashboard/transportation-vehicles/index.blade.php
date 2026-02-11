@@ -6,7 +6,7 @@
         'title' => __('main.transportation-vehicles'),
         'description' => __('main.manage_system_types', ['types' => __('main.transportation-vehicles')]),
         'import_url' => route('import.data', ['models' => 'transportation-vehicles']),
-        'page_create_url' => route('transportation-vehicles.create'),
+        'page_create_url' => route('dashboard.transportation.vehicles.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.transportation-vehicle')]),
     ])
     <!-- End of Container -->

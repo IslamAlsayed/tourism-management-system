@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\CrossingPort;
-use App\Models\User;
+use Modules\Core\Entities\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -62,7 +62,7 @@ class CrossingPortFactory extends Factory
             'allows_visa_on_arrival' => $this->faker->boolean(40),
             'nationality_policy' => $this->generateNationalityPolicies(),
             'departure_tax' => $this->faker->optional(0.7)->randomFloat(2, 10, 100),
-            'departure_tax_currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id,
+            'departure_tax_currency_id' => \Modules\Localization\Entities\Currency::inRandomOrder()->first()?->id,
 
             // Contact information
             'phone' => $this->faker->optional(0.8)->phoneNumber(),
@@ -76,7 +76,7 @@ class CrossingPortFactory extends Factory
             // Visa requirements
             'visa_required' => $this->faker->boolean(70),
             'visa_fee' => $this->faker->optional(0.8)->randomFloat(2, 20, 200),
-            'visa_fee_currency_id' => \App\Models\Currency::inRandomOrder()->first()?->id,
+            'visa_fee_currency_id' => \Modules\Localization\Entities\Currency::inRandomOrder()->first()?->id,
             'visa_duration' => $this->faker->optional(0.8)->randomElement([30, 60, 90, 180]),
             'visa_conditions' => $this->faker->optional(0.5)->paragraph(),
             'visa_application_url' => $this->faker->optional(0.4)->url(),

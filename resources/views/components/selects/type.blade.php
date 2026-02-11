@@ -1,6 +1,6 @@
 @php
     $name = isset($name) ? $name : 'type_id';
-    $types = \App\Models\Type::orderBy('name')->get(['name', 'id']);
+    $types = \Modules\Accommodations\Entities\Type::orderBy('name')->get(['name', 'id']);
 @endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
@@ -10,7 +10,7 @@
                 ({{ count($types) ?: 0 }})
             </strong>
         </div>
-        <a href="{{ route('types.create') }}" class="text-blue-600 text-2sm">
+        <a href="{{ route('dashboard.accommodations.types.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>
     </label>
@@ -19,7 +19,8 @@
             <option value="" selected disabled></option>
         @endif
         @forelse ($types as $type)
-            <option value="{{ $type->id }}" {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $type->id ? 'selected' : '' }}>
+            <option value="{{ $type->id }}"
+                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $type->id ? 'selected' : '' }}>
                 {{ $type->name }}
             </option>
         @empty

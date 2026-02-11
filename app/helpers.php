@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
-use App\Models\Setting;
+use Modules\Core\Entities\User;
+use Modules\Core\Entities\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +13,7 @@ if (!function_exists('getActiveUser')) {
      * Checks authentication first.
      *
      * @param int|null $id
-     * @return \App\Models\User|null
+     * @return \Modules\Core\Entities\User|null
      */
     function getActiveUser($id = null)
     {
@@ -34,7 +34,7 @@ if (!function_exists('getActiveUserId')) {
      * Checks authentication first.
      *
      * @param int|null $id
-     * @return \App\Models\User|null
+     * @return \Modules\Core\Entities\User|null
      */
     function getActiveUserId($id = null)
     {

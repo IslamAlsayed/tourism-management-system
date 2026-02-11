@@ -6,7 +6,7 @@
                 ({{ count($languages) ?: 0 }})
             </strong>
         </div>
-        <a href="{{ route('languages.create') }}" class="text-blue-600 text-2sm">
+        <a href="{{ route('dashboard.localization.languages.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>
     </label>
@@ -15,7 +15,8 @@
             <option value="" selected disabled></option>
         @endif
         @forelse ($languages as $language)
-            <option value="{{ $language->id }}" {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $language->id ? 'selected' : '' }}>
+            <option value="{{ $language->id }}"
+                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $language->id ? 'selected' : '' }}>
                 {{ $language->id }} - {{ $language->name }}
                 {{ $language->name }}{{ $language->name_ar ? ' - ' . $language->name_ar : '' }}
             </option>

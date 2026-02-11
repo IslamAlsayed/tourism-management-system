@@ -4,17 +4,17 @@
     <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
         [
             'condition' => \App\Models\Country::count() > 0,
-            'route' => route('countries.create'),
+            'route' => route('dashboard.geography.countries.create'),
             'label' => __('main.countries'),
         ],
         [
             'condition' => \App\Models\State::count() > 0,
-            'route' => route('states.create'),
+            'route' => route('dashboard.geography.states.create'),
             'label' => __('main.states'),
         ],
         [
             'condition' => \App\Models\City::count() > 0,
-            'route' => route('cities.create'),
+            'route' => route('dashboard.geography.cities.create'),
             'label' => __('main.cities'),
         ],
     ]">

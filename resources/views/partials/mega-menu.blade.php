@@ -8,8 +8,7 @@
     <div class="flex items-stretch [--kt-reparent-mode:prepend] [--kt-reparent-target:body] lg:[--kt-reparent-mode:prepend] lg:[--kt-reparent-target:#megaMenuContainer]"
         data-kt-reparent="true">
         <!--Megamenu Wrapper-->
-        <div class="hidden [--kt-drawer-enable:true] lg:flex lg:items-stretch lg:[--kt-drawer-enable:false]"
-            data-kt-drawer="true"
+        <div class="hidden [--kt-drawer-enable:true] lg:flex lg:items-stretch lg:[--kt-drawer-enable:false]" data-kt-drawer="true"
             data-kt-drawer-class="kt-drawer kt-drawer-start fixed z-2002 lg:z-1000 top-0 bottom-0 w-full me-5 max-w-[250px] p-5 lg:p-0 overflow-auto"
             id="mega_menu_wrapper">
             <!--Megamenu-->
@@ -25,9 +24,8 @@
                 </div>
                 <!--End of Megamenu Item-->
                 <!--Megamenu Item-->
-                <div class="kt-menu-item" data-kt-menu-item-placement="bottom-start"
-                    data-kt-menu-item-placement-rtl="bottom-end" data-kt-menu-item-toggle="accordion|lg:dropdown"
-                    data-kt-menu-item-trigger="click">
+                <div class="kt-menu-item" data-kt-menu-item-placement="bottom-start" data-kt-menu-item-placement-rtl="bottom-end"
+                    data-kt-menu-item-toggle="accordion|lg:dropdown" data-kt-menu-item-trigger="click">
                     <!-- data-kt-menu-item-trigger="click|lg:hover" -->
                     <div
                         class="kt-menu-link bg-transparent! lg:background kt-menu-link-hover:text-primary kt-menu-item-active:text-mono kt-menu-item-show:text-primary kt-menu-item-here:text-mono kt-menu-item-active:font-medium kt-menu-item-here:font-medium text-sm text-foreground">
@@ -56,10 +54,8 @@
                                 </h3>
                                 <div class="grid lg:grid-cols-2 lg:gap-5">
                                     <div class="flex flex-col gap-2">
-                                        <div
-                                            class="kt-menu-item {{ isActive('tours.guides.index', [], $currentRoute) ? 'active' : '' }}">
-                                            <a class="kt-menu-link" href="{{ route('tours.guides.index') }}"
-                                                tabindex="0">
+                                        <div class="kt-menu-item {{ isActive('dashboard.tourguides.guides.index', [], $currentRoute) ? 'active' : '' }}">
+                                            <a class="kt-menu-link" href="{{ route('dashboard.tourguides.guides.index') }}" tabindex="0">
                                                 <span class="kt-menu-icon">
                                                     <i class="fas fa-map"></i>
                                                 </span>
@@ -68,10 +64,8 @@
                                                 </span>
                                             </a>
                                         </div>
-                                        <div
-                                            class="kt-menu-item {{ isActive('restaurants.index', [], $currentRoute) ? 'active' : '' }}">
-                                            <a class="kt-menu-link" href="{{ route('restaurants.index') }}"
-                                                tabindex="0">
+                                        <div class="kt-menu-item {{ isActive('restaurants.index', [], $currentRoute) ? 'active' : '' }}">
+                                            <a class="kt-menu-link" href="{{ route('dashboard.restaurants.index') }}" tabindex="0">
                                                 <span class="kt-menu-icon">
                                                     <i class="fas fa-utensils"></i>
                                                 </span>
@@ -80,10 +74,8 @@
                                                 </span>
                                             </a>
                                         </div>
-                                        <div
-                                            class="kt-menu-item {{ isActive('accommodations.index', [], $currentRoute) ? 'active' : '' }}">
-                                            <a class="kt-menu-link" href="{{ route('accommodations.index') }}"
-                                                tabindex="0">
+                                        <div class="kt-menu-item {{ isActive('accommodations.index', [], $currentRoute) ? 'active' : '' }}">
+                                            <a class="kt-menu-link" href="{{ route('dashboard.accommodations.index') }}" tabindex="0">
                                                 <span class="kt-menu-icon">
                                                     <i class="fas fa-hotel"></i>
                                                 </span>
@@ -94,10 +86,8 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-2">
-                                        <div
-                                            class="kt-menu-item {{ isActive('transportations.companies.index', [], $currentRoute) ? 'active' : '' }}">
-                                            <a class="kt-menu-link"
-                                                href="{{ route('transportations.companies.index') }}" tabindex="0">
+                                        <div class="kt-menu-item {{ isActive('transportation.companies.index', [], $currentRoute) ? 'active' : '' }}">
+                                            <a class="kt-menu-link" href="{{ route('dashboard.transportation.companies.index') }}" tabindex="0">
                                                 <span class="kt-menu-icon">
                                                     <i class="fas fa-car"></i>
                                                 </span>
@@ -106,9 +96,8 @@
                                                 </span>
                                             </a>
                                         </div>
-                                        <div
-                                            class="kt-menu-item {{ isActive('reports.index', [], $currentRoute) ? 'active' : '' }}">
-                                            <a class="kt-menu-link" href="{{ route('reports.index') }}" tabindex="0">
+                                        <div class="kt-menu-item {{ isActive('reports.index', [], $currentRoute) ? 'active' : '' }}">
+                                            <a class="kt-menu-link" href="{{ route('dashboard.core.reports.index') }}" tabindex="0">
                                                 <span class="kt-menu-icon">
                                                     <i class="fas fa-chart-line"></i>
                                                 </span>
@@ -127,7 +116,7 @@
                 <!--Megamenu Item-->
                 <div class="kt-menu-item">
                     <a class="kt-menu-link kt-menu-item-hover:text-primary kt-menu-item-active:text-mono kt-menu-item-active:font-medium text-nowrap text-sm font-medium text-foreground"
-                        href="{{ route('settings.general') }}">
+                        href="{{ route('dashboard.core.settings.general') }}">
                         <span class="kt-menu-title text-nowrap">
                             Settings
                         </span>

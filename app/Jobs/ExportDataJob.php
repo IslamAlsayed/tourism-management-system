@@ -25,7 +25,7 @@ class ExportDataJob implements ShouldQueue
     protected bool $includeRelations;
 
     /**
-     * @param string $modelClass  — full class path like App\Models\User::class
+     * @param string $modelClass  — full class path like Modules\Core\Entities\User::class
      * @param string|null $filename
      * @param int $chunkSize
      * @param array $hiddenColumns — columns to exclude from export (e.g., ['id', 'uuid'])
@@ -286,7 +286,6 @@ class ExportDataJob implements ShouldQueue
 
             $spreadsheet->disconnectWorksheets();
             unset($spreadsheet);
-
         } catch (\Throwable $e) {
             Log::warning('Failed to format Excel file: ' . $e->getMessage());
         }

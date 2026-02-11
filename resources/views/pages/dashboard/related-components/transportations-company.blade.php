@@ -55,11 +55,11 @@
             ])
             <div class="lg:col-span-2 flex gap-2 mt-4">
                 @include('components.elements.show-button', [
-                    'models' => 'transportations.companies',
+                    'models' => 'transportation.companies',
                     'id' => $record->id,
                 ])
                 @include('components.elements.edit-button', [
-                    'models' => 'transportations.companies',
+                    'models' => 'transportation.companies',
                     'id' => $record->id,
                 ])
                 @livewire('delete-bottom', [

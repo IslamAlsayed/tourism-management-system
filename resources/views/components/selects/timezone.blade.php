@@ -1,6 +1,6 @@
 @php
     $name = isset($name) ? $name : 'timezone_id';
-    $timezones = \App\Models\Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
+    $timezones = \Modules\Localization\Entities\Timezone::orderBy('name')->get(['name', 'name_ar', 'abbreviation', 'id']);
 @endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
@@ -10,7 +10,7 @@
                 ({{ count($timezones) ?: 0 }})
             </strong>
         </div>
-        <a href="{{ route('timezones.create') }}" class="text-blue-600 text-2sm">
+        <a href="{{ route('dashboard.localization.timezones.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>
     </label>
@@ -19,7 +19,8 @@
             <option value="" selected disabled></option>
         @endif
         @forelse ($timezones as $timezone)
-            <option value="{{ $timezone->id }}" {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $timezone->id ? 'selected' : '' }}>
+            <option value="{{ $timezone->id }}"
+                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $timezone->id ? 'selected' : '' }}>
                 {{ app()->getLocale() == 'ar' ? ($timezone->name_ar ? $timezone->name_ar . ' ' : '') : ($timezone->name ? $timezone->name . ' ' : '') }}({{ $timezone->abbreviation }})
             </option>
         @empty

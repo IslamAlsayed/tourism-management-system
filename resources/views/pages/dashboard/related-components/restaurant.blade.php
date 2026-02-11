@@ -132,7 +132,7 @@
                 @livewire('delete-bottom', [
                     'type' => 'restaurant',
                     'modelId' => $record->id,
-                    'modelType' => '\\App\\Models\\Restaurant',
+                    'modelType' => '\\Modules\\Restaurants\\Entities\\Restaurant',
                     'table' => 'restaurants',
                 ])
             </div>

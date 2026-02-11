@@ -1,12 +1,15 @@
 <div class="aside-menu flex-column-fluid">
     <!--begin::Aside Menu-->
-    <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
+    <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+        data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu"
+        data-kt-scroll-offset="0">
         <!--begin::Menu-->
-        <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
+        <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
+            id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
 
-            @foreach($menuItems as $item)
-                @if($checkPermission($item['permission'] ?? null))
-                    @if(isset($item['children']))
+            @foreach ($menuItems as $item)
+                @if ($checkPermission($item['permission'] ?? null))
+                    @if (isset($item['children']))
                         {{-- Menu with Children --}}
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $hasActiveChild($item['children']) ? 'show here' : '' }}">
                             <span class="menu-link">
@@ -23,7 +26,8 @@
                     @else
                         {{-- Simple Menu Item --}}
                         <div class="menu-item">
-                            <a class="menu-link {{ $isActiveRoute($item['route'] ?? '') ? 'active' : '' }}" href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
+                            <a class="menu-link {{ $isActiveRoute($item['route'] ?? '') ? 'active' : '' }}"
+                                href="{{ isset($item['route']) ? route($item['route']) : '#' }}">
                                 <span class="menu-icon">
                                     <i class="{{ $item['icon'] }} fs-2"></i>
                                 </span>
@@ -43,7 +47,7 @@
 
             {{-- Quick Actions --}}
             <div class="menu-item">
-                <a class="menu-link" href="{{ route('users.create') }}">
+                <a class="menu-link" href="{{ route('dashboard.core.users.create') }}">
                     <span class="menu-icon">
                         <i class="ki-filled ki-user-plus fs-2"></i>
                     </span>
@@ -52,7 +56,7 @@
             </div>
 
             <div class="menu-item">
-                <a class="menu-link" href="{{ route('profile.edit') }}">
+                <a class="menu-link" href="{{ route('dashboard.core.profile.edit') }}">
                     <span class="menu-icon">
                         <i class="ki-filled ki-profile-user fs-2"></i>
                     </span>
@@ -80,19 +84,19 @@
 </div>
 
 @push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize menu
-    KTMenu.init();
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize menu
+            KTMenu.init();
 
-    // Auto expand active menu items
-    const activeItems = document.querySelectorAll('.menu-item.here');
-    activeItems.forEach(item => {
-        const accordion = item.querySelector('[data-kt-menu-trigger="click"]');
-        if (accordion) {
-            KTMenu.expand(accordion);
-        }
-    });
-});
-</script>
+            // Auto expand active menu items
+            const activeItems = document.querySelectorAll('.menu-item.here');
+            activeItems.forEach(item => {
+                const accordion = item.querySelector('[data-kt-menu-trigger="click"]');
+                if (accordion) {
+                    KTMenu.expand(accordion);
+                }
+            });
+        });
+    </script>
 @endpush

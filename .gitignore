@@ -23,13 +23,15 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 *.md
-*.md
+docs
 *copy.php
 storage/app/private
 *copy.*
 
 /properties.js
 */trash
+trash
+trash2
 app/Helpers
 /resources/views/pages/dashboard/vehicles
 SYSTEM_READY.txt

@@ -1,6 +1,6 @@
 @php
     $name = isset($name) ? $name : 'site_id';
-    $sites = \App\Models\TouristSite::orderBy('name')->get(['id', 'name']);
+    $sites = \Modules\Tourists\Entities\TouristSite::orderBy('name')->get(['id', 'name']);
 @endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
@@ -10,7 +10,7 @@
                 ({{ count($sites) ?: 0 }})
             </strong>
         </div>
-        <a href="{{ route('tourist-sites.create') }}" class="text-blue-600 text-2sm">
+        <a href="{{ route('dashboard.tourists.sites.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>
     </label>
@@ -19,7 +19,8 @@
             <option value="" selected disabled></option>
         @endif
         @forelse ($sites as $site)
-            <option value="{{ $site->id }}" {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $site->id ? 'selected' : '' }}>
+            <option value="{{ $site->id }}"
+                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $site->id ? 'selected' : '' }}>
                 {{ $site->name }}
             </option>
         @empty

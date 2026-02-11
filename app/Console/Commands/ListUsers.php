@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\User;
+use Modules\Core\Entities\User;
 
 class ListUsers extends Command
 {

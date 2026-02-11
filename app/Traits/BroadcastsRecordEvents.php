@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Models\Setting;
+use Modules\Core\Entities\Setting;
 use App\Events\RecordEvent;
 use Illuminate\Support\Facades\Schema;
 

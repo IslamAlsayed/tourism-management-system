@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\User;
+use Modules\Core\Entities\User;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Support\Facades\Auth;

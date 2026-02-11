@@ -1,6 +1,6 @@
 @php
     $name = isset($name) ? $name : 'nationality_id';
-    $nationalities = \App\Models\Nationality::orderBy('name')->get(['id', 'name']);
+    $nationalities = \Modules\Geography\Entities\Nationality::orderBy('name')->get(['id', 'name']);
 @endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
@@ -10,7 +10,7 @@
                 ({{ count($nationalities) ?: 0 }})
             </strong>
         </div>
-        <a href="{{ route('nationalities.create') }}" class="text-blue-600 text-2sm">
+        <a href="{{ route('dashboard.geography.nationalities.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>
     </label>
@@ -19,7 +19,8 @@
             <option value="" selected disabled></option>
         @endif
         @forelse ($nationalities as $nationality)
-            <option value="{{ $nationality->id }}" {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $nationality->id ? 'selected' : '' }}>
+            <option value="{{ $nationality->id }}"
+                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $nationality->id ? 'selected' : '' }}>
                 {{ $nationality->name }}
             </option>
         @empty

@@ -1,14 +1,13 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
-        :requirements="[
-            [
-                'condition' => \App\Models\Currency::count() > 0,
-                'route' => route('currencies.create'),
-                'label' => __('main.currencies_'),
-            ],
-        ]">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
+        [
+            'condition' => \Modules\Localization\Entities\Currency::count() > 0,
+            'route' => route('currencies.create'),
+            'label' => __('main.currencies_'),
+        ],
+    ]">
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}

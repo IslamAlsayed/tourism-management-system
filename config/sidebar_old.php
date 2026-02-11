@@ -85,7 +85,7 @@ return [
                                 'en' => 'Add New Country',
                                 'ar' => 'إضافة بلد جديد'
                             ],
-                            'route' => 'countries.create',
+                            'route' => 'dashboard.geography.countries.create',
                         ],
                     ],
                 ],
@@ -108,7 +108,7 @@ return [
                                 'en' => 'Add New City',
                                 'ar' => 'إضافة مدينة جديدة'
                             ],
-                            'route' => 'cities.create',
+                            'route' => 'dashboard.geography.cities.create',
                         ],
                     ],
                 ],

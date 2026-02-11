@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Ably\AblyRest;
-use App\Models\Setting;
+use Modules\Core\Entities\Setting;
 use Livewire\Component;
 use Illuminate\Support\Str;
 

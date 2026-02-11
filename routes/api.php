@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AiController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RouteController;
+use App\Http\Controllers\Api\RegionController;
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\DashboardController;
 
 /*
@@ -11,9 +14,7 @@ use App\Http\Controllers\Api\DashboardController;
 |--------------------|
 */
 
-Route::middleware(['web', 'auth'])->group(function () {
-    Route::get('/get-references-test', [DashboardController::class, 'getReferencesForTest'])->name('api.get-references-test');
-    Route::post('/get-references', [DashboardController::class, 'getReferences'])->name('api.get-references');
+Route::middleware(['api'])->group(function () {
     Route::get('/image/download', [DashboardController::class, 'download'])->name('image.download');
 
     // Route::patch('patch/toggleStatus', [DashboardController::class, 'toggleStatus'])->name('patch.toggleStatus');
@@ -25,8 +26,8 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/web-push-notifications', [DashboardController::class, 'webPushNotifications'])->name('web-push-notifications');
 
     // Location APIs for accommodations
-    Route::get('/countries/{countryId}/cities', [\App\Http\Controllers\Api\LocationController::class, 'getCitiesByCountry']);
-    Route::get('/regions/{regionId}/subregions', [\App\Http\Controllers\Api\LocationController::class, 'getSubregionsByRegion']);
+    Route::get('/countries/{countryId}/cities', [LocationController::class, 'getCitiesByCountry']);
+    Route::get('/regions/{regionId}/subregions', [LocationController::class, 'getSubregionsByRegion']);
 
     Route::post('/ai/correct-text', [AiController::class, 'correctByGpt']);
 
@@ -35,4 +36,18 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     Route::get('routes/nationalities', [RouteController::class, 'getNationalities'])->name('routes.nationalities');
     Route::get('routes/nationalities/{id}', [RouteController::class, 'getNationalityById'])->name('routes.nationality.show');
+});
+
+Route::middleware(['api'])->group(function () {
+    // Auth
+    Route::post('/login', [AuthController::class, 'login'])->name('api.login');
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('api.logout');
+
+    // Regions
+    Route::get('/regions', [RegionController::class, 'index']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/regions', [RegionController::class, 'store']);
+        Route::put('/regions/{region}', [RegionController::class, 'update']);
+        Route::delete('/regions/{region}', [RegionController::class, 'destroy']);
+    });
 });

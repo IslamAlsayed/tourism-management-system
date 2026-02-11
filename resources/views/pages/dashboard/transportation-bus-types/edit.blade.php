@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('transportation-bus-types.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.transportation.bus-types.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.transportations-bus_types')]) }}
             </div>
         </div>
@@ -29,18 +29,15 @@
                         {{ __('main.type_information', ['type' => __('main.transportations-bus_type')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('transportation-bus-types.update', $transportationBusType->id) }}"
-                        class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.transportation.bus-types.update', $transportationBusType->id) }}" class="space-y-6 p-4">
                         @csrf
                         @method('PUT')
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
                             <!-- Transportation bus type -->
                             <div class="">
-                                <label for="name"
-                                    class="kt-label mb-2">{{ __('main.transportations-bus_type') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ $transportationBusType->name }}">
+                                <label for="name" class="kt-label mb-2">{{ __('main.transportations-bus_type') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $transportationBusType->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -49,15 +46,13 @@
                             <!-- Seats -->
                             <div class="">
                                 <label for="seats" class="kt-label mb-2">Seats</label>
-                                <input type="number" name="seats" id="seats" class="kt-input h-[45px]"
-                                    value="{{ $transportationBusType->seats }}">
+                                <input type="number" name="seats" id="seats" class="kt-input h-[45px]" value="{{ $transportationBusType->seats }}">
                             </div>
 
                             <!-- Type -->
                             <div class="">
                                 <label for="type" class="kt-label mb-2">Type</label>
-                                <input type="text" name="type" id="type" class="kt-input h-[45px]"
-                                    value="{{ $transportationBusType->type }}">
+                                <input type="text" name="type" id="type" class="kt-input h-[45px]" value="{{ $transportationBusType->type }}">
                             </div>
 
                             <!-- Transportation company -->
@@ -66,8 +61,7 @@
                                 <select name="company_id" id="company_id" class="kt-input h-[45px]">
                                     <option value="">--</option>
                                     @foreach ($transportationCompanies as $company)
-                                        <option value="{{ $company->id }}"
-                                            {{ $company->id == $transportationBusType->company_id ? 'selected' : '' }}>
+                                        <option value="{{ $company->id }}" {{ $company->id == $transportationBusType->company_id ? 'selected' : '' }}>
                                             {{ $company->name }}</option>
                                     @endforeach
                                 </select>

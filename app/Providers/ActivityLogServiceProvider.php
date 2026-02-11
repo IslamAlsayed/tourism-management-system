@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Setting;
+use Modules\Core\Entities\Setting;
 use App\Events\ActivityCreated;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Schema;

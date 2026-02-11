@@ -10,7 +10,7 @@
                 <i class="ki-outline ki-arrow-down fs-2 inline-block"></i>
             </button>
 
-            <a href="{{ route('tourist-services.create', ['site_id' => $record->id]) }}" class="kt-btn kt-btn-sm kt-btn-primary">
+            <a href="{{ route('dashboard.tourists.services.create', ['site_id' => $record->id]) }}" class="kt-btn kt-btn-sm kt-btn-primary">
                 <i class="ki-filled ki-plus text-sm me-1"></i>
                 {{ __('main.add_type', ['type' => __('main.service')]) }}
             </a>
@@ -132,7 +132,8 @@
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.phone') }}</label>
                                         <div>
-                                            <a href="tel:{{ $service->phone }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px]">
+                                            <a href="tel:{{ $service->phone }}" target="_blank"
+                                                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px]">
                                                 {{ $service->phone }}
                                                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                             </a>
@@ -143,7 +144,8 @@
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.email') }}</label>
                                         <div>
-                                            <a href="mailto:{{ $service->email_01 }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px]">
+                                            <a href="mailto:{{ $service->email_01 }}" target="_blank"
+                                                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px]">
                                                 {{ $service->email_01 }}
                                                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                             </a>
@@ -154,7 +156,8 @@
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.mobile') }}</label>
                                         <div>
-                                            <a href="tel:{{ $service->mobile_01 }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px]">
+                                            <a href="tel:{{ $service->mobile_01 }}" target="_blank"
+                                                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px]">
                                                 {{ $service->mobile_01 }}
                                                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                             </a>
@@ -172,7 +175,8 @@
                                 @if ($service->website)
                                     <div class="col-span-2">
                                         <label class="kt-label mb-1">{{ __('main.website') }}</label>
-                                        <a href="{{ $service->website }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                                        <a href="{{ $service->website }}" target="_blank"
+                                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                                             {{ $service->website }}
                                             <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                         </a>

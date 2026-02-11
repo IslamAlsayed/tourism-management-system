@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Client;
 use App\Models\Airline;
-use App\Models\Country;
-use App\Models\MediaFile;
-use App\Models\TourGuide;
-use App\Models\Restaurant;
-use App\Models\TouristService;
 use App\Models\CrossingPort;
+use App\Models\MediaFile;
+use Modules\Tourists\Entities\TouristService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+use Modules\Core\Entities\User;
+use Modules\CRM\Entities\Client;
+use Modules\Geography\Entities\Country;
+use Modules\Restaurants\Entities\Restaurant;
+use Modules\TourGuides\Entities\TourGuide;
 
 class MediaFileSeeder extends Seeder
 {

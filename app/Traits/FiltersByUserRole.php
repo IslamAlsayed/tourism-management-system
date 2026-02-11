@@ -12,7 +12,7 @@ trait FiltersByUserRole
         if (app()->runningInConsole()) {
             return;
         }
-        if (static::class == 'App\Models\User') {
+        if (static::class == 'Modules\Core\Entities\User') {
             return;
         }
         static::addGlobalScope('filterByUserRole', function (Builder $builder) {

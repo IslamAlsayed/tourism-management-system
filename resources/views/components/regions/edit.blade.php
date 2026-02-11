@@ -7,18 +7,17 @@
         <label for="region_id" class="kt-label mb-2 flex items-center justify-between">
             <div>
                 {{ __('main.region') }}
-                <strong
-                    class="dataLength text-primary">({{ isset($regions) && count($regions) ? count($regions) : 0 }})</strong>
+                <strong class="dataLength text-primary">({{ isset($regions) && count($regions) ? count($regions) : 0 }})</strong>
                 @if (isset($regions) && count($regions) <= 0)
                     <span id="region_id-info" class="text-red-600 text-sm span-info show">
                         (Not regions found)
                     </span>
                 @endif
             </div>
-            <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.regions.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
-        <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search
-            data-current-value="{{ $record->region_id }}" value="{{ $record->region_id }}">
+        <select name="region_id" id="region_id" class="kt-select h-[45px]" special-search data-current-value="{{ $record->region_id }}"
+            value="{{ $record->region_id }}">
             <option value="">--</option>
             @if (isset($regions))
                 @foreach ($regions as $region)
@@ -45,11 +44,11 @@
                     ({{ __('main.select_type_first', ['type' => __('main.region')]) }})
                 </span>
             </div>
-            <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.subregions.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
 
-        <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search
-            data-current-value="{{ $record->subregion_id }}" value="{{ $record->subregion_id }}">
+        <select name="subregion_id" id="subregion_id" class="kt-select h-[45px]" special-search data-current-value="{{ $record->subregion_id }}"
+            value="{{ $record->subregion_id }}">
             <option value="">--</option>
         </select>
         @error('subregion_id')
@@ -69,11 +68,11 @@
                     ({{ __('main.select_type_first', ['type' => __('main.subregion')]) }})
                 </span>
             </div>
-            <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.countries.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
 
-        <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search
-            data-current-value="{{ $record->country_id }}" value="{{ $record->country_id }}">
+        <select name="country_id" id="country_id" class="kt-select h-[45px]" special-search data-current-value="{{ $record->country_id }}"
+            value="{{ $record->country_id }}">
             <option value="">--</option>
         </select>
         @error('country_id')
@@ -90,8 +89,7 @@
                     @if (isset($multiple) && $multiple)
                         <input type="hidden" name="all_states" value="0">
                         <div class="custom-input">
-                            <input type="checkbox" name="all_states" id="all_states" value="1"
-                                {{ old('all_states') ? 'checked' : '' }}>
+                            <input type="checkbox" name="all_states" id="all_states" value="1" {{ old('all_states') ? 'checked' : '' }}>
                             <label for="all_states">{{ __('main.all_types', ['types' => __('main.states')]) }}</label>
                         </div>
                     @else
@@ -104,20 +102,19 @@
                     ({{ __('main.select_type_first', ['type' => __('main.country')]) }})
                 </span>
             </div>
-            <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.states.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
 
-        <select name="{{ isset($multiple) && $multiple ? 'state_id[]' : 'state_id' }}" id="state_id"
-            class="kt-select h-[45px]" @if (isset($multiple) && $multiple) special-multiple @else special-search @endif
-            data-current-value="{{ $record->state_id }}" value="{{ $record->state_id }}">
+        <select name="{{ isset($multiple) && $multiple ? 'state_id[]' : 'state_id' }}" id="state_id" class="kt-select h-[45px]"
+            @if (isset($multiple) && $multiple) special-multiple @else special-search @endif data-current-value="{{ $record->state_id }}"
+            value="{{ $record->state_id }}">
             <option value="">--</option>
         </select>
 
         @if (isset($multiple) && $multiple)
             @if (!empty($record->state_list))
                 @foreach ($record->state_list as $item)
-                    <input type="hidden" name="state_id[]" data-name="{{ $item['name'] }}"
-                        value="{{ $item['id'] }}">
+                    <input type="hidden" name="state_id[]" data-name="{{ $item['name'] }}" value="{{ $item['id'] }}">
                 @endforeach
             @endif
         @endif
@@ -136,8 +133,7 @@
                     @if (isset($multiple) && $multiple)
                         <input type="hidden" name="all_cities" value="0">
                         <div class="custom-input">
-                            <input type="checkbox" name="all_cities" id="all_cities" value="1"
-                                {{ old('all_cities') ? 'checked' : '' }}>
+                            <input type="checkbox" name="all_cities" id="all_cities" value="1" {{ old('all_cities') ? 'checked' : '' }}>
                             <label for="all_cities">{{ __('main.all_types', ['types' => __('main.cities')]) }}</label>
                         </div>
                     @else
@@ -150,20 +146,19 @@
                     ({{ __('main.select_type_first', ['type' => __('main.country')]) }})
                 </span>
             </div>
-            <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.cities.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
 
-        <select name="{{ isset($multiple) && $multiple ? 'city_id[]' : 'city_id' }}" id="city_id"
-            class="kt-select h-[45px]" @if (isset($multiple) && $multiple) special-multiple @else special-search @endif
-            data-current-value="{{ $record->city_id }}" value="{{ $record->city_id }}">
+        <select name="{{ isset($multiple) && $multiple ? 'city_id[]' : 'city_id' }}" id="city_id" class="kt-select h-[45px]"
+            @if (isset($multiple) && $multiple) special-multiple @else special-search @endif data-current-value="{{ $record->city_id }}"
+            value="{{ $record->city_id }}">
             <option value="">--</option>
         </select>
 
         @if (isset($multiple) && $multiple)
             @if (!empty($record->city_list))
                 @foreach ($record->city_list as $item)
-                    <input type="hidden" name="city_id[]" data-name="{{ $item['name'] }}"
-                        value="{{ $item['id'] }}">
+                    <input type="hidden" name="city_id[]" data-name="{{ $item['name'] }}" value="{{ $item['id'] }}">
                 @endforeach
             @endif
         @endif

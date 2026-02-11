@@ -2,8 +2,8 @@
 
 namespace App\Livewire\MorphicForms;
 
-use App\Models\TransportationCompany;
 use Livewire\Component;
+use Modules\Transportation\Entities\Company;
 
 class VehicleTypeForm extends Component
 {
@@ -17,7 +17,7 @@ class VehicleTypeForm extends Component
     public function mount($record = null)
     {
         $this->record = $record;
-        $this->companies = TransportationCompany::get(['id', 'name', 'code'])->toArray();
+        $this->companies = Company::get(['id', 'name', 'code'])->toArray();
 
         if ($record) {
             if (method_exists($record, 'vehicleTypes') && $record->vehicleTypes()->exists()) {

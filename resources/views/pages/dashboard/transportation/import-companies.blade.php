@@ -14,7 +14,7 @@
                     <p class="text-muted mt-2">{{ $description }}</p>
                 </div>
                 <div class="col-auto">
-                    <a href="{{ route('transportations.companies.index') }}" class="btn btn-outline-primary">
+                    <a href="{{ route('dashboard.transportation.companies.index') }}" class="btn btn-outline-primary">
                         <i class="fas fa-arrow-left me-2"></i>{{ __('main.back') }}
                     </a>
                 </div>
@@ -27,8 +27,7 @@
                     <div class="card-body">
                         <h5 class="card-title mb-4">{{ __('main.upload_excel_file') }}</h5>
 
-                        <form action="{{ route('transportations.import-export.companies-import') }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('transportations.import-export.companies-import') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <!-- File Input -->
@@ -37,8 +36,8 @@
                                     {{ __('main.select_file') }}
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="file" class="form-control @error('file') is-invalid @enderror"
-                                    id="file" name="file" accept=".csv,.xlsx" required>
+                                <input type="file" class="form-control @error('file') is-invalid @enderror" id="file" name="file" accept=".csv,.xlsx"
+                                    required>
                                 @error('file')
                                     <div class="invalid-feedback d-block">
                                         {{ $message }}
@@ -85,8 +84,7 @@
                                     {{ __('main.include_relations') }}
                                 </label>
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="include_relations"
-                                        name="include_relations" value="1" checked>
+                                    <input type="checkbox" class="form-check-input" id="include_relations" name="include_relations" value="1" checked>
                                     <label class="form-check-label" for="include_relations">
                                         {{ __('main.export_related_data') }}
                                     </label>

@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('transportation-vehicles.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.transportation.vehicles.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.transportations-vehicles')]) }}
                 </a>
             </div>
@@ -23,7 +23,7 @@
         @include('components.must-add-first', [
             'requirements' => [
                 [
-                    'condition' => \App\Models\Currency::count() > 0,
+                    'condition' => \Modules\Localization\Entities\Currency::count() > 0,
                     'route' => route('currencies.index'),
                     'label' => __('main.currencies_'),
                 ],
@@ -40,7 +40,7 @@
                         {{ __('main.type_information', ['type' => __('main.transportations-vehicles')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('transportation-vehicles.store') }}" class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.transportation.vehicles.store') }}" class="space-y-6 p-4">
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 items-end mb-4">
@@ -83,8 +83,7 @@
                                 <label for="car_route_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Car Route
                                 </label>
-                                <select name="car_route_id" id="car_route_id" class="kt-input h-[45px]" required
-                                    special-search>
+                                <select name="car_route_id" id="car_route_id" class="kt-input h-[45px]" required special-search>
                                     <option value="">--</option>
                                     @foreach ($carRoutes as $carRoute)
                                         <option value="{{ $carRoute->id }}">{{ $carRoute->route }}</option>
@@ -107,8 +106,7 @@
                             <!-- Price -->
                             <div class="">
                                 <label for="price" class="kt-label mb-2">{{ __('main.price') }}</label>
-                                <input type="number" step="0.1" name="price" id="price"
-                                    class="kt-input h-[45px]">
+                                <input type="number" step="0.1" name="price" id="price" class="kt-input h-[45px]">
                                 @error('price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

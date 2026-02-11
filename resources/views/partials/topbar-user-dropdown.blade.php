@@ -1,10 +1,9 @@
 <!-- User -->
-<div class="shrink-0" data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px" data-kt-dropdown-offset-rtl="-20px, 10px"
-    data-kt-dropdown-placement="bottom-end" data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
+<div class="shrink-0" data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px" data-kt-dropdown-offset-rtl="-20px, 10px" data-kt-dropdown-placement="bottom-end"
+    data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
     <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
         @if ($activeUser && $activeUser->photo && checkExistFile($activeUser->photo))
-            <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
-                class="border-2 border-green-500 rounded-full size-9 shrink-0"
+            <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}" class="border-2 border-green-500 rounded-full size-9 shrink-0"
                 src="{{ asset('storage/' . $activeUser->photo) }}" />
         @else
             <span class="image-character" style="min-width: 35px; min-height: 35px; font-size: 14px;">
@@ -23,8 +22,7 @@
         <div class="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
             <div class="flex items-center gap-2">
                 @if ($activeUser && $activeUser->photo && checkExistFile($activeUser->photo))
-                    <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}"
-                        class="border-2 border-green-500 rounded-full size-9 shrink-0"
+                    <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}" class="border-2 border-green-500 rounded-full size-9 shrink-0"
                         src="{{ asset('storage/' . $activeUser->photo) }}" />
                 @else
                     <span class="image-character" style="min-width: 35px; min-height: 35px; font-size: 14px;">
@@ -42,8 +40,7 @@
                     <span class="text-sm font-semibold leading-none text-foreground">
                         {{ $activeUser?->name ?? __('main.unknown_user') }}
                     </span>
-                    <a class="text-xs font-medium leading-none hover:text-primary text-secondary-foreground"
-                        href="#">
+                    <a class="text-xs font-medium leading-none hover:text-primary text-secondary-foreground" href="#">
                         {{ $activeUser?->email ?? __('main.unknown_email') }}
                     </a>
                 </div>
@@ -57,7 +54,7 @@
                 <div class="kt-dropdown-menu-separator"></div>
             </li>
             <li>
-                <a class="kt-dropdown-menu-link" href="{{ route('user.profile') }}">
+                <a class="kt-dropdown-menu-link" href="{{ route('dashboard.core.user.profile') }}">
                     <i class="ki-filled ki-profile-circle">
                     </i>
                     {{ __('main.my_profile') }}
@@ -79,8 +76,7 @@
                     <ul class="kt-dropdown-menu-sub">
                         @foreach ($system_languages as $key => $language)
                             <li class="{{ getCurrentLocale() == $language->code ? 'active disabled' : '' }}">
-                                <a class="kt-dropdown-menu-link"
-                                    href="{{ route('system-languages.change', $language->code) }}">
+                                <a class="kt-dropdown-menu-link" href="{{ route('dashboard.localization.system-languages.change', $language->code) }}">
                                     <span class="flex items-center gap-2">
                                         <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->code . '.svg') : asset('storage/' . $language->photo) }}"
                                             class="inline-block rounded-full size-4">

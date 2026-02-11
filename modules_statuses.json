@@ -1,0 +1,13 @@
+{
+    "Core": true,
+    "Geography": true,
+    "Localization": true,
+    "TourGuides": true,
+    "Accommodations": true,
+    "Restaurants": true,
+    "Transportation": true,
+    "TravelDocuments": true,
+    "Subscriptions": false,
+    "CRM": true,
+    "Tourists": true
+}

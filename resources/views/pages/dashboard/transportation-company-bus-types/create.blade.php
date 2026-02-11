@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('transportation-company-bus-types.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.transportation.company-bus-types.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.transportations-company_bus_types')]) }}
                 </a>
             </div>
@@ -23,8 +23,8 @@
         @include('components.must-add-first', [
             'requirements' => [
                 [
-                    'condition' => \App\Models\TransportationCompany::count() > 0,
-                    'route' => route('transportation-companies.index'),
+                    'condition' => \Modules\Transportation\Entities\Company::count() > 0,
+                    'route' => route('dashboard.transportation.companies.index'),
                     'label' => __('main.transportations_companies'),
                 ],
             ],
@@ -40,8 +40,7 @@
                         {{ __('main.type_information', ['type' => __('main.transportations-company_bus_type')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('transportation-company-bus-types.store') }}"
-                        class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.transportation.company-bus-types.store') }}" class="space-y-6 p-4">
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
@@ -76,9 +75,8 @@
                             <div class="">
                                 <label for="company_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Transportation Company
-                                    <a href="{{ route('transportation-companies.create') }}"
-                                        class="text-blue-600 text-2sm">
-                                        {{ __('main.add') }}
+                                    <a href="{{ route('transportation-companies.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('mroute('dashboard.transportation.
                                     </a>
                                 </label>
                                 <select name="company_id" id="company_id" class="kt-input h-[45px]" required>
@@ -93,13 +91,11 @@
                             <div class="">
                                 <label for="bus_type_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Transportation Bus Type
-                                    <a href="{{ route('transportation-bus-types.create') }}"
-                                        class="text-blue-600 text-2sm">
+                                    <a href="{{ route('transportation-bus-types.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
-                                    </a>
+                                    </a>route('dashboard.transportation.
                                 </label>
-                                <select name="bus_type_id" id="bus_type_id" class="kt-input h-[45px]" required
-                                    special-search>
+                                <select name="bus_type_id" id="bus_type_id" class="kt-input h-[45px]" required special-search>
                                     <option value="">--</option>
                                     @foreach ($transportationBusTypes as $busType)
                                         <option value="{{ $busType->id }}">{{ $busType->name }}</option>

@@ -23,8 +23,8 @@
         @include('components.must-add-first', [
             'requirements' => [
                 [
-                    'condition' => \App\Models\TransportationCompany::count() > 0,
-                    'route' => route('transportation-companies.index'),
+                    'condition' => \Modules\Transportation\Entities\Company::count() > 0,
+                    'route' => route('dashboard.transportation.companies.index'),
                     'label' => __('main.transportations_companies'),
                 ],
             ],
@@ -69,7 +69,8 @@
                             <div>
                                 <label for="key" class="kt-label required mb-2">{{ __('main.key') }}</label>
                                 <div class="relative">
-                                    <input type="text" name="key" id="key" class="kt-input h-[45px] pr-10" value="{{ old('key', fake()->numerify('PD-#####')) }}" required readonly>
+                                    <input type="text" name="key" id="key" class="kt-input h-[45px] pr-10"
+                                        value="{{ old('key', fake()->numerify('PD-#####')) }}" required readonly>
 
                                     <button type="button" onclick="generateNewKey()" toggle-button
                                         class="absolute top-1/2 -translate-y-1/2 text-primary cursor-pointer refresh-code refresh-code hover:text-gray-700">

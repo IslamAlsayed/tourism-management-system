@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Setting;
+use Modules\Core\Entities\Setting;
 use App\Models\Notification;
-use App\Models\SystemLanguage;
+use Modules\Localization\Entities\SystemLanguage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;

@@ -2,19 +2,27 @@
 
 namespace App\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\Log;
+use Modules\CRM\Entities\Client;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Schema;
-use App\Events\ImportExportCompleted;
+use Illuminate\Bus\Queueable;
 use App\Events\DataStorageMessage;
-use App\Services\TransportationDataImporter;
+use Illuminate\Support\Facades\Log;
+use Modules\Geography\Entities\City;
+use App\Events\ImportExportCompleted;
+use Illuminate\Support\Facades\Event;
+use Modules\Geography\Entities\State;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Schema;
+use Modules\Geography\Entities\Region;
+use Modules\Geography\Entities\Country;
 use Illuminate\Queue\InteractsWithQueue;
+use Modules\Accommodations\Entities\Type;
+use Modules\Geography\Entities\Subregion;
 use Spatie\SimpleExcel\SimpleExcelReader;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\Services\TransportationDataImporter;
+use Modules\Transportation\Entities\Company;
 
 class ImportDataJob implements ShouldQueue
 {
@@ -152,7 +160,7 @@ class ImportDataJob implements ShouldQueue
 
             // Capture TourGuideType pivot data BEFORE filtering by fillable
             // This is necessary because state_id and city_id are NOT columns in tour_guide_types table
-            if ($this->modelClass === \App\Models\TourGuideType::class) {
+            if ($this->modelClass === \Modules\TourGuides\Entities\TourGuideType::class) {
                 $pivotData = [];
 
                 // Extract state_id from cleaned data
@@ -227,14 +235,14 @@ class ImportDataJob implements ShouldQueue
             }
 
             // Generate code for Client model if column exists and value is empty
-            if ($this->modelClass === \App\Models\Client::class && in_array('code', $fillable) && empty($prepared['code'])) {
+            if ($this->modelClass === Client::class && in_array('code', $fillable) && empty($prepared['code'])) {
                 $prepared['code'] = generateCode('CLT-', 5);
                 Log::debug("Auto-generated Client code: {$prepared['code']}");
             }
 
             // Convert model_type from simple name to full namespace
             // e.g., "accommodation" -> "App\Models\Accommodation"
-            // e.g., "transportation-company" -> "App\Models\TransportationCompany"
+            // e.g., "transportation-company" -> Company"
             if (in_array('model_type', $fillable) && !empty($prepared['model_type'])) {
                 $modelType = trim((string) $prepared['model_type']);
 
@@ -289,7 +297,7 @@ class ImportDataJob implements ShouldQueue
                         $searchTerm = trim((string) $timezoneValue);
 
                         // Try exact match first (name, name_ar, or abbreviation)
-                        $timezone = \App\Models\Timezone::where('name', $searchTerm)
+                        $timezone = \Modules\Localization\Entities\Timezone::where('name', $searchTerm)
                             ->orWhere('name_ar', $searchTerm)
                             ->orWhere('abbreviation', $searchTerm)
                             ->first();
@@ -297,7 +305,7 @@ class ImportDataJob implements ShouldQueue
                         // If not found, try case-insensitive partial match
                         if (!$timezone) {
                             try {
-                                $timezone = \App\Models\Timezone::where('name', 'LIKE', "%{$searchTerm}%")
+                                $timezone = \Modules\Localization\Entities\Timezone::where('name', 'LIKE', "%{$searchTerm}%")
                                     ->orWhere('name', 'LIKE', "%{$searchTerm}%")
                                     ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
                                     ->orWhere('abbreviation', 'LIKE', "%{$searchTerm}%")
@@ -334,7 +342,7 @@ class ImportDataJob implements ShouldQueue
                         $searchTerm = trim((string) $languageValue);
 
                         // Try exact match first (name, name_ar, code, or iso_code)
-                        $language = \App\Models\Language::where('name', $searchTerm)
+                        $language = \Modules\Localization\Entities\Language::where('name', $searchTerm)
                             ->orWhere('name_ar', $searchTerm)
                             ->orWhere('code', $searchTerm)
                             ->orWhere('iso_code', $searchTerm)
@@ -342,7 +350,7 @@ class ImportDataJob implements ShouldQueue
 
                         // If not found, try partial match
                         if (!$language) {
-                            $language = \App\Models\Language::where('name', 'LIKE', "%{$searchTerm}%")
+                            $language = \Modules\Localization\Entities\Language::where('name', 'LIKE', "%{$searchTerm}%")
                                 ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
                                 ->first();
                         }
@@ -370,7 +378,7 @@ class ImportDataJob implements ShouldQueue
                         $searchTerm = trim((string) $currencyValue);
 
                         // Try exact match first (name, name_ar, code, or symbol)
-                        $currency = \App\Models\Currency::where('name', $searchTerm)
+                        $currency = \Modules\Localization\Entities\Currency::where('name', $searchTerm)
                             ->orWhere('name_ar', $searchTerm)
                             ->orWhere('code', $searchTerm)
                             ->orWhere('symbol', $searchTerm)
@@ -378,7 +386,7 @@ class ImportDataJob implements ShouldQueue
 
                         // If not found, try partial match
                         if (!$currency) {
-                            $currency = \App\Models\Currency::where('name', 'LIKE', "%{$searchTerm}%")
+                            $currency = \Modules\Localization\Entities\Currency::where('name', 'LIKE', "%{$searchTerm}%")
                                 ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
                                 ->orWhere('code', 'LIKE', "%{$searchTerm}%")
                                 ->first();
@@ -432,13 +440,13 @@ class ImportDataJob implements ShouldQueue
                             $searchTerm = trim((string) $typeValue);
 
                             // Try exact match first (name, name_ar)
-                            $type = \App\Models\Type::where('name', $searchTerm)
+                            $type = Type::where('name', $searchTerm)
                                 ->orWhere('name_ar', $searchTerm)
                                 ->first();
 
                             // If not found, try partial match
                             if (!$type) {
-                                $type = \App\Models\Type::where('name', 'LIKE', "%{$searchTerm}%")
+                                $type = Type::where('name', 'LIKE', "%{$searchTerm}%")
                                     ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
                                     ->first();
                             }
@@ -446,7 +454,7 @@ class ImportDataJob implements ShouldQueue
                             // If still not found, create new type
                             if (!$type) {
                                 try {
-                                    $type = \App\Models\Type::create(['name' => $searchTerm, 'name_ar' => $searchTerm]);
+                                    $type = Type::create(['name' => $searchTerm, 'name_ar' => $searchTerm]);
                                     Log::info("Created new type: '{$searchTerm}' with ID: {$type->id}");
                                 } catch (\Throwable $createError) {
                                     Log::warning("Failed to create new type '{$searchTerm}': " . $createError->getMessage());
@@ -477,7 +485,7 @@ class ImportDataJob implements ShouldQueue
                     try {
                         $searchTerm = trim((string) $regionValue);
 
-                        $region = \App\Models\Region::where('name', $searchTerm)
+                        $region = Region::where('name', $searchTerm)
                             ->orWhere('name_ar', $searchTerm)
                             ->orWhere('name', 'LIKE', "%{$searchTerm}%")
                             ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
@@ -505,7 +513,7 @@ class ImportDataJob implements ShouldQueue
                     try {
                         $searchTerm = trim((string) $subregionValue);
 
-                        $subregion = \App\Models\Subregion::where('name', $searchTerm)
+                        $subregion = Subregion::where('name', $searchTerm)
                             ->orWhere('name_ar', $searchTerm)
                             ->orWhere('name', 'LIKE', "%{$searchTerm}%")
                             ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
@@ -532,11 +540,11 @@ class ImportDataJob implements ShouldQueue
                     $countryValue = $prepared['country_id'];
 
                     if (is_numeric($countryValue)) {
-                        $country = \App\Models\Country::find($countryValue);
+                        $country = Country::find($countryValue);
                     } else {
                         $searchTerm = trim((string) $countryValue);
 
-                        $country = \App\Models\Country::query()
+                        $country = Country::query()
                             ->where('name', $searchTerm)
                             ->orWhere('name_ar', $searchTerm)
                             ->orWhere('iso2', $searchTerm)
@@ -575,7 +583,7 @@ class ImportDataJob implements ShouldQueue
             // Auto-fill country_id and state_id from city if not provided
             if (!empty($prepared['city_id']) && is_numeric($prepared['city_id'])) {
                 try {
-                    $city = \App\Models\City::find($prepared['city_id']);
+                    $city = City::find($prepared['city_id']);
 
                     // If country_id is missing, get it from city
                     if (in_array('country_id', $fillable) && empty($prepared['country_id'])) {
@@ -601,7 +609,7 @@ class ImportDataJob implements ShouldQueue
             if (!empty($prepared['state_id']) && is_numeric($prepared['state_id']) && empty($prepared['country_id'])) {
                 try {
                     if (in_array('country_id', $fillable)) {
-                        $state = \App\Models\State::find($prepared['state_id']);
+                        $state = State::find($prepared['state_id']);
                         if ($state && $state->country_id) {
                             $prepared['country_id'] = $state->country_id;
                             Log::debug("Auto-filled country_id from state: {$state->country_id}");
@@ -660,7 +668,7 @@ class ImportDataJob implements ShouldQueue
             }
 
             // Capture transportation company contact details for separate table
-            if ($this->modelClass === \App\Models\TransportationCompany::class) {
+            if ($this->modelClass === Company::class) {
                 $contactRow = TransportationDataImporter::extractContactData($prepared, $cleaned);
                 if (!empty($contactRow)) {
                     $this->pendingTransportationContacts[] = $contactRow;
@@ -781,7 +789,7 @@ class ImportDataJob implements ShouldQueue
                     }
 
                     // Use service for transportation companies to handle duplicates
-                    if ($this->modelClass === \App\Models\TransportationCompany::class) {
+                    if ($this->modelClass === Company::class) {
                         $chunkUuidMap = null;
                         TransportationDataImporter::upsertCompanies($finalRows, $chunkUuidMap);
                         $this->transportationCompanyUuidMap = array_merge($this->transportationCompanyUuidMap, $chunkUuidMap ?? []);
@@ -821,7 +829,7 @@ class ImportDataJob implements ShouldQueue
                             }
                             Log::debug('Inserting single row columns: ' . implode(',', array_keys((array) $filtered)));
                             if (!empty($filtered)) {
-                                if ($this->modelClass === \App\Models\TransportationCompany::class) {
+                                if ($this->modelClass === Company::class) {
                                     $rowUuidMap = null;
                                     TransportationDataImporter::upsertCompanies([$filtered], $rowUuidMap);
                                     $this->transportationCompanyUuidMap = array_merge($this->transportationCompanyUuidMap, $rowUuidMap ?? []);
@@ -916,13 +924,13 @@ class ImportDataJob implements ShouldQueue
                     }
                     $finalRows[] = $rowBuilt;
                 }
-                // if ($this->modelClass === \App\Models\TransportationCompany::class) {
+                // if ($this->modelClass === Company::class) {
                 //     // $this->modelClass::updateOrCreate($finalRows);
                 //     $this->modelClass::updateOrCreate(['name' => $type['name']], $finalRows);
                 // } else {
 
                 // Use service for transportation companies to handle duplicates
-                if ($this->modelClass === \App\Models\TransportationCompany::class) {
+                if ($this->modelClass === Company::class) {
                     $chunkUuidMap = null;
                     TransportationDataImporter::upsertCompanies($finalRows, $chunkUuidMap);
                     $this->transportationCompanyUuidMap = array_merge($this->transportationCompanyUuidMap, $chunkUuidMap ?? []);
@@ -954,7 +962,7 @@ class ImportDataJob implements ShouldQueue
                                 continue;
                             }
                         }
-                        if ($this->modelClass === \App\Models\TransportationCompany::class) {
+                        if ($this->modelClass === Company::class) {
                             $rowUuidMap = null;
                             TransportationDataImporter::upsertCompanies([$r], $rowUuidMap);
                             $this->transportationCompanyUuidMap = array_merge($this->transportationCompanyUuidMap, $rowUuidMap ?? []);
@@ -969,13 +977,13 @@ class ImportDataJob implements ShouldQueue
             }
         }
 
-        if ($this->modelClass === \App\Models\TransportationCompany::class) {
+        if ($this->modelClass === Company::class) {
             TransportationDataImporter::processPendingContacts($this->pendingTransportationContacts, $this->transportationCompanyUuidMap);
             Log::debug('Transportation import completed: ' . count($this->transportationCompanyUuidMap) . ' UUID mappings, ' . count($this->pendingTransportationContacts) . ' contacts processed');
         }
 
         // Sync TourGuideType relationships (states and cities)
-        if ($this->modelClass === \App\Models\TourGuideType::class) {
+        if ($this->modelClass === \Modules\TourGuides\Entities\TourGuideType::class) {
             $this->syncTourGuideTypeRelationships();
         }
 
@@ -1037,7 +1045,7 @@ class ImportDataJob implements ShouldQueue
 
                 if (empty($matchCriteria)) {
                     // If no match criteria, just insert
-                    \App\Models\TransportationCompany::create($row);
+                    Company::create($row);
                     continue;
                 }
 
@@ -1045,7 +1053,7 @@ class ImportDataJob implements ShouldQueue
                 $updateData = array_diff_key($row, $matchCriteria);
 
                 // Use updateOrCreate to handle duplicates
-                \App\Models\TransportationCompany::updateOrCreate(
+                Company::updateOrCreate(
                     $matchCriteria,
                     $updateData
                 );
@@ -1071,13 +1079,13 @@ class ImportDataJob implements ShouldQueue
             if ($modelClass === 'App\\Models\\Country' || $tableName === 'countries') {
                 Log::info('Auto-syncing states and cities for imported countries...');
 
-                $countries = \App\Models\Country::all();
+                $countries = Country::all();
                 $syncedStates = 0;
                 $syncedCities = 0;
 
                 foreach ($countries as $country) {
                     // Sync states that belong to this country
-                    $stateIds = \App\Models\State::where('country_id', $country->id)
+                    $stateIds = State::where('country_id', $country->id)
                         ->pluck('id')
                         ->toArray();
                     if (!empty($stateIds)) {
@@ -1087,7 +1095,7 @@ class ImportDataJob implements ShouldQueue
                     }
 
                     // Sync cities that belong to states of this country
-                    $cityIds = \App\Models\City::whereIn('state_id', $stateIds)
+                    $cityIds = City::whereIn('state_id', $stateIds)
                         ->pluck('id')
                         ->toArray();
                     if (!empty($cityIds)) {
@@ -1125,18 +1133,18 @@ class ImportDataJob implements ShouldQueue
             $syncedCities = 0;
 
             // Get all tour guide types ordered by ID (should match import order)
-            $allTypes = \App\Models\TourGuideType::orderBy('id')->get();
+            $allTypes = \Modules\TourGuides\Entities\TourGuideType::orderBy('id')->get();
 
             foreach ($this->tourGuideTypePivotData as $pivotData) {
                 // Find the TourGuideType by UUID, type name, or row index
                 $type = null;
 
                 if (!empty($pivotData['uuid'])) {
-                    $type = \App\Models\TourGuideType::where('uuid', $pivotData['uuid'])->first();
+                    $type = \Modules\TourGuides\Entities\TourGuideType::where('uuid', $pivotData['uuid'])->first();
                 }
 
                 if (!$type && !empty($pivotData['type'])) {
-                    $type = \App\Models\TourGuideType::where('type', $pivotData['type'])->first();
+                    $type = \Modules\TourGuides\Entities\TourGuideType::where('type', $pivotData['type'])->first();
                 }
 
                 // Fallback: use row index to match (since records are inserted in order)

@@ -4522,11 +4522,11 @@
     }
 
     .bg-transparent {
-        background-color: transparent;
+        background: transparent;
     }
 
     .bg-transparent\! {
-        background-color: transparent !important;
+        background: transparent !important;
     }
 
     .bg-violet-50 {

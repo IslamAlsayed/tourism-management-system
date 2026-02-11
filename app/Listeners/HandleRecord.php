@@ -3,8 +3,8 @@
 namespace App\Listeners;
 
 use Ably\AblyRest;
-use App\Models\User;
-use App\Models\Setting;
+use Modules\Core\Entities\User;
+use Modules\Core\Entities\Setting;
 use App\Events\RecordEvent;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Log;

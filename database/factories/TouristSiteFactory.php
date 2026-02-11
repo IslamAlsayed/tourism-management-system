@@ -3,11 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\City;
-use App\Models\TouristSite;
+use Modules\Tourists\Entities\TouristSite;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TouristSite>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\Tourists\Entities\TouristSite>
  */
 class TouristSiteFactory extends Factory
 {

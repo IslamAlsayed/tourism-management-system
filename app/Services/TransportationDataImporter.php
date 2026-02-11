@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\TransportationCompany;
-use App\Models\TransportationCompanyContact;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Modules\Transportation\Entities\Company;
+use Modules\Transportation\Entities\CompanyContact;
 
 class TransportationDataImporter
 {
@@ -40,7 +40,7 @@ class TransportationDataImporter
 
                 if (empty($matchCriteria)) {
                     // If no match criteria, just insert
-                    $company = TransportationCompany::create($row);
+                    $company = Company::create($row);
                     if ($rowUuid) {
                         $uuidMap[$rowUuid] = $company->uuid;
                     }
@@ -49,7 +49,7 @@ class TransportationDataImporter
                 }
 
                 // Check if company already exists
-                $existing = TransportationCompany::where($matchCriteria)->first();
+                $existing = Company::where($matchCriteria)->first();
 
                 if ($existing) {
                     // Update existing company but keep the original UUID
@@ -65,7 +65,7 @@ class TransportationDataImporter
                     Log::debug("Updated transportation company (UUID preserved): " . $existing->uuid);
                 } else {
                     // Create new company
-                    $company = TransportationCompany::create($row);
+                    $company = Company::create($row);
                     if ($rowUuid) {
                         $uuidMap[$rowUuid] = $company->uuid;
                     }
@@ -96,7 +96,7 @@ class TransportationDataImporter
         try {
             // Always insert all contacts - never upsert
             // This allows multiple contact methods per company
-            TransportationCompanyContact::insert($rows);
+            CompanyContact::insert($rows);
             Log::debug('Inserted transportation company contacts: ' . count($rows));
             return count($rows);
         } catch (\Throwable $e) {
@@ -136,7 +136,7 @@ class TransportationDataImporter
 
             Log::debug("Processing " . count($pendingContacts) . " pending contacts for " . count($uuids) . " unique companies");
 
-            $idMap = TransportationCompany::whereIn('uuid', $uuids)->pluck('id', 'uuid')->toArray();
+            $idMap = Company::whereIn('uuid', $uuids)->pluck('id', 'uuid')->toArray();
 
             Log::debug("Found " . count($idMap) . " companies in database");
 
@@ -185,7 +185,7 @@ class TransportationDataImporter
     {
         $companyUuid = $prepared['uuid'] ?? null;
 
-        // Extract all contact fields from $cleaned array since they're not in TransportationCompany's fillable
+        // Extract all contact fields from $cleaned array since they're not in Company's fillable
         $department = self::getValueByNormalizedKeys($cleaned, ['department', 'departmenet', 'department_name', 'dept']);
         $contactPerson = self::getValueByNormalizedKeys($cleaned, ['contact_person', 'contact', 'person']);
         $email = self::getValueByNormalizedKeys($cleaned, ['email', 'e_mail', 'mail']);

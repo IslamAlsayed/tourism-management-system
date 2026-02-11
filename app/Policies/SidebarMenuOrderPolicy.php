@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\User;
+use Modules\Core\Entities\User;
 use App\Models\SidebarMenuOrder;
 
 class SidebarMenuOrderPolicy

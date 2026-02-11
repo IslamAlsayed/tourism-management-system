@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a class="kt-btn kt-btn-primary" href="{{ route('user.profile') }}">
+                <a class="kt-btn kt-btn-primary" href="{{ route('dashboard.core.user.profile') }}">
                     {{ __('main.view_profile') }}
                 </a>
             </div>
@@ -57,7 +57,7 @@
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_users') }}
                                 </span>
-                                <a href="{{ route('users.index') }}" class="text-xs text-blue-600 hover:underline">
+                                <a href="{{ route('dashboard.core.users.index') }}" class="text-xs text-blue-600 hover:underline">
                                     {{ __('main.view_all') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
@@ -73,7 +73,7 @@
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_countries') }}
                                 </span>
-                                <a href="{{ route('countries.index') }}" class="text-xs text-blue-600 hover:underline">
+                                <a href="{{ route('dashboard.geography.countries.index') }}" class="text-xs text-blue-600 hover:underline">
                                     {{ __('main.view_all') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
@@ -89,7 +89,7 @@
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_cities') }}
                                 </span>
-                                <a href="{{ route('cities.index') }}" class="text-xs text-blue-600 hover:underline">
+                                <a href="{{ route('dashboard.geography.cities.index') }}" class="text-xs text-blue-600 hover:underline">
                                     {{ __('main.view_all') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
@@ -105,7 +105,7 @@
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_currencies') }}
                                 </span>
-                                <a href="{{ route('currencies.index') }}" class="text-xs text-blue-600 hover:underline">
+                                <a href="{{ route('dashboard.localization.currencies.index') }}" class="text-xs text-blue-600 hover:underline">
                                     {{ __('main.view_all') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
@@ -151,7 +151,7 @@
                             </div>
                         </div>
                         <div class="kt-card-footer justify-center">
-                            <a class="kt-link kt-link-underlined kt-link-dashed" href="{{ route('user.profile') }}">
+                            <a class="kt-link kt-link-underlined kt-link-dashed" href="{{ route('dashboard.core.user.profile') }}">
                                 {{ __('main.get_started') }}
                             </a>
                         </div>
@@ -169,16 +169,14 @@
                                 {{ __('main.system_overview') }}
                             </h3>
                             <div class="kt-menu" data-kt-menu="true">
-                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
-                                    data-kt-menu-item-placement="bottom-start" data-kt-menu-item-toggle="dropdown"
-                                    data-kt-menu-item-trigger="click">
+                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-start"
+                                    data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
                                     <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
                                         <i class="ki-filled ki-dots-vertical text-lg"></i>
                                     </button>
-                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
-                                        data-kt-menu-dismiss="true">
+                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]" data-kt-menu-dismiss="true">
                                         <div class="kt-menu-item">
-                                            <a class="kt-menu-link" href="{{ route('users.index') }}">
+                                            <a class="kt-menu-link" href="{{ route('dashboard.core.users.index') }}">
                                                 <span class="kt-menu-icon">
                                                     <i class="ki-filled ki-users"></i>
                                                 </span>
@@ -186,7 +184,7 @@
                                             </a>
                                         </div>
                                         <div class="kt-menu-item">
-                                            <a class="kt-menu-link" href="{{ route('countries.index') }}">
+                                            <a class="kt-menu-link" href="{{ route('dashboard.geography.countries.index') }}">
                                                 <span class="kt-menu-icon">
                                                     <i class="ki-filled ki-geolocation"></i>
                                                 </span>
@@ -194,7 +192,7 @@
                                             </a>
                                         </div>
                                         <div class="kt-menu-item">
-                                            <a class="kt-menu-link" href="{{ route('cities.index') }}">
+                                            <a class="kt-menu-link" href="{{ route('dashboard.geography.cities.index') }}">
                                                 <span class="kt-menu-icon">
                                                     <i class="ki-filled ki-map"></i>
                                                 </span>
@@ -202,7 +200,7 @@
                                             </a>
                                         </div>
                                         <div class="kt-menu-item">
-                                            <a class="kt-menu-link" href="{{ route('currencies.index') }}">
+                                            <a class="kt-menu-link" href="{{ route('dashboard.localization.currencies.index') }}">
                                                 <span class="kt-menu-icon">
                                                     <i class="ki-filled ki-dollar"></i>
                                                 </span>
@@ -260,8 +258,7 @@
                                     </div>
                                     <div class="flex items-center text-sm font-medium text-foreground gap-6">
                                         <span class="lg:text-right">{{ $stats['users'] }}</span>
-                                        <a href="{{ route('users.index') }}"
-                                            class="kt-btn kt-btn-sm kt-btn-outline">{{ __('main.view') }}</a>
+                                        <a href="{{ route('dashboard.core.users.index') }}" class="kt-btn kt-btn-sm kt-btn-outline">{{ __('main.view') }}</a>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between flex-wrap gap-2">
@@ -271,7 +268,7 @@
                                     </div>
                                     <div class="flex items-center text-sm font-medium text-foreground gap-6">
                                         <span class="lg:text-right">{{ $stats['countries'] }}</span>
-                                        <a href="{{ route('countries.index') }}"
+                                        <a href="{{ route('dashboard.geography.countries.index') }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline">{{ __('main.view') }}</a>
                                     </div>
                                 </div>
@@ -282,7 +279,7 @@
                                     </div>
                                     <div class="flex items-center text-sm font-medium text-foreground gap-6">
                                         <span class="lg:text-right">{{ $stats['cities'] }}</span>
-                                        <a href="{{ route('cities.index') }}"
+                                        <a href="{{ route('dashboard.geography.cities.index') }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline">{{ __('main.view') }}</a>
                                     </div>
                                 </div>
@@ -293,7 +290,7 @@
                                     </div>
                                     <div class="flex items-center text-sm font-medium text-foreground gap-6">
                                         <span class="lg:text-right">{{ $stats['currencies'] }}</span>
-                                        <a href="{{ route('currencies.index') }}"
+                                        <a href="{{ route('dashboard.localization.currencies.index') }}"
                                             class="kt-btn kt-btn-sm kt-btn-outline">{{ __('main.view') }}</a>
                                     </div>
                                 </div>
@@ -323,7 +320,7 @@
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
-                                                <a href="{{ route('users.index') }}">{{ __('main.manage_users') }}</a>
+                                                <a href="{{ route('dashboard.core.users.index') }}">{{ __('main.manage_users') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['users'] }}
                                                 {{ __('main.total') }}
@@ -338,7 +335,7 @@
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
-                                                <a href="{{ route('countries.index') }}">{{ __('main.countries') }}</a>
+                                                <a href="{{ route('dashboard.geography.countries.index') }}">{{ __('main.countries') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['countries'] }}
                                                 {{ __('main.total') }}
@@ -353,7 +350,7 @@
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
-                                                <a href="{{ route('cities.index') }}">{{ __('main.cities') }}</a>
+                                                <a href="{{ route('dashboard.geography.cities.index') }}">{{ __('main.cities') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['cities'] }}
                                                 {{ __('main.total') }}
@@ -368,7 +365,7 @@
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
-                                                <a href="{{ route('currencies.index') }}">{{ __('main.currencies') }}</a>
+                                                <a href="{{ route('dashboard.localization.currencies.index') }}">{{ __('main.currencies') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['currencies'] }}
                                                 {{ __('main.total') }}

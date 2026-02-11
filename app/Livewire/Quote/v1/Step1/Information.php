@@ -5,7 +5,7 @@ namespace App\Livewire\Quote\v1\Step1;
 use App\Models\Booking;
 use App\Models\Nationality;
 use Livewire\Component;
-use App\Models\Currency;
+use Modules\Localization\Entities\Currency;
 
 class Information extends Component
 {

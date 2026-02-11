@@ -2,7 +2,7 @@
 
 namespace App\Livewire\MorphicForms;
 
-use App\Models\Currency;
+use Modules\Localization\Entities\Currency;
 use App\Models\TransportationVehicleType;
 use Livewire\Component;
 

@@ -20,7 +20,8 @@
     @case('user')
         <td title="{{ $model->name }}">
             <div class="flex items-center gap-2.5">
-                <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}" alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
+                <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}" alt="{{ $model->name }}"
+                    class="rounded-full size-9 shrink-0">
                 <div class="flex flex-col">
                     <a class="text-sm font-medium text-mono hover:text-primary mb-px" href="#">
                         {!! highlightSearch($model->name ?? '--', $search) !!}
@@ -36,8 +37,8 @@
     @case('photo')
         <td title="{{ $model->name }}">
             <div class="relative w-fit">
-                <img src="{{ $model->photo && checkExistFile($model->photo) ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}" alt="{{ $model->name }}"
-                    class="rounded-full size-9 shrink-0">
+                <img src="{{ $model->photo && checkExistFile($model->photo) ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
+                    alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
                 @if (isset($models) && $models && $models == 'users')
                     <span class="real-active {{ $model->user_status == 'online' ? 'active heartbeat' : '' }} user-heartbeat-{{ $model->id }}"></span>
                 @endif
@@ -49,7 +50,8 @@
         <td title="{{ $model->main_image }}">
             <div class="relative w-fit">
                 @if (Str::isUrl($model->main_image))
-                    <img src="{{ $model->main_image }}" alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}" class="rounded-full size-9 shrink-0">
+                    <img src="{{ $model->main_image }}" alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}"
+                        class="rounded-full size-9 shrink-0">
                 @else
                     <img src="{{ $model->main_image && checkExistFile($model->main_image) ? asset('storage/' . $model->main_image) : asset('metronic/media/avatars/blank.png') }}"
                         alt="{{ $model->main_image }}" class="rounded-full size-9 shrink-0">
@@ -67,8 +69,8 @@
                             @if ($key >= 5)
                                 @break
                             @endif
-                            <img src="{{ $image && checkExistFile($image) ? asset('storage/' . $image) : asset('metronic/media/avatars/blank.png') }}" alt="{{ $image }}"
-                                class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
+                            <img src="{{ $image && checkExistFile($image) ? asset('storage/' . $image) : asset('metronic/media/avatars/blank.png') }}"
+                                alt="{{ $image }}" class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
                         @endforeach
                         @if (count($model->gallery) > 5)
                             <div class="h-fit inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
@@ -450,7 +452,8 @@
 
     @case('client_type')
         <td title="{{ __('main.' . $model->client_type == 'individual' ? 'individual' : 'corporate') }}">
-            <span class="inline-block text-white bg-{{ $model->client_type == 'individual' ? 'yellow-400' : 'blue-600' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <span
+                class="inline-block text-white bg-{{ $model->client_type == 'individual' ? 'yellow-400' : 'blue-600' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! $model->client_type == 'individual' ? highlightSearch(__('main.individual'), $search) : highlightSearch(__('main.corporate'), $search) !!}
             </span>
         </td>
@@ -576,7 +579,8 @@
     @case('website_url')
         <td title="{{ $model->website_url ?? '--' }}">
             @if ($model->website_url)
-                <a href="{{ $model->website_url }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->website_url }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->website_url ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -591,7 +595,8 @@
     @case('facebook_url')
         <td title="{{ $model->facebook_url ?? '--' }}">
             @if ($model->facebook_url)
-                <a href="{{ $model->facebook_url }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->facebook_url }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->facebook_url ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -606,7 +611,8 @@
     @case('instagram_url')
         <td title="{{ $model->instagram_url ?? '--' }}">
             @if ($model->instagram_url)
-                <a href="{{ $model->instagram_url }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->instagram_url }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->instagram_url ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -621,7 +627,8 @@
     @case('linkedin_url')
         <td title="{{ $model->linkedin_url ?? '--' }}">
             @if ($model->linkedin_url)
-                <a href="{{ $model->linkedin_url }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->linkedin_url }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->linkedin_url ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -636,7 +643,8 @@
     @case('visa_application_url')
         <td title="{{ $model->visa_application_url ?? '--' }}">
             @if ($model->visa_application_url)
-                <a href="{{ $model->visa_application_url }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->visa_application_url }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->visa_application_url ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -651,7 +659,8 @@
     @case('visa_policy_source')
         <td title="{{ $model->visa_policy_source ?? '--' }}">
             @if ($model->visa_policy_source)
-                <a href="{{ $model->visa_policy_source }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->visa_policy_source }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->visa_policy_source ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -666,7 +675,8 @@
     @case('twitter_url')
         <td title="{{ $model->twitter_url ?? '--' }}">
             @if ($model->twitter_url)
-                <a href="{{ $model->twitter_url }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->twitter_url }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->twitter_url ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -681,7 +691,8 @@
     @case('video_url')
         <td title="{{ $model->video_url ?? '--' }}">
             @if ($model->video_url)
-                <a href="{{ $model->video_url }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->video_url }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->video_url ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -696,7 +707,8 @@
     @case('virtual_tour_url')
         <td title="{{ $model->virtual_tour_url ?? '--' }}">
             @if ($model->virtual_tour_url)
-                <a href="{{ $model->virtual_tour_url }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->virtual_tour_url }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->virtual_tour_url ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1176,7 +1188,8 @@
     @case('currency')
         <td title="{{ optional($model->currency)->name ?? '--' }}">
             @if ($model->currency)
-                <a href="{{ route('currencies.show', $model->currency?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.localization.currencies.show', $model->currency?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->currency)->code ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1191,7 +1204,8 @@
     @case('departure_tax_currency')
         <td title="{{ optional($model->departure_tax_currency)->name ?? '--' }}">
             @if ($model->departure_tax_currency)
-                <a href="{{ route('currencies.show', $model->departure_tax_currency?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.localization.currencies.show', $model->departure_tax_currency?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->departure_tax_currency)->code ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1206,7 +1220,8 @@
     @case('departureTaxCurrency')
         <td title="{{ optional($model->departureTaxCurrency)->name ?? '--' }}">
             @if ($model->departureTaxCurrency)
-                <a href="{{ route('currencies.show', $model->departureTaxCurrency?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.localization.currencies.show', $model->departureTaxCurrency?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->departureTaxCurrency)->code ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1221,7 +1236,8 @@
     @case('visa_fee_currency')
         <td title="{{ optional($model->visa_fee_currency)->name ?? '--' }}">
             @if ($model->visa_fee_currency)
-                <a href="{{ route('currencies.show', $model->visa_fee_currency?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.localization.currencies.show', $model->visa_fee_currency?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->visa_fee_currency)->code ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1236,7 +1252,8 @@
     @case('visaFeeCurrency')
         <td title="{{ optional($model->visaFeeCurrency)->name ?? '--' }}">
             @if ($model->visaFeeCurrency)
-                <a href="{{ route('currencies.show', $model->visaFeeCurrency?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.localization.currencies.show', $model->visaFeeCurrency?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->visaFeeCurrency)->code ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1307,7 +1324,8 @@
     @case('creator')
         <td title="{{ optional($model->creator)->name ?? __('main.unknown') }}">
             @if (isset($model->creator) && !empty($model->creator))
-                <a href="{{ route('users.show', $model->creator->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.core.users.show', $model->creator->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->creator)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
@@ -1322,7 +1340,8 @@
     @case('updater')
         <td title="{{ optional($model->updater)->name ?? __('main.unknown') }}">
             @if (isset($model->updater) && !empty($model->updater))
-                <a href="{{ route('users.show', $model->updater->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.core.users.show', $model->updater->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->updater)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
@@ -1361,7 +1380,8 @@
     @case('season')
         <td title="{{ optional($model->season)->name ?? '--' }}">
             @if ($model->season)
-                <a href="{{ route('seasons.show', $model->season->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.accommodations.seasons.show', $model->season->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->season->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
@@ -1389,7 +1409,8 @@
         <td title="{{ $model->accommodations->pluck('name')->filter()->implode(', ') }}">
             @if ($model->accommodations->count() > 0)
                 @foreach ($model->accommodations->take(3) as $accommodation)
-                    <a href="{{ route('accommodations.show', $accommodation->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('dashboard.accommodations.show', $accommodation->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($accommodation->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                     </a>
@@ -1411,7 +1432,8 @@
         <td title="{{ $model->seasons->pluck('name')->filter()->implode(', ') }}">
             @if ($model->seasons->count() > 0)
                 @foreach ($model->seasons->take(3) as $season)
-                    <a href="{{ route('seasons.show', $season->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('dashboard.accommodations.seasons.show', $season->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($season->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                     </a>
@@ -1433,7 +1455,8 @@
         <td title="{{ $model->rooms->pluck('name')->filter()->implode(', ') }}">
             @if ($model->rooms->count() > 0)
                 @foreach ($model->rooms->take(3) as $room)
-                    <a href="{{ route('rooms.show', $room->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('rooms.show', $room->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($room->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                     </a>
@@ -1455,7 +1478,8 @@
         <td title="{{ $model->meals->pluck('name')->filter()->implode(', ') }}">
             @if ($model->meals->count() > 0)
                 @foreach ($model->meals->take(3) as $meal)
-                    <a href="{{ route('meals.show', $meal->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('meals.show', $meal->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($meal->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                     </a>
@@ -1477,7 +1501,8 @@
         <td title="{{ $model->supplements->pluck('name')->filter()->implode(', ') }}">
             @if ($model->supplements->count() > 0)
                 @foreach ($model->supplements->take(3) as $meal)
-                    <a href="{{ route('supplements.show', $meal->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('supplements.show', $meal->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($meal->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                     </a>
@@ -1711,7 +1736,8 @@
     @case('timezone')
         <td title="{{ optional($model->timezone)->name ?? '--' }}">
             @if ($model->timezone)
-                <a href="{{ route('timezones' . '.show', $model->timezone->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.localization.timezones' . '.show', $model->timezone->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(str_replace('_', ' ', optional($model->timezone)->name) ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1762,7 +1788,8 @@
     @case('company')
         <td title="{{ optional($model->company)->name ?? '--' }}">
             @if ($model->company)
-                <a href="{{ route('transportations.companies.show', $model->company->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.transportation.companies.show', $model->company->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->company->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
@@ -1777,7 +1804,8 @@
     @case('vehicleType')
         <td title="{{ optional($model->vehicleType)->name ?? '--' }}">
             @if ($model->vehicleType)
-                <a href="{{ route('transportations.vehicle-types.show', $model->vehicleType->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('transportations.vehicle-types.show', $model->vehicleType->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->vehicleType->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
@@ -1793,7 +1821,8 @@
         <td title="{{ $model->vehicleTypes->pluck('name')->filter()->implode(', ') }}">
             @if ($model->vehicleTypes->count() > 0)
                 @foreach ($model->vehicleTypes->take(3) as $vehicleType)
-                    <a href="{{ route('transportations.vehicle-types.show', $vehicleType->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('transportations.vehicle-types.show', $vehicleType->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($vehicleType->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                     </a>
@@ -1814,7 +1843,8 @@
     @case('pricingUnit')
         <td title="{{ optional($model->pricingUnit)->name ?? '--' }}">
             @if ($model->pricingUnit)
-                <a href="{{ route('transportations.pricing-units.show', $model->pricingUnit->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('transportations.pricing-units.show', $model->pricingUnit->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->pricingUnit->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
@@ -1829,7 +1859,8 @@
     @case('originCity')
         <td title="{{ optional($model->originCity)->name ?? '--' }}">
             @if ($model->originCity)
-                <a href="{{ route('cities.show', $model->originCity->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.geography.cities.show', $model->originCity->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->originCity->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
@@ -1844,7 +1875,8 @@
     @case('destinationCity')
         <td title="{{ optional($model->destinationCity)->name ?? '--' }}">
             @if ($model->destinationCity)
-                <a href="{{ route('cities.show', $model->destinationCity->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.geography.cities.show', $model->destinationCity->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->destinationCity->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
@@ -1859,7 +1891,8 @@
     @case('region')
         <td title="{{ optional($model->region)->name ?? '--' }}">
             @if ($model->region)
-                <a href="{{ route('regions.show', $model->region?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.geography.regions.show', $model->region?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->region)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1874,7 +1907,8 @@
     @case('subregion')
         <td title="{{ optional($model->subregion)->name ?? '--' }}">
             @if ($model->subregion)
-                <a href="{{ route('subregions.show', $model->subregion->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.geography.subregions.show', $model->subregion->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->subregion)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1889,7 +1923,8 @@
     @case('country')
         <td title="{{ optional($model->country)->name ?? '--' }}">
             @if ($model->country)
-                <a href="{{ route('countries.show', $model->country?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.geography.countries.show', $model->country?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->country)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1904,7 +1939,8 @@
     @case('destinationCountry')
         <td title="{{ optional($model->destinationCountry)->name ?? '--' }}">
             @if ($model->destinationCountry)
-                <a href="{{ route('countries.show', $model->destinationCountry?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.geography.countries.show', $model->destinationCountry?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->destinationCountry)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1919,7 +1955,8 @@
     @case('state')
         <td title="{{ optional($model->state)->name ?? '--' }}">
             @if ($model->state)
-                <a href="{{ route('states.show', $model->state?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.geography.states.show', $model->state?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->state)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1934,7 +1971,8 @@
     @case('city')
         <td title="{{ optional($model->city)->name ?? '--' }}">
             @if ($model->city)
-                <a href="{{ route('cities.show', $model->city?->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.geography.cities.show', $model->city?->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->city)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1949,7 +1987,8 @@
     @case('nationality')
         <td title="{{ optional($model->nationality)->name ?? '--' }}">
             @if ($model->nationality)
-                <a href="{{ route('nationalities.show', $model->nationality->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.geography.nationalities.show', $model->nationality->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->nationality)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1964,7 +2003,8 @@
     @case('tour_guide')
         <td title="{{ optional($model->tour_guide)->name ?? '--' }}">
             @if ($model->tour_guide)
-                <a href="{{ route('tours.guides.show', $model->tour_guide->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.tourguides.guides.show', $model->tour_guide->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->tour_guide)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -1979,7 +2019,8 @@
     @case('guide_type')
         <td title="{{ optional($model->guide_type)->type ?? '--' }}">
             @if ($model->guide_type)
-                <a href="{{ route('tours.guides-types.show', $model->guide_type->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ route('dashboard.tourguides.guides-types.show', $model->guide_type->id) }}"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->guide_type)->type ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
@@ -2033,7 +2074,8 @@
         <td title="{{ $model->states->pluck('name')->filter()->implode(', ') }}">
             @if ($model->states && $model->states->count() > 0)
                 @foreach ($model->states->take(3) as $state)
-                    <a href="{{ route('states.show', $state->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('dashboard.geography.states.show', $state->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($state->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                     </a>
@@ -2055,7 +2097,8 @@
         <td title="{{ $model->cities->pluck('name')->filter()->implode(', ') }}">
             @if ($model->cities && $model->cities->count() > 0)
                 @foreach ($model->cities->take(3) as $city)
-                    <a href="{{ route('cities.show', $city->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    <a href="{{ route('dashboard.geography.cities.show', $city->id) }}"
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($city->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                     </a>
@@ -2168,7 +2211,8 @@
 @break --}}
     @case('client_type')
         <td title="{{ __('main.' . $model->client_type == 'individual' ? 'individual' : 'corporate') }}">
-            <span class="inline-block text-white bg-{{ $model->client_type == 'individual' ? 'yellow-400' : 'blue-600' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <span
+                class="inline-block text-white bg-{{ $model->client_type == 'individual' ? 'yellow-400' : 'blue-600' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! $model->client_type == 'individual' ? highlightSearch(__('main.individual'), $search) : highlightSearch(__('main.corporate'), $search) !!}
             </span>
         </td>
@@ -3099,7 +3143,7 @@
             {!! highlightSearch(limitedText($model->visa_last_update?->format('Y-m-d H:i') ?? '--', 30), $search) !!}
         </td>
     @break
-    
+
     @case('created_at')
         <td title="{{ $model->created_at?->format('Y-m-d H:i') ?? '--' }}">
             {!! highlightSearch(limitedText($model->created_at?->format('Y-m-d H:i') ?? '--', 30), $search) !!}
@@ -3114,7 +3158,8 @@
 
     @case('created_by')
         <td title="{{ optional($model->created_by)->name ?: '' }}">
-            <a href="{{ route('users.show', $model->created_by->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="{{ route('dashboard.core.users.show', $model->created_by->id) }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText(optional($model->created_by)->name ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -3123,7 +3168,8 @@
 
     @case('createdBy')
         <td title="{{ optional($model->createdBy)->name ?: '' }}">
-            <a href="{{ route('users.show', $model->createdBy->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="{{ route('dashboard.core.users.show', $model->createdBy->id) }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText(optional($model->createdBy)->name ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -3132,7 +3178,8 @@
 
     @case('updated_by')
         <td title="{{ optional($model->updated_by)->name ?: '' }}">
-            <a href="{{ route('users.show', $model->updated_by->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="{{ route('dashboard.core.users.show', $model->updated_by->id) }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText(optional($model->updated_by)->name ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -3141,7 +3188,8 @@
 
     @case('updatedBy')
         <td title="{{ optional($model->updatedBy)->name ?: '' }}">
-            <a href="{{ route('users.show', $model->createdBy->id) }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="{{ route('dashboard.core.users.show', $model->createdBy->id) }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText(optional($model->createdBy)->name ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>

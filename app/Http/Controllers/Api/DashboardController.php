@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Ably\AblyRest;
-use App\Models\User;
+use Modules\Core\Entities\User;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Events\UserLoggedEvent;

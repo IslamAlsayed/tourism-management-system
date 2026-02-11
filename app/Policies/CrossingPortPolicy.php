@@ -2,43 +2,43 @@
 
 namespace App\Policies;
 
-use App\Models\User;
+use Modules\Core\Entities\User;
 use App\Models\CrossingPort;
 
 class CrossingPortPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['superadmin', 'admin']);
+        return $user->can('manage_crossing_ports');
     }
 
     public function view(User $user, CrossingPort $crossingPort): bool
     {
-        return $user->hasRole(['superadmin', 'admin']);
+        return $user->can('manage_crossing_ports');
     }
 
     public function create(User $user): bool
     {
-        return $user->hasRole(['superadmin', 'admin']);
+        return $user->can('manage_crossing_ports');
     }
 
     public function update(User $user, CrossingPort $crossingPort): bool
     {
-        return $user->hasRole(['superadmin', 'admin']);
+        return $user->can('manage_crossing_ports');
     }
 
     public function delete(User $user, CrossingPort $crossingPort): bool
     {
-        return $user->hasRole(['superadmin', 'admin']);
+        return $user->can('manage_crossing_ports');
     }
 
     public function restore(User $user, CrossingPort $crossingPort): bool
     {
-        return $user->hasRole(['superadmin', 'admin']);
+        return $user->can('manage_crossing_ports');
     }
 
     public function forceDelete(User $user, CrossingPort $crossingPort): bool
     {
-        return $user->hasRole('superadmin');
+        return $user->can('manage_crossing_ports');
     }
 }

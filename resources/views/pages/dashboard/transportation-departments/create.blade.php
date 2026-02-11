@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('transportation-companies.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.transportation.companies.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.transportations_companies')]) }}
                 </a>
             </div>
@@ -24,17 +24,17 @@
             'requirements' => [
                 [
                     'condition' => \App\Models\Country::count() > 0,
-                    'route' => route('countries.index'),
+                    'route' => route('dashboard.geography.countries.index'),
                     'label' => __('main.countries'),
                 ],
                 [
                     'condition' => \App\Models\State::count() > 0,
-                    'route' => route('states.index'),
+                    'route' => route('dashboard.geography.states.index'),
                     'label' => __('main.states'),
                 ],
                 [
                     'condition' => \App\Models\City::count() > 0,
-                    'route' => route('cities.index'),
+                    'route' => route('dashboard.geography.cities.index'),
                     'label' => __('main.cities'),
                 ],
             ],
@@ -50,7 +50,7 @@
                         {{ __('main.type_information', ['type' => __('main.transportations-company')]) }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('transportation-companies.store') }}" class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.transportation.companies.store') }}" class="space-y-6 p-4">
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
@@ -121,7 +121,7 @@
                             <div class="">
                                 <label for="company_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Transportation Company
-                                    <a href="{{ route('transportation-companies.create') }}" class="text-blue-600 text-2sm">
+                                    <a href="{{ route('dashboard.transportation.companies.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
@@ -137,7 +137,7 @@
                             <div class="">
                                 <label for="country_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Countries
-                                    <a href="{{ route('countries.create') }}" class="text-blue-600 text-2sm">
+                                    <a href="{{ route('dashboard.geography.countries.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
@@ -153,7 +153,7 @@
                             <div class="">
                                 <label for="state_id" class="kt-label required mb-2 flex items-center justify-between">
                                     States
-                                    <a href="{{ route('states.create') }}" class="text-blue-600 text-2sm">
+                                    <a href="{{ route('dashboard.geography.states.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
@@ -169,7 +169,7 @@
                             <div class="">
                                 <label for="city_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Cities
-                                    <a href="{{ route('cities.create') }}" class="text-blue-600 text-2sm">
+                                    <a href="{{ route('dashboard.geography.cities.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
@@ -185,7 +185,7 @@
                             <div class="">
                                 <label for="region_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Regions
-                                    <a href="{{ route('regions.create') }}" class="text-blue-600 text-2sm">
+                                    <a href="{{ route('dashboard.geography.regions.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>
@@ -201,7 +201,7 @@
                             <div class="">
                                 <label for="subregion_id" class="kt-label required mb-2 flex items-center justify-between">
                                     Subregions
-                                    <a href="{{ route('subregions.create') }}" class="text-blue-600 text-2sm">
+                                    <a href="{{ route('dashboard.geography.subregions.create') }}" class="text-blue-600 text-2sm">
                                         {{ __('main.add') }}
                                     </a>
                                 </label>

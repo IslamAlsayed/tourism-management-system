@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Currency;
-use App\Models\TouristSite;
-use App\Models\TouristService;
+use Modules\Localization\Entities\Currency;
+use Modules\Tourists\Entities\TouristSite;
+use Modules\Tourists\Entities\TouristService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TouristService>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\Tourists\Entities\TouristService>
  */
 class TouristServiceFactory extends Factory
 {

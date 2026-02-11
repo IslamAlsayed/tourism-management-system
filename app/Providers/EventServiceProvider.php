@@ -22,9 +22,9 @@ class EventServiceProvider extends ServiceProvider
             HandleUserLogged::class,
         ],
 
-            // ActivityCreated::class => [
-            //     HandleActivityCreated::class,
-            // ],
+        // ActivityCreated::class => [
+        //     HandleActivityCreated::class,
+        // ],
 
         RecordEvent::class => [
             HandleRecord::class,
