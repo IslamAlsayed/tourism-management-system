@@ -66,22 +66,10 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Latitude -->
-                            <div class="">
-                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" step="0.00000001" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ old('latitude') }}">
-                                @error('latitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.latitude')
 
                             <!-- Longitude -->
-                            <div class="">
-                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" step="0.00000001" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ old('longitude') }}">
-                                @error('longitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.longitude')
 
                             {{-- Currency --}}
                             @include('components.selects.currency')

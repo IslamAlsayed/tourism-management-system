@@ -42,6 +42,6 @@ class VisaRequirementPolicy
 
     public function forceDelete(User $user, VisaRequirement $visaRequirement): bool
     {
-        return $user->can('manage_visa_requirements');
+        return $user->hasRole('superadmin');
     }
 }

@@ -42,6 +42,6 @@ class PricingDefinitionPolicy
 
     public function forceDelete(User $user, PricingDefinition $pricingDefinition): bool
     {
-        return $user->can('manage_pricing_definitions');
+        return $user->hasRole('superadmin');
     }
 }

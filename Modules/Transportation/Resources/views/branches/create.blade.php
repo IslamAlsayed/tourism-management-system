@@ -96,24 +96,10 @@
                             </div>
 
                             <!-- Latitude -->
-                            <div class="align-self-end">
-                                <label for="latitude" class="kt-label">{{ __('main.latitude') }}</label>
-                                <input type="number" name="latitude" id="latitude" step="0.0000001" class="kt-input h-[45px]" value="{{ old('latitude') }}"
-                                    placeholder="e.g., 31.2001">
-                                @error('latitude')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.latitude')
 
                             <!-- Longitude -->
-                            <div class="align-self-end">
-                                <label for="longitude" class="kt-label">{{ __('main.longitude') }}</label>
-                                <input type="number" name="longitude" id="longitude" step="0.0000001" class="kt-input h-[45px]" value="{{ old('longitude') }}"
-                                    placeholder="e.g., 29.9187">
-                                @error('longitude')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.longitude')
                         </div>
                     </div>
                 </div>

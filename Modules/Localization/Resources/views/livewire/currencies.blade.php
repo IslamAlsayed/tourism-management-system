@@ -24,7 +24,7 @@
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'currencies',
+                    'models' => 'dashboard.localization.currencies',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent

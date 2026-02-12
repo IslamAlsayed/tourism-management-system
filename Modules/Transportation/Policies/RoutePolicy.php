@@ -42,6 +42,6 @@ class RoutePolicy
 
     public function forceDelete(User $user, Route $route): bool
     {
-        return $user->can('manage_routes');
+        return $user->hasRole('superadmin');
     }
 }

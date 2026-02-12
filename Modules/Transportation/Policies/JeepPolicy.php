@@ -42,6 +42,6 @@ class JeepPolicy
 
     public function forceDelete(User $user, Jeep $jeep): bool
     {
-        return $user->can('manage_jeeps');
+        return $user->hasRole('superadmin');
     }
 }

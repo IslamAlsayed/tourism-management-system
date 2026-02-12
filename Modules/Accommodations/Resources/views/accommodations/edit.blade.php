@@ -60,24 +60,10 @@
                             </div>
 
                             <!-- Latitude -->
-                            <div class="align-self-end">
-                                <label for="latitude" class="kt-label">{{ __('main.latitude') }}</label>
-                                <input type="number" name="latitude" id="latitude" step="0.0000001" class="kt-input h-[45px]"
-                                    value="{{ $accommodation->latitude }}" placeholder="e.g., 31.2001">
-                                @error('latitude')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.latitude', ['record' => $accommodation])
 
                             <!-- Longitude -->
-                            <div class="align-self-end">
-                                <label for="longitude" class="kt-label">{{ __('main.longitude') }}</label>
-                                <input type="number" name="longitude" id="longitude" step="0.0000001" class="kt-input h-[45px]"
-                                    value="{{ $accommodation->longitude }}" placeholder="e.g., 29.9187">
-                                @error('longitude')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.longitude', ['record' => $accommodation])
                         </div>
                     </div>
                 </div>
@@ -179,8 +165,8 @@
                             <!-- General Email -->
                             <div class="align-self-end">
                                 <label for="general_email" class="kt-label">{{ __('main.general_email') }}</label>
-                                <input type="email" name="general_email" id="general_email" class="kt-input h-[45px]"
-                                    value="{{ $accommodation->general_email }}" placeholder="info@accommodation.com">
+                                <input type="email" name="general_email" id="general_email" class="kt-input h-[45px]" value="{{ $accommodation->general_email }}"
+                                    placeholder="info@accommodation.com">
                                 @error('general_email')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror

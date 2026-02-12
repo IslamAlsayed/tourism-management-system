@@ -42,6 +42,6 @@ class VehicleTypePolicy
 
     public function forceDelete(User $user, VehicleType $vehicleType): bool
     {
-        return $user->can('manage_vehicle_types');
+        return $user->hasRole('superadmin');
     }
 }

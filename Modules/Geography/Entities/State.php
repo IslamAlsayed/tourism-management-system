@@ -29,7 +29,7 @@ class State extends Model
         'level',
         'latitude',
         'longitude',
-        'all_cities',
+        'photo',
         'is_active',
         'is_independent',
         'is_developed',

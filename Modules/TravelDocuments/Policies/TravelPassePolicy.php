@@ -42,6 +42,6 @@ class TravelPassePolicy
 
     public function forceDelete(User $user, TravelPasse $travelPasse): bool
     {
-        return $user->can('manage_travel_passes');
+        return $user->hasRole('superadmin');
     }
 }

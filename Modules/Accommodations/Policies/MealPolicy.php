@@ -39,6 +39,6 @@ class MealPolicy
 
     public function forceDelete(User $user, Meal $meal): bool
     {
-        return $user->can('manage_meals');
+        return $user->hasRole('superadmin');
     }
 }

@@ -21,9 +21,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name')->nullable();
             $table->string('name_ar')->nullable();
-            $table->foreignId('timezone_id')->nullable();
             $table->foreignId('country_id')->nullable();
-            $table->boolean('all_cities')->nullable()->default(false);
             $table->string('iso2')->nullable();
             $table->string('iso3')->nullable();
             $table->string('fips_code')->nullable();
@@ -31,10 +29,11 @@ return new class extends Migration
             $table->integer('level')->nullable();
             $table->decimal('latitude', 10, 6)->nullable();
             $table->decimal('longitude', 10, 6)->nullable();
+            $table->string('photo')->nullable();
             $table->boolean('is_independent')->nullable()->default(false);
             $table->boolean('is_developed')->nullable()->default(false);
             $table->boolean('is_landlocked')->nullable()->default(false);
-            $table->boolean('is_active')->nullable();
+            $table->boolean('is_active')->nullable()->default(true);
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

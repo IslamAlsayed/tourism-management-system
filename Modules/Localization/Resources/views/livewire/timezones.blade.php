@@ -24,7 +24,7 @@
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'timezones',
+                    'models' => 'dashboard.localization.timezones',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent

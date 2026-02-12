@@ -27,17 +27,12 @@
                     'route' => route('dashboard.geography.countries.create'),
                     'label' => __('main.countries_'),
                 ],
-                [
-                    'condition' => \Modules\Geography\Entities\City::count() > 0,
-                    'route' => route('dashboard.geography.cities.create'),
-                    'label' => __('main.cities_'),
-                ],
             ],
         ])
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('dashboard.geography.states.store') }}" method="POST">
+        <form action="{{ route('dashboard.geography.states.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
                 <!-- Location Information -->
@@ -48,30 +43,15 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [country, city] --}}
-                        @livewire('geography::livewire.regions.location-to-state', ['multiple' => ['cities']])
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {{-- Regions [country, city] --}}
+                            @livewire('geography::livewire.regions.location-to-state')
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Latitude -->
-                            <div>
-                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" step="0.00000001" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ old('latitude') }}">
-                                @error('latitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.latitude')
 
                             <!-- Longitude -->
-                            <div>
-                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" step="0.00000001" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ old('longitude') }}">
-                                @error('longitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- Timezone --}}
-                            @include('components.selects.timezone')
+                            @include('components.inputs.longitude')
                         </div>
                     </div>
                 </div>
@@ -115,7 +95,8 @@
                             <!-- State Code (ISO 2) -->
                             <div>
                                 <label for="iso2" class="kt-label required mb-2">{{ __('main.iso2') }}</label>
-                                <input type="text" name="iso2" id="iso2" class="kt-input h-[45px]" required value="{{ old('iso2') }}">
+                                <input type="text" name="iso2" id="iso2" minlength="2" maxlength="2" class="kt-input h-[45px]" required
+                                    value="{{ old('iso2') }}">
                                 @error('iso2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -124,7 +105,8 @@
                             <!-- State Code (ISO 3) -->
                             <div>
                                 <label for="iso3" class="kt-label required mb-2">{{ __('main.iso3') }}</label>
-                                <input type="text" name="iso3" id="iso3" class="kt-input h-[45px]" required value="{{ old('iso3') }}">
+                                <input type="text" name="iso3" id="iso3" minlength="3" maxlength="3" class="kt-input h-[45px]" required
+                                    value="{{ old('iso3') }}">
                                 @error('iso3')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -146,6 +128,30 @@
                                 @error('level')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Media Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.media')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 gap-6">
+                            <!-- Photo -->
+                            <div>
+                                <label for="photo" class="kt-label">{{ __('main.photo') }}</label>
+                                <div class="dropzone mt-2 border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer"
+                                    data-input="photo">
+                                    <i class="far fa-cloud-arrow-up text-5xl text-gray-600"></i>
+                                    <p class="mt-4">{{ __('main.click_or_drag_image_here') }}</p>
+                                </div>
+                                <input type="file" id="photo" name="photo" accept="image/*" hidden>
+                                <div id="preview-photo" class="hidden flex flex-wrap gap-4 mt-6"></div>
                             </div>
                         </div>
                     </div>
@@ -213,3 +219,7 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    @include('components.scripts.drag-drop-images')
+@endpush

@@ -1,3 +1,7 @@
+@php
+    $name = isset($name) ? $name : 'language_id';
+    $languages = \Modules\Localization\Entities\Language::orderBy('name')->get(['id', 'name', 'name_ar', 'code']);
+@endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
         <div>
@@ -17,7 +21,6 @@
         @forelse ($languages as $language)
             <option value="{{ $language->id }}"
                 {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $language->id ? 'selected' : '' }}>
-                {{ $language->id }} - {{ $language->name }}
                 {{ $language->name }}{{ $language->name_ar ? ' - ' . $language->name_ar : '' }}
             </option>
         @empty

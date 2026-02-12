@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Country;
+namespace Modules\Geography\Http\Requests\Country;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,10 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
-            'iso2' => ['required', 'string', 'min:2', 'max:3'],
-            'iso3' => ['required', 'string', 'min:2', 'max:3'],
+            'iso2' => ['nullable', 'string', 'min:2', 'max:3'],
+            'iso3' => ['nullable', 'string', 'min:2', 'max:3'],
             'numeric_code' => ['nullable', 'integer'],
             'phone_code' => ['nullable', 'string'],
             'capital' => ['nullable', 'string', 'max:255'],
@@ -40,12 +40,6 @@ class StoreRequest extends FormRequest
 
             'region_id' => ['nullable', 'integer', 'exists:regions,id'],
             'subregion_id' => ['nullable', 'integer', 'exists:subregions,id'],
-
-            'state_id' => ['nullable', 'exists:states,id'],
-            'all_states' => ['boolean'],
-
-            'city_id' => ['nullable', 'exists:cities,id'],
-            'all_cities' => ['boolean'],
 
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],

@@ -42,6 +42,6 @@ class PricingPolicy
 
     public function forceDelete(User $user, Pricing $pricing): bool
     {
-        return $user->can('manage_pricings');
+        return $user->hasRole('superadmin');
     }
 }

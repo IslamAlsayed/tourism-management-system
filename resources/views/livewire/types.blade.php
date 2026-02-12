@@ -39,7 +39,7 @@
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'types',
+                    'models' => 'dashboard.accommodations.types',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent

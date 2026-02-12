@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Subregion;
+namespace Modules\Geography\Http\Requests\Subregion;
 
 use Illuminate\Foundation\Http\FormRequest;
 

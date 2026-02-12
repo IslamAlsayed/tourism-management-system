@@ -32,7 +32,7 @@ return [
         [
             'title' => 'core',
             'icon' => 'fas fa-gear',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'system',
             'children' => [
                 // ================= Users - المستخدمين =================
@@ -381,7 +381,7 @@ return [
         [
             'title' => 'localization',
             'icon' => 'fas fa-earth-africa',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'localization',
             'children' => [
                 // ================= Languages - اللغات =================
@@ -471,7 +471,7 @@ return [
         [
             'title' => 'tour-guides',
             'icon' => 'fas fa-person-hiking',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'tour-guides',
             'children' => [
                 // ================= Tour Guides =================
@@ -572,7 +572,7 @@ return [
         [
             'title' => 'accommodations',
             'icon' => 'fas fa-building',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'accommodations',
             'children' => [
                 [
@@ -854,7 +854,7 @@ return [
         [
             'title' => 'restaurants',
             'icon' => 'fas fa-utensils',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'restaurants',
             'children' => [
                 [
@@ -934,7 +934,7 @@ return [
         [
             'title' => 'transportation',
             'icon' => 'fas fa-bus',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'transportation',
             'children' => [
                 [
@@ -1124,7 +1124,7 @@ return [
         [
             'title' => 'travel documents',
             'icon' => 'fas fa-passport',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'travel documents',
             'children' => [
                 [
@@ -1178,7 +1178,7 @@ return [
         [
             'title' => 'crm',
             'icon' => 'fas fa-address-book',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'crm',
             'children' => [
                 [
@@ -1210,7 +1210,7 @@ return [
         [
             'title' => 'tourists',
             'icon' => 'fas fa-box',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'tourists',
             'children' => [
                 [
@@ -1264,7 +1264,7 @@ return [
         [
             'title' => 'entry points',
             'icon' => 'fas fa-signs-post',
-            'status' => 'done',
+            'fixed' => 'done',
             'label' => 'system',
             'children' => [
                 [

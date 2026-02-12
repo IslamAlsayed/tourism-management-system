@@ -39,6 +39,6 @@ class RestaurantPolicy
 
     public function forceDelete(User $user, Restaurant $restaurant): bool
     {
-        return $user->can('manage_restaurants');
+        return $user->hasRole('superadmin');
     }
 }

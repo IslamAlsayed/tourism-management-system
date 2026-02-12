@@ -39,6 +39,6 @@ class MediaFilePolicy
 
     public function forceDelete(User $user, MediaFile $mediaFile): bool
     {
-        return $user->can('manage_media');
+        return $user->hasRole('superadmin');
     }
 }

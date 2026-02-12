@@ -2,14 +2,16 @@
 
 namespace Modules\Geography\Http\Controllers;
 
+use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
-use Modules\Geography\Entities\City;
 use Modules\Geography\Entities\State;
-use App\Http\Requests\State\StoreRequest;
-use App\Http\Requests\State\UpdateRequest;
+use Modules\Geography\Http\Requests\State\StoreRequest;
+use Modules\Geography\Http\Requests\State\UpdateRequest;
 
 class StateController extends Controller
 {
+    use PhotoUploadTrait;
+
     public function index()
     {
         return view('geography::states.index');
@@ -23,18 +25,11 @@ class StateController extends Controller
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
-        unset($validated['city_id']);
         $state = State::create($validated);
         if (!$state)
             return redirect()->route('dashboard.geography.states.index')->withError(__('messages.type_creation_failed', ['type' => __('main.state')]));
-        $cityIds = [];
-        if ($request->boolean('all_cities') && isset($validated['country_id'])) {
-            $cityIds = City::where('country_id', $validated['country_id'])->pluck('id')->toArray();
-        } elseif ($request->filled('city_id')) {
-            $cityIds = array_unique((array) $request->input('city_id'));
-        }
-        if (!empty($cityIds)) {
-            $state->cities()->sync($cityIds);
+        if ($request->hasFile('photo')) {
+            $this->uploadSinglePhoto($request, $state, 'photo', 'states');
         }
         return $state
             ? ($request->has('save_and_add')
@@ -65,16 +60,13 @@ class StateController extends Controller
         if (!$state)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         $validated = $request->validated();
-        unset($validated['city_id']);
-        $state->update($validated);
-        $cityIds = [];
-        if ($request->boolean('all_cities') && isset($validated['country_id'])) {
-            $cityIds = City::where('country_id', $validated['country_id'])->pluck('id')->toArray();
-        } elseif ($request->filled('city_id')) {
-            $cityIds = array_unique((array) $request->input('city_id'));
+        if ($request->input('remove_photo') && $request->hasFile('photo')) {
+            $this->uploadSinglePhoto($request, $state, 'photo', 'states');
         }
-        $state->cities()->sync($cityIds);
-        return redirect()->route('dashboard.geography.states.index')->withSuccess(__('messages.type_updated', ['type' => __('main.state')]));
+        $updated = $state->update($validated);
+        return $updated
+            ? redirect()->route('dashboard.geography.states.index')->withSuccess(__('messages.type_updated', ['type' => __('main.state')]))
+            : redirect()->route('dashboard.geography.states.index')->withError(__('messages.type_update_failed', ['type' => __('main.state')]));
     }
 
     public function destroy($id)

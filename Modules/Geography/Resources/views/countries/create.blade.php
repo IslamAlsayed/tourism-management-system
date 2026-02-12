@@ -24,7 +24,7 @@
             'requirements' => [
                 [
                     'condition' => \Modules\Localization\Entities\Currency::count() > 0,
-                    'route' => route('currencies.index'),
+                    'route' => route('dashboard.localization.currencies.index'),
                     'label' => __('main.currencies_'),
                 ],
                 [
@@ -37,16 +37,6 @@
                     'route' => route('dashboard.geography.subregions.index'),
                     'label' => __('main.subregions_'),
                 ],
-                [
-                    'condition' => \Modules\Geography\Entities\State::count() > 0,
-                    'route' => route('dashboard.geography.states.index'),
-                    'label' => __('main.states_'),
-                ],
-                [
-                    'condition' => \Modules\Geography\Entities\City::count() > 0,
-                    'route' => route('dashboard.geography.cities.index'),
-                    'label' => __('main.cities_'),
-                ],
             ],
         ])
     </div>
@@ -55,12 +45,6 @@
         <form action="{{ route('dashboard.geography.countries.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
-                <!-- Country Photo -->
-                @include('components.input-image', [
-                    'column' => 'country',
-                    'columnName' => 'photo',
-                ])
-
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -69,27 +53,15 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [region, subregion, state, city] --}}
-                        @livewire('geography::livewire.regions.location-to-country', ['multiple' => ['states', 'cities']])
+                        {{-- Regions [region, subregion] --}}
+                        @livewire('geography::livewire.regions.location-to-country')
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Latitude -->
-                            <div class="">
-                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" step="0.00000001" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ old('latitude') }}">
-                                @error('latitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.latitude')
 
                             <!-- Longitude -->
-                            <div class="">
-                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" step="0.00000001" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ old('longitude') }}">
-                                @error('longitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.longitude')
 
                             <!-- Capital City -->
                             <div class="">
@@ -107,10 +79,7 @@
                             @include('components.selects.currency')
 
                             {{-- Language --}}
-                            @include('components.selects.language', [
-                                'name' => 'language_id',
-                                'languages' => $languages,
-                            ])
+                            @include('components.selects.language')
                         </div>
                     </div>
                 </div>
@@ -218,6 +187,32 @@
                     </div>
                 </div>
 
+                <!-- Media Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.media')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 gap-6">
+                            <!-- Photo -->
+                            <div>
+                                <label for="photo" class="kt-label">
+                                    {{ __('main.photo') }}
+                                </label>
+                                <div class="dropzone mt-2 border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer"
+                                    data-input="photo">
+                                    <i class="far fa-cloud-arrow-up text-5xl text-gray-600"></i>
+                                    <p class="mt-4">{{ __('main.click_or_drag_image_here') }}</p>
+                                </div>
+                                <input type="file" id="photo" name="photo" accept="image/*" hidden>
+                                <div id="preview-photo" class="hidden flex flex-wrap gap-4 mt-6"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {{-- Description --}}
                 @include('components.elements.input-text-editor', [
                     'name' => 'description',
@@ -276,3 +271,7 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    @include('components.scripts.drag-drop-images')
+@endpush

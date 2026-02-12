@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\City;
+namespace Modules\Geography\Http\Requests\State;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,17 +25,18 @@ class StoreRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
 
-            'timezone_id' => ['nullable', 'exists:timezones,id'],
-            'country_id' => ['nullable', 'exists:countries,id'],
+            'country_id' => ['nullable', 'string', 'exists:countries,id'],
 
-            'state_id' => ['nullable'],
-            'state_id.*' => ['integer', 'exists:states,id'],
-            'all_states' => ['nullable'],
-
-            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
-            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'wikiDataId' => ['nullable', 'string', 'max:255'],
-            'population' => ['nullable', 'integer'],
+            'iso2' => ['required', 'string', 'min:2', 'max:3'],
+            'iso3' => ['required', 'string', 'min:2', 'max:3'],
+            'fips_code' => ['nullable', 'string', 'max:2'],
+            'type' => ['nullable', 'string', 'max:255'],
+            'level' => ['nullable', 'integer'],
+            'latitude' => ['nullable', 'numeric'],
+            'longitude' => ['nullable', 'numeric'],
+            'parent_id' => ['nullable', 'integer', 'exists:states,id'],
+            'photo' => new \App\Rules\PhotoRules(),
+            // 'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
 
             'is_active' => ['boolean'],
             'is_independent' => ['boolean'],

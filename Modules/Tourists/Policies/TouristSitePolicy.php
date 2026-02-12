@@ -2,11 +2,14 @@
 
 namespace Modules\Tourists\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\Core\Entities\User;
 use Modules\Tourists\Entities\TouristSite;
 
 class TouristSitePolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(User $user): bool
     {
         return $user->can('manage_sites');
@@ -39,6 +42,6 @@ class TouristSitePolicy
 
     public function forceDelete(User $user, TouristSite $site): bool
     {
-        return $user->can('manage_sites');
+        return $user->hasRole('superadmin');
     }
 }

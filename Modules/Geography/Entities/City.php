@@ -2,12 +2,12 @@
 
 namespace Modules\Geography\Entities;
 
-use App\Traits\HasUuid;
-use Modules\Localization\Entities\Timezone;
-use App\Traits\HasSearch;
-use App\Traits\ClearsEmptyRichText;
 use App\Traits\BroadcastsRecordEvents;
+use App\Traits\ClearsEmptyRichText;
+use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Geography\Entities\State;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class City extends Model
@@ -27,36 +27,24 @@ class City extends Model
         'longitude',
         'wiki_data_id',
         'population',
-        'all_states',
+        'photo',
         'is_active',
         'is_independent',
         'is_developed',
         'is_landlocked',
         'description',
         'notes',
-        'timezone_id',
-        'country_id',
         'state_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['timezone', 'country', 'state', 'states'];
+        return ['state', 'states'];
     }
 
     public function getExcludedColumns()
     {
-        return ['timezone_id', 'country_id', 'state_id', 'description', 'notes'];
-    }
-
-    public function timezone()
-    {
-        return $this->belongsTo(Timezone::class);
-    }
-
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
+        return ['state_id', 'description', 'notes'];
     }
 
     public function state()

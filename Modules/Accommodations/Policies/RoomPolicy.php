@@ -39,6 +39,6 @@ class RoomPolicy
 
     public function forceDelete(User $user, Room $room): bool
     {
-        return $user->can('manage_rooms');
+        return $user->hasRole('superadmin');
     }
 }

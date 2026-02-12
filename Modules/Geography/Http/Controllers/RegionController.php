@@ -4,8 +4,8 @@ namespace Modules\Geography\Http\Controllers;
 
 use Modules\Geography\Entities\Region;
 use Illuminate\Routing\Controller;
-use App\Http\Requests\Regions\RegionsCreateRequest;
-use App\Http\Requests\Regions\RegionsUpdateRequest;
+use Modules\Geography\Http\Requests\Regions\StoreRequest;
+use Modules\Geography\Http\Requests\Regions\UpdateRequest;
 
 class RegionController extends Controller
 {
@@ -19,7 +19,7 @@ class RegionController extends Controller
         return view('geography::regions.create');
     }
 
-    public function store(RegionsCreateRequest $request)
+    public function store(StoreRequest $request)
     {
         $validated = $request->validated();
         $created = Region::create($validated);
@@ -46,7 +46,7 @@ class RegionController extends Controller
         return view('geography::regions.edit', compact('region'));
     }
 
-    public function update(RegionsUpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $region = Region::find($id);
         if (!$region)

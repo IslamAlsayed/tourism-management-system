@@ -42,6 +42,6 @@ class ClientPolicy
 
     public function forceDelete(User $user, Client $client): bool
     {
-        return $user->can('manage_clients');
+        return $user->hasRole('superadmin');
     }
 }

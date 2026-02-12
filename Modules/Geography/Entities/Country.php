@@ -2,15 +2,19 @@
 
 namespace Modules\Geography\Entities;
 
-use Modules\Localization\Entities\Currency;
-use Modules\Localization\Entities\Language;
-use Modules\Localization\Entities\Timezone;
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\ClearsEmptyRichText;
 use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Geography\Entities\City;
+use Modules\Geography\Entities\Region;
+use Modules\Geography\Entities\State;
+use Modules\Geography\Entities\Subregion;
+use Modules\Localization\Entities\Currency;
+use Modules\Localization\Entities\Language;
+use Modules\Localization\Entities\Timezone;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Country extends Model

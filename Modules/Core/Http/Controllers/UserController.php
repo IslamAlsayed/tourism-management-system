@@ -34,9 +34,9 @@ class UserController extends Controller
             $this->uploadPhoto($request, $created, 'photo', "users");
             return $request->has('save_and_add')
                 ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.user')]))
-                : redirect()->route('users.index')->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
+                : redirect()->route('dashboard.core.users.index')->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
         }
-        return redirect()->route('users.index')->withError(__('messages.type_creation_failed', ['type' => __('main.user')]));
+        return redirect()->route('dashboard.core.users.index')->withError(__('messages.type_creation_failed', ['type' => __('main.user')]));
     }
 
     public function show($id)
@@ -72,7 +72,7 @@ class UserController extends Controller
             $this->uploadPhoto($request, $user, 'photo', "users");
         }
         return $updated
-            ? redirect()->route('users.index')->withSuccess(__('messages.type_updated', ['type' => __('main.user')]))
+            ? redirect()->route('dashboard.core.users.index')->withSuccess(__('messages.type_updated', ['type' => __('main.user')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.user')]));
     }
 

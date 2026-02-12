@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\State;
+namespace Modules\Geography\Http\Requests\State;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,23 +23,21 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
 
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
-            'city_id' => ['nullable'],
-            'city_id.*' => ['integer', 'exists:cities,id'],
-            'all_cities' => ['nullable'],
 
-            'iso2' => ['required', 'string', 'min:2', 'max:3'],
-            'iso3' => ['required', 'string', 'min:2', 'max:3'],
+            'iso2' => ['nullable', 'string', 'min:2', 'max:3'],
+            'iso3' => ['nullable', 'string', 'min:2', 'max:3'],
             'fips_code' => ['nullable', 'string', 'max:2'],
             'type' => ['nullable', 'string', 'max:255'],
             'level' => ['nullable', 'integer'],
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
-            'timezone_id' => ['nullable', 'exists:timezones,id'],
             'parent_id' => ['nullable', 'integer', 'exists:states,id'],
+            'photo' => new \App\Rules\PhotoRules(),
+            // 'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
 
             'is_active' => ['boolean'],
             'is_independent' => ['boolean'],

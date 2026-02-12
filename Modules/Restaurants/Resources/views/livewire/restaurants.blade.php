@@ -24,7 +24,7 @@
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'restaurants',
+                    'models' => 'dashboard.restaurants.restaurants',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent

@@ -14,20 +14,17 @@ class LocationToCountry extends Component
     public $multiple;
     public $selectedStates = [];
     public $selectedCities = [];
-    public $filters = ['region' => null, 'subregion' => null, 'state' => null, 'city' => null];
-    public $options = ['regions' => [], 'subregions' => [], 'states' => [], 'cities' => []];
+    public $filters = ['region' => null, 'subregion' => null];
+    public $options = ['regions' => [], 'subregions' => []];
     protected array $map = [
         'region' => ['model' => Subregion::class, 'foreign' => 'region_id', 'target' => 'subregions'],
         'subregion' => ['model' => State::class, 'foreign' => 'subregion_id', 'target' => 'states'],
-        'state' => ['model' => City::class, 'foreign' => 'state_id', 'target' => 'cities'],
     ];
 
     public function mount($record = null, $multiple = null)
     {
         $this->record = $record;
         $this->multiple = $multiple;
-        $this->selectedStates = $record?->states?->pluck('id')->toArray() ?? [];
-        $this->selectedCities = $record?->cities?->pluck('id')->toArray() ?? [];
         $this->options['regions'] = Region::orderBy('name')->get(['id', 'name']);
         if ($record) {
             foreach (array_keys($this->filters) as $key) {
@@ -47,10 +44,6 @@ class LocationToCountry extends Component
         if (blank($value)) {
             return;
         }
-        if ($key == 'state') {
-            $this->loadNext('state', $value);
-            return;
-        }
 
         $this->loadNext($key, $value);
     }
@@ -62,21 +55,14 @@ class LocationToCountry extends Component
         }
         $config = $this->map[$key];
         $query = $config['model']::query();
-        if ($key === 'state') {
-            $query->whereHas('states', function ($q) use ($id) {
-                is_array($id) ? $q->whereIn('states.id', $id) : $q->where('states.id', $id);
-            });
-        } else {
-            is_array($id) ? $query->whereIn($config['foreign'], $id) : $query->where($config['foreign'], $id);
-        }
         $this->options[$config['target']] = $query->orderBy('name')->get(['id', 'name']);
         $this->dispatch('select-options-updated', true);
     }
 
     protected function resetBelow(string $key)
     {
-        $order = ['region', 'subregion', 'state', 'city'];
-        $optionKeys = ['region' => 'regions', 'subregion' => 'subregions', 'state' => 'states', 'city' => 'cities'];
+        $order = ['region', 'subregion'];
+        $optionKeys = ['region' => 'regions', 'subregion' => 'subregions'];
         $index = array_search($key, $order);
         if ($index === false) {
             return;

@@ -6,7 +6,7 @@
         'title' => __('main.users'),
         'description' => __('main.manage_system_types', ['types' => __('main.users')]),
         'import_url' => route('import.data', ['models' => 'users']),
-        'page_create_url' => route('users.create'),
+        'page_create_url' => route('dashboard.core.users.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.user')]),
     ])
     <!-- End of Container -->

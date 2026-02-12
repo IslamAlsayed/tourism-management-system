@@ -39,6 +39,6 @@ class SeasonPolicy
 
     public function forceDelete(User $user, Season $season): bool
     {
-        return $user->can('manage_seasons');
+        return $user->hasRole('superadmin');
     }
 }

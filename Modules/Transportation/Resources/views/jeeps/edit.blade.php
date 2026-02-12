@@ -445,7 +445,7 @@
 
                                 {{-- Existing photo (edit mode) --}}
                                 @if (!empty($jeep->photo))
-                                    <div id="existing-photo" class="relative w-fit mt-3">
+                                    <div id="existing-photo" class="relative w-fit mt-8">
                                         <img src="{{ asset('storage/' . $jeep->photo) }}" class="h-32 w-32 rounded">
                                         <button type="button"
                                             class="remove-existing-photo absolute -top-2 -right-2 bg-danger cursor-pointer text-white w-6 h-6 rounded-full">
@@ -454,7 +454,7 @@
                                     </div>
                                 @endif
 
-                                <div id="preview-photo" class="hidden mt-3"></div>
+                                <div id="preview-photo" class="hidden mt-8"></div>
                             </div>
 
                             <!-- Gallery Images -->
@@ -471,7 +471,7 @@
                                 <input type="hidden" name="removed_gallery" id="removed_gallery" value="[]">
 
                                 <!-- Existing Gallery Images -->
-                                <div class="mt-4 flex flex-wrap gap-4">
+                                <div class="mt-8 flex flex-wrap gap-4">
                                     @if (is_array($jeep->gallery))
                                         @foreach ($jeep->gallery as $index => $img)
                                             <div id="existing_gallery_{{ $index }}" class="relative">
@@ -486,7 +486,7 @@
                                     @endif
                                 </div>
 
-                                <div id="preview-gallery" class="hidden flex gap-3 mt-3"></div>
+                                <div id="preview-gallery" class="hidden flex gap-3 mt-8"></div>
                             </div>
                         </div>
                     </div>

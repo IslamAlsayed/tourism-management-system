@@ -39,6 +39,6 @@ class AccommodationPolicy
 
     public function forceDelete(User $user, Accommodation $accommodation): bool
     {
-        return $user->can('manage_accommodations');
+        return $user->hasRole('superadmin');
     }
 }

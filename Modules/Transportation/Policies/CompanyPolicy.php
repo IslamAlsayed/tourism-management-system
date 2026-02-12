@@ -42,6 +42,6 @@ class CompanyPolicy
 
     public function forceDelete(User $user, Company $company): bool
     {
-        return $user->can('manage_companies');
+        return $user->hasRole('superadmin');
     }
 }

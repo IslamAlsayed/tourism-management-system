@@ -11,8 +11,8 @@ class LocationToState extends Component
     public $record;
     public $multiple;
     public $selectedCities = [];
-    public $filters = ['country' => null, 'city' => null];
-    public $options = ['countries' => [], 'cities' => []];
+    public $filters = ['country' => null];
+    public $options = ['countries' => []];
     protected array $map = [
         'country' => ['model' => City::class, 'foreign' => 'country_id', 'target' => 'cities'],
     ];
@@ -25,12 +25,6 @@ class LocationToState extends Component
         $this->options['countries'] = Country::orderBy('name')->get(['id', 'name']);
         if ($record) {
             foreach (array_keys($this->filters) as $key) {
-                if ($key == 'city') {
-                    $this->filters['city'] = $record?->cities?->pluck('id')->toArray();
-                } else {
-                    $this->filters[$key] = $record->{$key . '_id'} ?? null;
-                }
-
                 if ($this->filters[$key]) {
                     $this->loadNext($key, $this->filters[$key]);
                 }
@@ -65,8 +59,8 @@ class LocationToState extends Component
 
     protected function resetBelow(string $key)
     {
-        $order = ['country', 'city'];
-        $optionKeys = ['country' => 'countries', 'city' => 'cities'];
+        $order = ['country'];
+        $optionKeys = ['country' => 'countries'];
         $index = array_search($key, $order);
         if ($index === false) {
             return;

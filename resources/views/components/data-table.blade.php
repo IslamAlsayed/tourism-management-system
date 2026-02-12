@@ -49,7 +49,7 @@
                     @endforeach
                     <td class="px-4 py-2 text-end">
                         <div class="flex gap-2 justify-end">
-                            @if (isset($models) && showRouteExists($models) && showFunctionExists($models) && getActiveUser()->can('view', $item))
+                            @if (isset($models) && getActiveUser()->can('view', $item))
                                 @include('components.elements.show-button', [
                                     'models' => $models,
                                     'id' => $item->id,

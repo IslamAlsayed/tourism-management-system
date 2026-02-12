@@ -24,7 +24,7 @@
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'countries',
+                    'models' => 'dashboard.geography.countries',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent

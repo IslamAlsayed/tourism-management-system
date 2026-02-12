@@ -139,15 +139,36 @@ trait PhotoUploadTrait
         if (!$request->hasFile($column)) {
             return;
         }
+        // Store old photo path BEFORE any updates
+        $oldPhoto = $model->{$column};
+        // dd($model->toArray(), $oldPhoto, $request->file($column));
 
-        // delete old photo
-        if (!empty($model->{$column})) {
-            Storage::disk('public')->delete($model->{$column});
-        }
+        // if (Storage::disk('public')->exists($oldPhoto)) {
+        // dd("Old photo exists at path: {$oldPhoto}. Deletion is deferred until after new photo is uploaded and model is updated.");
+        // }
+        // dd($request->input('remove_photo'), $request->all(), $request->file($column));
 
+        // Upload new photo
         $path = $request->file($column)->store("uploads/{$folder}/{$model->id}", 'public');
 
+        // Update model with new path
         $model->update([$column => $path]);
+
+        // Delete old photo AFTER successful update
+        if (!empty($oldPhoto)) {
+            if (Storage::disk('public')->exists($oldPhoto)) {
+                Storage::disk('public')->delete($oldPhoto);
+            }
+
+            // Delete the folder if empty
+            $folderPath = "uploads/{$folder}/{$model->id}";
+            if (Storage::disk('public')->exists($folderPath)) {
+                $files = Storage::disk('public')->files($folderPath);
+                if (empty($files)) {
+                    Storage::disk('public')->deleteDirectory($folderPath);
+                }
+            }
+        }
     }
 
     public function uploadGallery(Request $request, Model $model, string $column = 'gallery', string $folder = 'other')

@@ -5,8 +5,8 @@ namespace Modules\Geography\Http\Controllers;
 use Modules\Geography\Entities\Region;
 use Modules\Geography\Entities\Subregion;
 use Illuminate\Routing\Controller;
-use App\Http\Requests\Subregion\StoreRequest;
-use App\Http\Requests\Subregion\UpdateRequest;
+use Modules\Geography\Http\Requests\Subregion\StoreRequest;
+use Modules\Geography\Http\Requests\Subregion\UpdateRequest;
 
 class SubregionController extends Controller
 {

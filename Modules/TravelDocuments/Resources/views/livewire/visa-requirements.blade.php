@@ -18,14 +18,15 @@
         </div>
     @endcomponent
 
-    <div class="kt-card-content" wire:loading.class="loading" wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,refreshData">
+    <div class="kt-card-content" wire:loading.class="loading"
+        wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,refreshData">
         <div data-kt-datatable-state-save="false" id="visa-requirements_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'visa-requirements',
+                    'models' => 'dashboard.travel-documents.visa-requirements',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent

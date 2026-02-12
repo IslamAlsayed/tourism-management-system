@@ -5,8 +5,8 @@ namespace Modules\Geography\Http\Controllers;
 use Modules\Geography\Entities\Country;
 use Modules\Geography\Entities\Nationality;
 use Illuminate\Routing\Controller;
-use App\Http\Requests\Nationality\StoreRequest;
-use App\Http\Requests\Nationality\UpdateRequest;
+use Modules\Geography\Http\Requests\Nationality\StoreRequest;
+use Modules\Geography\Http\Requests\Nationality\UpdateRequest;
 
 class NationalityController extends Controller
 {

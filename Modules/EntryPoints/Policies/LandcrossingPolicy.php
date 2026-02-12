@@ -42,6 +42,6 @@ class LandcrossingPolicy
 
     public function forceDelete(User $user, Landcrossing $landcrossing): bool
     {
-        return $user->can('manage_land_crossings');
+        return $user->hasRole('superadmin');
     }
 }

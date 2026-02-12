@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Nationality;
+namespace Modules\Geography\Http\Requests\Subregion;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,10 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'name_ar' => ['required', 'string', 'max:255'],
-            'country_id' => ['nullable', 'string', 'exists:countries,id'],
-            'is_active' => ['boolean'],
-            'description' => ['nullable', 'string'],
-            'notes' => ['nullable', 'string'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
+            'wiki_data_id' => ['nullable', 'string', 'max:255'],
+            'region_id' => ['nullable', 'string', 'exists:regions,id'],
         ];
     }
 }

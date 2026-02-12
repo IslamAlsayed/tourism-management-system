@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\City;
+namespace Modules\Geography\Http\Requests\City;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,20 +22,16 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
 
-            'timezone_id' => ['nullable', 'exists:timezones,id'],
-            'country_id' => ['nullable', 'exists:countries,id'],
-
-            'state_id' => ['nullable'],
-            'state_id.*' => ['integer', 'exists:states,id'],
-            'all_states' => ['nullable', 'boolean'],
+            'state_id' => ['nullable', 'exists:states,id'],
 
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
             'wikiDataId' => ['nullable', 'string', 'max:255'],
             'population' => ['nullable', 'integer'],
+            'photo' => new \App\Rules\PhotoRules(),
 
             'is_active' => ['boolean'],
             'is_independent' => ['boolean'],

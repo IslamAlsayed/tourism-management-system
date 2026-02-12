@@ -42,6 +42,6 @@ class SeaportPolicy
 
     public function forceDelete(User $user, Seaport $seaport): bool
     {
-        return $user->can('manage_seaports');
+        return $user->hasRole('superadmin');
     }
 }

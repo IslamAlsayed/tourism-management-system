@@ -24,7 +24,7 @@
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'transportations-vehicles',
+                    'models' => 'dashboard.transportation.vehicles',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent

@@ -39,6 +39,6 @@ class AirlinePolicy
 
     public function forceDelete(User $user, Airline $airline): bool
     {
-        return $user->can('manage_airlines');
+        return $user->hasRole('superadmin');
     }
 }

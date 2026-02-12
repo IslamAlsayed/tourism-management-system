@@ -10,8 +10,8 @@ use Modules\Geography\Entities\CityState;
 use Illuminate\Http\Request;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
-use App\Http\Requests\Country\StoreRequest;
-use App\Http\Requests\Country\UpdateRequest;
+use Modules\Geography\Http\Requests\Country\StoreRequest;
+use Modules\Geography\Http\Requests\Country\UpdateRequest;
 
 class CountryController extends Controller
 {
@@ -24,37 +24,23 @@ class CountryController extends Controller
 
     public function create()
     {
-        $languages = Language::orderBy('name')->get();
-        return view('geography::countries.create', compact('languages'));
+        return view('geography::countries.create');
     }
 
     public function store(StoreRequest $request)
     {
-        $data = $request->validated();
-        unset($data['state_id'], $data['city_id']);
-        $country = Country::create($data);
+        $validated = $request->validated();
+        $country = Country::create($validated);
         if (!$country)
             return redirect()->route('dashboard.geography.countries.index')->withError(__('messages.type_creation_failed', ['type' => __('main.country')]));
-        $this->uploadPhoto($request, $country, 'photo', 'countries');
-        // States
-        $stateIds = [];
-        if ($request->boolean('all_states')) {
-            $stateIds = State::where('country_id', $country->id)->pluck('id')->toArray();
-        } elseif ($request->filled('state_id')) {
-            $stateIds = array_unique((array) $request->input('state_id'));
+        if ($request->hasFile('photo')) {
+            $this->uploadSinglePhoto($request, $country, 'photo', 'countries');
         }
-        $country->states()->sync($stateIds);
-        // Cities
-        $cityIds = [];
-        if ($request->boolean('all_cities')) {
-            $cityIds = City::whereIn('state_id', $stateIds)->pluck('id')->toArray();
-        } elseif ($request->filled('city_id')) {
-            $cityIds = array_unique((array) $request->input('city_id'));
-        }
-        $country->cities()->sync($cityIds);
-        return $request->has('save_and_add')
-            ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.country')]))
-            : redirect()->route('dashboard.geography.countries.index')->withSuccess(__('messages.type_created', ['type' => __('main.country')]));
+        return $country
+            ? ($request->has('save_and_add')
+                ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.country')]))
+                : redirect()->route('dashboard.geography.countries.index')->withSuccess(__('messages.type_created', ['type' => __('main.country')])))
+            : redirect()->back()->withError(__('messages.type_creation_failed', ['type' => __('main.country')]));
     }
 
     public function show($id)
@@ -70,34 +56,19 @@ class CountryController extends Controller
         $country = Country::find($id);
         if (!$country)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.country')]));
-        $languages = Language::orderBy('name')->get();
-        return view('geography::countries.edit', compact('country', 'languages'));
+        return view('geography::countries.edit', compact('country'));
     }
 
     public function update(UpdateRequest $request, $id)
     {
         $country = Country::find($id);
         if (!$country)
-            return redirect()->route('dashboard.geography.countries.index')->withError(__('messages.type_creation_failed', ['type' => __('main.country')]));
-        $data = $request->validated();
-        unset($data['state_id'], $data['city_id']);
-        // States
-        $stateIds = [];
-        if ($request->boolean('all_states')) {
-            $stateIds = State::where('country_id', $country->id)->pluck('id')->toArray();
-        } elseif ($request->filled('state_id')) {
-            $stateIds = array_unique((array) $request->input('state_id'));
+            return redirect()->route('dashboard.geography.countries.index')->withError(__('messages.type_update_failed', ['type' => __('main.country')]));
+        $validated = $request->validated();
+        if ($request->input('remove_photo') && $request->hasFile('photo')) {
+            $this->uploadSinglePhoto($request, $country, 'photo', 'countries');
         }
-        $country->states()->sync($stateIds);
-        // Cities
-        $cityIds = [];
-        if ($request->boolean('all_cities')) {
-            $cityIds = array_unique(CityState::whereIn('state_id', $stateIds)->pluck('city_id')->toArray());
-        } elseif ($request->filled('city_id')) {
-            $cityIds = array_unique((array) $request->input('city_id'));
-        }
-        $country->cities()->sync($cityIds);
-        $updated = $country->update($data);
+        $updated = $country->update($validated);
         return $updated
             ? redirect()->route('dashboard.geography.countries.index')->withSuccess(__('messages.type_updated', ['type' => __('main.country')]))
             : redirect()->route('dashboard.geography.countries.index')->withError(__('messages.type_update_failed', ['type' => __('main.country')]));

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Regions;
+namespace Modules\Geography\Http\Requests\Regions;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegionsUpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class RegionsUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string', 'max:255'],
-            'name_ar' => ['nullable', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'name_ar' => ['required', 'string', 'max:255'],
             'wiki_data_id' => ['nullable', 'string', 'max:255'],
         ];
     }

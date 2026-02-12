@@ -14,7 +14,8 @@
             <option value="" selected>--</option>
             @foreach ($options['countries'] as $item)
                 <option value="{{ $item->id }}" {{ old('country_id', $record->country_id ?? null) == $item->id ? 'selected' : '' }}>
-                    {{ $item->name }}</option>
+                    {{ $item->name }}{{ $item->name_ar ? ' - ' . $item->name_ar : '' }}
+                </option>
             @endforeach
         </select>
         @error('country_id')
@@ -31,7 +32,8 @@
                         <input type="hidden" name="all_states" value="0">
                         <div class="custom-input">
                             <input type="checkbox" name="all_states" id="all_states" value="1" wire:model.live="all_states"
-                                {{ ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'checked' : '' }} data-kt-datatable-row-check="true">
+                                {{ ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'checked' : '' }}
+                                data-kt-datatable-row-check="true">
                             <label for="all_states">{{ __('main.states') }}</label>
                         </div>
                     @else
@@ -58,7 +60,7 @@
             @endif
             @foreach ($options['states'] as $item)
                 <option value="{{ $item->id }}" @selected((isset($multiple) && in_array('states', $multiple) && in_array($item->id, $selectedStates ?? [])) || $item->id == old('state_id', $record->state_id ?? null))>
-                    {{ $item->name }}
+                    {{ $item->name }}{{ $item->name_ar ? ' - ' . $item->name_ar : '' }}
                 </option>
             @endforeach
         </select>
@@ -104,7 +106,7 @@
             @endif
             @foreach ($options['cities'] as $item)
                 <option value="{{ $item->id }}" @selected((isset($multiple) && in_array('cities', $multiple) && in_array($item->id, $selectedCities ?? [])) || $item->id == old('city_id', $record->city_id ?? null))>
-                    {{ $item->name }}
+                    {{ $item->name }}{{ $item->name_ar ? ' - ' . $item->name_ar : '' }}
                 </option>
             @endforeach
         </select>

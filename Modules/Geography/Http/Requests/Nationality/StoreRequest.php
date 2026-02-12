@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Nationality;
+namespace Modules\Geography\Http\Requests\Nationality;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string', 'max:255'],
-            'name_ar' => ['nullable', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'name_ar' => ['required', 'string', 'max:255'],
             'country_id' => ['nullable', 'string', 'exists:countries,id'],
             'is_active' => ['boolean'],
             'description' => ['nullable', 'string'],

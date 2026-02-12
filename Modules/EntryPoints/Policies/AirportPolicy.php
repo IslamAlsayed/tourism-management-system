@@ -42,6 +42,6 @@ class AirportPolicy
 
     public function forceDelete(User $user, Airport $airport): bool
     {
-        return $user->can('manage_airports');
+        return $user->hasRole('superadmin');
     }
 }

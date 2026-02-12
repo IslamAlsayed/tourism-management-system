@@ -30,7 +30,7 @@
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'users',
+                    'models' => 'dashboard.core.users',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent

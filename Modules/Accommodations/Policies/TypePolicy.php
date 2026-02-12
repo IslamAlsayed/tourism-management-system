@@ -39,6 +39,6 @@ class TypePolicy
 
     public function forceDelete(User $user, Type $type): bool
     {
-        return $user->can('manage_types');
+        return $user->hasRole('superadmin');
     }
 }

@@ -34,30 +34,15 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [country, city] --}}
-                        @livewire('geography::livewire.regions.location-to-state', ['record' => $state, 'multiple' => ['cities']])
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {{-- Regions [country, city] --}}
+                            @livewire('geography::livewire.regions.location-to-state', ['record' => $state])
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Latitude -->
-                            <div class="">
-                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" step="0.00000001" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ $state->latitude }}">
-                                @error('latitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            @include('components.inputs.latitude', ['record' => $state])
 
                             <!-- Longitude -->
-                            <div class="">
-                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" step="0.00000001" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ $state->longitude }}">
-                                @error('longitude')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- Timezone --}}
-                            @include('components.selects.timezone')
+                            @include('components.inputs.longitude', ['record' => $state])
                         </div>
                     </div>
                 </div>
@@ -137,6 +122,43 @@
                     </div>
                 </div>
 
+                <!-- Media Information -->
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.type_information', ['type' => __('main.media')]) }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 gap-6">
+                            <!-- Photo -->
+                            <div>
+                                <label for="photo" class="kt-label">{{ __('main.photo') }}</label>
+                                <div class="dropzone mt-2 border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer"
+                                    data-input="photo" data-preview="preview-photo">
+                                    <i class="far fa-cloud-arrow-up text-5xl text-gray-600"></i>
+                                    <p class="mt-4">{{ __('main.click_or_drag_image_here') }}</p>
+                                </div>
+                                <input type="file" name="photo" id="photo" accept="image/*" hidden>
+                                <input type="hidden" name="remove_photo" id="remove_photo" value="0">
+
+                                {{-- Existing photo (edit mode) --}}
+                                @if (!empty($state->photo))
+                                    <div id="existing-photo" class="relative w-fit mt-8">
+                                        <img src="{{ asset('storage/' . $state->photo) }}" class="h-32 w-32 rounded">
+                                        <button type="button"
+                                            class="remove-existing-photo absolute -top-2 -right-2 bg-danger cursor-pointer text-white w-6 h-6 rounded-full">
+                                            ×
+                                        </button>
+                                    </div>
+                                @endif
+
+                                <div id="preview-photo" class="hidden mt-8"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {{-- Description --}}
                 @include('components.elements.input-text-editor', [
                     'name' => 'description',
@@ -199,3 +221,7 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    @include('components.scripts.drag-drop-images')
+@endpush

@@ -42,6 +42,6 @@ class CompanyContactPolicy
 
     public function forceDelete(User $user, CompanyContact $companyContact): bool
     {
-        return $user->can('manage_company_contacts');
+        return $user->hasRole('superadmin');
     }
 }

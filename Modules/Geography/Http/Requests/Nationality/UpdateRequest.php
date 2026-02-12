@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Subregion;
+namespace Modules\Geography\Http\Requests\Nationality;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,8 +24,10 @@ class UpdateRequest extends FormRequest
         return [
             'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
-            'wiki_data_id' => ['nullable', 'string', 'max:255'],
-            'region_id' => ['nullable', 'string', 'exists:regions,id'],
+            'country_id' => ['nullable', 'string', 'exists:countries,id'],
+            'is_active' => ['boolean'],
+            'description' => ['nullable', 'string'],
+            'notes' => ['nullable', 'string'],
         ];
     }
 }

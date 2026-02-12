@@ -39,6 +39,6 @@ class SupplementPolicy
 
     public function forceDelete(User $user, Supplement $supplement): bool
     {
-        return $user->can('manage_supplements');
+        return $user->hasRole('superadmin');
     }
 }

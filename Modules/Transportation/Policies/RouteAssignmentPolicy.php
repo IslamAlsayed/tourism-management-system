@@ -42,6 +42,6 @@ class RouteAssignmentPolicy
 
     public function forceDelete(User $user, RouteAssignment $routeAssignment): bool
     {
-        return $user->can('manage_route_assignments');
+        return $user->hasRole('superadmin');
     }
 }

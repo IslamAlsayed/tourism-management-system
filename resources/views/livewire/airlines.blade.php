@@ -24,7 +24,7 @@
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
-                    'models' => 'airlines',
+                    'models' => 'dashboard.entrypoints.airlines',
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent
