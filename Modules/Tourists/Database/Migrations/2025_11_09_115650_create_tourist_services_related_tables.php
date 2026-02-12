@@ -10,6 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        if (
+            Schema::hasTable('seasonal_prices') &&
+            Schema::hasTable('tax_configurations') &&
+            Schema::hasTable('commission_configurations') &&
+            Schema::hasTable('tourist_service_modules') &&
+            Schema::hasTable('subregion_pricing') &&
+            Schema::hasTable('custom_nationalities') &&
+            Schema::hasTable('operating_schedules') &&
+            Schema::hasTable('special_hours')
+        ) {
+            return;
+        }
         // === SEASONAL PRICES TABLE ===
         Schema::create('seasonal_prices', function (Blueprint $table) {
             $table->id();

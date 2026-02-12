@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             MediaFileSeeder::class, // Must be last to store all existing photos
             // TouristSiteSeeder::class,
             // TouristServiceSeeder::class,
-            // CrossingPortSeeder::class,
+            // EntryPointSeeder::class,
             // AirlineSeeder::class,
             // CompleteDataSeeder::class,
             // AccommodationSeeder::class,

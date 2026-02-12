@@ -10,6 +10,9 @@ return new class extends Migration {
      */
     public function up()
     {
+        if (Schema::hasTable('city_state')) {
+            return;
+        }
         Schema::create('city_state', function (Blueprint $table) {
             $table->foreignId('city_id')->nullable();
             $table->foreignId('state_id')->nullable();

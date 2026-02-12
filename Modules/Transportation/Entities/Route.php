@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Route extends Model
 {
     use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
-    protected $table = 'transportations_routes';
+
     protected $richTextAttributes = [
         'description',
         'notes',

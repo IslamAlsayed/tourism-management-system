@@ -5,8 +5,8 @@ namespace Modules\Transportation\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\Transportation\Entities\Route;
 use Modules\Transportation\Entities\RouteAssignment;
-use App\Http\Requests\Transportation\RouteAssignment\StoreRequest;
-use App\Http\Requests\Transportation\RouteAssignment\UpdateRequest;
+use Modules\Transportation\Http\Requests\RouteAssignment\StoreRequest;
+use Modules\Transportation\Http\Requests\RouteAssignment\UpdateRequest;
 
 class RouteAssignmentController extends Controller
 {

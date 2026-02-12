@@ -36,7 +36,7 @@
                     </div>
                     <div class="kt-card-body p-4">
                         {{-- Regions [country, state, city] --}}
-                        <livewire:regions.location-select-base :record="$touristSite" />
+                        @livewire('geography::livewire.regions.location-select-base', ['record' => $touristSite])
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <div>

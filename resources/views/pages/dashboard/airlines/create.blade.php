@@ -23,17 +23,17 @@
         @include('components.must-add-first', [
             'requirements' => [
                 [
-                    'condition' => \App\Models\Country::count() > 0,
+                    'condition' => \Modules\Geography\Entities\Country::count() > 0,
                     'route' => route('dashboard.geography.countries.index'),
                     'label' => __('main.countries'),
                 ],
                 [
-                    'condition' => \App\Models\State::count() > 0,
+                    'condition' => \Modules\Geography\Entities\State::count() > 0,
                     'route' => route('dashboard.geography.states.index'),
                     'label' => __('main.states'),
                 ],
                 [
-                    'condition' => \App\Models\City::count() > 0,
+                    'condition' => \Modules\Geography\Entities\City::count() > 0,
                     'route' => route('dashboard.geography.cities.index'),
                     'label' => __('main.cities'),
                 ],

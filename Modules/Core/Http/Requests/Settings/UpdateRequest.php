@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Settings;
+namespace Modules\Core\Http\Requests\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -88,6 +88,7 @@ class UpdateRequest extends FormRequest
             'app_smtp_password' => ['nullable', 'string'],
             'app_sidebar_width' => ['nullable', 'integer', 'min:100'],
             'app_show_uuid_column' => ['nullable', 'boolean'],
+            'app_display_menu_labels' => ['nullable', 'boolean'],
         ];
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Livewire\Quote\v2\Step2;
-use App\Models\City;
+
+use Modules\Geography\Entities\City;
 use App\Models\Hotel;
-use App\Models\Country;
+use Modules\Geography\Entities\Country;
 use Livewire\Component;
 
 class ProgramDetails extends Component

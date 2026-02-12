@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('pricing-definitions.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.core.pricing-definitions.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.pricing-definitions')]) }}
                 </a>
             </div>
@@ -32,7 +32,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('pricing-definitions.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.core.pricing-definitions.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
                 <!-- Transportation pricings Information -->

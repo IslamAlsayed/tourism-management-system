@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('country_state')) {
+            return;
+        }
         Schema::create('country_state', function (Blueprint $table) {
             $table->foreignId('country_id')->nullable();
             $table->foreignId('state_id')->nullable();

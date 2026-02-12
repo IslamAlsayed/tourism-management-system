@@ -19,7 +19,7 @@
         ],
         [
             'condition' => \App\Models\PricingDefinition::count() > 0,
-            'route' => route('pricing-definitions.create'),
+            'route' => route('dashboard.core.pricing-definitions.create'),
             'label' => __('main.pricing-definitions'),
         ],
         [

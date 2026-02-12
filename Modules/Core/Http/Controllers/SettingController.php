@@ -2,17 +2,14 @@
 
 namespace Modules\Core\Http\Controllers;
 
-use Modules\Core\Entities\User;
-use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
-use Modules\Core\Entities\Setting;
 use Illuminate\Support\Facades\Cache;
-use App\Http\Requests\User\UpdateRequest;
+use Modules\Core\Entities\Setting;
+use Modules\Core\Entities\User;
+use Modules\Core\Http\Requests\Settings\UpdateRequest;
 
 class SettingController extends Controller
 {
-    use PhotoUploadTrait;
-
     public function index()
     {
         return view('core::settings.index');

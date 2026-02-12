@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('seasonal_prices')) {
+            return;
+        }
         Schema::create('seasonal_prices', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

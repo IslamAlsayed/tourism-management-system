@@ -19,7 +19,6 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 class Company extends Model
 {
     use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
-    protected $table = 'transportations_companies';
     protected $richTextAttributes = [
         'description',
         'notes',

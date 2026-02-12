@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('tour_guide_type_state')) {
+            return;
+        }
         Schema::create('tour_guide_type_state', function (Blueprint $table) {
             $table->foreignId('tour_guide_type_id')->nullable();
             $table->foreignId('state_id')->nullable();

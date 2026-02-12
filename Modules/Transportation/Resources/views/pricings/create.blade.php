@@ -38,8 +38,8 @@
                     'label' => __('main.seasons'),
                 ],
                 [
-                    'condition' => \App\Models\PricingDefinition::count() > 0,
-                    'route' => route('pricing-definitions.index'),
+                    'condition' => \Modules\Core\Entities\PricingDefinition::count() > 0,
+                    'route' => route('dashboard.core.pricing-definitions.index'),
                     'label' => __('main.pricing-definitions'),
                 ],
                 [

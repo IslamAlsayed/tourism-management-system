@@ -1,16 +1,16 @@
 @php
     $name = isset($name) ? $name : 'crossing_port_id';
-    $crossingPorts = \App\Models\CrossingPort::orderBy('name')->get(['id', 'name']);
+    $EntryPoints = \App\Models\EntryPoint::orderBy('name')->get(['id', 'name']);
 @endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
         <div>
             {{ __('main.' . (isset($name) ? str_replace('_id', '', $name) : '')) }}
             <strong class="dataLength text-primary">
-                ({{ count($crossingPorts) ?: 0 }})
+                ({{ count($EntryPoints) ?: 0 }})
             </strong>
         </div>
-        <a href="{{ route('crossings-ports.create') }}" class="text-blue-600 text-2sm">
+        <a href="{{ route('dashboard.entrypoints.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>
     </label>
@@ -18,8 +18,9 @@
         @if (!isset($record) || !isset($record->{isset($name) ? $name : ''}))
             <option value="" selected disabled></option>
         @endif
-        @forelse ($crossingPorts as $crossing_port_id)
-            <option value="{{ $crossing_port_id->id }}" {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $crossing_port_id->id ? 'selected' : '' }}>
+        @forelse ($EntryPoints as $crossing_port_id)
+            <option value="{{ $crossing_port_id->id }}"
+                {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $crossing_port_id->id ? 'selected' : '' }}>
                 {{ $crossing_port_id->name }}
             </option>
         @empty

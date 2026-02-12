@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('subregion_pricings')) {
+            return;
+        }
         Schema::create('subregion_pricing', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

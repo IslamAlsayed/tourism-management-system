@@ -56,10 +56,10 @@
                                 </a>
                             </div>
                         @endif
-                        @if ($visaRequirement->crossingPort)
+                        @if ($visaRequirement->EntryPoint)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.crossing_port') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $visaRequirement->crossingPort->name }}</p>
+                                <p class="text-sm text-secondary-foreground">{{ $visaRequirement->EntryPoint->name }}</p>
                             </div>
                         @endif
                         <div>

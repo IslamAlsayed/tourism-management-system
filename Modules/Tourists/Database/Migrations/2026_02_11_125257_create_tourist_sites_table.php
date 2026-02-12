@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('tourist_sites')) {
+            return;
+        }
         Schema::create('tourist_sites', function (Blueprint $table) {
             // ========== Primary Keys & Timestamps ==========
             $table->id()->autoIncrement();

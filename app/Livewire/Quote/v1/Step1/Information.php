@@ -3,7 +3,7 @@
 namespace App\Livewire\Quote\v1\Step1;
 
 use App\Models\Booking;
-use App\Models\Nationality;
+use Modules\Geography\Entities\Nationality;
 use Livewire\Component;
 use Modules\Localization\Entities\Currency;
 

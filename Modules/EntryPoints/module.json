@@ -1,0 +1,11 @@
+{
+    "name": "EntryPoints",
+    "alias": "entrypoints",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\EntryPoints\\Providers\\EntryPointsServiceProvider"
+    ],
+    "files": []
+}

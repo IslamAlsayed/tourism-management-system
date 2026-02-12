@@ -35,9 +35,9 @@ class CompanyFactory extends Factory
             'description' => $this->faker->paragraph(3),
             'notes' => $this->faker->optional()->sentence(),
             'currency_id' => \Modules\Localization\Entities\Currency::inRandomOrder()->first()?->id ?? \Modules\Localization\Entities\Currency::factory(),
-            'country_id' => \App\Models\Country::inRandomOrder()->first()?->id ?? \App\Models\Country::factory(),
-            'state_id' => \App\Models\State::inRandomOrder()->first()?->id ?? null,
-            'city_id' => \App\Models\City::inRandomOrder()->first()?->id ?? null,
+            'country_id' => \Modules\Geography\Entities\Country::inRandomOrder()->first()?->id ?? \Modules\Geography\Entities\Country::factory(),
+            'state_id' => \Modules\Geography\Entities\State::inRandomOrder()->first()?->id ?? null,
+            'city_id' => \Modules\Geography\Entities\City::inRandomOrder()->first()?->id ?? null,
         ];
     }
 }

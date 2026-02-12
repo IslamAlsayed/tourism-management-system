@@ -42,7 +42,7 @@
                     </div>
                     <div class="kt-card-body p-4 pb-0">
                         {{-- Regions [country, state, city] --}}
-                        <livewire:regions.location-select-base :record="$touristService" />
+                        @livewire('geography::livewire.regions.location-select-base', ['record' => $touristService])
                     </div>
                 </div>
 

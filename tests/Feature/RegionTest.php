@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Region;
+use Modules\Geography\Entities\Region;
 use Modules\Core\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;

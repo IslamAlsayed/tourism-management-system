@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Nationality;
+use Modules\Geography\Entities\Nationality;
 use App\Models\RichText;
 use Illuminate\Database\Seeder;
 

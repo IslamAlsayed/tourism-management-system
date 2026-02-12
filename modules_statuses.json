@@ -9,5 +9,6 @@
     "TravelDocuments": true,
     "Subscriptions": false,
     "CRM": true,
-    "Tourists": true
+    "Tourists": true,
+    "EntryPoints": true
 }

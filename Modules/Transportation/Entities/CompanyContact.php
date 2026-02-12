@@ -10,8 +10,6 @@ class CompanyContact extends Model
 {
     use HasFactory, HasUuid;
 
-    protected $table = 'transportations_company_contacts';
-
     protected $fillable = [
         'id',
         'uuid',

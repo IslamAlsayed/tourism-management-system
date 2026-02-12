@@ -2,11 +2,11 @@
 
 namespace Modules\Transportation\Http\Controllers;
 
-use App\Models\PricingDefinition;
 use Illuminate\Routing\Controller;
+use Modules\Core\Entities\PricingDefinition;
 use Modules\Transportation\Entities\Pricing;
-use App\Http\Requests\Transportation\Pricing\StoreRequest;
-use App\Http\Requests\Transportation\Pricing\UpdateRequest;
+use Modules\Transportation\Http\Requests\Pricing\StoreRequest;
+use Modules\Transportation\Http\Requests\Pricing\UpdateRequest;
 
 class PricingController extends Controller
 {

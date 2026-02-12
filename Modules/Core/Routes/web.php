@@ -8,6 +8,7 @@ use Modules\Core\Http\Controllers\ReportsController;
 use Modules\Core\Http\Controllers\SettingController;
 use Modules\Core\Http\Controllers\PermissionController;
 use Modules\Core\Http\Controllers\ActivityLogController;
+use Modules\Core\Http\Controllers\PricingDefinitionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,9 @@ Route::prefix('dashboard/core')->name('dashboard.core.')->middleware('auth')->gr
         Route::get('/locations', [ReportsController::class, 'locations'])->name('locations');
         Route::get('/analytics', [ReportsController::class, 'analytics'])->name('analytics');
     });
+
+    // === CROSSING PORTS MANAGEMENT ===
+    Route::resource('pricing-definitions', PricingDefinitionController::class)->names('pricing-definitions');
 
     // === ACTIVITY LOG ===
     Route::get('activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');

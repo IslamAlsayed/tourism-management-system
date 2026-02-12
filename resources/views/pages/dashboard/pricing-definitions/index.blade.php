@@ -7,7 +7,7 @@
         'description' => __('main.manage_system_types', [
             'types' => __('main.pricing-definitions'),
         ]),
-        'page_create_url' => route('pricing-definitions.create'),
+        'page_create_url' => route('dashboard.core.pricing-definitions.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.pricing-definition')]),
     ])
     <!-- End of Container -->

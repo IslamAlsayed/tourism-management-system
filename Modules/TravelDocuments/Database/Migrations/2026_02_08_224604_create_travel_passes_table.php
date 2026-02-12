@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('travel_passes')) {
+            return;
+        }
         Schema::create('travel_passes', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

@@ -10,6 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        if (Schema::hasTable('jobs') && Schema::hasTable('job_batches') && Schema::hasTable('failed_jobs')) {
+            return;
+        }
         Schema::create('jobs', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique()->default(\Illuminate\Support\Str::uuid());

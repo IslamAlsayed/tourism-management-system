@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('users') && Schema::hasTable('password_reset_tokens') && Schema::hasTable('sessions')) {
+            return;
+        }
         Schema::create('users', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->unique();

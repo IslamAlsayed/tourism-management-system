@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 return new class extends Migration {
     public function up()
     {
+        if (Schema::hasTable('rich_texts')) {
+            return;
+        }
         Schema::create('rich_texts', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->uuid('uuid')->default(DB::raw('(UUID())'))->unique();

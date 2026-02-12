@@ -3,7 +3,7 @@
 @section('content')
     <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
         [
-            'condition' => \App\Models\City::count() > 0,
+            'condition' => \Modules\Geography\Entities\City::count() > 0,
             'route' => route('dashboard.geography.cities.create'),
             'label' => __('main.cities'),
         ],

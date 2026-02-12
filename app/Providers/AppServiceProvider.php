@@ -2,13 +2,11 @@
 
 namespace App\Providers;
 
-use Modules\CRM\Entities\Client;
 use App\Models\Airline;
 use App\Models\MediaFile;
-use App\Models\CrossingPort;
-use Modules\Tourists\Entities\TouristService;
 use Modules\Core\Entities\User;
 use App\Observers\PhotoObserver;
+use Modules\CRM\Entities\Client;
 use Modules\Core\Entities\Setting;
 use App\Observers\ActivityObserver;
 use App\Observers\MediaFileObserver;
@@ -17,7 +15,9 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Geography\Entities\Country;
 use Spatie\Activitylog\Models\Activity;
 use Modules\TourGuides\Entities\TourGuide;
+use Modules\EntryPoints\Entities\Landcrossing;
 use Modules\Restaurants\Entities\Restaurant;
+use Modules\Tourists\Entities\TouristService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(PhotoObserver::class);
         Client::observe(PhotoObserver::class);
         TouristService::observe(PhotoObserver::class);
-        CrossingPort::observe(PhotoObserver::class);
+        Landcrossing::observe(PhotoObserver::class);
         Airline::observe(PhotoObserver::class);
         Restaurant::observe(PhotoObserver::class);
         TourGuide::observe(PhotoObserver::class);

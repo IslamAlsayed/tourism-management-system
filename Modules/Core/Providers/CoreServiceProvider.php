@@ -20,6 +20,9 @@ use Modules\Core\Policies\SettingPolicy;
 use Spatie\Permission\Models\Permission;
 use Modules\Core\Policies\ActivityPolicy;
 use Modules\Core\Policies\PermissionPolicy;
+use Modules\Core\Entities\PricingDefinition;
+use Modules\Core\Livewire\PricingDefinitions;
+use Modules\Core\Policies\PricingDefinitionPolicy;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -39,6 +42,7 @@ class CoreServiceProvider extends ServiceProvider
         Permission::class => PermissionPolicy::class,
         Setting::class => SettingPolicy::class,
         User::class => UserPolicy::class,
+        PricingDefinition::class => PricingDefinitionPolicy::class,
         Activity::class => ActivityPolicy::class,
     ];
 
@@ -57,6 +61,7 @@ class CoreServiceProvider extends ServiceProvider
         Livewire::component('core::roles', Roles::class);
         Livewire::component('core::permissions', Permissions::class);
         Livewire::component('core::users', Users::class);
+        Livewire::component('core::pricing-definitions', PricingDefinitions::class);
         Livewire::component('core::activity-log', ActivityLog::class);
 
         // === Register Policies ===

@@ -5,8 +5,8 @@ namespace Modules\Transportation\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Modules\Transportation\Entities\Company;
 use Modules\Transportation\Entities\VehicleType;
-use App\Http\Requests\Transportation\VehicleType\StoreRequest;
-use App\Http\Requests\Transportation\VehicleType\UpdateRequest;
+use Modules\Transportation\Http\Requests\VehicleType\StoreRequest;
+use Modules\Transportation\Http\Requests\VehicleType\UpdateRequest;
 
 class VehicleTypeController extends Controller
 {

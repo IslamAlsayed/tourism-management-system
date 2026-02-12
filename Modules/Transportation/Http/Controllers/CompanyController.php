@@ -8,8 +8,8 @@ use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
 use Modules\Transportation\Entities\Company;
 use Modules\Transportation\Entities\VehicleType;
-use App\Http\Requests\Transportation\Company\StoreRequest;
-use App\Http\Requests\Transportation\Company\UpdateRequest;
+use Modules\Transportation\Http\Requests\Company\StoreRequest;
+use Modules\Transportation\Http\Requests\Company\UpdateRequest;
 
 class CompanyController extends Controller
 {

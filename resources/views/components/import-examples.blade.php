@@ -42,7 +42,7 @@
 @section('content')
     <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
         [
-            'condition' => \App\Models\Country::count() > 0,
+            'condition' => \Modules\Geography\Entities\Country::count() > 0,
             'route' => route('dashboard.geography.countries.create'),
             'label' => __('main.countries_'),
         ],
@@ -68,12 +68,12 @@
             'label' => __('main.currencies_'),
         ],
         [
-            'condition' => \App\Models\Region::count() > 0,
+            'condition' => \Modules\Geography\Entities\Region::count() > 0,
             'route' => route('dashboard.geography.regions.create'),
             'label' => __('main.regions_'),
         ],
         [
-            'condition' => \App\Models\Country::count() > 0,
+            'condition' => \Modules\Geography\Entities\Country::count() > 0,
             'route' => route('dashboard.geography.countries.create'),
             'label' => __('main.countries_'),
         ],

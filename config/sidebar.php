@@ -112,6 +112,23 @@ return [
                         ],
                     ],
                 ],
+                // ================= Topics - المواضيع =================
+                [
+                    'title' => 'pricing definitions',
+                    'icon' => 'fas fa-money-bill-wave',
+                    'children' => [
+                        [
+                            'title' => 'all pricing definitions',
+                            'icon' => 'fas fa-list',
+                            'route' => 'dashboard.core.pricing-definitions.index',
+                        ],
+                        [
+                            'title' => 'create pricing definition',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.core.pricing-definitions.create',
+                        ],
+                    ],
+                ],
                 // ================= Notifications - الإشعارات =================
                 // [
                 //     'title' => 'notifications',
@@ -370,11 +387,11 @@ return [
                 // ================= Languages - اللغات =================
                 [
                     'title' => 'languages',
-                    'icon' => 'fas fa-language',
+                    'icon' => 'fas fa-globe',
                     'children' => [
                         [
                             'title' => 'all languages',
-                            'icon' => 'fas fa-language',
+                            'icon' => 'fas fa-globe',
                             'route' => 'dashboard.localization.languages.index'
                         ],
                         [
@@ -387,11 +404,11 @@ return [
                 // ================= System Languages - لغات النظام =================
                 [
                     'title' => 'system languages',
-                    'icon' => 'fas fa-globe',
+                    'icon' => 'fas fa-language',
                     'children' => [
                         [
                             'title' => 'all languages',
-                            'icon' => 'fas fa-globe',
+                            'icon' => 'fas fa-language',
                             'route' => 'dashboard.localization.system-languages.index'
                         ],
                         [
@@ -1243,28 +1260,86 @@ return [
             ],
         ],
 
-        // ================= Topics - المواضيع =================
+        // ================= Entry Points - نقاط الدخول =================
         [
-            'title' => 'topics',
-            'icon' => 'fas fa-book',
+            'title' => 'entry points',
+            'icon' => 'fas fa-signs-post',
+            'status' => 'done',
+            'label' => 'system',
             'children' => [
                 [
-                    'title' => 'pricing definitions',
-                    'icon' => 'fas fa-money-bill-wave',
+                    'title' => 'land crossings',
+                    'icon' => 'fas fa-bridge',
                     'children' => [
                         [
-                            'title' => 'all pricing definitions',
-                            'icon' => 'fas fa-list',
-                            'route' => 'pricing-definitions.index',
+                            'title' => 'all land crossings',
+                            'icon' => 'fas fa-bridge',
+                            'route' => 'dashboard.entrypoints.land-crossings.index',
+                            'parameters' => ['t' => Str::random(120)],
                         ],
                         [
-                            'title' => 'create pricing definition',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'pricing-definitions.create',
+                            'title' => 'create land crossing',
+                            'icon' => 'fas fa-user-plus',
+                            'route' => 'dashboard.entrypoints.land-crossings.create',
+                            'parameters' => ['t' => Str::random(120)],
                         ],
+                        [
+                            'title' => 'import land crossings',
+                            'icon' => 'fas fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'land-crossing', 'models' => 'land-crossings', 'view' => 'land-crossings'],
+                        ]
                     ],
                 ],
-            ],
+                [
+                    'title' => 'sea ports',
+                    'icon' => 'fas fa-ship',
+                    'children' => [
+                        [
+                            'title' => 'all sea ports',
+                            'icon' => 'fas fa-ship',
+                            'route' => 'dashboard.entrypoints.seaports.index',
+                            'parameters' => ['t' => Str::random(120)],
+                        ],
+                        [
+                            'title' => 'create sea port',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.entrypoints.seaports.create',
+                            'parameters' => ['t' => Str::random(120)],
+                        ],
+                        [
+                            'title' => 'import sea ports',
+                            'icon' => 'fas fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'seaport', 'models' => 'seaports', 'view' => 'seaports'],
+                        ]
+                    ],
+                ],
+                [
+                    'title' => 'airports',
+                    'icon' => 'fas fa-plane-departure',
+                    'children' => [
+                        [
+                            'title' => 'all airports',
+                            'icon' => 'fas fa-plane-departure',
+                            'route' => 'dashboard.entrypoints.airports.index',
+                            'parameters' => ['t' => Str::random(120)],
+                        ],
+                        [
+                            'title' => 'create airport',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.entrypoints.airports.create',
+                            'parameters' => ['t' => Str::random(120)],
+                        ],
+                        [
+                            'title' => 'import airports',
+                            'icon' => 'fas fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'airport', 'models' => 'airports', 'view' => 'airports'],
+                        ]
+                    ],
+                ],
+            ]
         ],
 
         // ================= Air Transport - النقل الجوي =================
@@ -1292,52 +1367,52 @@ return [
         ],
 
         // ================= Crossings & Ports - المعابر والموانئ =================
-        [
-            'title' => 'crossings & ports',
-            'icon' => 'fas fa-signs-post',
-            'children' => [
-                [
-                    'title' => 'all crossings ports',
-                    'icon' => 'fas fa-list',
-                    'route' => 'crossings-ports.index'
-                ],
-                [
-                    'title' => 'create crossing port',
-                    'icon' => 'fas fa-plus',
-                    'route' => 'crossings-ports.create'
-                ],
-                [
-                    'title' => 'import crossings ports',
-                    'icon' => 'fas fa-file-import',
-                    'route' => 'import.data',
-                    'parameters' => ['model' => 'crossings-port', 'models' => 'crossings-ports', 'view' => 'crossings-ports'],
-                ],
-                [
-                    'title' => 'airports',
-                    'icon' => 'fas fa-plane-departure',
-                    'children' => [
-                        [
-                            'title' => 'international airports',
-                            'icon' => 'fas fa-globe',
-                            'route' => 'crossings-ports.filtered',
-                            'parameters' => ['t' => Str::random(120), 'filtered' => 'international-airports'],
-                        ],
-                        [
-                            'title' => 'domestic airports',
-                            'icon' => 'fas fa-plane',
-                            'route' => 'crossings-ports.filtered',
-                            'parameters' => ['t' => Str::random(120), 'filtered' => 'domestic-airports'],
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'seaports',
-                    'icon' => 'fas fa-ship',
-                    'route' => 'crossings-ports.filtered',
-                    'parameters' => ['t' => Str::random(120), 'filtered' => 'seaports'],
-                ],
-            ],
-        ],
+        // [
+        //     'title' => 'crossings & ports',
+        //     'icon' => 'fas fa-signs-post',
+        //     'children' => [
+        //         [
+        //             'title' => 'all crossings ports',
+        //             'icon' => 'fas fa-list',
+        //             'route' => 'crossings-ports.index'
+        //         ],
+        //         [
+        //             'title' => 'create crossing port',
+        //             'icon' => 'fas fa-plus',
+        //             'route' => 'crossings-ports.create'
+        //         ],
+        //         [
+        //             'title' => 'import crossings ports',
+        //             'icon' => 'fas fa-file-import',
+        //             'route' => 'import.data',
+        //             'parameters' => ['model' => 'crossings-port', 'models' => 'crossings-ports', 'view' => 'crossings-ports'],
+        //         ],
+        //         [
+        //             'title' => 'airports',
+        //             'icon' => 'fas fa-plane-departure',
+        //             'children' => [
+        //                 [
+        //                     'title' => 'international airports',
+        //                     'icon' => 'fas fa-globe',
+        //                     'route' => 'crossings-ports.filtered',
+        //                     'parameters' => ['t' => Str::random(120), 'filtered' => 'international-airports'],
+        //                 ],
+        //                 [
+        //                     'title' => 'domestic airports',
+        //                     'icon' => 'fas fa-plane',
+        //                     'route' => 'crossings-ports.filtered',
+        //                     'parameters' => ['t' => Str::random(120), 'filtered' => 'domestic-airports'],
+        //                 ],
+        //             ],
+        //         ],
+        //         [
+        //             'title' => 'seaports',
+        //             'icon' => 'fas fa-ship',
+        //             'route' => 'crossings-ports.filtered',
+        //             'parameters' => ['t' => Str::random(120), 'filtered' => 'seaports'],
+        //         ],
+        //     ],
+        // ],
 
         // ================= Media Files - الملفات الإعلامية =================
         [
@@ -1353,55 +1428,6 @@ return [
                     'title' => 'upload files',
                     'icon' => 'fas fa-upload',
                     'route' => 'media-files.create',
-                ],
-            ],
-        ],
-
-        // ================= Settings - الإعدادات =================
-        [
-            'title' => 'settings',
-            'icon' => 'fas fa-gear',
-            'status' => 'done',
-            'children' => [
-                [
-                    'title' => 'general',
-                    'icon' => 'fas fa-sliders',
-                    'route' => 'dashboard.core.settings.general',
-                ],
-                [
-                    'title' => 'security',
-                    'icon' => 'fas fa-shield-halved',
-                    'route' => 'dashboard.core.settings.security',
-                    'roles' => ['admin', 'superadmin']
-                ],
-                // [
-                //     'title' => 'notifications',
-                //     'route' => 'dashboard.core.settings.notifications'
-                // ],
-                [
-                    'title' => 'backup',
-                    'icon' => 'fas fa-database',
-                    'fixed' => 'soon',
-                    'route' => '#'
-                    // 'route' => 'dashboard.core.settings.backup'
-                ],
-                [
-                    'title' => 'booking',
-                    'icon' => 'fas fa-book',
-                    'fixed' => 'soon',
-                    'route' => '#'
-                    // 'route' => 'dashboard.core.settings.booking'
-                ],
-                [
-                    'title' => 'integration',
-                    'icon' => 'fas fa-plug',
-                    'route' => 'dashboard.core.settings.integration',
-                    'roles' => ['admin', 'superadmin']
-                ],
-                [
-                    'title' => 'system',
-                    'icon' => 'fas fa-cog',
-                    'route' => 'dashboard.core.settings.system'
                 ],
             ],
         ],

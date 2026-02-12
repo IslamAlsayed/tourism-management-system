@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('pricing-definitions.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.core.pricing-definitions.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.pricing-definitions')]) }}
                 </a>
             </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('pricing-definitions.update', $pricing->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.core.pricing-definitions.update', $pricing->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
@@ -38,8 +38,7 @@
                             {{-- Name (English) --}}
                             <div class="align-self-end">
                                 <label for="name" class="kt-label">{{ __('main.name') }}</label>
-                                <input type="text" class="kt-input h-[45px]" id="name" name="name"
-                                    value="{{ $pricing->name }}">
+                                <input type="text" class="kt-input h-[45px]" id="name" name="name" value="{{ $pricing->name }}">
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -48,8 +47,7 @@
                             {{-- Name (Arabic) --}}
                             <div class="align-self-end">
                                 <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                                <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
-                                    value="{{ $pricing->name_ar }}">
+                                <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar" value="{{ $pricing->name_ar }}">
                                 @error('name_ar')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -59,8 +57,7 @@
                             <div>
                                 <label for="key" class="kt-label mb-2">{{ __('main.key') }}</label>
                                 <div class="relative">
-                                    <input type="text" name="key" id="key" class="kt-input h-[45px] pr-10"
-                                        value="{{ $pricing->key }}" readonly>
+                                    <input type="text" name="key" id="key" class="kt-input h-[45px] pr-10" value="{{ $pricing->key }}" readonly>
                                 </div>
                                 @error('key')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -70,8 +67,7 @@
                             <!-- Category -->
                             <div class="align-self-end">
                                 <label for="category" class="kt-label">{{ __('main.category') }}</label>
-                                <input type="text" name="category" id="category" class="kt-input h-[45px]"
-                                    value="{{ $pricing->category }}">
+                                <input type="text" name="category" id="category" class="kt-input h-[45px]" value="{{ $pricing->category }}">
                                 @error('category')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\City;
-use App\Models\Subregion;
+use Modules\Geography\Entities\City;
+use Modules\Geography\Entities\Subregion;
 use App\Http\Controllers\Controller;
 
 class LocationController extends Controller

@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('operating_schedules')) {
+            return;
+        }
         Schema::create('operating_schedules', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

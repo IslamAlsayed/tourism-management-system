@@ -2,23 +2,23 @@
 
 namespace Modules\Transportation\Entities;
 
-use App\Models\PricingDefinition;
-use App\Traits\ClearsEmptyRichText;
-use App\Traits\FiltersByUserRole;
-use App\Traits\HasSearch;
 use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HasSearch;
+use App\Traits\FiltersByUserRole;
+use App\Traits\ClearsEmptyRichText;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Accommodations\Entities\Season;
 use Modules\Localization\Entities\Currency;
+use Modules\Core\Entities\PricingDefinition;
 use Modules\Transportation\Entities\Company;
 use Modules\Transportation\Entities\VehicleType;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pricing extends Model
 {
     use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
-    protected $table = 'transportations_pricings';
+
     protected $richTextAttributes = [
         'description',
         'notes',

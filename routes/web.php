@@ -7,7 +7,7 @@ use App\Http\Controllers\Dashboard\AirlineController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\MediaFileController;
 use App\Http\Controllers\Admin\SidebarManagerController;
-use App\Http\Controllers\Dashboard\CrossingPortController;
+use App\Http\Controllers\Dashboard\EntryPointController;
 use App\Http\Controllers\Dashboard\NotificationController;
 use Modules\Transportation\Http\Controllers\PricingDefinitionController;
 
@@ -32,10 +32,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::post('/reset', [ColumnPreferenceController::class, 'reset'])->name('reset');
     });
 
-    // === CROSSING PORTS MANAGEMENT ===
-    Route::resource('crossings-ports', CrossingPortController::class)->names('crossings-ports');
-    Route::get('crossings-ports/filtered/{filtered}', [CrossingPortController::class, 'filtered'])->name('crossings-ports.filtered');
-
     // === AIR TRANSPORT MANAGEMENT ===
     Route::resource('airlines', AirlineController::class)->names('airlines');
     Route::get('airlines/type/{type}', [AirlineController::class, 'type'])->name('airlines.type');
@@ -43,8 +39,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // === MEDIA FILES MANAGEMENT ===
     Route::resource('media-files', MediaFileController::class)->names('media-files');
     Route::post('media-files/bulk-delete', [MediaFileController::class, 'bulkDelete'])->name('media-files.bulk-delete');
-
-    Route::resource('pricing-definitions', PricingDefinitionController::class)->names('pricing-definitions');
 
     // === ADMIN TOOLS ===
     Route::prefix('admin/sidebar')->name('sidebar.')->middleware('admin')->group(function () {

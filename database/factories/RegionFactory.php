@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Region>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\Geography\Entities\Region>
  */
 class RegionFactory extends Factory
 {

@@ -136,7 +136,7 @@ class PhotoObserver
             'User' => 'users',
             'Client' => 'clients',
             'touristService' => 'tourist-services',
-            'CrossingPort' => 'crossing-ports',
+            'EntryPoint' => 'crossing-ports',
             'Airline' => 'airlines',
             'Restaurant' => 'restaurants',
             'TourGuide' => 'tour-guides',

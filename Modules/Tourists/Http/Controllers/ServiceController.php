@@ -120,9 +120,9 @@ class ServiceController extends Controller
 
         $sites = TouristSite::orderBy('sort_order')->get(['id', 'name']);
         $currencies = \Modules\Localization\Entities\Currency::orderBy('name')->get(['id', 'name', 'code']);
-        $countries = \App\Models\Country::orderBy('name')->get(['id', 'name']);
-        $nationalities = \App\Models\Nationality::orderBy('name')->get(['id', 'name']);
-        $subregions = \App\Models\Subregion::orderBy('name')->get(['id', 'name']);
+        $countries = \Modules\Geography\Entities\Country::orderBy('name')->get(['id', 'name']);
+        $nationalities = \Modules\Geography\Entities\Nationality::orderBy('name')->get(['id', 'name']);
+        $subregions = \Modules\Geography\Entities\Subregion::orderBy('name')->get(['id', 'name']);
 
         return view(
             'tourists::services.edit',

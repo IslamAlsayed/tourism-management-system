@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('commission_configurations')) {
+            return;
+        }
         Schema::create('commission_configurations', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

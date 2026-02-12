@@ -23,7 +23,7 @@
         @include('components.must-add-first', [
             'requirements' => [
                 [
-                    'condition' => \App\Models\State::count() > 0,
+                    'condition' => \Modules\Geography\Entities\State::count() > 0,
                     'route' => route('dashboard.geography.states.create'),
                     'label' => __('main.states_'),
                 ],

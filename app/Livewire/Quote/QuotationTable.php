@@ -3,11 +3,11 @@
 namespace App\Livewire\Quote;
 
 use App\Models\Booking;
-use App\Models\Country;
+use Modules\Geography\Entities\Country;
 use Livewire\Component;
 use Modules\Localization\Entities\Currency;
-use App\Models\Subregion;
-use App\Models\Nationality;
+use Modules\Geography\Entities\Subregion;
+use Modules\Geography\Entities\Nationality;
 
 class QuotationTable extends Component
 {

@@ -4,8 +4,8 @@ namespace Modules\Transportation\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\Transportation\Entities\Route;
-use App\Http\Requests\Transportation\Route\StoreRequest;
-use App\Http\Requests\Transportation\Route\UpdateRequest;
+use Modules\Transportation\Http\Requests\Route\StoreRequest;
+use Modules\Transportation\Http\Requests\Route\UpdateRequest;
 
 class RouteController extends Controller
 {

@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('custom_nationalities')) {
+            return;
+        }
         Schema::create('custom_nationalities', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

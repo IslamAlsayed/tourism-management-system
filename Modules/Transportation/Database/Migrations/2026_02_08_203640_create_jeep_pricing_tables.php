@@ -13,6 +13,9 @@ return new class extends Migration {
 
     public function up(): void
     {
+        if (Schema::hasTable('jeep_seasons') && Schema::hasTable('jeep_season_nationality_prices')) {
+            return;
+        }
         Schema::create('jeep_seasons', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();

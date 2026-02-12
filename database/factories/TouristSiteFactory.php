@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\City;
+use Modules\Geography\Entities\City;
 use Modules\Tourists\Entities\TouristSite;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

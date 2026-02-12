@@ -24,7 +24,7 @@
     </div>
 
     {{-- Sidebar Content --}}
-    <div class="kt-sidebar-content flex grow shrink-0 py-5" id="sidebar_content">
+    <div class="kt-sidebar-content flex grow shrink-0 py-5 pt-0" id="sidebar_content">
         <div class="kt-scrollable-y-hover grow shrink-0 flex ps-2 lg:ps-5 pe-1 lg:pe-3" style="padding-inline-end: 0" data-kt-scrollable="true"
             data-kt-scrollable-dependencies="#sidebar_header" data-kt-scrollable-height="auto" data-kt-scrollable-offset="0px"
             data-kt-scrollable-wrappers="#sidebar_content" id="sidebar_scrollable">
@@ -63,7 +63,7 @@
                     @if ($hasChildren)
                         {{-- Menu with Children --}}
                         <div class="kt-menu-item {{ $hasActiveChild ? 'show' : '' }}" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
-                            @if (isset($item['label']))
+                            @if (isset($item['label']) && $settings->app_display_menu_labels)
                                 <span class="inline-block text-gray-500 font-medium ms-2" style="font-size: 10px">
                                     {{ __('sidebar.' . $item['label']) }}
                                 </span>

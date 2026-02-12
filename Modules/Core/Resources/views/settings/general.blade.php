@@ -102,6 +102,16 @@
                                     'label' => __('main.app_show_uuid_column'),
                                 ])
                             </div>
+                            <div class="flex items-center gap-3">
+                                <input type="hidden" name="app_display_menu_labels" value="0">
+                                @include('components.elements.checkbox-button', [
+                                    'name' => 'app_display_menu_labels',
+                                    'id' => 'app_display_menu_labels',
+                                    'value' => '1',
+                                    'checked' => $settings->app_display_menu_labels,
+                                    'label' => __('main.app_display_menu_labels'),
+                                ])
+                            </div>
                         </div>
 
                         <!-- Submit Buttons -->

@@ -9,7 +9,7 @@ use App\Models\MediaFile;
 use App\Models\StarRating;
 use App\Models\TableColumn;
 use Modules\Tourists\Entities\TouristSite;
-use App\Models\CrossingPort;
+use App\Models\EntryPoint;
 use App\Models\Notification;
 use Modules\Tourists\Entities\TouristService;
 use App\Policies\AirlinePolicy;
@@ -20,7 +20,7 @@ use App\Policies\MediaFilePolicy;
 use App\Policies\StarRatingPolicy;
 use App\Policies\TableColumnPolicy;
 use App\Policies\TouristSitePolicy;
-use App\Policies\CrossingPortPolicy;
+use App\Policies\EntryPointPolicy;
 use App\Policies\NotificationPolicy;
 use App\Policies\TouristServicePolicy;
 use App\Policies\SidebarMenuOrderPolicy;
@@ -39,7 +39,7 @@ class AuthServiceProvider extends ServiceProvider
 
         // Application Models
         Airline::class => AirlinePolicy::class,
-        CrossingPort::class => CrossingPortPolicy::class,
+        EntryPoint::class => EntryPointPolicy::class,
         MediaFile::class => MediaFilePolicy::class,
         Notification::class => NotificationPolicy::class,
         PricingDefinition::class => PricingDefinitionPolicy::class,

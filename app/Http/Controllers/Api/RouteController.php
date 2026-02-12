@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\City;
-use App\Models\Nationality;
+use Modules\Geography\Entities\City;
+use Modules\Geography\Entities\Nationality;
 use App\Http\Controllers\Controller;
 
 class RouteController extends Controller

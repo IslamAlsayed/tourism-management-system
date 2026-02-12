@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Region;
+use Modules\Geography\Entities\Region;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

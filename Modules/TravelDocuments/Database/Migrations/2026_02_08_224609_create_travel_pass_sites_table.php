@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('travel_pass_sites')) {
+            return;
+        }
         Schema::create('travel_pass_sites', function (Blueprint $table) {
             $table->id();
 

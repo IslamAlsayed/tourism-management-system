@@ -2,7 +2,7 @@
 
 namespace Modules\Core\Http\Controllers;
 
-use App\Models\Country;
+use \Modules\Geography\Entities\Country;
 use Modules\Core\Entities\User;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;

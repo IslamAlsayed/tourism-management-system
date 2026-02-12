@@ -42,6 +42,7 @@ class Setting extends Model
         'app_notifications_system_reports',
         'app_notifications_security_updates',
         'app_paginate_count',
+        'app_display_menu_labels',
         // Google Maps Settings
         'app_google_maps_key',
         // Booking Settings
