@@ -16,8 +16,6 @@ class EntryPointsDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call([
-            EntryPointSeeder::class,
-        ]);
+        // $this->call();
     }
 }

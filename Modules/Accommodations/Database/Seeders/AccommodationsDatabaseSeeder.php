@@ -16,12 +16,6 @@ class AccommodationsDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call([
-            AccommodationSeeder::class,
-            // RoomSeeder::class,
-            // SeasonSeeder::class,
-            // MealSeeder::class,
-            // SupplementSeeder::class,
-        ]);
+        // $this->call();
     }
 }

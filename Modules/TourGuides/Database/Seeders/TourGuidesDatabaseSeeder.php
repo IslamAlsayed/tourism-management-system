@@ -16,11 +16,6 @@ class TourGuidesDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call([
-            TourGuideLanguageSeeder::class,
-            TourGuideSeeder::class,
-            TourGuideTypeSeeder::class,
-            TourGuideReviewSeeder::class,
-        ]);
+        // $this->call();
     }
 }
