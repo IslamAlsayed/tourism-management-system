@@ -41,3 +41,4 @@ jsconfig.json
 border_crossings_guide.html
 .env.testing
 CROSSING_PORTS_UPDATE.md
+.github\workflows\.bashrc

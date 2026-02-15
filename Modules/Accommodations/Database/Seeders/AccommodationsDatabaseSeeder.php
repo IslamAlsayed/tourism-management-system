@@ -16,6 +16,7 @@ class AccommodationsDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+<<<<<<< HEAD
         $this->call([
             // AccommodationSeeder::class,
             // RoomSeeder::class,
@@ -23,5 +24,8 @@ class AccommodationsDatabaseSeeder extends Seeder
             // MealSeeder::class,
             // SupplementSeeder::class,
         ]);
+=======
+        // $this->call();
+>>>>>>> production
     }
 }

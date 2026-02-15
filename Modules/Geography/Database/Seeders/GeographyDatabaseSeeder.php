@@ -16,6 +16,6 @@ class GeographyDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(CompleteDataSeeder::class);
+        // $this->call();
     }
 }
