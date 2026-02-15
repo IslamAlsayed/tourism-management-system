@@ -16,12 +16,6 @@ class EntryPointsDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-<<<<<<< HEAD
-        $this->call([
-            // LandcrossingSeeder::class,
-        ]);
-=======
         // $this->call();
->>>>>>> production
     }
 }

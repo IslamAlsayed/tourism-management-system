@@ -16,12 +16,6 @@ class CRMDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-<<<<<<< HEAD
-        $this->call([
-            // ClientSeeder::class,
-        ]);
-=======
         // $this->call();
->>>>>>> production
     }
 }
