@@ -2,12 +2,12 @@
 
 namespace Modules\Core\Http\Controllers;
 
-use \Modules\Geography\Entities\Country;
-use Modules\Core\Entities\User;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
-use App\Http\Requests\User\StoreRequest;
-use App\Http\Requests\User\UpdateRequest;
+use Modules\Core\Entities\User;
+use Modules\Core\Http\Requests\User\StoreRequest;
+use Modules\Core\Http\Requests\User\UpdateRequest;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -20,23 +20,26 @@ class UserController extends Controller
 
     public function create()
     {
-        $countries = Country::all();
-        return view('core::users.create', compact('countries'));
+        $roles = Role::orderBy('name')->get();
+        return view('core::users.create', compact('roles'));
     }
 
     public function store(StoreRequest $request)
     {
         $validated = $request->validated();
-        $data = array_merge($validated, $request->safe()->except('photo'));
-        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
-        $created = User::create($data);
-        if ($created) {
-            $this->uploadPhoto($request, $created, 'photo', "users");
-            return $request->has('save_and_add')
-                ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.user')]))
-                : redirect()->route('dashboard.core.users.index')->withSuccess(__('messages.type_created', ['type' => __('main.user')]));
+        $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
+        $created = User::create($validated);
+
+        $created->assignRole($created->role);
+
+        if ($request->hasFile('photo')) {
+            $this->uploadSinglePhoto($request, $created, 'photo', 'users');
         }
-        return redirect()->route('dashboard.core.users.index')->withError(__('messages.type_creation_failed', ['type' => __('main.user')]));
+        return $created
+            ? ($request->has('save_and_add')
+                ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.user')]))
+                : redirect()->route('dashboard.core.users.index')->withSuccess(__('messages.type_created', ['type' => __('main.user')])))
+            : redirect()->route('dashboard.core.users.index')->withError(__('messages.type_creation_failed', ['type' => __('main.user')]));
     }
 
     public function show($id)
@@ -52,8 +55,8 @@ class UserController extends Controller
         $user = User::find($id);
         if (!$user)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.user')]));
-        $countries = Country::all();
-        return view('core::users.edit', compact('user', 'countries'));
+        $roles = Role::orderBy('name')->get();
+        return view('core::users.edit', compact('user', 'roles'));
     }
 
     public function update(UpdateRequest $request, $id)
@@ -62,14 +65,13 @@ class UserController extends Controller
         if (!$user)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.user')]));
         $validated = $request->validated();
-        $data = array_merge($validated, $request->safe()->except('photo'));
-        $data['name'] = ($data['first_name'] ?? $user->first_name) . ' ' . ($data['last_name'] ?? $user->last_name);
+        $validated['name'] = ($validated['first_name'] ?? $user->first_name) . ' ' . ($validated['last_name'] ?? $user->last_name);
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
-        $updated = $user->update($request->all());
-        if ($request->has('photo')) {
-            $this->uploadPhoto($request, $user, 'photo', "users");
+        $updated = $user->update($validated);
+        if ($request->input('remove_photo') && $request->hasFile('photo')) {
+            $this->uploadSinglePhoto($request, $user, 'photo', 'users');
         }
         return $updated
             ? redirect()->route('dashboard.core.users.index')->withSuccess(__('messages.type_updated', ['type' => __('main.user')]))

@@ -19,9 +19,6 @@ use Modules\Accommodations\Http\Controllers\TypeController;
 */
 
 Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(function () {
-    // === ACCOMMODATION MANAGEMENT ===
-    Route::resource('accommodations', AccommodationController::class);
-
     // === TYPES MANAGEMENT ===
     Route::resource('accommodations/types', TypeController::class)->names('accommodations.types');
 
@@ -36,4 +33,10 @@ Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(functi
 
     // === SUPPLEMENTS MANAGEMENT ===
     Route::resource('accommodations/supplements', SupplementController::class)->names('accommodations.supplements');
+
+    // === SUPPLEMENTS MANAGEMENT ===
+    Route::resource('shared-space/rooms', RoomController::class)->names('shared-space.rooms');
+
+    // === ACCOMMODATIONS MANAGEMENT ===
+    Route::resource('accommodations', AccommodationController::class)->names('accommodations');
 });

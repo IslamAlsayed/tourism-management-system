@@ -1,16 +1,16 @@
 @php
     $name = isset($name) ? $name : 'crossing_port_id';
-    $EntryPoints = \App\Models\EntryPoint::orderBy('name')->get(['id', 'name']);
+    $Landcrossings = \Modules\EntryPoints\Entities\Landcrossing::orderBy('name')->get(['id', 'name']);
 @endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">
         <div>
             {{ __('main.' . (isset($name) ? str_replace('_id', '', $name) : '')) }}
             <strong class="dataLength text-primary">
-                ({{ count($EntryPoints) ?: 0 }})
+                ({{ count($Landcrossings) ?: 0 }})
             </strong>
         </div>
-        <a href="{{ route('dashboard.entrypoints.create') }}" class="text-blue-600 text-2sm">
+        <a href="{{ route('dashboard.entrypoints.land-crossings.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
         </a>
     </label>
@@ -18,7 +18,7 @@
         @if (!isset($record) || !isset($record->{isset($name) ? $name : ''}))
             <option value="" selected disabled></option>
         @endif
-        @forelse ($EntryPoints as $crossing_port_id)
+        @forelse ($Landcrossings as $crossing_port_id)
             <option value="{{ $crossing_port_id->id }}"
                 {{ isset($record->{isset($name) ? $name : ''}) && $record->{isset($name) ? $name : ''} == $crossing_port_id->id ? 'selected' : '' }}>
                 {{ $crossing_port_id->name }}

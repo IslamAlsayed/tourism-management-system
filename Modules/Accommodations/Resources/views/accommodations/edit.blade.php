@@ -26,14 +26,6 @@
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
-                {{-- Accommodation Photo --}}
-                @include('components.input-image', [
-                    'modelKey' => $accommodation->name ?? 'A',
-                    'column' => 'accommodation',
-                    'columnName' => 'photo',
-                    'record' => $accommodation,
-                ])
-
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -42,10 +34,28 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [country, state, city] --}}
-                        @livewire('geography::livewire.regions.location-select-base', ['record' => $accommodation])
-
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            <!-- City -->
+                            <div>
+                                <label for="city_id" class="kt-label required mb-2 flex items-center justify-between">
+                                    <div>
+                                        {{ __('main.city') }}
+                                        <strong class="dataLength text-primary">
+                                            ({{ $countCities ?: 0 }})
+                                        </strong>
+                                    </div>
+                                    <a href="{{ route('dashboard.geography.cities.create') }}" class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="city_id" id="city_id" class="kt-select cities-select" data-value="{{ $accommodation->city_id }}">
+                                    <option value="" selected>--</option>
+                                </select>
+                                @error('city_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             {{-- Currency --}}
                             @include('components.selects.currency', ['record' => $accommodation])
 
@@ -143,6 +153,9 @@
                     </div>
                 </div>
 
+                <!-- Media Information -->
+                @include('components.inputs.photo', ['record' => $accommodation])
+
                 <!-- Contact Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -165,8 +178,8 @@
                             <!-- General Email -->
                             <div class="align-self-end">
                                 <label for="general_email" class="kt-label">{{ __('main.general_email') }}</label>
-                                <input type="email" name="general_email" id="general_email" class="kt-input h-[45px]" value="{{ $accommodation->general_email }}"
-                                    placeholder="info@accommodation.com">
+                                <input type="email" name="general_email" id="general_email" class="kt-input h-[45px]"
+                                    value="{{ $accommodation->general_email }}" placeholder="info@accommodation.com">
                                 @error('general_email')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -275,3 +288,65 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const citiesSelects = $('.cities-select');
+
+            // Initialize Select2
+            citiesSelects.select2({
+                ajax: {
+                    url: '{{ route('routes.cities') }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            page: params.page || 1
+                        };
+                    },
+                    processResults: function(data, params) {
+                        params.page = params.page || 1;
+                        return {
+                            results: data.results,
+                            pagination: {
+                                more: data.pagination.more
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: '{{ __('main.search') }}...',
+                allowClear: true,
+                minimumInputLength: 0,
+                language: {
+                    inputTooShort: function() {
+                        return '--';
+                    },
+                    noResults: function() {
+                        return '{{ __('main.no_results_found') }}';
+                    }
+                }
+            });
+
+            // ✅ Handle EDIT MODE for each select
+            citiesSelects.each(function() {
+                const select = $(this); // ✅ مهم
+                const selectedCityId = select.data('value');
+                if (!selectedCityId) return;
+                $.ajax({
+                    url: '{{ url('api/routes/cities') }}/' + selectedCityId,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function(data) {
+                    if (select.find("option[value='" + data.id + "']").length) {
+                        return;
+                    }
+                    const option = new Option(data.text, data.id, true, true);
+                    select.append(option).trigger('change');
+                });
+            });
+        });
+    </script>
+@endpush

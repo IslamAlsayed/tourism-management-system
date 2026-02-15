@@ -22,6 +22,7 @@
             <div class="flex items-center gap-2.5">
                 <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}" alt="{{ $model->name }}"
                     class="rounded-full size-9 shrink-0">
+
                 <div class="flex flex-col">
                     <a class="text-sm font-medium text-mono hover:text-primary mb-px" href="#">
                         {!! highlightSearch($model->name ?? '--', $search) !!}
@@ -1478,7 +1479,7 @@
         <td title="{{ $model->meals->pluck('name')->filter()->implode(', ') }}">
             @if ($model->meals->count() > 0)
                 @foreach ($model->meals->take(3) as $meal)
-                    <a href="{{ route('meals.show', $meal->id) }}"
+                    <a href="{{ route('dashboard.accommodations.meals.show', $meal->id) }}"
                         class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($meal->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
@@ -1501,7 +1502,7 @@
         <td title="{{ $model->supplements->pluck('name')->filter()->implode(', ') }}">
             @if ($model->supplements->count() > 0)
                 @foreach ($model->supplements->take(3) as $meal)
-                    <a href="{{ route('supplements.show', $meal->id) }}"
+                    <a href="{{ route('dashboard.accommodations.supplements.show', $meal->id) }}"
                         class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                         {!! highlightSearch(limitedText($meal->name ?? '--', 30), $search) !!}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
@@ -1750,10 +1751,16 @@
     @break
 
     @case('model_type')
-        <td title="{{ __('main.' . modelTypeToString($model->model_type, '-')) ?? '--' }}">
+        @php
+            // Handle both old (App\Models\Accommodation) and new (Modules\Accommodations\Entities\Accommodation) formats
+            $modelTypeParts = explode('\\', $model->model_type);
+            $modelClassName = end($modelTypeParts); // Get the last part (class name)
+            $modelTypeTranslation = modelTypeToString($model->model_type, '-');
+        @endphp
+        <td title="{{ __('main.' . $modelTypeTranslation) ?? ($modelClassName ?? '--') }}">
             @if ($model->model_type && $model->model)
                 <span class="inline-block text-black bg-info/30 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                    {!! highlightSearch(limitedText(__('main.' . modelTypeToString($model->model_type, '-')) ?? '--', 30), $search) !!}
+                    {!! highlightSearch(limitedText(__('main.' . $modelTypeTranslation) ?? ($modelClassName ?? '--'), 30), $search) !!}
                 </span>
             @else
                 <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
@@ -1766,7 +1773,7 @@
     @case('model')
         <td title="{{ optional($model->model)->name ?? '--' }}">
             @if ($model->model)
-                <a href="{{ route(modelTypeToRoute($model->model_type, true, '.') . '.show', $model->model->id) }}"
+                <a href="{{ route(getModelRoute($model->model_type) . '.show', $model->model->id) }}"
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->model)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>

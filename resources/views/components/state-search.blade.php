@@ -19,24 +19,58 @@
     </div>
     <div class="kt-card-body p-4">
         <div class="flex flex-wrap gap-3">
-            @foreach ($records->take(20) as $city)
+            {{-- Display first 20 records --}}
+            @foreach ($records->take(20) as $record)
                 @if (isset($type) && $type == 'route')
-                    <a href="{{ route($models . '.show', $city->id) }}" class="kt-btn kt-btn-outline kt-btn-sm bg-info text-white list-item">
-                        {{ $city->name }}
+                    <a href="{{ route($models . '.show', $record->id) }}" class="kt-btn kt-btn-outline kt-btn-sm bg-info text-white list-item">
+                        {{ $record->name }}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-white"></i>
                     </a>
                 @else
                     <span class="kt-btn kt-btn-outline kt-btn-sm bg-info text-white list-item">
-                        {{ __('main.' . $city->{$column ?? 'name'}) ?? $city->name }}
+                        @if (isset($flat) && $flat)
+                            {{ $record }}
+                        @else
+                            {{ __('main.' . $record->{$column ?? 'name'}) ?? $record->name }}
+                            <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-white"></i>
+                        @endif
+                    </span>
+                @endif
+            @endforeach
+
+            {{-- Display remaining records --}}
+            @foreach ($records->slice(20) as $record)
+                @if (isset($type) && $type == 'route')
+                    <a href="{{ route($models . '.show', $record->id) }}" class="more-item hidden kt-btn kt-btn-outline kt-btn-sm bg-info text-white list-item">
+                        {{ $record->name }}
                         <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-white"></i>
+                    </a>
+                @else
+                    <span class="more-item hidden kt-btn kt-btn-outline kt-btn-sm bg-info text-white list-item">
+                        @if (isset($flat) && $flat)
+                            {{ $record }}
+                        @else
+                            {{ __('main.' . $record->{$column ?? 'name'}) ?? $record->name }}
+                            <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-white"></i>
+                        @endif
                     </span>
                 @endif
             @endforeach
         </div>
+
+        {{-- Show more/less buttons --}}
         @if ($records->count() > 20)
             <div class="mt-4 text-center">
                 <p class="text-sm text-secondary-foreground">
-                    {{ __('main.showing_first_items', ['count' => 20, 'total' => $records->count()]) }}
+                    <span id="showing-count">
+                        {{ __('messages.showing_first_items', ['count' => 20, 'total' => $records->count()]) }}
+                    </span>
+                    <span id="show-more" class="text-primary underline cursor-pointer">
+                        {{ __('messages.more') }}
+                    </span>
+                    <span id="show-less" class="hidden text-primary underline cursor-pointer">
+                        {{ __('messages.less') }}
+                    </span>
                 </p>
             </div>
         @endif
@@ -46,6 +80,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let listCards = document.querySelectorAll('.list-search-card');
+        let showingCount = document.getElementById('showing-count');
+        let showMoreButtons = document.getElementById('show-more');
+        let showLessButtons = document.getElementById('show-less');
         if (listCards.length === 0) return;
         listCards.forEach(card => {
             let searchPar = card.querySelector('.search-par');
@@ -91,5 +128,29 @@
                 });
             }
         });
+
+        // Show more functionality
+        if (showMoreButtons) {
+            showMoreButtons.addEventListener('click', function() {
+                let card = showMoreButtons.closest('.list-search-card');
+                let moreItems = card.querySelectorAll('.more-item');
+                moreItems.forEach(item => item.classList.remove('hidden'));
+                showingCount.textContent = '{{ __('messages.showing_all_items', ['total' => $records->count()]) }}';
+                showMoreButtons.classList.add('hidden');
+                showLessButtons.classList.remove('hidden');
+            });
+        }
+
+        // Show less functionality
+        if (showLessButtons) {
+            showLessButtons.addEventListener('click', function() {
+                let card = showLessButtons.closest('.list-search-card');
+                let moreItems = card.querySelectorAll('.more-item');
+                moreItems.forEach(item => item.classList.add('hidden'));
+                showingCount.textContent = '{{ __('messages.showing_first_items', ['count' => 20, 'total' => $records->count()]) }}';
+                showMoreButtons.classList.remove('hidden');
+                showLessButtons.classList.add('hidden');
+            });
+        }
     });
 </script>

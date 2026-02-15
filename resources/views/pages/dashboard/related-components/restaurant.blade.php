@@ -25,7 +25,7 @@
                     <div>
                         <label class="kt-label mb-1">{{ __('main.type') }}</label>
                         <div>
-                            <a href="{{ route('types.show', $record->type?->id) }}" class="kt-badge kt-badge-primary">
+                            <a href="{{ route('dashboard.accommodations.types.show', $record->type?->id) }}" class="kt-badge kt-badge-primary">
                                 {{ $record->type?->name ?: __('main.na') }}
                                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                             </a>

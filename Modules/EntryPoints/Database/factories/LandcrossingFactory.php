@@ -1,16 +1,15 @@
 <?php
 
-namespace Database\Factories;
+namespace Modules\EntryPoints\Database\Factories;
 
-use Modules\EntryPoints\Entities\Landcrossing;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\EntryPoint>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\EntryPoints\Entities\Landcrossing>
  */
-class EntryPointFactory extends Factory
+class LandcrossingFactory extends Factory
 {
-    protected $model = Landcrossing::class;
+    protected $model = \Modules\EntryPoints\Entities\Landcrossing::class;
 
     /**
      * Define the model's default state.

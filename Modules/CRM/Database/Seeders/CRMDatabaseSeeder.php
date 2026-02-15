@@ -17,7 +17,7 @@ class CRMDatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call([
-            ClientSeeder::class,
+            // ClientSeeder::class,
         ]);
     }
 }

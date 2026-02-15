@@ -118,6 +118,9 @@ class Seasons extends Component
         if ($this->type) {
             $query->where('model_type', 'like', '%' . studlyCaseName($this->type) . '%');
         }
+        if (request()->type) {
+            $query->where('model_type', 'Modules\\' . ucfirst(pluralLowerCaseName(request()->type)) . '\\Entities\\' . pluralCaseName(request()->type));
+        }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
         return view('accommodations::livewire.seasons', ['data' => $data, 'totalCount' => $this->totalCount ?: Season::count(), 'selectedIds' => $this->selectedIds]);

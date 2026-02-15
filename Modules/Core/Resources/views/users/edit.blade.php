@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.edit_user'))
+@section('title', __('main.edit_type', ['type' => __('main.user')]))
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.edit_user') }}
+                    {{ __('main.edit_type', ['type' => __('main.user')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.edit_user_description') }}
+                    {{ __('main.edit_type_description', ['type' => __('main.user')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -28,49 +28,58 @@
                     @csrf
                     @method('PUT')
                     <div class="grid gap-4 lg:gap-6">
-
-                        <!-- Profile Photo -->
-                        @include('components.input-image', [
-                            'modelKey' => $user->name ?? 'U',
-                            'column' => 'user',
-                            'columnName' => 'photo',
-                            'record' => $user,
-                        ])
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            <!-- Name -->
-                            <div class="">
-                                <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $user->name }}">
-                                @error('name')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
+                        <!-- User Information -->
+                        <div class="kt-card">
+                            <div class="kt-card-header">
+                                <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.user')]) }}</h3>
                             </div>
+                            <div class="kt-card-body p-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                                    <!-- First Name -->
+                                    <div class="">
+                                        <label for="first_name" class="kt-label mb-2">{{ __('main.first_name') }}</label>
+                                        <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]" value="{{ $user->first_name }}">
+                                        @error('first_name')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <!-- First Name -->
-                            <div class="">
-                                <label for="first_name" class="kt-label mb-2">{{ __('main.first_name') }}</label>
-                                <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]" value="{{ $user->first_name }}">
-                                @error('first_name')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                    <!-- Last Name -->
+                                    <div class="">
+                                        <label for="last_name" class="kt-label mb-2">{{ __('main.last_name') }}</label>
+                                        <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]" value="{{ $user->last_name }}">
+                                        @error('last_name')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <!-- Last Name -->
-                            <div class="">
-                                <label for="last_name" class="kt-label mb-2">{{ __('main.last_name') }}</label>
-                                <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]" value="{{ $user->last_name }}">
-                                @error('last_name')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
+                                    <!-- Role -->
+                                    <div class="">
+                                        <label for="role" class="kt-label required mb-2">{{ __('main.role') }}</label>
+                                        <select name="role" id="role" class="kt-input basic-single">
+                                            <option value="" selected>--</option>
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role->name }}" {{ $user->role == $role->name ? 'selected' : '' }}>
+                                                    {{ $role->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('role')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Bio -->
+                                @include('components.elements.input-text-editor', [
+                                    'column' => 'bio',
+                                    'value' => $user->bio,
+                                ])
                             </div>
                         </div>
 
-                        <!-- Bio -->
-                        @include('components.elements.input-text-editor', [
-                            'column' => 'bio',
-                            'value' => $user->bio,
-                        ])
+                        <!-- Media Information -->
+                        @include('components.inputs.photo', ['record' => $user])
 
                         <!-- Contact Information -->
                         <div class="kt-card">
@@ -281,7 +290,7 @@
                         ])
 
                         <!-- Update Submit Buttons -->
-                        @include('components.elements.update-submit', ['models' => 'users'])
+                        @include('components.elements.update-submit', ['models' => 'dashboard.core.users', 'model' => 'user'])
                     </div>
                 </form>
             </div>

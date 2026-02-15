@@ -207,6 +207,9 @@ class ActivityLog extends Component
         if ($this->dateTo) {
             $query->where('created_at', '<=', $this->dateTo);
         }
+        if (request()->type) {
+            $query->where('log_name', request()->type);
+        }
         $this->applySorting($query);
         return $query;
     }

@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('roles.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.core.roles.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.roles')]) }}
                 </a>
             </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('roles.store') }}">
+        <form class="space-y-6" method="POST" action="{{ route('dashboard.core.roles.store') }}">
             @csrf
             <div class="grid gap-4 lg:gap-6">
 
@@ -39,11 +39,25 @@
                                     {{ __('main.name') }}
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ old('name') }}" required>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ old('name') }}" required>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Permission Note -->
+                <div class="kt-card bg-yellow-100 border">
+                    <div class="kt-card-body p-4">
+                        <div class="flex gap-3">
+                            <i class="fas fa-info-circle text-yellow-600 mt-1"></i>
+                            <div>
+                                <p class="text-sm text-gray-600">
+                                    <strong>{{ __('main.note') }}:</strong>
+                                    {{ __('messages.permissions_with_manage_prefix_include_all_crud_operations') }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -59,12 +73,15 @@
                             @forelse($permissions->chunk(3) as $permissionGroup)
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                     @foreach ($permissionGroup as $permission)
-                                        <label class="flex items-center gap-3 cursor-pointer">
-                                            <input type="checkbox" name="permissions[]" value="{{ $permission->id }}"
-                                                class="w-4 h-4 rounded border-gray-300"
-                                                {{ old('permissions') && in_array($permission->id, old('permissions')) ? 'checked' : '' }}>
-                                            <span class="text-sm font-medium">{{ $permission->name }}</span>
-                                        </label>
+                                        <div class="flex items-center gap-3">
+                                            <input type="hidden" name="permissions[]" value="0">
+                                            @include('components.elements.checkbox-button', [
+                                                'name' => 'permissions[]',
+                                                'id' => 'permission_' . $permission->id,
+                                                'value' => $permission->id,
+                                                'label' => $permission->name,
+                                            ])
+                                        </div>
                                     @endforeach
                                 </div>
                             @empty
@@ -82,7 +99,7 @@
                     <button type="submit" class="kt-btn kt-btn-primary">
                         {{ __('main.create') }}
                     </button>
-                    <a href="{{ route('roles.index') }}" class="kt-btn kt-btn-outline">
+                    <a href="{{ route('dashboard.core.roles.index') }}" class="kt-btn kt-btn-outline">
                         {{ __('main.cancel') }}
                     </a>
                 </div>

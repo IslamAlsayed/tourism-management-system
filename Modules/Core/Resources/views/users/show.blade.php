@@ -34,16 +34,6 @@
                     <h3 class="kt-card-title">{{ __('main.basic_information') }}</h3>
                 </div>
 
-                <div class="text-start w-[200px] pt-6">
-                    <!-- Profile Photo -->
-                    @include('components.input-image', [
-                        'modelKey' => $user->name ?? 'U',
-                        'column' => 'user',
-                        'columnName' => 'photo',
-                        'record' => $user,
-                    ])
-                </div>
-
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         @if ($user->name)
@@ -95,7 +85,7 @@
                                     'modelType' => '\\Modules\\Core\\Entities\\User',
                                     'field' => 'is_active',
                                     'value' => (bool) $user->is_active,
-                                    'table' => 'users',
+                                    'table' => 'dashboard.core.users',
                                 ])
                             </div>
                         </div>
@@ -111,17 +101,22 @@
                 </div>
             </div>
 
+            <!-- Media Files -->
+            @if (!empty($user->photo))
+                @include('components.display-photo', ['record' => $user, 'alt' => $user->name])
+            @endif
+
             <!-- Metadata -->
             @include('components.metadata', ['record' => $user])
 
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'users',
+                    'models' => 'dashboard.core.users',
                     'id' => $user->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'users',
+                    'model' => 'dashboard.core.users',
                     'id' => $user->id,
                 ])
                 <a href="{{ route('dashboard.core.users.index') }}" class="kt-btn kt-btn-outline">

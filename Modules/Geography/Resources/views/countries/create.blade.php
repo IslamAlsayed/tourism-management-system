@@ -188,30 +188,7 @@
                 </div>
 
                 <!-- Media Information -->
-                <div class="kt-card">
-                    <div class="kt-card-header">
-                        <h3 class="kt-card-title">
-                            {{ __('main.type_information', ['type' => __('main.media')]) }}
-                        </h3>
-                    </div>
-                    <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 gap-6">
-                            <!-- Photo -->
-                            <div>
-                                <label for="photo" class="kt-label">
-                                    {{ __('main.photo') }}
-                                </label>
-                                <div class="dropzone mt-2 border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer"
-                                    data-input="photo">
-                                    <i class="far fa-cloud-arrow-up text-5xl text-gray-600"></i>
-                                    <p class="mt-4">{{ __('main.click_or_drag_image_here') }}</p>
-                                </div>
-                                <input type="file" id="photo" name="photo" accept="image/*" hidden>
-                                <div id="preview-photo" class="hidden flex flex-wrap gap-4 mt-6"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('components.inputs.photo')
 
                 {{-- Description --}}
                 @include('components.elements.input-text-editor', [
@@ -271,7 +248,3 @@
         </form>
     </div>
 @endsection
-
-@push('scripts')
-    @include('components.scripts.drag-drop-images')
-@endpush

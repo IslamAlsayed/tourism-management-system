@@ -8,12 +8,6 @@
         'searchValue' => $search ?? null,
         'showSearch' => true,
     ])
-        @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
-            @include('components.columns', [
-                'allColumns' => $allColumns ?? [],
-                'selectedIds' => $selectedIds ?? [],
-            ])
-        @endif
     @endcomponent
 
     <div class="kt-card-content" wire:loading.class="loading"
@@ -43,8 +37,7 @@
                                     @if ($column == 'uuid' && $settings->app_show_uuid_column == 0)
                                         @continue
                                     @endif
-                                    <th wire:click="sortBy('{{ $column }}')"
-                                        title="{{ __('main.sort_by') }} {{ __('main.' . $column) }}"
+                                    <th wire:click="sortBy('{{ $column }}')" title="{{ __('main.sort_by') }} {{ __('main.' . $column) }}"
                                         class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-50 transition-colors">
                                         {{ __('main.' . $column) }}
                                         <i class="fas {{ $this->getSortIcon($column) }} ms-2"
@@ -56,8 +49,7 @@
                         </thead>
                         <tbody id="data_table_tbody">
                             @forelse ($data as $permission)
-                                <tr wire:key="row-{{ $permission->id }}"
-                                    class="hover:bg-gray-100 unique-record-{{ $permission->id }}">
+                                <tr wire:key="row-{{ $permission->id }}" class="hover:bg-gray-100 unique-record-{{ $permission->id }}">
                                     <td class="text-center">
                                         @include('components.elements.checkbox-button', [
                                             'name' => 'selectItem[]',
@@ -70,32 +62,33 @@
                                         {!! highlightSearch(limitedText($permission->name ?? '--', 30), $search) !!}
                                     </td>
                                     <td>
-                                        <span
-                                            class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-gray-600">
+                                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-yellow-100 text-gray-600">
                                             {!! highlightSearch(limitedText($permission->guard_name ?? '--', 30), $search) !!}
                                         </span>
                                     </td>
                                     <td>{!! highlightSearch(limitedText($permission->created_at->format('Y-m-d H:i') ?? '--', 30), $search) !!}</td>
                                     <td class="px-4 py-2 text-end">
                                         <div class="flex gap-2 justify-end">
-                                            @if (showRouteExists('permissions') && showFunctionExists('permissions'))
+                                            @if (getActiveUser()->can('view', $permission))
                                                 @include('components.elements.show-button', [
-                                                    'models' => 'permissions',
+                                                    'models' => 'dashboard.core.permissions',
                                                     'id' => $permission->id,
                                                 ])
                                             @endif
 
                                             @if (getActiveUser()->can('update', $permission))
                                                 @include('components.elements.edit-button', [
-                                                    'models' => 'permissions',
+                                                    'models' => 'dashboard.core.permissions',
                                                     'id' => $permission->id,
                                                 ])
                                             @endif
 
                                             @if (getActiveUser()->can('delete', $permission))
-                                                @include('components.elements.delete-button', [
-                                                    'id' => $permission->id,
-                                                ])
+                                                @include('components.elements.delete-button', ['id' => $permission->id])
+                                            @endif
+
+                                            @if (getActiveUser()->can('forceDelete', $permission))
+                                                @include('components.elements.forceDelete-button', ['id' => $permission->id])
                                             @endif
                                         </div>
                                     </td>

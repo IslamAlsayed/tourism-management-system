@@ -20,8 +20,6 @@ return new class extends Migration
             // Foreign Keys
             $table->foreignId('type_id')->nullable();
             $table->foreignId('currency_id')->nullable();
-            $table->foreignId('country_id')->nullable();
-            $table->foreignId('state_id')->nullable();
             $table->foreignId('city_id')->nullable();
 
             // Basic info
@@ -50,6 +48,7 @@ return new class extends Migration
             $table->string('postal_code')->nullable();
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
+            $table->string('photo')->nullable();
             $table->boolean('is_active')->nullable();
             $table->text('description')->nullable();
             $table->text('notes')->nullable();

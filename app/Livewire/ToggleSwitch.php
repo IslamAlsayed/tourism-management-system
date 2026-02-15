@@ -45,7 +45,7 @@ class ToggleSwitch extends Component
 
             $this->value = $newValue;
             if ($this->table == 'users' && $this->field == 'is_active') {
-                $ably = new AblyRest(Setting::first()->app_ably_key);
+                $ably = new AblyRest(Setting::withoutGlobalScopes()->first()->app_ably_key);
                 $data = ['id' => $this->modelId, 'value' => $newValue];
                 $ably->channel('switch.user.active')->publish('switch.user.active', $data);
             }

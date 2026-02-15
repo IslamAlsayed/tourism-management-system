@@ -6,7 +6,7 @@
         'title' => __('main.currencies'),
         'description' => __('main.manage_system_types', ['types' => __('main.currencies')]),
         'import_url' => route('import.data', ['models' => 'currencies']),
-        'page_create_url' => route('currencies.create'),
+        'page_create_url' => route('dashboard.geography.currencies.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.currency')]),
     ])
     <!-- End of Container -->

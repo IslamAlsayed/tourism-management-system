@@ -12,12 +12,12 @@ class RolePolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->can('manage_roles');
+        return $user->can('manage_roles') || $user->can('view_roles');
     }
 
     public function view(User $user, Role $role): bool
     {
-        return $user->can('manage_roles');
+        return $user->can('manage_roles') || $user->can('view_roles');
     }
 
     public function create(User $user): bool

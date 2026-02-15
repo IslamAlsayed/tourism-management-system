@@ -25,10 +25,13 @@ class RolePermissionSeeder extends Seeder
         $permissions = [
             // User Management
             'manage_users',
+            'view_users',
 
             // Roles & Permissions
             'manage_roles',
+            'view_roles',
             'manage_permissions',
+            'view_permissions',
 
             // System Settings
             'manage_system',
@@ -39,6 +42,7 @@ class RolePermissionSeeder extends Seeder
 
             // Data Management (general)
             'manage_data',
+            'view_data',
 
             // Specific Data Management
             'manage_clients',
@@ -56,6 +60,8 @@ class RolePermissionSeeder extends Seeder
             'manage_meals',
             'manage_rooms',
             'manage_media',
+            'manage_pricing_definitions',
+            'view_pricing_definitions',
 
             // Import/Export
             'import_data',
@@ -90,6 +96,7 @@ class RolePermissionSeeder extends Seeder
             'view_data',
             'export_reports',
             'view_activity_log',
+            'view_pricing_definitions'
         ];
         $userRole->syncPermissions($userPermissions);
     }

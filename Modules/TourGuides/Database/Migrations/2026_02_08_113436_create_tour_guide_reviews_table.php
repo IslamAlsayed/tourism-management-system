@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('tour_guide_languages')) {
+        if (Schema::hasTable('tour_guide_reviews')) {
             return;
         }
         Schema::create('tour_guide_reviews', function (Blueprint $table) {

@@ -87,16 +87,18 @@
                 </div>
             </div>
 
-            <!-- Accommodations -->
-            @if (count($type->accommodations) > 0)
+            <!-- Type Related accommodations -->
+            @if (!empty($type->accommodations) && count($type->accommodations) > 0)
                 <div class="kt-card bg-blue-100">
-                    <div class="kt-card-header">
+                    <div class="kt-card-header flex items-center justify-between">
                         <h3 class="kt-card-title">
                             {{ __('main.type_information', ['type' => __('main.accommodation')]) }}
                             <span class="text-primary font-semibold">({{ count($type->accommodations) }})</span>
                         </h3>
+
+                        <button class="cursor-pointer" id="toggle-section" toggle-button><i class="icon fas fa-angle-up"></i></button>
                     </div>
-                    <div class="kt-card-body p-4">
+                    <div class="kt-card-body p-4" id="type-sections">
                         <div class="flex flex-col gap-4">
                             @foreach ($type->accommodations as $accommodation)
                                 <div wire:key="accommodation-{{ $accommodation->id }}" class="kt-card p-4 record-accommodations-{{ $accommodation->id }}">
@@ -207,11 +209,11 @@
                                     @endif
                                     <div class="lg:col-span-2 flex gap-2 mt-4">
                                         @include('components.elements.show-button', [
-                                            'models' => 'dashboard.accommodations.accommodations',
+                                            'models' => 'dashboard.accommodations',
                                             'id' => $accommodation->id,
                                         ])
                                         @include('components.elements.edit-button', [
-                                            'models' => 'dashboard.accommodations.accommodations',
+                                            'models' => 'dashboard.accommodations',
                                             'id' => $accommodation->id,
                                         ])
                                         @livewire('delete-bottom', [
@@ -268,3 +270,17 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        let toggleButton = document.getElementById('toggle-section');
+        let accommodationsSection = document.getElementById('type-sections');
+        if (toggleButton && accommodationsSection) {
+            toggleButton.addEventListener('click', function() {
+                accommodationsSection.classList.toggle('hidden');
+                toggleButton.querySelector('.icon').classList.toggle('fa-angle-up');
+                toggleButton.querySelector('.icon').classList.toggle('fa-angle-down');
+            });
+        }
+    </script>
+@endpush

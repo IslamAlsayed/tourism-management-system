@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('subregion_pricings')) {
+        if (Schema::hasTable('subregion_pricing')) {
             return;
         }
         Schema::create('subregion_pricing', function (Blueprint $table) {

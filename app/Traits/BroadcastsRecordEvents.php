@@ -19,7 +19,7 @@ trait BroadcastsRecordEvents
         // Broadcast when a model is created
         static::created(function ($model) {
             if (Schema::hasTable('settings')) {
-                $settings = Setting::first();
+                $settings = Setting::withoutGlobalScopes()->first();
                 if ($settings && $settings->app_notifications_new_record == 1) {
                     $user = getActiveUser();
                     if ($user && !app()->runningInConsole()) {
@@ -33,7 +33,7 @@ trait BroadcastsRecordEvents
         // Broadcast when a model is updated
         static::updated(function ($model) {
             if (Schema::hasTable('settings')) {
-                $settings = Setting::first();
+                $settings = Setting::withoutGlobalScopes()->first();
                 if ($settings && $settings->app_notifications_data_updates == 1) {
                     $user = getActiveUser();
                     if ($user && !app()->runningInConsole()) {
@@ -47,7 +47,7 @@ trait BroadcastsRecordEvents
         // Broadcast when a model is deleted
         static::deleted(function ($model) {
             if (Schema::hasTable('settings')) {
-                $settings = Setting::first();
+                $settings = Setting::withoutGlobalScopes()->first();
                 if ($settings && $settings->app_notifications_data_deletes == 1) {
                     $user = getActiveUser();
                     if ($user && !app()->runningInConsole()) {

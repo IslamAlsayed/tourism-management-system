@@ -123,7 +123,6 @@
                     </div>
                     <div class="kt-card-body p-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 items-end gap-6">
-
                             <!-- Origin City -->
                             <div>
                                 <label for="origin_city_id" class="kt-label">{{ __('main.city') }}</label>

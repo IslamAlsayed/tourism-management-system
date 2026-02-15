@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace Modules\EntryPoints\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\EntryPoints\Entities\Landcrossing;
 
-class EntryPointSeeder extends Seeder
+class LandcrossingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,13 +15,13 @@ class EntryPointSeeder extends Seeder
         truncateWithReset(Landcrossing::class);
 
         // Create specific crossing ports and airports
-        Landcrossing::factory()->internationalAirport()->count(5)->create();
-        Landcrossing::factory()->domesticAirport()->count(5)->create();
-        Landcrossing::factory()->seaport()->count(3)->create();
-        Landcrossing::factory()->landCrossing()->count(7)->create();
+        // Landcrossing::factory()->internationalAirport()->count(5)->create();
+        // Landcrossing::factory()->domesticAirport()->count(5)->create();
+        // Landcrossing::factory()->seaport()->count(3)->create();
+        // Landcrossing::factory()->landCrossing()->count(7)->create();
 
         // Create additional random crossing ports
-        Landcrossing::factory()->count(10)->create();
+        // Landcrossing::factory()->count(10)->create();
 
         // Create some sample real crossing ports
         $this->createRealEntryPoints();

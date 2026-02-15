@@ -50,12 +50,12 @@ return [
                             'icon' => 'fas fa-user-plus',
                             'route' => 'dashboard.core.users.create',
                         ],
-                        [
-                            'title' => 'import users',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'user', 'models' => 'users', 'view' => 'users'],
-                        ]
+                        // [
+                        //     'title' => 'import users',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'user', 'models' => 'users', 'view' => 'users'],
+                        // ]
                     ],
                 ],
                 // ================= Roles & Permissions - الأدوار والصلاحيات =================
@@ -144,16 +144,19 @@ return [
                             'title' => 'all activities',
                             'icon' => 'fas fa-list',
                             'route' => 'dashboard.core.activity-log.index',
+                            'parameters' => ['t' => Str::random(120), 'type' => ''],
                         ],
                         [
                             'title' => 'user activities',
                             'icon' => 'fas fa-user',
-                            'route' => 'dashboard.core.activity-log.users',
+                            'route' => 'dashboard.core.activity-log.index',
+                            'parameters' => ['t' => Str::random(120), 'type' => 'users'],
                         ],
                         [
                             'title' => 'system activities',
                             'icon' => 'fas fa-cogs',
-                            'route' => 'dashboard.core.activity-log.system',
+                            'route' => 'dashboard.core.activity-log.index',
+                            'parameters' => ['t' => Str::random(120), 'type' => 'system'],
                         ],
                     ],
                 ],
@@ -251,12 +254,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.geography.regions.create',
                         ],
-                        [
-                            'title' => 'import regions',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'region', 'models' => 'regions', 'view' => 'regions'],
-                        ],
+                        // [
+                        //     'title' => 'import regions',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'region', 'models' => 'regions', 'view' => 'regions'],
+                        // ],
                     ],
                 ],
                 // ================= Subregions - المناطق الفرعية =================
@@ -274,12 +277,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.geography.subregions.create',
                         ],
-                        [
-                            'title' => 'import subregions',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'subregion', 'models' => 'subregions', 'view' => 'subregions'],
-                        ],
+                        // [
+                        //     'title' => 'import subregions',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'subregion', 'models' => 'subregions', 'view' => 'subregions'],
+                        // ],
                     ],
                 ],
                 // ================= Countries - الدول =================
@@ -297,12 +300,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.geography.countries.create',
                         ],
-                        [
-                            'title' => 'import countries',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'country', 'models' => 'countries', 'view' => 'countries'],
-                        ],
+                        // [
+                        //     'title' => 'import countries',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'country', 'models' => 'countries', 'view' => 'countries'],
+                        // ],
                     ],
                 ],
                 // ================= States - الولايات =================
@@ -320,12 +323,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.geography.states.create',
                         ],
-                        [
-                            'title' => 'import states',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'state', 'models' => 'states', 'view' => 'states'],
-                        ],
+                        // [
+                        //     'title' => 'import states',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'state', 'models' => 'states', 'view' => 'states'],
+                        // ],
                     ],
                 ],
                 // ================= Cities - المدن =================
@@ -343,12 +346,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.geography.cities.create',
                         ],
-                        [
-                            'title' => 'import cities',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'city', 'models' => 'cities', 'view' => 'cities'],
-                        ],
+                        // [
+                        //     'title' => 'import cities',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'city', 'models' => 'cities', 'view' => 'cities'],
+                        // ],
                     ],
                 ],
                 // ================= Nationalities - الجنسيات =================
@@ -366,12 +369,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.geography.nationalities.create',
                         ],
-                        [
-                            'title' => 'import nationalities',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'nationality', 'models' => 'nationalities', 'view' => 'nationalities'],
-                        ],
+                        // [
+                        //     'title' => 'import nationalities',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'nationality', 'models' => 'nationalities', 'view' => 'nationalities'],
+                        // ],
                     ],
                 ],
             ],
@@ -433,12 +436,12 @@ return [
                             'icon' => 'fas fa-square-plus',
                             'route' => 'dashboard.localization.currencies.create',
                         ],
-                        [
-                            'title' => 'import currencies',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'currency', 'models' => 'currencies', 'view' => 'currencies'],
-                        ],
+                        // [
+                        //     'title' => 'import currencies',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'currency', 'models' => 'currencies', 'view' => 'currencies'],
+                        // ],
                     ],
                 ],
                 // ================= Timezones - المناطق الزمنية =================
@@ -456,12 +459,12 @@ return [
                             'icon' => 'fas fa-square-plus',
                             'route' => 'dashboard.localization.timezones.create',
                         ],
-                        [
-                            'title' => 'import timezones',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'timezone', 'models' => 'timezones', 'view' => 'timezones'],
-                        ],
+                        // [
+                        //     'title' => 'import timezones',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'timezone', 'models' => 'timezones', 'view' => 'timezones'],
+                        // ],
                     ],
                 ],
             ],
@@ -489,12 +492,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.tourguides.guides.create'
                         ],
-                        [
-                            'title' => 'import guides',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'tourGuide', 'models' => 'tours-guides', 'view' => 'tours.guides'],
-                        ],
+                        // [
+                        //     'title' => 'import guides',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'tourGuide', 'models' => 'tours-guides', 'view' => 'tours.guides'],
+                        // ],
                     ],
                 ],
                 [
@@ -511,12 +514,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.tourguides.guides-types.create'
                         ],
-                        [
-                            'title' => 'import guides-types',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'tourGuideType', 'models' => 'tours-guides-types', 'view' => 'tours.guides-types'],
-                        ],
+                        // [
+                        //     'title' => 'import guides-types',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'tourGuideType', 'models' => 'tours-guides-types', 'view' => 'tours.guides-types'],
+                        // ],
                     ],
                 ],
                 [
@@ -533,12 +536,80 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.tourguides.guides-reviews.create'
                         ],
+                        // [
+                        //     'title' => 'import guides-reviews',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'tourGuideReview', 'models' => 'tours-guides-reviews', 'view' => 'tours.guides-reviews'],
+                        // ],
+                    ],
+                ],
+                // [
+                //     'title' => 'seasons',
+                //     'icon' => 'fas fa-calendar-days',
+                //     'children' => [
+                //         [
+                //             'title' => 'all seasons',
+                //             'icon' => 'fas fa-calendar-check',
+                //             'route' => 'dashboard.accommodations.seasons.index',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'tours'],
+                //         ],
+                //         [
+                //             'title' => 'create season',
+                //             'icon' => 'fas fa-plus',
+                //             'route' => 'dashboard.accommodations.seasons.create',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'tours'],
+                //         ],
+                //         [
+                //             'title' => 'import seasons',
+                //             'icon' => 'fas fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
+                //         ],
+                //     ],
+                // ],
+            ]
+        ],
+
+        // ================= Shared Space - المطاعم =================
+        [
+            'title' => 'shared space',
+            'icon' => 'fas fa-utensils',
+            'fixed' => 'done',
+            'label' => 'Shared Space',
+            'children' => [
+                [
+                    'title' => 'types',
+                    'icon' => 'fas fa-layer-group',
+                    'children' => [
                         [
-                            'title' => 'import guides-reviews',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'tourGuideReview', 'models' => 'tours-guides-reviews', 'view' => 'tours.guides-reviews'],
+                            'title' => 'all types',
+                            'icon' => 'fas fa-list',
+                            'route' => 'dashboard.shared-space.rooms.index',
                         ],
+                        [
+                            'title' => 'create type',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.shared-space.rooms.create',
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'rooms',
+                    'icon' => 'fas fa-door-closed',
+                    'children' => [
+                        [
+                            'title' => 'all rooms',
+                            'icon' => 'fas fa-door-open',
+                            'route' => 'dashboard.shared-space.rooms.index',
+                            'parameters' => ['t' => Str::random(120), 'type' => ''],
+                        ],
+                        [
+                            'title' => 'create room',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.shared-space.rooms.create',
+                            'parameters' => ['type' => ''],
+                        ]
                     ],
                 ],
                 [
@@ -548,31 +619,61 @@ return [
                         [
                             'title' => 'all seasons',
                             'icon' => 'fas fa-calendar-check',
-                            'route' => 'dashboard.accommodations.seasons.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'tours'],
+                            'route' => 'dashboard.shared-space.rooms.index',
+                            'parameters' => ['t' => Str::random(120), 'type' => ''],
                         ],
                         [
                             'title' => 'create season',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.seasons.create',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'tours'],
-                        ],
-                        [
-                            'title' => 'import seasons',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
-                        ],
+                            'icon' => 'fas fa-calendar-plus',
+                            'route' => 'dashboard.shared-space.rooms.create',
+                            'parameters' => ['type' => 'accommodation', Str::random()],
+                        ]
                     ],
                 ],
-            ]
+                [
+                    'title' => 'meals',
+                    'icon' => 'fas fa-utensils',
+                    'children' => [
+                        [
+                            'title' => 'all meals',
+                            'icon' => 'fas fa-bowl-food',
+                            'route' => 'dashboard.shared-space.rooms.index',
+                            'parameters' => ['t' => Str::random(120), 'type' => ''],
+                        ],
+                        [
+                            'title' => 'create meal',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.shared-space.rooms.create',
+                            'parameters' => ['type' => ''],
+                        ]
+                    ],
+                ],
+                [
+                    'title' => 'supplements',
+                    'icon' => 'fas fa-circle-plus',
+                    'children' => [
+                        [
+                            'title' => 'all supplements',
+                            'icon' => 'fas fa-list-check',
+                            'route' => 'dashboard.shared-space.rooms.index',
+                            'parameters' => ['t' => Str::random(120), 'type' => ''],
+                        ],
+                        [
+                            'title' => 'create supplement',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.shared-space.rooms.create',
+                            'parameters' => ['type' => ''],
+                        ]
+                    ],
+                ],
+            ],
         ],
 
         // ================= Accommodations - الاقامات =================
         [
             'title' => 'accommodations',
             'icon' => 'fas fa-building',
-            'fixed' => 'done',
+            'status' => 'done',
             'label' => 'accommodations',
             'children' => [
                 [
@@ -589,106 +690,84 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.accommodations.create',
                         ],
-                        [
-                            'title' => 'import accommodations',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'accommodation', 'models' => 'accommodations', 'view' => 'accommodations'],
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'types',
-                    'icon' => 'fas fa-layer-group',
-                    'children' => [
-                        [
-                            'title' => 'all types',
-                            'icon' => 'fas fa-list',
-                            'route' => 'dashboard.accommodations.types.index',
-                        ],
-                        [
-                            'title' => 'create type',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.types.create',
-                        ],
-                        [
-                            'title' => 'import types',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'type', 'models' => 'types', 'view' => 'types'],
-                        ],
+                        // [
+                        //     'title' => 'import accommodations',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'accommodation', 'models' => 'accommodations', 'view' => 'accommodations'],
+                        // ],
                     ],
                 ],
                 // [
-                //     'title' => 'cores',
-                //     'icon' => 'fa-regular fa-layer-group',
+                //     'title' => 'types',
+                //     'icon' => 'fas fa-layer-group',
                 //     'children' => [
                 //         [
-                //             'title' => 'all cores',
-                //             'icon' => 'fa-regular fa-list-ul',
-                //             'route' => 'cores.index',
+                //             'title' => 'all types',
+                //             'icon' => 'fas fa-list',
+                //             'route' => 'dashboard.accommodations.types.index',
                 //         ],
                 //         [
                 //             'title' => 'create type',
-                //             'icon' => 'fa-regular fa-square-plus',
-                //             'route' => 'cores.create',
+                //             'icon' => 'fas fa-plus',
+                //             'route' => 'dashboard.accommodations.types.create',
                 //         ],
                 //         [
-                //             'title' => 'import cores',
-                //             'icon' => 'fa-regular fa-file-import',
+                //             'title' => 'import types',
+                //             'icon' => 'fas fa-file-import',
                 //             'route' => 'import.data',
-                //             'parameters' => ['models' => 'cores'],
+                //             'parameters' => ['model' => 'type', 'models' => 'types', 'view' => 'types'],
                 //         ],
                 //     ],
                 // ],
-                [
-                    'title' => 'rooms',
-                    'icon' => 'fas fa-door-closed',
-                    'children' => [
-                        [
-                            'title' => 'all rooms',
-                            'icon' => 'fas fa-door-open',
-                            'route' => 'dashboard.accommodations.rooms.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
-                        ],
-                        [
-                            'title' => 'create room',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.rooms.create',
-                            'parameters' => ['type' => 'accommodation'],
-                        ],
-                        [
-                            'title' => 'import rooms',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'room', 'models' => 'rooms', 'view' => 'rooms'],
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'seasons',
-                    'icon' => 'fas fa-calendar-days',
-                    'children' => [
-                        [
-                            'title' => 'all seasons',
-                            'icon' => 'fas fa-calendar-check',
-                            'route' => 'dashboard.accommodations.seasons.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
-                        ],
-                        [
-                            'title' => 'create season',
-                            'icon' => 'fas fa-calendar-plus',
-                            'route' => 'dashboard.accommodations.seasons.create',
-                            'parameters' => ['type' => 'accommodation', Str::random(120)],
-                        ],
-                        [
-                            'title' => 'import seasons',
-                            'icon' => 'fa-regular fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
-                        ],
-                    ],
-                ],
+                // [
+                //     'title' => 'rooms',
+                //     'icon' => 'fas fa-door-closed',
+                //     'children' => [
+                //         [
+                //             'title' => 'all rooms',
+                //             'icon' => 'fas fa-door-open',
+                //             'route' => 'dashboard.accommodations.rooms.index',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
+                //         ],
+                //         [
+                //             'title' => 'create room',
+                //             'icon' => 'fas fa-plus',
+                //             'route' => 'dashboard.accommodations.rooms.create',
+                //             'parameters' => ['type' => 'accommodation'],
+                //         ],
+                //         [
+                //             'title' => 'import rooms',
+                //             'icon' => 'fas fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['model' => 'room', 'models' => 'rooms', 'view' => 'rooms'],
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'seasons',
+                //     'icon' => 'fas fa-calendar-days',
+                //     'children' => [
+                //         [
+                //             'title' => 'all seasons',
+                //             'icon' => 'fas fa-calendar-check',
+                //             'route' => 'dashboard.accommodations.seasons.index',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
+                //         ],
+                //         [
+                //             'title' => 'create season',
+                //             'icon' => 'fas fa-calendar-plus',
+                //             'route' => 'dashboard.accommodations.seasons.create',
+                //             'parameters' => ['type' => 'accommodation', Str::random(120)],
+                //         ],
+                //         [
+                //             'title' => 'import seasons',
+                //             'icon' => 'fa-regular fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
+                //         ],
+                //     ],
+                // ],
                 // [
                 //     'title' => 'pricing',
                 //     'icon' => 'fa-regular fa-layer-group',
@@ -733,54 +812,54 @@ return [
                 //         ],
                 //     ],
                 // ],
-                [
-                    'title' => 'meals',
-                    'icon' => 'fas fa-utensils',
-                    'children' => [
-                        [
-                            'title' => 'all meals',
-                            'icon' => 'fas fa-bowl-food',
-                            'route' => 'dashboard.accommodations.meals.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
-                        ],
-                        [
-                            'title' => 'create meal',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.meals.create',
-                            'parameters' => ['type' => 'accommodation'],
-                        ],
-                        [
-                            'title' => 'import meals',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'meal', 'models' => 'meals', 'view' => 'meals'],
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'supplements',
-                    'icon' => 'fas fa-circle-plus',
-                    'children' => [
-                        [
-                            'title' => 'all supplements',
-                            'icon' => 'fas fa-list-check',
-                            'route' => 'dashboard.accommodations.supplements.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
-                        ],
-                        [
-                            'title' => 'create supplement',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.supplements.create',
-                            'parameters' => ['type' => 'accommodation'],
-                        ],
-                        [
-                            'title' => 'import supplements',
-                            'icon' => 'fa-regular fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
-                        ],
-                    ],
-                ],
+                // [
+                //     'title' => 'meals',
+                //     'icon' => 'fas fa-utensils',
+                //     'children' => [
+                //         [
+                //             'title' => 'all meals',
+                //             'icon' => 'fas fa-bowl-food',
+                //             'route' => 'dashboard.accommodations.meals.index',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
+                //         ],
+                //         [
+                //             'title' => 'create meal',
+                //             'icon' => 'fas fa-plus',
+                //             'route' => 'dashboard.accommodations.meals.create',
+                //             'parameters' => ['type' => 'accommodation'],
+                //         ],
+                //         [
+                //             'title' => 'import meals',
+                //             'icon' => 'fas fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['model' => 'meal', 'models' => 'meals', 'view' => 'meals'],
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'supplements',
+                //     'icon' => 'fas fa-circle-plus',
+                //     'children' => [
+                //         [
+                //             'title' => 'all supplements',
+                //             'icon' => 'fas fa-list-check',
+                //             'route' => 'dashboard.accommodations.supplements.index',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'accommodation'],
+                //         ],
+                //         [
+                //             'title' => 'create supplement',
+                //             'icon' => 'fas fa-plus',
+                //             'route' => 'dashboard.accommodations.supplements.create',
+                //             'parameters' => ['type' => 'accommodation'],
+                //         ],
+                //         [
+                //             'title' => 'import supplements',
+                //             'icon' => 'fa-regular fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
+                //         ],
+                //     ],
+                // ],
                 // [
                 //     'title' => 'policing',
                 //     'icon' => 'fa-regular fa-layer-group',
@@ -871,62 +950,62 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.restaurants.create',
                         ],
-                        [
-                            'title' => 'import restaurants',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'accommodation', 'models' => 'restaurants', 'view' => 'restaurants'],
-                        ],
+                        // [
+                        //     'title' => 'import restaurants',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'accommodation', 'models' => 'restaurants', 'view' => 'restaurants'],
+                        // ],
                     ],
                 ],
-                [
-                    'title' => 'meals',
-                    'icon' => 'fas fa-bowl-food',
-                    'children' => [
-                        [
-                            'title' => 'all meals',
-                            'icon' => 'fas fa-bowl-rice',
-                            'route' => 'dashboard.accommodations.meals.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'restaurant'],
-                        ],
-                        [
-                            'title' => 'create meal',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.meals.create',
-                            'parameters' => ['type' => 'restaurant'],
-                        ],
-                        [
-                            'title' => 'import meals',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'meal', 'models' => 'meals', 'view' => 'meals'],
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'supplements',
-                    'icon' => 'fas fa-circle-plus',
-                    'children' => [
-                        [
-                            'title' => 'all supplements',
-                            'icon' => 'fas fa-list-check',
-                            'route' => 'dashboard.accommodations.supplements.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'restaurant'],
-                        ],
-                        [
-                            'title' => 'create supplement',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.supplements.create',
-                            'parameters' => ['type' => 'restaurant'],
-                        ],
-                        [
-                            'title' => 'import supplements',
-                            'icon' => 'fa-regular fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
-                        ],
-                    ],
-                ],
+                // [
+                //     'title' => 'meals',
+                //     'icon' => 'fas fa-bowl-food',
+                //     'children' => [
+                //         [
+                //             'title' => 'all meals',
+                //             'icon' => 'fas fa-bowl-rice',
+                //             'route' => 'dashboard.accommodations.meals.index',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'restaurant'],
+                //         ],
+                //         [
+                //             'title' => 'create meal',
+                //             'icon' => 'fas fa-plus',
+                //             'route' => 'dashboard.accommodations.meals.create',
+                //             'parameters' => ['type' => 'restaurant'],
+                //         ],
+                //         [
+                //             'title' => 'import meals',
+                //             'icon' => 'fas fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['model' => 'meal', 'models' => 'meals', 'view' => 'meals'],
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'supplements',
+                //     'icon' => 'fas fa-circle-plus',
+                //     'children' => [
+                //         [
+                //             'title' => 'all supplements',
+                //             'icon' => 'fas fa-list-check',
+                //             'route' => 'dashboard.accommodations.supplements.index',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'restaurant'],
+                //         ],
+                //         [
+                //             'title' => 'create supplement',
+                //             'icon' => 'fas fa-plus',
+                //             'route' => 'dashboard.accommodations.supplements.create',
+                //             'parameters' => ['type' => 'restaurant'],
+                //         ],
+                //         [
+                //             'title' => 'import supplements',
+                //             'icon' => 'fa-regular fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
+                //         ],
+                //     ],
+                // ],
             ],
         ],
 
@@ -951,12 +1030,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.transportation.companies.create',
                         ],
-                        [
-                            'title' => 'import companies',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'transportationCompany', 'models' => 'transportations-companies', 'view' => 'transportation.companies'],
-                        ],
+                        // [
+                        //     'title' => 'import companies',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'transportationCompany', 'models' => 'transportations-companies', 'view' => 'transportation.companies'],
+                        // ],
                     ],
                 ],
                 [
@@ -973,12 +1052,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.transportation.vehicle-types.create',
                         ],
-                        [
-                            'title' => 'import vehicle-types',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'transportationVehicleType', 'models' => 'transportations-vehicle-types', 'view' => 'transportation.vehicle-types'],
-                        ],
+                        // [
+                        //     'title' => 'import vehicle-types',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'transportationVehicleType', 'models' => 'transportations-vehicle-types', 'view' => 'transportation.vehicle-types'],
+                        // ],
                     ],
                 ],
                 [
@@ -1017,12 +1096,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.transportation.routes.create',
                         ],
-                        [
-                            'title' => 'import routes',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'transportationRoute', 'models' => 'transportations-routes', 'view' => 'transportation.routes'],
-                        ],
+                        // [
+                        //     'title' => 'import routes',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'transportationRoute', 'models' => 'transportations-routes', 'view' => 'transportation.routes'],
+                        // ],
                     ],
                 ],
                 [
@@ -1039,12 +1118,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.transportation.route-assignments.create',
                         ],
-                        [
-                            'title' => 'import route assignments',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'transportationRouteAssignment', 'models' => 'transportations-route-assignments', 'view' => 'transportation.route-assignments'],
-                        ],
+                        // [
+                        //     'title' => 'import route assignments',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'transportationRouteAssignment', 'models' => 'transportations-route-assignments', 'view' => 'transportation.route-assignments'],
+                        // ],
                     ],
                 ],
                 [
@@ -1061,62 +1140,62 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.transportation.pricings.create',
                         ],
-                        [
-                            'title' => 'import pricings',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'transportationPricing', 'models' => 'transportations-pricings', 'view' => 'transportation.pricings'],
-                        ],
+                        // [
+                        //     'title' => 'import pricings',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'transportationPricing', 'models' => 'transportations-pricings', 'view' => 'transportation.pricings'],
+                        // ],
                     ],
                 ],
-                [
-                    'title' => 'seasons',
-                    'icon' => 'fas fa-calendar-days',
-                    'children' => [
-                        [
-                            'title' => 'all seasons',
-                            'icon' => 'fas fa-calendar-check',
-                            'route' => 'dashboard.accommodations.seasons.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
-                        ],
-                        [
-                            'title' => 'create season',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.seasons.create',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
-                        ],
-                        [
-                            'title' => 'import seasons',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
-                        ],
-                    ],
-                ],
-                [
-                    'title' => 'supplements',
-                    'icon' => 'fas fa-circle-plus',
-                    'children' => [
-                        [
-                            'title' => 'all supplements',
-                            'icon' => 'fas fa-list-check',
-                            'route' => 'dashboard.accommodations.supplements.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
-                        ],
-                        [
-                            'title' => 'create supplement',
-                            'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.supplements.create',
-                            'parameters' => ['type' => 'transportation'],
-                        ],
-                        [
-                            'title' => 'import supplements',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
-                        ],
-                    ],
-                ],
+                // [
+                //     'title' => 'seasons',
+                //     'icon' => 'fas fa-calendar-days',
+                //     'children' => [
+                //         [
+                //             'title' => 'all seasons',
+                //             'icon' => 'fas fa-calendar-check',
+                //             'route' => 'dashboard.accommodations.seasons.index',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
+                //         ],
+                //         [
+                //             'title' => 'create season',
+                //             'icon' => 'fas fa-plus',
+                //             'route' => 'dashboard.accommodations.seasons.create',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
+                //         ],
+                //         [
+                //             'title' => 'import seasons',
+                //             'icon' => 'fas fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'title' => 'supplements',
+                //     'icon' => 'fas fa-circle-plus',
+                //     'children' => [
+                //         [
+                //             'title' => 'all supplements',
+                //             'icon' => 'fas fa-list-check',
+                //             'route' => 'dashboard.accommodations.supplements.index',
+                //             'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
+                //         ],
+                //         [
+                //             'title' => 'create supplement',
+                //             'icon' => 'fas fa-plus',
+                //             'route' => 'dashboard.accommodations.supplements.create',
+                //             'parameters' => ['type' => 'transportation'],
+                //         ],
+                //         [
+                //             'title' => 'import supplements',
+                //             'icon' => 'fas fa-file-import',
+                //             'route' => 'import.data',
+                //             'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
+                //         ],
+                //     ],
+                // ],
             ],
         ],
 
@@ -1195,12 +1274,12 @@ return [
                             'icon' => 'fas fa-user-plus',
                             'route' => 'dashboard.crm.clients.create',
                         ],
-                        [
-                            'title' => 'import clients',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'client', 'models' => 'clients', 'view' => 'clients'],
-                        ]
+                        // [
+                        //     'title' => 'import clients',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'client', 'models' => 'clients', 'view' => 'clients'],
+                        // ]
                     ],
                 ],
             ]
@@ -1227,12 +1306,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.tourists.sites.create',
                         ],
-                        [
-                            'title' => 'import sites',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'site', 'models' => 'sites', 'view' => 'sites'],
-                        ]
+                        // [
+                        //     'title' => 'import sites',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'site', 'models' => 'sites', 'view' => 'sites'],
+                        // ]
                     ],
                 ],
                 [
@@ -1249,12 +1328,12 @@ return [
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.tourists.services.create',
                         ],
-                        [
-                            'title' => 'import services',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'service', 'models' => 'services', 'view' => 'services'],
-                        ],
+                        // [
+                        //     'title' => 'import services',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'service', 'models' => 'services', 'view' => 'services'],
+                        // ],
                     ],
                 ],
             ],
@@ -1283,12 +1362,12 @@ return [
                             'route' => 'dashboard.entrypoints.land-crossings.create',
                             'parameters' => ['t' => Str::random(120)],
                         ],
-                        [
-                            'title' => 'import land crossings',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'land-crossing', 'models' => 'land-crossings', 'view' => 'land-crossings'],
-                        ]
+                        // [
+                        //     'title' => 'import land crossings',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'land-crossing', 'models' => 'land-crossings', 'view' => 'land-crossings'],
+                        // ]
                     ],
                 ],
                 [
@@ -1307,12 +1386,12 @@ return [
                             'route' => 'dashboard.entrypoints.seaports.create',
                             'parameters' => ['t' => Str::random(120)],
                         ],
-                        [
-                            'title' => 'import sea ports',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'seaport', 'models' => 'seaports', 'view' => 'seaports'],
-                        ]
+                        // [
+                        //     'title' => 'import sea ports',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'seaport', 'models' => 'seaports', 'view' => 'seaports'],
+                        // ]
                     ],
                 ],
                 [
@@ -1331,12 +1410,12 @@ return [
                             'route' => 'dashboard.entrypoints.airports.create',
                             'parameters' => ['t' => Str::random(120)],
                         ],
-                        [
-                            'title' => 'import airports',
-                            'icon' => 'fas fa-file-import',
-                            'route' => 'import.data',
-                            'parameters' => ['model' => 'airport', 'models' => 'airports', 'view' => 'airports'],
-                        ]
+                        // [
+                        //     'title' => 'import airports',
+                        //     'icon' => 'fas fa-file-import',
+                        //     'route' => 'import.data',
+                        //     'parameters' => ['model' => 'airport', 'models' => 'airports', 'view' => 'airports'],
+                        // ]
                     ],
                 ],
             ]

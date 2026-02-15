@@ -410,11 +410,11 @@
                                 ])
                                 <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
-                                        'models' => 'seasons',
+                                        'models' => 'dashboard.accommodations.seasons',
                                         'id' => $season->id,
                                     ])
                                     @include('components.elements.edit-button', [
-                                        'models' => 'seasons',
+                                        'models' => 'dashboard.accommodations.seasons',
                                         'id' => $season->id,
                                     ])
                                     @livewire('delete-bottom', [
@@ -443,7 +443,7 @@
                         (<span class="font-semibold text-primary">{{ $restaurant->meals->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('meals.create') }}" class="kt-btn kt-btn-sm kt-btn-primary">
+                        <a href="{{ route('dashboard.accommodations.meals.create') }}" class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.meal')]) }}
                         </a>
@@ -529,11 +529,11 @@
                                 ])
                                 <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
-                                        'models' => 'meals',
+                                        'models' => 'dashboard.accommodations.meals',
                                         'id' => $meal->id,
                                     ])
                                     @include('components.elements.edit-button', [
-                                        'models' => 'meals',
+                                        'models' => 'dashboard.accommodations.meals',
                                         'id' => $meal->id,
                                     ])
                                     @livewire('delete-bottom', [
@@ -562,7 +562,8 @@
                         (<span class="font-semibold text-primary">{{ $restaurant->supplements->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('supplements.create', ['accommodation_id' => $restaurant->id]) }}" class="kt-btn kt-btn-sm kt-btn-primary">
+                        <a href="{{ route('dashboard.accommodations.supplements.create', ['accommodation_id' => $restaurant->id]) }}"
+                            class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.supplement')]) }}
                         </a>
@@ -638,11 +639,11 @@
                                 ])
                                 <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
-                                        'models' => 'supplements',
+                                        'models' => 'dashboard.accommodations.supplements',
                                         'id' => $supplement->id,
                                     ])
                                     @include('components.elements.edit-button', [
-                                        'models' => 'supplements',
+                                        'models' => 'dashboard.accommodations.supplements',
                                         'id' => $supplement->id,
                                     ])
                                     @livewire('delete-bottom', [
@@ -666,11 +667,11 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'restaurants',
+                    'models' => 'dashboard.restaurants',
                     'id' => $restaurant->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'restaurants',
+                    'model' => 'dashboard.restaurants',
                     'id' => $restaurant->id,
                 ])
                 <a href="{{ route('dashboard.restaurants.index') }}" class="kt-btn kt-btn-outline">

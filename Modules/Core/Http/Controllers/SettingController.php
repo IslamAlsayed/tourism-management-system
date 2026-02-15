@@ -52,19 +52,19 @@ class SettingController extends Controller
 
     public function general()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return view('core::settings.general', compact('settings'));
     }
 
     public function security()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return view('core::settings.security', compact('settings'));
     }
 
     public function notifications()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return view('core::settings.notifications', compact('settings'));
     }
 
@@ -77,26 +77,26 @@ class SettingController extends Controller
             'backup_frequency' => Cache::get('backup_frequency', 'weekly'),
         ];
 
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return view('core::settings.backup', compact('settings', 'backupInfo'));
     }
 
     public function booking()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return view('core::settings.booking', compact('settings'));
     }
 
     public function integration()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         $users = User::orderBy('name')->get(['name', 'email', 'id']);
         return view('core::settings.integration', compact('settings', 'users'));
     }
 
     public function system()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return view('core::settings.system', compact('settings'));
     }
 

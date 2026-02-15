@@ -26,8 +26,8 @@ class CurrencyController extends Controller
         return $created
             ? ($request->has('save_and_add')
                 ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.currency')]))
-                : redirect()->route('currencies.index')->with('success', __('messages.type_created', ['type' => __('main.currency')])))
-            : redirect()->route('currencies.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.currency')]));
+                : redirect()->route('dashboard.geography.currencies.index')->with('success', __('messages.type_created', ['type' => __('main.currency')])))
+            : redirect()->route('dashboard.geography.currencies.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.currency')]));
     }
 
     public function show($id)
@@ -54,7 +54,7 @@ class CurrencyController extends Controller
         $validated = $request->validated();
         $updated = $currency->update($validated);
         return $updated
-            ? redirect()->route('currencies.index')->withSuccess(__('messages.type_updated', ['type' => __('main.currency')]))
+            ? redirect()->route('dashboard.geography.currencies.index')->withSuccess(__('messages.type_updated', ['type' => __('main.currency')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.currency')]));
     }
 
@@ -65,7 +65,7 @@ class CurrencyController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.currency')]));
         $deleted = $currency->delete();
         return $deleted
-            ? redirect()->route('currencies.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.currency')]))
-            : redirect()->route('currencies.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.currency')]));
+            ? redirect()->route('dashboard.geography.currencies.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.currency')]))
+            : redirect()->route('dashboard.geography.currencies.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.currency')]));
     }
 }

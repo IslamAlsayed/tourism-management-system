@@ -1,16 +1,16 @@
 @extends('layouts.master')
 
-@section('title', __('main.create_new_user'))
+@section('title', __('main.create_type', ['type' => __('main.user')]))
 
 @section('content')
     <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.create_new_user') }}
+                    {{ __('main.create_type', ['type' => __('main.user')]) }}
                 </h1>
                 <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ __('main.create_new_user_description') }}
+                    {{ __('main.create_type_description', ['type' => __('main.user')]) }}
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
@@ -27,71 +27,85 @@
                 <form class="space-y-6" method="POST" action="{{ route('dashboard.core.users.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="grid gap-4 lg:gap-6">
-
-                        <!-- Profile Photo -->
-                        @include('components.input-image', [
-                            'column' => 'user',
-                            'columnName' => 'photo',
-                        ])
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                            <!-- Name -->
-                            <div class="">
-                                <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ old('name') }}">
-                                @error('name')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
+                        <!-- User Information -->
+                        <div class="kt-card">
+                            <div class="kt-card-header">
+                                <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.user')]) }}</h3>
                             </div>
+                            <div class="kt-card-body p-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                                    <!-- First Name -->
+                                    <div class="">
+                                        <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
+                                        <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]" value="{{ old('first_name') }}" required>
+                                        @error('first_name')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <!-- First Name -->
-                            <div class="">
-                                <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
-                                <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]" value="{{ old('first_name') }}" required>
-                                @error('first_name')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                    <!-- Last Name -->
+                                    <div class="">
+                                        <label for="last_name" class="kt-label required mb-2">{{ __('main.last_name') }}</label>
+                                        <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]" value="{{ old('last_name') }}" required>
+                                        @error('last_name')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <!-- Last Name -->
-                            <div class="">
-                                <label for="last_name" class="kt-label required mb-2">{{ __('main.last_name') }}</label>
-                                <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]" value="{{ old('last_name') }}" required>
-                                @error('last_name')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                    <!-- Password -->
+                                    <div class="">
+                                        <label for="password" class="kt-label required mb-2">{{ __('main.password') }}</label>
+                                        <input type="password" name="password" id="password" class="kt-input h-[45px]" required autocomplete="off">
+                                        @error('password')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <!-- Password -->
-                            <div class="">
-                                <label for="password" class="kt-label required mb-2">{{ __('main.password') }}</label>
-                                <input type="password" name="password" id="password" class="kt-input h-[45px]" required autocomplete="off">
-                                @error('password')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                    <!-- Confirmation Password -->
+                                    <div class="">
+                                        <label for="password_confirmation" class="kt-label required mb-2">{{ __('main.confirm_password') }}</label>
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="kt-input h-[45px]" required
+                                            autocomplete="off">
+                                        @error('password_confirmation')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                            <!-- Confirmation Password -->
-                            <div class="">
-                                <label for="password_confirmation" class="kt-label required mb-2">{{ __('main.confirm_password') }}</label>
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="kt-input h-[45px]" required
-                                    autocomplete="off">
-                                @error('password_confirmation')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
+                                    <!-- Role -->
+                                    <div class="">
+                                        <label for="role" class="kt-label required mb-2">
+                                            {{ __('main.role') }}
+                                            <span class="text-red-600">*</span>
+                                        </label>
+                                        <select name="role" id="role" class="kt-input basic-single" required>
+                                            <option value="" selected>--</option>
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role->name }}" {{ old('role') == $role->name ? 'selected' : '' }}>
+                                                    {{ $role->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('role')
+                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Bio -->
+                                @include('components.elements.input-text-editor', [
+                                    'column' => 'bio',
+                                    'value' => old('bio'),
+                                ])
                             </div>
                         </div>
 
-                        <!-- Bio -->
-                        @include('components.elements.input-text-editor', [
-                            'column' => 'bio',
-                            'value' => old('bio'),
-                        ])
+                        <!-- Media Information -->
+                        @include('components.inputs.photo')
 
                         <!-- Contact Information -->
                         <div class="kt-card">
                             <div class="kt-card-header">
-                                <h3 class="kt-card-title">{{ __('main.contact_information') }}</h3>
+                                <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.contact')]) }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
@@ -209,8 +223,8 @@
                                     <!-- Preferred Language -->
                                     <div class="">
                                         <label for="preferred_language" class="kt-label mb-2">{{ __('main.preferred_language') }}</label>
-                                        <select name="preferred_language" id="preferred_language" class="kt-select h-[45px]" special-search>
-                                            <option value="">{{ __('main.select_language') }}</option>
+                                        <select name="preferred_language" id="preferred_language" class="kt-select basic-single">
+                                            <option value="" selected>--</option>
                                             <option value="en" {{ old('preferred_language') == 'en' ? 'selected' : '' }}>
                                                 {{ __('main.english') }}</option>
                                             <option value="ar" {{ old('preferred_language') == 'ar' ? 'selected' : '' }}>
@@ -292,7 +306,7 @@
                         ])
 
                         <!-- Save Submit Buttons -->
-                        @include('components.elements.save-submit', ['models' => 'users'])
+                        @include('components.elements.save-submit', ['models' => 'dashboard.core.users', 'model' => 'user'])
                     </div>
                 </form>
             </div>

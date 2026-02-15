@@ -2,13 +2,17 @@
 
 namespace Modules\Restaurants\Providers;
 
-use Livewire\Livewire;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use Modules\Restaurants\Contracts\RestaurantRepositoryInterface;
+use Modules\Restaurants\Contracts\RestaurantServiceInterface;
 use Modules\Restaurants\Entities\Restaurant;
 use Modules\Restaurants\Livewire\Restaurants;
 use Modules\Restaurants\Policies\RestaurantPolicy;
+use Modules\Restaurants\Repositories\RestaurantRepository;
+use Modules\Restaurants\Services\RestaurantService;
 
 class RestaurantsServiceProvider extends ServiceProvider
 {
@@ -53,6 +57,25 @@ class RestaurantsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+
+        $this->registerRepositories();
+        $this->registerServices();
+    }
+
+    private function registerRepositories()
+    {
+        $this->app->bind(
+            RestaurantRepositoryInterface::class,
+            RestaurantRepository::class
+        );
+    }
+
+    private function registerServices()
+    {
+        $this->app->bind(
+            RestaurantServiceInterface::class,
+            RestaurantService::class
+        );
     }
 
     /**

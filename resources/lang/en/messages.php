@@ -19,6 +19,9 @@ return [
     'select_at_least_one_notification_type' => 'Select at least one notification type.',
     'invalid_type' => 'Invalid Type',
     'session_expired' => 'Session has expired. Please log in again.',
+    'no_photo_available' => 'No photo available.',
+    'more' => 'More',
+    'less' => 'Less',
 
     // Status Messages
     'profile_updated' => 'Profile Updated',
@@ -42,6 +45,18 @@ return [
     'invalid_input' => 'Invalid Input',
     'validation_error' => 'Validation Error',
     'server_error' => 'Server Error',
+
+    // Authorization Messages
+    'unauthorized_action' => 'You are not authorized to perform this action.',
+    'forbidden' => 'Forbidden',
+    'not_authenticated' => 'You must be authenticated to access this resource.',
+    'permission_denied' => 'Permission Denied',
+    'role_not_found' => 'Role not found.',
+    'permission_not_found' => 'Permission not found.',
+    'cannot_delete_role_with_users' => 'Cannot delete role that has users assigned.',
+    'cannot_delete_permission_with_roles' => 'Cannot delete permission that is assigned to roles.',
+    'role_already_exists' => 'Role already exists.',
+    'permission_already_exists' => 'Permission already exists.',
 
     // Type Creation
     'type_created' => ':type Created',
@@ -166,4 +181,7 @@ return [
     'no_permissions_assigned' => 'No permissions assigned to this role.',
     'permissions_count' => 'Permissions count: :count',
     'permission_name_format' => 'Use snake_case format like: create_users, edit_posts, delete_comments',
+    'showing_all_items' => 'Showing all :total items',
+    'showing_first_items' => 'Showing first :count items out of :total',
+    'permissions_with_manage_prefix_include_all_crud_operations' => 'Permissions with "manage_" prefix include all CRUD operations (create, view, update, delete) for that resource.',
 ];

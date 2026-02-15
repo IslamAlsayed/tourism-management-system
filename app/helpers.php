@@ -28,6 +28,7 @@ if (!function_exists('getActiveUser')) {
         return Auth::user();
     }
 }
+
 if (!function_exists('getActiveUserId')) {
     /**
      * Get the currently authenticated user's ID.
@@ -68,7 +69,7 @@ if (!function_exists('setUserStatus')) {
 if (!function_exists('getActiveSettings')) {
     function getActiveSettings()
     {
-        return Setting::first() ?? [];
+        return Setting::withoutGlobalScopes()->first() ?? [];
     }
 }
 
@@ -331,7 +332,7 @@ if (!function_exists('generateCode')) {
 if (!function_exists('getPaginate')) {
     function getPaginate()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return (int) session('paginate_count', $settings->app_paginate_count ?? config('app.paginate_count'));
     }
 }
@@ -737,7 +738,7 @@ if (!function_exists('shouldSendNotification')) {
      */
     function shouldSendNotification()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return $settings && $settings->app_push_notifications == 1;
     }
 }
@@ -750,7 +751,7 @@ if (!function_exists('shouldSendEmail')) {
      */
     function shouldSendEmail()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return $settings && $settings->app_email_notifications == 1;
     }
 }
@@ -763,7 +764,7 @@ if (!function_exists('shouldSendSms')) {
      */
     function shouldSendSms()
     {
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         return $settings && $settings->app_sms_notifications == 1;
     }
 }
@@ -860,5 +861,87 @@ if (!function_exists('truncateWithReset')) {
         if ($disableForeignKeys) {
             \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
         }
+    }
+}
+
+if (!function_exists('getModelRoute')) {
+    /**
+     * Convert full model class name to route name
+     * 
+     * Examples:
+     * Modules\Accommodations\Entities\Accommodation → accommodations
+     * App\Models\Accommodation → accommodations
+     * Modules\Transportation\Entities\Company → transportation.companies
+     *
+     * @param string $modelType - Full class name with namespace
+     * @param bool $withPrefix - Whether to include dashboard prefix
+     * @return string - Route name
+     */
+    function getModelRoute($modelType, $withPrefix = true)
+    {
+        // Extract class name from namespace
+        $modelTypeParts = explode('\\', $modelType);
+        $className = end($modelTypeParts);
+
+        // Map model class names to route names
+        $routeMap = [
+            'Accommodation' => 'accommodations',
+            'Room' => 'accommodations.rooms',
+            'Season' => 'accommodations.seasons',
+            'Meal' => 'accommodations.meals',
+            'Supplement' => 'accommodations.supplements',
+            'Type' => 'accommodations.types',
+
+            // Transportation
+            'Company' => 'transportation.companies',
+            'Route' => 'transportation.routes',
+            'VehicleType' => 'transportation.vehicle-types',
+
+            // Restaurant
+            'Restaurant' => 'restaurants',
+
+            // Tour Guides
+            'TourGuide' => 'tourguides.guides',
+
+            // Geography
+            'Country' => 'geography.countries',
+            'State' => 'geography.states',
+            'City' => 'geography.cities',
+            'Nationality' => 'geography.nationalities',
+
+            // Localization
+            'Currency' => 'localization.currencies',
+            'Language' => 'localization.languages',
+            'Timezone' => 'localization.timezones',
+
+            // CRM
+            'Client' => 'crm.clients',
+        ];
+
+        // Get route name from map, fallback to pluralized class name
+        $routeName = $routeMap[$className] ?? Str::plural(Str::kebab($className));
+
+        // Add dashboard prefix if requested
+        if ($withPrefix && !Str::contains($routeName, '.')) {
+            $routeName = 'dashboard.' . $routeName;
+        } elseif ($withPrefix && Str::startsWith($routeName, 'dashboard.') === false) {
+            $routeName = 'dashboard.' . $routeName;
+        }
+
+        return $routeName;
+    }
+}
+
+if (!function_exists('getModelRouteWithDashboard')) {
+    /**
+     * Get model route with full dashboard prefix
+     * 
+     * @param string $modelType - Full class name with namespace
+     * @return string - Full route name with dashboard prefix
+     */
+    function getModelRouteWithDashboard($modelType)
+    {
+        $route = getModelRoute($modelType, false);
+        return 'dashboard.' . $route;
     }
 }

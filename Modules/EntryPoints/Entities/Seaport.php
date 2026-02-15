@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Seaport extends Model
 {
     use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
-    protected $table = 'entry_points';
+    protected $table = 'seaports';
     protected $richTextAttributes = [
         'address',
         'description',

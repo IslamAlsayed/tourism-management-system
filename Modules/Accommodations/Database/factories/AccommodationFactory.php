@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AccommodationFactory extends Factory
 {
+    protected $model = \Modules\Accommodations\Entities\Accommodation::class;
     /**
      * Define the model's default state.
      *

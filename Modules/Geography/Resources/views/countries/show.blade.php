@@ -179,6 +179,11 @@
                 </div>
             </div>
 
+            <!-- Media Files -->
+            @if (!empty($country->photo))
+                @include('components.display-photo', ['record' => $country, 'alt' => $country->name])
+            @endif
+
             <!-- Location Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -291,11 +296,11 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'countries',
+                    'models' => 'dashboard.geography.countries',
                     'id' => $country->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'countries',
+                    'model' => 'dashboard.geography.countries',
                     'id' => $country->id,
                 ])
                 <a href="{{ route('dashboard.geography.countries.index') }}" class="kt-btn kt-btn-outline">

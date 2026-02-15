@@ -13,12 +13,12 @@
             'label' => __('main.transportations-vehicle-types'),
         ],
         [
-            'condition' => \Modules\Core\Entities\Season::count() > 0,
+            'condition' => \Modules\Accommodations\Entities\Season::count() > 0,
             'route' => route('dashboard.accommodations.seasons.create'),
             'label' => __('main.seasons'),
         ],
         [
-            'condition' => \App\Models\PricingDefinition::count() > 0,
+            'condition' => \Modules\Core\Entities\PricingDefinition::count() > 0,
             'route' => route('dashboard.core.pricing-definitions.create'),
             'label' => __('main.pricing-definitions'),
         ],

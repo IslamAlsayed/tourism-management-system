@@ -19,6 +19,9 @@ return [
     'select_at_least_one_notification_type' => 'يرجى اختيار نوع إشعار واحد على الأقل',
     'invalid_type' => 'هذا النوع غير صالح',
     'session_expired' => 'انتهت الجلسة. برجاء تسجيل الدخول مرة أخرى.',
+    'no_photo_available' => 'لا توجد صورة متاحة.',
+    'more' => 'المزيد',
+    'less' => 'أقل',
 
     // Status Messages
     'profile_updated' => 'تم تحديث الملف الشخصي',
@@ -42,6 +45,18 @@ return [
     'invalid_input' => 'إدخال غير صالح',
     'validation_error' => 'خطأ في التحقق',
     'server_error' => 'خطأ في الخادم',
+
+    // Authorization Messages
+    'unauthorized_action' => 'أنت غير مخول للقيام بهذا الإجراء.',
+    'forbidden' => 'ممنوع',
+    'not_authenticated' => 'يجب أن تكون مصدقًا للوصول إلى هذا المورد.',
+    'permission_denied' => 'تم رفض الإذن',
+    'role_not_found' => 'الدور غير موجود.',
+    'permission_not_found' => 'الإذن غير موجود.',
+    'cannot_delete_role_with_users' => 'لا يمكن حذف الدور الذي يحتوي على مستخدمين معينين.',
+    'cannot_delete_permission_with_roles' => 'لا يمكن حذف الإذن الذي تم تعيينه للأدوار.',
+    'role_already_exists' => 'الدور موجود بالفعل.',
+    'permission_already_exists' => 'الإذن موجود بالفعل.',
 
     // Type Creation
     'type_created' => 'تم إنشاء :type',
@@ -166,4 +181,7 @@ return [
     'no_permissions_assigned' => 'لم يتم تعيين أي صلاحيات لهذا الدور.',
     'permissions_count' => 'عدد الصلاحيات: :count',
     'permission_name_format' => 'استخدم صيغة الثعبان (snake_case) مثل: create_users, edit_posts, delete_comments',
+    'showing_all_items' => 'عرض كل :total عناصر',
+    'showing_first_items' => 'عرض أول :count عناصر من أصل :total',
+    'permissions_with_manage_prefix_include_all_crud_operations' => 'الصلاحيات التي تبدأ بـ "manage_" تشمل جميع عمليات CRUD (إنشاء، عرض، تحديث، حذف) لهذا المورد.',
 ];

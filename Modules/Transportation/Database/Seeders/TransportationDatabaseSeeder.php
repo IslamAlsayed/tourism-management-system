@@ -17,9 +17,9 @@ class TransportationDatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call([
-            CompanySeeder::class,
-            JeepSeeder::class,
-            RouteSeeder::class,
+            // CompanySeeder::class,
+            // JeepSeeder::class,
+            // RouteSeeder::class,
         ]);
     }
 }

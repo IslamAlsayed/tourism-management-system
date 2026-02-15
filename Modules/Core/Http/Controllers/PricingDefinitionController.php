@@ -4,8 +4,8 @@ namespace Modules\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Modules\Core\Entities\PricingDefinition;
-use \App\Http\Requests\PricingDefinition\StoreRequest;
-use \App\Http\Requests\PricingDefinition\UpdateRequest;
+use Modules\Core\Http\Requests\PricingDefinition\StoreRequest;
+use Modules\Core\Http\Requests\PricingDefinition\UpdateRequest;
 
 class PricingDefinitionController extends Controller
 {

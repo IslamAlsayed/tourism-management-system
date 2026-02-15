@@ -43,7 +43,6 @@ class User extends Authenticatable
         'department',
         'position',
         'preferred_language',
-        'timezone_id',
         'preferences',
         'role',
         'is_active',
@@ -56,6 +55,7 @@ class User extends Authenticatable
         'notes',
         'created_by',
         'updated_by',
+        'timezone_id',
     ];
 
     public function getRelationshipNames()

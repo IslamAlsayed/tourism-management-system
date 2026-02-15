@@ -44,8 +44,6 @@ Route::prefix('dashboard/core')->name('dashboard.core.')->middleware('auth')->gr
 
     // === ACTIVITY LOG ===
     Route::get('activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
-    Route::get('activity-log/users', [ActivityLogController::class, 'users'])->name('activity-log.users');
-    Route::get('activity-log/system', [ActivityLogController::class, 'system'])->name('activity-log.system');
 
     // === PROFILE MANAGEMENT ===
     Route::prefix('profile')->name('profile.')->group(function () {

@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use Modules\Core\Entities\Setting;
 use App\Models\Notification;
-use Modules\Localization\Entities\SystemLanguage;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Modules\Core\Entities\Setting;
+use Modules\Localization\Entities\SystemLanguage;
+use Spatie\Activitylog\Models\Activity;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -27,7 +28,7 @@ class ViewServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             $activeUser = Auth::check() ? Auth::user() : null;
             $system_languages = SystemLanguage::all();
-            $settings = Setting::first() ?? null;
+            $settings = Setting::withoutGlobalScopes()->first() ?? null;
 
             // Get notifications for authenticated user
             $notifications = collect();

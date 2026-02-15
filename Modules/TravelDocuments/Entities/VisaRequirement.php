@@ -2,7 +2,7 @@
 
 namespace Modules\TravelDocuments\Entities;
 
-use App\Models\EntryPoint;
+use Modules\EntryPoints\Entities\Landcrossing;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,7 +27,7 @@ class VisaRequirement extends Model
         'uuid',
         'nationality_id',
         'destination_country_id',
-        'crossing_port_id',
+        'landcrossing_id',
         'visa_type',
         'visa_category',
         'can_issue_at_port',
@@ -54,7 +54,7 @@ class VisaRequirement extends Model
 
     public function getRelationshipNames()
     {
-        return ['nationality', 'destinationCountry', 'EntryPoint', 'visaFeeCurrency', 'departureTaxCurrency'];
+        return ['nationality', 'destinationCountry', 'landcrossing', 'visaFeeCurrency', 'departureTaxCurrency'];
     }
 
     public function getExcludedColumns()
@@ -89,9 +89,9 @@ class VisaRequirement extends Model
         return $this->belongsTo(Country::class, 'destination_country_id');
     }
 
-    public function EntryPoint()
+    public function landcrossing()
     {
-        return $this->belongsTo(EntryPoint::class);
+        return $this->belongsTo(Landcrossing::class);
     }
 
     public function visaFeeCurrency()

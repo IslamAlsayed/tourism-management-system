@@ -4,8 +4,10 @@ namespace App\Exceptions;
 
 use Throwable;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -38,6 +40,26 @@ class Handler extends ExceptionHandler
             }
 
             return redirect()->route('auth.login')->withErrors(__('The Request Method Is Not Allowed.'));
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            dd('Authorization Exception: ' . $exception->getMessage());
+            if ($request->expectsJson()) {
+                return response()->json(['message' => __('messages.unauthorized_action')], 403);
+            }
+
+            return redirect()->back()->withError(__('messages.unauthorized_action'));
+        }
+
+        // Handle 403 Forbidden errors
+        if ($exception instanceof HttpException && $exception->getStatusCode() === 403) {
+            dd('Authorization Exception: ' . $exception->getMessage());
+
+            if ($request->expectsJson()) {
+                return response()->json(['message' => __('messages.unauthorized_action')], 403);
+            }
+
+            return redirect()->back()->withError(__('messages.unauthorized_action'));
         }
 
         return parent::render($request, $exception);

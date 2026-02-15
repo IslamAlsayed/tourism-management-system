@@ -15,12 +15,12 @@
             </div>
             <div class="flex items-center gap-2.5">
                 @if (!in_array($role->name, ['superadmin', 'admin', 'user']))
-                    <a href="{{ route('roles.edit', $role->id) }}" class="kt-btn kt-btn-primary md:hidden">
+                    <a href="{{ route('dashboard.core.roles.edit', $role->id) }}" class="kt-btn kt-btn-primary md:hidden">
                         <i class="ki-filled ki-pencil text-sm me-2"></i>
                         {{ __('main.edit') }}
                     </a>
                 @endif
-                <a href="{{ route('roles.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.core.roles.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.roles')]) }}
                 </a>
             </div>
@@ -38,22 +38,44 @@
                 <div class="kt-card-body p-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div>
-                            <label class="kt-label mb-1">{{ __('main.name') }}</label>
-                            <p class="text-sm text-secondary-foreground font-medium">{{ $role->name }}</p>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.created_at') }}</label>
-                            <p class="text-sm text-secondary-foreground">
-                                {{ $role->created_at->format('Y-m-d H:i') }}
+                            <label class="kt-label mb-2">{{ __('main.name') }}</label>
+                            <p class="text-sm text-secondary-foreground font-medium">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $role->name }}
+                                </span>
                             </p>
                         </div>
                         <div>
-                            <label class="kt-label mb-1">{{ __('main.permissions_count') }}</label>
-                            <p class="text-sm text-secondary-foreground font-medium">{{ $role->permissions->count() }}</p>
+                            <label class="kt-label mb-2">{{ __('main.created_at') }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                {{ $role->created_at->format('Y-m-d H:i') }} -
+                                <span class="kt-badge kt-badge-mono">
+                                    {{ $role->created_at->diffForHumans() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-2">{{ __('main.permissions_count') }}</label>
+                            <p class="text-sm text-secondary-foreground font-medium">
+                                <span class="kt-badge kt-badge-primary">
+                                    {{ $role->permissions->count() }}
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Related Cities -->
+            @if ($rolePermissions && $rolePermissions->count() > 0)
+                @include('components.state-search', [
+                    'flat' => true,
+                    'type' => 'no-route',
+                    'models' => 'permissions',
+                    'column' => 'permission',
+                    'records' => $rolePermissions,
+                ])
+            @endif
 
             <!-- Assigned Permissions -->
             <div class="kt-card">
@@ -78,15 +100,24 @@
                 </div>
             </div>
 
-            <!-- Edit Button -->
-            @if (!in_array($role->name, ['superadmin', 'admin', 'user']))
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('roles.edit', $role->id) }}" class="kt-btn kt-btn-primary hidden md:inline-flex">
-                        <i class="ki-filled ki-pencil text-sm me-2"></i>
-                        {{ __('main.edit') }}
-                    </a>
-                </div>
-            @endif
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                @if (getActiveUser()->can('edit', $role))
+                    @include('components.elements.edit-button', [
+                        'models' => 'dashboard.core.roles',
+                        'id' => $role->id,
+                    ])
+                @endif
+                @if (getActiveUser()->can('delete', $role))
+                    @include('components.elements.delete-form', [
+                        'model' => 'dashboard.core.roles',
+                        'id' => $role->id,
+                    ])
+                @endif
+                <a href="{{ route('dashboard.core.roles.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back_to_types', ['types' => __('main.roles')]) }}
+                </a>
+            </div>
         </div>
     </div>
 @endsection

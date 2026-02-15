@@ -34,7 +34,7 @@
                     <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.accommodation')]) }}</h3>
                 </div>
                 <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                         @if ($accommodation->name)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -235,6 +235,11 @@
                         </div>
                     </div>
                 </div>
+            @endif
+
+            <!-- Media Files -->
+            @if (!empty($accommodation->photo))
+                @include('components.display-photo', ['record' => $accommodation, 'alt' => $accommodation->name])
             @endif
 
             <!-- Contact Information -->

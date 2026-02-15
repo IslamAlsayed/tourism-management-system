@@ -25,6 +25,7 @@
 
     &:before {
         left: 0;
+        right: auto;
         height: var(--size);
         width: var(--size);
         box-shadow: inset 0 0 0 var(--stroke) var(--unchecked);
@@ -35,6 +36,7 @@
         height: 0;
         width: 0;
         left: calc(var(--size) / 2);
+        right: auto;
         border-radius: 1px;
         transition: 200ms ease-out;
         background-color: var(--unchecked);
@@ -42,7 +44,9 @@
 
     label {
         cursor: pointer;
-        padding: 0.5rem 0 0.5rem calc(var(--size) + var(--gap));
+        padding-block: 0.5rem;
+        padding-inline-start: calc(var(--size) + var(--gap));
+        padding-inline-end: 0;
         user-select: none;
     }
 
@@ -52,6 +56,7 @@
 
     &:has(input:checked):after {
         left: calc(var(--inset) + var(--stroke));
+        right: auto;
         height: calc(var(--size) - ((var(--inset) + var(--stroke)) * 2));
         width: calc(var(--size) - ((var(--inset) + var(--stroke)) * 2));
         background-color: var(--checked);
@@ -85,6 +90,25 @@
 
         &:after {
             border-radius: 0.75px;
+        }
+    }
+}
+
+html[lang=ar] {
+    .custom-input {
+        &:before {
+            right: 0;
+            left: auto;
+        }
+
+        &:after {
+            right: calc(var(--size) / 2);
+            left: auto;
+        }
+
+        &:has(input:checked):after {
+            right: calc(var(--inset) + var(--stroke));
+            left: auto;
         }
     }
 }

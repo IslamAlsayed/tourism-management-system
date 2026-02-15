@@ -2,8 +2,6 @@
 
 namespace Modules\Accommodations\Livewire;
 
-use Modules\Accommodations\Entities\Meal;
-use Modules\Accommodations\Entities\Room;
 use Modules\Accommodations\Entities\Type;
 use Modules\Accommodations\Entities\Season;
 use Livewire\Component;

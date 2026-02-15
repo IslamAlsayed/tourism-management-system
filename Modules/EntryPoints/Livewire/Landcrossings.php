@@ -11,7 +11,7 @@ use App\Traits\HandlesCrudSafely;
 use App\Traits\CustomColumnsLivewireLegacy;
 use Modules\EntryPoints\Entities\LandCrossing;
 
-class LandCrossings extends Component
+class Landcrossings extends Component
 {
     use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
 

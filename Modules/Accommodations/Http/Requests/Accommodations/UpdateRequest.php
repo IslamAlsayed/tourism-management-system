@@ -115,8 +115,6 @@ class UpdateRequest extends FormRequest
             'contact_email' => 'nullable|email|max:255',
 
             // Location
-            'country_id' => 'nullable|exists:countries,id',
-            'state_id' => 'nullable|exists:states,id',
             'city_id' => 'nullable|exists:cities,id',
             'street' => 'nullable|string|max:500',
             'box' => 'nullable|string|max:50',

@@ -79,6 +79,58 @@ class AccommodationsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+
+        // === Register Repositories ===
+        $this->registerRepositories();
+
+        // === Register Services ===
+        $this->registerServices();
+    }
+
+    /**
+     * Register Repositories
+     *
+     * @return void
+     */
+    private function registerRepositories()
+    {
+        $this->app->bind(
+            \Modules\Accommodations\Contracts\AccommodationRepositoryInterface::class,
+            \Modules\Accommodations\Repositories\AccommodationRepository::class
+        );
+
+        $this->app->bind(
+            \Modules\Accommodations\Contracts\RoomRepositoryInterface::class,
+            \Modules\Accommodations\Repositories\RoomRepository::class
+        );
+
+        $this->app->bind(
+            \Modules\Accommodations\Contracts\SeasonRepositoryInterface::class,
+            \Modules\Accommodations\Repositories\SeasonRepository::class
+        );
+
+        $this->app->bind(
+            \Modules\Accommodations\Contracts\MealRepositoryInterface::class,
+            \Modules\Accommodations\Repositories\MealRepository::class
+        );
+
+        $this->app->bind(
+            \Modules\Accommodations\Contracts\SupplementRepositoryInterface::class,
+            \Modules\Accommodations\Repositories\SupplementRepository::class
+        );
+    }
+
+    /**
+     * Register Services
+     *
+     * @return void
+     */
+    private function registerServices()
+    {
+        $this->app->bind(
+            \Modules\Accommodations\Contracts\AccommodationServiceInterface::class,
+            \Modules\Accommodations\Services\AccommodationService::class
+        );
     }
 
     /**

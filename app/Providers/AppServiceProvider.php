@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
         Country::observe(PhotoObserver::class);
 
         if (Schema::hasTable('settings')) {
-            $settings = Setting::first() ?? null;
+            $settings = Setting::withoutGlobalScopes()->first() ?? null;
             if ($settings && isset($settings->app_session_lifetime)) {
                 // Admin and superadmin: 0 = unlimited session (1 year), or specified duration
                 if (getActiveUser()) {

@@ -25,10 +25,10 @@
             @if (isset($types[$filterType]))
                 <label class="kt-label mb-2">
                     {{ __('main.' . $types[$filterType]['label']) }}
+                    <strong class="text-primary">({{ count($models) }})</strong>
                     @if (!$record)
                         <span class="text-red-600">*</span>
                     @endif
-                    <strong class="text-primary">({{ count($models) }})</strong>
                 </label>
             @endif
 

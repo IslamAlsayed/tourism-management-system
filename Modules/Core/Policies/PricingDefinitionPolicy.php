@@ -12,12 +12,12 @@ class PricingDefinitionPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->can('manage_pricing_definitions');
+        return $user->can('manage_pricing_definitions') || $user->can('view_pricing_definitions');
     }
 
     public function view(User $user, PricingDefinition $pricingDefinition): bool
     {
-        return $user->can('manage_pricing_definitions');
+        return $user->can('manage_pricing_definitions') || $user->can('view_pricing_definitions');
     }
 
     public function create(User $user): bool

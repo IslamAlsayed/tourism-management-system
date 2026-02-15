@@ -4,7 +4,7 @@
         <h3 class="kt-card-title">
             {{ __('main.type_information', ['type' => __('main.accommodation')]) }}
         </h3>
-        <div class="kt-card-toolbar">{{ $record->created_at->diffForHumans() }}</div>
+        <div class="kt-card-toolbar">{{ $record->created_at?->diffForHumans() ?? __('main.na') }}</div>
     </div>
     <div class="kt-card-body p-4">
         <div class="kt-card background rounded-lg p-4 pt-2">
@@ -25,7 +25,7 @@
                     <div>
                         <label class="kt-label mb-1">{{ __('main.type') }}</label>
                         <div>
-                            <a href="{{ route('types.show', $record->type?->id) }}" class="kt-badge kt-badge-primary">
+                            <a href="{{ route('dashboard.accommodations.types.show', $record->type?->id) }}" class="kt-badge kt-badge-primary">
                                 {{ $record->type?->name ?: __('main.na') }}
                                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                             </a>
@@ -122,11 +122,11 @@
             ])
             <div class="lg:col-span-2 flex gap-2 mt-4">
                 @include('components.elements.show-button', [
-                    'models' => 'accommodations',
+                    'models' => 'dashboard.accommodations',
                     'id' => $record->id,
                 ])
                 @include('components.elements.edit-button', [
-                    'models' => 'accommodations',
+                    'models' => 'dashboard.accommodations',
                     'id' => $record->id,
                 ])
                 @livewire('delete-bottom', [

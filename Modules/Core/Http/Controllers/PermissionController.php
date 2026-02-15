@@ -24,7 +24,7 @@ class PermissionController extends Controller
         $validated = $request->validate(['name' => 'required|string|unique:permissions,name']);
         $created =  Permission::create(['name' => $validated['name'], 'guard_name' => 'web']);
         return $created
-            ? redirect()->route('permissions.index')->withSuccess(__('messages.permission_created_successfully'))
+            ? redirect()->route('dashboard.core.permissions.index')->withSuccess(__('messages.permission_created_successfully'))
             : redirect()->back()->withError(__('messages.permission_creation_failed'));
     }
 
@@ -43,7 +43,7 @@ class PermissionController extends Controller
         $validated = $request->validate(['name' => 'required|string|unique:permissions,name,' . $permission->id]);
         $updated = $permission->update(['name' => $validated['name']]);
         return $updated
-            ? redirect()->route('permissions.index')->withSuccess(__('messages.permission_updated_successfully'))
+            ? redirect()->route('dashboard.core.permissions.index')->withSuccess(__('messages.permission_updated_successfully'))
             : redirect()->back()->withError(__('messages.permission_update_failed'));
     }
 
@@ -51,7 +51,7 @@ class PermissionController extends Controller
     {
         $deleted = $permission->delete();
         return $deleted
-            ? redirect()->route('permissions.index')->withSuccess(__('messages.permission_deleted_successfully'))
+            ? redirect()->route('dashboard.core.permissions.index')->withSuccess(__('messages.permission_deleted_successfully'))
             : redirect()->back()->withError(__('messages.permission_deletion_failed'));
     }
 }

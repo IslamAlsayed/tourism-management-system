@@ -24,7 +24,7 @@ class HandleRecord
         if (!\Illuminate\Support\Facades\Schema::hasTable('settings')) {
             return;
         }
-        $settings = Setting::first();
+        $settings = Setting::withoutGlobalScopes()->first();
         if (!$settings)
             return;
 

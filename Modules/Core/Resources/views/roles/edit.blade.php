@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('roles.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.core.roles.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.roles')]) }}
                 </a>
             </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('roles.update', $role->id) }}">
+        <form class="space-y-6" method="POST" action="{{ route('dashboard.core.roles.update', $role->id) }}">
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
@@ -40,8 +40,7 @@
                                     {{ __('main.name') }}
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
-                                    value="{{ $role->name }}" required
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $role->name }}" required
                                     {{ in_array($role->name, ['superadmin', 'admin', 'user']) ? 'disabled' : '' }}>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -85,11 +84,10 @@
 
                 <!-- Actions -->
                 <div class="flex items-center gap-3">
-                    <button type="submit" class="kt-btn kt-btn-primary"
-                        {{ in_array($role->name, ['superadmin', 'admin', 'user']) ? 'disabled' : '' }}>
+                    <button type="submit" class="kt-btn kt-btn-primary" {{ in_array($role->name, ['superadmin']) ? 'disabled' : '' }}>
                         {{ __('main.update') }}
                     </button>
-                    <a href="{{ route('roles.index') }}" class="kt-btn kt-btn-outline">
+                    <a href="{{ route('dashboard.core.roles.index') }}" class="kt-btn kt-btn-outline">
                         {{ __('main.cancel') }}
                     </a>
                 </div>

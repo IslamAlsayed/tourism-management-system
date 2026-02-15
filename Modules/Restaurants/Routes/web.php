@@ -16,5 +16,5 @@ use Modules\Restaurants\Http\Controllers\RestaurantController;
 
 Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(function () {
     // === RESTAURANT MANAGEMENT ===
-    Route::resource('restaurants', RestaurantController::class);
+    Route::resource('restaurants', RestaurantController::class)->names('restaurants');
 });

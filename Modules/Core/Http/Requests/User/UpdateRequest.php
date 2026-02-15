@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
             'name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->route('user'))],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
+            'photo' => new \App\Rules\PhotoRules(),
 
             // Personal Information
             'first_name' => ['nullable', 'string', 'max:100'],
@@ -52,6 +52,7 @@ class UpdateRequest extends FormRequest
             'button_display_mode' => ['nullable', 'string', 'in:icon,text,both'],
 
             // Status Flags
+            'role' => ['nullable', 'string', 'exists:roles,name'],
             'is_admin' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
             'is_verified' => ['nullable', 'boolean'],

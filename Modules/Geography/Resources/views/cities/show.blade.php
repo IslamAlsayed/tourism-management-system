@@ -130,6 +130,11 @@
                 </div>
             </div>
 
+            <!-- Media Files -->
+            @if (!empty($city->photo))
+                @include('components.display-photo', ['record' => $city, 'alt' => $city->name])
+            @endif
+
             <!-- Location Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -233,11 +238,11 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'cities',
+                    'models' => 'dashboard.geography.cities',
                     'id' => $city->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'cities',
+                    'model' => 'dashboard.geography.cities',
                     'id' => $city->id,
                 ])
                 <a href="{{ route('dashboard.geography.cities.index') }}" class="kt-btn kt-btn-outline">

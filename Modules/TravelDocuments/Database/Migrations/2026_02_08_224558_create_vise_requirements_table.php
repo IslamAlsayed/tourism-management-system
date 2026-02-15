@@ -23,7 +23,7 @@ return new class extends Migration
             // Relationships
             $table->foreignId('nationality_id')->nullable();
             $table->foreignId('destination_country_id')->nullable();
-            $table->foreignId('crossing_port_id')->nullable();
+            $table->foreignId('landcrossing_id')->nullable();
 
             // Visa Type & Category
             $table->enum('visa_type', ['none_required', 'on_arrival', 'e_visa', 'embassy_required', 'transit', 'restricted'])->default('on_arrival');

@@ -12,7 +12,7 @@
     <!-- Container -->
     <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
-            @livewire('core::activity-log')
+            @livewire('core::activity-log', ['type' => $type])
         </div>
     </div>
     <!-- End of Container -->

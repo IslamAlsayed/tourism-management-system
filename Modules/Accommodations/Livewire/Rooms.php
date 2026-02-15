@@ -132,6 +132,9 @@ class Rooms extends Component
         if ($this->filterStatus && $this->filterStatus['payload']['value'] !== 'all') {
             $query->where('is_active', $this->filterStatus['payload']['value'] === 'active' ? true : false);
         }
+        if (request()->type) {
+            $query->where('model_type', 'Modules\\' . ucfirst(pluralLowerCaseName(request()->type)) . '\\Entities\\' . pluralCaseName(request()->type));
+        }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
         return view('accommodations::livewire.rooms', ['data' => $data, 'totalCount' => $this->totalCount ?: Room::count(), 'selectedIds' => $this->selectedIds]);

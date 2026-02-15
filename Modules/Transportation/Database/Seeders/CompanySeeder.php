@@ -4,7 +4,7 @@ namespace Modules\Transportation\Database\Seeders;
 
 use App\Models\RichText;
 use Illuminate\Database\Seeder;
-use App\Models\PricingDefinition;
+use Modules\Core\Entities\PricingDefinition;
 use Modules\Accommodations\Entities\Season;
 use Modules\Transportation\Entities\Company;
 use Modules\Transportation\Entities\Pricing;

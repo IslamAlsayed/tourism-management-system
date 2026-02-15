@@ -24,7 +24,7 @@
             'requirements' => [
                 [
                     'condition' => \Modules\Localization\Entities\Currency::count() > 0,
-                    'route' => route('currencies.index'),
+                    'route' => route('dashboard.geography.currencies.index'),
                     'label' => __('main.currencies_'),
                 ],
             ],

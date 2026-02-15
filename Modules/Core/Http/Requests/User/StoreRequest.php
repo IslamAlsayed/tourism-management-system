@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
             'name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'photo' => ['nullable', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
+            'photo' => new \App\Rules\PhotoRules(),
 
             // Personal Information
             'first_name' => ['required', 'string', 'max:100'],
@@ -51,7 +51,7 @@ class StoreRequest extends FormRequest
             'button_display_mode' => ['nullable', 'string', 'in:icon,text,both'],
 
             // Status Flags
-            'role' => ['nullable', 'boolean'],
+            'role' => ['required', 'string', 'exists:roles,name'],
             'is_active' => ['nullable', 'boolean'],
             'is_verified' => ['nullable', 'boolean'],
             'force_password_change' => ['nullable', 'boolean'],

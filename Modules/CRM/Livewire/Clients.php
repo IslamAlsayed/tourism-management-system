@@ -126,24 +126,35 @@ class Clients extends Component
 
     public function render()
     {
-        $cacheKey = $this->getCacheKey();
+        // $cacheKey = $this->getCacheKey();
         $filterGender = is_array($this->filterClientGender) ? ($this->filterClientGender['payload']['value'] ?? null) : $this->filterClientGender;
         $filterStatus = is_array($this->filterClientStatus) ? ($this->filterClientStatus['payload']['value'] ?? null) : $this->filterClientStatus;
-        $data = Cache::remember($cacheKey, now()->addMinutes(5), function () use ($filterGender, $filterStatus) {
-            $query = Client::query();
-            if (!getActiveUser()->role) {
-                $query->where('role', '!=', 'superadmin');
-            }
-            $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-            if ($filterGender && $filterGender !== 'all') {
-                $query->where('gender', $filterGender);
-            }
-            if ($filterStatus && $filterStatus !== 'all') {
-                $query->where('client_status', $filterStatus);
-            }
-            $this->applySorting($query);
-            return $query->paginate(getPaginate());
-        });
+        // $data = Cache::remember($cacheKey, now()->addMinutes(5), function () use ($filterGender, $filterStatus) {
+        //     $query = Client::query();
+        //     if (!getActiveUser()->role) {
+        //         $query->where('role', '!=', 'superadmin');
+        //     }
+        //     $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        //     if ($filterGender && $filterGender !== 'all') {
+        //         $query->where('gender', $filterGender);
+        //     }
+        //     if ($filterStatus && $filterStatus !== 'all') {
+        //         $query->where('client_status', $filterStatus);
+        //     }
+        //     $this->applySorting($query);
+        //     return $query->paginate(getPaginate());
+        // });
+
+        $query = Client::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        if ($filterGender && $filterGender !== 'all') {
+            $query->where('gender', $filterGender);
+        }
+        if ($filterStatus && $filterStatus !== 'all') {
+            $query->where('client_status', $filterStatus);
+        }
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         return view('crm::livewire.clients', ['data' => $data, 'totalCount' => $this->totalCount ?: Client::count(), 'selectedIds' => $this->selectedIds]);
     }
 }

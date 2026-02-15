@@ -40,7 +40,7 @@
                     <div class="kt-card-body p-5 flex flex-col items-center">
                         <div class="relative mb-5">
                             <div class="size-32 rounded-full overflow-hidden">
-                                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/blank.png') }}"
+                                <img src="{{ $user->photo && checkExistFile($user->photo) ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/blank.png') }}"
                                     alt="{{ $user->name }}" class="size-full object-cover">
                             </div>
                             <a href="{{ route('dashboard.core.profile.edit') }}"

@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Airport extends Model
 {
     use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
-    protected $table = 'entry_points';
+    protected $table = 'airports';
     protected $richTextAttributes = [
         'address',
         'description',

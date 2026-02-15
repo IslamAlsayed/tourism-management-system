@@ -2,14 +2,19 @@
 
 namespace Modules\Core\Database\Seeders;
 
-use Modules\Core\Entities\User;
+use App\Models\MediaFile;
+use App\Models\RichText;
 use Illuminate\Database\Seeder;
+use Modules\Core\Entities\User;
 
 class UserSeeder extends Seeder
 {
     public function run()
     {
         truncateWithReset(User::class);
+        truncateWithReset(MediaFile::class);
+        RichText::where('record_type', User::class)->delete();
+        RichText::where('record_type', MediaFile::class)->delete();
 
         // Create users with hardcoded photos and assign roles
         // PhotoObserver will automatically create MediaFile records

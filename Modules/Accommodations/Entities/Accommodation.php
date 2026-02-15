@@ -7,10 +7,8 @@ use App\Traits\HasSearch;
 use App\Traits\FiltersByUserRole;
 use App\Traits\ClearsEmptyRichText;
 use Modules\Geography\Entities\City;
-use Modules\Geography\Entities\State;
 use App\Traits\BroadcastsRecordEvents;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Geography\Entities\Country;
 use Modules\Accommodations\Entities\Type;
 use Modules\Localization\Entities\Currency;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
@@ -27,6 +25,7 @@ class Accommodation extends Model
     protected $fillable = [
         'id',
         'uuid',
+        'photo',
         'name',
         'name_ar',
         'classification',
@@ -54,8 +53,6 @@ class Accommodation extends Model
 
         'type_id',
         'currency_id',
-        'country_id',
-        'state_id',
         'city_id',
     ];
 
@@ -66,48 +63,48 @@ class Accommodation extends Model
         'longitude' => 'decimal:7',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::saving(function ($item) {
-            if (!isset($item->country_id) || empty($item->country_id)) {
-                if (!empty($item->city_id) && $item->city) {
-                    $item->country_id = $item->city?->country_id;
-                } elseif (!empty($item->state_id) && $item->state) {
-                    $item->country_id = $item->state?->country_id;
-                }
-            }
-            if (!isset($item->state_id) || empty($item->state_id)) {
-                if (!empty($item->city_id) && $item->city) {
-                    $item->state_id = $item->city?->state_id;
-                }
-            }
-        });
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::saving(function ($item) {
+    //         if (!isset($item->country_id) || empty($item->country_id)) {
+    //             if (!empty($item->city_id) && $item->city) {
+    //                 $item->country_id = $item->city?->country_id;
+    //             } elseif (!empty($item->state_id) && $item->state) {
+    //                 $item->country_id = $item->state?->country_id;
+    //             }
+    //         }
+    //         if (!isset($item->state_id) || empty($item->state_id)) {
+    //             if (!empty($item->city_id) && $item->city) {
+    //                 $item->state_id = $item->city?->state_id;
+    //             }
+    //         }
+    //     });
 
-        static::updating(function ($item) {
-            if (!isset($item->country_id) || empty($item->country_id)) {
-                if (!empty($item->city_id) && $item->city) {
-                    $item->country_id = $item->city?->country_id;
-                } elseif (!empty($item->state_id) && $item->state) {
-                    $item->country_id = $item->state?->country_id;
-                }
-            }
-            if (!isset($item->state_id) || empty($item->state_id)) {
-                if (!empty($item->city_id) && $item->city) {
-                    $item->state_id = $item->city?->state_id;
-                }
-            }
-        });
-    }
+    //     static::updating(function ($item) {
+    //         if (!isset($item->country_id) || empty($item->country_id)) {
+    //             if (!empty($item->city_id) && $item->city) {
+    //                 $item->country_id = $item->city?->country_id;
+    //             } elseif (!empty($item->state_id) && $item->state) {
+    //                 $item->country_id = $item->state?->country_id;
+    //             }
+    //         }
+    //         if (!isset($item->state_id) || empty($item->state_id)) {
+    //             if (!empty($item->city_id) && $item->city) {
+    //                 $item->state_id = $item->city?->state_id;
+    //             }
+    //         }
+    //     });
+    // }
 
     public function getRelationshipNames()
     {
-        return ['type', 'currency', 'country', 'state', 'city', 'seasons', 'rooms', 'meals', 'supplements'];
+        return ['type', 'currency', 'city', 'seasons', 'rooms', 'meals', 'supplements'];
     }
 
     public function getExcludedColumns()
     {
-        return ['type_id', 'currency_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
+        return ['type_id', 'currency_id', 'city_id', 'description', 'notes'];
     }
 
     public function type()
@@ -118,16 +115,6 @@ class Accommodation extends Model
     public function currency()
     {
         return $this->belongsTo(Currency::class);
-    }
-
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
-
-    public function state()
-    {
-        return $this->belongsTo(State::class);
     }
 
     public function city()

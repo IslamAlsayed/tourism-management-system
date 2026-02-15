@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Airline;
-use App\Models\EntryPoint;
 use App\Models\MediaFile;
 use Modules\Tourists\Entities\TouristService;
 use Illuminate\Database\Seeder;
@@ -11,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Modules\Core\Entities\User;
 use Modules\CRM\Entities\Client;
+use Modules\EntryPoints\Entities\Landcrossing;
 use Modules\Geography\Entities\Country;
 use Modules\Restaurants\Entities\Restaurant;
 use Modules\TourGuides\Entities\TourGuide;
@@ -28,7 +28,7 @@ class MediaFileSeeder extends Seeder
         $this->storeExistingPhotos(User::class, 'users');
         $this->storeExistingPhotos(Client::class, 'clients');
         $this->storeExistingPhotos(TouristService::class, 'tourist-services');
-        $this->storeExistingPhotos(EntryPoint::class, 'crossing-ports');
+        $this->storeExistingPhotos(Landcrossing::class, 'land-crossing');
         $this->storeExistingPhotos(Airline::class, 'airlines');
         $this->storeExistingPhotos(Restaurant::class, 'restaurants');
         $this->storeExistingPhotos(TourGuide::class, 'tour-guides');

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\FiltersByUserRole;
 use App\Traits\ClearsEmptyRichText;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Modules\Core\Entities\User;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class MediaFile extends Model

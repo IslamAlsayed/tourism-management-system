@@ -2,13 +2,13 @@
 
 namespace Modules\Core\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Modules\Core\Entities\User;
 use App\Traits\PhotoUploadTrait;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\User\UpdateRequest;
+use Illuminate\View\View;
+use Modules\Core\Entities\User;
+use Modules\Core\Http\Requests\User\UpdateRequest;
 
 class ProfileController extends Controller
 {

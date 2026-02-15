@@ -10,14 +10,4 @@ class ActivityLogController extends Controller
     {
         return view('core::activities.index');
     }
-
-    public function users()
-    {
-        return view('core::activities.users');
-    }
-
-    public function system()
-    {
-        return view('core::activities.system');
-    }
 }

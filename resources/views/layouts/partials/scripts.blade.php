@@ -31,7 +31,7 @@
         key: "{{ config('app.ably_key') }}",
         logLevel: 1
     });
-    window.settings = @json(Modules\Core\Entities\Setting::first());
+    window.settings = @json(Modules\Core\Entities\Setting::withoutGlobalScopes()->first());
 
     document.addEventListener("visibilitychange", () => {
         if (document.hidden) {

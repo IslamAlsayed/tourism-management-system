@@ -125,21 +125,28 @@ class Users extends Component
 
     public function render()
     {
-        $cacheKey = $this->getCacheKey();
-        $data = Cache::remember($cacheKey, now()->addMinutes(5), function () {
-            $query = User::query();
-            if (!getActiveUser()->role) {
-                $query->where('role', '!=', 'superadmin');
-            }
-            $query->searchWithRelations(
-                search: $this->search,
-                selectedColumns: $this->columns,
-                availableRelations: $this->relations
-            );
-            $this->applySorting($query);
-            return $query->paginate(getPaginate());
-        });
+        // $cacheKey = $this->getCacheKey();
+        // $data = Cache::remember($cacheKey, now()->addMinutes(5), function () {
+        //     $query = User::query();
+        //     if (!getActiveUser()->role) {
+        //         $query->where('role', '!=', 'superadmin');
+        //     }
+        //     $query->searchWithRelations(
+        //         search: $this->search,
+        //         selectedColumns: $this->columns,
+        //         availableRelations: $this->relations
+        //     );
+        //     $this->applySorting($query);
+        //     return $query->paginate(getPaginate());
+        // });
 
+        $query = User::query();
+        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
+        if ($this->search) {
+            $query->where('name', 'like', '%' . $this->search . '%');
+        }
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
         return view('core::livewire.users', [
             'data' => $data,
             'totalCount' => $this->totalCount ?: User::count(),

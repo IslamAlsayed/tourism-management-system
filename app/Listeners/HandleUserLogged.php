@@ -93,7 +93,7 @@ class HandleUserLogged
                     continue;
                 }
 
-                $settings = Setting::first();
+                $settings = Setting::withoutGlobalScopes()->first();
                 if (!$settings)
                     return;
 

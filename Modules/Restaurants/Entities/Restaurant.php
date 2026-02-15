@@ -7,9 +7,7 @@ use App\Traits\HasSearch;
 use App\Traits\FiltersByUserRole;
 use App\Traits\ClearsEmptyRichText;
 use Modules\Geography\Entities\City;
-use Modules\Geography\Entities\State;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Geography\Entities\Country;
 use Modules\Accommodations\Entities\Meal;
 use Modules\Accommodations\Entities\Type;
 use Modules\Accommodations\Entities\Season;
@@ -66,41 +64,39 @@ class Restaurant extends Model
         'type_id',
         'timezone_id',
         'currency_id',
-        'country_id',
-        'state_id',
         'city_id',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::saving(function ($item) {
-            if (empty($item->country_id) && !empty($item->city_id)) {
-                $item->country_id = $item->city?->country_id;
-            }
-            if (empty($item->state_id) && !empty($item->city_id)) {
-                $item->state_id = $item->city?->state_id;
-            }
-        });
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::saving(function ($item) {
+    //         if (empty($item->country_id) && !empty($item->city_id)) {
+    //             $item->country_id = $item->city?->country_id;
+    //         }
+    //         if (empty($item->state_id) && !empty($item->city_id)) {
+    //             $item->state_id = $item->city?->state_id;
+    //         }
+    //     });
 
-        static::updating(function ($item) {
-            if (empty($item->country_id) && !empty($item->city_id)) {
-                $item->country_id = $item->city?->country_id;
-            }
-            if (empty($item->state_id) && !empty($item->city_id)) {
-                $item->state_id = $item->city?->state_id;
-            }
-        });
-    }
+    //     static::updating(function ($item) {
+    //         if (empty($item->country_id) && !empty($item->city_id)) {
+    //             $item->country_id = $item->city?->country_id;
+    //         }
+    //         if (empty($item->state_id) && !empty($item->city_id)) {
+    //             $item->state_id = $item->city?->state_id;
+    //         }
+    //     });
+    // }
 
     public function getRelationshipNames()
     {
-        return ['type', 'timezone', 'currency', 'country', 'state', 'city', 'seasons', 'meals', 'supplements'];
+        return ['type', 'timezone', 'currency', 'city', 'seasons', 'meals', 'supplements'];
     }
 
     public function getExcludedColumns()
     {
-        return ['type_id', 'timezone_id', 'currency_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
+        return ['type_id', 'timezone_id', 'currency_id', 'city_id', 'description', 'notes'];
     }
 
     public function type()
@@ -116,16 +112,6 @@ class Restaurant extends Model
     public function currency()
     {
         return $this->belongsTo(Currency::class);
-    }
-
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
-
-    public function state()
-    {
-        return $this->belongsTo(State::class);
     }
 
     public function city()

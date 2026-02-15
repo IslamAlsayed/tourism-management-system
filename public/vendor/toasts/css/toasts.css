@@ -61,6 +61,7 @@
     /* right: 15px; */
     /* left: auto; */
     left: 50%;
+    right: auto;
     transform: translateX(-50%);
     gap: 15px;
     display: flex;
@@ -558,8 +559,9 @@
 
 html[lang=ar] {
     & .toasts {
-        left: 15px;
-        right: auto;
+        left: auto;
+        right: 50%;
+        transform: translateX(50%);
     }
 }
 
