@@ -35,7 +35,10 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Currency Name -->
                             <div class="mb-3">
-                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
+                                <label for="name" class="kt-label required mb-2">
+                                    {{ __('main.name') }}
+                                    <span class="text-red-600">*</span>
+                                </label>
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]" required value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -44,7 +47,10 @@
 
                             <!-- Currency Code -->
                             <div class="mb-3">
-                                <label for="code" class="kt-label required mb-2">{{ __('main.currency_code_iso') }}</label>
+                                <label for="code" class="kt-label required mb-2">
+                                    {{ __('main.currency_code_iso') }}
+                                    <span class="text-red-600">*</span>
+                                </label>
                                 <input type="text" name="code" id="code" class="kt-input h-[45px]" maxlength="3" required
                                     value="{{ old('code') }}" />
                                 @error('code')
@@ -54,7 +60,10 @@
 
                             <!-- Currency Symbol -->
                             <div class="mb-3">
-                                <label for="symbol" class="kt-label required mb-2">{{ __('main.currency_symbol') }}</label>
+                                <label for="symbol" class="kt-label required mb-2">
+                                    {{ __('main.currency_symbol') }}
+                                    <span class="text-red-600">*</span>
+                                </label>
                                 <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]" maxLength="5" required value="{{ old('symbol') }}">
                                 @error('symbol')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -93,51 +102,11 @@
                         </div>
 
                         <!-- Save Submit Buttons -->
-                        @include('components.elements.save-submit', ['models' => 'currencies'])
+                        @include('components.elements.save-submit', [
+                            'models' => 'dashboard.localization.currencies',
+                            'model' => 'currency',
+                        ])
                     </form>
-                </div>
-            </div>
-
-            <!-- Currency Info -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.important_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.iso_4217_codes') }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.use_standard_currency_codes') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-chart-line text-success"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.exchange_rates') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.auto_update_rates_hint') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-dollar text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.formatting_display') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.check_format_hint') }}</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

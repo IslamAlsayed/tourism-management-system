@@ -103,11 +103,11 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'currencies',
+                    'models' => 'dashboard.localization.currencies',
                     'id' => $currency->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'currencies',
+                    'model' => 'dashboard.localization.currencies',
                     'id' => $currency->id,
                 ])
                 <a href="{{ route('dashboard.localization.currencies.index') }}" class="kt-btn kt-btn-outline">

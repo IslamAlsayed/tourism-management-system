@@ -95,7 +95,7 @@
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.hd_day_fees') }}</label>
                                 <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->hd_day_fe ?? 0 . ' ' . $tourGuide->currency->code ?: __('main.na') }}
+                                    {{ $tourGuide->hd_day_fe ?? 0 . ' ' . $tourGuide->currency?->code ?: __('main.na') }}
                                 </p>
                             </div>
                         @endif
@@ -164,22 +164,26 @@
                 <div class="kt-card-body p-4">
                     <div class="flex flex-wrap" style="gap: 20px 80px;">
                         @if ($tourGuide->country)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                                <a href="{{ route('dashboard.geography.regions.show', $tourGuide->country?->region?->id) }}"
-                                    class="block text-sm text-primary underline">
-                                    {{ $tourGuide->country?->region?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                                <a href="{{ route('dashboard.geography.subregions.show', $tourGuide->country?->subregion?->id) }}"
-                                    class="block text-sm text-primary underline">
-                                    {{ $tourGuide->country?->subregion?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
+                            @if ($tourGuideType->country->region)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                                    <a href="{{ route('dashboard.geography.regions.show', $tourGuide->country?->region?->id) }}"
+                                        class="block text-sm text-primary underline">
+                                        {{ $tourGuide->country?->region?->name ?? __('main.na') }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            @endif
+                            @if ($tourGuideType->country->subregion)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                                    <a href="{{ route('dashboard.geography.subregions.show', $tourGuide->country?->subregion?->id) }}"
+                                        class="block text-sm text-primary underline">
+                                        {{ $tourGuide->country?->subregion?->name ?? __('main.na') }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            @endif
                         @endif
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
@@ -260,7 +264,7 @@
                     'id' => $tourGuide->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'tours.guides',
+                    'model' => 'dashboard.tourguides.guides',
                     'id' => $tourGuide->id,
                 ])
                 <a href="{{ route('dashboard.tourguides.guides.index') }}" class="kt-btn kt-btn-outline">

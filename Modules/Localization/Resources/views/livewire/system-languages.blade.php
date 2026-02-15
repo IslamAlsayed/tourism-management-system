@@ -64,7 +64,7 @@
                                         </a>
                                     @endif
                                     @include('components.elements.edit-button', [
-                                        'models' => 'system-languages',
+                                        'models' => 'dashboard.localization.system-languages',
                                         'id' => $language->id,
                                     ])
                                     @include('components.elements.delete-button', [
@@ -127,7 +127,7 @@
                                                 </span>
                                             @endif
                                             @include('components.elements.edit-button', [
-                                                'models' => 'system-languages',
+                                                'models' => 'dashboard.localization.system-languages',
                                                 'id' => $language->id,
                                             ])
                                             @include('components.elements.delete-button', [

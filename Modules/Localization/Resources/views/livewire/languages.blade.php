@@ -29,8 +29,7 @@
 
                     {{-- Grid length --}}
                     <div>
-                        <select wire:change="toggleGridLength($event.target.value,'languages')"
-                            wire:model.live="gridLength" class="kt-select">
+                        <select wire:change="toggleGridLength($event.target.value,'languages')" wire:model.live="gridLength" class="kt-select">
                             @for ($length = 1; $length <= 10; $length++)
                                 <option value="{{ $length }}" @if ($gridLength == $length) selected @endif>
                                     {{ $length }}</option>
@@ -41,8 +40,7 @@
 
                 <div class="flex flex-wrap gap-4 mb-4">
                     @foreach ($data as $language)
-                        <div wire:key="{{ $language->id }}"
-                            style="width: calc((100% / {{ $gridLength }}) - {{ (($gridLength - 1) * 16) / $gridLength }}px)"
+                        <div wire:key="{{ $language->id }}" style="width: calc((100% / {{ $gridLength }}) - {{ (($gridLength - 1) * 16) / $gridLength }}px)"
                             class="kt-card hover:bg-gray-100 text-center p-4 rounded-lg shadow-sm">
                             <span class="text-start">
                                 @include('components.elements.checkbox-button', [
@@ -59,11 +57,12 @@
                             <div class="kt-card-footer flex justify-center p-0 pt-2">
                                 <div class="flex justify-center gap-2">
                                     @include('components.elements.edit-button', [
-                                        'models' => 'languages',
+                                        'models' => 'dashboard.localization.languages',
                                         'id' => $language->id,
                                     ])
 
                                     @include('components.elements.delete-button', [
+                                        'models' => 'dashboard.localization.languages',
                                         'id' => $language->id,
                                     ])
                                 </div>
@@ -73,14 +72,13 @@
                 </div>
             </div>
         @else
-            <div wire:key="{{ $view ? $view : '' }}-view" data-kt-datatable="true" data-kt-datatable-state-save="false"
-                id="team_crew_table">
+            <div wire:key="{{ $view ? $view : '' }}-view" data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
                 <div class="kt-scrollable-x-auto">
                     @component('components.data-table', [
                         'data' => $data,
                         'columns' => $columns,
                         'search' => $search,
-                        'models' => 'languages',
+                        'models' => 'dashboard.localization.languages',
                         'selectedIds' => $selectedIds ?? [],
                     ])
                     @endcomponent

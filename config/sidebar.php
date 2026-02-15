@@ -32,7 +32,7 @@ return [
         [
             'title' => 'core',
             'icon' => 'fas fa-gear',
-            'fixed' => 'done',
+            'status' => 'done',
             'label' => 'system',
             'children' => [
                 // ================= Users - المستخدمين =================
@@ -384,7 +384,7 @@ return [
         [
             'title' => 'localization',
             'icon' => 'fas fa-earth-africa',
-            'fixed' => 'done',
+            'status' => 'done',
             'label' => 'localization',
             'children' => [
                 // ================= Languages - اللغات =================
@@ -474,7 +474,7 @@ return [
         [
             'title' => 'tour-guides',
             'icon' => 'fas fa-person-hiking',
-            'fixed' => 'done',
+            'status' => 'done',
             'label' => 'tour-guides',
             'children' => [
                 // ================= Tour Guides =================
@@ -933,7 +933,7 @@ return [
         [
             'title' => 'restaurants',
             'icon' => 'fas fa-utensils',
-            'fixed' => 'done',
+            'status' => 'done',
             'label' => 'restaurants',
             'children' => [
                 [

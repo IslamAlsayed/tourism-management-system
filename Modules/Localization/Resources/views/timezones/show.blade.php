@@ -145,11 +145,11 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'timezones',
+                    'models' => 'dashboard.localization.timezones',
                     'id' => $timezone->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'timezones',
+                    'model' => 'dashboard.localization.timezones',
                     'id' => $timezone->id,
                 ])
                 <a href="{{ route('dashboard.localization.timezones.index') }}" class="kt-btn kt-btn-outline">

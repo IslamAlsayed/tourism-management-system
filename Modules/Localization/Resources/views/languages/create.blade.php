@@ -32,12 +32,6 @@
                     <form method="POST" action="{{ route('dashboard.localization.languages.store') }}" enctype="multipart/form-data" class="space-y-6 p-4">
                         @csrf
 
-                        <!-- Language Photo -->
-                        @include('components.input-image', [
-                            'column' => 'language',
-                            'columnName' => 'flag',
-                        ])
-
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Language Name (Arabic) -->
                             <div class="">
@@ -69,41 +63,8 @@
                         </div>
 
                         <!-- Save Submit Buttons -->
-                        @include('components.elements.save-submit', ['models' => 'languages'])
+                        @include('components.elements.save-submit', ['models' => 'dashboard.localization.languages', 'model' => 'language'])
                     </form>
-                </div>
-            </div>
-
-            <!-- Quick Info -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.important_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.ensure_data_accuracy') }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.geographic_coordinates') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-geolocation text-success"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.use_map_services') }}</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

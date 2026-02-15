@@ -26,15 +26,6 @@
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
-
-                {{-- Tour Guide Photo --}}
-                @include('components.input-image', [
-                    'modelKey' => $tourGuide->name ?? 'TG',
-                    'column' => 'tour-guide',
-                    'columnName' => 'photo',
-                    'record' => $tourGuide,
-                ])
-
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -231,6 +222,9 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Media Information -->
+                @include('components.inputs.photo', ['record' => $tourGuide])
 
                 <!-- Description -->
                 @include('components.elements.input-text-editor', [

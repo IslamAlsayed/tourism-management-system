@@ -26,14 +26,6 @@
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
-                <!-- Restaurant Photo -->
-                @include('components.input-image', [
-                    'modelKey' => $restaurant->name ?? 'R',
-                    'column' => 'restaurant',
-                    'columnName' => 'photo',
-                    'record' => $restaurant,
-                ])
-
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -169,6 +161,9 @@
                         ])
                     </div>
                 </div>
+
+                <!-- Media Information -->
+                @include('components.inputs.photo', ['record' => $restaurant])
 
                 <!-- Contact Information -->
                 <div class="kt-card">
