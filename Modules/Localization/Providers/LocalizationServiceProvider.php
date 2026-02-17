@@ -51,7 +51,7 @@ class LocalizationServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
         Livewire::component('localization::languages', Languages::class);
-        Livewire::component('localization::system_languages', SystemLanguages::class);
+        Livewire::component('localization::system-languages', SystemLanguages::class);
         Livewire::component('localization::currencies', Currencies::class);
         Livewire::component('localization::timezones', Timezones::class);
 

@@ -34,6 +34,7 @@
                         @csrf
                         @method('PUT')
 
+<<<<<<< HEAD
                         <!-- Languages Photo -->
                         @include('components.input-image', [
                             'modelKey' => $language->code ?? 'C',
@@ -42,6 +43,8 @@
                             'record' => $language,
                         ])
 
+=======
+>>>>>>> dev
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Language Code -->
                             <div class="">
@@ -68,6 +71,11 @@
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
+                            </div>
+
+                            <div class="col-span-full">
+                                <!-- Media Information -->
+                                @include('components.inputs.photo', ['record' => $language])
                             </div>
                         </div>
 

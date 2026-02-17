@@ -6,7 +6,7 @@
         'title' => __('main.system_languages'),
         'description' => __('main.manage_system_types', ['types' => __('main.languages')]),
         'import_url' => route('import.data', ['models' => 'system_languages']),
-        'page_create_url' => route('system-languages.create'),
+        'page_create_url' => route('dashboard.localization.system-languages.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.system_language')]),
     ])
     <!-- End of Container -->

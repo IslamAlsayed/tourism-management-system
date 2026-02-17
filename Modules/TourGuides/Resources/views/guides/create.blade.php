@@ -46,12 +46,6 @@
             @csrf
             <div class="grid gap-4 lg:gap-6">
 
-                {{-- Tour Guide Photo --}}
-                @include('components.input-image', [
-                    'column' => 'tour-guide',
-                    'columnName' => 'photo',
-                ])
-
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -247,6 +241,9 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Media Information -->
+                @include('components.inputs.photo')
 
                 <!-- Description -->
                 @include('components.elements.input-text-editor', [

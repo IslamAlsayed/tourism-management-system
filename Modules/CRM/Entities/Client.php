@@ -16,6 +16,7 @@ use Modules\Geography\Entities\State;
 use Modules\Localization\Entities\Currency;
 use Modules\Localization\Entities\Timezone;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use Modules\CRM\Database\Factories\ClientFactory;
 
 class Client extends Model
 {
@@ -211,5 +212,13 @@ class Client extends Model
         return $this->client_type === 'corporate' && $this->company_name
             ? $this->company_name
             : $this->full_name;
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     */
+    protected static function newFactory()
+    {
+        return ClientFactory::new();
     }
 }

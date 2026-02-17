@@ -154,7 +154,10 @@
                         </div>
 
                         <!-- Save Submit -->
-                        @include('components.elements.save-submit', ['models' => 'timezones'])
+                        @include('components.elements.save-submit', [
+                            'models' => 'dashboard.localization.timezones',
+                            'model' => 'timezone',
+                        ])
                     </div>
                 </form>
             </div>

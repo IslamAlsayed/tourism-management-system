@@ -62,6 +62,7 @@
                                     ])
 
                                     @include('components.elements.delete-button', [
+                                        'models' => 'dashboard.localization.languages',
                                         'id' => $language->id,
                                     ])
                                 </div>

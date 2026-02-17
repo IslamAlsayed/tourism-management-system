@@ -30,9 +30,9 @@ class SystemLanguageController extends Controller
         if ($language) {
             $this->loadActiveLanguages();
             $this->uploadPhoto($request, $language, 'photo', "languages");
-            return redirect()->route('system-languages.index')->withSuccess(__('messages.type_created', ['type' => __('main.language')]));
+            return redirect()->route('dashboard.localization.system-languages.index')->withSuccess(__('messages.type_created', ['type' => __('main.language')]));
         }
-        return redirect()->route('system-languages.index')->withError(__('messages.type_creation_failed', ['type' => __('main.language')]));
+        return redirect()->route('dashboard.localization.system-languages.index')->withError(__('messages.type_creation_failed', ['type' => __('main.language')]));
     }
 
     public function edit($id)
@@ -72,9 +72,9 @@ class SystemLanguageController extends Controller
         $deleted = $language->delete();
         if ($deleted) {
             $this->deletePhoto($language, 'flag');
-            return redirect()->route('system-languages.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.language')]));
+            return redirect()->route('dashboard.localization.system-languages.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.language')]));
         }
-        return redirect()->route('system-languages.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.language')]));
+        return redirect()->route('dashboard.localization.system-languages.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.language')]));
     }
 
     public function loadActiveLanguages()

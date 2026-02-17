@@ -7,6 +7,7 @@ use App\Http\Requests\Client\UpdateRequest;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
 use Modules\CRM\Entities\Client;
+use Modules\Geography\Entities\City;
 use Modules\Geography\Entities\Nationality;
 
 class ClientController extends Controller
@@ -21,7 +22,8 @@ class ClientController extends Controller
     public function create()
     {
         $nationalities = Nationality::orderBy('name')->get();
-        return view('crm::clients.create', compact('nationalities'));
+        $citiesCount = City::count();
+        return view('crm::clients.create', compact('nationalities', 'citiesCount'));
     }
 
     public function store(StoreRequest $request)
@@ -50,7 +52,8 @@ class ClientController extends Controller
         if (!$client)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.client')]));
         $nationalities = Nationality::orderBy('name')->get();
-        return view('crm::clients.edit', compact('client', 'nationalities'));
+        $citiesCount = City::count();
+        return view('crm::clients.edit', compact('client', 'nationalities', 'citiesCount'));
     }
 
     public function update(UpdateRequest $request, $id)

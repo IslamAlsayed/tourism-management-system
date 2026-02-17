@@ -89,22 +89,26 @@
                 <div class="kt-card-body p-4">
                     <div class="flex flex-wrap" style="gap: 20px 80px;">
                         @if ($tourGuideType->country)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                                <a href="{{ route('dashboard.geography.regions.show', $tourGuideType->country?->region?->id) }}"
-                                    class="block text-sm text-primary underline">
-                                    {{ $tourGuideType->country?->region?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                                <a href="{{ route('dashboard.geography.subregions.show', $tourGuideType->country?->subregion?->id) }}"
-                                    class="block text-sm text-primary underline">
-                                    {{ $tourGuideType->country?->subregion?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
+                            @if ($tourGuideType->country->region)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.region') }}</label>
+                                    <a href="{{ route('dashboard.geography.regions.show', $tourGuideType->country?->region?->id) }}"
+                                        class="block text-sm text-primary underline">
+                                        {{ $tourGuideType->country?->region?->name ?? __('main.na') }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            @endif
+                            @if ($tourGuideType->country->subregion)
+                                <div>
+                                    <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
+                                    <a href="{{ route('dashboard.geography.subregions.show', $tourGuideType->country?->subregion?->id) }}"
+                                        class="block text-sm text-primary underline">
+                                        {{ $tourGuideType->country?->subregion?->name ?? __('main.na') }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                </div>
+                            @endif
                         @endif
                         <div>
                             <label class="kt-label mb-1">{{ __('main.country') }}</label>
@@ -164,7 +168,7 @@
                     'id' => $tourGuideType->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'tours.guides-types',
+                    'model' => 'dashboard.tourguides.guides-types',
                     'id' => $tourGuideType->id,
                 ])
                 <a href="{{ route('dashboard.tourguides.guides-types.index') }}" class="kt-btn kt-btn-outline">

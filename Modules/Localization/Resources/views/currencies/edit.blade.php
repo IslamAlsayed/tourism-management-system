@@ -90,52 +90,12 @@
                             </div>
 
                             <!-- Update Submit Buttons -->
-                            @include('components.elements.update-submit', ['models' => 'currencies'])
+                            @include('components.elements.update-submit', [
+                                'models' => 'dashboard.localization.currencies',
+                                'model' => 'currency',
+                            ])
                         </div>
                     </form>
-                </div>
-            </div>
-
-            <!-- Currency Info -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.important_information') }}</h3>
-                </div>
-                <div class="kt-card-body p-2">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-primary"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.iso_4217_codes') }}</div>
-                                <div class="text-sm text-secondary-foreground">
-                                    {{ __('main.use_standard_currency_codes') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-chart-line text-success"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.exchange_rates') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.auto_update_rates_hint') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-dollar text-warning"></i>
-                            </div>
-                            <div>
-                                <div class="mb-2 font-semibold">{{ __('main.formatting_display') }}</div>
-                                <div class="text-sm text-secondary-foreground">{{ __('main.check_format_hint') }}</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

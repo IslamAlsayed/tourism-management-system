@@ -32,16 +32,13 @@
                     <form method="POST" action="{{ route('dashboard.localization.languages.store') }}" enctype="multipart/form-data" class="space-y-6 p-4">
                         @csrf
 
-                        <!-- Language Photo -->
-                        @include('components.input-image', [
-                            'column' => 'language',
-                            'columnName' => 'flag',
-                        ])
-
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Language Code -->
                             <div class="">
-                                <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>
+                                <label for="code" class="kt-label required mb-2">
+                                    {{ __('main.code') }}
+                                    <span class="text-red-600">*</span>
+                                </label>
                                 <input type="text" name="code" id="code" class="kt-input h-[45px]" min="2" required value="{{ old('code') }}">
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -55,6 +52,11 @@
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
+                            </div>
+
+                            <div class="col-span-full">
+                                <!-- Media Information -->
+                                @include('components.inputs.photo')
                             </div>
                         </div>
 

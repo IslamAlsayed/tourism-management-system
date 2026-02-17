@@ -4,7 +4,7 @@
     <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
         [
             'condition' => \Modules\Localization\Entities\Currency::count() > 0,
-            'route' => route('dashboard.geography.currencies.create'),
+            'route' => route('dashboard.localization.currencies.create'),
             'label' => __('main.currencies'),
         ],
     ]">

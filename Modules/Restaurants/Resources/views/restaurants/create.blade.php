@@ -50,9 +50,6 @@
         <form action="{{ route('dashboard.restaurants.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
-                <!-- Restaurant Photo -->
-                @include('components.input-image', ['column' => 'restaurant', 'columnName' => 'photo'])
-
                 <!-- Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -189,6 +186,9 @@
                         ])
                     </div>
                 </div>
+
+                <!-- Media Information -->
+                @include('components.inputs.photo')
 
                 <!-- Contact Information -->
                 <div class="kt-card">
