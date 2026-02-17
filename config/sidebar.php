@@ -958,6 +958,7 @@ return [
                         // ],
                     ],
                 ],
+
                 // [
                 //     'title' => 'meals',
                 //     'icon' => 'fas fa-bowl-food',
