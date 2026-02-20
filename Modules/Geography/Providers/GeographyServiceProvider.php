@@ -2,31 +2,33 @@
 
 namespace Modules\Geography\Providers;
 
-use Livewire\Livewire;
-use Illuminate\Support\Facades\Gate;
-use Modules\Geography\Entities\City;
-use Modules\Geography\Entities\State;
 use Illuminate\Support\Facades\Config;
-use Modules\Geography\Entities\Region;
-use Modules\Geography\Livewire\Cities;
-use Modules\Geography\Livewire\States;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use Modules\Geography\Entities\City;
 use Modules\Geography\Entities\Country;
-use Modules\Geography\Livewire\Regions;
+use Modules\Geography\Entities\Nationality;
+use Modules\Geography\Entities\Region;
+use Modules\Geography\Entities\State;
 use Modules\Geography\Entities\Subregion;
+use Modules\Geography\Livewire\Cities;
 use Modules\Geography\Livewire\Countries;
+use Modules\Geography\Livewire\Nationalities;
+use Modules\Geography\Livewire\Regions;
+use Modules\Geography\Livewire\Regions\LocationSelectBase2;
+use Modules\Geography\Livewire\Regions\LocationSelectBase;
+use Modules\Geography\Livewire\Regions\LocationToCity;
+use Modules\Geography\Livewire\Regions\LocationToCountry;
+use Modules\Geography\Livewire\Regions\LocationToState;
+use Modules\Geography\Livewire\States;
 use Modules\Geography\Livewire\Subregions;
 use Modules\Geography\Policies\CityPolicy;
-use Modules\Geography\Policies\StatePolicy;
-use Modules\Geography\Policies\RegionPolicy;
-use Modules\Geography\Livewire\Nationalities;
 use Modules\Geography\Policies\CountryPolicy;
+use Modules\Geography\Policies\NationalityPolicy;
+use Modules\Geography\Policies\RegionPolicy;
+use Modules\Geography\Policies\StatePolicy;
 use Modules\Geography\Policies\SubregionPolicy;
-use Modules\Geography\Livewire\Regions\LocationToCity;
-use Modules\Geography\Livewire\Regions\LocationToState;
-use Modules\Geography\Livewire\Regions\LocationToCountry;
-use Modules\Geography\Livewire\Regions\LocationSelectBase;
-use Modules\Geography\Livewire\Regions\LocationSelectBase2;
 
 class GeographyServiceProvider extends ServiceProvider
 {
@@ -46,6 +48,7 @@ class GeographyServiceProvider extends ServiceProvider
         Country::class => CountryPolicy::class,
         State::class => StatePolicy::class,
         City::class => CityPolicy::class,
+        Nationality::class => NationalityPolicy::class,
     ];
 
     /**

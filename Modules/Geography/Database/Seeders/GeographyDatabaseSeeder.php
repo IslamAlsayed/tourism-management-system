@@ -2,8 +2,8 @@
 
 namespace Modules\Geography\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 
 class GeographyDatabaseSeeder extends Seeder
 {
@@ -16,6 +16,8 @@ class GeographyDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call();
+        $this->call([
+            RoleAndPermissionsSeeder::class,
+        ]);
     }
 }

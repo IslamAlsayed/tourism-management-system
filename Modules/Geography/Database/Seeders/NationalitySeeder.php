@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Modules\Geography\Database\Seeders;
 
 use Modules\Geography\Entities\Nationality;
 use App\Models\RichText;

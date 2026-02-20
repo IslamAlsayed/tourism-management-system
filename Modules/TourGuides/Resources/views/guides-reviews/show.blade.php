@@ -91,7 +91,7 @@
                     'id' => $tourGuideReview->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'tours.guides-reviews',
+                    'model' => 'dashboard.tourguides.guides-reviews',
                     'id' => $tourGuideReview->id,
                 ])
                 <a href="{{ route('dashboard.tourguides.guides-reviews.index') }}" class="kt-btn kt-btn-outline">

@@ -151,7 +151,7 @@
                                 <h3 class="kt-card-title">{{ __('main.employment_information') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                                     <!-- Employee ID -->
                                     <div class="">
                                         <label for="employee_id" class="kt-label mb-2">{{ __('main.employee_id') }}</label>
@@ -218,8 +218,8 @@
                             <div class="kt-card-header">
                                 <h3 class="kt-card-title">{{ __('main.system_settings') }}</h3>
                             </div>
-                            <div class="kt-card-body p-4">
-                                <div class="grid lg:grid-cols-3 gap-6 mb-4">
+                            <div class="kt-card-body p-4 pb-0">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                     <!-- Preferred Language -->
                                     <div class="">
                                         <label for="preferred_language" class="kt-label mb-2">{{ __('main.preferred_language') }}</label>

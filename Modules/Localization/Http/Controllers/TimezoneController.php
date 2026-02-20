@@ -26,8 +26,8 @@ class TimezoneController extends Controller
         return $created
             ? ($request->has('save_and_add')
                 ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.timezone')]))
-                : redirect()->route('dashboard.core.timezones.index')->with('success', __('messages.type_created', ['type' => __('main.timezone')])))
-            : redirect()->route('dashboard.core.timezones.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.timezone')]));
+                : redirect()->route('dashboard.localization.timezones.index')->with('success', __('messages.type_created', ['type' => __('main.timezone')])))
+            : redirect()->route('dashboard.localization.timezones.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.timezone')]));
     }
 
     public function show($id)
@@ -54,7 +54,7 @@ class TimezoneController extends Controller
         $validated = $request->validated();
         $updated = $timezone->update($validated);
         return $updated
-            ? redirect()->route('dashboard.core.timezones.index')->withSuccess(__('messages.type_updated', ['type' => __('main.timezone')]))
+            ? redirect()->route('dashboard.localization.timezones.index')->withSuccess(__('messages.type_updated', ['type' => __('main.timezone')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.timezone')]));
     }
 
@@ -65,7 +65,7 @@ class TimezoneController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.timezone')]));
         $deleted = $timezone->delete();
         return $deleted
-            ? redirect()->route('dashboard.core.timezones.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.timezone')]))
-            : redirect()->route('dashboard.core.timezones.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.timezone')]));
+            ? redirect()->route('dashboard.localization.timezones.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.timezone')]))
+            : redirect()->route('dashboard.localization.timezones.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.timezone')]));
     }
 }

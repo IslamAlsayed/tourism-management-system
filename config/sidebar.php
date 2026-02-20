@@ -946,7 +946,7 @@ return [
                             'route' => 'dashboard.restaurants.index',
                         ],
                         [
-                            'title' => 'create accommodation',
+                            'title' => 'create restaurant',
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.restaurants.create',
                         ],

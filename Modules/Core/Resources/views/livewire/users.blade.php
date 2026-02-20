@@ -2,7 +2,7 @@
     @component('includes.pagination-info', [
         'data' => $data,
         'columns' => $columns ?? [],
-        'title' => __('main.users2'),
+        'title' => __('main.users'),
         'entityName' => __('main.user'),
         'sortField' => $sortField ?? null,
         'searchValue' => $search ?? null,

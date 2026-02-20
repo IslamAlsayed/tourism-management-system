@@ -30,7 +30,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->can('manage_users');
+        return $user->hasRole('superadmin');
     }
 
     /**
@@ -38,7 +38,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->can('manage_users');
+        return $user->hasRole('superadmin');
     }
 
     /**
@@ -46,7 +46,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return $user->can('manage_users');
+        return $user->hasRole('superadmin');
     }
 
     /**

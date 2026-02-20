@@ -46,12 +46,6 @@ class RolePermissionSeeder extends Seeder
 
             // Specific Data Management
             'manage_clients',
-            'manage_currencies',
-            'manage_regions',
-            'manage_subregions',
-            'manage_countries',
-            'manage_states',
-            'manage_cities',
             'manage_airlines',
             'manage_accommodations',
             'manage_restaurants',

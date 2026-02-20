@@ -54,20 +54,22 @@
                                     </div>
 
                                     <!-- Role -->
-                                    <div class="">
-                                        <label for="role" class="kt-label required mb-2">{{ __('main.role') }}</label>
-                                        <select name="role" id="role" class="kt-input basic-single">
-                                            <option value="" selected>--</option>
-                                            @foreach ($roles as $role)
-                                                <option value="{{ $role->name }}" {{ $user->role == $role->name ? 'selected' : '' }}>
-                                                    {{ $role->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('role')
-                                            <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    @if (auth()->user()->can('update', $user))
+                                        <div class="">
+                                            <label for="role" class="kt-label required mb-2">{{ __('main.role') }}</label>
+                                            <select name="role" id="role" class="kt-input basic-single">
+                                                <option value="" selected>--</option>
+                                                @foreach ($roles as $role)
+                                                    <option value="{{ $role->name }}" {{ $user->role == $role->name ? 'selected' : '' }}>
+                                                        {{ $role->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('role')
+                                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- Bio -->
@@ -130,7 +132,7 @@
                                 <h3 class="kt-card-title">{{ __('main.employment_information') }}</h3>
                             </div>
                             <div class="kt-card-body p-4">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                                     <!-- Employee ID -->
                                     <div class="">
                                         <label for="employee_id" class="kt-label mb-2">{{ __('main.employee_id') }}</label>
@@ -200,7 +202,7 @@
                             <div class="kt-card-header">
                                 <h3 class="kt-card-title">{{ __('main.system_settings') }}</h3>
                             </div>
-                            <div class="kt-card-body p-4">
+                            <div class="kt-card-body p-4 pb-0">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                     <!-- Preferred Language -->
                                     <div class="">

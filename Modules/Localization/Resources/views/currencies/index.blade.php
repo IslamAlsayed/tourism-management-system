@@ -14,11 +14,7 @@
     <!-- Container -->
     <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
-<<<<<<< HEAD
-            @livewire('geography::currencies')
-=======
             @livewire('localization::currencies')
->>>>>>> dev
         </div>
     </div>
     <!-- End of Container -->
