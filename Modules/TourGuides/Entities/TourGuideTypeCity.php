@@ -2,15 +2,16 @@
 
 namespace Modules\TourGuides\Entities;
 
-use App\Traits\HasUuid;
-use App\Traits\HasSearch;
-use Modules\Geography\Entities\City;
 use App\Traits\BroadcastsRecordEvents;
+use App\Traits\FiltersByUserRole;
+use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Geography\Entities\City;
 
 class TourGuideTypeCity extends Model
 {
-    use HasSearch, HasUuid, BroadcastsRecordEvents;
+    use HasSearch, HasUuid, FiltersByUserRole, BroadcastsRecordEvents;
 
     protected $table = 'tour_guide_type_city';
     protected $fillable = [

@@ -7,7 +7,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Modules\Localization\Entities\SystemLanguage;
-use App\Http\Requests\SystemLanguageStoreRequest;
+use Modules\Localization\Http\Requests\SystemLanguage\StoreRequest;
+use Modules\Localization\Http\Requests\SystemLanguage\UpdateRequest;
 
 class SystemLanguageController extends Controller
 {
@@ -22,14 +23,15 @@ class SystemLanguageController extends Controller
         return view('localization::system-languages.create');
     }
 
-    public function store(SystemLanguageStoreRequest $request)
+    public function store(StoreRequest $request)
     {
         $validated = $request->validated();
-        $data = array_merge($validated, $request->safe()->except('photo'));
-        $language = SystemLanguage::create($data);
+        $language = SystemLanguage::create($validated);
         if ($language) {
             $this->loadActiveLanguages();
-            $this->uploadPhoto($request, $language, 'photo', "languages");
+            if ($request->hasFile('photo')) {
+                $this->uploadSinglePhoto($request, $language, 'photo', 'languages');
+            }
             return redirect()->route('dashboard.localization.system-languages.index')->withSuccess(__('messages.type_created', ['type' => __('main.language')]));
         }
         return redirect()->route('dashboard.localization.system-languages.index')->withError(__('messages.type_creation_failed', ['type' => __('main.language')]));
@@ -42,6 +44,24 @@ class SystemLanguageController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.language')]));
         }
         return view('localization::system-languages.edit', compact('language'));
+    }
+
+    public function update(UpdateRequest $request, $id)
+    {
+        $language = SystemLanguage::find($id);
+        if (!$language) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.language')]));
+        }
+        $validated = $request->validated();
+        $updated = $language->update($validated);
+        if ($updated) {
+            $this->loadActiveLanguages();
+            if ($request->input('remove_photo') && $request->hasFile('photo')) {
+                $this->uploadSinglePhoto($request, $language, 'photo', 'languages');
+            }
+            return redirect()->route('dashboard.localization.system-languages.index')->withSuccess(__('messages.type_updated', ['type' => __('main.language')]));
+        }
+        return redirect()->route('dashboard.localization.system-languages.index')->withError(__('messages.type_update_failed', ['type' => __('main.language')]));
     }
 
     public function locale($locale = 'en')

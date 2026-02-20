@@ -4,11 +4,12 @@ namespace Modules\CRM\Entities;
 
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\ClearsEmptyRichText;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Core\Entities\User;
+use Modules\CRM\Database\Factories\ClientFactory;
 use Modules\Geography\Entities\City;
 use Modules\Geography\Entities\Country;
 use Modules\Geography\Entities\Nationality;
@@ -16,11 +17,10 @@ use Modules\Geography\Entities\State;
 use Modules\Localization\Entities\Currency;
 use Modules\Localization\Entities\Timezone;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
-use Modules\CRM\Database\Factories\ClientFactory;
 
 class Client extends Model
 {
-    use HasSearch, HasRichText, HasUuid, HasFactory, BroadcastsRecordEvents, ClearsEmptyRichText;
+    use HasSearch, HasRichText, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
         'notes',

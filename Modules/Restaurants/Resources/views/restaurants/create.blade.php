@@ -28,16 +28,6 @@
                     'label' => __('main.types'),
                 ],
                 [
-                    'condition' => \Modules\Geography\Entities\Country::count() > 0,
-                    'route' => route('dashboard.geography.countries.index'),
-                    'label' => __('main.countries'),
-                ],
-                [
-                    'condition' => \Modules\Geography\Entities\State::count() > 0,
-                    'route' => route('dashboard.geography.states.index'),
-                    'label' => __('main.states'),
-                ],
-                [
                     'condition' => \Modules\Geography\Entities\City::count() > 0,
                     'route' => route('dashboard.geography.cities.index'),
                     'label' => __('main.cities'),
@@ -58,10 +48,24 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [country, state, city] --}}
-                        @livewire('geography::livewire.regions.location-select-base')
-
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            <!-- City -->
+                            <div>
+                                <label for="city_id" class="kt-label required">
+                                    {{ __('main.city') }}
+                                    <strong class="dataLength text-primary">
+                                        ({{ $citiesCount ?: 0 }})
+                                    </strong>
+                                    <span class="text-red-600">*</span>
+                                </label>
+                                <select name="city_id" id="city_id" class="kt-select cities-select" required>
+                                    <option value="" selected>--</option>
+                                </select>
+                                @error('city_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Latitude -->
                             @include('components.inputs.latitude')
 
@@ -386,3 +390,68 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        // Initialize Select2 for cities with AJAX
+        document.addEventListener('DOMContentLoaded', function() {
+            const citiesSelects = $('.cities-select');
+
+            citiesSelects.select2({
+                ajax: {
+                    url: '{{ route('routes.cities') }}',
+                    type: 'GET',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            page: params.page || 1
+                        };
+                    },
+                    processResults: function(data, params) {
+                        params.page = params.page || 1;
+                        return {
+                            results: data.results,
+                            pagination: {
+                                more: data.pagination.more
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 0,
+                placeholder: '{{ __('main.search') }}...',
+                allowClear: true,
+                language: {
+                    inputTooShort: function(args) {
+                        return '--';
+                    },
+                    noResults: function() {
+                        return '{{ __('main.no_results_found') }}';
+                    }
+                }
+            });
+
+            // Load initial 25 cities
+            citiesSelects.each(function() {
+                $.ajax({
+                    url: '{{ route('routes.cities') }}',
+                    type: 'GET',
+                    data: {
+                        q: '',
+                        page: 1
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        const select = $(this);
+                        data.results.forEach(function(city) {
+                            const option = new Option(city.text.trim(), city.id);
+                            select.append(option);
+                        });
+                    }.bind(this)
+                });
+            });
+        });
+    </script>
+@endpush

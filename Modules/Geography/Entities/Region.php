@@ -2,14 +2,16 @@
 
 namespace Modules\Geography\Entities;
 
-use App\Traits\HasUuid;
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\ClearsEmptyRichText;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Region extends Model
 {
-    use HasFactory, HasSearch, HasUuid;
+    use HasSearch, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
 
     protected $fillable = [
         'id',

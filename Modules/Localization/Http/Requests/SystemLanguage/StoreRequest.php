@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Modules\Localization\Http\Requests\SystemLanguage;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class SystemLanguageStoreRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +23,9 @@ class SystemLanguageStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|unique:languages,name",
-            "code" => "required|unique:languages,code",
-            'photo' => ['required', 'string', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120']
+            'name' => ['required', 'unique:languages,name', Rule::unique('languages', 'name')->ignore($this->route('system_language'))],
+            'code' => ['required', 'unique:languages,code', Rule::unique('languages', 'code')->ignore($this->route('system_language'))],
+            'photo' => new \App\Rules\PhotoRules(),
         ];
     }
 }

@@ -2,24 +2,25 @@
 
 namespace Modules\Restaurants\Entities;
 
-use App\Traits\HasUuid;
-use App\Traits\HasSearch;
-use App\Traits\FiltersByUserRole;
+use App\Traits\BroadcastsRecordEvents;
 use App\Traits\ClearsEmptyRichText;
-use Modules\Geography\Entities\City;
+use App\Traits\FiltersByUserRole;
+use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Accommodations\Entities\Meal;
-use Modules\Accommodations\Entities\Type;
 use Modules\Accommodations\Entities\Season;
+use Modules\Accommodations\Entities\Supplement;
+use Modules\Accommodations\Entities\Type;
+use Modules\Geography\Entities\City;
 use Modules\Localization\Entities\Currency;
 use Modules\Localization\Entities\Timezone;
-use Modules\Accommodations\Entities\Supplement;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Restaurant extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
+    use HasSearch, HasRichText, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
+
     protected $richTextAttributes = [
         'description',
         'notes',

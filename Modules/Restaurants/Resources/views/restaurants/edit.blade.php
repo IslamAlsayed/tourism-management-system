@@ -34,10 +34,23 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [country, state, city] --}}
-                        @livewire('geography::livewire.regions.location-select-base', ['record' => $restaurant])
-
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            <!-- City -->
+                            <div>
+                                <label for="city_id" class="kt-label">
+                                    {{ __('main.city') }}
+                                    <strong class="dataLength text-primary">
+                                        ({{ $citiesCount ?: 0 }})
+                                    </strong>
+                                </label>
+                                <select name="city_id" id="city_id" class="kt-select cities-select" data-value="{{ $restaurant->city_id }}">
+                                    <option value="" selected>--</option>
+                                </select>
+                                @error('city_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Latitude -->
                             @include('components.inputs.latitude', ['record' => $restaurant])
 
@@ -362,3 +375,65 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const citiesSelects = $('.cities-select');
+
+            // Initialize Select2
+            citiesSelects.select2({
+                ajax: {
+                    url: '{{ route('routes.cities') }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            page: params.page || 1
+                        };
+                    },
+                    processResults: function(data, params) {
+                        params.page = params.page || 1;
+                        return {
+                            results: data.results,
+                            pagination: {
+                                more: data.pagination.more
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: '{{ __('main.search') }}...',
+                allowClear: true,
+                minimumInputLength: 0,
+                language: {
+                    inputTooShort: function() {
+                        return '--';
+                    },
+                    noResults: function() {
+                        return '{{ __('main.no_results_found') }}';
+                    }
+                }
+            });
+
+            // ✅ Handle EDIT MODE for each select
+            citiesSelects.each(function() {
+                const select = $(this); // ✅ مهم
+                const selectedCityId = select.data('value');
+                if (!selectedCityId) return;
+                $.ajax({
+                    url: '{{ url('api/routes/cities') }}/' + selectedCityId,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function(data) {
+                    if (select.find("option[value='" + data.id + "']").length) {
+                        return;
+                    }
+                    const option = new Option(data.text, data.id, true, true);
+                    select.append(option).trigger('change');
+                });
+            });
+        });
+    </script>
+@endpush

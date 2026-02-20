@@ -2,11 +2,11 @@
 
 namespace Modules\Restaurants\Http\Controllers;
 
-use App\Http\Requests\Restaurant\StoreRequest;
-use App\Http\Requests\Restaurant\UpdateRequest;
+use Modules\Restaurants\Http\Requests\Restaurant\StoreRequest;
+use Modules\Restaurants\Http\Requests\Restaurant\UpdateRequest;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
-use Modules\Accommodations\Entities\Type;
+use Modules\Geography\Entities\City;
 use Modules\Restaurants\Contracts\RestaurantServiceInterface;
 use Modules\Restaurants\Entities\Restaurant;
 
@@ -28,8 +28,8 @@ class RestaurantController extends Controller
 
     public function create()
     {
-        $types = Type::all()->pluck('name', 'id');
-        return view('restaurants::restaurants.create', compact('types'));
+        $citiesCount = City::count();
+        return view('restaurants::restaurants.create', compact('citiesCount'));
     }
 
     public function store(StoreRequest $request)
@@ -56,8 +56,8 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::with((new Restaurant())->getRelationshipNames())->find($id);
         if (!$restaurant)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
-        $types = Type::all()->pluck('name', 'id');
-        return view('restaurants::restaurants.edit', compact('restaurant', 'types'));
+        $citiesCount = City::count();
+        return view('restaurants::restaurants.edit', compact('restaurant', 'citiesCount'));
     }
 
     public function update(UpdateRequest $request, $id)

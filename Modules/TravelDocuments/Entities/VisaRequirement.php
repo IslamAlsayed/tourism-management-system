@@ -2,12 +2,15 @@
 
 namespace Modules\TravelDocuments\Entities;
 
-use Modules\EntryPoints\Entities\Landcrossing;
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\ClearsEmptyRichText;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Core\Entities\User;
+use Modules\EntryPoints\Entities\Landcrossing;
 use Modules\Geography\Entities\Country;
 use Modules\Geography\Entities\Nationality;
 use Modules\Localization\Entities\Currency;
@@ -15,7 +18,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class VisaRequirement extends Model
 {
-    use HasSearch, HasUuid, HasRichText, HasFactory;
+    use HasSearch, HasUuid, HasRichText, HasFactory, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
 
     protected $richTextAttributes = [
         'description',

@@ -12,21 +12,14 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function __construct()
     {
-        $this->model = $this->getModel();
+        $this->setModel();
     }
 
-    // abstract public function getModel();
-
-    // public function __construct()
-    // {
-    //     $this->setModel();
-    // }
-
-    // private function setModel()
-    // {
-    //     $modelClass = $this->getModel();
-    //     $this->model = new $modelClass();
-    // }
+    private function setModel()
+    {
+        $modelClass = $this->getModel();
+        $this->model = new $modelClass();
+    }
 
     public function find($id)
     {

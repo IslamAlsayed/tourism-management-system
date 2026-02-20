@@ -21,6 +21,7 @@ class LocalizationDatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call([
+            RoleAndPermissionsSeeder::class,
             SystemLanguageSeeder::class,
             LanguageSeeder::class,
             TimezoneSeeder::class,

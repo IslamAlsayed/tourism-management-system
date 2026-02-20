@@ -2,7 +2,9 @@
 
 namespace Modules\TravelDocuments\Entities;
 
-use Modules\Tourists\Entities\TouristSite;
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\ClearsEmptyRichText;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,11 +12,12 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Core\Entities\User;
 use Modules\Geography\Entities\Country;
 use Modules\Localization\Entities\Currency;
+use Modules\Tourists\Entities\TouristSite;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TravelPasse extends Model
 {
-    use HasSearch, HasUuid, HasRichText, HasFactory;
+    use HasFactory, HasSearch, HasRichText, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
 
     protected $richTextAttributes = [
         'description',

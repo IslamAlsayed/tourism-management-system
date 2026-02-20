@@ -50,13 +50,13 @@ class Users extends Component
     public function destroy($id)
     {
         $this->safeDestroy($id, User::class, 'user');
-        Cache::tags(['users'])->flush();
+        // Cache::tags(['users'])->flush();
     }
 
     public function forceDelete($id)
     {
         $this->safeForceDelete($id, User::class, 'user');
-        Cache::tags(['users'])->flush();
+        // Cache::tags(['users'])->flush();
     }
 
     public function updatedSelectPage($value)

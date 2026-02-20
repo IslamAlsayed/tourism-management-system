@@ -236,7 +236,7 @@ return [
         [
             'title' => 'geography',
             'icon' => 'fas fa-location-dot',
-            'status' => 'done',
+            'status' => 'updated',
             'label' => 'geography',
             'children' => [
                 // ================= Regions - المناطق =================
@@ -384,7 +384,7 @@ return [
         [
             'title' => 'localization',
             'icon' => 'fas fa-earth-africa',
-            'status' => 'done',
+            'status' => 'updated',
             'label' => 'localization',
             'children' => [
                 // ================= Languages - اللغات =================
@@ -933,7 +933,7 @@ return [
         [
             'title' => 'restaurants',
             'icon' => 'fas fa-utensils',
-            'status' => 'done',
+            'status' => 'updated',
             'label' => 'restaurants',
             'children' => [
                 [

@@ -2,14 +2,17 @@
 
 namespace Modules\TravelDocuments\Entities;
 
-use Modules\Tourists\Entities\TouristSite;
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\ClearsEmptyRichText;
+use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Tourists\Entities\TouristSite;
 
 class TravelPassSite extends Model
 {
-    use HasSearch, HasUuid;
+    use HasSearch, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
 
     protected $fillable = [
         'id',

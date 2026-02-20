@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Restaurant;
+namespace Modules\Restaurants\Http\Requests\Restaurant;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +23,10 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['nullable', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
 
-            'type_id' => ['required', 'string', 'max:50', 'exists:types,id'],
+            'type_id' => ['nullable', 'string', 'max:50', 'exists:types,id'],
             'timezone_id' => ['nullable', 'string', 'exists:timezones,id'],
             'currency_id' => ['nullable', 'string', 'exists:currencies,id'],
 
@@ -86,7 +87,7 @@ class StoreRequest extends FormRequest
             'email_01' => ['nullable', 'email', 'max:255'],
             'email_02' => ['nullable', 'email', 'max:255'],
             'box' => ['nullable', 'string', 'max:255'],
-            'postal_code' => ['nullable', 'string', 'max:50', 'unique:restaurants,postal_code'],
+            'postal_code' => ['nullable', 'numeric', 'max:50', Rule::unique('restaurants', 'postal_code')->ignore($this->route('restaurant'))],
             'street' => ['nullable', 'string', 'max:255'],
             'mobile' => ['nullable', 'string', 'max:20'],
             'website' => ['nullable', 'string', 'max:255'],

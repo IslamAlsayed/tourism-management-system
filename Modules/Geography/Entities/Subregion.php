@@ -2,15 +2,17 @@
 
 namespace Modules\Geography\Entities;
 
-use App\Traits\HasUuid;
-use App\Traits\HasSearch;
+use App\Traits\BroadcastsRecordEvents;
+use App\Traits\ClearsEmptyRichText;
 use App\Traits\FiltersByUserRole;
+use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Subregion extends Model
 {
-    use HasSearch, HasUuid, HasRichText, FiltersByUserRole;
+    use HasSearch, HasRichText, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
     protected $richTextAttributes = [
         'description',
         'notes',
