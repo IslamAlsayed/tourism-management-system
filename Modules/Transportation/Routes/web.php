@@ -7,6 +7,8 @@ use Modules\Transportation\Http\Controllers\PricingController;
 use Modules\Transportation\Http\Controllers\RouteAssignmentController;
 use Modules\Transportation\Http\Controllers\RouteController;
 use Modules\Transportation\Http\Controllers\VehicleTypeController;
+use Modules\Transportation\Http\Controllers\SeasonController;
+use Modules\Transportation\Http\Controllers\TransportationSupplementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +39,10 @@ Route::prefix('dashboard/transportation')->name('dashboard.transportation.')->mi
 
     // === PRICINGS MANAGEMENT ===
     Route::resource('pricings', PricingController::class)->names('pricings');
+
+    // === SEASONS MANAGEMENT ===
+    Route::resource('seasons', SeasonController::class)->names('seasons');
+
+    // === SUPPLEMENTS MANAGEMENT ===
+    Route::resource('supplements', TransportationSupplementController::class)->names('supplements');
 });

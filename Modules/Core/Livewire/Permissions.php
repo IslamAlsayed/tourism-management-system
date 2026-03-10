@@ -59,6 +59,7 @@ class Permissions extends Component
         }
 
         Permission::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Permission::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -71,21 +72,13 @@ class Permissions extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Permission::class, $cols, 'permissions');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Permission::class, $cols, 'permissions');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Permission::class, $cols, 'permissions', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Permission::class, $cols, 'permissions', $extension);
     }
 
     public function render()
@@ -99,3 +92,4 @@ class Permissions extends Component
         return view('core::livewire.permissions', ['data' => $data, 'totalCount' => $this->totalCount ?: Permission::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

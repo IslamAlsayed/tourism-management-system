@@ -65,6 +65,7 @@ class GuidesTypes extends Component
         }
 
         TourGuideType::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(TourGuideType::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -77,21 +78,13 @@ class GuidesTypes extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], TourGuideType::class, $cols, 'tour_guide_types');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], TourGuideType::class, $cols, 'tour_guide_types');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], TourGuideType::class, $cols, 'tour_guide_types', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], TourGuideType::class, $cols, 'tour_guide_types', $extension);
     }
 
     public function render()
@@ -107,3 +100,4 @@ class GuidesTypes extends Component
         return view('tourguides::livewire.guides-types', ['data' => $data, 'totalCount' => $this->totalCount ?: TourGuideType::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

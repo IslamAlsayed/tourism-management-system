@@ -39,9 +39,6 @@
         <div class="flex items-center justify-between gap-2">
             <span class="flex items-center gap-2">
                 <i class="text-base ki-filled ki-moon" id="icon-theme-mode"></i>
-                <span class="font-medium text-2sm" id="text-theme-mode">
-                    {{ __('main.dark_mode') }}
-                </span>
             </span>
             <input class="kt-switch" id="switch-theme-mode" type="checkbox" value="1" />
         </div>

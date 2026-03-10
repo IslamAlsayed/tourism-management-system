@@ -60,6 +60,7 @@ class Routes extends Component
         }
 
         Route::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Route::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -72,21 +73,13 @@ class Routes extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Route::class, $cols, 'transportations-routes');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Route::class, $cols, 'transportations-routes');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Route::class, $cols, 'transportations-routes', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Route::class, $cols, 'transportations-routes', $extension);
     }
 
     public function render()
@@ -98,3 +91,4 @@ class Routes extends Component
         return view('transportation::livewire.routes', ['data' => $data, 'totalCount' => $this->totalCount ?: Route::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

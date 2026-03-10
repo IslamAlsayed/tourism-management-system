@@ -32,7 +32,8 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('dashboard.transportation.vehicle-types.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.transportation.vehicle-types.store') }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
                 <!-- Transportations Vehicle Type Information -->
@@ -53,7 +54,8 @@
                                 <select name="company_id" id="company_id" class="kt-select basic-single" required>
                                     <option value="" disabled selected>--</option>
                                     @foreach ($companies as $company)
-                                        <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>
+                                        <option value="{{ $company->id }}"
+                                            {{ old('company_id') == $company->id ? 'selected' : '' }}>
                                             {{ $company->name }} ({{ $company->code }})
                                         </option>
                                     @endforeach
@@ -69,7 +71,8 @@
                                     {{ __('main.name') }}
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required value="{{ old('name') }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -78,7 +81,8 @@
                             <!-- Name Arabic -->
                             <div class="align-self-end">
                                 <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ old('name_ar') }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -90,7 +94,8 @@
                                     {{ __('main.min_capacity') }}
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <input type="number" name="min_capacity" id="min_capacity" class="kt-input h-[45px]" value="{{ old('min_capacity') }}">
+                                <input type="number" name="min_capacity" id="min_capacity" class="kt-input h-[45px]"
+                                    value="{{ old('min_capacity') }}">
                                 @error('min_capacity')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -102,7 +107,8 @@
                                     {{ __('main.max_capacity') }}
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <input type="number" name="max_capacity" id="max_capacity" class="kt-input h-[45px]" value="{{ old('max_capacity') }}">
+                                <input type="number" name="max_capacity" id="max_capacity" class="kt-input h-[45px]"
+                                    value="{{ old('max_capacity') }}">
                                 @error('max_capacity')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -155,6 +161,9 @@
                         ])
                     </div>
                 </div>
+
+                {{-- Custom Fields --}}
+                <x-custom-fields module-name="transportation" entity-type="VehicleType" />
 
                 {{-- Save Buttons --}}
                 @include('components.elements.save-submit', [

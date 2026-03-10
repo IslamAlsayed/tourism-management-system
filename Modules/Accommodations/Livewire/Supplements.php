@@ -84,6 +84,7 @@ class Supplements extends Component
         }
 
         Supplement::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Supplement::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -96,21 +97,13 @@ class Supplements extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Supplement::class, $cols, 'accommodations-supplements');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Supplement::class, $cols, 'accommodations-supplements');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Supplement::class, $cols, 'accommodations-supplements', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Supplement::class, $cols, 'accommodations-supplements', $extension);
     }
 
     public function resetFilters()
@@ -142,3 +135,4 @@ class Supplements extends Component
         return view('accommodations::livewire.supplements', ['data' => $data, 'totalCount' => $this->totalCount ?: Supplement::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

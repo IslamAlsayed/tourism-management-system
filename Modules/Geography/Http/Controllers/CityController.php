@@ -60,7 +60,7 @@ class CityController extends Controller
         if (!$city)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.city')]));
         $validated = $request->validated();
-        if ($request->input('remove_photo') && $request->hasFile('photo')) {
+        if ($request->hasFile('photo')) {
             $this->uploadSinglePhoto($request, $city, 'photo', 'cities');
         }
         $updated = $city->update($validated);

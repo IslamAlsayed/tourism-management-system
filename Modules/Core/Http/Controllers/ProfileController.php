@@ -9,6 +9,7 @@ use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\UpdateRequest;
+use Illuminate\Support\Facades\Cache;
 
 class ProfileController extends Controller
 {
@@ -22,11 +23,22 @@ class ProfileController extends Controller
     }
 
     /**
+     * Show the user's public profile.
+     */
+    public function publicProfile(Request $request): View
+    {
+        return view('core::profile.profile-public', ['user' => getActiveUser()]);
+    }
+
+    /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
     {
-        return view('core::profile.edit', ['user' => getActiveUser()]);
+        return view('core::profile.edit', [
+            'user' => getActiveUser(),
+            'countries' => \Modules\Geography\Entities\Country::all(),
+        ]);
     }
 
     /**
@@ -52,6 +64,7 @@ class ProfileController extends Controller
         }
 
         $user->save();
+        // Cache::tags(['users'])->flush();
 
         return redirect()->route('user.profile')->withSuccess(__('messages.type_updated', ['type' => __('main.profile')]));
     }
@@ -111,6 +124,7 @@ class ProfileController extends Controller
         $user = $request->user();
         try {
             $this->uploadPhoto($request, $user, 'photo', 'profile-photos');
+            // Cache::tags(['users'])->flush();
             return redirect()->route('user.profile')->withSuccess(__('messages.photo_uploaded_successfully'));
         } catch (\Exception $e) {
             return redirect()->route('user.profile')->withError(__('messages.no_photo_uploaded'));
@@ -142,5 +156,23 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         return view('core::profile.settings-final', compact('user'));
+    }
+
+    /**
+     * Show the security settings page.
+     */
+    public function security()
+    {
+        $user = Auth::user();
+        return view('core::profile.security', compact('user'));
+    }
+
+    /**
+     * Show the notifications settings page.
+     */
+    public function notifications()
+    {
+        $user = Auth::user();
+        return view('core::profile.notifications', compact('user'));
     }
 }

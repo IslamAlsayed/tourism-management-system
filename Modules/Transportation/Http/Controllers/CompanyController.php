@@ -59,6 +59,11 @@ class CompanyController extends Controller
         $validated = array_merge($validated, $request->safe()->except('photo'));
         if (!$company)
             return redirect()->route('transportation.companies.index')->withError(__('messages.type_creation_failed', ['type' => __('main.company')]));
+        
+        if ($request->has('custom_fields')) {
+            $company->saveCustomFields($request->custom_fields);
+        }
+
         $this->uploadPhoto($request, $company, 'photo', "transportation/companies");
         return $request->has('save_and_add')
             ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.company')]))
@@ -92,6 +97,10 @@ class CompanyController extends Controller
 
         if ($request->has('photo')) {
             $this->uploadPhoto($request, $company, 'photo', "transportation/companies");
+        }
+
+        if ($request->has('custom_fields')) {
+            $company->saveCustomFields($request->custom_fields);
         }
 
         // VEHICLE TYPES

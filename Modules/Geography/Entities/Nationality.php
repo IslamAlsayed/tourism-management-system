@@ -7,10 +7,11 @@ use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Nationality extends Model
 {
-    use HasSearch, HasUuid, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasSearch, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, SoftDeletes;
 
     protected $fillable = [
         'id',
@@ -30,7 +31,7 @@ class Nationality extends Model
 
     public function getExcludedColumns()
     {
-        return ['country_id', 'description', 'notes'];
+        return ['uuid', 'country_id', 'description', 'notes', 'created_at', 'updated_at', 'deleted_at'];
     }
 
     public function country()

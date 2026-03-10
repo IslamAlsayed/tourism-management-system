@@ -4,7 +4,7 @@ namespace Modules\Tourists\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\Core\Entities\User;
-use Modules\Tourists\Entities\TouristService;
+use Modules\TouristServices\Entities\TouristService;
 
 class TouristServicePolicy
 {

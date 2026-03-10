@@ -16,6 +16,7 @@ return [
     'activity_date_from' => 'من تاريخ',
     'activity_date_to' => 'إلى تاريخ',
     'activity_clear_current_log' => 'مسح السجل الحالي',
+    'activity_clear_all_logs' => 'مسح جميع السجلات',
     'activity_breakdown_title' => 'تفاصيل الأحداث',
     'activity_selected_title' => 'تفاصيل الحدث المحدد',
     'activity_id' => 'رقم الحدث',
@@ -31,6 +32,11 @@ return [
     'clear_selection' => 'إلغاء التحديد',
     'per_page' => 'عدد النتائج',
     'unknown' => 'غير معروف',
+    'event_created' => 'إنشاء',
+    'event_updated' => 'تحديث',
+    'event_deleted' => 'حذف',
+    'event_restored' => 'استعادة',
+    'event_unknown' => 'غير معروف',
 
     // Auth Activities
     'auth' => [

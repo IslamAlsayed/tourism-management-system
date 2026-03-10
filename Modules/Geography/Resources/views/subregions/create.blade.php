@@ -69,8 +69,8 @@
 
                             <!-- Subregion Name (Arabic) -->
                             <div class="">
-                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.type_name_arabic', ['type' => __('main.subregion')]) }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required>
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.type_name_arabic', ['type' => __('main.subregion')]) }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror

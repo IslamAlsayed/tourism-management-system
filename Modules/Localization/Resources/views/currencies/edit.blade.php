@@ -29,7 +29,8 @@
                     <h3 class="kt-card-title">{{ __('main.currency_information') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('dashboard.localization.currencies.update', $currency->id) }}" class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.localization.currencies.update', $currency->id) }}"
+                        class="space-y-6 p-4">
                         @csrf
                         @method('PUT')
 
@@ -37,8 +38,19 @@
                             <!-- Currency Name -->
                             <div class="">
                                 <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $currency->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $currency->name }}">
                                 @error('name')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Currency Name (English) -->
+                            <div class="">
+                                <label for="name_en" class="kt-label mb-2">{{ __('main.name_en') ?? 'Name (English)' }}</label>
+                                <input type="text" name="name_en" id="name_en" class="kt-input h-[45px]"
+                                    value="{{ $currency->name_en }}">
+                                @error('name_en')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -46,7 +58,8 @@
                             <!-- Currency Code -->
                             <div class="">
                                 <label for="code" class="kt-label mb-2">{{ __('main.currency_code_iso') }}</label>
-                                <input type="text" name="code" id="code" class="kt-input h-[45px]" maxlength="3" value="{{ $currency->code }}" />
+                                <input type="text" name="code" id="code" class="kt-input h-[45px]" maxlength="3"
+                                    value="{{ $currency->code }}" />
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -55,42 +68,85 @@
                             <!-- Currency Symbol -->
                             <div class="">
                                 <label for="symbol" class="kt-label mb-2">{{ __('main.currency_symbol') }}</label>
-                                <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]" maxLength="5" value="{{ $currency->symbol }}">
+                                <input type="text" name="symbol" id="symbol" class="kt-input h-[45px]" maxLength="5"
+                                    value="{{ $currency->symbol }}">
                                 @error('symbol')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Exchange Rate -->
+                            <div class="">
+                                <label for="exchange_rate" class="kt-label mb-2">{{ __('main.exchange_rate') }}</label>
+                                <input type="number" step="0.000001" name="exchange_rate" id="exchange_rate" class="kt-input h-[45px]"
+                                    value="{{ $currency->exchange_rate }}">
+                                @error('exchange_rate')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Decimal Places -->
+                            <div class="">
+                                <label for="decimal_places" class="kt-label mb-2">{{ __('main.decimal_places') ?? 'Decimal Places' }}</label>
+                                <input type="number" name="decimal_places" id="decimal_places" class="kt-input h-[45px]"
+                                    value="{{ $currency->decimal_places }}">
+                                @error('decimal_places')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
+                            <!-- Sort Order -->
+                            <div class="">
+                                <label for="sort_order" class="kt-label mb-2">{{ __('main.sort_order') ?? 'Sort Order' }}</label>
+                                <input type="number" name="sort_order" id="sort_order" class="kt-input h-[45px]"
+                                    value="{{ $currency->sort_order }}">
+                                @error('sort_order')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
-                        <!-- Currency Settings -->
-                        <div class="space-y-4">
-                            <h4 class="mb-2 font-semibold">{{ __('main.currency_settings') }}</h4>
-                            <div class="grid lg:grid-cols-1 gap-4">
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="is_active" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'is_active',
-                                        'id' => 'is_active',
-                                        'value' => '1',
-                                        'checked' => $currency->is_active,
-                                        'label' => __('main.active'),
-                                    ])
-                                </div>
-
-                                <div class="flex items-center gap-3">
-                                    <input type="hidden" name="auto_update_rate" value="0">
-                                    @include('components.elements.checkbox-button', [
-                                        'name' => 'auto_update_rate',
-                                        'id' => 'auto_update_rate',
-                                        'value' => '1',
-                                        'disabled' => true,
-                                        'label' => __('main.auto_update_rate'),
-                                    ])
-                                </div>
+                        <hr class="my-6 border-dashed border-gray-200">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-4">
+                            <!-- Currency Settings -->
+                            <div class="flex items-center gap-2">
+                                <input type="hidden" name="is_active" value="0">
+                                <label class="switch switch-sm" for="is_active">
+                                    <input class="switch-input" name="is_active" id="is_active" type="checkbox" value="1" {{ $currency->is_active ? 'checked' : '' }} />
+                                    <span class="switch-label font-medium text-sm text-gray-700">{{ __('main.active') }}</span>
+                                </label>
                             </div>
 
+                            <div class="flex items-center gap-2">
+                                <input type="hidden" name="is_auto_update" value="0">
+                                <label class="switch switch-sm" for="is_auto_update">
+                                    <input class="switch-input" name="is_auto_update" id="is_auto_update" type="checkbox" value="1" {{ $currency->is_auto_update ? 'checked' : '' }} />
+                                    <span class="switch-label font-medium text-sm text-gray-700">{{ __('main.auto_update_rate') ?? 'Auto Update Rate' }}</span>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <input type="hidden" name="is_base_currency" value="0">
+                                <label class="switch switch-sm" for="is_base_currency">
+                                    <input class="switch-input" name="is_base_currency" id="is_base_currency" type="checkbox" value="1" {{ $currency->is_base_currency ? 'checked' : '' }} />
+                                    <span class="switch-label font-medium text-sm text-gray-700">{{ __('main.is_base_currency') ?? 'Base Currency' }}</span>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <input type="hidden" name="is_major_currency" value="0">
+                                <label class="switch switch-sm" for="is_major_currency">
+                                    <input class="switch-input" name="is_major_currency" id="is_major_currency" type="checkbox" value="1" {{ $currency->is_major_currency ? 'checked' : '' }} />
+                                    <span class="switch-label font-medium text-sm text-gray-700">{{ __('main.is_major_currency') ?? 'Major Currency' }}</span>
+                                </label>
+                            </div>
+                        </div>
+
                             <!-- Update Submit Buttons -->
-                            @include('components.elements.update-submit', ['models' => 'currencies'])
+                            @include('components.elements.update-submit', [
+                                'models' => 'currencies',
+                                'cancel_route' => route('dashboard.localization.currencies.index'),
+                            ])
                         </div>
                     </form>
                 </div>

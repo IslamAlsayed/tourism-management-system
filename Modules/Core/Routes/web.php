@@ -9,6 +9,7 @@ use Modules\Core\Http\Controllers\SettingController;
 use Modules\Core\Http\Controllers\PermissionController;
 use Modules\Core\Http\Controllers\ActivityLogController;
 use Modules\Core\Http\Controllers\PricingDefinitionController;
+use Modules\Core\Http\Controllers\FieldDefinitionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,9 @@ Route::prefix('dashboard/core')->name('dashboard.core.')->middleware('auth')->gr
     // === CROSSING PORTS MANAGEMENT ===
     Route::resource('pricing-definitions', PricingDefinitionController::class)->names('pricing-definitions');
 
+    // === FIELD DEFINITIONS ===
+    Route::resource('field-definitions', FieldDefinitionController::class)->names('field-definitions');
+
     // === ACTIVITY LOG ===
     Route::get('activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
     Route::get('activity-log/users', [ActivityLogController::class, 'users'])->name('activity-log.users');
@@ -68,7 +72,7 @@ Route::prefix('dashboard/core')->name('dashboard.core.')->middleware('auth')->gr
     });
 
     // Alternative Profile
-    Route::get('/user/profile', [ProfileController::class, 'index'])->name('user.profile');
+    Route::get('/user/profile', [ProfileController::class, 'publicProfile'])->name('user.profile');
 
     // === SYSTEM SETTINGS ===    
     Route::prefix('settings')->name('settings.')->group(function () {
@@ -81,7 +85,7 @@ Route::prefix('dashboard/core')->name('dashboard.core.')->middleware('auth')->gr
         Route::get('system', [SettingController::class, 'system'])->name('system');
         Route::post('backup/create', [SettingController::class, 'createBackup'])->name('backup.create');
     });
-    Route::resource('settings', SettingController::class)->names('settings');
+    Route::resource('settings', SettingController::class)->names('settings')->only(['index', 'edit', 'update']);
 });
 
 require __DIR__ . '/auth.php';

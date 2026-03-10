@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('roles.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.core.roles.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.roles')]) }}
                 </a>
             </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('roles.store') }}">
+        <form class="space-y-6" method="POST" action="{{ route('dashboard.core.roles.store') }}">
             @csrf
             <div class="grid gap-4 lg:gap-6">
 
@@ -82,7 +82,7 @@
                     <button type="submit" class="kt-btn kt-btn-primary">
                         {{ __('main.create') }}
                     </button>
-                    <a href="{{ route('roles.index') }}" class="kt-btn kt-btn-outline">
+                    <a href="{{ route('dashboard.core.roles.index') }}" class="kt-btn kt-btn-outline">
                         {{ __('main.cancel') }}
                     </a>
                 </div>

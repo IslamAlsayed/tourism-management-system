@@ -71,6 +71,7 @@ class Seasons extends Component
         }
 
         Season::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Season::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -83,21 +84,13 @@ class Seasons extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Season::class, $cols, 'seasons');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Season::class, $cols, 'seasons');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Season::class, $cols, 'seasons', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Season::class, $cols, 'seasons', $extension);
     }
 
     public function resetFilters()
@@ -123,3 +116,4 @@ class Seasons extends Component
         return view('accommodations::livewire.seasons', ['data' => $data, 'totalCount' => $this->totalCount ?: Season::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

@@ -29,7 +29,8 @@
                     <h3 class="kt-card-title">{{ __('main.basic_language_info') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('dashboard.localization.languages.store') }}" enctype="multipart/form-data" class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.localization.languages.store') }}"
+                        enctype="multipart/form-data" class="space-y-6 p-4">
                         @csrf
 
                         <!-- Language Photo -->
@@ -41,9 +42,10 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Language Name (Arabic) -->
                             <div class="">
-                                <label for="name_ar" class="kt-label required mb-2">{{ __('main.name') }}
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name') }}
                                     ({{ __('main.name_ar') }})</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" required value="{{ old('name_ar') }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -52,7 +54,8 @@
                             <!-- Language Name -->
                             <div class="">
                                 <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required value="{{ old('name') }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" required
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -61,7 +64,8 @@
                             <!-- Language Code -->
                             <div class="">
                                 <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>
-                                <input type="text" name="code" id="code" class="kt-input h-[45px]" min="2" required value="{{ old('code') }}">
+                                <input type="text" name="code" id="code" class="kt-input h-[45px]" min="2"
+                                    required value="{{ old('code') }}">
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -69,7 +73,10 @@
                         </div>
 
                         <!-- Save Submit Buttons -->
-                        @include('components.elements.save-submit', ['models' => 'languages'])
+                        @include('components.elements.save-submit', [
+                            'models' => 'languages',
+                            'cancel_route' => route('dashboard.localization.languages.index'),
+                        ])
                     </form>
                 </div>
             </div>

@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
         $tawfiq = User::factory()->create([
             'name' => 'tawfiq',
             'email' => 'tawfiq@example.com',
+            'password' => bcrypt('12345678'),
             'bio' => 'Administrator account',
             'first_name' => 'tawfiq',
             'last_name' => 'makhamreh',
@@ -38,6 +39,7 @@ class UserSeeder extends Seeder
         $islam = User::factory()->create([
             'name' => 'islam',
             'email' => 'islam@example.com',
+            'password' => bcrypt('12345678'),
             'bio' => 'developer account',
             'first_name' => 'islam',
             'last_name' => 'alsayed',
@@ -58,6 +60,7 @@ class UserSeeder extends Seeder
         $ahmed = User::factory()->create([
             'name' => 'ahmed',
             'email' => 'ahmed@example.com',
+            'password' => bcrypt('12345678'),
             'bio' => 'normal user account',
             'first_name' => 'ahmed',
             'last_name' => 'ali',

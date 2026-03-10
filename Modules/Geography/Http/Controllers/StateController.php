@@ -60,7 +60,7 @@ class StateController extends Controller
         if (!$state)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.state')]));
         $validated = $request->validated();
-        if ($request->input('remove_photo') && $request->hasFile('photo')) {
+        if ($request->hasFile('photo')) {
             $this->uploadSinglePhoto($request, $state, 'photo', 'states');
         }
         $updated = $state->update($validated);

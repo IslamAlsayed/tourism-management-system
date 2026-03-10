@@ -48,7 +48,6 @@ class VisaRequirements extends Component
     public function destroy($id)
     {
         $this->safeDestroy($id, VisaRequirement::class, 'visa-requirement');
-        Cache::tags(['visa-requirements'])->flush();
     }
 
     public function updatedSelectPage($value)
@@ -74,6 +73,7 @@ class VisaRequirements extends Component
         }
 
         VisaRequirement::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(VisaRequirement::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -86,21 +86,13 @@ class VisaRequirements extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], VisaRequirement::class, $cols, 'visa-requirements');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], VisaRequirement::class, $cols, 'visa-requirements');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], VisaRequirement::class, $cols, 'visa-requirements', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], VisaRequirement::class, $cols, 'visa-requirements', $extension);
     }
 
     protected function getCacheKey()
@@ -137,3 +129,4 @@ class VisaRequirements extends Component
         ]);
     }
 }
+

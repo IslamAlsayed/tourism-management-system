@@ -66,6 +66,7 @@ class RouteAssignments extends Component
         }
 
         RouteAssignment::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(RouteAssignment::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -78,21 +79,13 @@ class RouteAssignments extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], RouteAssignment::class, $cols, 'transportations-route-assignments');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], RouteAssignment::class, $cols, 'transportations-route-assignments');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], RouteAssignment::class, $cols, 'transportations-route-assignments', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], RouteAssignment::class, $cols, 'transportations-route-assignments', $extension);
     }
 
     public function resetFilters()
@@ -116,3 +109,4 @@ class RouteAssignments extends Component
         return view('transportation::livewire.route-assignments', ['data' => $data, 'totalCount' => $this->totalCount ?: RouteAssignment::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

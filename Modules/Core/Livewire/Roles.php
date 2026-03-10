@@ -36,6 +36,11 @@ class Roles extends Component
         $this->safeDestroy($id, Role::class, 'role');
     }
 
+    public function forceDelete($id)
+    {
+        $this->safeForceDelete($id, Role::class, 'role');
+    }
+
     public function updatedSelectPage($value)
     {
         $this->selectedIds = $value ? $this->currentPageDataIds()->toArray() : [];
@@ -59,6 +64,7 @@ class Roles extends Component
         }
 
         Role::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Role::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -71,21 +77,13 @@ class Roles extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Role::class, $cols, 'roles');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Role::class, $cols, 'roles');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Role::class, $cols, 'roles', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Role::class, $cols, 'roles', $extension);
     }
 
     public function render()
@@ -99,3 +97,4 @@ class Roles extends Component
         return view('core::livewire.roles', ['data' => $data, 'totalCount' => $this->totalCount ?: Role::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

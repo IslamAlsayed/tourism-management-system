@@ -36,28 +36,19 @@ class Accommodations extends Component
 
     public function updatingFilterTypeId($value)
     {
-        // Handle Select2 array structure
-        if (is_array($value) && isset($value['payload']['value'])) {
-            $this->filterTypeId = $value['payload']['value'];
-        }
+        $this->filterTypeId = is_array($value) && isset($value['payload']['value']) ? $value['payload']['value'] : $value;
         $this->resetPage();
     }
 
     public function updatingFilterSeasonId($value)
     {
-        // Handle Select2 array structure
-        if (is_array($value) && isset($value['payload']['value'])) {
-            $this->filterSeasonId = $value['payload']['value'];
-        }
+        $this->filterSeasonId = is_array($value) && isset($value['payload']['value']) ? $value['payload']['value'] : $value;
         $this->resetPage();
     }
 
     public function updatingFilterStatus($value)
     {
-        // Handle Select2 array structure
-        if (is_array($value) && isset($value['payload']['value'])) {
-            $this->filterStatus = $value['payload']['value'];
-        }
+        $this->filterStatus = is_array($value) && isset($value['payload']['value']) ? $value['payload']['value'] : $value;
         $this->resetPage();
     }
     public function mount()
@@ -97,6 +88,7 @@ class Accommodations extends Component
         }
 
         Accommodation::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Accommodation::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -109,21 +101,13 @@ class Accommodations extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Accommodation::class, $cols, 'accommodations');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Accommodation::class, $cols, 'accommodations');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Accommodation::class, $cols, 'accommodations', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Accommodation::class, $cols, 'accommodations', $extension);
     }
 
     public function resetFilters()
@@ -143,19 +127,20 @@ class Accommodations extends Component
 
         $query = Accommodation::query();
         $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        // if ($this->filterTypeId && $this->filterTypeId !== 'all') {
-        //     $query->where('type_id', $this->filterTypeId);
-        // }
-        // if ($this->filterSeasonId && $this->filterSeasonId !== 'all') {
-        //     $query->whereHas('seasons', function ($q) {
-        //         $q->where('id', $this->filterSeasonId);
-        //     });
-        // }
-        // if ($this->filterStatus && $this->filterStatus !== 'all') {
-        //     $query->where('is_active', $this->filterStatus === 'active' ? true : false);
-        // }
+        if ($this->filterTypeId && $this->filterTypeId !== 'all') {
+            $query->where('type_id', $this->filterTypeId);
+        }
+        if ($this->filterSeasonId && $this->filterSeasonId !== 'all') {
+            $query->whereHas('seasons', function ($q) {
+                $q->where('id', $this->filterSeasonId);
+            });
+        }
+        if ($this->filterStatus && $this->filterStatus !== 'all') {
+            $query->where('is_active', $this->filterStatus === 'active' ? true : false);
+        }
         $this->applySorting($query);
         $data = $query->paginate(getPaginate());
         return view('accommodations::livewire.accommodations', ['data' => $data, 'totalCount' => $this->totalCount ?: Accommodation::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

@@ -3,269 +3,325 @@
 @section('title', __('main.type_details', ['type' => __('main.tours.guide')]))
 
 @section('content')
-    <div class="kt-container-fixed">
-        <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
-            <div class="flex flex-col justify-center gap-2">
-                <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ $tourGuide->name }}
-                </h1>
-                <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
-                    {{ $tourGuide->guide_type?->type }}
+    <!-- Dashboard Header -->
+    <div class="kt-container-fixed py-5 border-b mb-8">
+        <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+            <div class="flex flex-col md:flex-row items-center gap-6 text-center md:text-start">
+                <!-- Avatar Section -->
+                <div class="symbol symbol-100px symbol-circle border border-gray-300 shadow-sm overflow-hidden bg-gray-100">
+                    @if($tourGuide->image)
+                        <img src="{{ asset('storage/' . $tourGuide->image) }}" alt="{{ $tourGuide->name }}" class="object-cover w-full h-full">
+                    @else
+                        <div class="flex items-center justify-center w-full h-full text-gray-400">
+                            <i class="ki-outline ki-user fs-1"></i>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Basic Info Section -->
+                <div class="flex flex-col gap-2">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-0">
+                        {{ $tourGuide->name }}
+                    </h1>
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                        <span class="badge badge-lg badge-light-primary font-bold">
+                            {{ $tourGuide->guide_type?->type ?? __('main.na') }}
+                        </span>
+                        @if($tourGuide->is_active)
+                            <span class="badge badge-lg badge-light-success font-bold">
+                                {{ __('main.active') }}
+                            </span>
+                        @else
+                            <span class="badge badge-lg badge-light-danger font-bold">
+                                {{ __('main.inactive') }}
+                            </span>
+                        @endif
+                    </div>
                 </div>
             </div>
-            <div class="flex items-center gap-2.5">
-                <a href="{{ route('dashboard.tourguides.guides.edit', $tourGuide->id) }}" class="kt-btn kt-btn-primary md:hidden">
-                    <i class="ki-filled ki-pencil text-sm me-2"></i>
+
+            <div class="flex items-center gap-3">
+                <a href="{{ route('dashboard.tourguides.guides.edit', $tourGuide->id) }}" class="btn btn-primary btn-sm">
+                    <i class="ki-outline ki-pencil fs-4 me-1"></i>
                     {{ __('main.edit') }}
                 </a>
-                <a href="{{ route('dashboard.tourguides.guides.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.tours.guides')]) }}
+                <a href="{{ route('dashboard.tourguides.guides.index') }}" class="btn btn-outline btn-outline-default btn-sm">
+                    <i class="ki-outline ki-arrow-left fs-4 me-1"></i>
+                    {{ __('main.back') }}
                 </a>
             </div>
         </div>
     </div>
 
     <div class="kt-container-fixed">
-        <div class="grid gap-4 lg:gap-6">
-            <!-- Tour Guide Information -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.tours.guide')]) }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        @if ($tourGuide->name)
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            <!-- Left Column: Primary Details -->
+            <div class="xl:col-span-2 space-y-6">
+                <!-- Personal Information Card -->
+                <div class="card shadow-sm">
+                    <div class="card-header py-4">
+                        <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold text-gray-900">{{ __('main.type_information', ['type' => __('main.tours.guide')]) }}</span>
+                            <span class="text-muted mt-1 fw-semibold fs-7">{{ __('main.personal_details') }}</span>
+                        </h3>
+                    </div>
+                    <div class="card-body py-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.name') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->name ?: __('main.na') }}</p>
+                                <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.name_ar') }}</label>
+                                <div class="fs-6 text-gray-800 fw-bold">{{ $tourGuide->name_ar ?: __('main.na') }}</div>
                             </div>
-                        @endif
-                        @if ($tourGuide->name_ar)
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.name_ar') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->name_ar ?: __('main.na') }}</p>
+                                <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.gender') }}</label>
+                                <div class="fs-6 text-gray-800 fw-bold">
+                                    <span class="badge badge-light-info">{{ $tourGuide->gender ?: __('main.na') }}</span>
+                                </div>
                             </div>
-                        @endif
-                        @if ($tourGuide->home_city)
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.home_city') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->home_city ?: __('main.na') }}</p>
+                                <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.birth_date') }}</label>
+                                <div class="fs-6 text-gray-800 fw-bold">{{ $tourGuide->birth_date ?: __('main.na') }}</div>
                             </div>
-                        @endif
-                        @if ($tourGuide->birth_year)
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.birth_year') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->birth_year ?: __('main.na') }}</p>
+                                <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.age') }}</label>
+                                <div class="fs-5 text-primary fw-bolder">{{ $tourGuide->age ?: __('main.na') }} {{ __('main.years') }}</div>
                             </div>
-                        @endif
-                        @if ($tourGuide->gender)
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.gender') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <span class="kt-badge kt-badge-info">{{ $tourGuide->gender ?: __('main.na') }}</span>
-                                </p>
+                                <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.national_guide_id') }}</label>
+                                <div class="fs-6 text-gray-800 fw-bold">{{ $tourGuide->national_guide_id ?: __('main.na') }}</div>
                             </div>
-                        @endif
-                        @if ($tourGuide->national_guide_id)
                             <div>
-                                <label class="kt-label mb-1">{{ __('main.national_guide_id') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->national_guide_id ?: __('main.na') }}</p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->tourism_ministry_code)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.tourism_ministry_code') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->tourism_ministry_code ?: __('main.na') }}</p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->fd_day_fees)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.fd_day_fees') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->fd_day_fees ?? 0 . ' ' . $tourGuide->currency->code ?: __('main.na') }}
-                                </p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->hd_day_fees)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.hd_day_fees') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->hd_day_fe ?? 0 . ' ' . $tourGuide->currency->code ?: __('main.na') }}
-                                </p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->extra_fees_1)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.extra_fees_1') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->extra_fees_1 ?? 0 . ' ' . $tourGuide->currency->code ?: __('main.na') }}
-                                </p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->extra_fees_2)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.extra_fees_2') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->extra_fees_2 ?? 0 . ' ' . $tourGuide->currency->code ?: __('main.na') }}
-                                </p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->guideType)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.guide_type') }}</label>
-                                <p class="text-sm text-secondary-foreground">{{ $tourGuide->guideType->name }}</p>
-                            </div>
-                        @endif
-                        @if ($tourGuide->currency)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.currency') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    {{ $tourGuide->currency->name }}
-                                    <span class="text-primary font-semibold">
-                                        ({{ $tourGuide->currency->code }})
-                                    </span>
-                                </p>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.is_active') }}</label>
-                            <div class="flex items-center gap-2">
-                                @livewire('toggle-switch', [
-                                    'modelId' => $tourGuide->id,
-                                    'modelType' => '\\Modules\\TourGuides\\Entities\\TourGuide',
-                                    'field' => 'is_active',
-                                    'value' => (bool) $tourGuide->is_active,
-                                    'table' => 'tour-guides',
-                                ])
+                                <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.tourism_ministry_code') }}</label>
+                                <div class="fs-6 text-gray-800 fw-bold">{{ $tourGuide->tourism_ministry_code ?: __('main.na') }}</div>
                             </div>
                         </div>
-                        @include('components.elements.displayable-rich-text', [
-                            'record' => $tourGuide,
-                            'column' => 'description',
-                        ])
-                        @include('components.elements.displayable-rich-text', [
-                            'record' => $tourGuide,
-                            'column' => 'notes',
-                        ])
+
+                        <div class="separator my-8 border-gray-200"></div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div>
+                                <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.fd_day_fees') }}</label>
+                                <div class="fs-5 text-gray-900 fw-boldest">
+                                    {{ number_format($tourGuide->fd_day_fees ?? 0) }} <span class="fs-8 text-muted fw-normal">{{ $tourGuide->currency?->code }}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.hd_day_fees') }}</label>
+                                <div class="fs-5 text-gray-900 fw-boldest">
+                                    {{ number_format($tourGuide->hd_day_fees ?? 0) }} <span class="fs-8 text-muted fw-normal">{{ $tourGuide->currency?->code }}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.languages') }}</label>
+                                <div class="flex flex-wrap gap-1 mt-1">
+                                    @forelse ($tourGuide->tourGuideLanguages as $tgl)
+                                        <span class="badge badge-light-primary fw-bold">
+                                            {{ $tgl->language?->name }}
+                                            @if($tgl->proficiency) <span class="ms-1 opacity-50 text-xs">({{ $tgl->proficiency }})</span> @endif
+                                        </span>
+                                    @empty
+                                        <span class="text-muted fs-7 italic">{{ __('main.na') }}</span>
+                                    @endforelse
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Location Information -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.location')]) }}</h3>
-                </div>
-                <div class="kt-card-body p-4">
-                    <div class="flex flex-wrap" style="gap: 20px 80px;">
-                        @if ($tourGuide->country)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                                <a href="{{ route('dashboard.geography.regions.show', $tourGuide->country?->region?->id) }}"
-                                    class="block text-sm text-primary underline">
-                                    {{ $tourGuide->country?->region?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                                <a href="{{ route('dashboard.geography.subregions.show', $tourGuide->country?->subregion?->id) }}"
-                                    class="block text-sm text-primary underline">
-                                    {{ $tourGuide->country?->subregion?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
-                            </div>
-                        @endif
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.country') }}</label>
-                            @if ($tourGuide->country)
-                                <a href="{{ route('dashboard.geography.countries.show', $tourGuide->country?->id) }}" class="block text-sm text-primary underline">
-                                    {{ $tourGuide->country?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
+                <!-- Description & Notes -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header py-4">
+                            <h3 class="card-title fw-bold text-gray-900">
+                                <i class="ki-outline ki-text-align-left fs-4 text-primary me-2"></i>
+                                {{ __('main.description') }}
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            @if($tourGuide->description)
+                                <div class="text-gray-700 fs-6 leading-relaxed">
+                                    {!! $tourGuide->description !!}
+                                </div>
                             @else
-                                <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
+                                <div class="text-center py-6">
+                                    <span class="text-muted italic">{{ __('main.no_description') }}</span>
+                                </div>
                             @endif
                         </div>
-                        <div class="col-span-2">
-                            <label class="kt-label mb-1">{{ __('main.street_address') }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $tourGuide->street ?? __('main.na') }}</p>
+                    </div>
+                    <div class="card shadow-sm h-100 border-dashed border-gray-300">
+                        <div class="card-header py-4">
+                            <h3 class="card-title fw-bold text-gray-900">
+                                <i class="ki-outline ki-note fs-4 text-warning me-2"></i>
+                                {{ __('main.notes') }}
+                            </h3>
                         </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.box') }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $tourGuide->box ?? __('main.na') }}</p>
-                        </div>
-                        <div>
-                            <label class="kt-label mb-1">{{ __('main.postal_code') }}</label>
-                            <p class="text-sm text-secondary-foreground">{{ $tourGuide->postal_code ?? __('main.na') }}
-                            </p>
+                        <div class="card-body bg-light-warning bg-opacity-10 rounded">
+                            @if($tourGuide->notes)
+                                <div class="text-gray-700 fs-6 italic leading-relaxed">
+                                    {!! $tourGuide->notes !!}
+                                </div>
+                            @else
+                                <div class="text-center py-6">
+                                    <span class="text-muted italic">{{ __('main.no_notes') }}</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Contact Information -->
-            <div class="kt-card">
-                <div class="kt-card-header">
-                    <h3 class="kt-card-title">{{ __('main.type_information', ['type' => __('main.contact')]) }}</h3>
+            <!-- Right Column: Location & Contact -->
+            <div class="space-y-6">
+                <!-- Location Card -->
+                <div class="card shadow-sm">
+                    <div class="card-header py-4 bg-light-primary bg-opacity-10">
+                        <h3 class="card-title fw-bold text-gray-900">
+                            <i class="ki-outline ki-geolocation fs-3 text-primary me-2"></i>
+                            {{ __('main.location_info') }}
+                        </h3>
+                    </div>
+                    <div class="card-body py-6 space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="symbol symbol-40px symbol-circle bg-light-primary">
+                                <span class="symbol-label text-primary"><i class="ki-outline ki-global fs-2"></i></span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-muted fs-8 fw-bold uppercase">{{ __('main.country') }}</span>
+                                <span class="fs-6 text-gray-800 fw-bold">{{ $tourGuide->country?->name ?? __('main.na') }}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="symbol symbol-40px symbol-circle bg-light-success">
+                                <span class="symbol-label text-success"><i class="ki-outline ki-pointers fs-2"></i></span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-muted fs-8 fw-bold uppercase">{{ __('main.state') }}</span>
+                                <span class="fs-6 text-gray-800 fw-bold">{{ $tourGuide->state?->name ?? __('main.na') }}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="symbol symbol-40px symbol-circle bg-light-info">
+                                <span class="symbol-label text-info"><i class="ki-outline ki-map fs-2"></i></span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-muted fs-8 fw-bold uppercase">{{ __('main.city') }} ({{ __('main.home_city') }})</span>
+                                <span class="fs-6 text-gray-800 fw-bold">{{ $tourGuide->home_city ?? $tourGuide->city?->name ?? __('main.na') }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4 border-t">
+                            <div class="flex flex-col mb-4">
+                                <span class="text-muted fs-8 fw-bold uppercase mb-1">{{ __('main.street_address') }}</span>
+                                <span class="fs-6 text-gray-700">{{ $tourGuide->street ?? __('main.na') }}</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="flex flex-col">
+                                    <span class="text-muted fs-8 fw-bold uppercase mb-1">{{ __('main.postal_code') }}</span>
+                                    <span class="fs-6 text-gray-700">{{ $tourGuide->postal_code ?? __('main.na') }}</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-muted fs-8 fw-bold uppercase mb-1">{{ __('main.box') }}</span>
+                                    <span class="fs-6 text-gray-700">{{ $tourGuide->box ?? __('main.na') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="kt-card-body p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        @if ($tourGuide->email)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.email') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <a href="mailto:{{ $tourGuide->email }}" class="text-primary hover:underline">
-                                        {{ $tourGuide->email }}
-                                    </a>
-                                </p>
+
+                <!-- Contact Card -->
+                <div class="card shadow-sm border-2 border-primary border-opacity-10">
+                    <div class="card-header py-4">
+                        <h3 class="card-title fw-bold text-gray-900">
+                            <i class="ki-outline ki-phone fs-4 text-success me-2"></i>
+                            {{ __('main.contact_info') }}
+                        </h3>
+                    </div>
+                    <div class="card-body py-6 space-y-5">
+                        <div class="flex items-center gap-4 bg-light-light p-3 rounded hover:bg-light transition-colors">
+                            <div class="symbol symbol-35px bg-white border">
+                                <span class="symbol-label text-gray-600"><i class="ki-outline ki-sms fs-2"></i></span>
                             </div>
-                        @endif
-                        @if ($tourGuide->mobile_01)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.mobile_01') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <a href="tel:{{ $tourGuide->mobile_01 }}" class="text-primary hover:underline">
-                                        {{ $tourGuide->mobile_01 }}
-                                    </a>
-                                </p>
+                            <div class="flex flex-col overflow-hidden">
+                                <span class="text-muted fs-9 fw-bold uppercase">{{ __('main.email') }}</span>
+                                <a href="mailto:{{ $tourGuide->email }}" class="fs-6 text-primary fw-bold hover:underline truncate">
+                                    {{ $tourGuide->email ?? __('main.na') }}
+                                </a>
                             </div>
-                        @endif
-                        @if ($tourGuide->mobile_02)
-                            <div>
-                                <label class="kt-label mb-1">{{ __('main.mobile_02') }}</label>
-                                <p class="text-sm text-secondary-foreground">
-                                    <a href="tel:{{ $tourGuide->mobile_02 }}" class="text-primary hover:underline">
-                                        {{ $tourGuide->mobile_02 }}
-                                    </a>
-                                </p>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-light-light p-3 rounded">
+                            <div class="symbol symbol-35px bg-white border">
+                                <span class="symbol-label text-success"><i class="ki-outline ki-whatsapp fs-2"></i></span>
                             </div>
-                        @endif
+                            <div class="flex flex-col">
+                                <span class="text-muted fs-9 fw-bold uppercase">{{ __('main.mobile_01') }}</span>
+                                <a href="tel:{{ $tourGuide->mobile_01 }}" class="fs-6 text-gray-800 fw-boldest hover:text-success transition-colors">
+                                    {{ $tourGuide->mobile_01 ?? __('main.na') }}
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-light-light p-3 rounded">
+                            <div class="symbol symbol-35px bg-white border">
+                                <span class="symbol-label text-gray-600"><i class="ki-outline ki-phone fs-2"></i></span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-muted fs-9 fw-bold uppercase">{{ __('main.mobile_02') }}</span>
+                                <span class="fs-6 text-gray-700 font-medium">{{ $tourGuide->mobile_02 ?? __('main.na') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Card -->
+                <div class="card shadow-sm">
+                    <div class="card-body py-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex flex-col">
+                                <span class="fs-6 fw-bold text-gray-800">{{ __('main.status_label') }}</span>
+                                <span class="text-muted fs-8">{{ __('main.toggle_status_desc') }}</span>
+                            </div>
+                            @livewire('toggle-switch', [
+                                'modelId' => $tourGuide->id,
+                                'modelType' => '\\Modules\\TourGuides\\Entities\\TourGuide',
+                                'field' => 'is_active',
+                                'value' => (bool) $tourGuide->is_active,
+                                'table' => 'tour-guides',
+                            ])
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Metadata -->
+        <!-- Metadata Section -->
+        <div class="mt-8 mb-6">
             @include('components.metadata', ['record' => $tourGuide])
+        </div>
 
-            <!-- Actions -->
-            <div class="flex items-center gap-4">
-                @include('components.elements.edit-button', [
-                    'models' => 'dashboard.tourguides.guides',
-                    'id' => $tourGuide->id,
-                ])
-                @include('components.elements.delete-form', [
-                    'model' => 'tours.guides',
-                    'id' => $tourGuide->id,
-                ])
-                <a href="{{ route('dashboard.tourguides.guides.index') }}" class="kt-btn kt-btn-outline">
-                    {{ __('main.back_to_types', ['types' => __('main.tours.guides')]) }}
-                </a>
+        <!-- Sticky Footer with Actions -->
+        <div class="bottom-0 left-0 right-0 z-10 py-4 mt-6">
+            <div class="flex items-center justify-center gap-4">
+                <div class="bg-white px-8 py-3 rounded-full shadow-lg border border-gray-200 flex items-center gap-4">
+                    <form action="{{ route('dashboard.tourguides.guides.destroy', $tourGuide->id) }}" method="POST" class="d-inline border-e pe-4">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-icon btn-light-danger btn-sm border-0 border-transparent bg-transparent" onclick="return confirm('{{ __('main.confirm_delete') }}')">
+                            <i class="ki-outline ki-trash fs-3"></i>
+                        </button>
+                    </form>
+                    
+                    <a href="{{ route('dashboard.tourguides.guides.edit', $tourGuide->id) }}" class="btn btn-icon btn-light-primary btn-sm bg-transparent">
+                        <i class="ki-outline ki-pencil fs-3"></i>
+                    </a>
+
+                    <div class="border-s ps-4">
+                        <a href="{{ route('dashboard.tourguides.guides.index') }}" class="btn btn-sm btn-light-default bg-transparent">
+                            <i class="ki-outline ki-arrow-left fs-4 me-2"></i>
+                            {{ __('main.back_to_list') }}
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

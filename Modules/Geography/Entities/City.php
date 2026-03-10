@@ -7,12 +7,13 @@ use App\Traits\ClearsEmptyRichText;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Geography\Entities\State;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class City extends Model
 {
-    use HasSearch, HasRichText, HasUuid, BroadcastsRecordEvents, ClearsEmptyRichText;
+    use HasSearch, HasRichText, HasUuid, BroadcastsRecordEvents, ClearsEmptyRichText, SoftDeletes;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -39,7 +40,7 @@ class City extends Model
 
     public function getRelationshipNames()
     {
-        return ['state', 'states'];
+        return ['state', 'states', 'accommodations', 'restaurants', 'transportationCompanies'];
     }
 
     public function getExcludedColumns()
@@ -55,5 +56,20 @@ class City extends Model
     public function states()
     {
         return $this->belongsToMany(State::class, 'city_state');
+    }
+
+    public function accommodations()
+    {
+        return $this->hasMany(\Modules\Accommodations\Entities\Accommodation::class);
+    }
+
+    public function restaurants()
+    {
+        return $this->hasMany(\Modules\Restaurants\Entities\Restaurant::class);
+    }
+
+    public function transportationCompanies()
+    {
+        return $this->hasMany(\Modules\Transportation\Entities\Company::class);
     }
 }

@@ -23,7 +23,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'name_ar' => ['required', 'string', 'max:255'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
             'wiki_data_id' => ['nullable', 'string', 'max:255'],
             'region_id' => ['required', 'string', 'exists:regions,id'],
         ];

@@ -52,7 +52,17 @@ class SettingController extends Controller
 
     public function general()
     {
-        $settings = Setting::first();
+        $settings = Setting::first() ?? Setting::create([
+            'app_name' => config('app.name', 'Tourism Management'),
+            'app_url' => config('app.url', 'http://localhost'),
+            'app_version' => '1.0.0',
+            'app_columns_length' => config('app.app_columns_length', 5),
+            'app_show_uuid_column' => 0,
+            'app_display_menu_labels' => 1,
+            'app_paginate_count' => 10,
+            'app_status' => 1,
+            'app_php_version' => PHP_VERSION,
+        ]);
         return view('core::settings.general', compact('settings'));
     }
 

@@ -30,8 +30,10 @@
                             <div class="text">
                                 @if (isToastArray($type, 'title'))
                                     <strong>{{ isToastArray($type, 'title') }}</strong>
+                                @elseif (is_string(session()->get($type)) && strlen(session()->get($type)) < 30)
+                                    <strong>{{ ucfirst($type) }}</strong>
                                 @endif
-                                <p>{{ isToastArray($type, 'message') }}</p>
+                                <p>{{ isToastArray($type, 'message') ?: (is_string(session()->get($type)) ? session()->get($type) : '') }}</p>
                             </div>
 
                             @if ($actions = getToastActions($type))

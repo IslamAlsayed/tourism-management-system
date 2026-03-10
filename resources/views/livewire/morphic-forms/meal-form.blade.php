@@ -31,6 +31,8 @@
                         </div>
 
                         {{-- Basic Information --}}
+                        <input type="hidden" name="meals[{{ $index }}][id]"
+                            value="{{ $meal['meal_id'] ?? '' }}">
                         <div class="grid grid-cols-1 sm:grid-cols-2 items-end gap-6 mb-4">
                             {{-- Name (English) --}}
                             <div class="align-self-end">
@@ -61,8 +63,51 @@
                             </div>
                         </div>
 
+                        {{-- Meal Type --}}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6 mb-4">
+                            <div class="align-self-end">
+                                <label for="meals_{{ $index }}_type" class="kt-label mb-2">
+                                    {{ __('main.meal_type') }}
+                                    <span class="text-red-600 text-2xl">*</span>
+                                </label>
+                                <select name="meals[{{ $index }}][type]" id="meals_{{ $index }}_type"
+                                    class="kt-select basic-single" wire:model="meals.{{ $index }}.type"
+                                    required>
+                                    <option value="" disabled selected></option>
+                                    <option value="breakfast">{{ __('main.breakfast') }}</option>
+                                    <option value="lunch">{{ __('main.lunch') }}</option>
+                                    <option value="dinner">{{ __('main.dinner') }}</option>
+                                    <option value="other">{{ __('main.other') }}</option>
+                                </select>
+                                @error('meals.' . $index . '.type')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
                         {{-- Pricing Information --}}
-                        <div class="grid grid-cols-1 sm:grid-cols-2 items-end gap-6 mb-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-end gap-6 mb-4">
+                            {{-- Season --}}
+                            <div class="align-self-end">
+                                <label for="meals_{{ $index }}_season_id" class="kt-label mb-2">
+                                    {{ __('main.season') }}
+                                </label>
+                                <select name="meals[{{ $index }}][season_id]"
+                                    id="meals_{{ $index }}_season_id" class="kt-select basic-single"
+                                    wire:model="meals.{{ $index }}.season_id">
+                                    <option value="" selected>{{ __('main.fixed_price_all_year') }}</option>
+                                    @foreach ($seasons as $id => $name)
+                                        <option value="{{ $id }}"
+                                            {{ old('meals.' . $index . '.season_id') == $id ? 'selected' : '' }}>
+                                            {{ $name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('meals.' . $index . '.season_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             {{-- Currency --}}
                             <div class="align-self-end">
                                 <label for="meals_{{ $index }}_currency_id" class="kt-label mb-2">
@@ -84,20 +129,85 @@
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
 
-                            {{-- Price --}}
-                            <div class="align-self-end">
-                                <label for="meals_{{ $index }}_price" class="kt-label mb-1">
-                                    {{ __('main.price') }}
-                                    <span class="text-red-600 text-2xl">*</span>
-                                </label>
-                                <input type="number" step="0.01" name="meals[{{ $index }}][price]"
-                                    id="meals_{{ $index }}_price" class="kt-input h-[45px]"
-                                    wire:model="meals.{{ $index }}.price"
-                                    value="{{ old('meals.' . $index . '.price', 0) }}" min="0">
-                                @error('meals.' . $index . '.price')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
+                        <!-- FIT Pricing -->
+                        <div class="mt-4 mb-2">
+                            <h4 class="text-md font-semibold text-primary mb-4">{{ __('main.fit_pricing') }}</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div class="align-self-end">
+                                    <label for="meals_{{ $index }}_fit_price_adult"
+                                        class="kt-label">{{ __('main.price_adult') }}</label>
+                                    <input type="number" step="0.01"
+                                        name="meals[{{ $index }}][fit_price_adult]"
+                                        id="meals_{{ $index }}_fit_price_adult" class="kt-input h-[45px]"
+                                        wire:model="meals.{{ $index }}.fit_price_adult" placeholder="0.00">
+                                </div>
+                                <div class="align-self-end">
+                                    <label for="meals_{{ $index }}_fit_price_child_6_11"
+                                        class="kt-label">{{ __('main.price_child_6_11') }}</label>
+                                    <input type="number" step="0.01"
+                                        name="meals[{{ $index }}][fit_price_child_6_11]"
+                                        id="meals_{{ $index }}_fit_price_child_6_11" class="kt-input h-[45px]"
+                                        wire:model="meals.{{ $index }}.fit_price_child_6_11"
+                                        placeholder="0.00">
+                                </div>
+                                <div class="align-self-end">
+                                    <label for="meals_{{ $index }}_fit_price_child_under_6"
+                                        class="kt-label">{{ __('main.price_child_under_6') }}</label>
+                                    <input type="number" step="0.01"
+                                        name="meals[{{ $index }}][fit_price_child_under_6]"
+                                        id="meals_{{ $index }}_fit_price_child_under_6"
+                                        class="kt-input h-[45px]"
+                                        wire:model="meals.{{ $index }}.fit_price_child_under_6"
+                                        placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Group Pricing -->
+                        <div class="mt-8 mb-2 border-t pt-6">
+                            <h4 class="text-md font-semibold text-primary mb-4">{{ __('main.group_pricing') }}</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {{-- Min Group Size --}}
+                                <div class="align-self-end">
+                                    <label for="meals_{{ $index }}_min_group_size"
+                                        class="kt-label mb-1">{{ __('main.min_group_size') }}</label>
+                                    <input type="number" name="meals[{{ $index }}][min_group_size]"
+                                        id="meals_{{ $index }}_min_group_size" class="kt-input h-[45px]"
+                                        wire:model="meals.{{ $index }}.min_group_size" min="1">
+                                    @error('meals.' . $index . '.min_group_size')
+                                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="align-self-end">
+                                    <label for="meals_{{ $index }}_group_price_adult"
+                                        class="kt-label">{{ __('main.price_adult') }}</label>
+                                    <input type="number" step="0.01"
+                                        name="meals[{{ $index }}][group_price_adult]"
+                                        id="meals_{{ $index }}_group_price_adult" class="kt-input h-[45px]"
+                                        wire:model="meals.{{ $index }}.group_price_adult" placeholder="0.00">
+                                </div>
+                                <div class="align-self-end">
+                                    <label for="meals_{{ $index }}_group_price_child_6_11"
+                                        class="kt-label">{{ __('main.price_child_6_11') }}</label>
+                                    <input type="number" step="0.01"
+                                        name="meals[{{ $index }}][group_price_child_6_11]"
+                                        id="meals_{{ $index }}_group_price_child_6_11"
+                                        class="kt-input h-[45px]"
+                                        wire:model="meals.{{ $index }}.group_price_child_6_11"
+                                        placeholder="0.00">
+                                </div>
+                                <div class="align-self-end">
+                                    <label for="meals_{{ $index }}_group_price_child_under_6"
+                                        class="kt-label">{{ __('main.price_child_under_6') }}</label>
+                                    <input type="number" step="0.01"
+                                        name="meals[{{ $index }}][group_price_child_under_6]"
+                                        id="meals_{{ $index }}_group_price_child_under_6"
+                                        class="kt-input h-[45px]"
+                                        wire:model="meals.{{ $index }}.group_price_child_under_6"
+                                        placeholder="0.00">
+                                </div>
                             </div>
                         </div>
 
@@ -114,11 +224,25 @@
                             @enderror
                         </div>
 
+                        {{-- Notes --}}
+                        <div class="mb-4">
+                            <label for="meals_{{ $index }}_notes"
+                                class="kt-label mb-2">{{ __('main.notes') }}</label>
+                            <input id="meals_{{ $index }}_notes" type="hidden"
+                                name="meals[{{ $index }}][notes]"
+                                value="{{ old('meals.' . $index . '.notes') }}">
+                            <trix-editor input="meals_{{ $index }}_notes"></trix-editor>
+                            @error('meals.' . $index . '.notes')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         {{-- Additional Settings --}}
                         <div class="flex gap-6">
                             {{-- Is Included --}}
                             <div class="flex items-center gap-3">
-                                <input type="hidden" name="meals[{{ $index }}][is_included]" value="0">
+                                <input type="hidden" name="meals[{{ $index }}][is_included]"
+                                    value="0">
                                 <div class="custom-input">
                                     <input type="checkbox" name="meals[{{ $index }}][is_included]"
                                         id="meal-{{ $index }}-is_included"
@@ -132,7 +256,8 @@
 
                             {{-- Is Supplement --}}
                             <div class="flex items-center gap-3">
-                                <input type="hidden" name="meals[{{ $index }}][is_supplement]" value="0">
+                                <input type="hidden" name="meals[{{ $index }}][is_supplement]"
+                                    value="0">
                                 <div class="custom-input">
                                     <input type="checkbox" name="meals[{{ $index }}][is_supplement]"
                                         id="meal-{{ $index }}-is_supplement"

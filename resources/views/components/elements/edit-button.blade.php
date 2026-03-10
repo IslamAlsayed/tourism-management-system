@@ -19,7 +19,7 @@
     $routeParams = array_filter($routeParams, fn($value) => !is_null($value));
 @endphp
 
-@if ($routeName)
+@if ($routeName && Route::has($routeName))
     <a href="{{ route($routeName, $routeParams) }}" class="kt-btn kt-btn-sm kt-btn-outline bg-primary text-white"
         style="{{ $styles ?? '' }}" wire:ignore>
 

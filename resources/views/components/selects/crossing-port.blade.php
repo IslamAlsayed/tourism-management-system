@@ -10,9 +10,9 @@
                 ({{ count($EntryPoints) ?: 0 }})
             </strong>
         </div>
-        <a href="{{ route('dashboard.entrypoints.create') }}" class="text-blue-600 text-2sm">
+        {{-- <a href="{{ route('dashboard.entrypoints.create') }}" class="text-blue-600 text-2sm">
             {{ __('main.add') }}
-        </a>
+        </a> --}}
     </label>
     <select name="{{ isset($name) ? $name : '' }}" id="{{ isset($name) ? $name : '' }}" class="kt-select basic-single">
         @if (!isset($record) || !isset($record->{isset($name) ? $name : ''}))

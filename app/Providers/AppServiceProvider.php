@@ -17,7 +17,7 @@ use Spatie\Activitylog\Models\Activity;
 use Modules\TourGuides\Entities\TourGuide;
 use Modules\EntryPoints\Entities\Landcrossing;
 use Modules\Restaurants\Entities\Restaurant;
-use Modules\Tourists\Entities\TouristService;
+use Modules\TouristServices\Entities\TouristService;
 
 class AppServiceProvider extends ServiceProvider
 {

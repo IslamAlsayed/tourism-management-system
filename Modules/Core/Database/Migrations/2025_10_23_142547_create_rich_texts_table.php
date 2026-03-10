@@ -13,7 +13,7 @@ return new class extends Migration {
         }
         Schema::create('rich_texts', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->uuid('uuid')->default(DB::raw('(UUID())'))->unique();
+            $table->uuid('uuid')->unique();
             $table->morphs('record');
             $table->string('field');
             $table->longText('body')->nullable();

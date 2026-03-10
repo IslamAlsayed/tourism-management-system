@@ -19,6 +19,7 @@ use Modules\Geography\Livewire\Subregions;
 use Modules\Geography\Policies\CityPolicy;
 use Modules\Geography\Policies\StatePolicy;
 use Modules\Geography\Policies\RegionPolicy;
+use Modules\Geography\Entities\Nationality;
 use Modules\Geography\Livewire\Nationalities;
 use Modules\Geography\Policies\CountryPolicy;
 use Modules\Geography\Policies\SubregionPolicy;
@@ -46,6 +47,7 @@ class GeographyServiceProvider extends ServiceProvider
         Country::class => CountryPolicy::class,
         State::class => StatePolicy::class,
         City::class => CityPolicy::class,
+        Nationality::class => \App\Policies\NationalityPolicy::class,
     ];
 
     /**

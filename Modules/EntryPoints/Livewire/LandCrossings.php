@@ -79,6 +79,7 @@ class LandCrossings extends Component
         }
 
         LandCrossing::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(LandCrossing::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -91,21 +92,13 @@ class LandCrossings extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], LandCrossing::class, $cols, 'crossings_ports');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], LandCrossing::class, $cols, 'crossings_ports');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], LandCrossing::class, $cols, 'crossings_ports', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], LandCrossing::class, $cols, 'crossings_ports', $extension);
     }
 
     public function resetFilters()
@@ -147,3 +140,4 @@ class LandCrossings extends Component
         return view('entrypoints::livewire.land-crossings', ['data' => $data, 'totalCount' => $this->totalCount ?: LandCrossing::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

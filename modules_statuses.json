@@ -10,5 +10,10 @@
     "Subscriptions": false,
     "CRM": true,
     "Tourists": true,
-    "EntryPoints": true
+    "EntryPoints": true,
+    "Emails": true,
+    "WhatsApp": true,
+    "MCP": true,
+    "TouristSites": true,
+    "TouristServices": true
 }

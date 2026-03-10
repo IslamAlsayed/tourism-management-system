@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Tourists\Http\Controllers\SiteController;
-use Modules\Tourists\Http\Controllers\ServiceController;
+use Modules\Tourists\Http\Controllers\TouristsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +15,5 @@ use Modules\Tourists\Http\Controllers\ServiceController;
 */
 
 Route::prefix('dashboard/tourists')->name('dashboard.tourists.')->middleware('auth')->group(function () {
-    Route::resource('sites', SiteController::class)->names('sites');
-    Route::resource('services', ServiceController::class)->names('services');
+    Route::get('/', [TouristsController::class, 'index']);
 });

@@ -35,17 +35,25 @@ class ImportDataJob implements ShouldQueue
     protected array $pendingTransportationContacts = [];
     protected array $transportationCompanyUuidMap = [];
     protected array $tourGuideTypePivotData = []; // Store pivot data for TourGuideType
+    protected array $tourGuideLanguagePivotData = []; // Store pivot data for TourGuide
+    protected ?string $historyUuid;
+    protected string $source;
 
-    public function __construct(string $modelClass, string $filePath, int $chunkSize = 1000, ?int $userId = null)
+    public function __construct(string $modelClass, string $filePath, int $chunkSize = 1000, ?int $userId = null, string $source = 'file', ?string $historyUuid = null)
     {
         $this->modelClass = $modelClass;
         $this->filePath = $filePath;
         $this->chunkSize = $chunkSize;
         $this->userId = $userId;
+        $this->source = $source;
+        $this->historyUuid = $historyUuid;
     }
 
     public function handle(): void
     {
+        if ($this->historyUuid) {
+            \App\Models\ImportHistory::where('uuid', $this->historyUuid)->update(['status' => 'processing']);
+        }
         $model = new $this->modelClass;
 
         if (!method_exists($model, 'getFillable')) {
@@ -63,13 +71,12 @@ class ImportDataJob implements ShouldQueue
             $fillable = array_values(array_intersect($fillable, $dbColumns));
 
             // ensure primary key is not part of fillable to avoid attempting to insert it
+            // HOWEVER, we will allow 'id' and 'uuid' specifically for data integrity if provided in Excel
             try {
                 $pkName = $model->getKeyName();
                 if (!empty($pkName)) {
                     $pkLower = strtolower($pkName);
-                    $fillable = array_values(array_filter($fillable, function ($c) use ($pkLower) {
-                        return strtolower($c) !== $pkLower;
-                    }));
+                    // We'll keep it in our internal list to look for in Excel, but it's handled separately
                 }
             } catch (\Throwable $_) {
                 // ignore
@@ -125,14 +132,126 @@ class ImportDataJob implements ShouldQueue
                 Log::debug('ImportDataJob detected headers: ' . json_encode($headerMap));
 
                 // create reverse lookup from fillable -> header key if possible
+                // also include 'id' and 'uuid' in the search
+                $searchableCols = array_merge($fillable, ['id', 'uuid']);
                 $fillableLookup = [];
-                foreach ($fillable as $col) {
+                foreach ($searchableCols as $col) {
                     $colNorm = strtolower($col);
+                    $foundIdAlias = false;
+
+                    // Aliases for 'id' to ensure row numbering from Excel acts as ID
+                    if ($col === 'id') {
+                        $modelBaseName = strtolower(class_basename($this->modelClass));
+                        $idAliases = ['#', 'no', 'no.', 'number', 'الرقم', 'رقم', 'id', "{$modelBaseName}_id"];
+                        foreach ($headerMap as $hNorm => $orig) {
+                            if (in_array($hNorm, $idAliases)) {
+                                $fillableLookup['id'] = $orig;
+                                $foundIdAlias = true;
+                                break;
+                            }
+                        }
+                        if ($foundIdAlias) {
+                            continue;
+                        }
+                    }
+
                     // try exact match
                     if (isset($headerMap[$colNorm])) {
                         $fillableLookup[$col] = $headerMap[$colNorm];
                         continue;
                     }
+
+                    // Smart alias mapping for common columns
+                    $modelBaseName = strtolower(class_basename($this->modelClass));
+                    if ($col === 'name') {
+                        $aliases = [
+                            "{$modelBaseName}_en", "{$modelBaseName}_name", 'name_en', 'en',
+                            'guide_name_en', 'guidename_en', 'guidenameenglish', 'guide_name',
+                            'nameenglish', 'name_english', 'english_name', 'englishname',
+                        ];
+                        foreach ($aliases as $alias) {
+                            if (isset($headerMap[$alias])) {
+                                $fillableLookup[$col] = $headerMap[$alias];
+                                continue 2;
+                            }
+                        }
+                    }
+                    if ($col === 'name_ar') {
+                        $aliases = [
+                            "{$modelBaseName}_ar", 'ar',
+                            'guide_name_ar', 'guidename_ar', 'guidenamearbic', 'guidenamarabic',
+                            'namearabic', 'name_arabic', 'arabic_name', 'arabicname',
+                        ];
+                        foreach ($aliases as $alias) {
+                            if (isset($headerMap[$alias])) {
+                                $fillableLookup[$col] = $headerMap[$alias];
+                                continue 2;
+                            }
+                        }
+                    }
+
+                    // tourism_ministry_code aliases
+                    if ($col === 'tourism_ministry_code') {
+                        $aliases = ['tourism_ministry_id', 'tourismministryid', 'ministry_code', 'ministrycode', 'ministry_id'];
+                        foreach ($aliases as $alias) {
+                            if (isset($headerMap[$alias])) {
+                                $fillableLookup[$col] = $headerMap[$alias];
+                                continue 2;
+                            }
+                        }
+                    }
+
+                    // Special alias for curancy_id -> currency_id which is misspelled in their sheet
+                    if ($col === 'currency_id') {
+                        $aliases = ['curancy_id', 'currency', 'curancy'];
+                        foreach ($aliases as $alias) {
+                            if (isset($headerMap[$alias])) {
+                                $fillableLookup[$col] = $headerMap[$alias];
+                                continue 2;
+                            }
+                        }
+                    }
+
+                    // TourGuide specific aliases
+                    if ($this->modelClass === \Modules\TourGuides\Entities\TourGuide::class) {
+                        if ($col === 'birth_date') {
+                            $aliases = ['dob', 'date_of_birth', 'birthdate', 'birth_date', 'تاريخ_الميلاد'];
+                            foreach ($aliases as $alias) {
+                                if (isset($headerMap[$alias])) {
+                                    $fillableLookup[$col] = $headerMap[$alias];
+                                    continue 2;
+                                }
+                            }
+                        }
+                        if ($col === 'home_city' || $col === 'city_id') {
+                            $aliases = ['home_city', 'city', 'cities', 'city_id', 'مدينة_السكن', 'المدينة'];
+                            foreach ($aliases as $alias) {
+                                if (isset($headerMap[$alias])) {
+                                    $fillableLookup[$col] = $headerMap[$alias];
+                                    continue 2;
+                                }
+                            }
+                        }
+                        if ($col === 'state_id') {
+                            $aliases = ['state', 'states', 'state_id', 'governorate', 'المحافظة'];
+                            foreach ($aliases as $alias) {
+                                if (isset($headerMap[$alias])) {
+                                    $fillableLookup[$col] = $headerMap[$alias];
+                                    continue 2;
+                                }
+                            }
+                        }
+                        if ($col === 'guide_type_id') {
+                            $aliases = ['guide_type', 'type', 'category', 'guide_type_id', 'نوع_الدليل'];
+                            foreach ($aliases as $alias) {
+                                if (isset($headerMap[$alias])) {
+                                    $fillableLookup[$col] = $headerMap[$alias];
+                                    continue 2;
+                                }
+                            }
+                        }
+                    }
+
                     // try snake_case of header names
                     foreach ($headerMap as $hNorm => $orig) {
                         if ($hNorm === $colNorm || $hNorm === Str::snake($col)) {
@@ -162,48 +281,59 @@ class ImportDataJob implements ShouldQueue
             // This is necessary because state_id and city_id are NOT columns in tour_guide_types table
             if ($this->modelClass === \Modules\TourGuides\Entities\TourGuideType::class) {
                 $pivotData = [];
-
-                // Extract state_id from cleaned data
+                // Extract state_id and city_id with aliases and smart resolution
+                $stateValue = null;
+                $cityValue = null;
                 foreach ($headerMap as $normKey => $origKey) {
-                    if ($normKey === 'state_id' && isset($cleaned[$origKey])) {
-                        // Clean the value - remove brackets and whitespace
-                        $value = $cleaned[$origKey];
-                        if (is_string($value)) {
-                            $value = str_replace(['[', ']', ' '], '', $value);
-                        }
-                        $pivotData['state_id'] = $value;
+                    if (in_array($normKey, ['state_id', 'state', 'states', 'states_name']) && isset($cleaned[$origKey])) {
+                        $stateValue = $cleaned[$origKey];
                     }
-                    if ($normKey === 'city_id' && isset($cleaned[$origKey])) {
-                        // Clean the value - remove brackets and whitespace
-                        $value = $cleaned[$origKey];
-                        if (is_string($value)) {
-                            $value = str_replace(['[', ']', ' '], '', $value);
-                        }
-                        $pivotData['city_id'] = $value;
+                    if (in_array($normKey, ['city_id', 'city', 'cities', 'home_city', 'cities_id']) && isset($cleaned[$origKey])) {
+                        $cityValue = $cleaned[$origKey];
                     }
                 }
 
-                // We'll store this and match it later using type or uuid
-                if (!empty($pivotData)) {
-                    // Try to get identifying info (including row index as fallback)
-                    foreach ($headerMap as $normKey => $origKey) {
-                        if ($normKey === 'uuid' && isset($cleaned[$origKey])) {
-                            $pivotData['uuid'] = $cleaned[$origKey];
-                        }
-                        if ($normKey === 'type' && isset($cleaned[$origKey])) {
-                            $pivotData['type'] = $cleaned[$origKey];
-                        }
+                if ($stateValue !== null) {
+                    if (is_numeric($stateValue)) {
+                        $pivotData['state_id'] = str_replace(['[', ']', ' '], '', (string)$stateValue);
+                    } else {
+                        // resolve by name
+                        $searchTerm = trim((string)$stateValue);
+                        $state = \Modules\Geography\Entities\State::where('name', $searchTerm)->orWhere('name_ar', $searchTerm)->first();
+                        if ($state) $pivotData['state_id'] = $state->id;
                     }
-                    // Add row index to ensure we can match even if UUID is missing
-                    $pivotData['row_index'] = $totalRows;
-                    $this->tourGuideTypePivotData[] = $pivotData;
-                    Log::debug('Captured TourGuideType pivot data: ' . json_encode($pivotData));
                 }
+
+                if ($cityValue !== null) {
+                    if (is_numeric($cityValue)) {
+                        $pivotData['city_id'] = str_replace(['[', ']', ' '], '', (string)$cityValue);
+                    } else {
+                        // resolve by name
+                        $searchTerm = trim((string)$cityValue);
+                        $city = \Modules\Geography\Entities\City::where('name', $searchTerm)->orWhere('name_ar', $searchTerm)->first();
+                        if ($city) $pivotData['city_id'] = $city->id;
+                    }
+                }
+                // Try to get identifying info (including row index as fallback)
+                foreach ($headerMap as $normKey => $origKey) {
+                    if ($normKey === 'uuid' && isset($cleaned[$origKey])) {
+                        $pivotData['uuid'] = $cleaned[$origKey];
+                    }
+                    if ($normKey === 'type' && isset($cleaned[$origKey])) {
+                        $pivotData['type'] = $cleaned[$origKey];
+                    }
+                }
+                // Add row index to ensure we can match even if UUID is missing
+                $pivotData['row_index'] = $totalRows;
+                $this->tourGuideTypePivotData[] = $pivotData;
+                Log::debug('Captured TourGuideType pivot data: ' . json_encode($pivotData));
             }
 
             // Build a row aligned with $fillable using lookup when possible
+            // Include 'id' and 'uuid' if found in Excel
             $prepared = [];
-            foreach ($fillable as $col) {
+            $potentialCols = array_merge($fillable, ['id', 'uuid']);
+            foreach ($potentialCols as $col) {
                 if (!empty($fillableLookup[$col])) {
                     $headerKey = $fillableLookup[$col];
                     $prepared[$col] = $cleaned[$headerKey] ?? null;
@@ -220,13 +350,102 @@ class ImportDataJob implements ShouldQueue
                     $prepared[$col] = $found ? ($cleaned[$found] ?? null) : null;
                 }
             }
+            // Remove null ID/UUID if they weren't in the original excel to avoid issues
+            if (isset($prepared['id']) && $prepared['id'] === null) unset($prepared['id']);
+            if (isset($prepared['uuid']) && $prepared['uuid'] === null) unset($prepared['uuid']);
 
-            // Set default values for common boolean columns if they are null
-            if (isset($prepared['is_active']) && $prepared['is_active'] === null) {
-                $prepared['is_active'] = true;
+            // Extract Guide Languages (comma separated) for TourGuideLanguage pivot relations
+            if ($this->modelClass === \Modules\TourGuides\Entities\TourGuide::class) {
+                $langColumnExists = null;
+                foreach ($headerMap as $normKey => $origKey) {
+                    if (in_array($normKey, ['guide_languages', 'languages', 'guidelanguages'])) {
+                        $langColumnExists = $origKey;
+                        break;
+                    }
+                }
+                if ($langColumnExists && isset($cleaned[$langColumnExists]) && !empty($cleaned[$langColumnExists])) {
+                    $langString = $cleaned[$langColumnExists];
+                    // Example: "Spanish،French،Italian،English" OR "Spanish,French,English"
+                    $langStrNorm = str_replace('،', ',', $langString); // replace arabic comma
+                    $langArray = array_map('trim', explode(',', $langStrNorm));
+                    $langIds = [];
+                    foreach ($langArray as $langName) {
+                        if (empty($langName)) continue;
+                        // Match or create the Language dynamically. Assuming \Modules\Localization\Entities\Language
+                        $lk = mb_strtolower($langName);
+                        $langRec = \Modules\Localization\Entities\Language::whereRaw('LOWER(name) = ?', [$lk])
+                            ->orWhereRaw('LOWER(name_ar) = ?', [$lk])
+                            ->first();
+
+                        if (!$langRec) {
+                            $langRec = \Modules\Localization\Entities\Language::create([
+                                'name' => $langName,
+                                'name_ar' => $langName, // No auto translation mechanism readily available, store as is
+                                'code' => substr($lk, 0, 2),
+                                'is_active' => true,
+                            ]);
+                        }
+                        if ($langRec) {
+                            $langIds[] = $langRec->id;
+                        }
+                    }
+                    
+                    if (!empty($langIds)) {
+                        // Create pivot array linking row_index or uuid to languages
+                        $pivotData = [
+                            'row_index' => $totalRows,
+                            'language_ids' => array_unique($langIds)
+                        ];
+                        if (isset($prepared['uuid'])) {
+                            $pivotData['uuid'] = $prepared['uuid'];
+                        }
+                        $this->tourGuideLanguagePivotData[] = $pivotData;
+                        Log::debug('Captured TourGuide Language pivot data: ' . json_encode($pivotData));
+                    }
+                }
             }
-            if (isset($prepared['is_included']) && $prepared['is_included'] === null) {
-                $prepared['is_included'] = false;
+
+            // Robustly parse boolean fields natively
+            $booleanFields = ['is_active', 'is_included'];
+            foreach ($booleanFields as $boolField) {
+                if (array_key_exists($boolField, $prepared)) {
+                    $val = $prepared[$boolField];
+                    if ($val === null || $val === '') {
+                        // Setup default logic: is_active defaults to true, is_included defaults to false
+                        $prepared[$boolField] = ($boolField === 'is_active');
+                    } else {
+                        // Cast '1', '0', 'true', 'false', 'yes', 'no', 'active', 'inactive' safely
+                        $valStr = strtolower(trim((string) $val));
+                        $truthy = ['1', 'true', 'yes', 'active', 'y', 't'];
+                        $falsy = ['0', 'false', 'no', 'inactive', 'n', 'f'];
+
+                        if (in_array($valStr, $truthy, true)) {
+                            $prepared[$boolField] = true;
+                        } elseif (in_array($valStr, $falsy, true)) {
+                            $prepared[$boolField] = false;
+                        } else {
+                            // Fallback to strict boolean cast if unknown string
+                            $prepared[$boolField] = (bool) $val;
+                        }
+                    }
+                }
+            }
+
+            // Normalize gender values (e.g., 'M' → 'male', 'F' → 'female')
+            if (array_key_exists('gender', $prepared) && $prepared['gender'] !== null) {
+                $genderVal = strtolower(trim((string) $prepared['gender']));
+                $maleAliases = ['m', 'male', 'man', 'ذكر', 'رجل'];
+                $femaleAliases = ['f', 'female', 'woman', 'أنثى', 'امرأة'];
+
+                if (in_array($genderVal, $maleAliases, true)) {
+                    $prepared['gender'] = 'male';
+                } elseif (in_array($genderVal, $femaleAliases, true)) {
+                    $prepared['gender'] = 'female';
+                } else {
+                    // Unknown gender value (e.g., '?') — set to null
+                    $prepared['gender'] = null;
+                    Log::debug("Unrecognized gender value '{$genderVal}' set to null");
+                }
             }
 
             // Generate UUID if column exists in fillable and value is empty/null
@@ -369,43 +588,175 @@ class ImportDataJob implements ShouldQueue
                 }
             }
 
-            // Smart currency_id lookup: if value is text, search by name/code
-            if (in_array('currency_id', $fillable) && !empty($prepared['currency_id'])) {
-                $currencyValue = $prepared['currency_id'];
-
-                if (!is_numeric($currencyValue)) {
-                    try {
-                        $searchTerm = trim((string) $currencyValue);
-
-                        // Try exact match first (name, name_ar, code, or symbol)
-                        $currency = \Modules\Localization\Entities\Currency::where('name', $searchTerm)
-                            ->orWhere('name_ar', $searchTerm)
-                            ->orWhere('code', $searchTerm)
-                            ->orWhere('symbol', $searchTerm)
+            // Smart currency lookup: searches by ID, name, or code
+            $currencyKeys = ['currency_id', 'currency', 'curancy_id'];
+            $currencyResolved = false;
+            foreach ($currencyKeys as $ck) {
+                if (array_key_exists($ck, $prepared) && $prepared[$ck] !== null) {
+                    $val = $prepared[$ck];
+                    if (is_numeric($val) && $val > 0) {
+                        $prepared['currency_id'] = (int) $val;
+                    } elseif (is_string($val)) {
+                        $valTrim = strtolower(trim($val));
+                        // Lookup by name, code, or symbol
+                        $cObj = \Modules\Localization\Entities\Currency::where('name', 'like', "%{$valTrim}%")
+                            ->orWhere('name_ar', 'like', "%{$valTrim}%")
+                            ->orWhere('code', 'like', "%{$valTrim}%")
+                            ->orWhere('symbol', 'like', "%{$valTrim}%")
                             ->first();
+                        
+                        // If matching fails by exact name, we default to 138 (JOD)
+                        $prepared['currency_id'] = $cObj ? $cObj->id : 138;
+                    } else {
+                        $prepared['currency_id'] = 138; // Default fallback to Jordanian Dinar
+                    }
+                    $currencyResolved = true;
+                    // Unset alias keys if they aren't 'currency_id'
+                    if ($ck !== 'currency_id') {
+                        unset($prepared[$ck]);
+                    }
+                    break;
+                }
+            }
 
-                        // If not found, try partial match
-                        if (!$currency) {
-                            $currency = \Modules\Localization\Entities\Currency::where('name', 'LIKE', "%{$searchTerm}%")
-                                ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
-                                ->orWhere('code', 'LIKE', "%{$searchTerm}%")
-                                ->first();
-                        }
+            // Always assign default currency if column is completely missing
+            if (!$currencyResolved && in_array('currency_id', $fillable)) {
+                $prepared['currency_id'] = 138;
+            }
 
-                        if ($currency) {
-                            $prepared['currency_id'] = $currency->id ?? 138;
-                            Log::debug("Resolved currency '{$searchTerm}' to ID: {$currency->id} ({$currency->name})");
-                        } else {
-                            Log::warning("Could not resolve currency: '{$searchTerm}' - setting to null");
-                            $prepared['currency_id'] = 138;
+
+
+            // Smart birth_date and age mapping for TourGuides
+            if ($this->modelClass === \Modules\TourGuides\Entities\TourGuide::class) {
+                $dateKeys = ['birth_date', 'birth_year', 'birthyear', 'birthdate'];
+                foreach ($dateKeys as $dk) {
+                    if (isset($prepared[$dk]) && !empty($prepared[$dk])) {
+                        $val = $prepared[$dk];
+                        try {
+                            if (is_numeric($val) && (int)$val > 1900 && (int)$val < 2100) {
+                                // Assume it's just a year
+                                $prepared['birth_date'] = (int)$val . '-01-01';
+                            } else {
+                                $prepared['birth_date'] = \Carbon\Carbon::parse((string)$val)->format('Y-m-d');
+                            }
+                            // Calculate age
+                            $prepared['age'] = \Carbon\Carbon::parse($prepared['birth_date'])->age;
+                        } catch (\Throwable $e) {
+                            Log::warning("Failed to parse birth_date from '{$val}': " . $e->getMessage());
                         }
-                    } catch (\Throwable $e) {
-                        Log::warning('Failed to resolve currency: ' . $e->getMessage());
-                        $prepared['currency_id'] = 138;
+                        if ($dk !== 'birth_date') unset($prepared[$dk]);
+                        break;
                     }
                 }
-            } else {
-                $prepared['currency_id'] = 138;
+
+                // Smart guide_type_id lookup by name
+                if (in_array('guide_type_id', $fillable)) {
+                    $typeValue = null;
+                    foreach ($headerMap as $normKey => $origKey) {
+                        if (in_array($normKey, ['guide_type', 'guidetype', 'type']) && isset($cleaned[$origKey])) {
+                            $typeValue = $cleaned[$origKey];
+                            break;
+                        }
+                    }
+                    if ($typeValue && !is_numeric($typeValue)) {
+                        $searchTerm = trim((string)$typeValue);
+                        $type = \Modules\TourGuides\Entities\TourGuideType::where('type', $searchTerm)
+                            ->orWhere('type', 'LIKE', "%{$searchTerm}%")
+                            ->first();
+                        if ($type) {
+                            $prepared['guide_type_id'] = $type->id;
+                        }
+                    }
+                }
+
+                // Smart state_id and city_id lookup by name
+                if (in_array('state_id', $fillable)) {
+                    $stateValue = null;
+                    foreach ($headerMap as $normKey => $origKey) {
+                        if (in_array($normKey, ['states_name', 'state', 'state_name']) && isset($cleaned[$origKey])) {
+                            $stateValue = $cleaned[$origKey];
+                            break;
+                        }
+                    }
+                    if ($stateValue && !is_numeric($stateValue)) {
+                        $searchTerm = trim((string)$stateValue);
+                        $state = \Modules\Geography\Entities\State::where('name', $searchTerm)
+                            ->orWhere('name_ar', $searchTerm)
+                            ->first();
+                        if ($state) {
+                            $prepared['state_id'] = $state->id;
+                        }
+                    }
+                }
+
+                if (in_array('city_id', $fillable)) {
+                    $cityValue = null;
+                    foreach ($headerMap as $normKey => $origKey) {
+                        if (in_array($normKey, ['home_city', 'city', 'city_name']) && isset($cleaned[$origKey])) {
+                            $cityValue = $cleaned[$origKey];
+                            break;
+                        }
+                    }
+                    if ($cityValue && !is_numeric($cityValue)) {
+                        $searchTerm = trim((string)$cityValue);
+                        $city = \Modules\Geography\Entities\City::where('name', $searchTerm)
+                            ->orWhere('name_ar', $searchTerm)
+                            ->first();
+                        if ($city) {
+                            $prepared['city_id'] = $city->id;
+                        }
+                    }
+                }
+            }
+
+            // Extract Guide Languages (comma separated) for TourGuideLanguage pivot relations
+            if ($this->modelClass === \Modules\TourGuides\Entities\TourGuide::class) {
+                $langColumnExists = null;
+                foreach ($headerMap as $normKey => $origKey) {
+                    if (in_array($normKey, ['guide_languages', 'languages', 'guidelanguages'])) {
+                        $langColumnExists = $origKey;
+                        break;
+                    }
+                }
+                if ($langColumnExists && isset($cleaned[$langColumnExists]) && !empty($cleaned[$langColumnExists])) {
+                    $langString = $cleaned[$langColumnExists];
+                    // Example: "Spanish،French،Italian،English" OR "Spanish,French,English"
+                    $langStrNorm = str_replace('،', ',', $langString); // replace arabic comma
+                    $langArray = array_map('trim', explode(',', $langStrNorm));
+                    $langIds = [];
+                    foreach ($langArray as $langName) {
+                        if (empty($langName)) continue;
+                        // Match or create the Language dynamically. Assuming \Modules\Localization\Entities\Language
+                        $lk = mb_strtolower($langName);
+                        $langRec = \Modules\Localization\Entities\Language::whereRaw('LOWER(name) = ?', [$lk])
+                            ->orWhereRaw('LOWER(name_ar) = ?', [$lk])
+                            ->first();
+
+                        if (!$langRec) {
+                            $langRec = \Modules\Localization\Entities\Language::create([
+                                'name' => $langName,
+                                'name_ar' => $langName, // No auto translation mechanism readily available, store as is
+                                'code' => substr($lk, 0, 2),
+                                'is_active' => true,
+                            ]);
+                        }
+                        if ($langRec) {
+                            $langIds[] = $langRec->id;
+                        }
+                    }
+                    
+                    if (!empty($langIds)) {
+                        $pivotData = [
+                            'row_index' => $totalRows,
+                            'language_ids' => array_unique($langIds)
+                        ];
+                        if (isset($prepared['uuid'])) {
+                            $pivotData['uuid'] = $prepared['uuid'];
+                        }
+                        $this->tourGuideLanguagePivotData[] = $pivotData;
+                        Log::debug('Captured TourGuide Language pivot data: ' . json_encode($pivotData));
+                    }
+                }
             }
 
             // Smart type_id lookup: if value is text, search by name/code, or create if not found
@@ -676,14 +1027,8 @@ class ImportDataJob implements ShouldQueue
             }
 
             // prevent duplicate primary-key insertion (CSV might contain `id` column)
-            try {
-                $pk = $model->getKeyName();
-                if (!empty($pk) && isset($prepared[$pk])) {
-                    unset($prepared[$pk]);
-                }
-            } catch (\Throwable $_) {
-                // ignore if model doesn't provide key name
-            }
+            // UNLESS it's explicitly provided and we want to keep it.
+            // We'll keep it in $prepared for now and handle it during insert/upsert.
 
 
             // debug: log the resolved fillable columns and primary key
@@ -710,20 +1055,13 @@ class ImportDataJob implements ShouldQueue
                 }
 
                 // Strong sanitization: only allow columns that are in $fillable
-                // and always strip primary-key-like keys (id and model PK),
+                // and optionally 'id'/'uuid' if present in the Excel and DB.
                 // handling BOM/encoding/whitespace variants via normalization.
                 $sanitized = [];
-                // Ensure 'id' and model primary key are removed from allowed columns
-                $normPkTmp = $pk ? preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $pk))) : null;
-                $allowed = array_values(array_filter($fillable, function ($c) use ($normPkTmp) {
-                    $norm = preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $c)));
-                    if ($norm === 'id')
-                        return false;
-                    if ($normPkTmp && $norm === $normPkTmp)
-                        return false;
-                    return true;
-                }));
-                $normPk = $normPkTmp;
+                // We'll allow 'id' and 'uuid' if they exist in the DB columns
+                $allowed = array_values(array_intersect(array_merge($fillable, ['id', 'uuid']), $dbColumns ?? []));
+                
+                $normPk = $pk ? preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $pk))) : null;
                 $normAllowed = [];
                 foreach ($allowed as $a) {
                     $normAllowed[$a] = preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $a)));
@@ -735,7 +1073,8 @@ class ImportDataJob implements ShouldQueue
                         $normKey = preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $origKey)));
 
                         // drop any primary key-like column (explicit id or model pk)
-                        if ($normKey === 'id' || ($normPk && $normKey === $normPk)) {
+                        // EXCEPTION: if it's in $allowed, we KEEP it (it was added to $allowed in previous step)
+                        if (($normKey === 'id' || ($normPk && $normKey === $normPk)) && !in_array($origKey, $allowed, true)) {
                             continue;
                         }
 
@@ -795,7 +1134,30 @@ class ImportDataJob implements ShouldQueue
                         $this->transportationCompanyUuidMap = array_merge($this->transportationCompanyUuidMap, $chunkUuidMap ?? []);
                         $counter += count($finalRows);
                     } else {
-                        $this->modelClass::insert($finalRows);
+                        // Extract columns that should be updated on duplicate (all allowed columns except UUID/ID)
+                        $updateColumns = array_filter($allowed, fn($col) => !in_array($col, ['id', 'uuid']));
+                        
+                        // Determine unique key for upsert
+                        $uniqueBy = ['name'];
+                        if (!empty($finalRows) && isset($finalRows[0]['id'])) {
+                            $uniqueBy = ['id'];
+                        } elseif (!empty($finalRows) && isset($finalRows[0]['uuid'])) {
+                            $uniqueBy = ['uuid'];
+                        } elseif ($this->modelClass === \Modules\TourGuides\Entities\TourGuideType::class && !empty($finalRows) && isset($finalRows[0]['type'])) {
+                            $uniqueBy = ['type'];
+                        }
+
+                        // Use upsert to insert new records and update existing ones for most models
+                        // For TourGuide, bypass bulk upsert due to MySQL deadlock issues on multiple unique keys
+                        if ($this->modelClass === \Modules\TourGuides\Entities\TourGuide::class) {
+                            throw new \Exception("Bypassing bulk upsert for TourGuide to prevent MySQL deadlocks. Using per-row fallback.");
+                        }
+
+                        $this->modelClass::upsert(
+                            $finalRows,
+                            $uniqueBy,
+                            $updateColumns
+                        );
                         $counter += count($finalRows);
                     }
                 } catch (\Throwable $e) {
@@ -813,7 +1175,8 @@ class ImportDataJob implements ShouldQueue
                             $normPkSingle = $pk ? preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $pk))) : null;
                             foreach ($r as $origKey => $value) {
                                 $normKey = preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $origKey)));
-                                if ($normKey === 'id' || ($normPkSingle && $normKey === $normPkSingle)) {
+                                // Keep 'id' if it's in $allowed (preserves Excel IDs for FK integrity)
+                                if (($normKey === 'id' || ($normPkSingle && $normKey === $normPkSingle)) && !in_array($origKey, $allowed ?? [], true)) {
                                     continue;
                                 }
                                 if (in_array($origKey, $allowed ?? [], true)) {
@@ -834,7 +1197,15 @@ class ImportDataJob implements ShouldQueue
                                     TransportationDataImporter::upsertCompanies([$filtered], $rowUuidMap);
                                     $this->transportationCompanyUuidMap = array_merge($this->transportationCompanyUuidMap, $rowUuidMap ?? []);
                                 } else {
-                                    $this->modelClass::insert([$filtered]);
+                                    $updateCols = array_filter(array_keys($filtered), fn($col) => !in_array($col, ['id', 'uuid']));
+                                    $uniqueKeyString = isset($filtered['id']) ? 'id' : (isset($filtered['uuid']) ? 'uuid' : (isset($filtered['type']) && $this->modelClass === \Modules\TourGuides\Entities\TourGuideType::class ? 'type' : 'name'));
+                                    
+                                    // Safer fallback using updateOrCreate instead of upsert to avoid duplicate key locks
+                                    $matchCondition = [$uniqueKeyString => $filtered[$uniqueKeyString]];
+                                    $this->modelClass::updateOrCreate(
+                                        $matchCondition,
+                                        \Illuminate\Support\Arr::only($filtered, $updateCols)
+                                    );
                                 }
                                 $counter++;
                             }
@@ -868,17 +1239,9 @@ class ImportDataJob implements ShouldQueue
 
             // Strong sanitization for final buffer: same behavior as chunk handling
             $sanitized = [];
-            // Ensure 'id' and model primary key are removed from allowed columns
-            $normPkTmp = $pk ? preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $pk))) : null;
-            $allowed = array_values(array_filter($fillable, function ($c) use ($normPkTmp) {
-                $norm = preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $c)));
-                if ($norm === 'id')
-                    return false;
-                if ($normPkTmp && $norm === $normPkTmp)
-                    return false;
-                return true;
-            }));
-            $normPk = $normPkTmp;
+            // We'll allow 'id' and 'uuid' if they exist in the DB columns
+            $allowed = array_values(array_intersect(array_merge($fillable, ['id', 'uuid']), $dbColumns ?? []));
+            $normPk = $pk ? preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $pk))) : null;
             $normAllowed = [];
             foreach ($allowed as $a) {
                 $normAllowed[$a] = preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $a)));
@@ -888,7 +1251,9 @@ class ImportDataJob implements ShouldQueue
                 $filtered = [];
                 foreach ($row as $origKey => $value) {
                     $normKey = preg_replace('/[^a-z0-9_]/u', '', mb_strtolower(trim((string) $origKey)));
-                    if ($normKey === 'id' || ($normPk && $normKey === $normPk)) {
+                    // drop any primary key-like column (explicit id or model pk)
+                    // EXCEPTION: if it's in $allowed, we KEEP it
+                    if (($normKey === 'id' || ($normPk && $normKey === $normPk)) && !in_array($origKey, $allowed, true)) {
                         continue;
                     }
                     if (in_array($origKey, $allowed, true)) {
@@ -936,7 +1301,26 @@ class ImportDataJob implements ShouldQueue
                     $this->transportationCompanyUuidMap = array_merge($this->transportationCompanyUuidMap, $chunkUuidMap ?? []);
                     $counter += count($finalRows);
                 } else {
-                    $this->modelClass::insert($finalRows);
+                    // Extract columns that should be updated on duplicate (all allowed columns except UUID/ID)
+                    $updateColumnsFinal = array_filter($allowed, fn($col) => !in_array($col, ['id', 'uuid']));
+                    
+                    // Determine unique key for upsert
+                    $uniqueByFinal = ['name'];
+                    if (!empty($finalRows) && isset($finalRows[0]['id'])) {
+                        $uniqueByFinal = ['id'];
+                    } elseif (!empty($finalRows) && isset($finalRows[0]['uuid'])) {
+                        $uniqueByFinal = ['uuid'];
+                    }
+
+                    if ($this->modelClass === \Modules\TourGuides\Entities\TourGuide::class) {
+                        throw new \Exception("Bypassing bulk upsert for TourGuide final chunk to prevent MySQL deadlocks.");
+                    }
+
+                    $this->modelClass::upsert(
+                        $finalRows,
+                        $uniqueByFinal,
+                        $updateColumnsFinal
+                    );
                     $counter += count($finalRows);
                 }
                 // }
@@ -949,17 +1333,16 @@ class ImportDataJob implements ShouldQueue
                 }
                 foreach ($sanitized as $r) {
                     try {
-                        // ensure no PK present (normalized check)
+                        // Preserve 'id' from Excel for FK integrity — only remove if not in allowed
                         foreach (array_keys($r) as $k) {
                             $normKey = preg_replace('/[^a-z0-9_]/', '', strtolower(trim((string) $k)));
-                            $normPk = $pk ? preg_replace('/[^a-z0-9_]/', '', strtolower(trim((string) $pk))) : null;
-                            if ($normPk && $normKey === $normPk) {
-                                unset($r[$k]);
-                                continue;
-                            }
-                            if ($normKey === 'id') {
-                                unset($r[$k]);
-                                continue;
+                            // Only remove PK if it's NOT in the allowed list
+                            if (!in_array($k, $allowed ?? [], true)) {
+                                $normPk = $pk ? preg_replace('/[^a-z0-9_]/', '', strtolower(trim((string) $pk))) : null;
+                                if (($normPk && $normKey === $normPk) || $normKey === 'id') {
+                                    unset($r[$k]);
+                                    continue;
+                                }
                             }
                         }
                         if ($this->modelClass === Company::class) {
@@ -967,7 +1350,15 @@ class ImportDataJob implements ShouldQueue
                             TransportationDataImporter::upsertCompanies([$r], $rowUuidMap);
                             $this->transportationCompanyUuidMap = array_merge($this->transportationCompanyUuidMap, $rowUuidMap ?? []);
                         } else {
-                            $this->modelClass::insert([$r]);
+                            $updateCols = array_filter(array_keys($r), fn($col) => !in_array($col, ['id', 'uuid']));
+                            $uniqueKeyString = isset($r['id']) ? 'id' : (isset($r['uuid']) ? 'uuid' : 'name');
+                            
+                            // Safer fallback using updateOrCreate instead of upsert to avoid duplicate key locks
+                            $matchCondition = [$uniqueKeyString => $r[$uniqueKeyString]];
+                            $this->modelClass::updateOrCreate(
+                                $matchCondition,
+                                \Illuminate\Support\Arr::only($r, $updateCols)
+                            );
                         }
                         $counter++;
                     } catch (\Throwable $er) {
@@ -987,8 +1378,34 @@ class ImportDataJob implements ShouldQueue
             $this->syncTourGuideTypeRelationships();
         }
 
+        // Sync TourGuide relationships (languages)
+        if ($this->modelClass === \Modules\TourGuides\Entities\TourGuide::class) {
+            $this->syncTourGuideLanguageRelationships();
+        }
+
         // Log summary
         Log::debug("ImportDataJob completed: Total rows read: {$totalRows}, Records inserted: {$counter}");
+
+        // Save statistics to import_settings
+        try {
+            \App\Models\ImportSetting::updateOrCreate(
+                ['model_type' => $this->modelClass],
+                [
+                    'last_import_count' => $counter,
+                    'last_imported_at' => now(),
+                ]
+            );
+
+            // Update history
+            if ($this->historyUuid) {
+                \App\Models\ImportHistory::where('uuid', $this->historyUuid)->update([
+                    'status' => 'completed',
+                    'record_count' => $counter,
+                ]);
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Failed to save import statistics: ' . $e->getMessage());
+        }
 
         // Auto-sync relationships after importing specific models
         // $this->syncRelationshipsAfterImport($model);
@@ -1196,6 +1613,74 @@ class ImportDataJob implements ShouldQueue
         } catch (\Throwable $e) {
             Log::warning('Failed to sync TourGuideType relationships: ' . $e->getMessage());
             Log::warning('Stack trace: ' . $e->getTraceAsString());
+        }
+    }
+
+    /**
+     * Sync TourGuideLanguage languages from imported data
+     */
+    protected function syncTourGuideLanguageRelationships(): void
+    {
+        try {
+            if (empty($this->tourGuideLanguagePivotData)) {
+                Log::info('No TourGuideLanguage pivot data to sync.');
+                return;
+            }
+
+            Log::info('Syncing TourGuideLanguage from import...');
+
+            $syncedLanguages = 0;
+            // Get all tour guides ordered by ID (should match import order roughly if new, or identifiable by uuid)
+            $allGuides = \Modules\TourGuides\Entities\TourGuide::orderBy('id')->get();
+
+            foreach ($this->tourGuideLanguagePivotData as $pivotData) {
+                $guide = null;
+
+                if (!empty($pivotData['uuid'])) {
+                    $guide = \Modules\TourGuides\Entities\TourGuide::where('uuid', $pivotData['uuid'])->first();
+                }
+
+                // Fallback: use row index to match
+                if (!$guide && isset($pivotData['row_index'])) {
+                    $index = $pivotData['row_index'] - 1; // Convert to 0-based index
+                    if (isset($allGuides[$index])) {
+                        $guide = $allGuides[$index];
+                    }
+                }
+
+                if (!$guide) {
+                    Log::warning('Could not find TourGuide for language pivot sync: ' . json_encode($pivotData));
+                    continue;
+                }
+
+                if (!empty($pivotData['language_ids'])) {
+                    $languageIds = array_filter($pivotData['language_ids'], 'is_numeric');
+                    if (!empty($languageIds)) {
+                        $guide->tourGuideLanguages()->delete(); // Clear old pivots to avoid duplicates
+                        foreach ($languageIds as $langId) {
+                            \Modules\TourGuides\Entities\TourGuideLanguage::create([
+                                'tour_guide_id' => $guide->id,
+                                'language_id'   => $langId,
+                            ]);
+                        }
+                        $syncedLanguages += count($languageIds);
+                    }
+                }
+            }
+
+            Log::info("TourGuideLanguage sync completed: {$syncedLanguages} language relationships synced.");
+        } catch (\Throwable $e) {
+            Log::warning('Failed to sync TourGuideLanguage relationships: ' . $e->getMessage());
+        }
+    }
+
+    public function failed(\Throwable $exception): void
+    {
+        if (isset($this->historyUuid) && $this->historyUuid) {
+            \App\Models\ImportHistory::where('uuid', $this->historyUuid)->update([
+                'status' => 'failed',
+                'error_message' => $exception->getMessage(),
+            ]);
         }
     }
 }

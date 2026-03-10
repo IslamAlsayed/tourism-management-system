@@ -34,7 +34,7 @@ class GuideController extends Controller
         $data = array_merge($data, $request->safe()->except(['photo']));
         $tourGuide = TourGuide::create($data);
 
-        if ($tourGuide && $request['language_id']) {
+        if ($tourGuide && $request->has('language_id')) {
             foreach ($request['language_id'] as $language_id) {
                 TourGuideLanguage::create([
                     'tour_guide_id' => $tourGuide->id,
@@ -42,6 +42,11 @@ class GuideController extends Controller
                 ]);
             }
         }
+
+        if ($tourGuide && $request->has('custom_fields')) {
+            $tourGuide->saveCustomFields($request->custom_fields);
+        }
+
         if ($request->has('photo')) {
             $this->uploadPhoto($request, $tourGuide, 'photo', "tour-guides");
         }
@@ -81,7 +86,7 @@ class GuideController extends Controller
         $data['updated_by'] = getActiveUserId();
         $updated = $tourGuide->update($data);
 
-        if ($tourGuide && $request['language_id']) {
+        if ($tourGuide && $request->has('language_id')) {
             $tourGuide->tourGuideLanguages()->delete();
             foreach ($request['language_id'] as $language_id) {
                 TourGuideLanguage::create([
@@ -90,6 +95,11 @@ class GuideController extends Controller
                 ]);
             }
         }
+
+        if ($tourGuide && $request->has('custom_fields')) {
+            $tourGuide->saveCustomFields($request->custom_fields);
+        }
+
         if ($request->has('photo')) {
             $this->uploadPhoto($request, $tourGuide, 'photo', "tour-guides");
         }

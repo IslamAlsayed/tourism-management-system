@@ -24,7 +24,8 @@
     <div class="kt-container-fixed">
         <div class="kt-card p-4">
             <div class="kt-card-body">
-                <form class="space-y-6" method="POST" action="{{ route('dashboard.accommodations.meals.update', $meal->id) }}">
+                <form class="space-y-6" method="POST"
+                    action="{{ route('dashboard.accommodations.meals.update', $meal->id) }}">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="type" value="{{ request()->query('type') }}">
@@ -42,7 +43,8 @@
                                 <label for="name" class="kt-label">
                                     {{ __('main.name') }}
                                 </label>
-                                <input type="text" class="kt-input h-[45px]" id="name" name="name" value="{{ $meal->name }}">
+                                <input type="text" class="kt-input h-[45px]" id="name" name="name"
+                                    value="{{ $meal->name }}">
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -53,7 +55,8 @@
                                 <label for="name_ar" class="kt-label"></label>
                                 {{ __('main.name_ar') }}
                                 </label>
-                                <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar" value="{{ $meal->name_ar }}">
+                                <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
+                                    value="{{ $meal->name_ar }}">
                                 @error('name_ar')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -64,8 +67,8 @@
                                 <label for="price" class="kt-label mb-1">
                                     {{ __('main.price') }}
                                 </label>
-                                <input type="number" step="0.01" name="price" id="price" class="kt-input h-[45px]" value="{{ $meal->price }}"
-                                    minLength="0">
+                                <input type="number" step="0.01" name="price" id="price" class="kt-input h-[45px]"
+                                    value="{{ $meal->price }}" minLength="0">
                                 @error('price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -116,6 +119,9 @@
                                 ])
                             </div>
                         </div>
+
+                        {{-- Dynamic Custom Fields --}}
+                        <x-custom-fields module-name="accommodations" entity-type="Meal" :entity="$meal" />
 
                         {{-- Update Submit --}}
                         @include('components.elements.update-submit', [

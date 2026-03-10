@@ -24,8 +24,10 @@
     if (switchThemeMode) {
         // 🔹 Set initial state of the switch
         switchThemeMode.checked = themeMode === 'dark' || themeMode === 'system' ? true : false;
-        textThemeMode.innerText = ['dark', 'system'].includes(themeMode) ? @json(__('main.dark_mode')) :
-            @json(__('main.light_mode'));
+        if (textThemeMode) {
+            textThemeMode.innerText = ['dark', 'system'].includes(themeMode) ? @json(__('main.dark_mode')) :
+                @json(__('main.light_mode'));
+        }
 
         // 🔹 Apply theme
         applyTheme(themeMode);
@@ -41,8 +43,10 @@
         // ================= Helpers =================
         function applyTheme(mode) {
             document.documentElement.classList.toggle('dark', mode === 'dark');
-            textThemeMode.innerText = ['dark', 'system'].includes(themeMode) ? @json(__('main.dark_mode')) :
-                @json(__('main.light_mode'));
+            if (textThemeMode) {
+                textThemeMode.innerText = ['dark', 'system'].includes(themeMode) ? @json(__('main.dark_mode')) :
+                    @json(__('main.light_mode'));
+            }
             // Update icon
             iconThemeMode.classList.toggle('ki-sun', mode === 'light');
             iconThemeMode.classList.toggle('text-yellow-500', mode === 'light');

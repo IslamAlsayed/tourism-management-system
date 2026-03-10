@@ -35,7 +35,8 @@ class UpdateRequest extends FormRequest
             'supports_dst' => 'nullable|boolean',
             'region' => 'nullable|string|max:100',
             'city' => 'nullable|string|max:100',
-            'description' => 'nullable|string|max:500',
+            'description' => 'nullable|string',
+            'notes' => 'nullable|string',
             'is_active' => 'nullable|boolean',
             'sort_order' => 'nullable|integer',
         ];

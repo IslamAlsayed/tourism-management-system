@@ -24,7 +24,8 @@
     <div class="kt-container-fixed">
         <div class="kt-card p-4">
             <div class="kt-card-body">
-                <form class="space-y-6" method="POST" action="{{ route('dashboard.accommodations.seasons.update', $season->id) }}">
+                <form class="space-y-6" method="POST"
+                    action="{{ route('dashboard.accommodations.seasons.update', $season->id) }}">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="type" value="{{ request()->query('type') }}">
@@ -39,7 +40,8 @@
                                 <label for="name" class="kt-label mb-1">
                                     {{ __('main.name') }}
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $season->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $season->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -48,7 +50,8 @@
                             {{-- Name (Arabic) --}}
                             <div>
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $season->name_ar }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $season->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -101,6 +104,9 @@
                                 'label' => __('main.active'),
                             ])
                         </div>
+
+                        {{-- Dynamic Custom Fields --}}
+                        <x-custom-fields module-name="accommodations" entity-type="Season" :entity="$season" />
 
                         <!-- Update Submit -->
                         @include('components.elements.update-submit', [

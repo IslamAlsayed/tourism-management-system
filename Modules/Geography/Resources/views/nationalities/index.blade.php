@@ -5,7 +5,7 @@
     @include('includes.table-breadcrumb', [
         'title' => __('main.nationalities'),
         'description' => __('main.manage_system_types', ['types' => __('main.nationalities')]),
-        'import_url' => route('import.data', ['models' => 'dashboard.geography.nationalities']),
+        'import_url' => route('import.data', ['models' => 'nationalities']),
         'page_create_url' => route('dashboard.geography.nationalities.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.nationality')]),
     ])

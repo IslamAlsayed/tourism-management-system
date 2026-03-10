@@ -63,6 +63,7 @@ class SystemLanguages extends Component
         }
 
         SystemLanguage::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(SystemLanguage::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -72,24 +73,23 @@ class SystemLanguages extends Component
         ]);
     }
 
-    public function exportSelectedPDF()
+    public function clearSelected()
     {
-        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], SystemLanguage::class, $cols, 'system_languages');
         $this->selectedIds = [];
         $this->selectPage = false;
         $this->dispatch('reset-checkout-boxes');
-        return $result;
+    }
+
+    public function exportSelectedPDF()
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], SystemLanguage::class, $cols, 'system_languages');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], SystemLanguage::class, $cols, 'system_languages', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], SystemLanguage::class, $cols, 'system_languages', $extension);
     }
 
     public function toggleView()
@@ -112,3 +112,4 @@ class SystemLanguages extends Component
         return view('localization::livewire.system-languages', ['data' => $data, 'totalCount' => $this->totalCount ?: SystemLanguage::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

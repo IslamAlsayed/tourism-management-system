@@ -38,6 +38,8 @@
                             </button>
                         </div>
 
+                        <input type="hidden" name="seasons[{{ $index }}][id]"
+                            value="{{ $season['season_id'] ?? '' }}">
                         <div class="grid grid-cols-1 sm:grid-cols-2 items-end gap-6 mb-4">
                             {{-- Name (English) --}}
                             <div class="align-self-end">
@@ -109,6 +111,19 @@
                                 value="{{ old('seasons.' . $index . '.description') }}">
                             <trix-editor input="seasons_{{ $index }}_description"></trix-editor>
                             @error('seasons.' . $index . '.description')
+                                <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Notes --}}
+                        <div class="mb-4">
+                            <label for="seasons_{{ $index }}_notes"
+                                class="kt-label mb-2">{{ __('main.notes') }}</label>
+                            <input id="seasons_{{ $index }}_notes" type="hidden"
+                                name="seasons[{{ $index }}][notes]"
+                                value="{{ old('seasons.' . $index . '.notes') }}">
+                            <trix-editor input="seasons_{{ $index }}_notes"></trix-editor>
+                            @error('seasons.' . $index . '.notes')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
                         </div>

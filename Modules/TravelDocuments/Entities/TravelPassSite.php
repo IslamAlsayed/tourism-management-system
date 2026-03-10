@@ -2,7 +2,7 @@
 
 namespace Modules\TravelDocuments\Entities;
 
-use Modules\Tourists\Entities\TouristSite;
+use Modules\TouristSites\Entities\TouristSite;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;

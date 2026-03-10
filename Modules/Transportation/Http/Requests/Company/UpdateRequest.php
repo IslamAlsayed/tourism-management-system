@@ -33,7 +33,7 @@ class UpdateRequest extends FormRequest
             'phone' => 'nullable|string|max:20',
             'mobile' => 'nullable|string|max:20',
             'fax' => 'nullable|string|max:20',
-            'website' => 'nullable|url|max:255',
+            'website' => 'nullable|string|max:255',
 
             // Location
             'currency_id' => 'nullable|exists:currencies,id',

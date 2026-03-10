@@ -49,7 +49,8 @@
                                     {{ __('main.name') }}
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ old('name') }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -58,7 +59,8 @@
                             {{-- Name (Arabic) --}}
                             <div>
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ old('name_ar') }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -70,8 +72,8 @@
                                     {{ __('main.price') }}
                                     <span class="text-red-600 text-2xl">*</span>
                                 </label>
-                                <input type="number" step="0.01" name="price" id="price" class="kt-input h-[45px]" value="{{ old('price', 0) }}"
-                                    min="0">
+                                <input type="number" step="0.01" name="price" id="price" class="kt-input h-[45px]"
+                                    value="{{ old('price', 0) }}" min="0">
                                 @error('price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -81,7 +83,8 @@
                             <div class="align-self-end">
                                 <label for="price_type" class="kt-label mb-2">{{ __('main.price_type') }}</label>
                                 <select name="price_type" id="price_type" class="kt-select basic-single">
-                                    <option value="per_person" {{ old('price_type', 'per_person') == 'per_person' ? 'selected' : '' }}>
+                                    <option value="per_person"
+                                        {{ old('price_type', 'per_person') == 'per_person' ? 'selected' : '' }}>
                                         {{ __('main.per_person') }}
                                     </option>
                                     <option value="per_room" {{ old('price_type') == 'per_room' ? 'selected' : '' }}>
@@ -134,6 +137,9 @@
                                 ])
                             </div>
                         </div>
+
+                        {{-- Dynamic Custom Fields --}}
+                        <x-custom-fields module-name="accommodations" entity-type="Supplement" />
 
                         <!-- Save Submit -->
                         @include('components.elements.save-submit', [

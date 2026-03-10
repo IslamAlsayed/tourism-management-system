@@ -2,26 +2,26 @@
 
 namespace Modules\Restaurants\Entities;
 
-use App\Traits\HasUuid;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
+use App\Traits\HasCustomFields;
 use App\Traits\FiltersByUserRole;
 use App\Traits\ClearsEmptyRichText;
 use Modules\Geography\Entities\City;
 use Modules\Geography\Entities\State;
+use Modules\Geography\Entities\Region;
+use Modules\Geography\Entities\Subregion;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Geography\Entities\Country;
-use Modules\Accommodations\Entities\Meal;
-use Modules\Accommodations\Entities\Type;
 use Modules\Accommodations\Entities\Season;
 use Modules\Localization\Entities\Currency;
 use Modules\Localization\Entities\Timezone;
-use Modules\Accommodations\Entities\Supplement;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Restaurant extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText, HasCustomFields;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -36,6 +36,13 @@ class Restaurant extends Model
         'rating',
         'company_name',
         'specialty',
+        'fit_price_adult',
+        'fit_price_child_6_11',
+        'fit_price_child_under_6',
+        'group_price_adult',
+        'group_price_child_6_11',
+        'group_price_child_under_6',
+        'min_group_size',
         'phone_01',
         'phone_02',
         'fax',
@@ -69,6 +76,8 @@ class Restaurant extends Model
         'country_id',
         'state_id',
         'city_id',
+        'region_id',
+        'subregion_id',
     ];
 
     protected static function boot()
@@ -95,17 +104,27 @@ class Restaurant extends Model
 
     public function getRelationshipNames()
     {
-        return ['type', 'timezone', 'currency', 'country', 'state', 'city', 'seasons', 'meals', 'supplements'];
+        return ['type', 'timezone', 'currency', 'country', 'state', 'city', 'region', 'subregion', 'seasons', 'meals', 'supplements'];
     }
 
     public function getExcludedColumns()
     {
-        return ['type_id', 'timezone_id', 'currency_id', 'country_id', 'state_id', 'city_id', 'description', 'notes'];
+        return ['type_id', 'timezone_id', 'currency_id', 'country_id', 'state_id', 'city_id', 'region_id', 'subregion_id', 'description', 'notes'];
     }
 
     public function type()
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(RestaurantType::class, 'type_id');
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function subregion()
+    {
+        return $this->belongsTo(Subregion::class);
     }
 
     public function timezone()
@@ -139,15 +158,15 @@ class Restaurant extends Model
         return $this->morphMany(Season::class, 'model');
     }
 
-    // علاقة polymorphic modelship للوجبات
+    // علاقة وجبات المطعم - مستقلة
     public function meals()
     {
-        return $this->morphMany(Meal::class, 'model');
+        return $this->hasMany(RestaurantMeal::class);
     }
 
-    // علاقة polymorphic modelship للإضافات
+    // علاقة إضافات المطعم - مستقلة
     public function supplements()
     {
-        return $this->morphMany(Supplement::class, 'model');
+        return $this->hasMany(RestaurantSupplement::class);
     }
 }

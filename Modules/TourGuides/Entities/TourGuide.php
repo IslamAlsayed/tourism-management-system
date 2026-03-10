@@ -4,6 +4,7 @@ namespace Modules\TourGuides\Entities;
 
 use App\Traits\HasUuid;
 use App\Traits\HasSearch;
+use App\Traits\HasCustomFields;
 use App\Traits\FiltersByUserRole;
 use App\Traits\ClearsEmptyRichText;
 use Modules\Geography\Entities\City;
@@ -16,7 +17,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TourGuide extends Model
 {
-    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText, HasCustomFields;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -31,7 +32,8 @@ class TourGuide extends Model
         'mobile_01',
         'mobile_02',
         'home_city',
-        'birth_year',
+        'birth_date',
+        'age',
         'photo',
         'gender',
         'national_guide_id',
@@ -54,6 +56,9 @@ class TourGuide extends Model
     {
         parent::boot();
         static::saving(function ($item) {
+            if ($item->birth_date) {
+                $item->age = \Carbon\Carbon::parse($item->birth_date)->age;
+            }
             if (empty($item->country_id) && !empty($item->city_id)) {
                 $item->country_id = $item->city?->country_id;
             }

@@ -75,7 +75,7 @@ class AuthenticatedSessionController extends Controller
         }
         if (session('session_expired')) {
             session()->forget(['login_attempted']);
-            showToastWarningMessage(__('messages.session_expired'))->pin();
+            showToastWarningMessage(__('messages.session_expired'));
             return view('core::auth.login');
         }
         return redirect('/login');

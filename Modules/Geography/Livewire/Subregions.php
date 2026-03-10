@@ -14,12 +14,24 @@ use App\Traits\ExportsData;
 class Subregions extends Component
 {
     use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
+
     public $search = '';
-    public $totalCount = '';
     public $message = [];
+    public $filterActive = '';
+    public $filterRegionId = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterActive()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterRegionId()
     {
         $this->resetPage();
     }
@@ -48,52 +60,112 @@ class Subregions extends Component
 
     protected function currentPageDataIds()
     {
-        $paginator = Subregion::paginate(getPaginate());
-        return $paginator->getCollection()->pluck('id');
+        return $this->buildQuery()->paginate(getPaginate())->getCollection()->pluck('id');
+    }
+
+    protected function buildQuery()
+    {
+        $query = Subregion::query();
+
+        if ($this->filterActive === 'active') {
+            $query->where('is_active', true);
+        } elseif ($this->filterActive === 'inactive') {
+            $query->where('is_active', false);
+        }
+
+        if ($this->filterRegionId && $this->filterRegionId !== 'all') {
+            $query->where('region_id', $this->filterRegionId);
+        }
+
+        $query->searchWithRelations(
+            search: $this->search,
+            selectedColumns: $this->columns,
+            availableRelations: $this->relations
+        );
+
+        $query->withCount([
+            'countries',
+            'accommodations',
+            'restaurants',
+            'transportationCompanies'
+        ]);
+
+        $this->applySorting($query);
+
+        return $query;
+    }
+
+    public function activateSelected()
+    {
+        if (empty($this->selectedIds)) return;
+        Subregion::whereIn('id', $this->selectedIds)->update(['is_active' => true]);
+        $this->clearSelected();
+        $this->dispatch('refresh-page');
+    }
+
+    public function deactivateSelected()
+    {
+        if (empty($this->selectedIds)) return;
+        Subregion::whereIn('id', $this->selectedIds)->update(['is_active' => false]);
+        $this->clearSelected();
+        $this->dispatch('refresh-page');
     }
 
     public function deleteSelected()
     {
-        if (empty($this->selectedIds)) {
-            return;
-        }
-
+        if (empty($this->selectedIds)) return;
         Subregion::whereIn('id', $this->selectedIds)->delete();
-        $count = count($this->selectedIds);
-        $this->selectedIds = [];
+        $this->resetAutoIncrementIfEmpty(Subregion::class);
+        $this->clearSelected();
+        $this->dispatch('refresh-page');
+    }
 
-        $this->dispatch('show-toast', [
-            'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('main.subregions'), 'count' => $count]),
-        ]);
+    public function forceDeleteSelected()
+    {
+        if (empty($this->selectedIds)) return;
+        Subregion::whereIn('id', $this->selectedIds)->forceDelete();
+        $this->resetAutoIncrementIfEmpty(Subregion::class);
+        $this->clearSelected();
+        $this->dispatch('refresh-page');
+    }
+
+    public function clearSelected()
+    {
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'filterActive', 'filterRegionId']);
+        $this->resetSort();
+        $this->resetPage();
+        $this->dispatch('reset-filters');
     }
 
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Subregion::class, $cols, 'subregions');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Subregion::class, $cols, 'subregions');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Subregion::class, $cols, 'subregions', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Subregion::class, $cols, 'subregions', $extension);
     }
 
     public function render()
     {
-        $query = Subregion::query();
-        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $this->applySorting($query);
-        $data = $query->paginate(getPaginate());
-        return view('geography::livewire.subregions', ['data' => $data, 'totalCount' => $this->totalCount ?: Subregion::count(), 'selectedIds' => $this->selectedIds]);
+        $data = $this->buildQuery()->paginate(getPaginate());
+
+        $regions = \Modules\Geography\Entities\Region::where('is_active', true)->orderBy('name')->pluck('name', 'id');
+
+        return view('geography::livewire.subregions', [
+            'data'        => $data,
+            'selectedIds' => $this->selectedIds,
+            'regions'     => $regions,
+        ]);
     }
 }

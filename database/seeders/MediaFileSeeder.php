@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Airline;
 use App\Models\EntryPoint;
 use App\Models\MediaFile;
-use Modules\Tourists\Entities\TouristService;
+use Modules\TouristServices\Entities\TouristService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Localization\Policies;
+namespace Modules\TourGuides\Policies;
 
 use Modules\Core\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;

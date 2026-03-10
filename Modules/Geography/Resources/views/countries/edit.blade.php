@@ -149,6 +149,27 @@
                                 @enderror
                             </div>
 
+                            <!-- Emoji (Flag) -->
+                            <div class="">
+                                <label for="emoji" class="kt-label mb-2">{{ __('main.emoji') }}</label>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-3xl bg-gray-50 border border-gray-200 rounded px-2 h-[45px] flex items-center justify-center">{{ $country->emoji }}</span>
+                                    <input type="text" name="emoji" id="emoji" class="kt-input h-[45px]" value="{{ $country->emoji }}">
+                                </div>
+                                @error('emoji')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Emoji Unicode -->
+                            <div class="">
+                                <label for="emojiU" class="kt-label mb-2">{{ __('main.emojiU') }}</label>
+                                <input type="text" name="emojiU" id="emojiU" class="kt-input h-[45px]" value="{{ $country->emojiU }}" dir="ltr">
+                                @error('emojiU')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Population -->
                             <div class="">
                                 <label for="population" class="kt-label mb-2">{{ __('main.population') }}</label>

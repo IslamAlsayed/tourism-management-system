@@ -26,11 +26,11 @@ class StoreRequest extends FormRequest
             'code' => ['nullable', 'string', 'max:255', 'unique:tourist_sites,code'],
             'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
-            'site_type' => ['nullable', 'string', 'max:255'],
-            'category' => ['nullable', 'string', 'max:255'],
+            'site_type' => ['nullable', 'array'],
+            'category' => ['nullable', 'array'],
             'unesco_site' => ['nullable', 'boolean'],
-            'supplier_type' => ['nullable', 'string', 'max:255'],
-            'sites_theme' => ['nullable', 'string', 'max:255'],
+            'supplier_type' => ['nullable', 'array'],
+            'sites_theme' => ['nullable', 'array'],
             'supplier_name' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
 
@@ -39,6 +39,9 @@ class StoreRequest extends FormRequest
             'country_id' => ['nullable', 'integer', 'exists:countries,id'],
             'state_id' => ['nullable', 'integer', 'exists:states,id'],
             'city_id' => ['nullable', 'integer', 'exists:cities,id'],
+            'region_id' => ['nullable', 'integer', 'exists:regions,id'],
+            'subregion_id' => ['nullable', 'integer', 'exists:subregions,id'],
+            'timezone_id' => ['nullable', 'integer', 'exists:timezones,id'],
             'address' => ['nullable', 'string', 'max:500'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
@@ -59,6 +62,10 @@ class StoreRequest extends FormRequest
             'entry_fee_local_child' => ['nullable', 'numeric', 'min:0'],
             'entry_fee_resident_adult' => ['nullable', 'numeric', 'min:0'],
             'entry_fee_resident_child' => ['nullable', 'numeric', 'min:0'],
+            'nationality_entry_fees' => ['nullable', 'array'],
+            'nationality_entry_fees.*.nationality_id' => ['required', 'exists:nationalities,id'],
+            'nationality_entry_fees.*.adult_price' => ['nullable', 'numeric', 'min:0'],
+            'nationality_entry_fees.*.child_price' => ['nullable', 'numeric', 'min:0'],
 
             // ========== Operating Hours ==========
             'opening_time' => ['nullable', 'date_format:H:i'],
@@ -66,6 +73,24 @@ class StoreRequest extends FormRequest
             'operating_days' => ['nullable', 'array'],
             // 'special_hours' => ['nullable', 'json'],
             'is_24_7' => ['nullable', 'boolean'],
+
+            // ========== Holidays ==========
+            'holidays' => ['nullable', 'array'],
+            'holidays.*.type' => ['required_with:holidays', 'string', 'in:weekly,annual,one_time'],
+            'holidays.*.day_of_week' => ['nullable', 'string'],
+            'holidays.*.holiday_date' => ['nullable', 'date'],
+            'holidays.*.name' => ['nullable', 'string', 'max:255'],
+            'holidays.*.name_ar' => ['nullable', 'string', 'max:255'],
+
+            // ========== Seasonal Hours ==========
+            'seasonal_hours' => ['nullable', 'array'],
+            'seasonal_hours.*.season_name' => ['required_with:seasonal_hours', 'string', 'max:255'],
+            'seasonal_hours.*.season_name_ar' => ['nullable', 'string', 'max:255'],
+            'seasonal_hours.*.start_date' => ['required_with:seasonal_hours', 'date'],
+            'seasonal_hours.*.end_date' => ['required_with:seasonal_hours', 'date'],
+            'seasonal_hours.*.opening_time' => ['nullable', 'date_format:H:i'],
+            'seasonal_hours.*.closing_time' => ['nullable', 'date_format:H:i'],
+            'seasonal_hours.*.is_closed' => ['nullable', 'boolean'],
 
             // ========== Contact Information ==========
             'phone' => ['nullable', 'string', 'max:20'],
@@ -79,6 +104,8 @@ class StoreRequest extends FormRequest
             'contact_person' => ['nullable', 'string', 'max:255'],
 
             // ========== Facilities & Services ==========
+            'facilities' => ['nullable', 'array'],
+            'facilities.*' => ['integer', 'exists:facilities,id'],
             'wheelchair_accessible' => ['nullable', 'boolean'],
             'free_wifi' => ['nullable', 'boolean'],
             'parking' => ['nullable', 'boolean'],
@@ -104,8 +131,12 @@ class StoreRequest extends FormRequest
 
             // ========== Additional Pricing ==========
             'local_guide_price' => ['nullable', 'numeric', 'min:0'],
+            'local_guide_price_unit_id' => ['nullable', 'integer', 'exists:pricing_definitions,id'],
             'club_car_price' => ['nullable', 'numeric', 'min:0'],
+            'club_car_price_unit_id' => ['nullable', 'integer', 'exists:pricing_definitions,id'],
             'has_unified_ticket' => ['nullable', 'boolean'],
+            'travel_passes' => ['nullable', 'array'],
+            'travel_passes.*' => ['integer', 'exists:travel_passes,id'],
 
             // ========== Media & Content ==========
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],

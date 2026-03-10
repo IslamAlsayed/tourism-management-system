@@ -4,6 +4,7 @@ namespace Modules\Core\Http\Controllers\Auth;
 
 use Illuminate\Routing\Controller;
 use Modules\Core\Entities\User;
+use Modules\Geography\Entities\Country;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('core::auth.register');
+        $countries = Country::all();
+        return view('core::auth.register', compact('countries'));
     }
 
     /**
@@ -32,12 +34,20 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'country_id' => ['required', 'exists:countries,id'],
+            'mobile' => ['required', 'string', 'max:20'],
+            'company_name' => ['required', 'string', 'max:255'],
+            'company_website' => ['nullable', 'string', 'max:255'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'country_id' => $request->country_id,
+            'mobile' => $request->mobile,
+            'company_name' => $request->company_name,
+            'company_website' => $request->company_website,
         ]);
         event(new Registered($user));
         activity()->causedBy($user)->performedOn($user)->useLog('models')->event('register')->withProperties([

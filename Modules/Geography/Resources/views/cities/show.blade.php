@@ -180,6 +180,30 @@
                                 <p class="text-sm text-secondary-foreground">{{ __('main.na') }}</p>
                             @endif
                         </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.accommodations')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $city->accommodations()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.restaurants')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $city->restaurants()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.transportation_companies')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $city->transportationCompanies()->count() }}
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

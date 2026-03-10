@@ -136,5 +136,5 @@
 @endsection
 
 @push('styles')
-    @include('components.styles.drag-drop-images')
+    @include('components.scripts.drag-drop-images')
 @endpush

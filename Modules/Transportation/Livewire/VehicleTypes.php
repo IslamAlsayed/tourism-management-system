@@ -60,6 +60,7 @@ class VehicleTypes extends Component
         }
 
         VehicleType::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(VehicleType::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -72,21 +73,13 @@ class VehicleTypes extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], VehicleType::class, $cols, 'transportationvehicle_types');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], VehicleType::class, $cols, 'transportationvehicle_types');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], VehicleType::class, $cols, 'transportationvehicle_types', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], VehicleType::class, $cols, 'transportationvehicle_types', $extension);
     }
 
     public function render()
@@ -98,3 +91,4 @@ class VehicleTypes extends Component
         return view('transportation::livewire.vehicle_types', ['data' => $data, 'totalCount' => $this->totalCount ?: VehicleType::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

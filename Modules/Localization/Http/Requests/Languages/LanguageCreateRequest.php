@@ -23,7 +23,7 @@ class LanguageCreateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'name_ar' => ['required', 'string', 'max:255'],
+            'name_ar' => ['nullable', 'string', 'max:255'],
             'code' => ['required', 'string', 'unique:languages,code'],
         ];
     }

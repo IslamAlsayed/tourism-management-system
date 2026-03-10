@@ -4,6 +4,7 @@ namespace Modules\Transportation\Entities;
 
 use App\Traits\ClearsEmptyRichText;
 use App\Traits\FiltersByUserRole;
+use App\Traits\HasCustomFields;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +19,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Company extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText, HasCustomFields;
     protected $richTextAttributes = [
         'description',
         'notes',

@@ -25,6 +25,7 @@ class RolePermissionSeeder extends Seeder
         $permissions = [
             // User Management
             'manage_users',
+            'view_users',
 
             // Roles & Permissions
             'manage_roles',
@@ -39,6 +40,7 @@ class RolePermissionSeeder extends Seeder
 
             // Data Management (general)
             'manage_data',
+            'view_data',
 
             // Specific Data Management
             'manage_clients',

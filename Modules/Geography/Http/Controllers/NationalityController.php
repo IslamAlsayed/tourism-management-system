@@ -37,7 +37,7 @@ class NationalityController extends Controller
         $nationality = Nationality::with((new Nationality)->getRelationshipNames())->find($id);
         return $nationality
             ? view('geography::nationalities.show', compact('nationality'))
-            : redirect()->back()->withError(__('messages.type_deletion_failed', ['type' => __('main.nationality')]));
+            : redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.nationality')]));
     }
 
     public function edit($id)

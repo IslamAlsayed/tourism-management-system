@@ -88,7 +88,7 @@
                                 <label class="kt-label mb-1">{{ __('main.seasons') }}</label>
                                 <div class="flex flex-wrap gap-2">
                                     @forelse($company->seasons as $season)
-                                        <a href="{{ route('dashboard.accommodations.seasons.show', $season->id) }}" class="kt-badge kt-badge-info">
+                                        <a href="{{ route('dashboard.transportation.seasons.show', $season->id) }}" class="kt-badge kt-badge-info">
                                             #{{ $season->id }} | {{ $season->name }}
                                             <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                         </a>
@@ -109,6 +109,61 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Stats Information -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">
+                        <i class="ki-filled ki-chart-pie-3 text-info me-2"></i>
+                        {{ __('main.statistics') }}
+                    </h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="flex flex-wrap" style="gap: 20px 80px;">
+                        @if ($company->vehicleTypes)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.vehicle_types')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $company->vehicleTypes->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($company->seasons)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.seasons')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $company->seasons->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($company->supplements)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.supplements')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $company->supplements->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($company->contacts)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.contacts')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $company->contacts->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Location Information -->
             <div class="kt-card">

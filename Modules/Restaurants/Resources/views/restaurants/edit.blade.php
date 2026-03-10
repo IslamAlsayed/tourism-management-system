@@ -22,7 +22,8 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('dashboard.restaurants.update', $restaurant->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.restaurants.update', $restaurant->id) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
@@ -42,8 +43,9 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        {{-- Regions [country, state, city] --}}
-                        @livewire('geography::livewire.regions.location-select-base', ['record' => $restaurant])
+                        {{-- Regions [region, subregion, country, state, city] --}}
+                        @livewire('geography::livewire.regions.location-to-country', ['record' => $restaurant])
+                        @livewire('geography::livewire.regions.location-select-base2', ['record' => $restaurant])
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Latitude -->
@@ -58,32 +60,7 @@
                             {{-- Currency --}}
                             @include('components.selects.currency', ['record' => $restaurant])
 
-                            <!-- Street Address -->
-                            <div class="align-self-end">
-                                <label for="street" class="kt-label">{{ __('main.street') }}</label>
-                                <input type="text" name="street" id="street" class="kt-input h-[45px]" value="{{ $restaurant->street }}">
-                                @error('street')
-                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
 
-                            <!-- Postal Code -->
-                            <div class="align-self-end">
-                                <label for="postal_code" class="kt-label">{{ __('main.postal_code') }}</label>
-                                <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]" value="{{ $restaurant->postal_code }}">
-                                @error('postal_code')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Box -->
-                            <div class="align-self-end">
-                                <label for="box" class="kt-label">{{ __('main.box') }}</label>
-                                <input type="text" name="box" id="box" class="kt-input h-[45px]" value="{{ $restaurant->box }}">
-                                @error('box')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -102,7 +79,8 @@
                                 <label for="name" class="kt-label">
                                     {{ __('main.name') }}
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $restaurant->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->name }}">
                                 @error('name')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -111,7 +89,8 @@
                             <!-- Name Arabic -->
                             <div class="align-self-end">
                                 <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $restaurant->name_ar }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -120,14 +99,41 @@
                             <!-- Company Name -->
                             <div class="align-self-end">
                                 <label for="company_name" class="kt-label">{{ __('main.company_name') }}</label>
-                                <input type="text" name="company_name" id="company_name" class="kt-input h-[45px]" value="{{ $restaurant->company_name }}">
+                                <input type="text" name="company_name" id="company_name" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->company_name }}">
                                 @error('company_name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            {{-- Type --}}
-                            @include('components.selects.type', ['record' => $restaurant])
+                            {{-- Restaurant Type --}}
+                            <div class="align-self-end">
+                                <label for="type_id" class="kt-label mb-2 flex items-center justify-between">
+                                    <div>
+                                        {{ __('main.type') }}
+                                        <strong class="dataLength text-primary">({{ count($types) }})</strong>
+                                    </div>
+                                    <a href="{{ route('dashboard.restaurants.types.create') }}"
+                                        class="text-blue-600 text-2sm">
+                                        {{ __('main.add') }}
+                                    </a>
+                                </label>
+                                <select name="type_id" id="type_id" class="kt-select basic-single">
+                                    <option value="" disabled {{ !$restaurant->type_id ? 'selected' : '' }}>
+                                    </option>
+                                    @forelse ($types as $typeId => $typeName)
+                                        <option value="{{ $typeId }}"
+                                            {{ $restaurant->type_id == $typeId ? 'selected' : '' }}>
+                                            {{ $typeName }}
+                                        </option>
+                                    @empty
+                                        <option value="">{{ __('messages.no_records_found') }}</option>
+                                    @endforelse
+                                </select>
+                                @error('type_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
                             <!-- Rating -->
                             <div class="align-self-end">
@@ -135,7 +141,8 @@
                                 <select name="rating" id="rating" class="kt-select basic-single">
                                     <option value="" disabled selected></option>
                                     @foreach (range(1, 5) as $item)
-                                        <option value="{{ $item }}" {{ $restaurant->rating == $item ? 'selected' : '' }}>
+                                        <option value="{{ $item }}"
+                                            {{ $restaurant->rating == $item ? 'selected' : '' }}>
                                             {{ $item }} {{ __('main.stars') }}
                                         </option>
                                     @endforeach
@@ -148,10 +155,79 @@
                             <!-- Specialty -->
                             <div class="align-self-end">
                                 <label for="specialty" class="kt-label">{{ __('main.specialty') }}</label>
-                                <input type="text" name="specialty" id="specialty" class="kt-input h-[45px]" value="{{ $restaurant->specialty }}">
+                                <input type="text" name="specialty" id="specialty" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->specialty }}">
                                 @error('specialty')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <div class="kt-card-header mt-8 mb-4">
+                            <h3 class="kt-card-title">{{ __('main.pricing_information') }}</h3>
+                        </div>
+
+                        <!-- FIT Pricing -->
+                        <div class="mt-4 mb-2">
+                            <h4 class="text-md font-semibold text-primary mb-4">{{ __('main.fit_pricing') }}</h4>
+                            <div class="flex flex-wrap md:flex-nowrap gap-4">
+                                <div class="flex-1">
+                                    <label for="fit_price_adult" class="kt-label">{{ __('main.price_adult') }}</label>
+                                    <input type="number" step="0.01" name="fit_price_adult" id="fit_price_adult"
+                                        class="kt-input h-[45px]" value="{{ $restaurant->fit_price_adult }}"
+                                        placeholder="0.00">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="fit_price_child_6_11"
+                                        class="kt-label">{{ __('main.price_child_6_11') }}</label>
+                                    <input type="number" step="0.01" name="fit_price_child_6_11"
+                                        id="fit_price_child_6_11" class="kt-input h-[45px]"
+                                        value="{{ $restaurant->fit_price_child_6_11 }}" placeholder="0.00">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="fit_price_child_under_6"
+                                        class="kt-label">{{ __('main.price_child_under_6') }}</label>
+                                    <input type="number" step="0.01" name="fit_price_child_under_6"
+                                        id="fit_price_child_under_6" class="kt-input h-[45px]"
+                                        value="{{ $restaurant->fit_price_child_under_6 }}" placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Group Pricing -->
+                        <div class="mt-8 mb-2 border-t pt-6">
+                            <h4 class="text-md font-semibold text-primary mb-4">{{ __('main.group_pricing') }}</h4>
+                            <div class="flex flex-wrap md:flex-nowrap gap-4">
+                                <div class="flex-1">
+                                    <label for="min_group_size" class="kt-label">{{ __('main.min_group_size') }}</label>
+                                    <input type="number" name="min_group_size" id="min_group_size"
+                                        class="kt-input h-[45px]"
+                                        value="{{ old('min_group_size', $restaurant->min_group_size ?? 1) }}"
+                                        min="1">
+                                    @error('min_group_size')
+                                        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="flex-1">
+                                    <label for="group_price_adult" class="kt-label">{{ __('main.price_adult') }}</label>
+                                    <input type="number" step="0.01" name="group_price_adult" id="group_price_adult"
+                                        class="kt-input h-[45px]" value="{{ $restaurant->group_price_adult }}"
+                                        placeholder="0.00">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="group_price_child_6_11"
+                                        class="kt-label">{{ __('main.price_child_6_11') }}</label>
+                                    <input type="number" step="0.01" name="group_price_child_6_11"
+                                        id="group_price_child_6_11" class="kt-input h-[45px]"
+                                        value="{{ $restaurant->group_price_child_6_11 }}" placeholder="0.00">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="group_price_child_under_6"
+                                        class="kt-label">{{ __('main.price_child_under_6') }}</label>
+                                    <input type="number" step="0.01" name="group_price_child_under_6"
+                                        id="group_price_child_under_6" class="kt-input h-[45px]"
+                                        value="{{ $restaurant->group_price_child_under_6 }}" placeholder="0.00">
+                                </div>
                             </div>
                         </div>
 
@@ -179,10 +255,40 @@
                     </div>
                     <div class="kt-card-body p-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            <!-- Street Address -->
+                            <div class="align-self-end">
+                                <label for="street" class="kt-label">{{ __('main.street') }}</label>
+                                <input type="text" name="street" id="street" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->street }}">
+                                @error('street')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Postal Code -->
+                            <div class="align-self-end">
+                                <label for="postal_code" class="kt-label">{{ __('main.postal_code') }}</label>
+                                <input type="text" name="postal_code" id="postal_code" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->postal_code }}">
+                                @error('postal_code')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Box -->
+                            <div class="align-self-end">
+                                <label for="box" class="kt-label">{{ __('main.box') }}</label>
+                                <input type="text" name="box" id="box" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->box }}">
+                                @error('box')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <!-- Email 01 -->
                             <div class="align-self-end">
                                 <label for="email_01" class="kt-label">{{ __('main.email_01') }}</label>
-                                <input type="email" name="email_01" id="email_01" class="kt-input h-[45px]" value="{{ $restaurant->email_01 }}">
+                                <input type="email" name="email_01" id="email_01" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->email_01 }}">
                                 @error('email_01')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -191,7 +297,8 @@
                             <!-- Email 02 -->
                             <div class="align-self-end">
                                 <label for="email_02" class="kt-label">{{ __('main.email_02') }}</label>
-                                <input type="email" name="email_02" id="email_02" class="kt-input h-[45px]" value="{{ $restaurant->email_02 }}">
+                                <input type="email" name="email_02" id="email_02" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->email_02 }}">
                                 @error('email_02')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -200,7 +307,8 @@
                             <!-- Phone 01 -->
                             <div class="align-self-end">
                                 <label for="phone_01" class="kt-label">{{ __('main.phone_01') }}</label>
-                                <input type="tel" name="phone_01" id="phone_01" class="kt-input h-[45px]" value="{{ $restaurant->phone_01 }}">
+                                <input type="tel" name="phone_01" id="phone_01" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->phone_01 }}">
                                 @error('phone_01')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -209,7 +317,8 @@
                             <!-- Phone 02 -->
                             <div class="align-self-end">
                                 <label for="phone_02" class="kt-label">{{ __('main.phone_02') }}</label>
-                                <input type="tel" name="phone_02" id="phone_02" class="kt-input h-[45px]" value="{{ $restaurant->phone_02 }}">
+                                <input type="tel" name="phone_02" id="phone_02" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->phone_02 }}">
                                 @error('phone_02')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -218,7 +327,8 @@
                             <!-- Mobile -->
                             <div class="align-self-end">
                                 <label for="mobile" class="kt-label">{{ __('main.mobile') }}</label>
-                                <input type="tel" name="mobile" id="mobile" class="kt-input h-[45px]" value="{{ $restaurant->mobile }}">
+                                <input type="tel" name="mobile" id="mobile" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->mobile }}">
                                 @error('mobile')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -227,7 +337,8 @@
                             <!-- Fax -->
                             <div class="align-self-end">
                                 <label for="fax" class="kt-label">{{ __('main.fax') }}</label>
-                                <input type="text" name="fax" id="fax" class="kt-input h-[45px]" value="{{ $restaurant->fax }}">
+                                <input type="text" name="fax" id="fax" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->fax }}">
                                 @error('fax')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -236,8 +347,8 @@
                             {{-- Contact Person --}}
                             <div class="align-self-end">
                                 <label for="contact_person" class="kt-label">{{ __('main.contact_person') }}</label>
-                                <input type="text" name="contact_person" id="contact_person" class="kt-input h-[45px]"
-                                    value="{{ $restaurant->contact_person }}">
+                                <input type="text" name="contact_person" id="contact_person"
+                                    class="kt-input h-[45px]" value="{{ $restaurant->contact_person }}">
                                 @error('contact_person')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -246,7 +357,8 @@
                             {{-- Website --}}
                             <div class="align-self-end">
                                 <label for="website" class="kt-label">{{ __('main.website') }}</label>
-                                <input type="url" name="website" id="website" class="kt-input h-[45px]" value="{{ $restaurant->website }}">
+                                <input type="url" name="website" id="website" class="kt-input h-[45px]"
+                                    value="{{ $restaurant->website }}">
                                 @error('website')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -357,6 +469,9 @@
                         'label' => __('main.is_active'),
                     ])
                 </div>
+
+                {{-- Dynamic Custom Fields --}}
+                <x-custom-fields module-name="restaurants" entity-type="Restaurant" :entity="$restaurant" />
 
                 <!-- Update Submit -->
                 @include('components.elements.update-submit', [

@@ -20,7 +20,12 @@ trait FiltersByUserRole
             if (!$user || ($user && in_array($user->role, ['superadmin', 'admin']))) {
                 return;
             }
-            $builder->where(static::getActiveColumn(), 1);
+            $model = new static;
+            $table = $model->getTable();
+            $column = static::getActiveColumn();
+            if (\Illuminate\Support\Facades\Schema::hasColumn($table, $column)) {
+                $builder->where("{$table}.{$column}", 1);
+            }
         });
     }
 
@@ -31,7 +36,11 @@ trait FiltersByUserRole
             return $query;
         }
         if (!in_array($user->role, ['superadmin', 'admin'])) {
-            $query->where(static::getActiveColumn(), 1);
+            $table = (new static)->getTable();
+            $column = static::getActiveColumn();
+            if (\Illuminate\Support\Facades\Schema::hasColumn($table, $column)) {
+                $query->where("{$table}.{$column}", 1);
+            }
         }
         return $query;
     }
@@ -50,7 +59,8 @@ trait FiltersByUserRole
      */
     public function scopeActive(Builder $query): Builder
     {
-        return $query->where(static::getActiveColumn(), 1);
+        $table = (new static)->getTable();
+        return $query->where("{$table}." . static::getActiveColumn(), 1);
     }
 
     /**
@@ -58,7 +68,8 @@ trait FiltersByUserRole
      */
     public function scopeInactive(Builder $query): Builder
     {
-        return $query->where(static::getActiveColumn(), 0);
+        $table = (new static)->getTable();
+        return $query->where("{$table}." . static::getActiveColumn(), 0);
     }
 
     /**

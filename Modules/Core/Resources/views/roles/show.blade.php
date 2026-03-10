@@ -15,12 +15,12 @@
             </div>
             <div class="flex items-center gap-2.5">
                 @if (!in_array($role->name, ['superadmin', 'admin', 'user']))
-                    <a href="{{ route('roles.edit', $role->id) }}" class="kt-btn kt-btn-primary md:hidden">
+                    <a href="{{ route('dashboard.core.roles.edit', $role->id) }}" class="kt-btn kt-btn-primary md:hidden">
                         <i class="ki-filled ki-pencil text-sm me-2"></i>
                         {{ __('main.edit') }}
                     </a>
                 @endif
-                <a href="{{ route('roles.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.core.roles.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.roles')]) }}
                 </a>
             </div>
@@ -81,7 +81,8 @@
             <!-- Edit Button -->
             @if (!in_array($role->name, ['superadmin', 'admin', 'user']))
                 <div class="flex items-center gap-3">
-                    <a href="{{ route('roles.edit', $role->id) }}" class="kt-btn kt-btn-primary hidden md:inline-flex">
+                    <a href="{{ route('dashboard.core.roles.edit', $role->id) }}"
+                        class="kt-btn kt-btn-primary hidden md:inline-flex">
                         <i class="ki-filled ki-pencil text-sm me-2"></i>
                         {{ __('main.edit') }}
                     </a>

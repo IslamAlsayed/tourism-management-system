@@ -51,12 +51,12 @@ class SubregionController extends Controller
 
     public function update(UpdateRequest $request, $id)
     {
-        $subregions = Subregion::find($id);
-        if (!$subregions) {
-            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregions')]));
+        $subregion = Subregion::find($id);
+        if (!$subregion) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregion')]));
         }
         $validated = $request->validated();
-        $updated = $subregions->update($validated);
+        $updated = $subregion->update($validated);
         return $updated
             ? redirect()->route('dashboard.geography.subregions.index')->withSuccess(__('messages.type_updated', ['type' => __('main.subregion')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.subregion')]));
@@ -64,11 +64,11 @@ class SubregionController extends Controller
 
     public function destroy($id)
     {
-        $subregions = Subregion::find($id);
-        if (!$subregions) {
-            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregions')]));
+        $subregion = Subregion::find($id);
+        if (!$subregion) {
+            return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.subregion')]));
         }
-        $deleted = $subregions->delete();
+        $deleted = $subregion->delete();
         return $deleted
             ? redirect()->route('dashboard.geography.subregions.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.subregion')]))
             : redirect()->route('dashboard.geography.subregions.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.subregion')]));

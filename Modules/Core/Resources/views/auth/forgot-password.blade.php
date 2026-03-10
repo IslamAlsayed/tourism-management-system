@@ -1,92 +1,118 @@
-@extends('layouts.metronic')
+@extends('layouts.auth')
 
 @section('title', 'Password Recovery')
 
 @push('styles')
     <style>
-        .page-bg {
-            background-image: url('metronic/media/images/2600x1200/bg-10.png');
+        .branded-bg {
+            background-image: url('{{ asset('metronic/media/images/2600x1600/bg-2.png') }}');
         }
 
-        .dark .page-bg {
-            background-image: url('metronic/media/images/2600x1200/bg-10-dark.png');
+        .dark .branded-bg {
+            background-image: url('{{ asset('metronic/media/images/2600x1600/bg-2-dark.png') }}');
+        }
+
+        @media (min-width: 1024px) {
+            .auth-grid {
+                display: grid !important;
+                grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+            }
+
+            .auth-form-col {
+                grid-column: span 7 / span 7 !important;
+            }
+
+            .auth-image-col {
+                grid-column: span 5 / span 5 !important;
+            }
         }
     </style>
 @endpush
 
-@push('scripts')
-    <!-- Google tag (gtag.js) -->
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-52YZ3XGZJ6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'G-52YZ3XGZJ6');
-    </script>
-
-    <!-- Theme Mode -->
-    <script>
-        const defaultThemeMode = 'light'; // light|dark|system
-        let themeMode;
-
-        if (document.documentElement) {
-            if (localStorage.getItem('kt-theme')) {
-                themeMode = localStorage.getItem('kt-theme');
-            } else if (
-                document.documentElement.hasAttribute('data-kt-theme-mode')
-            ) {
-                themeMode =
-                    document.documentElement.getAttribute('data-kt-theme-mode');
-            } else {
-                themeMode = defaultThemeMode;
-            }
-
-            if (themeMode === 'system') {
-                themeMode = window.matchMedia('(prefers-color-scheme: dark)').matches ?
-                    'dark' :
-                    'light';
-            }
-
-            document.documentElement.classList.add(themeMode);
-        }
-    </script>
-    <!-- End of Theme Mode -->
-@endpush
-
 @section('content')
     <!--begin::Authentication - Forget Password -->
-    <div class="flex items-center justify-center grow bg-center bg-no-repeat page-bg" style="height: 100svh">
-        <div class="kt-card max-w-[370px] w-full">
-            <form action="{{ route('password.email') }}" class="kt-card-content flex flex-col gap-5 p-10"
-                id="kt_password_reset_form" method="post">
-                @csrf
-                <div class="text-center">
-                    <h3 class="text-lg font-medium text-mono">
-                        Your Email
-                    </h3>
-                    <span class="text-sm text-secondary-foreground">
-                        Enter your email to reset password
-                    </span>
+    <div class="auth-grid grow min-h-[100svh]">
+
+        {{-- Left: Form (60% on desktop) --}}
+        <div class="flex justify-center items-center p-8 lg:p-10 order-2 lg:order-1 auth-form-col">
+            <div class="kt-card max-w-[370px] w-full border-0 shadow-none bg-transparent">
+                <div class="flex justify-center mb-10">
+                    <a href="{{ url('/') }}">
+                        <img class="dark:hidden max-w-none"
+                            src="{{ asset('metronic/media/app/mixjo-default-logo-dark.svg') }}"
+                            style="height: 100px !important; min-height: 100px !important; width: auto !important; object-fit: contain !important;" />
+                        <img class="hidden dark:block max-w-none"
+                            src="{{ asset('metronic/media/app/mixjo-default-logo.svg') }}"
+                            style="height: 100px !important; min-height: 100px !important; width: auto !important; object-fit: contain !important;" />
+                    </a>
                 </div>
-                <div class="flex flex-col gap-1">
-                    <label class="kt-form-label font-normal text-mono">
-                        Email
-                    </label>
-                    <input class="kt-input h-[45px]" type="text" name="email" value="" />
-                </div>
-                <button class="kt-btn kt-btn-primary flex justify-center grow">
-                    Continue
-                    <i class="ki-filled ki-black-right"></i>
-                </button>
-            </form>
+                <form action="{{ route('password.email') }}" class="kt-card-content flex flex-col gap-5 p-10"
+                    id="kt_password_reset_form" method="post">
+                    @csrf
+
+                    <div class="text-center mb-2.5">
+                        <h3 class="text-lg font-medium text-mono leading-none mb-2.5">
+                            Your Email
+                        </h3>
+                        <div class="flex items-center justify-center font-medium">
+                            <span class="text-sm text-secondary-foreground">
+                                Enter your email to reset your password
+                            </span>
+                        </div>
+                    </div>
+
+                    @if (session('status'))
+                        <div class="text-sm font-medium text-success text-center -mb-2">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="text-sm font-medium text-danger text-center -mb-2">
+                            {{ $errors->first() }}
+                        </div>
+                    @endif
+
+                    <div class="flex flex-col gap-1">
+                        <label class="kt-form-label font-normal text-mono">Email</label>
+                        <input class="kt-input" type="email" name="email" value="{{ old('email') }}"
+                            placeholder="email@email.com" required autofocus />
+                    </div>
+
+                    <button class="kt-btn kt-btn-primary flex justify-center grow mt-2">
+                        Continue
+                        <i class="ki-filled ki-black-right ms-1"></i>
+                    </button>
+
+                    <div class="flex items-center justify-center mt-2">
+                        <span class="text-sm text-secondary-foreground me-1.5">
+                            Remembered your password?
+                        </span>
+                        <a class="text-sm text-primary font-medium hover:text-primary-active"
+                            href="{{ route('login') }}">Sign In</a>
+                    </div>
+                </form>
+            </div>
         </div>
+
+        {{-- Right: Branded background image (40% on desktop) --}}
+        <div class="hidden lg:block lg:order-2 auth-image-col bg-center xl:bg-cover bg-no-repeat branded-bg">
+            <div class="flex flex-col p-8 lg:p-16 gap-6">
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-2">
+                        <h3 class="text-2xl font-semibold text-mono">Welcome to MixJo.</h3>
+                        <div class="text-base font-medium text-secondary-foreground">
+                            Everything you need to optimise and grow your travel business in one solution.
+                        </div>
+                    </div>
+                    <div class="text-base font-medium text-secondary-foreground">
+                        Travel CRM + backoffice + booking engine software tailored for travel agents, tour operators,
+                        homeworkers and DMC's.
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!--end::Authentication - Forget Password-->
 @endsection
-
-@push('scripts')
-@endpush

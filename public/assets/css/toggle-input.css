@@ -1,207 +1,145 @@
-:root {
-    --h: 20px;
-    --speed: .3s
-}
+/* ========================================================
+   Metronic KtUI Switch Component - Official Style
+   Matches: https://ktui.io/docs/switch
+   ======================================================== */
 
-.toggle-hold {
-    display: flex;
-    position: relative;
-    width: calc(var(--h) * 2);
-    height: var(--h);
-    overflow: hidden;
-    border-radius: var(--h);
-    outline: 4px solid #9991;
-    animation: glow 4s infinite linear;
-}
-
-@keyframes glow {
-    0% {
-        outline: 4px solid #9991
-    }
-
-    25% {
-        outline: 4.5px solid #9991
-    }
-
-    50% {
-        outline: 5px solid #9992
-    }
-
-    75% {
-        outline: 4.5px solid #9991
-    }
-
-    100% {
-        outline: 4px solid #9991
-    }
-}
-
-.toggle-hold::before {
-    /* content: ''; */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1;
-    background: conic-gradient(#fff 0%, #00c914 80%, #fff 100%);
-    animation: spin linear 10s infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg)
-    }
-
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg)
-    }
-}
-
-.toggle-hold label {
-    width: 100%;
-    height: 100%;
-    position: relative;
+/* Base switch container */
+.kt-switch {
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
-    background: transparent;
-    transition: .2s;
+    user-select: none;
+    position: relative;
 }
 
-.toggle-hold .toggle-input:not(:checked)+label {
-    background: #555
+/* Hide native checkbox */
+.kt-switch input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
-.toggle-hold input[type="checkbox"] {
-    display: none;
+/* The visual switch track (label element) */
+.kt-switch .kt-switch-label {
+    display: flex;
+    align-items: center;
+    width: 36px;
+    height: 20px;
+    background-color: var(--kt-gray-300, #c4c4cc);
+    border-radius: 20px;
+    position: relative;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
 }
 
-.toggle-hold label::before {
+/* The knob/thumb */
+.kt-switch .kt-switch-label::after {
     content: '';
     position: absolute;
-    inset: 1px;
-    background: linear-gradient(to bottom, #0009, #000b);
-    backdrop-filter: blur(5px);
-    border-radius: var(--h)
+    width: 14px;
+    height: 14px;
+    background-color: #fff;
+    border-radius: 50%;
+    left: 3px;
+    top: 3px;
+    transition: left 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.toggle-hold label span {
+/* Checked state - track turns primary color */
+.kt-switch input[type="checkbox"]:checked + .kt-switch-label {
+    background-color: var(--kt-primary, #1b84ff);
+}
+
+/* Checked state - knob slides to right */
+.kt-switch input[type="checkbox"]:checked + .kt-switch-label::after {
+    left: calc(100% - 17px);
+}
+
+/* Disabled state */
+.kt-switch input[type="checkbox"]:disabled + .kt-switch-label {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Focus ring */
+.kt-switch input[type="checkbox"]:focus-visible + .kt-switch-label {
+    outline: 2px solid var(--kt-primary, #1b84ff);
+    outline-offset: 2px;
+}
+
+/* ---- Size Variants ---- */
+
+/* Small */
+.kt-switch.kt-switch-sm .kt-switch-label {
+    width: 30px;
+    height: 16px;
+    border-radius: 16px;
+}
+.kt-switch.kt-switch-sm .kt-switch-label::after {
+    width: 10px;
+    height: 10px;
+    left: 3px;
+    top: 3px;
+}
+.kt-switch.kt-switch-sm input[type="checkbox"]:checked + .kt-switch-label::after {
+    left: calc(100% - 13px);
+}
+
+/* Large */
+.kt-switch.kt-switch-lg .kt-switch-label {
+    width: 48px;
+    height: 26px;
+    border-radius: 26px;
+}
+.kt-switch.kt-switch-lg .kt-switch-label::after {
+    width: 20px;
+    height: 20px;
+    left: 3px;
+    top: 3px;
+}
+.kt-switch.kt-switch-lg input[type="checkbox"]:checked + .kt-switch-label::after {
+    left: calc(100% - 23px);
+}
+
+/* ---- Color Variants ---- */
+.kt-switch.kt-switch-success input[type="checkbox"]:checked + .kt-switch-label {
+    background-color: var(--kt-success, #17c653);
+}
+.kt-switch.kt-switch-danger input[type="checkbox"]:checked + .kt-switch-label {
+    background-color: var(--kt-danger, #f8285a);
+}
+.kt-switch.kt-switch-warning input[type="checkbox"]:checked + .kt-switch-label {
+    background-color: var(--kt-warning, #f6c000);
+}
+
+/* Dark mode support */
+.dark .kt-switch .kt-switch-label {
+    background-color: var(--kt-gray-600, #6c757d);
+}
+
+/* Legacy .switch class - kept for backward compat with any old templates */
+.switch {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+.switch input[type="checkbox"] {
     position: absolute;
-    width: auto;
-    height: 65%;
-    aspect-ratio: 1;
-    border-radius: var(--h);
-    top: 50%;
-    left: calc(var(--h) / 2);
-    transform: translate(-50%, -50%);
-    animation: slide-off var(--speed) forwards cubic-bezier(.5, 0, 0, 1)
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
-
-.toggle-hold .toggle-input:checked+label span {
-    animation: slide-on var(--speed) forwards cubic-bezier(.5, 0, 0, 1);
-}
-
-@keyframes slide-on {
-    0% {
-        left: calc(var(--h) / 2)
-    }
-
-    100% {
-        left: calc(100% - var(--h) / 2)
-    }
-}
-
-@keyframes slide-off {
-    0% {
-        left: calc(100% - var(--h) / 2)
-    }
-
-    100% {
-        left: calc(var(--h) / 2)
-    }
-}
-
-.toggle-hold label span::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    width: 100%;
-    height: 100%;
-    background: #00c914;
-    transition: .2s;
-    border-radius: var(--h);
-    animation:
-        slide-off-w var(--speed) forwards cubic-bezier(.5, 0, .5, 1);
-}
-
-.toggle-hold .toggle-input:not(:checked)+label span::after {
-    background: #b44
-}
-
-.toggle-hold .toggle-input:checked+label span::after {
-    animation:
-        slide-on-w var(--speed) forwards cubic-bezier(.5, 0, .5, 1);
-}
-
-@keyframes slide-on-w {
-    0% {
-        width: 100%
-    }
-
-    35% {
-        width: 150%
-    }
-
-    50% {
-        width: 130%
-    }
-
-    60% {
-        width: 105%
-    }
-
-    100% {
-        width: 100%
-    }
-}
-
-@keyframes slide-off-w {
-    0% {
-        width: 100%
-    }
-
-    35% {
-        width: 150%
-    }
-
-    50% {
-        width: 130%
-    }
-
-    60% {
-        width: 105%
-    }
-
-    100% {
-        width: 100%
-    }
-}
-
-.toggle-hold label span::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    height: 100%;
-    background: #00c914;
-    transition: .2s;
-    border-radius: var(--h);
-    filter: blur(30px);
-}
-
-.toggle-hold .toggle-input:not(:checked)+label span::before {
-    background: #0000
+.switch .switch-input + span,
+.switch-label {
+    display: flex;
+    align-items: center;
+    width: 36px;
+    height: 20px;
+    background-color: var(--kt-gray-300, #c4c4cc);
+    border-radius: 20px;
+    position: relative;
+    transition: background-color 0.2s ease;
 }

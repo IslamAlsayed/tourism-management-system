@@ -50,13 +50,11 @@ class Users extends Component
     public function destroy($id)
     {
         $this->safeDestroy($id, User::class, 'user');
-        Cache::tags(['users'])->flush();
     }
 
     public function forceDelete($id)
     {
         $this->safeForceDelete($id, User::class, 'user');
-        Cache::tags(['users'])->flush();
     }
 
     public function updatedSelectPage($value)
@@ -82,6 +80,7 @@ class Users extends Component
         }
 
         User::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(User::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -94,21 +93,13 @@ class Users extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], User::class, $cols, 'users');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], User::class, $cols, 'users');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], User::class, $cols, 'users', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], User::class, $cols, 'users', $extension);
     }
 
     protected function getCacheKey()
@@ -126,19 +117,17 @@ class Users extends Component
     public function render()
     {
         $cacheKey = $this->getCacheKey();
-        $data = Cache::remember($cacheKey, now()->addMinutes(5), function () {
-            $query = User::query();
-            if (!getActiveUser()->role) {
-                $query->where('role', '!=', 'superadmin');
-            }
-            $query->searchWithRelations(
-                search: $this->search,
-                selectedColumns: $this->columns,
-                availableRelations: $this->relations
-            );
-            $this->applySorting($query);
-            return $query->paginate(getPaginate());
-        });
+        $query = User::query();
+        if (!getActiveUser()->role) {
+            $query->where('role', '!=', 'superadmin');
+        }
+        $query->searchWithRelations(
+            search: $this->search,
+            selectedColumns: $this->columns,
+            availableRelations: $this->relations
+        );
+        $this->applySorting($query);
+        $data = $query->paginate(getPaginate());
 
         return view('core::livewire.users', [
             'data' => $data,
@@ -147,3 +136,4 @@ class Users extends Component
         ]);
     }
 }
+

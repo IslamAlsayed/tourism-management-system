@@ -1,15 +1,30 @@
-@extends('layouts.metronic')
+@extends('layouts.auth')
 
 @section('title', 'Confirm Password')
 
 @push('styles')
     <style>
-        .page-bg {
-            background-image: url('metronic/media/images/2600x1200/bg-10.png');
+        .branded-bg {
+            background-image: url('{{ asset('metronic/media/images/2600x1600/bg-2.png') }}');
         }
 
-        .dark .page-bg {
-            background-image: url('metronic/media/images/2600x1200/bg-10-dark.png');
+        .dark .branded-bg {
+            background-image: url('{{ asset('metronic/media/images/2600x1600/bg-2-dark.png') }}');
+        }
+
+        @media (min-width: 1024px) {
+            .auth-grid {
+                display: grid !important;
+                grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+            }
+
+            .auth-form-col {
+                grid-column: span 7 / span 7 !important;
+            }
+
+            .auth-image-col {
+                grid-column: span 5 / span 5 !important;
+            }
         }
     </style>
 @endpush
@@ -27,93 +42,87 @@
 
         gtag('config', 'G-52YZ3XGZJ6');
     </script>
-
-    <!-- Theme Mode -->
-    <script>
-        const defaultThemeMode = 'light'; // light|dark|system
-        let themeMode;
-
-        if (document.documentElement) {
-            if (localStorage.getItem('kt-theme')) {
-                themeMode = localStorage.getItem('kt-theme');
-            } else if (
-                document.documentElement.hasAttribute('data-kt-theme-mode')
-            ) {
-                themeMode =
-                    document.documentElement.getAttribute('data-kt-theme-mode');
-            } else {
-                themeMode = defaultThemeMode;
-            }
-
-            if (themeMode === 'system') {
-                themeMode = window.matchMedia('(prefers-color-scheme: dark)').matches ?
-                    'dark' :
-                    'light';
-            }
-
-            document.documentElement.classList.add(themeMode);
-        }
-    </script>
-    <!-- End of Theme Mode -->
 @endpush
 
 @section('content')
-    <!--begin::Authentication - Confirm Password -->
-    <div class="flex justify-center items-center p-8 lg:p-10 order-2 lg:order-1" style="height: 100svh">
-        <div class="kt-card max-w-[370px] w-full">
-            <form action="{{ route('password.confirm') }}" class="kt-card-content flex flex-col gap-5 p-10"
-                id="reset_password_change_password_form" method="post">
-                @csrf
-                <div class="text-center">
-                    <h3 class="text-lg font-medium text-mono">
-                        Reset Password
+    <div class="auth-grid grow min-h-[100svh]">
+
+        {{-- Left: Form (60% on desktop) --}}
+        <div class="flex justify-center items-center p-8 lg:p-10 order-2 lg:order-1 auth-form-col">
+            <div class="kt-card max-w-[370px] w-full border-0 shadow-none bg-transparent">
+                <div class="flex justify-center mb-10">
+                    <a href="{{ url('/') }}">
+                        <img class="dark:hidden max-w-none"
+                            src="{{ asset('metronic/media/app/mixjo-default-logo-dark.svg') }}"
+                            style="height: 100px !important; min-height: 100px !important; width: auto !important; object-fit: contain !important;" />
+                        <img class="hidden dark:block max-w-none"
+                            src="{{ asset('metronic/media/app/mixjo-default-logo.svg') }}"
+                            style="height: 100px !important; min-height: 100px !important; width: auto !important; object-fit: contain !important;" />
+                    </a>
+                </div>
+                <form action="{{ route('password.confirm') }}" class="kt-card-content flex flex-col gap-5 p-10"
+                    id="reset_password_change_password_form" method="post">
+                    @csrf
+                    <div class="text-center">
+                        <h3 class="text-lg font-medium text-mono">
+                            Confirm Password
+                        </h3>
+                        <span class="text-sm text-secondary-foreground">
+                            Enter your password to continue
+                        </span>
+                    </div>
+
+                    @error('password')
+                        <div class="text-sm font-medium text-danger mt-1 text-center">{{ $message }}</div>
+                    @enderror
+
+                    <div class="flex flex-col gap-1">
+                        <label class="kt-form-label text-mono">
+                            Password
+                        </label>
+                        <label class="kt-input" data-kt-toggle-password="true">
+                            <input name="password" placeholder="Enter your password" type="password" required />
+                            <div class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
+                                data-kt-toggle-password-trigger="true">
+                                <span class="kt-toggle-password-active:hidden">
+                                    <i class="ki-filled ki-eye text-muted-foreground">
+                                    </i>
+                                </span>
+                                <span class="hidden kt-toggle-password-active:block">
+                                    <i class="ki-filled ki-eye-slash text-muted-foreground">
+                                    </i>
+                                </span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <button class="kt-btn kt-btn-primary flex justify-center grow" type="submit">
+                        Confirm
+                    </button>
+                </form>
+            </div>
+        </div>
+        {{-- Right: Branded background image (40% on desktop) --}}
+        <div class="hidden lg:block lg:order-2 auth-image-col bg-center xl:bg-cover bg-no-repeat branded-bg">
+            <div class="flex flex-col p-8 lg:p-16 gap-6">
+                {{-- Logo removed from here to be exclusively in the form section as requested --}}
+                <div class="flex flex-col gap-3">
+                    <h3 class="text-2xl font-semibold text-mono">
+                        Secure Access Portal
                     </h3>
-                    <span class="text-sm text-secondary-foreground">
-                        Enter your new password
-                    </span>
+                    <div class="text-base font-medium text-secondary-foreground">
+                        A robust authentication gateway ensuring
+                        <br />
+                        secure
+                        <span class="text-mono font-semibold">
+                            efficient user access
+                        </span>
+                        to the Metronic
+                        <br />
+                        Dashboard interface.
+                    </div>
                 </div>
-                <div class="flex flex-col gap-1">
-                    <label class="kt-form-label text-mono">
-                        New Password
-                    </label>
-                    <label class="kt-input h-[45px]" data-kt-toggle-password="true">
-                        <input name="user_new_password" type="password" value="" />
-                        <div class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
-                            data-kt-toggle-password-trigger="true">
-                            <span class="kt-toggle-password-active:hidden">
-                                <i class="ki-filled ki-eye text-muted-foreground">
-                                </i>
-                            </span>
-                            <span class="hidden kt-toggle-password-active:block">
-                                <i class="ki-filled ki-eye-slash text-muted-foreground">
-                                </i>
-                            </span>
-                        </div>
-                    </label>
-                </div>
-                <div class="flex flex-col gap-1">
-                    <label class="kt-form-label font-normal text-mono">
-                        Confirm New Password
-                    </label>
-                    <label class="kt-input h-[45px]" data-kt-toggle-password="true">
-                        <input name="user_confirm_password" type="password" value="" />
-                        <div class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
-                            data-kt-toggle-password-trigger="true">
-                            <span class="kt-toggle-password-active:hidden">
-                                <i class="ki-filled ki-eye text-muted-foreground">
-                                </i>
-                            </span>
-                            <span class="hidden kt-toggle-password-active:block">
-                                <i class="ki-filled ki-eye-slash text-muted-foreground">
-                                </i>
-                            </span>
-                        </div>
-                    </label>
-                </div>
-                <button class="kt-btn kt-btn-primary flex justify-center grow">
-                    Submit
-                </button>
-            </form>
+            </div>
         </div>
     </div>
     <!--end::Authentication - Confirm Password-->

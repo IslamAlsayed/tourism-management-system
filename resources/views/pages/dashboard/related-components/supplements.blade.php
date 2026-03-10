@@ -6,7 +6,8 @@
             (<span class="font-semibold text-primary">{{ $record->supplements->count() }}</span>)
         </h3>
         <div class="kt-card-toolbar">
-            <a href="{{ route('supplements.create', isset($type) ? ['type' => $type, randomToken()] : []) }}" class="kt-btn kt-btn-sm kt-btn-primary">
+            <a href="{{ route('dashboard.restaurants.supplements.create', isset($type) ? ['type' => $type, randomToken()] : []) }}"
+                class="kt-btn kt-btn-sm kt-btn-primary">
                 <i class="ki-filled ki-plus text-sm me-1"></i>
                 {{ __('main.add_type', ['type' => __('main.supplement')]) }}
             </a>
@@ -15,7 +16,8 @@
     <div class="kt-card-body p-4">
         <div class="grid lg:grid-cols-2 gap-4">
             @forelse($record->supplements as $supplement)
-                <div wire:key="supplement-{{ $supplement->id }}" class="kt-card background rounded-lg p-4 pt-2 record-supplements-{{ $supplement->id }}">
+                <div wire:key="supplement-{{ $supplement->id }}"
+                    class="kt-card background rounded-lg p-4 pt-2 record-supplements-{{ $supplement->id }}">
                     <div class="grid lg:grid-cols-2 gap-4">
                         <div>
                             <label class="kt-label mb-1">{{ __('main.name') }}</label>

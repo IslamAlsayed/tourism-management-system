@@ -11,7 +11,7 @@
                     MixJo Inc.
                 </a>
                 <span class="text-secondary-foreground">
-                    v{{ $settings->app_version ?: config('app.app_version', '4.1.0') }}
+                    v{{ optional($settings)->app_version ?: config('app.app_version', '4.1.0') }}
                 </span>
             </div>
             <nav class="order-1 flex gap-4 text-sm font-normal text-secondary-foreground md:order-2">

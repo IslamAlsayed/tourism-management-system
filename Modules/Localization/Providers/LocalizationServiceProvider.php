@@ -54,6 +54,11 @@ class LocalizationServiceProvider extends ServiceProvider
         Livewire::component('localization::system_languages', SystemLanguages::class);
         Livewire::component('localization::currencies', Currencies::class);
         Livewire::component('localization::timezones', Timezones::class);
+        // Short aliases used in blade views
+        Livewire::component('languages', Languages::class);
+        Livewire::component('system-languages', SystemLanguages::class);
+        Livewire::component('currencies', Currencies::class);
+        Livewire::component('timezones', Timezones::class);
 
         // === Register Policies ===
         foreach ($this->policies as $model => $policy) {

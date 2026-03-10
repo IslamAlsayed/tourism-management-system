@@ -122,6 +122,61 @@
                 </div>
             </div>
 
+            <!-- Stats Information -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">
+                        <i class="ki-filled ki-chart-pie-3 text-info me-2"></i>
+                        {{ __('main.statistics') }}
+                    </h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="flex flex-wrap" style="gap: 20px 80px;">
+                        @if ($accommodation->rooms)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.rooms')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $accommodation->rooms->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($accommodation->meals)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.meals')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $accommodation->meals->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($accommodation->supplements)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.supplements')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $accommodation->supplements->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($accommodation->seasons)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.seasons')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $accommodation->seasons->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+
             <!-- Location Information -->
             <div class="kt-card">
                 <div class="kt-card-header">

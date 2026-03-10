@@ -79,6 +79,7 @@ class Seaports extends Component
         }
 
         Seaport::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Seaport::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -91,21 +92,13 @@ class Seaports extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Seaport::class, $cols, 'crossings_ports');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Seaport::class, $cols, 'crossings_ports');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Seaport::class, $cols, 'crossings_ports', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Seaport::class, $cols, 'crossings_ports', $extension);
     }
 
     public function resetFilters()
@@ -147,3 +140,4 @@ class Seaports extends Component
         return view('entrypoints::livewire.seaports', ['data' => $data, 'totalCount' => $this->totalCount ?: Seaport::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

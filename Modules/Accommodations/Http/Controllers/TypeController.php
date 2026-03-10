@@ -23,6 +23,11 @@ class TypeController extends Controller
     {
         $validated = $request->validated();
         $created = Type::create($validated);
+
+        if ($created && $request->has('custom_fields')) {
+            $created->saveCustomFields($request->custom_fields);
+        }
+
         return $created
             ? ($request->has('save_and_add')
                 ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.type')]))
@@ -53,6 +58,11 @@ class TypeController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.type')]));
         $validated = $request->validated();
         $updated = $type->update($validated);
+
+        if ($type && $request->has('custom_fields')) {
+            $type->saveCustomFields($request->custom_fields);
+        }
+
         return $updated
             ? redirect()->route('dashboard.accommodations.types.index')->withSuccess(__('messages.type_updated', ['type' => __('main.type')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.type')]));

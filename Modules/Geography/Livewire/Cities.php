@@ -16,11 +16,39 @@ class Cities extends Component
     use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
 
     public $search = '';
-    public $totalCount = '';
-    public $message = [];
+    public $filterActive = '';
+    public $filterStateId = '';
+    public $filterCountryId = '';
+    public $filterRegionId = '';
+    public $filterSubregionId = '';
     protected $listeners = ['recordUpdated' => '$refresh'];
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterActive()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterStateId()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterCountryId()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterRegionId()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterSubregionId()
     {
         $this->resetPage();
     }
@@ -49,52 +77,130 @@ class Cities extends Component
 
     protected function currentPageDataIds()
     {
-        $paginator = City::paginate(getPaginate());
-        return $paginator->getCollection()->pluck('id');
+        return $this->buildQuery()->paginate(getPaginate())->getCollection()->pluck('id');
+    }
+
+    protected function buildQuery()
+    {
+        $query = City::query();
+
+        if ($this->filterActive === 'active') {
+            $query->where('is_active', true);
+        } elseif ($this->filterActive === 'inactive') {
+            $query->where('is_active', false);
+        }
+
+        if ($this->filterStateId && $this->filterStateId !== 'all') {
+            $query->where('state_id', $this->filterStateId);
+        }
+
+        if ($this->filterCountryId && $this->filterCountryId !== 'all') {
+            $query->whereHas('state', function ($q) {
+                $q->where('country_id', $this->filterCountryId);
+            });
+        }
+
+        if ($this->filterRegionId && $this->filterRegionId !== 'all') {
+            $query->whereHas('state.country', function ($q) {
+                $q->where('region_id', $this->filterRegionId);
+            });
+        }
+
+        if ($this->filterSubregionId && $this->filterSubregionId !== 'all') {
+            $query->whereHas('state.country', function ($q) {
+                $q->where('subregion_id', $this->filterSubregionId);
+            });
+        }
+
+        $query->searchWithRelations(
+            search: $this->search,
+            selectedColumns: $this->columns,
+            availableRelations: $this->relations
+        );
+
+        $query->withCount([
+            'accommodations',
+            'restaurants',
+            'transportationCompanies'
+        ]);
+
+        $this->applySorting($query);
+
+        return $query;
+    }
+
+    public function activateSelected()
+    {
+        if (empty($this->selectedIds)) return;
+        City::whereIn('id', $this->selectedIds)->update(['is_active' => true]);
+        $this->clearSelected();
+        $this->dispatch('refresh-page');
+    }
+
+    public function deactivateSelected()
+    {
+        if (empty($this->selectedIds)) return;
+        City::whereIn('id', $this->selectedIds)->update(['is_active' => false]);
+        $this->clearSelected();
+        $this->dispatch('refresh-page');
     }
 
     public function deleteSelected()
     {
-        if (empty($this->selectedIds)) {
-            return;
-        }
-
+        if (empty($this->selectedIds)) return;
         City::whereIn('id', $this->selectedIds)->delete();
-        $count = count($this->selectedIds);
-        $this->selectedIds = [];
+        $this->resetAutoIncrementIfEmpty(City::class);
+        $this->clearSelected();
+        $this->dispatch('refresh-page');
+    }
 
-        $this->dispatch('show-toast', [
-            'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('main.cities'), 'count' => $count]),
-        ]);
+    public function forceDeleteSelected()
+    {
+        if (empty($this->selectedIds)) return;
+        City::whereIn('id', $this->selectedIds)->forceDelete();
+        $this->resetAutoIncrementIfEmpty(City::class);
+        $this->clearSelected();
+        $this->dispatch('refresh-page');
+    }
+
+    public function clearSelected()
+    {
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
     }
 
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], City::class, $cols, 'cities');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], City::class, $cols, 'cities');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], City::class, $cols, 'cities', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], City::class, $cols, 'cities', $extension);
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'filterActive', 'filterStateId', 'filterCountryId', 'filterRegionId', 'filterSubregionId']);
+        $this->resetSort();
+        $this->resetPage();
+        $this->dispatch('reset-filters');
     }
 
     public function render()
     {
-        $query = City::query();
-        $query->searchWithRelations(search: $this->search, selectedColumns: $this->columns, availableRelations: $this->relations);
-        $this->applySorting($query);
-        $data = $query->paginate(getPaginate());
-        return view('geography::livewire.cities', ['data' => $data, 'totalCount' => $this->totalCount ?: City::count(), 'selectedIds' => $this->selectedIds]);
+        $data = $this->buildQuery()->paginate(getPaginate());
+
+        return view('geography::livewire.cities', [
+            'data'        => $data,
+            'selectedIds' => $this->selectedIds,
+            'states'      => \Modules\Geography\Entities\State::pluck('name', 'id')->toArray(),
+            'countries'   => \Modules\Geography\Entities\Country::pluck('name', 'id')->toArray(),
+            'regions'     => \Modules\Geography\Entities\Region::pluck('name', 'id')->toArray(),
+            'subregions'  => \Modules\Geography\Entities\Subregion::pluck('name', 'id')->toArray(),
+        ]);
     }
 }

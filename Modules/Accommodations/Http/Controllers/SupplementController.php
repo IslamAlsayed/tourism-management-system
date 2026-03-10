@@ -27,6 +27,11 @@ class SupplementController extends Controller
         $validated['model_id'] = $request->input('model_id');
         $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
         $created = Supplement::create($validated);
+
+        if ($created && $request->has('custom_fields')) {
+            $created->saveCustomFields($request->custom_fields);
+        }
+
         return $created
             ? ($request->has('save_and_add')
                 ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.supplement')]))
@@ -59,6 +64,11 @@ class SupplementController extends Controller
         $validated['model_id'] = $request->input('model_id');
         $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
         $updated = $supplement->update($validated);
+
+        if ($supplement && $request->has('custom_fields')) {
+            $supplement->saveCustomFields($request->custom_fields);
+        }
+
         return $updated
             ? redirect()->route('dashboard.accommodations.supplements.index', ['type' => $request->input('type')])->withSuccess(__('messages.type_updated', ['type' => __('main.supplement')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.supplement')]));

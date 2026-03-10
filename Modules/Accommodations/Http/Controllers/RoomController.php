@@ -25,6 +25,11 @@ class RoomController extends Controller
         $validated['model_id'] = $request->input('model_id');
         $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
         $created = Room::create($validated);
+
+        if ($created && $request->has('custom_fields')) {
+            $created->saveCustomFields($request->custom_fields);
+        }
+
         return $created
             ? ($request->has('save_and_add')
                 ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.room')]))
@@ -57,6 +62,11 @@ class RoomController extends Controller
         $validated['model_id'] = $request->input('model_id');
         $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
         $updated = $room->update($validated);
+
+        if ($room && $request->has('custom_fields')) {
+            $room->saveCustomFields($request->custom_fields);
+        }
+
         return $updated
             ? redirect()->route('dashboard.accommodations.rooms.index')->withSuccess(__('messages.type_updated', ['type' => __('main.room')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.room')]));

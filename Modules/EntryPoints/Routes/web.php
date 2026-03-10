@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Modules\EntryPoints\Http\Controllers\AirportController;
 use Modules\EntryPoints\Http\Controllers\EntryPointsController;
-use Modules\EntryPoints\Http\Controllers\LandCrossingController;
-use Modules\EntryPoints\Http\Controllers\SeaPortController;
+use Modules\EntryPoints\Http\Controllers\LandcrossingController;
+use Modules\EntryPoints\Http\Controllers\SeaportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +19,7 @@ use Modules\EntryPoints\Http\Controllers\SeaPortController;
 
 Route::prefix('dashboard/entrypoints')->name('dashboard.entrypoints.')->middleware('auth')->group(function () {
     Route::get('filtered/{filtered?}', [EntryPointsController::class, 'index'])->name('filtered');
-    Route::resource('land-crossings', LandCrossingController::class)->names('land-crossings');
-    Route::resource('seaports', SeaPortController::class)->names('seaports');
+    Route::resource('land-crossings', LandcrossingController::class)->names('land-crossings');
+    Route::resource('seaports', SeaportController::class)->names('seaports');
     Route::resource('airports', AirportController::class)->names('airports');
 });

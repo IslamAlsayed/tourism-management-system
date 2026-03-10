@@ -22,6 +22,7 @@ use Modules\Core\Policies\ActivityPolicy;
 use Modules\Core\Policies\PermissionPolicy;
 use Modules\Core\Entities\PricingDefinition;
 use Modules\Core\Livewire\PricingDefinitions;
+use Modules\Core\Livewire\FieldDefinitions;
 use Modules\Core\Policies\PricingDefinitionPolicy;
 
 class CoreServiceProvider extends ServiceProvider
@@ -62,6 +63,7 @@ class CoreServiceProvider extends ServiceProvider
         Livewire::component('core::permissions', Permissions::class);
         Livewire::component('core::users', Users::class);
         Livewire::component('core::pricing-definitions', PricingDefinitions::class);
+        Livewire::component('core::field-definitions', FieldDefinitions::class);
         Livewire::component('core::activity-log', ActivityLog::class);
 
         // === Register Policies ===

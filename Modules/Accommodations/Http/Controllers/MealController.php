@@ -25,6 +25,11 @@ class MealController extends Controller
         $validated['model_id'] = $request->input('model_id');
         $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
         $created = Meal::create($validated);
+
+        if ($created && $request->has('custom_fields')) {
+            $created->saveCustomFields($request->custom_fields);
+        }
+
         return $created
             ? ($request->has('save_and_add')
                 ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.meal')]))
@@ -57,6 +62,11 @@ class MealController extends Controller
         $validated['model_id'] = $request->input('model_id');
         $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
         $updated = $meal->update($validated);
+
+        if ($meal && $request->has('custom_fields')) {
+            $meal->saveCustomFields($request->custom_fields);
+        }
+
         return $updated
             ? redirect()->route('dashboard.accommodations.meals.index', ['type' => $request->input('type')])->withSuccess(__('messages.type_updated', ['type' => __('main.meal')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.meal')]));

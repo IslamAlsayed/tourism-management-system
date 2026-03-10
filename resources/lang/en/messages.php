@@ -42,6 +42,7 @@ return [
     'invalid_input' => 'Invalid Input',
     'validation_error' => 'Validation Error',
     'server_error' => 'Server Error',
+    'are_you_sure' => 'Are you sure?',
 
     // Type Creation
     'type_created' => ':type Created',
@@ -147,6 +148,8 @@ return [
     'data_refreshed_successfully' => 'Data refreshed successfully.',
     'no_seasons_found' => 'No active seasons found.',
     'no_results_found' => 'No results found',
+    'quick_edit_saved' => ':type updated successfully.',
+    'hold_ctrl_to_select_multiple' => 'Hold Ctrl (Windows) or Cmd (Mac) to select multiple items.',
 
     // Roles & Permissions
     'role_created_successfully' => 'Role created successfully.',
@@ -166,4 +169,12 @@ return [
     'no_permissions_assigned' => 'No permissions assigned to this role.',
     'permissions_count' => 'Permissions count: :count',
     'permission_name_format' => 'Use snake_case format like: create_users, edit_posts, delete_comments',
+
+    // Bulk Action Confirmations
+    'confirm_bulk_activate' => 'Are you sure you want to activate the selected items?',
+    'confirm_bulk_deactivate' => 'Are you sure you want to deactivate the selected items?',
+    'confirm_bulk_enable_auto_update' => 'Are you sure you want to enable auto-update for the selected items?',
+    'confirm_bulk_disable_auto_update' => 'Are you sure you want to disable auto-update (fix exchange rate) for the selected items?',
+    'confirm_bulk_delete' => "Are you sure you want to delete the selected items? NOTE: This is a 'Soft Delete'. The items will be hidden from the screen but remain in the database archive. Their IDs are preserved, meaning you cannot re-import or create new items with the same IDs.",
+    'confirm_bulk_force_delete' => "WARNING: Are you sure you want to PERMANENTLY delete the selected items? CRITICAL: This will completely erase the data from the database. Next time you create or import items, they will get NEW, higher IDs, which may break relationships with other modules (like Hotels or Restaurants). Use only if absolutely necessary!",
 ];

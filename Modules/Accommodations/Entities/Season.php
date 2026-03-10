@@ -2,17 +2,18 @@
 
 namespace Modules\Accommodations\Entities;
 
+use App\Traits\HasUuid;
+use App\Traits\HasSearch;
+use App\Traits\HasCustomFields;
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\ClearsEmptyRichText;
-use App\Traits\HasSearch;
-use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Season extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents, ClearsEmptyRichText;
+    use HasFactory, HasSearch, HasUuid, HasRichText, BroadcastsRecordEvents, ClearsEmptyRichText, HasCustomFields;
     protected $richTextAttributes = [
         'description',
         'notes'

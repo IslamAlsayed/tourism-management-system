@@ -27,8 +27,15 @@ class SeasonController extends Controller
     {
         $validated = $request->validated();
         $validated['model_id'] = $request->input('model_id');
-        $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
+        $modelType = $request->input('model_type');
+        $polyConfig = config('polymorphic-selects');
+        $validated['model_type'] = isset($polyConfig[$modelType]) ? $polyConfig[$modelType]['model'] : $modelType;
         $created = Season::create($validated);
+
+        if ($created && $request->has('custom_fields')) {
+            $created->saveCustomFields($request->custom_fields);
+        }
+
         return $created
             ? ($request->has('save_and_add')
                 ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.season')]))
@@ -59,8 +66,15 @@ class SeasonController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.season')]));
         $validated = $request->validated();
         $validated['model_id'] = $request->input('model_id');
-        $validated['model_type'] = "App\\Models\\" . studlyCaseName($request->input('model_type'));
+        $modelType = $request->input('model_type');
+        $polyConfig = config('polymorphic-selects');
+        $validated['model_type'] = isset($polyConfig[$modelType]) ? $polyConfig[$modelType]['model'] : $modelType;
         $updated = $season->update($validated);
+
+        if ($season && $request->has('custom_fields')) {
+            $season->saveCustomFields($request->custom_fields);
+        }
+
         return $updated
             ? redirect()->route('dashboard.accommodations.seasons.index', ['type' => $request->input('type')])->withSuccess(__('messages.type_updated', ['type' => __('main.season')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.season')]));

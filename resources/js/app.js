@@ -1,13 +1,63 @@
 import "./libs/trix";
 import "./bootstrap";
-import Alpine from "alpinejs";
+import KTComponents, { KTToast, KTSelect } from "@keenthemes/ktui";
+import confetti from "canvas-confetti";
 
-// Start Alpine.js
-window.Alpine = Alpine;
-Alpine.start();
+// External Plugins
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
+import tinymce from 'tinymce/tinymce';
+import Dropzone from "dropzone";
+import L from "leaflet";
+
+// Expose globally for use in Blade templates
+window.KTComponents = KTComponents;
+window.KTToast = KTToast;
+window.KTSelect = KTSelect;
+window.confetti = confetti;
+
+window.FullCalendar = { Calendar, dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin };
+window.tinymce = tinymce;
+window.Dropzone = Dropzone;
+window.L = L;
 
 // Metronic Core JavaScript functionality
 document.addEventListener("DOMContentLoaded", function () {
+    // Initialize all KT components (Select, Datepicker, Modal, etc.)
+    KTComponents.init();
+
+    // Listen to Livewire toast events
+    if (typeof Livewire !== "undefined") {
+        Livewire.on("show-toast", (event) => {
+            const data = Array.isArray(event) ? event[0] : event;
+            const variant = data.type || "info";
+
+            KTToast.show({
+                variant: variant,
+                message: data.message || "",
+                duration: data.pin ? 0 : 4000,
+                dismiss: true,
+            });
+        });
+    } else {
+        document.addEventListener("livewire:initialized", () => {
+            Livewire.on("show-toast", (event) => {
+                const data = Array.isArray(event) ? event[0] : event;
+                const variant = data.type || "info";
+
+                KTToast.show({
+                    variant: variant,
+                    message: data.message || "",
+                    duration: data.pin ? 0 : 4000,
+                    dismiss: true,
+                });
+            });
+        });
+    }
+
     // Initialize drawer functionality
     initDrawers();
 
@@ -122,3 +172,37 @@ window.MetronicCore = {
     initStickyHeaders,
     initModals,
 };
+
+// Canvas Confetti Random Direction
+window.randomConfetti = function () {
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function () {
+        const timeLeft = 2000;
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / 2000);
+        confetti(
+            Object.assign({}, defaults, {
+                particleCount,
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+            })
+        );
+        confetti(
+            Object.assign({}, defaults, {
+                particleCount,
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+            })
+        );
+    }, 250);
+    
+    // Stop after 2 seconds
+    setTimeout(() => clearInterval(interval), 2000);
+};
+

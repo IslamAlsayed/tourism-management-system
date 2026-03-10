@@ -70,7 +70,7 @@
                                 <label class="kt-label mb-1">{{ __('main.seasons') }}</label>
                                 <div class="flex flex-wrap gap-2">
                                     @forelse($company->seasons as $season)
-                                        <a href="{{ route('dashboard.accommodations.seasons.show', $season->id) }}" class="kt-badge kt-badge-info">
+                                        <a href="{{ route('dashboard.transportation.seasons.show', $season->id) }}" class="kt-badge kt-badge-info">
                                             #{{ $season->id }} | {{ $season->name }}
                                             <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
                                         </a>

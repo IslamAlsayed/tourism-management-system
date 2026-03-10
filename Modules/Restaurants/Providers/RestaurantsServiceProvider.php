@@ -7,8 +7,14 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Modules\Restaurants\Entities\Restaurant;
+use Modules\Restaurants\Entities\RestaurantType;
 use Modules\Restaurants\Livewire\Restaurants;
+use Modules\Restaurants\Livewire\RestaurantMeals;
+use Modules\Restaurants\Livewire\RestaurantTypes;
+use Modules\Restaurants\Livewire\RestaurantSupplements;
+use Modules\Restaurants\Livewire\Seasons;
 use Modules\Restaurants\Policies\RestaurantPolicy;
+use Modules\Restaurants\Policies\RestaurantTypePolicy;
 
 class RestaurantsServiceProvider extends ServiceProvider
 {
@@ -24,6 +30,7 @@ class RestaurantsServiceProvider extends ServiceProvider
 
     protected $policies = [
         Restaurant::class => RestaurantPolicy::class,
+        RestaurantType::class => RestaurantTypePolicy::class,
     ];
 
     /**
@@ -39,6 +46,10 @@ class RestaurantsServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
         Livewire::component('restaurants::restaurants', Restaurants::class);
+        Livewire::component('restaurants::restaurant-types', RestaurantTypes::class);
+        Livewire::component('restaurants::restaurant-meals', RestaurantMeals::class);
+        Livewire::component('restaurants::restaurant-supplements', RestaurantSupplements::class);
+        Livewire::component('restaurants::seasons', Seasons::class);
 
         foreach ($this->policies as $model => $policy) {
             Gate::policy($model, $policy);

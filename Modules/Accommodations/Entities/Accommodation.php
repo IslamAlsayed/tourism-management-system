@@ -4,6 +4,7 @@ namespace Modules\Accommodations\Entities;
 
 use App\Traits\HasUuid;
 use App\Traits\HasSearch;
+use App\Traits\HasCustomFields;
 use App\Traits\FiltersByUserRole;
 use App\Traits\ClearsEmptyRichText;
 use Modules\Geography\Entities\City;
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Accommodation extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText, HasCustomFields;
     protected $richTextAttributes = [
         'description',
         'notes',

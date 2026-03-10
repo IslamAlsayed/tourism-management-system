@@ -1,6 +1,6 @@
 @php
     $name = isset($name) ? $name : 'site_id';
-    $sites = \Modules\Tourists\Entities\TouristSite::orderBy('name')->get(['id', 'name']);
+    $sites = \Modules\TouristSites\Entities\TouristSite::orderBy('name')->get(['id', 'name']);
 @endphp
 <div>
     <label for="{{ isset($name) ? $name : '' }}" class="kt-label mb-2 flex items-center justify-between">

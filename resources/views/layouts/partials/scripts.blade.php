@@ -1,5 +1,5 @@
 <script src="{{ asset('metronic/js/core.bundle.js') }}" data-navigate-once></script>
-<script src="{{ asset('metronic/vendors/ktui/ktui.min.js') }}" data-navigate-once></script>
+{{-- KTUI loaded via Vite in app.js to avoid double initialization --}}
 <script src="{{ asset('metronic/vendors/apexcharts/apexcharts.min.js') }}" data-navigate-once></script>
 <script src="{{ asset('metronic/js/layouts/demo1.js') }}" data-navigate-once></script>
 {{-- jquery-3.7.1 --}}

@@ -54,7 +54,7 @@ return [
                             'title' => 'import users',
                             'icon' => 'fas fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'user', 'models' => 'users', 'view' => 'users'],
+                            'parameters' => ['models' => 'users'],
                         ]
                     ],
                 ],
@@ -112,20 +112,39 @@ return [
                         ],
                     ],
                 ],
-                // ================= Topics - المواضيع =================
+                // ================= Pricing Units - أنواع تقسيم الأسعار =================
                 [
-                    'title' => 'pricing definitions',
+                    'title' => 'pricing units',
                     'icon' => 'fas fa-money-bill-wave',
                     'children' => [
                         [
-                            'title' => 'all pricing definitions',
-                            'icon' => 'fas fa-list',
+                            'title' => 'all pricing units',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.core.pricing-definitions.index',
+                            'parameters' => ['category' => 'pricing_unit'],
                         ],
                         [
-                            'title' => 'create pricing definition',
+                            'title' => 'create pricing unit',
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.core.pricing-definitions.create',
+                            'parameters' => ['category' => 'pricing_unit'],
+                        ],
+                    ],
+                ],
+                // ================= Field Definitions - أسماء الحقول =================
+                [
+                    'title' => 'field definitions',
+                    'icon' => 'fas fa-tags',
+                    'children' => [
+                        [
+                            'title' => 'all field definitions',
+                            'icon' => 'ki-outline ki-minus',
+                            'route' => 'dashboard.core.field-definitions.index',
+                        ],
+                        [
+                            'title' => 'create field definition',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.core.field-definitions.create',
                         ],
                     ],
                 ],
@@ -142,7 +161,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all activities',
-                            'icon' => 'fas fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.core.activity-log.index',
                         ],
                         [
@@ -224,6 +243,12 @@ return [
                             'icon' => 'fas fa-cog',
                             'route' => 'dashboard.core.settings.system'
                         ],
+                        // [DISABLED] Theme Customizer - removed to prevent color conflicts
+                        // [
+                        //     'title' => 'theme_customizer',
+                        //     'icon' => 'fas fa-paint-roller',
+                        //     'route' => 'dashboard.core.settings.theme'
+                        // ],
                     ],
                 ],
             ],
@@ -243,7 +268,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all regions',
-                            'icon' => 'fas fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.geography.regions.index',
                         ],
                         [
@@ -266,7 +291,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all subregions',
-                            'icon' => 'fas fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.geography.subregions.index',
                         ],
                         [
@@ -289,7 +314,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all countries',
-                            'icon' => 'fas fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.geography.countries.index'
                         ],
                         [
@@ -312,7 +337,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all states',
-                            'icon' => 'fas fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.geography.states.index',
                         ],
                         [
@@ -335,7 +360,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all cities',
-                            'icon' => 'fas fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.geography.cities.index',
                         ],
                         [
@@ -358,7 +383,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all nationalities',
-                            'icon' => 'fas fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.geography.nationalities.index',
                         ],
                         [
@@ -548,13 +573,13 @@ return [
                         [
                             'title' => 'all seasons',
                             'icon' => 'fas fa-calendar-check',
-                            'route' => 'dashboard.accommodations.seasons.index',
+                            'route' => 'dashboard.tourguides.seasons.index',
                             'parameters' => ['t' => Str::random(120), 'type' => 'tours'],
                         ],
                         [
                             'title' => 'create season',
                             'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.seasons.create',
+                            'route' => 'dashboard.tourguides.seasons.create',
                             'parameters' => ['t' => Str::random(120), 'type' => 'tours'],
                         ],
                         [
@@ -603,7 +628,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all types',
-                            'icon' => 'fas fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.accommodations.types.index',
                         ],
                         [
@@ -863,11 +888,11 @@ return [
                     'children' => [
                         [
                             'title' => 'all restaurants',
-                            'icon' => 'fas fa-hotel',
+                            'icon' => 'fas fa-utensils',
                             'route' => 'dashboard.restaurants.index',
                         ],
                         [
-                            'title' => 'create accommodation',
+                            'title' => 'create restaurant',
                             'icon' => 'fas fa-plus',
                             'route' => 'dashboard.restaurants.create',
                         ],
@@ -875,7 +900,23 @@ return [
                             'title' => 'import restaurants',
                             'icon' => 'fas fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'accommodation', 'models' => 'restaurants', 'view' => 'restaurants'],
+                            'parameters' => ['model' => 'restaurant', 'models' => 'restaurants', 'view' => 'restaurants'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'restaurant types',
+                    'icon' => 'fas fa-tags',
+                    'children' => [
+                        [
+                            'title' => 'all types',
+                            'icon' => 'ki-outline ki-minus',
+                            'route' => 'dashboard.restaurants.types.index',
+                        ],
+                        [
+                            'title' => 'create type',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.restaurants.types.create',
                         ],
                     ],
                 ],
@@ -886,20 +927,18 @@ return [
                         [
                             'title' => 'all meals',
                             'icon' => 'fas fa-bowl-rice',
-                            'route' => 'dashboard.accommodations.meals.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'restaurant'],
+                            'route' => 'dashboard.restaurants.meals.index',
                         ],
                         [
                             'title' => 'create meal',
                             'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.meals.create',
-                            'parameters' => ['type' => 'restaurant'],
+                            'route' => 'dashboard.restaurants.meals.create',
                         ],
                         [
                             'title' => 'import meals',
                             'icon' => 'fas fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'meal', 'models' => 'meals', 'view' => 'meals'],
+                            'parameters' => ['model' => 'restaurant-meal', 'models' => 'restaurant-meals', 'view' => 'restaurant-meals'],
                         ],
                     ],
                 ],
@@ -910,20 +949,42 @@ return [
                         [
                             'title' => 'all supplements',
                             'icon' => 'fas fa-list-check',
-                            'route' => 'dashboard.accommodations.supplements.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'restaurant'],
+                            'route' => 'dashboard.restaurants.supplements.index',
                         ],
                         [
                             'title' => 'create supplement',
                             'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.supplements.create',
-                            'parameters' => ['type' => 'restaurant'],
+                            'route' => 'dashboard.restaurants.supplements.create',
                         ],
                         [
                             'title' => 'import supplements',
                             'icon' => 'fa-regular fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
+                            'parameters' => ['model' => 'restaurant-supplement', 'models' => 'restaurant-supplements', 'view' => 'restaurant-supplements'],
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'seasons',
+                    'icon' => 'fas fa-calendar-days',
+                    'children' => [
+                        [
+                            'title' => 'all seasons',
+                            'icon' => 'fas fa-calendar-check',
+                            'route' => 'dashboard.restaurants.seasons.index',
+                            'parameters' => ['type' => 'restaurant'],
+                        ],
+                        [
+                            'title' => 'create season',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.restaurants.seasons.create',
+                            'parameters' => ['type' => 'restaurant'],
+                        ],
+                        [
+                            'title' => 'import seasons',
+                            'icon' => 'fas fa-file-import',
+                            'route' => 'import.data',
+                            'parameters' => ['model' => 'restaurant-season', 'models' => 'restaurant-seasons', 'view' => 'seasons'],
                         ],
                     ],
                 ],
@@ -987,7 +1048,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all_jeeps',
-                            'icon' => 'fa-solid fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.transportation.jeeps.index'
                         ],
                         [
@@ -1031,7 +1092,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all route assignments',
-                            'icon' => 'fas fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.transportation.route-assignments.index',
                         ],
                         [
@@ -1076,20 +1137,20 @@ return [
                         [
                             'title' => 'all seasons',
                             'icon' => 'fas fa-calendar-check',
-                            'route' => 'dashboard.accommodations.seasons.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
+                            'route' => 'dashboard.transportation.seasons.index',
+                            'parameters' => ['type' => 'transportation'],
                         ],
                         [
                             'title' => 'create season',
                             'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.seasons.create',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
+                            'route' => 'dashboard.transportation.seasons.create',
+                            'parameters' => ['type' => 'transportation'],
                         ],
                         [
                             'title' => 'import seasons',
                             'icon' => 'fas fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'season', 'models' => 'seasons', 'view' => 'seasons'],
+                            'parameters' => ['model' => 'transportation-season', 'models' => 'transportation-seasons', 'view' => 'seasons'],
                         ],
                     ],
                 ],
@@ -1100,20 +1161,20 @@ return [
                         [
                             'title' => 'all supplements',
                             'icon' => 'fas fa-list-check',
-                            'route' => 'dashboard.accommodations.supplements.index',
-                            'parameters' => ['t' => Str::random(120), 'type' => 'transportation'],
+                            'route' => 'dashboard.transportation.supplements.index',
+                            'parameters' => ['type' => 'transportation'],
                         ],
                         [
                             'title' => 'create supplement',
                             'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.accommodations.supplements.create',
+                            'route' => 'dashboard.transportation.supplements.create',
                             'parameters' => ['type' => 'transportation'],
                         ],
                         [
                             'title' => 'import supplements',
                             'icon' => 'fas fa-file-import',
                             'route' => 'import.data',
-                            'parameters' => ['model' => 'supplement', 'models' => 'supplements', 'view' => 'supplements'],
+                            'parameters' => ['model' => 'transportation-supplement', 'models' => 'transportation-supplements', 'view' => 'transportation-supplements'],
                         ],
                     ],
                 ],
@@ -1133,7 +1194,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all visa requirements',
-                            'icon' => 'fa-solid fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.traveldocuments.visa-requirements.index'
                         ],
                         [
@@ -1155,7 +1216,7 @@ return [
                     'children' => [
                         [
                             'title' => 'all travel passes',
-                            'icon' => 'fa-solid fa-list',
+                            'icon' => 'ki-outline ki-minus',
                             'route' => 'dashboard.traveldocuments.travel-passes.index'
                         ],
                         [
@@ -1206,12 +1267,12 @@ return [
             ]
         ],
 
-        // ================= Tourists - السياح =================
+        // ================= Tourist Sites - المواقع السياحية =================
         [
-            'title' => 'tourists',
-            'icon' => 'fas fa-box',
+            'title' => 'tourist sites',
+            'icon' => 'fas fa-map-location-dot',
             'fixed' => 'done',
-            'label' => 'tourists',
+            'label' => 'tourist sites',
             'children' => [
                 [
                     'title' => 'sites',
@@ -1220,12 +1281,12 @@ return [
                         [
                             'title' => 'all sites',
                             'icon' => 'fas fa-map-location-dot',
-                            'route' => 'dashboard.tourists.sites.index',
+                            'route' => 'dashboard.touristsites.sites.index',
                         ],
                         [
                             'title' => 'create site',
                             'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.tourists.sites.create',
+                            'route' => 'dashboard.touristsites.sites.create',
                         ],
                         [
                             'title' => 'import sites',
@@ -1236,18 +1297,44 @@ return [
                     ],
                 ],
                 [
+                    'title' => 'facilities',
+                    'icon' => 'fas fa-list-check',
+                    'children' => [
+                        [
+                            'title' => 'all facilities',
+                            'icon' => 'fas fa-list-check',
+                            'route' => 'dashboard.touristsites.facilities.index',
+                        ],
+                        [
+                            'title' => 'create facility',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.touristsites.facilities.create',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+
+        // ================= Tourist Services - الخدمات السياحية =================
+        [
+            'title' => 'tourist services',
+            'icon' => 'fab fa-servicestack',
+            'fixed' => 'done',
+            'label' => 'tourist services',
+            'children' => [
+                [
                     'title' => 'services',
                     'icon' => 'fab fa-servicestack',
                     'children' => [
                         [
                             'title' => 'all services',
                             'icon' => 'fab fa-servicestack',
-                            'route' => 'dashboard.tourists.services.index',
+                            'route' => 'dashboard.touristservices.services.index',
                         ],
                         [
                             'title' => 'create service',
                             'icon' => 'fas fa-plus',
-                            'route' => 'dashboard.tourists.services.create',
+                            'route' => 'dashboard.touristservices.services.create',
                         ],
                         [
                             'title' => 'import services',
@@ -1373,7 +1460,7 @@ return [
         //     'children' => [
         //         [
         //             'title' => 'all crossings ports',
-        //             'icon' => 'fas fa-list',
+        //             'icon' => 'ki-outline ki-minus',
         //             'route' => 'crossings-ports.index'
         //         ],
         //         [
@@ -1431,5 +1518,47 @@ return [
                 ],
             ],
         ],
+
+        // ================= Communications - الاتصالات =================
+        [
+            'title' => 'communications',
+            'icon' => 'ki-outline ki-messages',
+            'fixed' => 'soon',
+            'label' => 'communications',
+            'children' => [
+                [
+                    'title' => 'emails',
+                    'icon' => 'ki-outline ki-sms',
+                    'route' => 'dashboard.emails.index',
+                ],
+                [
+                    'title' => 'whatsapp',
+                    'icon' => 'ki-outline ki-whatsapp',
+                    'route' => 'dashboard.whatsapp.index',
+                ],
+            ],
+        ],
+
+        // ================= MCP - نظام MCP =================
+        [
+            'title' => 'mcp',
+            'icon' => 'ki-outline ki-setting-4',
+            'fixed' => 'soon',
+            'label' => 'mcp',
+            'children' => [
+                [
+                    'title' => 'google maps',
+                    'icon' => 'ki-outline ki-map',
+                    'route' => 'dashboard.mcp.google-maps',
+                ],
+                [
+                    'title' => 'google drive',
+                    'icon' => 'ki-outline ki-folder',
+                    'route' => 'dashboard.mcp.google-drive',
+                ],
+            ],
+        ],
     ],
 ];
+
+

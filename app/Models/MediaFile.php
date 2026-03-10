@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Modules\Core\Entities\User;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class MediaFile extends Model
@@ -174,8 +175,8 @@ class MediaFile extends Model
     public static function getAvailableCollection()
     {
         $unsetKeys = ['cache', 'cache_locks', 'failed_jobs', 'job_batches', 'jobs', 'migrations', 'password_reset_tokens', 'rich_texts', 'sessions', 'sidebar_menu_orders'];
-        $tables = DB::select('SHOW TABLES');
-        $tableNames = array_map('current', $tables);
+        // Use Schema facade instead of raw SHOW TABLES (works on MySQL, SQLite, PostgreSQL)
+        $tableNames = \Illuminate\Support\Facades\Schema::getTableListing();
         $tableNames = array_diff($tableNames, $unsetKeys);
         $tableNames = array_merge($tableNames, ['general']);
         return $tableNames;

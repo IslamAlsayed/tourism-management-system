@@ -82,6 +82,7 @@ class Rooms extends Component
         }
 
         Room::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Room::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -94,21 +95,13 @@ class Rooms extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Room::class, $cols, 'rooms');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Room::class, $cols, 'rooms');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Room::class, $cols, 'rooms', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Room::class, $cols, 'rooms', $extension);
     }
 
     public function resetFilters()
@@ -137,3 +130,4 @@ class Rooms extends Component
         return view('accommodations::livewire.rooms', ['data' => $data, 'totalCount' => $this->totalCount ?: Room::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

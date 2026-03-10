@@ -73,7 +73,7 @@
                 </span>
             </div>
 
-            <a href="{{ route('dashboard.accommodations.seasons.create', ['type' => 'transportation', \Illuminate\Support\Str::random(120)]) }}"
+            <a href="{{ route('dashboard.transportation.seasons.create', ['type' => 'transportation', \Illuminate\Support\Str::random(120)]) }}"
                 class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
         <select name="season_id" id="season_id" class="kt-select basic-single" {{ !hasEmpty($filters['company']) ? 'disabled' : '' }}>

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\RichText;
-use Modules\Tourists\Entities\TouristSite;
+use Modules\TouristSites\Entities\TouristSite;
 use Illuminate\Database\Seeder;
 
 class TouristSiteSeeder extends Seeder

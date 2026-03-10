@@ -84,6 +84,7 @@ class Meals extends Component
         }
 
         Meal::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Meal::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -96,21 +97,13 @@ class Meals extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Meal::class, $cols, 'meals');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Meal::class, $cols, 'meals');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Meal::class, $cols, 'meals', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Meal::class, $cols, 'meals', $extension);
     }
 
     public function resetFilters()
@@ -142,3 +135,4 @@ class Meals extends Component
         return view('accommodations::livewire.meals', ['data' => $data, 'totalCount' => $this->totalCount ?: Meal::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

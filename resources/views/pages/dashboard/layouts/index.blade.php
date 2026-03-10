@@ -194,15 +194,14 @@
                                 allCheckboxes[i].checked = shouldCheck;
 
                                 const event = new Event('change', {
-                                    bubbles: true
-                                });
-                                allCheckboxes[i].dispatchEvent(event);
-                            }
-                        }
-
                         lastChecked = this;
                     });
                 });
+                
+                // Re-initialize Metronic components after Livewire DOM update
+                if (typeof KTMenu !== 'undefined') {
+                    KTMenu.init();
+                }
             });
         }
     </script>

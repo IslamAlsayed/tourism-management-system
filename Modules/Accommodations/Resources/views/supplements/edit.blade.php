@@ -24,7 +24,8 @@
     <div class="kt-container-fixed">
         <div class="kt-card p-4">
             <div class="kt-card-body">
-                <form class="space-y-6" method="POST" action="{{ route('dashboard.accommodations.supplements.update', $supplement->id) }}">
+                <form class="space-y-6" method="POST"
+                    action="{{ route('dashboard.accommodations.supplements.update', $supplement->id) }}">
                     @csrf
                     <input type="hidden" name="type" value="{{ request()->query('type') }}">
 
@@ -39,7 +40,8 @@
                                 <label for="name" class="kt-label mb-1">
                                     {{ __('main.name') }}
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $supplement->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $supplement->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -48,7 +50,8 @@
                             {{-- Name (Arabic) --}}
                             <div>
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $supplement->name_ar }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $supplement->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -59,8 +62,8 @@
                                 <label for="price" class="kt-label mb-1">
                                     {{ __('main.price') }}
                                 </label>
-                                <input type="number" step="0.01" name="price" id="price" class="kt-input h-[45px]" value="{{ $supplement->price }}"
-                                    min="0">
+                                <input type="number" step="0.01" name="price" id="price" class="kt-input h-[45px]"
+                                    value="{{ $supplement->price }}" min="0">
                                 @error('price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -70,13 +73,15 @@
                             <div class="align-self-end">
                                 <label for="price_type" class="kt-label mb-2">{{ __('main.price_type') }}</label>
                                 <select name="price_type" id="price_type" class="kt-select basic-single">
-                                    <option value="per_person" {{ $supplement->price_type == 'per_person' ? 'selected' : '' }}>
+                                    <option value="per_person"
+                                        {{ $supplement->price_type == 'per_person' ? 'selected' : '' }}>
                                         {{ __('main.per_person') }}
                                     </option>
                                     <option value="per_room" {{ $supplement->price_type == 'per_room' ? 'selected' : '' }}>
                                         {{ __('main.per_room') }}
                                     </option>
-                                    <option value="per_night" {{ $supplement->price_type == 'per_night' ? 'selected' : '' }}>
+                                    <option value="per_night"
+                                        {{ $supplement->price_type == 'per_night' ? 'selected' : '' }}>
                                         {{ __('main.per_night') }}
                                     </option>
                                     <option value="one_time" {{ $supplement->price_type == 'one_time' ? 'selected' : '' }}>
@@ -124,6 +129,9 @@
                                 ])
                             </div>
                         </div>
+
+                        {{-- Dynamic Custom Fields --}}
+                        <x-custom-fields module-name="accommodations" entity-type="Supplement" :entity="$supplement" />
 
                         <!-- Update Submit -->
                         @include('components.elements.update-submit', [

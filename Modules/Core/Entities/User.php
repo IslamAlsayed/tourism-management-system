@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Geography\Entities\Country;
 use Modules\Localization\Entities\Timezone;
 use Modules\Subscriptions\Entities\Subscription;
 use Modules\Subscriptions\Traits\HasSubscriptions;
@@ -36,6 +37,9 @@ class User extends Authenticatable
         'last_name',
         'mobile',
         'address',
+        'company_name',
+        'company_website',
+        'country_id',
         'user_code',
         'employee_id',
         'birth_date',
@@ -113,6 +117,11 @@ class User extends Authenticatable
         return $this->belongsTo(Timezone::class);
     }
 
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -138,12 +147,6 @@ class User extends Authenticatable
         return $query->where('id', '!=', getActiveUserId());
     }
 
-    public function setPasswordAttribute($value)
-    {
-        if (!empty($value)) {
-            $this->attributes['password'] = Hash::make($value);
-        }
-    }
 
     public function getFormattedBirthDateAttribute()
     {

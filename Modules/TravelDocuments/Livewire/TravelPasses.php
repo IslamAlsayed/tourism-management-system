@@ -48,7 +48,6 @@ class TravelPasses extends Component
     public function destroy($id)
     {
         $this->safeDestroy($id, TravelPasse::class, 'travel-pass');
-        Cache::tags(['travel-pass'])->flush();
     }
 
     public function updatedSelectPage($value)
@@ -74,6 +73,7 @@ class TravelPasses extends Component
         }
 
         TravelPasse::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(TravelPasse::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -86,21 +86,13 @@ class TravelPasses extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], TravelPasse::class, $cols, 'travel-pass');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], TravelPasse::class, $cols, 'travel-pass');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], TravelPasse::class, $cols, 'travel-pass', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], TravelPasse::class, $cols, 'travel-pass', $extension);
     }
 
     protected function getCacheKey()
@@ -137,3 +129,4 @@ class TravelPasses extends Component
         ]);
     }
 }
+

@@ -26,6 +26,9 @@ Route::middleware(['api'])->group(function () {
     Route::post('/web-push-notifications', [DashboardController::class, 'webPushNotifications'])->name('web-push-notifications');
 
     // Location APIs for accommodations
+    Route::get('/countries/{countryId}/states', [LocationController::class, 'getStatesByCountry']);
+    Route::get('/states/{stateId}/cities', [LocationController::class, 'getCitiesByState']);
+    Route::get('/cities/{cityId}/restaurants', [LocationController::class, 'getRestaurantsByCity']);
     Route::get('/countries/{countryId}/cities', [LocationController::class, 'getCitiesByCountry']);
     Route::get('/regions/{regionId}/subregions', [LocationController::class, 'getSubregionsByRegion']);
 

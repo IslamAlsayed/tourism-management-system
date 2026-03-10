@@ -9,6 +9,10 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
+use Modules\Geography\Entities\Country;
+use Modules\Geography\Entities\State;
+use Modules\Geography\Entities\City;
+use Modules\Localization\Entities\Timezone;
 
 class Airline extends Model
 {

@@ -22,7 +22,8 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('dashboard.tourguides.guides.update', $tourGuide->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.tourguides.guides.update', $tourGuide->id) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
@@ -65,7 +66,8 @@
                             <!-- Name (English) -->
                             <div class="">
                                 <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $tourGuide->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $tourGuide->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -74,7 +76,8 @@
                             <!-- Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $tourGuide->name_ar }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $tourGuide->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -83,7 +86,8 @@
                             <!-- Email -->
                             <div class="">
                                 <label for="email" class="kt-label mb-2">{{ __('main.email') }}</label>
-                                <input type="email" name="email" id="email" class="kt-input h-[45px]" value="{{ $tourGuide->email }}">
+                                <input type="email" name="email" id="email" class="kt-input h-[45px]"
+                                    value="{{ $tourGuide->email }}">
                                 @error('email')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -92,7 +96,8 @@
                             <!-- Mobile 01 -->
                             <div class="">
                                 <label for="mobile_01" class="kt-label mb-2">{{ __('main.mobile_01') }}</label>
-                                <input type="text" name="mobile_01" id="mobile_01" class="kt-input h-[45px]" max="2" value="{{ $tourGuide->mobile_01 }}">
+                                <input type="text" name="mobile_01" id="mobile_01" class="kt-input h-[45px]"
+                                    max="2" value="{{ $tourGuide->mobile_01 }}">
                                 @error('mobile_01')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -101,7 +106,8 @@
                             <!-- Mobile 02 -->
                             <div class="">
                                 <label for="mobile_02" class="kt-label mb-2">{{ __('main.mobile_02') }}</label>
-                                <input type="text" name="mobile_02" id="mobile_02" class="kt-input h-[45px]" max="2" value="{{ $tourGuide->mobile_02 }}">
+                                <input type="text" name="mobile_02" id="mobile_02" class="kt-input h-[45px]"
+                                    max="2" value="{{ $tourGuide->mobile_02 }}">
                                 @error('mobile_02')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -110,20 +116,50 @@
                             <!-- Home City -->
                             <div class="">
                                 <label for="home_city" class="kt-label mb-2">{{ __('main.home_city') }}</label>
-                                <input type="text" name="home_city" id="home_city" class="kt-input h-[45px]" max="3" value="{{ $tourGuide->home_city }}">
+                                <input type="text" name="home_city" id="home_city" class="kt-input h-[45px]"
+                                    max="3" value="{{ $tourGuide->home_city }}">
                                 @error('home_city')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Birth Year -->
+                            <!-- Birth Date -->
                             <div class="">
-                                <label for="birth_year" class="kt-label mb-2">{{ __('main.birth_year') }}</label>
-                                <input type="birth_year" name="birth_year" id="birth_year" class="kt-input h-[45px]" value="{{ $tourGuide->birth_year }}">
-                                @error('birth_year')
+                                <label for="birth_date" class="kt-label mb-2">{{ __('main.birth_date') }}</label>
+                                <input type="date" name="birth_date" id="birth_date" class="kt-input h-[45px]"
+                                    value="{{ $tourGuide->birth_date }}" onchange="calculateAge(this.value)">
+                                @error('birth_date')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <!-- Age (Calculated) -->
+                            <div class="">
+                                <label for="age_display" class="kt-label mb-2">{{ __('main.age') }}</label>
+                                <input type="text" id="age_display" class="kt-input h-[45px] bg-gray-100" readonly
+                                    placeholder="{{ __('main.auto_calculated') }}" value="{{ $tourGuide->age }}">
+                                <input type="hidden" name="age" id="age_hidden" value="{{ $tourGuide->age }}">
+                            </div>
+
+                            <script>
+                                function calculateAge(birthDate) {
+                                    if (!birthDate) return;
+                                    const today = new Date();
+                                    const birth = new Date(birthDate);
+                                    let age = today.getFullYear() - birth.getFullYear();
+                                    const m = today.getMonth() - birth.getMonth();
+                                    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+                                        age--;
+                                    }
+                                    document.getElementById('age_display').value = age;
+                                    document.getElementById('age_hidden').value = age;
+                                }
+                                // Run on load if value exists
+                                window.addEventListener('load', function() {
+                                    const bd = document.getElementById('birth_date').value;
+                                    if(bd) calculateAge(bd);
+                                });
+                            </script>
 
                             <!-- Gender -->
                             <div class="align-self-end">
@@ -142,9 +178,10 @@
 
                             <!-- National Guide ID -->
                             <div class="">
-                                <label for="national_guide_id" class="kt-label mb-2">{{ __('main.national_guide_id') }}</label>
-                                <input type="number" name="national_guide_id" id="national_guide_id" class="kt-input h-[45px]"
-                                    value="{{ $tourGuide->national_guide_id }}">
+                                <label for="national_guide_id"
+                                    class="kt-label mb-2">{{ __('main.national_guide_id') }}</label>
+                                <input type="number" name="national_guide_id" id="national_guide_id"
+                                    class="kt-input h-[45px]" value="{{ $tourGuide->national_guide_id }}">
                                 @error('national_guide_id')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -157,8 +194,9 @@
                                 </label>
                                 <select name="language_id[]" id="language_id" class="kt-select basic-multiple" multiple>
                                     @foreach ($languages as $language)
-                                        <option value="{{ $language->id }}" {{ in_array($language->id, $tourGuide->language_ids) ? 'selected' : '' }}>
-                                            {{ getCurrentLocale() == 'ar' ? $language['name_ar'] : $language['name'] }}
+                                        <option value="{{ $language->id }}"
+                                            {{ is_array(old('language_id')) && in_array($language->id, old('language_id')) ? 'selected' : '' }}>
+                                            {{ getCurrentLocale() == 'ar' ? $language->name_ar : $language->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -173,7 +211,8 @@
                                 <select name="guide_type_id" id="guide_type_id" class="kt-input basic-single">
                                     <option value="" disabled></option>
                                     @foreach ($guideTypes as $type)
-                                        <option value="{{ $type->id }}" {{ $tourGuide->guide_type_id == $type->id ? 'selected' : '' }}>
+                                        <option value="{{ $type->id }}"
+                                            {{ $tourGuide->guide_type_id == $type->id ? 'selected' : '' }}>
                                             {{ $type->type }}
                                         </option>
                                     @endforeach
@@ -185,9 +224,10 @@
 
                             <!-- Tourism Ministry Code -->
                             <div class="">
-                                <label for="tourism_ministry_code" class="kt-label mb-2">{{ __('main.tourism_ministry_code') }}</label>
-                                <input type="number" name="tourism_ministry_code" id="tourism_ministry_code" class="kt-input h-[45px]"
-                                    value="{{ $tourGuide->tourism_ministry_code }}">
+                                <label for="tourism_ministry_code"
+                                    class="kt-label mb-2">{{ __('main.tourism_ministry_code') }}</label>
+                                <input type="number" name="tourism_ministry_code" id="tourism_ministry_code"
+                                    class="kt-input h-[45px]" value="{{ $tourGuide->tourism_ministry_code }}">
                                 @error('tourism_ministry_code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -196,7 +236,8 @@
                             <!-- hd Day Fees -->
                             <div class="">
                                 <label for="fd_day_fees" class="kt-label mb-2">{{ __('main.fd_day_fees') }}</label>
-                                <input type="number" name="fd_day_fees" id="fd_day_fees" class="kt-input h-[45px]" value="{{ $tourGuide->fd_day_fees }}">
+                                <input type="number" name="fd_day_fees" id="fd_day_fees" class="kt-input h-[45px]"
+                                    value="{{ $tourGuide->fd_day_fees }}">
                                 @error('fd_day_fees')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -205,7 +246,8 @@
                             <!-- hd Day Fees -->
                             <div class="">
                                 <label for="hd_day_fees" class="kt-label mb-2">{{ __('main.hd_day_fees') }}</label>
-                                <input type="number" name="hd_day_fees" id="hd_day_fees" class="kt-input h-[45px]" value="{{ $tourGuide->hd_day_fees }}">
+                                <input type="number" name="hd_day_fees" id="hd_day_fees" class="kt-input h-[45px]"
+                                    value="{{ $tourGuide->hd_day_fees }}">
                                 @error('hd_day_fees')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -214,7 +256,8 @@
                             <!-- Extra Fees 1 -->
                             <div class="">
                                 <label for="extra_fees_1" class="kt-label mb-2">{{ __('main.extra_fees_1') }}</label>
-                                <input type="number" name="extra_fees_1" id="extra_fees_1" class="kt-input h-[45px]" value="{{ $tourGuide->extra_fees_1 }}">
+                                <input type="number" name="extra_fees_1" id="extra_fees_1" class="kt-input h-[45px]"
+                                    value="{{ $tourGuide->extra_fees_1 }}">
                                 @error('extra_fees_1')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -223,7 +266,8 @@
                             <!-- Extra Fees 2 -->
                             <div class="">
                                 <label for="extra_fees_2" class="kt-label mb-2">{{ __('main.extra_fees_2') }}</label>
-                                <input type="number" name="extra_fees_2" id="extra_fees_2" class="kt-input h-[45px]" value="{{ $tourGuide->extra_fees_2 }}">
+                                <input type="number" name="extra_fees_2" id="extra_fees_2" class="kt-input h-[45px]"
+                                    value="{{ $tourGuide->extra_fees_2 }}">
                                 @error('extra_fees_2')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -256,6 +300,9 @@
                         ])
                     </div>
                 </div>
+
+                {{-- Dynamic Custom Fields --}}
+                <x-custom-fields module-name="tour_guides" entity-type="TourGuide" :entity="$tourGuide" />
 
                 {{-- Update Buttons --}}
                 @include('components.elements.update-submit', [

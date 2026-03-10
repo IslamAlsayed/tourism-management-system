@@ -44,11 +44,21 @@ class ToggleSwitch extends Component
             $model->save();
 
             $this->value = $newValue;
+
+            // Only push to Ably if configured and user.is_active toggle
             if ($this->table == 'users' && $this->field == 'is_active') {
-                $ably = new AblyRest(Setting::first()->app_ably_key);
-                $data = ['id' => $this->modelId, 'value' => $newValue];
-                $ably->channel('switch.user.active')->publish('switch.user.active', $data);
+                try {
+                    $ablyKey = optional(\Modules\Core\Entities\Setting::first())->app_ably_key;
+                    if (!empty($ablyKey)) {
+                        $ably = new AblyRest($ablyKey);
+                        $data = ['id' => $this->modelId, 'value' => $newValue];
+                        $ably->channel('switch.user.active')->publish('switch.user.active', $data);
+                    }
+                } catch (\Exception $ablyEx) {
+                    // Ably not configured or failed - ignore silently
+                }
             }
+
             $this->dispatch('show-toast', ['type' => 'success', 'message' => __('messages.updated_successfully')]);
         } catch (\Exception $e) {
             $this->dispatch('show-toast', ['type' => 'error', 'message' => __('messages.error_occurred') . ': ' . $e->getMessage()]);

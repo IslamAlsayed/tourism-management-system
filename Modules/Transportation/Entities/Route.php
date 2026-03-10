@@ -6,6 +6,7 @@ use App\Traits\HasUuid;
 use App\Traits\HasSearch;
 use App\Traits\FiltersByUserRole;
 use App\Traits\ClearsEmptyRichText;
+use App\Traits\HasCustomFields;
 use Modules\Geography\Entities\City;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Transportation\Entities\RouteAssignment;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Route extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, ClearsEmptyRichText, HasCustomFields;
 
     protected $richTextAttributes = [
         'description',

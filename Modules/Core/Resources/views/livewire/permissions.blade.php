@@ -80,14 +80,14 @@
                                         <div class="flex gap-2 justify-end">
                                             @if (showRouteExists('permissions') && showFunctionExists('permissions'))
                                                 @include('components.elements.show-button', [
-                                                    'models' => 'permissions',
+                                                    'models' => 'dashboard.core.permissions',
                                                     'id' => $permission->id,
                                                 ])
                                             @endif
 
                                             @if (getActiveUser()->can('update', $permission))
                                                 @include('components.elements.edit-button', [
-                                                    'models' => 'permissions',
+                                                    'models' => 'dashboard.core.permissions',
                                                     'id' => $permission->id,
                                                 ])
                                             @endif
@@ -95,6 +95,7 @@
                                             @if (getActiveUser()->can('delete', $permission))
                                                 @include('components.elements.delete-button', [
                                                     'id' => $permission->id,
+                                                    'models' => 'dashboard.core.permissions',
                                                 ])
                                             @endif
                                         </div>

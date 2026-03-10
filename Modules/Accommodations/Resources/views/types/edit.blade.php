@@ -36,7 +36,8 @@
                         {{-- Name (English) --}}
                         <div>
                             <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
-                            <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $type['name'] }}">
+                            <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                value="{{ $type['name'] }}">
                             @error('name')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -45,7 +46,8 @@
                         {{-- Name (Arabic) --}}
                         <div>
                             <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                            <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $type['name_ar'] }}">
+                            <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                value="{{ $type['name_ar'] }}">
                             @error('name_ar')
                                 <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -78,6 +80,9 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Dynamic Custom Fields --}}
+            <x-custom-fields module-name="accommodations" entity-type="Type" :entity="$type" />
 
             <!-- Update Submit -->
             @include('components.elements.update-submit', [

@@ -1,38 +1,39 @@
 @extends('layouts.master')
 
 @section('content')
-    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
-        [
-            'condition' => \Modules\Geography\Entities\Region::count() > 0,
-            'route' => route('dashboard.geography.regions.create'),
-            'label' => __('main.regions'),
-        ],
-        [
-            'condition' => \Modules\Geography\Entities\Subregion::count() > 0,
-            'route' => route('dashboard.geography.subregions.create'),
-            'label' => __('main.subregions'),
-        ],
-        [
-            'condition' => \Modules\Geography\Entities\Country::count() > 0,
-            'route' => route('dashboard.geography.countries.create'),
-            'label' => __('main.countries'),
-        ],
-        [
-            'condition' => \Modules\Geography\Entities\State::count() > 0,
-            'route' => route('dashboard.geography.states.create'),
-            'label' => __('main.states'),
-        ],
-        [
-            'condition' => \Modules\Geography\Entities\City::count() > 0,
-            'route' => route('dashboard.geography.cities.create'),
-            'label' => __('main.cities'),
-        ],
-        [
-            'condition' => \Modules\Geography\Entities\Nationality::count() > 0,
-            'route' => route('nationalities.create'),
-            'label' => __('main.nationalities'),
-        ],
-    ]">
+    <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view"
+        :requirements="[
+            [
+                'condition' => \Modules\Geography\Entities\Region::count() > 0,
+                'route' => route('dashboard.geography.regions.create'),
+                'label' => __('main.regions'),
+            ],
+            [
+                'condition' => \Modules\Geography\Entities\Subregion::count() > 0,
+                'route' => route('dashboard.geography.subregions.create'),
+                'label' => __('main.subregions'),
+            ],
+            [
+                'condition' => \Modules\Geography\Entities\Country::count() > 0,
+                'route' => route('dashboard.geography.countries.create'),
+                'label' => __('main.countries'),
+            ],
+            [
+                'condition' => \Modules\Geography\Entities\State::count() > 0,
+                'route' => route('dashboard.geography.states.create'),
+                'label' => __('main.states'),
+            ],
+            [
+                'condition' => \Modules\Geography\Entities\City::count() > 0,
+                'route' => route('dashboard.geography.cities.create'),
+                'label' => __('main.cities'),
+            ],
+            [
+                'condition' => \Modules\Geography\Entities\Nationality::count() > 0,
+                'route' => route('dashboard.geography.nationalities.create'),
+                'label' => __('main.nationalities'),
+            ],
+        ]">
         <div class="mt-4">
             <a href="{{ route('export.data', ['models' => $models]) }}" class="kt-btn kt-btn-outline">
                 {{ __('main.export') }}

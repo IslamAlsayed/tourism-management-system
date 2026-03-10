@@ -14,7 +14,7 @@
         ],
         [
             'condition' => \Modules\Core\Entities\Season::count() > 0,
-            'route' => route('dashboard.accommodations.seasons.create'),
+            'route' => route('dashboard.transportation.seasons.create'),
             'label' => __('main.seasons'),
         ],
         [

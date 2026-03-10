@@ -29,8 +29,8 @@
                     <h3 class="kt-card-title">{{ __('main.basic_language_info') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('dashboard.localization.languages.update', $language->id) }}" enctype="multipart/form-data"
-                        class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.localization.languages.update', $language->id) }}"
+                        enctype="multipart/form-data" class="space-y-6 p-4">
                         @csrf
                         @method('PUT')
 
@@ -46,7 +46,8 @@
                             <!-- Language Name (Arabic) -->
                             <div class="">
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $language->name_ar }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $language->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -55,7 +56,8 @@
                             <!-- Language Name -->
                             <div class="">
                                 <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $language->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $language->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -64,7 +66,8 @@
                             <!-- Language Code -->
                             <div class="">
                                 <label for="code" class="kt-label mb-2">{{ __('main.code') }}</label>
-                                <input type="text" name="code" id="code" class="kt-input h-[45px]" min="2" value="{{ $language->code }}">
+                                <input type="text" name="code" id="code" class="kt-input h-[45px]" min="2"
+                                    value="{{ $language->code }}">
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -72,7 +75,10 @@
                         </div>
 
                         <!-- Update Submit Buttons -->
-                        @include('components.elements.update-submit', ['models' => 'languages'])
+                        @include('components.elements.update-submit', [
+                            'models' => 'languages',
+                            'cancel_route' => route('dashboard.localization.languages.index'),
+                        ])
                     </form>
                 </div>
             </div>

@@ -1,14 +1,65 @@
 @switch($column)
     @case('id')
         <td title="{{ $model->id }}">
-            {!! highlightSearch($model->id, $search) !!}
+            @if(isset($rowIndex))
+                {{ $rowIndex }}
+            @else
+                {!! highlightSearch($model->id, $search) !!}
+            @endif
         </td>
     @break
 
-    @case('uuid' && $settings->app_show_uuid_column != 0)
-        <td title="{{ $model->uuid }}">
-            {!! highlightSearch($model->uuid, $search) !!}
+    @case('subregions')
+    @case('subregions_count')
+    @case('countries')
+    @case('countries_count')
+    @case('states')
+    @case('states_count')
+    @case('cities')
+    @case('cities_count')
+    @case('accommodations')
+    @case('accommodations_count')
+    @case('restaurants')
+    @case('restaurants_count')
+    @case('transportationCompanies')
+    @case('transportation_companies')
+    @case('transportation_companies_count')
+        @php
+            $baseName = str_replace('_count', '', $column);
+            $translationKey = 'main.' . $baseName;
+            
+            // Map snake_case to camelCase for the relationship if needed
+            $relationName = ($baseName === 'transportation_companies') ? 'transportationCompanies' : $baseName;
+            
+            // Try to get count from eager-loaded attribute first, then fallback to relationship count
+            $countValue = 0;
+            if (isset($model->{$column}) && is_numeric($model->{$column})) {
+                $countValue = $model->{$column};
+            } elseif (isset($model->{$baseName . '_count'}) && is_numeric($model->{$baseName . '_count'})) {
+                $countValue = $model->{$baseName . '_count'};
+            } elseif ($model->relationLoaded($relationName)) {
+                $countValue = $model->{$relationName}->count();
+            }
+        @endphp
+        <td title="{{ __($translationKey) }}">
+            @if ($countValue > 0)
+                <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                    {{ $countValue }}
+                </span>
+            @else
+                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">0</i>
+                </div>
+            @endif
         </td>
+    @break
+
+    @case('uuid')
+        @if(optional($settings)->app_show_uuid_column != 0)
+            <td title="{{ $model->uuid }}">
+                {!! highlightSearch($model->uuid, $search) !!}
+            </td>
+        @endif
     @break
 
     @case('role')
@@ -20,8 +71,8 @@
     @case('user')
         <td title="{{ $model->name }}">
             <div class="flex items-center gap-2.5">
-                <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}" alt="{{ $model->name }}"
-                    class="rounded-full size-9 shrink-0">
+                <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
+                    alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
                 <div class="flex flex-col">
                     <a class="text-sm font-medium text-mono hover:text-primary mb-px" href="#">
                         {!! highlightSearch($model->name ?? '--', $search) !!}
@@ -35,14 +86,67 @@
     @break
 
     @case('photo')
-        <td title="{{ $model->name }}">
+        <td title="{{ $model->name ?? '' }}">
             <div class="relative w-fit">
-                <img src="{{ $model->photo && checkExistFile($model->photo) ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
-                    alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
+                @if ($model->photo && checkExistFile($model->photo))
+                    <img src="{{ asset('storage/' . $model->photo) }}" alt="{{ $model->name }}"
+                        class="rounded-full size-9 shrink-0">
+                @elseif (!empty($model->emoji))
+                    {{-- Show flag emoji as avatar fallback for countries --}}
+                    @if(!empty($model->iso2))
+                        <div class="flex items-center justify-center size-9 shrink-0 select-none overflow-hidden rounded-full shadow-sm bg-gray-50 border border-gray-100 dark:border-gray-800" title="{{ $model->emoji }}">
+                            <img src="{{ asset('assets/media/flags/' . strtolower($model->iso2) . '.svg') }}" alt="{{ $model->emoji }}" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                    @else
+                        <div class="flex items-center justify-center size-9 rounded-full bg-gray-100 dark:bg-gray-700 text-2xl shrink-0 select-none leading-none"
+                            title="{{ $model->emoji }}">
+                            {{ $model->emoji }}
+                        </div>
+                    @endif
+                @elseif (!empty($model->flag_emoji))
+                    @if(!empty($model->iso2))
+                        <div class="flex items-center justify-center size-9 shrink-0 select-none overflow-hidden rounded-full shadow-sm bg-gray-50 border border-gray-100 dark:border-gray-800" title="{{ $model->flag_emoji }}">
+                            <img src="{{ asset('assets/media/flags/' . strtolower($model->iso2) . '.svg') }}" alt="{{ $model->flag_emoji }}" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                    @else
+                        <div class="flex items-center justify-center size-9 rounded-full bg-gray-100 dark:bg-gray-700 text-2xl shrink-0 select-none leading-none"
+                            title="{{ $model->flag_emoji }}">
+                            {{ $model->flag_emoji }}
+                        </div>
+                    @endif
+                @else
+                    <img src="{{ asset('metronic/media/avatars/blank.png') }}" alt="{{ $model->name }}"
+                        class="rounded-full size-9 shrink-0">
+                @endif
                 @if (isset($models) && $models && $models == 'users')
-                    <span class="real-active {{ $model->user_status == 'online' ? 'active heartbeat' : '' }} user-heartbeat-{{ $model->id }}"></span>
+                    <span
+                        class="real-active {{ $model->user_status == 'online' ? 'active heartbeat' : '' }} user-heartbeat-{{ $model->id }}"></span>
                 @endif
             </div>
+        </td>
+    @break
+
+    @case('emoji')
+    @case('flag_emoji')
+        <td title="{{ $model->name ?? '' }}">
+            @php $flagValue = $model->emoji ?? $model->flag_emoji ?? null; @endphp
+            @if ($flagValue)
+                <div class="flex items-center gap-2">
+                    @if(!empty($model->iso2))
+                        <img src="{{ asset('assets/media/flags/' . strtolower($model->iso2) . '.svg') }}" alt="{{ $flagValue }}" class="h-[24px]" title="{{ $model->iso2 }}" loading="lazy">
+                    @else
+                        <span class="text-3xl leading-none select-none" title="{{ $model->iso2 ?? '' }}">{{ $flagValue }}</span>
+                    @endif
+                    @if (!empty($model->iso2))
+                        <span class="text-xs font-mono text-gray-400">{{ $model->iso2 }}</span>
+                    @endif
+                </div>
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">--</i>
+                </div>
+            @endif
         </td>
     @break
 
@@ -50,7 +154,8 @@
         <td title="{{ $model->main_image }}">
             <div class="relative w-fit">
                 @if (Str::isUrl($model->main_image))
-                    <img src="{{ $model->main_image }}" alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}"
+                    <img src="{{ $model->main_image }}"
+                        alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}"
                         class="rounded-full size-9 shrink-0">
                 @else
                     <img src="{{ $model->main_image && checkExistFile($model->main_image) ? asset('storage/' . $model->main_image) : asset('metronic/media/avatars/blank.png') }}"
@@ -61,7 +166,8 @@
     @break
 
     @case('gallery')
-        <td title="{{ __('main.gallery') }} - {{ __('main.total_images') }}: {{ $model->gallery ? count($model->gallery) : 0 }}">
+        <td
+            title="{{ __('main.gallery') }} - {{ __('main.total_images') }}: {{ $model->gallery ? count($model->gallery) : 0 }}">
             <div class="relative w-fit">
                 <div class="flex items-center -space-x-2">
                     @if ($model->gallery && count($model->gallery) > 0)
@@ -70,15 +176,18 @@
                                 @break
                             @endif
                             <img src="{{ $image && checkExistFile($image) ? asset('storage/' . $image) : asset('metronic/media/avatars/blank.png') }}"
-                                alt="{{ $image }}" class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
+                                alt="{{ $image }}"
+                                class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
                         @endforeach
                         @if (count($model->gallery) > 5)
-                            <div class="h-fit inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                            <div
+                                class="h-fit inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                                 +{{ count($model->gallery) - 5 }}
                             </div>
                         @endif
                     @else
-                        <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                        <div
+                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                             <i class="opacity-25">{{ __('main.null') }}</i>
                         </div>
                     @endif
@@ -91,7 +200,8 @@
         @php
             $galleryImages = $model->media->where('collection_name', 'gallery')->all() ?? [];
         @endphp
-        <td title="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }} - {{ __('main.total_images') }}: {{ count($galleryImages) }}">
+        <td
+            title="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }} - {{ __('main.total_images') }}: {{ count($galleryImages) }}">
             <div class="relative w-fit">
                 <div class="flex items-center -space-x-2">
                     @if (count($galleryImages) > 0)
@@ -100,20 +210,24 @@
                                 @break
                             @endif
                             @if (Str::isUrl($image->file_path))
-                                <img src="{{ $image->file_path }}" alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}"
+                                <img src="{{ $image->file_path }}"
+                                    alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}"
                                     class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
                             @else
                                 <img src="{{ $image->file_path && checkExistFile($image->file_path) ? asset('storage/' . $image->file_path) : asset('metronic/media/avatars/blank.png') }}"
-                                    alt="{{ $image->file_path }}" class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
+                                    alt="{{ $image->file_path }}"
+                                    class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
                             @endif
                         @endforeach
                         @if (count($galleryImages) > 5)
-                            <div class="h-fit inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                            <div
+                                class="h-fit inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                                 +{{ count($galleryImages) - 5 }}
                             </div>
                         @endif
                     @else
-                        <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                        <div
+                            class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                             <i class="opacity-25">{{ __('main.null') }}</i>
                         </div>
                     @endif
@@ -147,17 +261,89 @@
     @break
 
     @case('email')
+    @case('moduleAssignments')
+        <td title="{{ __('main.modules') }}">
+            <div class="flex flex-wrap gap-1 items-center">
+                @if ($model->moduleAssignments && $model->moduleAssignments->count() > 0)
+                    @php
+                        $moduleColors = [
+                            'tourists' => 'bg-info/10 text-info',
+                            'hotels' => 'bg-success/10 text-success',
+                            'transportation' => 'bg-warning/10 text-warning',
+                            'restaurants' => 'bg-danger/10 text-danger',
+                            'tours' => 'bg-primary/10 text-primary',
+                        ];
+                    @endphp
+                    @foreach ($model->moduleAssignments as $assignment)
+                        @php
+                            $colorClass = $moduleColors[$assignment->module_name] ?? 'bg-secondary/10 text-secondary';
+                        @endphp
+                        <span class="inline-block {{ $colorClass }} text-xs font-medium px-2 py-0.5 rounded-[7px]">
+                            {{ \Modules\Core\Entities\PricingDefinition::getAvailableModules()[$assignment->module_name] ?? $assignment->module_name }}
+                        </span>
+                    @endforeach
+                @else
+                    <div
+                        class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] user-select-none">
+                        <i class="opacity-25">{{ __('main.none') }}</i>
+                    </div>
+                @endif
+                
+                @if(isset($models) && $models === 'dashboard.core.pricing-definitions' && (getActiveUser()->hasRole('superadmin') || getActiveUser()->can('update', $model)))
+                    <button type="button" wire:click="openQuickEdit({{ $model->id }})" class="btn btn-icon btn-sm btn-light-primary ms-1" title="{{ __('main.quick_edit') }}">
+                        <i class="ki-outline ki-pencil fs-6"></i>
+                    </button>
+                @endif
+            </div>
+        </td>
+    @break
+
+    @case('email')
         <td title="{{ $model->email }}">
-            <a href="mailto:{{ $model->email }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="mailto:{{ $model->email }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->email ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
         </td>
     @break
 
+    @case('latitude')
+        <td title="{{ $model->latitude }}">
+            <div class="flex items-center gap-2">
+                <span>{!! highlightSearch($model->latitude ?? '--', $search) !!}</span>
+                @if($model->latitude && $model->longitude)
+                    <button type="button" class="btn btn-icon btn-sm btn-light-primary" 
+                        x-data 
+                        @click="$dispatch('open-map-modal', { lat: '{{ $model->latitude }}', lng: '{{ $model->longitude }}', title: {{ Js::from($model->name ?? $model->title ?? __('main.location')) }} })"
+                        title="{{ __('main.view_on_map') }}">
+                        <i class="ki-filled ki-geolocation"></i>
+                    </button>
+                @endif
+            </div>
+        </td>
+    @break
+
+    @case('longitude')
+        <td title="{{ $model->longitude }}">
+            <div class="flex items-center gap-2">
+                <span>{!! highlightSearch($model->longitude ?? '--', $search) !!}</span>
+                @if($model->latitude && $model->longitude)
+                    <button type="button" class="btn btn-icon btn-sm btn-light-primary" 
+                        x-data 
+                        @click="$dispatch('open-map-modal', { lat: '{{ $model->latitude }}', lng: '{{ $model->longitude }}', title: {{ Js::from($model->name ?? $model->title ?? __('main.location')) }} })"
+                        title="{{ __('main.view_on_map') }}">
+                        <i class="ki-filled ki-geolocation"></i>
+                    </button>
+                @endif
+            </div>
+        </td>
+    @break
+
     @case('email01')
         <td title="{{ $model->email01 }}">
-            <a href="mailto:{{ $model->email01 }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="mailto:{{ $model->email01 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->email01 ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -166,7 +352,8 @@
 
     @case('email_01')
         <td title="{{ $model->email_01 }}">
-            <a href="mailto:{{ $model->email_01 }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="mailto:{{ $model->email_01 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->email_01 ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -175,7 +362,8 @@
 
     @case('email02')
         <td title="{{ $model->email02 }}">
-            <a href="mailto:{{ $model->email02 }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="mailto:{{ $model->email02 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->email02 ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -184,7 +372,8 @@
 
     @case('email_02')
         <td title="{{ $model->email_02 }}">
-            <a href="mailto:{{ $model->email_02 }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="mailto:{{ $model->email_02 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->email_02 ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -196,7 +385,8 @@
             @if (isset($model->description) && !empty($model->description))
                 {!! highlightSearch(limitedText(strip_tags($model->description ?? '--'), 30), $search) !!}
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -208,7 +398,8 @@
             @if (isset($model->description_ar) && !empty($model->description_ar))
                 {!! highlightSearch(limitedText(strip_tags($model->description_ar ?? '--'), 30), $search) !!}
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -220,7 +411,8 @@
             @if (isset($model->address) && !empty($model->address))
                 {!! highlightSearch(limitedText(strip_tags($model->address ?? '--'), 30), $search) !!}
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -232,7 +424,8 @@
             @if (isset($model->address_ar) && !empty($model->address_ar))
                 {!! highlightSearch(limitedText(strip_tags($model->address_ar ?? '--'), 30), $search) !!}
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -244,7 +437,8 @@
             @if (isset($model->notes) && !empty($model->notes))
                 {!! highlightSearch(limitedText(strip_tags($model->notes ?? '--'), 30), $search) !!}
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -256,7 +450,8 @@
             @if (isset($model->notes_ar) && !empty($model->notes_ar))
                 {!! highlightSearch(limitedText(strip_tags($model->notes_ar ?? '--'), 30), $search) !!}
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -268,7 +463,8 @@
             @if (isset($model->review) && !empty($model->review))
                 {!! highlightSearch(limitedText(strip_tags($model->review ?? '--'), 30), $search) !!}
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -307,7 +503,8 @@
 
     @case('phone')
         <td title="{{ $model->phone }}">
-            <a href="tel:{{ $model->phone }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->phone ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -316,7 +513,8 @@
 
     @case('mobile')
         <td title="{{ $model->mobile }}">
-            <a href="tel:{{ $model->mobile }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->mobile }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->mobile ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -325,7 +523,8 @@
 
     @case('mobile01')
         <td title="{{ $model->mobile01 }}">
-            <a href="tel:{{ $model->mobile01 }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->mobile01 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->mobile01 ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -334,7 +533,8 @@
 
     @case('mobile_01')
         <td title="{{ $model->mobile_01 }}">
-            <a href="tel:{{ $model->mobile_01 }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->mobile_01 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->mobile_01 ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -343,7 +543,8 @@
 
     @case('mobile02')
         <td title="{{ $model->mobile02 }}">
-            <a href="tel:{{ $model->mobile02 }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->mobile02 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->mobile02 ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -352,7 +553,8 @@
 
     @case('mobile_02')
         <td title="{{ $model->mobile_02 }}">
-            <a href="tel:{{ $model->mobile_02 }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->mobile_02 }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->mobile_02 ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -361,7 +563,8 @@
 
     @case('primary_phone')
         <td title="{{ $model->primary_phone }}">
-            <a href="tel:{{ $model->primary_phone }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->primary_phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->primary_phone ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -370,7 +573,8 @@
 
     @case('secondary_phone')
         <td title="{{ $model->secondary_phone }}">
-            <a href="tel:{{ $model->secondary_phone }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->secondary_phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->secondary_phone ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -379,7 +583,8 @@
 
     @case('home_phone')
         <td title="{{ $model->home_phone }}">
-            <a href="tel:{{ $model->home_phone }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->home_phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->home_phone ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -388,7 +593,8 @@
 
     @case('work_phone')
         <td title="{{ $model->work_phone }}">
-            <a href="tel:{{ $model->work_phone }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->work_phone }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->work_phone ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -397,7 +603,8 @@
 
     @case('work_phone_ext')
         <td title="{{ $model->work_phone_ext }}">
-            <a href="tel:{{ $model->work_phone_ext }}" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <a href="tel:{{ $model->work_phone_ext }}"
+                class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                 {!! highlightSearch(limitedText($model->work_phone_ext ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
@@ -454,7 +661,9 @@
         <td title="{{ __('main.' . $model->client_type == 'individual' ? 'individual' : 'corporate') }}">
             <span
                 class="inline-block text-white bg-{{ $model->client_type == 'individual' ? 'yellow-400' : 'blue-600' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! $model->client_type == 'individual' ? highlightSearch(__('main.individual'), $search) : highlightSearch(__('main.corporate'), $search) !!}
+                {!! $model->client_type == 'individual'
+                    ? highlightSearch(__('main.individual'), $search)
+                    : highlightSearch(__('main.corporate'), $search) !!}
             </span>
         </td>
     @break
@@ -564,12 +773,14 @@
     @case('website')
         <td title="{{ $model->website ?? '--' }}">
             @if ($model->website)
-                <a href="{{ $model->website }}" target="_blank" class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                <a href="{{ $model->website }}" target="_blank"
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText($model->website ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -585,7 +796,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -601,7 +813,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -617,7 +830,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -633,7 +847,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -649,7 +864,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -665,7 +881,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -681,7 +898,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -697,7 +915,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -713,7 +932,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1194,7 +1414,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1210,7 +1431,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1226,7 +1448,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1242,7 +1465,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1258,7 +1482,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1300,7 +1525,8 @@
                     {!! highlightSearch(limitedText($model->site_type ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1314,7 +1540,8 @@
                     {!! highlightSearch(limitedText($model->difficulty_level ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1330,7 +1557,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
             @else
-                <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <span
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.unknown') }}</i>
                 </span>
             @endif
@@ -1346,7 +1574,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
             @else
-                <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <span
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.unknown') }}</i>
                 </span>
             @endif
@@ -1355,7 +1584,9 @@
 
     @case('accommodation')
         <td title="{{ $model->accommodation?->id . ' - ' . optional($model->accommodation)->name ?? '--' }}">
-            {!! $model->accommodation?->id . ' - ' . highlightSearch(limitedText(optional($model->accommodation)->name ?? '--', 30), $search) !!}
+            {!! $model->accommodation?->id .
+                ' - ' .
+                highlightSearch(limitedText(optional($model->accommodation)->name ?? '--', 30), $search) !!}
         </td>
     @break
 
@@ -1386,7 +1617,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1421,7 +1653,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1444,7 +1677,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1467,7 +1701,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1490,7 +1725,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1513,7 +1749,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1525,7 +1762,10 @@
             @if ($model->contacts && $model->contacts->count() > 0)
                 @foreach ($model->contacts->take(3) as $contact)
                     <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                        {!! highlightSearch(limitedText($contact->contact_person . ' (' . $contact->department . ') - ' . $contact->phone ?? '--', 30), $search) !!}
+                        {!! highlightSearch(
+                            limitedText($contact->contact_person . ' (' . $contact->department . ') - ' . $contact->phone ?? '--', 30),
+                            $search,
+                        ) !!}
                     </span>
                 @endforeach
                 @if ($model->contacts->count() > 3)
@@ -1534,7 +1774,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1555,7 +1796,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1576,7 +1818,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1618,7 +1861,8 @@
                     </span>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1639,7 +1883,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1660,7 +1905,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1681,7 +1927,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1702,7 +1949,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1742,7 +1990,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1756,7 +2005,8 @@
                     {!! highlightSearch(limitedText(__('main.' . modelTypeToString($model->model_type, '-')) ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1766,13 +2016,14 @@
     @case('model')
         <td title="{{ optional($model->model)->name ?? '--' }}">
             @if ($model->model)
-                <a href="{{ route(modelTypeToRoute($model->model_type, true, '.') . '.show', $model->model->id) }}"
+                <a href="{{ route('dashboard.' . modelTypeToRoute($model->model_type, true, '.') . '.show', $model->model->id) }}"
                     class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
                     {!! highlightSearch(limitedText(optional($model->model)->name ?? '--', 30), $search) !!}
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1794,7 +2045,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1810,7 +2062,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1833,7 +2086,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1849,7 +2103,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1865,7 +2120,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1881,7 +2137,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1897,7 +2154,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1913,7 +2171,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1929,7 +2188,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1945,7 +2205,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1961,7 +2222,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1977,7 +2239,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -1993,7 +2256,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -2009,7 +2273,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -2025,7 +2290,8 @@
                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                 </a>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -2049,7 +2315,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -2059,7 +2326,10 @@
     @case('type')
         <td title="{{ is_string($model->type) ? $model->type : optional($model->type)->name ?? '--' }}">
             <span class="kt-badge kt-badge-info">
-                {!! highlightSearch(limitedText(is_string($model->type) ? $model->type : optional($model->type)->name ?? '--', 30), $search) !!}
+                {!! highlightSearch(
+                    limitedText(is_string($model->type) ? $model->type : optional($model->type)->name ?? '--', 30),
+                    $search,
+                ) !!}
             </span>
         </td>
     @break
@@ -2086,7 +2356,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -2109,7 +2380,8 @@
                     </div>
                 @endif
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -2119,11 +2391,13 @@
     @case('all_states')
         <td title="{{ $model->all_states == 1 ? 'all' : '--' }}">
             @if ($model->all_states == 1)
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     {!! highlightSearch(limitedText($model->all_states == 1 ? __('main.yes') : '--', 30), $search) !!}
                 </div>
             @else
-                <div class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     {!! highlightSearch(limitedText(__('main.no'), 30), $search) !!}
                 </div>
             @endif
@@ -2133,11 +2407,13 @@
     @case('all_cities')
         <td title="{{ $model->all_cities == 1 ? 'all' : '--' }}">
             @if ($model->all_cities == 1)
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     {!! highlightSearch(limitedText($model->all_cities == 1 ? __('main.yes') : '--', 30), $search) !!}
                 </div>
             @else
-                <div class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     {!! highlightSearch(limitedText(__('main.no'), 30), $search) !!}
                 </div>
             @endif
@@ -2147,11 +2423,13 @@
     @case('is_global')
         <td title="{{ $model->is_global == 1 ? __('main.yes') : __('main.no') }}">
             @if ($model->is_global == 1)
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     {!! highlightSearch(limitedText($model->is_global == 1 ? __('main.yes') : __('main.no'), 30), $search) !!}
                 </div>
             @else
-                <div class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-danger/10 text-red-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     {!! highlightSearch(limitedText($model->is_global == 1 ? __('main.yes') : __('main.no'), 30), $search) !!}
                 </div>
             @endif
@@ -2161,11 +2439,13 @@
     @case('is_read')
         <td title="{{ $model->is_read == 1 ? __('main.read') : __('main.unread') }}">
             @if ($model->is_read == 1 && $model->read_at)
-                <div class="inline-block bg-gray/10 text-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-gray/10 text-gray-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     {!! highlightSearch(limitedText($model->is_read == 1 ? __('main.readed') : __('main.unreaded'), 30), $search) !!}
                 </div>
             @else
-                <div class="inline-block bg-primary/10 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     {!! highlightSearch(limitedText($model->is_read == 1 ? __('main.read') : __('main.unread'), 30), $search) !!}
                 </div>
             @endif
@@ -2213,14 +2493,21 @@
         <td title="{{ __('main.' . $model->client_type == 'individual' ? 'individual' : 'corporate') }}">
             <span
                 class="inline-block text-white bg-{{ $model->client_type == 'individual' ? 'yellow-400' : 'blue-600' }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! $model->client_type == 'individual' ? highlightSearch(__('main.individual'), $search) : highlightSearch(__('main.corporate'), $search) !!}
+                {!! $model->client_type == 'individual'
+                    ? highlightSearch(__('main.individual'), $search)
+                    : highlightSearch(__('main.corporate'), $search) !!}
             </span>
         </td>
     @break
 
     @case('client_status')
         @php
-            $color = $model->client_status == 'active' ? 'active' : ($model->client_status == 'inactive' ? 'inactive' : 'blacklisted');
+            $color =
+                $model->client_status == 'active'
+                    ? 'active'
+                    : ($model->client_status == 'inactive'
+                        ? 'inactive'
+                        : 'blacklisted');
         @endphp
         <td title="{{ __('main.' . $model->client_status) }}">
             <span class="inline-block text-white bg-{{ $color }} text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
@@ -2235,8 +2522,11 @@
 
     @case('gender')
         <td title="{{ $model->gender == 'male' ? __('main.male') : __('main.female') }}">
-            <span class="inline-block bg-{{ $model->gender == 'male' ? 'primary' : 'pink' }} text-white text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! $model->gender == 'male' ? highlightSearch(__('main.male'), $search) : highlightSearch(__('main.female'), $search) !!}
+            <span
+                class="inline-block bg-{{ $model->gender == 'male' ? 'primary' : 'pink' }} text-white text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
+                {!! $model->gender == 'male'
+                    ? highlightSearch(__('main.male'), $search)
+                    : highlightSearch(__('main.female'), $search) !!}
             </span>
         </td>
     @break
@@ -2261,7 +2551,9 @@
         <td title="{{ $model->is_active == 1 ? __('main.active') : __('main.inactive') }}">
             <div class="relative">
                 <span class="text-{{ $model->is_active == 1 ? 'green' : 'red' }}-600 font-semibold">
-                    {!! $model->is_active == 1 ? highlightSearch(__('main.active'), $search) : highlightSearch(__('main.inactive'), $search) !!}
+                    {!! $model->is_active == 1
+                        ? highlightSearch(__('main.active'), $search)
+                        : highlightSearch(__('main.inactive'), $search) !!}
                 </span>
             </div>
         </td>
@@ -3204,7 +3496,8 @@
                     {!! highlightSearch(limitedText(optional($model)->summer_opening_time ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -3219,7 +3512,8 @@
                     {!! highlightSearch(limitedText(optional($model)->summer_closing_time ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -3234,7 +3528,8 @@
                     {!! highlightSearch(limitedText(optional($model)->winter_opening_time ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -3249,7 +3544,8 @@
                     {!! highlightSearch(limitedText(optional($model)->winter_closing_time ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -3264,7 +3560,8 @@
                     {!! highlightSearch(limitedText(optional($model)->best_visit_time ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -3279,7 +3576,8 @@
                     {!! highlightSearch(limitedText(optional($model)->opening_time ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
@@ -3294,10 +3592,66 @@
                     {!! highlightSearch(limitedText(optional($model)->closing_time ?? '--', 30), $search) !!}
                 </span>
             @else
-                <div class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
                     <i class="opacity-25">{{ __('main.null') }}</i>
                 </div>
             @endif
+        </td>
+    @break
+
+    @case('category')
+        @php
+            $categoryLabels = [
+                'pricing_unit' => __('main.pricing_unit'),
+                'pricing_type' => __('main.pricing_type'),
+                'site_type' => __('main.site_type'),
+                'site_category' => __('main.site_category'),
+                'site_theme' => __('main.site_theme'),
+                'supplier_type' => __('main.supplier_type'),
+            ];
+            $categoryColors = [
+                'pricing_unit' => 'bg-blue-100 text-blue-700',
+                'pricing_type' => 'bg-indigo-100 text-indigo-700',
+                'site_type' => 'bg-green-100 text-green-700',
+                'site_category' => 'bg-yellow-100 text-yellow-800',
+                'site_theme' => 'bg-purple-100 text-purple-700',
+                'supplier_type' => 'bg-red-100 text-red-700',
+            ];
+        @endphp
+        <td title="{{ $model->category }}">
+            @if ($model->category)
+                <span
+                    class="inline-block {{ $categoryColors[$model->category] ?? 'bg-gray-100 text-gray-700' }} text-xs font-medium px-2 py-0.5 rounded-[7px]">
+                    {{ $categoryLabels[$model->category] ?? $model->category }}
+                </span>
+            @else
+                <div
+                    class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2 user-select-none">
+                    <i class="opacity-25">{{ __('main.null') }}</i>
+                </div>
+            @endif
+        </td>
+    @break
+
+    @case('is_active')
+    @case('is_base_currency')
+    @case('is_major_currency')
+    @case('is_auto_update')
+    @case('auto_update_rate')
+    @case('supports_dst')
+        <td title="{{ __('main.' . $column) }}" wire:ignore>
+            @livewire(
+                'toggle-switch',
+                [
+                    'modelId' => $model->id,
+                    'modelType' => get_class($model),
+                    'field' => $column,
+                    'value' => (bool) $model->$column,
+                    'table' => $models ?? '',
+                ],
+                key('toggle-' . $model->id . '-' . $column)
+            )
         </td>
     @break
 

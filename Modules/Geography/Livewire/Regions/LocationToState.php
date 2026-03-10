@@ -13,9 +13,7 @@ class LocationToState extends Component
     public $selectedCities = [];
     public $filters = ['country' => null];
     public $options = ['countries' => []];
-    protected array $map = [
-        'country' => ['model' => City::class, 'foreign' => 'country_id', 'target' => 'cities'],
-    ];
+    protected array $map = [];
 
     public function mount($record = null, $multiple = null)
     {

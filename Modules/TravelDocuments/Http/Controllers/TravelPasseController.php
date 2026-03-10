@@ -2,7 +2,7 @@
 
 namespace Modules\TravelDocuments\Http\Controllers;
 
-use Modules\Tourists\Entities\TouristSite;
+use Modules\TouristSites\Entities\TouristSite;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
 use Modules\TravelDocuments\Entities\TravelPasse;

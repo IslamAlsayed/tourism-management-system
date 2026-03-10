@@ -60,6 +60,7 @@ class Companies extends Component
         }
 
         Company::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Company::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -72,21 +73,13 @@ class Companies extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Company::class, $cols, 'transportations-companies');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Company::class, $cols, 'transportations-companies');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Company::class, $cols, 'transportations-companies', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Company::class, $cols, 'transportations-companies', $extension);
     }
 
     public function render()
@@ -98,3 +91,4 @@ class Companies extends Component
         return view('transportation::livewire.companies', ['data' => $data, 'totalCount' => $this->totalCount ?: Company::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

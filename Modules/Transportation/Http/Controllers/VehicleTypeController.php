@@ -27,6 +27,10 @@ class VehicleTypeController extends Controller
         $vehicleType = VehicleType::create($data);
         if (!$vehicleType)
             return redirect()->route('transportation.vehicle-types.index')->withError(__('messages.type_creation_failed', ['type' => __('main.transportation-vehicle-type')]));
+        
+        if ($request->has('custom_fields')) {
+            $vehicleType->saveCustomFields($request->custom_fields);
+        }
         return $request->has('save_and_add')
             ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.transportation-vehicle-type')]))
             : redirect()->route('transportation.vehicle-types.index')->withSuccess(__('messages.type_created', ['type' => __('main.transportation-vehicle-type')]));
@@ -56,6 +60,11 @@ class VehicleTypeController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportation-vehicle-type')]));
         $data = $request->validated();
         $updated = $vehicleType->update($data);
+
+        if ($request->has('custom_fields')) {
+            $vehicleType->saveCustomFields($request->custom_fields);
+        }
+
         return $updated
             ? redirect()->route('transportation.vehicle-types.index')->withSuccess(__('messages.type_updated', ['type' => __('main.transportation-vehicle-type')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.transportation-vehicle-type')]));

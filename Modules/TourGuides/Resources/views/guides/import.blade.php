@@ -95,7 +95,8 @@
             <table class="border min-w-full divide-y text-center divide-gray-200 mb-4">
                 <thead class="bg-blue-100">
                     <tr>
-                        <th class="border px-2">birth_year</th>
+                        <th class="border px-2">birth_date</th>
+                        <th class="border px-2">age</th>
                         <th class="border px-2">national_guide_id</th>
                         <th class="border px-2">currency_id</th>
                         <th class="border px-2">tourism_ministry_code</th>
@@ -105,7 +106,8 @@
                 </thead>
                 <tbody class="background divide-y divide-gray-200">
                     <tr>
-                        <td class="border px-2">1990</td>
+                        <td class="border px-2">1990-01-01</td>
+                        <td class="border px-2">35</td>
                         <td class="border px-2">12345</td>
                         <td class="border px-2">1</td>
                         <td class="border px-2">TM-001</td>

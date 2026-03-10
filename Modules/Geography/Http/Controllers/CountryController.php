@@ -65,7 +65,7 @@ class CountryController extends Controller
         if (!$country)
             return redirect()->route('dashboard.geography.countries.index')->withError(__('messages.type_update_failed', ['type' => __('main.country')]));
         $validated = $request->validated();
-        if ($request->input('remove_photo') && $request->hasFile('photo')) {
+        if ($request->hasFile('photo')) {
             $this->uploadSinglePhoto($request, $country, 'photo', 'countries');
         }
         $updated = $country->update($validated);
@@ -85,21 +85,4 @@ class CountryController extends Controller
             : redirect()->route('dashboard.geography.countries.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.country')]));
     }
 
-    public function bulkEdit(Request $request)
-    {
-        $action = $request->input('bulk_action');
-        $ids = $request->input('selected_ids', []);
-
-        if (empty($ids) || !$action) {
-            return redirect()->back()->withError(__('messages.select_countries_and_action'));
-        }
-
-        switch ($action) {
-            case 'delete':
-                $deleted = Country::whereIn('id', $ids)->delete();
-                return redirect()->back()->withSuccess(__('messages.countries_deleted', ['count' => $deleted]));
-            default:
-                return redirect()->back()->withError(__('messages.unknown_action'));
-        }
-    }
 }

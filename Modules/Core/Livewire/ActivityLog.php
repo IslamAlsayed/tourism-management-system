@@ -134,6 +134,7 @@ class ActivityLog extends Component
         }
 
         Activity::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Activity::class);
         $count = count($this->selectedIds);
         $this->afterMutation();
 
@@ -154,6 +155,17 @@ class ActivityLog extends Component
         ]);
     }
 
+    public function clearAll()
+    {
+        Activity::query()->delete();
+        $this->afterMutation();
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => __('activity.activity_log_cleared', ['type' => 'All']),
+        ]);
+    }
+
     protected function afterMutation()
     {
         $this->reset(['selectedIds', 'selectPage']);
@@ -165,7 +177,8 @@ class ActivityLog extends Component
 
     protected function currentPageActivityIds(): Collection
     {
-        $paginator = $this->getQuery()->paginate(getPaginate());
+        $paginate = min(getPaginate() ?: 50, 50);
+        $paginator = $this->getQuery()->paginate($paginate);
         return $paginator->getCollection()->pluck('id');
     }
 
@@ -381,8 +394,9 @@ class ActivityLog extends Component
 
     public function render()
     {
+        $paginate = min(getPaginate() ?: 50, 50);
         return view('core::livewire.activity-log', [
-            'data' => $this->getQuery()->paginate(getPaginate()),
+            'data' => $this->getQuery()->paginate($paginate),
             'logNames' => $this->availableLogNames(),
             'events' => $this->availableEvents(),
             'users' => $this->availableUsers(),
@@ -391,3 +405,4 @@ class ActivityLog extends Component
         ]);
     }
 }
+

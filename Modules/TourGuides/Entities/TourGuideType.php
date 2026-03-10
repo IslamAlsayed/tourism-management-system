@@ -4,6 +4,7 @@ namespace Modules\TourGuides\Entities;
 
 use App\Traits\HasUuid;
 use App\Traits\HasSearch;
+use App\Traits\HasCustomFields;
 use App\Traits\FiltersByUserRole;
 use App\Traits\ClearsEmptyRichText;
 use Modules\Geography\Entities\City;
@@ -16,7 +17,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class TourGuideType extends Model
 {
-    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText, HasCustomFields;
     protected $richTextAttributes = [
         'description',
         'notes',

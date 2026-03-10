@@ -6,8 +6,10 @@ use \Modules\Geography\Entities\Country;
 use Modules\Core\Entities\User;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
-use App\Http\Requests\User\StoreRequest;
-use App\Http\Requests\User\UpdateRequest;
+use Modules\Core\Http\Requests\User\StoreRequest;
+use Modules\Core\Http\Requests\User\UpdateRequest;
+
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {

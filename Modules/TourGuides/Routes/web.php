@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\TourGuides\Http\Controllers\GuideController;
 use Modules\TourGuides\Http\Controllers\GuideTypeController;
 use Modules\TourGuides\Http\Controllers\GuideReviewController;
+use Modules\TourGuides\Http\Controllers\SeasonController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,4 +28,7 @@ Route::prefix('dashboard/tourguides')->name('dashboard.tourguides.')->middleware
 
     // === TOUR GUIDE REVIEW MANAGEMENT ===
     Route::resource('guides-reviews', GuideReviewController::class)->names('guides-reviews');
+
+    // === SEASONS MANAGEMENT ===
+    Route::resource('seasons', SeasonController::class)->names('seasons');
 });

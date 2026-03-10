@@ -68,7 +68,15 @@ if (!function_exists('setUserStatus')) {
 if (!function_exists('getActiveSettings')) {
     function getActiveSettings()
     {
-        return Setting::first() ?? [];
+        static $cached = null;
+        static $resolved = false;
+
+        if (!$resolved) {
+            $cached = Setting::first();
+            $resolved = true;
+        }
+
+        return $cached;
     }
 }
 
@@ -331,8 +339,8 @@ if (!function_exists('generateCode')) {
 if (!function_exists('getPaginate')) {
     function getPaginate()
     {
-        $settings = Setting::first();
-        return (int) session('paginate_count', $settings->app_paginate_count ?? config('app.paginate_count'));
+        $settings = getActiveSettings();
+        return (int) session('paginate_count', optional($settings)->app_paginate_count ?? config('app.paginate_count'));
     }
 }
 
@@ -859,6 +867,42 @@ if (!function_exists('truncateWithReset')) {
 
         if ($disableForeignKeys) {
             \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+        }
+    }
+}
+
+if (!function_exists('showToastInfoMessage')) {
+    function showToastInfoMessage($message)
+    {
+        if (function_exists('addToastInfo')) {
+            addToastInfo($message);
+        }
+    }
+}
+
+if (!function_exists('showToastSuccessMessage')) {
+    function showToastSuccessMessage($message)
+    {
+        if (function_exists('addToastSuccess')) {
+            addToastSuccess($message);
+        }
+    }
+}
+
+if (!function_exists('showToastWarningMessage')) {
+    function showToastWarningMessage($message)
+    {
+        if (function_exists('addToastWarning')) {
+            addToastWarning($message);
+        }
+    }
+}
+
+if (!function_exists('showToastErrorMessage')) {
+    function showToastErrorMessage($message)
+    {
+        if (function_exists('addToastError')) {
+            addToastError($message);
         }
     }
 }

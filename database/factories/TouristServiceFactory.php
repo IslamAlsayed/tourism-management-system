@@ -3,12 +3,12 @@
 namespace Database\Factories;
 
 use Modules\Localization\Entities\Currency;
-use Modules\Tourists\Entities\TouristSite;
-use Modules\Tourists\Entities\TouristService;
+use Modules\TouristSites\Entities\TouristSite;
+use Modules\TouristServices\Entities\TouristService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\Tourists\Entities\TouristService>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Modules\TouristServices\Entities\TouristService>
  */
 class TouristServiceFactory extends Factory
 {

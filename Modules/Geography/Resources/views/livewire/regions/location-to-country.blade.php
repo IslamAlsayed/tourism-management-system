@@ -8,12 +8,14 @@
                     ({{ count($options['regions']) ?: 0 }})
                 </strong>
             </div>
-            <a href="{{ route('dashboard.geography.regions.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.regions.create') }}"
+                class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
         <select name="region_id" id="region_id" class="kt-select basic-single">
             <option value="" selected>--</option>
             @foreach ($options['regions'] as $item)
-                <option value="{{ $item->id }}" {{ old('region_id', $record->region_id ?? null) == $item->id ? 'selected' : '' }}>
+                <option value="{{ $item->id }}"
+                    {{ old('region_id', $record->region_id ?? null) == $item->id ? 'selected' : '' }}>
                     {{ $item->name }}{{ $item->name_ar ? ' - ' . $item->name_ar : '' }}
                 </option>
             @endforeach
@@ -30,19 +32,23 @@
                 <strong class="dataLength text-primary">
                     ({{ count($options['subregions']) ?: 0 }})
                 </strong>
-                <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading wire:target="filters.region,updatedFilters">
+                <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
+                    wire:target="filters.region,updatedFilters">
                 </i>
-                <span id="subregion_id-info" class="text-red-600 text-sm span-info {{ !hasEmpty($filters['region']) ? 'show' : '' }}">
+                <span id="subregion_id-info"
+                    class="text-red-600 text-sm span-info {{ !hasEmpty($filters['region']) ? 'show' : '' }}">
                     ({{ __('main.select_type_first', ['type' => __('main.region')]) }})
                 </span>
             </div>
 
-            <a href="{{ route('dashboard.geography.subregions.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.subregions.create') }}"
+                class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
-        <select name="subregion_id" id="subregion_id" class="kt-select basic-single" {{ !hasEmpty($filters['region']) ? 'disabled' : '' }}>
+        <select name="subregion_id" id="subregion_id" class="kt-select basic-single" {!! !hasEmpty($filters['region']) ? 'style="pointer-events:none;opacity:0.6;" tabindex="-1"' : '' !!}>
             <option value="" selected>--</option>
             @foreach ($options['subregions'] as $item)
-                <option value="{{ $item->id }}" {{ old('subregion_id', $record->subregion_id ?? null) == $item->id ? 'selected' : '' }}>
+                <option value="{{ $item->id }}"
+                    {{ old('subregion_id', $record->subregion_id ?? null) == $item->id ? 'selected' : '' }}>
                     {{ $item->name }}{{ $item->name_ar ? ' - ' . $item->name_ar : '' }}
                 </option>
             @endforeach

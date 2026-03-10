@@ -17,6 +17,8 @@ use Modules\Geography\Entities\City;
 use Modules\Geography\Entities\Country;
 use Modules\Localization\Entities\Currency;
 use Modules\Transportation\Entities\Company;
+use Modules\WhatsApp\Entities\WhatsAppAccount;
+use Modules\Emails\Entities\EmailAccount;
 
 class DashboardController extends Controller
 {
@@ -30,6 +32,10 @@ class DashboardController extends Controller
             'cities' => City::count(),
             'currencies' => Currency::count(),
             'users' => User::count(),
+            'whatsapp' => WhatsAppAccount::where('status', 'connected')->count(),
+            'whatsapp_total' => WhatsAppAccount::count(),
+            'emails' => EmailAccount::where('is_active', true)->count(),
+            'emails_total' => EmailAccount::count(),
         ];
 
         // showToastSuccessMessage('Welcome to the Dashboard!')->pin();

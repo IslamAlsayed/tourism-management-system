@@ -31,6 +31,7 @@ class SeasonForm extends Component
                             'season_to' => $season->season_to ? \Carbon\Carbon::parse($season->season_to)->format('Y-m-d') : '',
                             'is_active' => $season->is_active,
                             'description' => $season->description,
+                            'notes' => $season->notes,
                         ];
                     })->toArray();
             }
@@ -50,6 +51,7 @@ class SeasonForm extends Component
             'season_to' => '',
             'is_active' => 1,
             'description' => '',
+            'notes' => '',
         ];
         $this->dispatch('record-added');
     }

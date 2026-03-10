@@ -4,13 +4,13 @@ namespace Modules\Restaurants\Http\Controllers;
 
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
-use Modules\Accommodations\Entities\Meal;
-use Modules\Accommodations\Entities\Type;
+use Modules\Geography\Entities\Region;
+use Modules\Geography\Entities\Subregion;
 use Modules\Accommodations\Entities\Season;
 use Modules\Restaurants\Entities\Restaurant;
+use Modules\Restaurants\Entities\RestaurantType;
 use App\Http\Requests\Restaurant\StoreRequest;
 use App\Http\Requests\Restaurant\UpdateRequest;
-use Modules\Accommodations\Entities\Supplement;
 
 class RestaurantController extends Controller
 {
@@ -23,40 +23,54 @@ class RestaurantController extends Controller
 
     public function create()
     {
-        $types = Type::all()->pluck('name', 'id');
-        return view('restaurants::restaurants.create', compact('types'));
+        $types = RestaurantType::where('is_active', true)->pluck('name', 'id');
+        $regions = Region::orderBy('name')->pluck('name', 'id');
+        $subregions = Subregion::orderBy('name')->pluck('name', 'id');
+        return view('restaurants::restaurants.create', compact('types', 'regions', 'subregions'));
     }
 
     public function store(StoreRequest $request)
     {
+        \Log::info('Restaurant Store Payload: ', $request->all());
         $validated = $request->validated();
-        $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons', 'meals', 'supplements']));
+        \Log::info('Restaurant Validated Payload: ', $validated);
+        $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons']));
         $restaurant = Restaurant::create($validated);
         if (!$restaurant)
             return redirect()->route('dashboard.restaurants.index')->withError(__('messages.type_creation_failed', ['type' => __('main.restaurant')]));
         $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
+
+        if ($restaurant && $request->has('custom_fields')) {
+            $restaurant->saveCustomFields($request->custom_fields);
+        }
         // CREATE SEASONS
+        $seasonIdMap = [];
         if (!empty($validated['seasons'])) {
             foreach ($validated['seasons'] as $seasonData) {
-                $validated['model_id'] = $restaurant->id;
-                $validated['model_type'] = Restaurant::class;
-                Season::create($seasonData);
+                $seasonData['model_id'] = $restaurant->id;
+                $seasonData['model_type'] = Restaurant::class;
+                $tempId = $seasonData['id'] ?? null;
+                unset($seasonData['id']); // Prevent attempting to insert string temp ID
+
+                $season = Season::create($seasonData);
+                if ($tempId) {
+                    $seasonIdMap[$tempId] = $season->id;
+                }
             }
         }
+
         // CREATE MEALS
         if (!empty($validated['meals'])) {
             foreach ($validated['meals'] as $mealData) {
-                $validated['model_id'] = $restaurant->id;
-                $validated['model_type'] = Restaurant::class;
-                Meal::create($mealData);
-            }
-        }
-        // CREATE SUPPLEMENTS
-        if (!empty($validated['supplements'])) {
-            foreach ($validated['supplements'] as $supplementData) {
-                $validated['model_id'] = $restaurant->id;
-                $validated['model_type'] = Restaurant::class;
-                Supplement::create($supplementData);
+                $mealData['restaurant_id'] = $restaurant->id;
+                unset($mealData['id']); // Remove temp ID
+                
+                // Swap temporary season ID for real database ID if we just created it
+                if (!empty($mealData['season_id']) && isset($seasonIdMap[$mealData['season_id']])) {
+                    $mealData['season_id'] = $seasonIdMap[$mealData['season_id']];
+                }
+                
+                RestaurantMeal::create($mealData);
             }
         }
         return $request->has('save_and_add')
@@ -77,47 +91,85 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::with((new Restaurant())->getRelationshipNames())->find($id);
         if (!$restaurant)
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.restaurant')]));
-        $types = Type::all()->pluck('name', 'id');
-        return view('restaurants::restaurants.edit', compact('restaurant', 'types'));
+        $types = RestaurantType::where('is_active', true)->pluck('name', 'id');
+        $regions = Region::orderBy('name')->pluck('name', 'id');
+        $subregions = Subregion::orderBy('name')->pluck('name', 'id');
+        return view('restaurants::restaurants.edit', compact('restaurant', 'types', 'regions', 'subregions'));
     }
 
     public function update(UpdateRequest $request, $id)
     {
+        \Log::info('Restaurant Update Payload: ', $request->all());
         $restaurant = Restaurant::find($id);
         if (!$restaurant)
             return redirect()->route('dashboard.restaurants.index')->withError(__('messages.type_not_found', ['type' => __('main.restaurant')]));
         $validated = $request->validated();
-        $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons', 'meals', 'supplements']));
+        $validated = array_merge($validated, $request->safe()->except(['photo', 'seasons']));
         $updated = $restaurant->update($validated);
         if ($request->has('photo')) {
             $this->uploadPhoto($request, $restaurant, 'photo', 'restaurants');
         }
+
+        if ($restaurant && $request->has('custom_fields')) {
+            $restaurant->saveCustomFields($request->custom_fields);
+        }
         // EDIT SEASONS
+        $existingSeasonIds = [];
+        $seasonIdMap = [];
         if (!empty($validated['seasons'])) {
-            $restaurant->seasons()->where('model_type', Restaurant::class)->where('model_id', $restaurant->id)->delete();
             foreach ($validated['seasons'] as $seasonData) {
                 $seasonData['model_id'] = $restaurant->id;
                 $seasonData['model_type'] = Restaurant::class;
-                Season::create($seasonData);
+                
+                if (!empty($seasonData['id']) && is_numeric($seasonData['id'])) {
+                    $season = Season::find($seasonData['id']);
+                    if ($season) {
+                        $season->update($seasonData);
+                        $existingSeasonIds[] = $season->id;
+                    }
+                } else {
+                    $tempId = $seasonData['id'] ?? null;
+                    unset($seasonData['id']);
+                    $season = Season::create($seasonData);
+                    $existingSeasonIds[] = $season->id;
+                    if ($tempId) {
+                        $seasonIdMap[$tempId] = $season->id;
+                    }
+                }
             }
+            $restaurant->seasons()->where('model_type', Restaurant::class)
+                ->where('model_id', $restaurant->id)
+                ->whereNotIn('id', $existingSeasonIds)->delete();
+        } else {
+            $restaurant->seasons()->where('model_type', Restaurant::class)
+                ->where('model_id', $restaurant->id)->delete();
         }
+
         // EDIT MEALS
+        $existingMealIds = [];
         if (!empty($validated['meals'])) {
-            $restaurant->meals()->where('model_type', Restaurant::class)->where('model_id', $restaurant->id)->delete();
             foreach ($validated['meals'] as $mealData) {
-                $mealData['model_id'] = $restaurant->id;
-                $mealData['model_type'] = Restaurant::class;
-                Meal::create($mealData);
+                $mealData['restaurant_id'] = $restaurant->id;
+                
+                if (!empty($mealData['season_id']) && isset($seasonIdMap[$mealData['season_id']])) {
+                    $mealData['season_id'] = $seasonIdMap[$mealData['season_id']];
+                }
+                
+                if (!empty($mealData['id']) && is_numeric($mealData['id'])) {
+                    $meal = RestaurantMeal::find($mealData['id']);
+                    if ($meal) {
+                        $meal->update($mealData);
+                        $existingMealIds[] = $meal->id;
+                    }
+                } else {
+                    unset($mealData['id']);
+                    $meal = RestaurantMeal::create($mealData);
+                    $existingMealIds[] = $meal->id;
+                }
             }
-        }
-        // EDIT SUPPLEMENTS
-        if (!empty($validated['supplements'])) {
-            $restaurant->supplements()->where('model_type', Restaurant::class)->where('model_id', $restaurant->id)->delete();
-            foreach ($validated['supplements'] as $supplementData) {
-                $supplementData['model_id'] = $restaurant->id;
-                $supplementData['model_type'] = Restaurant::class;
-                Supplement::create($supplementData);
-            }
+            $restaurant->meals()->whereNotIn('id', $existingMealIds)->delete();
+        } else {
+            $restaurant->meals()->delete();
         }
         return $updated
             ? redirect()->route('dashboard.restaurants.index')->withSuccess(__('messages.type_updated', ['type' => __('main.restaurant')]))

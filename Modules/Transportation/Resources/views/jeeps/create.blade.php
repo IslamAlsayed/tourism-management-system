@@ -51,11 +51,14 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                             <!-- Provider Company -->
                             <div>
-                                <label for="company_id" class="kt-label required">{{ __('main.transportation_company') }}</label>
-                                <select name="company_id" id="company_id" class="kt-select basic-single" data-control="select2" required>
+                                <label for="company_id"
+                                    class="kt-label required">{{ __('main.transportation_company') }}</label>
+                                <select name="company_id" id="company_id" class="kt-select basic-single"
+                                    data-control="select2" required>
                                     <option value="">{{ __('main.select_company') }}</option>
                                     @foreach ($companies as $company)
-                                        <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>
+                                        <option value="{{ $company->id }}"
+                                            {{ old('company_id') == $company->id ? 'selected' : '' }}>
                                             {{ $company->name }}
                                         </option>
                                     @endforeach
@@ -88,8 +91,9 @@
                             <!-- Route Itinerary (Tagify) -->
                             <div class="col-span-full">
                                 <label for="route_itinerary" class="kt-label">{{ __('main.route_itinerary') }}</label>
-                                <input type="text" name="route_itinerary" id="route_itinerary" class="kt-input h-fit tagify-container"
-                                    value="{{ old('route_itinerary') }}" placeholder="Stop 1, Stop 2, ...">
+                                <input type="text" name="route_itinerary" id="route_itinerary"
+                                    class="kt-input h-fit tagify-container" value="{{ old('route_itinerary') }}"
+                                    placeholder="Stop 1, Stop 2, ...">
                                 <span class="text-xs text-gray-500 mt-1">{{ __('main.tagify_desc') }}</span>
                             </div>
 
@@ -101,7 +105,8 @@
                                             {{ __('main.origin_city') }}
                                             <span class="text-red-600 text-2xl">*</span>
                                         </label>
-                                        <select name="origin_city_id" id="origin_city_id" class="kt-select basic-single cities-select" required>
+                                        <select name="origin_city_id" id="origin_city_id"
+                                            class="kt-select basic-single cities-select" required>
                                             <option value="" selected>--</option>
                                         </select>
                                         @error('origin_city_id')
@@ -115,7 +120,8 @@
                                             {{ __('main.destination_city') }}
                                             <span class="text-red-600 text-2xl">*</span>
                                         </label>
-                                        <select name="destination_city_id" id="destination_city_id" class="kt-select basic-single cities-select" required>
+                                        <select name="destination_city_id" id="destination_city_id"
+                                            class="kt-select basic-single cities-select" required>
                                             <option value="" selected>--</option>
                                         </select>
                                         @error('destination_city_id')
@@ -128,15 +134,19 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div class="flex gap-2">
                                         <div class="flex-grow">
-                                            <label for="duration" class="kt-label required">{{ __('main.duration') }}</label>
-                                            <input type="number" step="0.1" name="duration" id="duration" class="kt-input h-[45px]"
-                                                value="{{ old('duration') }}" required>
+                                            <label for="duration"
+                                                class="kt-label required">{{ __('main.duration') }}</label>
+                                            <input type="number" step="0.1" name="duration" id="duration"
+                                                class="kt-input h-[45px]" value="{{ old('duration') }}" required>
                                         </div>
                                         <div class="w-1/3">
-                                            <label for="duration_unit" class="kt-label required">{{ __('main.unit') }}</label>
-                                            <select name="duration_unit" id="duration_unit" class="kt-select basic-single" required>
+                                            <label for="duration_unit"
+                                                class="kt-label required">{{ __('main.unit') }}</label>
+                                            <select name="duration_unit" id="duration_unit" class="kt-select basic-single"
+                                                required>
                                                 @foreach ($durationUnits as $key => $label)
-                                                    <option value="{{ $key }}" {{ old('duration_unit') == $key ? 'selected' : '' }}>
+                                                    <option value="{{ $key }}"
+                                                        {{ old('duration_unit') == $key ? 'selected' : '' }}>
                                                         {{ __('main.' . $key) }}
                                                     </option>
                                                 @endforeach
@@ -145,15 +155,19 @@
                                     </div>
                                     <div class="flex gap-2">
                                         <div class="flex-grow">
-                                            <label for="distance" class="kt-label required">{{ __('main.distance') }}</label>
-                                            <input type="number" step="0.1" name="distance" id="distance" class="kt-input h-[45px]"
-                                                value="{{ old('distance') }}" required>
+                                            <label for="distance"
+                                                class="kt-label required">{{ __('main.distance') }}</label>
+                                            <input type="number" step="0.1" name="distance" id="distance"
+                                                class="kt-input h-[45px]" value="{{ old('distance') }}" required>
                                         </div>
                                         <div class="w-1/3">
-                                            <label for="distance_unit" class="kt-label required">{{ __('main.unit') }}</label>
-                                            <select name="distance_unit" id="distance_unit" class="kt-select basic-single" required>
+                                            <label for="distance_unit"
+                                                class="kt-label required">{{ __('main.unit') }}</label>
+                                            <select name="distance_unit" id="distance_unit"
+                                                class="kt-select basic-single" required>
                                                 @foreach ($distanceUnits as $key => $label)
-                                                    <option value="{{ $key }}" {{ old('distance_unit') == $key ? 'selected' : '' }}>
+                                                    <option value="{{ $key }}"
+                                                        {{ old('distance_unit') == $key ? 'selected' : '' }}>
                                                         {{ __('main.' . $key) }}
                                                     </option>
                                                 @endforeach
@@ -175,22 +189,25 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
                                 <label class="kt-label">{{ __('main.vehicle_model') }}</label>
-                                <input type="text" name="vehicle_model" class="kt-input h-[45px]" value="{{ old('vehicle_model') }}"
-                                    placeholder="e.g. Toyota Land Cruiser">
+                                <input type="text" name="vehicle_model" class="kt-input h-[45px]"
+                                    value="{{ old('vehicle_model') }}" placeholder="e.g. Toyota Land Cruiser">
                             </div>
                             <div>
                                 <label class="kt-label">{{ __('main.model_year') }}</label>
-                                <input type="text" name="model_year" class="kt-input h-[45px]" value="{{ old('model_year') }}" placeholder="e.g. 2025">
+                                <input type="text" name="model_year" class="kt-input h-[45px]"
+                                    value="{{ old('model_year') }}" placeholder="e.g. 2025">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="kt-label">{{ __('main.license_plate') }}</label>
-                                <input type="text" name="license_plate" class="kt-input h-[45px]" value="{{ old('license_plate') }}">
+                                <input type="text" name="license_plate" class="kt-input h-[45px]"
+                                    value="{{ old('license_plate') }}">
                             </div>
                             <div>
                                 <label class="kt-label required">{{ __('main.seating_capacity') }}</label>
-                                <input type="number" name="car_seats" class="kt-input h-[45px]" value="{{ old('car_seats', 4) }}" required min="1">
+                                <input type="number" name="car_seats" class="kt-input h-[45px]"
+                                    value="{{ old('car_seats', 4) }}" required min="1">
                             </div>
                         </div>
                     </div>
@@ -216,7 +233,8 @@
                                         <div class="w-full">
                                             <input type="number" step="0.01" name="price" id="price"
                                                 class="h-full rounded-none bg-gray-50 text-gray-600 flex-1 min-w-0 w-full text-sm p-2.5"
-                                                style="border: 1px var(--tw-border-style) var(--input)" placeholder="0.00" value="{{ old('price') }}">
+                                                style="border: 1px var(--tw-border-style) var(--input)" placeholder="0.00"
+                                                value="{{ old('price') }}">
                                         </div>
 
                                         <div class="w-[220px]">
@@ -224,14 +242,16 @@
                                                 class="basic-single bg-gray-50 border border-s-0 border-gray-200 text-gray-600 text-sm rounded-e-md focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                                                 style="border-top-left-radius: 0 !important; border-bottom-left-radius: 0 !important; margin-left: -1px;">
                                                 @foreach ($priceTypes as $key => $label)
-                                                    <option value="{{ $key }}" {{ old('price_type', 'per_vehicle') == $key ? 'selected' : '' }}>
+                                                    <option value="{{ $key }}"
+                                                        {{ old('price_type', 'per_vehicle') == $key ? 'selected' : '' }}>
                                                         {{ __('main.' . $key) }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <span class="text-xs text-gray-500 mt-1 block">{{ __('main.fallback_price_if_no_season') }}</span>
+                                    <span
+                                        class="text-xs text-gray-500 mt-1 block">{{ __('main.fallback_price_if_no_season') }}</span>
                                 </div>
 
                                 <div class="grid grid-cols-2 items-end gap-4">
@@ -246,10 +266,12 @@
                                             {{ __('main.status') }}
                                             <span class="text-red-600">*</span>
                                         </label>
-                                        <select name="status" id="status" class="kt-select basic-single w-full" required>
+                                        <select name="status" id="status" class="kt-select basic-single w-full"
+                                            required>
                                             <option value="" selected>--</option>
                                             @foreach (['active', 'maintenance', 'retired'] as $status)
-                                                <option value="{{ $status }}" {{ old('status') == $status ? 'selected' : '' }}>
+                                                <option value="{{ $status }}"
+                                                    {{ old('status') == $status ? 'selected' : '' }}>
                                                     {{ __('main.' . $status) }}
                                                 </option>
                                             @endforeach
@@ -260,7 +282,8 @@
 
                             <!-- Right Side: Properties Checkboxes -->
                             <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                                <label class="kt-label mb-3 block text-center border-b border-gray-200 pb-2">{{ __('main.properties') }}</label>
+                                <label
+                                    class="kt-label mb-3 block text-center border-b border-gray-200 pb-2">{{ __('main.properties') }}</label>
                                 <div class="grid grid-cols-2 gap-4">
                                     @foreach (['has_ac', 'has_driver', 'is_4x4', 'has_camping_gear', 'is_featured'] as $item)
                                         <div class="flex items-center gap-3">
@@ -296,23 +319,27 @@
                     </div>
                     <div class="kt-card-body p-4" id="seasons-container">
                         <!-- Seasons will be added here dynamically -->
-                        <div class="text-center p-6 text-gray-400" id="no-seasons-msg">{{ __('main.no_seasons_added') }}</div>
+                        <div class="text-center p-6 text-gray-400" id="no-seasons-msg">{{ __('main.no_seasons_added') }}
+                        </div>
                     </div>
                 </div>
 
                 <!-- Template for New Season (Hidden) -->
                 <template id="season-template">
                     <div class="season-item border rounded-md bg-gray-50 overflow-hidden" data-index="INDEX">
-                        <div class="bg-gray-50 px-4 py-2 flex justify-between items-center border-b border-gray-200 cursor-pointer season-header-toggle">
+                        <div
+                            class="bg-gray-50 px-4 py-2 flex justify-between items-center border-b border-gray-200 cursor-pointer season-header-toggle">
                             <div class="flex items-center gap-2 font-semibold">
                                 <i class="ki-outline ki-calendar-tick fs-2 text-primary"></i>
                                 <span class="season-title">New Season</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <button type="button" class="text-gray-500 hover:text-primary transition-colors toggle-season">
+                                <button type="button"
+                                    class="text-gray-500 hover:text-primary transition-colors toggle-season">
                                     <i class="ki-outline ki-arrow-down fs-2"></i>
                                 </button>
-                                <button type="button" class="text-red-500 hover:text-red-700 transition-colors remove-season"
+                                <button type="button"
+                                    class="text-red-500 hover:text-red-700 transition-colors remove-season"
                                     title="{{ __('main.remove_season') }}">
                                     <i class="ki-outline ki-trash fs-2"></i>
                                 </button>
@@ -321,17 +348,23 @@
                         <div class="p-4 season-body">
                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
                                 <div class="w-full">
-                                    <label class="block text-sm font-medium mb-1 required">{{ __('main.season_name') }}</label>
-                                    <input type="text" name="seasons[INDEX][name]" class="kt-input h-[38px] season-name-input w-full"
-                                        placeholder="Summer 2026" required>
+                                    <label
+                                        class="block text-sm font-medium mb-1 required">{{ __('main.season_name') }}</label>
+                                    <input type="text" name="seasons[INDEX][name]"
+                                        class="kt-input h-[38px] season-name-input w-full" placeholder="Summer 2026"
+                                        required>
                                 </div>
                                 <div class="w-full">
-                                    <label class="block text-sm font-medium mb-1 required">{{ __('main.start_date') }}</label>
-                                    <input type="date" name="seasons[INDEX][start_date]" class="kt-input h-[38px] w-full" required>
+                                    <label
+                                        class="block text-sm font-medium mb-1 required">{{ __('main.start_date') }}</label>
+                                    <input type="date" name="seasons[INDEX][start_date]"
+                                        class="kt-input h-[38px] w-full" required>
                                 </div>
                                 <div class="w-full">
-                                    <label class="block text-sm font-medium mb-1 required">{{ __('main.end_date') }}</label>
-                                    <input type="date" name="seasons[INDEX][end_date]" class="kt-input h-[38px] w-full" required>
+                                    <label
+                                        class="block text-sm font-medium mb-1 required">{{ __('main.end_date') }}</label>
+                                    <input type="date" name="seasons[INDEX][end_date]"
+                                        class="kt-input h-[38px] w-full" required>
                                 </div>
                             </div>
 
@@ -341,7 +374,8 @@
                                 </h4>
                                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                                     <div class="background p-2 rounded border border-gray-200">
-                                        <label class="block text-xs font-semibold mb-1 text-gray-600">{{ __('main.price_local') }}</label>
+                                        <label
+                                            class="block text-xs font-semibold mb-1 text-gray-600">{{ __('main.price_local') }}</label>
                                         <div class="flex">
                                             <span
                                                 class="inline-flex items-center px-2 text-xs text-gray-600 bg-gray-50 border border-e-0 border-gray-200 rounded-s-md">
@@ -353,7 +387,8 @@
                                         </div>
                                     </div>
                                     <div class="background p-2 rounded border border-gray-200">
-                                        <label class="block text-xs font-semibold mb-1 text-gray-600">{{ __('main.price_arab') }}</label>
+                                        <label
+                                            class="block text-xs font-semibold mb-1 text-gray-600">{{ __('main.price_arab') }}</label>
                                         <div class="flex">
                                             <span
                                                 class="inline-flex items-center px-2 text-xs text-gray-600 bg-gray-50 border border-e-0 border-gray-200 rounded-s-md">
@@ -365,7 +400,8 @@
                                         </div>
                                     </div>
                                     <div class="background p-2 rounded border border-gray-200">
-                                        <label class="block text-xs font-semibold mb-1 text-gray-600">{{ __('main.price_foreigner') }}</label>
+                                        <label
+                                            class="block text-xs font-semibold mb-1 text-gray-600">{{ __('main.price_foreigner') }}</label>
                                         <div class="flex">
                                             <span
                                                 class="inline-flex items-center px-2 text-xs text-gray-600 bg-gray-50 border border-e-0 border-gray-200 rounded-s-md">
@@ -385,7 +421,8 @@
                                     <h4 class="text-xs font-bold uppercase text-gray-500 tracking-wider">
                                         {{ __('main.nationality_exceptions') }}
                                     </h4>
-                                    <button type="button" class="text-xs text-primary font-medium hover:underline add-nationality-price"
+                                    <button type="button"
+                                        class="text-xs text-primary font-medium hover:underline add-nationality-price"
                                         data-season-index="INDEX">
                                         + {{ __('main.add_exception') }}
                                     </button>
@@ -400,22 +437,25 @@
 
                 <!-- Template for Nationality Exception -->
                 <template id="nationality-price-template">
-                    <div class="flex gap-2 items-center nationality-price-row bg-gray-50 p-2 rounded border border-dashed border-gray-200">
+                    <div
+                        class="flex gap-2 items-center nationality-price-row bg-gray-50 p-2 rounded border border-dashed border-gray-200">
                         <div class="w-full">
-                            <select name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][nationality_id]" class="kt-select nationality-select text-sm"
-                                id="nationality_id" required>
+                            <select name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][nationality_id]"
+                                class="kt-select nationality-select text-sm" id="nationality_id" required>
                                 <option value="" selected>--</option>
                             </select>
                         </div>
                         <div class="w-full">
-                            <select name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][price_type]" class="kt-select price-type-select text-sm">
+                            <select name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][price_type]"
+                                class="kt-select price-type-select text-sm">
                                 @foreach ($priceTypes as $key => $label)
                                     <option value="{{ $key }}">{{ __('main.' . $key) }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="w-full">
-                            <input type="number" step="0.01" name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][price]"
+                            <input type="number" step="0.01"
+                                name="seasons[SEASON_INDEX][nationality_prices][NAT_INDEX][price]"
                                 class="kt-input h-[45px] text-sm" placeholder="{{ __('main.price') }}" required>
                         </div>
                         <button type="button" class="text-red-500 hover:text-red-700 remove-nationality-price p-1">
@@ -483,6 +523,9 @@
                     </div>
                 </div>
 
+                {{-- Custom Fields --}}
+                <x-custom-fields module-name="transportation" entity-type="Jeep" />
+
                 {{-- Save Buttons --}}
                 @include('components.elements.save-submit', [
                     'models' => 'dashboard.transportation.jeeps',
@@ -530,7 +573,8 @@
                 if (target.classList.contains('remove-season')) {
                     if (confirm('{{ __('messages.confirm_delete') }}')) {
                         target.closest('.season-item').remove();
-                        if (seasonsContainer.children.length <= 1) { // 1 accounts for message div (hidden or not)
+                        if (seasonsContainer.children.length <=
+                            1) { // 1 accounts for message div (hidden or not)
                             if (seasonsContainer.querySelectorAll('.season-item').length === 0) {
                                 noSeasonsMsg.style.display = 'block';
                             }
@@ -567,12 +611,14 @@
                     const newPriceTypeSelect = lastRow.querySelector('.price-type-select');
 
                     // Initialize nationality select with AJAX
-                    if (newNationalitySelect && !$(newNationalitySelect).hasClass('select2-hidden-accessible')) {
+                    if (newNationalitySelect && !$(newNationalitySelect).hasClass(
+                            'select2-hidden-accessible')) {
                         initNationalitySelect2($(newNationalitySelect));
                     }
 
                     // Initialize price type select as basic select2
-                    if (newPriceTypeSelect && !$(newPriceTypeSelect).hasClass('select2-hidden-accessible')) {
+                    if (newPriceTypeSelect && !$(newPriceTypeSelect).hasClass(
+                            'select2-hidden-accessible')) {
                         $(newPriceTypeSelect).select2({
                             minimumResultsForSearch: Infinity,
                             placeholder: '{{ __('main.select') }}',

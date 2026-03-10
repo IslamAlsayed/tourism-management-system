@@ -73,5 +73,16 @@ class Setting extends Model
         'app_smtp_password',
         'app_sidebar_width',
         'app_show_uuid_column',
+        // Theme Colors
+        'app_theme_color_primary',
+        'app_theme_color_secondary',
+        'app_theme_color_success',
+        'app_theme_color_info',
+        'app_theme_color_warning',
+        'app_theme_color_danger',
+        'app_theme_color_dark',
+        'app_theme_color_sidebar_bg',
+        'app_theme_color_sidebar_text',
+        'app_theme_color_sidebar_active',
     ];
 }

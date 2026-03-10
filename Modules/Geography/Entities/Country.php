@@ -8,6 +8,7 @@ use App\Traits\FiltersByUserRole;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Geography\Entities\City;
 use Modules\Geography\Entities\Region;
 use Modules\Geography\Entities\State;
@@ -19,7 +20,7 @@ use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Country extends Model
 {
-    use HasSearch, HasRichText, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText;
+    use HasSearch, HasRichText, HasUuid, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText, SoftDeletes;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -29,6 +30,8 @@ class Country extends Model
         'id',
         'uuid',
         'photo',
+        'emoji',
+        'emojiU',
         'name',
         'name_ar',
         'iso2',
@@ -57,7 +60,7 @@ class Country extends Model
 
     public function getRelationshipNames()
     {
-        return ['timezone', 'language', 'currency', 'region', 'subregion', 'states', 'cities'];
+        return ['timezone', 'language', 'currency', 'region', 'subregion', 'states', 'cities', 'accommodations', 'restaurants', 'transportationCompanies'];
     }
 
     public function getExcludedColumns()
@@ -92,11 +95,36 @@ class Country extends Model
 
     public function states()
     {
+        return $this->hasMany(State::class);
+    }
+
+    public function states_pivot()
+    {
         return $this->belongsToMany(State::class, 'country_state', 'country_id', 'state_id');
     }
 
     public function cities()
     {
+        return $this->hasManyThrough(City::class, State::class);
+    }
+
+    public function cities_pivot()
+    {
         return $this->belongsToMany(City::class, 'country_city', 'country_id', 'city_id');
+    }
+
+    public function accommodations()
+    {
+        return $this->hasMany(\Modules\Accommodations\Entities\Accommodation::class);
+    }
+
+    public function restaurants()
+    {
+        return $this->hasMany(\Modules\Restaurants\Entities\Restaurant::class);
+    }
+
+    public function transportationCompanies()
+    {
+        return $this->hasMany(\Modules\Transportation\Entities\Company::class);
     }
 }

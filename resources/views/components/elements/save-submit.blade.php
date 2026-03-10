@@ -7,7 +7,7 @@
         <i class="ki-filled ki-plus text-sm me-2"></i>
         {{ __('main.save_and_add_another') }}
     </button>
-    <a href="{{ route("$models.index") }}" class="kt-btn kt-btn-outline">
+    <a href="{{ isset($cancel_route) ? $cancel_route : route($models . '.index') }}" class="kt-btn kt-btn-outline">
         {{ __('main.cancel') }}
     </a>
 </div>

@@ -48,6 +48,11 @@ class GuideTypeController extends Controller
             $cityIds = array_unique((array) $request->input('city_id'));
         }
         $tourGuideType->cities()->sync($cityIds);
+
+        if ($tourGuideType && $request->has('custom_fields')) {
+            $tourGuideType->saveCustomFields($request->custom_fields);
+        }
+
         return $tourGuideType
             ? ($request->has('save_and_add')
                 ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.tours.guide-type')]))
@@ -96,6 +101,11 @@ class GuideTypeController extends Controller
         }
         $tourGuideType->cities()->sync($cityIds);
         $updated = $tourGuideType->update($validated);
+
+        if ($tourGuideType && $request->has('custom_fields')) {
+            $tourGuideType->saveCustomFields($request->custom_fields);
+        }
+
         return $updated
             ? redirect()->route('dashboard.tourguides.guides-types.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tours.guide-type')]))
             : redirect()->route('dashboard.tourguides.guides-types.index')->withError(__('messages.type_update_failed', ['type' => __('main.tours.guide-type')]));

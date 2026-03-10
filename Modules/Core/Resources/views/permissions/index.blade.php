@@ -6,7 +6,7 @@
         'title' => __('main.permissions'),
         'description' => __('main.manage_system_types', ['types' => __('main.permissions')]),
         'import_url' => null,
-        'page_create_url' => route('permissions.create'),
+        'page_create_url' => route('dashboard.core.permissions.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.permission')]),
     ])
     <!-- End of Container -->

@@ -133,18 +133,22 @@ function updateDeleteButtonVisibility(rowCheckboxSelector) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    // detect all selects
+function initSpecialDelete() {
     window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    initSpecialDelete();
 
     document.addEventListener("updatedPaginate", () => {
         console.log("updatedPaginate");
         setTimeout(() => {
             window.resetDeleteSelection();
-            window.specialDelete(
-                "selectAllItems",
-                "input[name='selectedItems[]']",
-            );
+            initSpecialDelete();
         }, 200);
     });
+});
+
+document.addEventListener("livewire:navigated", () => {
+    initSpecialDelete();
 });

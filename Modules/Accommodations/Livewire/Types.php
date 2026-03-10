@@ -65,6 +65,7 @@ class Types extends Component
         }
 
         Type::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Type::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -77,21 +78,13 @@ class Types extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Type::class, $cols, 'types');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Type::class, $cols, 'types');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Type::class, $cols, 'types', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Type::class, $cols, 'types', $extension);
     }
 
     public function resetFilters()
@@ -114,3 +107,4 @@ class Types extends Component
         return view('accommodations::livewire.types', ['data' => $data, 'totalCount' => $this->totalCount ?: Type::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

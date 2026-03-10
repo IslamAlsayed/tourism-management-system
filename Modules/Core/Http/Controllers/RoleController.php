@@ -31,11 +31,12 @@ class RoleController extends Controller
         $role = Role::create(['name' => $validated['name'], 'guard_name' => 'web']);
 
         if (!empty($validated['permissions'])) {
-            $role->syncPermissions($validated['permissions']);
+            $permissionIds = array_map('intval', $validated['permissions']);
+            $role->syncPermissions($permissionIds);
         }
 
         return $role
-            ? redirect()->route('roles.index')->withSuccess(__('messages.role_created_successfully'))
+            ? redirect()->route('dashboard.core.roles.index')->withSuccess(__('messages.role_created_successfully'))
             : redirect()->back()->withError(__('messages.role_creation_failed'));
     }
 
@@ -63,13 +64,14 @@ class RoleController extends Controller
         $role->update(['name' => $validated['name']]);
 
         if (!empty($validated['permissions'])) {
-            $role->syncPermissions($validated['permissions']);
+            $permissionIds = array_map('intval', $validated['permissions']);
+            $role->syncPermissions($permissionIds);
         } else {
             $role->syncPermissions([]);
         }
 
         return $role
-            ? redirect()->route('roles.index')->withSuccess(__('messages.role_updated_successfully'))
+            ? redirect()->route('dashboard.core.roles.index')->withSuccess(__('messages.role_updated_successfully'))
             : redirect()->back()->withError(__('messages.role_update_failed'));
     }
 
@@ -81,7 +83,7 @@ class RoleController extends Controller
 
         $deleted = $role->delete();
         return $deleted
-            ? redirect()->route('roles.index')->withSuccess(__('messages.role_deleted_successfully'))
+            ? redirect()->route('dashboard.core.roles.index')->withSuccess(__('messages.role_deleted_successfully'))
             : redirect()->back()->withError(__('messages.role_deletion_failed'));
     }
 }

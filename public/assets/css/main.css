@@ -1251,3 +1251,68 @@ html.dark {
 .top-scroll::-webkit-scrollbar-track {
     background: #eee;
 }
+
+/* ============================================
+   SIDEBAR COLLAPSE - ICON-ONLY MODE
+   Extends Metronic's built-in collapse CSS to
+   cover all nested accordion children levels.
+   body.demo1.kt-sidebar-collapse triggers this.
+   ============================================ */
+
+@media (min-width: 64rem) {
+
+    /* Hide ALL nested text, arrows, labels when collapsed and not hovering */
+    .demo1.kt-sidebar-collapse .kt-sidebar:not(:hover) .kt-menu-title,
+    .demo1.kt-sidebar-collapse .kt-sidebar:not(:hover) .kt-menu-arrow,
+    .demo1.kt-sidebar-collapse .kt-sidebar:not(:hover) .kt-menu-badge {
+        display: none !important;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Hide ALL nested accordion sub-menus */
+    .demo1.kt-sidebar-collapse .kt-sidebar:not(:hover) .kt-menu-accordion {
+        display: none !important;
+    }
+
+    /* Also hide section labels (inline-block spans above top groups) */
+    .demo1.kt-sidebar-collapse .kt-sidebar:not(:hover) #sidebar_menu > .kt-menu-item > span:not(.kt-menu-icon) {
+        display: none !important;
+    }
+
+    /* Make sure icons stay visible and centered */
+    .demo1.kt-sidebar-collapse .kt-sidebar:not(:hover) .kt-menu-icon {
+        display: flex !important;
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Center the menu-link when text is hidden */
+    .demo1.kt-sidebar-collapse .kt-sidebar:not(:hover) .kt-menu-link {
+        justify-content: center;
+        padding-inline: 0 !important;
+    }
+
+    /* Smooth transition for text/arrow hiding */
+    .demo1 .kt-sidebar .kt-menu-title,
+    .demo1 .kt-sidebar .kt-menu-arrow {
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    /* When hovering while collapsed, restore full menu */
+    .demo1.kt-sidebar-collapse .kt-sidebar:hover .kt-menu-title,
+    .demo1.kt-sidebar-collapse .kt-sidebar:hover .kt-menu-arrow {
+        display: inherit !important;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .demo1.kt-sidebar-collapse .kt-sidebar:hover .kt-menu-link {
+        justify-content: initial;
+        padding-inline: initial;
+    }
+
+    .demo1.kt-sidebar-collapse .kt-sidebar:hover .kt-menu-icon {
+        width: auto;
+    }
+}

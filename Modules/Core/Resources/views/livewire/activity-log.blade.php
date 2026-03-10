@@ -13,6 +13,7 @@
                 'selectedIds' => $selectedIds ?? [],
             ])
         @endif
+
     @endcomponent
 
     <div class="kt-card-body space-y-6 px-3">
@@ -38,30 +39,31 @@
             </div>
 
             {{-- Activity Breakdown --}}
-            <div class="rounded-lg border border-dashed border-gray-200 background mb-4 p-4" id="activity-breakdown-container">
+            <div class="rounded-lg border border-dashed border-gray-200 background mb-4 p-4"
+                id="activity-breakdown-container">
                 <h3 class="text-sm font-semibold text-gray-600">{{ __('activity.activity_breakdown_title') }}</h3>
-                <ul class="mt-3 space-y-2 text-sm text-gray-600">
-                    <div>
-                        @forelse ($breakdown as $row)
-                            @php
-                                $rowBadgeClass = badgeClasses($row->event ?? 'unknown');
-                            @endphp
-                            <li wire:key="activity-breakdown-{{ $row->event }}"
-                                class="flex items-center font-semibold justify-center gap-2 {{ $rowBadgeClass }} rounded-full ps-3 px-1 py-1">
-                                <span>{{ __('main.' . $row->event ?? 'unknown') }}</span>
-                                <span class="rounded-full px-2 py-0.5 text-xs font-medium bg-gray-50">{{ $row->total }}</span>
-                            </li>
-                        @empty
-                            <li class="text-gray-400">{{ __('main.no_data_available') }}</li>
-                        @endforelse
-                    </div>
-                </ul>
+                <div class="mt-3 flex flex-wrap gap-2 text-sm text-gray-600">
+                    @forelse ($breakdown as $row)
+                        @php
+                            $eventName = $row->event ?? 'unknown';
+                            $rowBadgeClass = badgeClasses($eventName);
+                        @endphp
+                        <div wire:key="activity-breakdown-{{ $eventName }}"
+                            class="badge {{ $rowBadgeClass }} badge-lg px-3 flex items-center gap-2 shadow-sm border border-transparent">
+                            <span class="font-semibold text-xs">{{ __('activity.event_' . $eventName) }}</span>
+                            <span class="badge badge-circle bg-white text-gray-800 ms-1 opacity-75" style="width: 20px; height: 20px; font-size: 10px; font-weight: bold;">{{ $row->total }}</span>
+                        </div>
+                    @empty
+                        <span class="text-gray-400 text-sm">{{ __('main.no_data_available') }}</span>
+                    @endforelse
+                </div>
             </div>
 
             {{-- Filters --}}
             <div class="gap-2 md:gap-4 mb-4 px-1" id="activity-filters-container">
                 <div class="space-y-1">
-                    <label for="filter-log" class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_log_type') }}</label>
+                    <label for="filter-log"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_log_type') }}</label>
                     <select id="filter-log" class="kt-select h-[45px]" wire:model.live="filterLog">
                         <option value="">--</option>
                         @foreach ($logNames as $logName)
@@ -72,7 +74,8 @@
                     </select>
                 </div>
                 <div class="space-y-1">
-                    <label for="filter-event" class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_event_type') }}</label>
+                    <label for="filter-event"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_event_type') }}</label>
                     <select id="filter-event" class="kt-select h-[45px]" wire:model.live="filterEvent">
                         <option value="">--</option>
                         @foreach ($events as $event)
@@ -83,7 +86,8 @@
                     </select>
                 </div>
                 <div class="space-y-1">
-                    <label for="filter-user" class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_user_filter') }}</label>
+                    <label for="filter-user"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_user_filter') }}</label>
                     <select id="filter-user" class="kt-select h-[45px]" wire:model.live="filterUser">
                         <option value="">--</option>
                         @foreach ($users as $user)
@@ -94,35 +98,80 @@
                     </select>
                 </div>
                 <div class="space-y-1">
-                    <label for="date-from" class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_from') }}</label>
+                    <label for="date-from"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_from') }}</label>
                     <input id="date-from" type="datetime-local" class="kt-input h-[45px]" wire:model.live="dateFrom">
                 </div>
                 <div class="space-y-1">
-                    <label for="date-to" class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_to') }}</label>
+                    <label for="date-to"
+                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_to') }}</label>
                     <input id="date-to" type="datetime-local" class="kt-input h-[45px]" wire:model.live="dateTo">
                 </div>
                 <div class="flex items-end gap-2">
                     @if (isset($dateFrom) || isset($dateTo) || $filterLog != '' || $filterEvent != '' || $filterUser != '')
-                        <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}" toggle-button
+                        <button type="button" wire:click="resetFilters" title="{{ __('main.reset_filters') }}"
+                            toggle-button
                             class="kt-btn bg-primary/30 text-blue-600 px-3 h-[45px] hover:bg-gray-50 transition-colors">
                             <i class="fas fa-arrow-rotate-left text-blue-600 me-1"></i>
                             <span class="text-sm">{{ __('main.reset_filters') }}</span>
                         </button>
                     @endif
                     @if ($filterLog != '')
-                        <button type="button" class="kt-btn bg-danger h-[45px]" wire:click="clearLog('{{ $filterLog }}')"
-                            wire:confirm="{{ __('main.are_you_sure') }}">
-                            <i class="ki-filled ki-trash me-1"></i>
-                            {{ __('activity.activity_clear_current_log') }}
-                        </button>
+                        <div x-data="{
+                            confirmClearLog() {
+                                Swal.fire({
+                                    title: '{{ __('messages.are_you_sure') }}',
+                                    text: '{{ __('messages.confirm_clear_log_text') ?? __('activity.activity_clear_current_log') }}',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#d33',
+                                    cancelButtonColor: '#3085d6',
+                                    confirmButtonText: '{{ __('main.yes') }}',
+                                    cancelButtonText: '{{ __('main.no') }}'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        @this.call('clearLog', '{{ $filterLog }}');
+                                    }
+                                })
+                            }
+                        }">
+                            <button type="button" class="kt-btn bg-danger h-[45px]" x-on:click.prevent="confirmClearLog">
+                                <i class="ki-filled ki-trash me-1"></i>
+                                {{ __('activity.activity_clear_current_log') }}
+                            </button>
+                        </div>
                     @endif
+                    <div x-data="{
+                        confirmClearAll() {
+                            Swal.fire({
+                                title: '{{ __('messages.are_you_sure') }}',
+                                text: '{{ __('messages.confirm_clear_all_logs_text') ?? __('activity.activity_clear_all_logs') }}',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: '{{ __('main.yes') }}',
+                                cancelButtonText: '{{ __('main.no') }}'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    @this.call('clearAll');
+                                }
+                            })
+                        }
+                    }">
+                        <button type="button" class="kt-btn bg-danger h-[45px]" x-on:click.prevent="confirmClearAll">
+                            <i class="ki-filled ki-trash me-1"></i>
+                            {{ __('activity.activity_clear_all_logs') }}
+                        </button>
+                    </div>
                 </div>
             </div>
         @endif
 
         {{-- Selected Activity --}}
         @if (!empty($selectedActivity))
-            <div class="rounded-lg border border-blue-200 bg-blue-50 mb-4 p-4" wire:target="selectedActivity,closeDetails" wire:loading.class="loading">
+            <div class="rounded-lg border border-blue-200 bg-blue-50 mb-4 p-4"
+                wire:target="selectedActivity,closeDetails" wire:loading.class="loading">
                 <div class="flex items-center justify-between gap-2 activity-details-header">
                     <h3 class="text-sm font-semibold text-blue-900">{{ __('activity.activity_selected_title') }}
                     </h3>
@@ -155,7 +204,8 @@
                         </div>
                         <div class="flex items-center justify-between">
                             <dt>{{ __('activity.activity_event_type') }}</dt>
-                            <dd class="rounded-full px-2 py-0.5 text-xs font-medium {{ badgeClasses($selectedActivity['event']) }}">
+                            <dd
+                                class="rounded-full px-2 py-0.5 text-xs font-medium {{ badgeClasses($selectedActivity['event']) }}">
                                 {{ ucfirst($selectedActivity['event']) }}</dd>
                         </div>
                         @if ($selectedActivity['causer'])
@@ -188,7 +238,8 @@
         @endif
 
         {{-- Table --}}
-        <div class="kt-card-content" wire:target="search,selectedActivity,closeDetails,viewDetails,delete" wire:loading.class="loading">
+        <div class="kt-card-content" wire:target="search,selectedActivity,closeDetails,viewDetails,delete"
+            wire:loading.class="loading">
             <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
                 <div class="kt-scrollable-x-auto">
                     <table class="kt-table table-auto text-nowrap">
@@ -197,7 +248,8 @@
                                 {{-- <th scope="col" class="px-3 py-2">
                                     <input type="checkbox" class="kt-checkbox" wire:model.live="selectPage">
                                 </th> --}}
-                                <th wire:click="sortBy('id')" scope="col" title="{{ __('main.sort_by') }} {{ __('main.id') }}"
+                                <th wire:click="sortBy('id')" scope="col"
+                                    title="{{ __('main.sort_by') }} {{ __('main.id') }}"
                                     class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 cursor-pointer hover:bg-gray-100">
                                     {{ __('main.id') }}
                                     <i class="fas {{ $this->getSortIcon('id') }} ms-2"
@@ -205,7 +257,8 @@
                                 </th>
                                 @if (isset($filterColumns) && $filterColumns)
                                     @foreach ($filterColumns as $column)
-                                        <th wire:key="filterColumns-{{ $column['key'] }}" wire:click="sortBy('{{ $column['key'] }}')" scope="col"
+                                        <th wire:key="filterColumns-{{ $column['key'] }}"
+                                            wire:click="sortBy('{{ $column['key'] }}')" scope="col"
                                             title="{{ __('main.sort_by') }} {{ __($column['label']) }}"
                                             class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 cursor-pointer hover:bg-gray-100">
                                             {{ __($column['label']) }}
@@ -214,7 +267,8 @@
                                         </th>
                                     @endforeach
                                 @endif
-                                <th scope="col" class="px-3 py-2 text-right text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                <th scope="col"
+                                    class="px-3 py-2 text-right text-xs font-semibold uppercase tracking-wide text-gray-500">
                                 </th>
                             </tr>
                         </thead>
@@ -236,7 +290,8 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-2 text-sm">
-                                        <span class="rounded-full px-2 py-0.5 text-xs font-medium w-full text-center inline-block {{ $badgeClass }}">
+                                        <span
+                                            class="rounded-full px-2 py-0.5 text-xs font-medium w-full text-center inline-block {{ $badgeClass }}">
                                             {!! highlightSearch(__('main.' . $activity->event ?? 'unknown'), $search) !!}
                                         </span>
                                     </td>
@@ -252,7 +307,8 @@
                                                 </div>
                                             @endif
                                         @else
-                                            <span class="text-xs text-gray-400">{{ __('activity.system_generated') }}</span>
+                                            <span
+                                                class="text-xs text-gray-400">{{ __('activity.system_generated') }}</span>
                                         @endif
                                     </td>
                                     <td class="px-3 py-2 text-sm text-gray-600">
@@ -265,14 +321,16 @@
                                             <span class="text-xs text-gray-400">—</span>
                                         @endif
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-600" title="{{ activityMessageSummary($activity, 1000) }}">
+                                    <td class="px-3 py-2 text-sm text-gray-600"
+                                        title="{{ activityMessageSummary($activity, 1000) }}">
                                         <div style="text-wrap: wrap;">
                                             {!! highlightSearch(activityMessageSummary($activity), $search) !!}
                                         </div>
                                     </td>
                                     <td class="px-3 py-2 text-right text-sm">
                                         <div class="flex justify-end gap-2">
-                                            <button type="button" class="kt-btn kt-btn-sm bg-primary" wire:click="viewDetails({{ $activity->id }})">
+                                            <button type="button" class="kt-btn kt-btn-sm bg-primary"
+                                                wire:click="viewDetails({{ $activity->id }})">
 
                                                 @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
                                                     {!! $text ?? __('main.show') !!}
@@ -283,7 +341,8 @@
                                                     {!! $text ?? __('main.show') !!}
                                                 @endif
                                             </button>
-                                            <button type="button" class="kt-btn kt-btn-sm bg-danger" wire:click="delete({{ $activity->id }})"
+                                            <button type="button" class="kt-btn kt-btn-sm bg-danger"
+                                                wire:click="delete({{ $activity->id }})"
                                                 wire:confirm="{{ __('main.are_you_sure') }}">
 
                                                 @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
@@ -305,7 +364,8 @@
                                     </td>
                                 </tr> --}}
                                 <tr>
-                                    <td colspan="{{ count($filterColumns) + 2 }}" class="px-4 py-3 text-center text-gray-500">
+                                    <td colspan="{{ count($filterColumns) + 2 }}"
+                                        class="px-4 py-3 text-center text-gray-500">
                                         <div class="w-[90px] h-[90px] mx-auto my-4">
                                             <img src="{{ asset('assets/images/other/no-data.svg') }}" alt="no data">
                                         </div>
@@ -322,15 +382,36 @@
         </div>
 
         @if (!empty($selectedIds))
-            <div class="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            <div
+                class="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
                 <span>{{ __('main.selected_items', ['count' => count($selectedIds)]) }}</span>
                 <div class="flex items-center gap-2">
                     <button type="button" class="kt-btn kt-btn-sm kt-btn-light"
                         wire:click="$set('selectedIds', [])">{{ __('activity.clear_selection') }}</button>
-                    <button type="button" class="kt-btn kt-btn-sm kt-btn-danger" wire:click="deleteSelected" wire:confirm="{{ __('main.are_you_sure') }}">
-                        <i class="ki-filled ki-trash me-1"></i>
-                        {{ __('main.delete_selected') }}
-                    </button>
+                    <div x-data="{
+                        confirmDelete() {
+                            Swal.fire({
+                                title: '{{ __('messages.are_you_sure') }}',
+                                text: '{!! addslashes(str_replace(["\r\n", "\n", "\r"], " ", __("messages.confirm_bulk_delete"))) !!}',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: '{{ __('main.yes') }}',
+                                cancelButtonText: '{{ __('main.no') }}'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    @this.call('deleteSelected');
+                                }
+                            })
+                        }
+                    }">
+                        <button type="button" class="kt-btn kt-btn-sm kt-btn-danger"
+                            x-on:click.prevent="confirmDelete">
+                            <i class="ki-filled ki-trash me-1"></i>
+                            {{ __('main.delete_selected') }}
+                        </button>
+                    </div>
                 </div>
             </div>
         @endif

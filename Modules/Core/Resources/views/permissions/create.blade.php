@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('permissions.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.core.permissions.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.permissions')]) }}
                 </a>
             </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('permissions.store') }}">
+        <form class="space-y-6" method="POST" action="{{ route('dashboard.core.permissions.store') }}">
             @csrf
             <div class="grid gap-4 lg:gap-6">
 
@@ -58,7 +58,7 @@
                     <button type="submit" class="kt-btn kt-btn-primary">
                         {{ __('main.create') }}
                     </button>
-                    <a href="{{ route('permissions.index') }}" class="kt-btn kt-btn-outline">
+                    <a href="{{ route('dashboard.core.permissions.index') }}" class="kt-btn kt-btn-outline">
                         {{ __('main.cancel') }}
                     </a>
                 </div>

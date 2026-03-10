@@ -57,8 +57,8 @@
 
                             <!-- Vehicle Name Arabic -->
                             <div class="mb-4">
-                                <label for="name_ar" class="kt-label required mb-2">Vehicle Name (Arabic)</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input" required
+                                <label for="name_ar" class="kt-label mb-2">Vehicle Name (Arabic)</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input"
                                     value="مرسيدس توريزمو">
                             </div>
                         </div>

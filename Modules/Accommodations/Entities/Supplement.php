@@ -4,6 +4,7 @@ namespace Modules\Accommodations\Entities;
 
 use App\Traits\HasUuid;
 use App\Traits\HasSearch;
+use App\Traits\HasCustomFields;
 use Modules\Core\Entities\User;
 use App\Traits\FiltersByUserRole;
 use App\Traits\BroadcastsRecordEvents;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Supplement extends Model
 {
-    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents;
+    use HasFactory, HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, HasCustomFields;
     protected $richTextAttributes = [
         'description',
         'notes',

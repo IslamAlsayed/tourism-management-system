@@ -25,6 +25,10 @@ class RouteController extends Controller
         $created = Route::create($data);
         if (!$created)
             return redirect()->route('transportation.routes.index')->withError(__('messages.type_creation_failed', ['type' => __('main.transportations-route')]));
+        
+        if ($request->has('custom_fields')) {
+            $created->saveCustomFields($request->custom_fields);
+        }
         return $request->has('save_and_add')
             ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.transportations-route')]))
             : redirect()->route('transportation.routes.index')->withSuccess(__('messages.type_created', ['type' => __('main.transportations-route')]));
@@ -53,6 +57,11 @@ class RouteController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.transportations-route')]));
         $data = $request->validated();
         $updated = $route->update($data);
+
+        if ($request->has('custom_fields')) {
+            $route->saveCustomFields($request->custom_fields);
+        }
+
         return $updated
             ? redirect()->route('transportation.routes.index')->withSuccess(__('messages.type_updated', ['type' => __('main.transportations-route')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.transportations-route')]));

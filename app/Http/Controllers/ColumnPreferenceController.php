@@ -65,13 +65,13 @@ class ColumnPreferenceController extends Controller
             if ($isAllSelected) {
                 // If all selected, reset to default
                 $fillable = array_values(array_diff($model->getFillable(), $excluded));
-                $defaultColumnsCount = getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+                $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
                 $columns = array_slice($fillable, 0, $defaultColumnsCount);
             } else {
                 // Select all columns
                 $relations = method_exists($model, 'getRelationshipNames') ? $model->getRelationshipNames() : [];
                 $fillable = $model->getFillable();
-                array_splice($fillable, getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)), 0, $relations);
+                array_splice($fillable, optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)), 0, $relations);
                 $columns = array_values(array_diff($fillable, $excluded));
             }
 
@@ -116,7 +116,7 @@ class ColumnPreferenceController extends Controller
         $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 
         // Exclude uuid if disabled in settings
-        if (getActiveSettings()->app_show_uuid_column == 0) {
+        if (optional(getActiveSettings())->app_show_uuid_column == 0) {
             $excluded[] = 'uuid';
         }
 

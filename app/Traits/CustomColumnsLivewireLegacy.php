@@ -3,6 +3,8 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
+use Livewire\Attributes\On;
 
 /**
  * ===================================================
@@ -44,11 +46,18 @@ trait CustomColumnsLivewireLegacy
         $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 
         // استبعد uuid إذا كان معطل في الإعدادات
-        if (getActiveSettings()->app_show_uuid_column == 0) {
+        if (optional(getActiveSettings())->app_show_uuid_column == 0) {
             $excluded[] = 'uuid';
         }
 
         return $excluded;
+    }
+
+    #[On('filterColumn')]
+    public function filterColumn($column, $value)
+    {
+        $this->searchColumns[$column] = $value;
+        $this->resetPage(); // Reset pagination when filtering
     }
 
     public function mountWithCustomColumns(string $modelClass)
@@ -57,12 +66,13 @@ trait CustomColumnsLivewireLegacy
         $model = new $modelClass();
         $this->relations = method_exists($model, 'getRelationshipNames') ? $model->getRelationshipNames() : [];
 
-        $this->fillable = $model->getFillable();
-        array_splice($this->fillable, getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)), 0, $this->relations);
+        // Fetch all actual columns from the database schema
+        $schemaColumns = \Illuminate\Support\Facades\Schema::getColumnListing($model->getTable());
+        
+        $this->fillable = $schemaColumns;
+        array_splice($this->fillable, optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)), 0, $this->relations);
 
         $excluded = $this->getExcludedColumnsWithSettings($model);
-
-        // $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 
         // Sort columns
         $this->allColumns = array_values(array_diff($this->fillable, $excluded));
@@ -78,7 +88,7 @@ trait CustomColumnsLivewireLegacy
         }
 
         // إذا لم توجد إعدادات محفوظة، استخدم الافتراضي
-        $defaultColumnsCount = getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+        $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
         $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, $defaultColumnsCount);
 
         $this->pendingColumns = $this->columns;
@@ -93,8 +103,9 @@ trait CustomColumnsLivewireLegacy
         // تأكد من استبعاد الأعمدة غير المسموح بها
         $cleanPending = array_diff($this->pendingColumns, $excluded);
 
-        // رتب الأعمدة بنفس ترتيبها الأصلي
-        $this->columns = array_values(array_intersect($this->allColumns, $cleanPending));
+        // رتب الأعمدة بناءً على الترتيب الجديد في pendingColumns
+        // مع التأكد من أنها موجودة في allColumns
+        $this->columns = array_values(array_intersect($cleanPending, $this->allColumns));
 
         // حفظ التغييرات في قاعدة البيانات للمستخدم الحالي
         if (Auth::check()) {
@@ -120,9 +131,8 @@ trait CustomColumnsLivewireLegacy
 
         // لو كل الأعمدة محددة → ارجع للافتراضي
         if ($this->isAllSelected) {
-            $fillable = array_values(array_diff($model->getFillable(), $excluded));
-            $defaultColumnsCount = getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
-            $this->pendingColumns = array_slice($fillable, 0, $defaultColumnsCount);
+            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+            $this->pendingColumns = array_slice($this->allColumns, 0, $defaultColumnsCount);
         }
         // غير كده → حدد الكل
         else {
@@ -143,13 +153,9 @@ trait CustomColumnsLivewireLegacy
             $this->hasCustomColumns = false; // Mark that custom columns are removed
         }
 
-        $model = new $this->modelClass();
-        // $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
-        $excluded = $this->getExcludedColumnsWithSettings($model);
-        $fillable = array_values(array_diff($model->getFillable(), $excluded));
-        $defaultColumnsCount = getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+        $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
 
-        $this->columns = array_slice($fillable, 0, $defaultColumnsCount);
+        $this->columns = array_slice($this->allColumns, 0, $defaultColumnsCount);
         $this->pendingColumns = $this->columns;
     }
 

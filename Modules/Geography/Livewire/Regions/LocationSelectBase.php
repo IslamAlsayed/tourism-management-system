@@ -50,20 +50,16 @@ class LocationSelectBase extends Component
                 $this->filters['state'] = $record->state_id ?? null;
                 if ($this->filters['state']) {
                     $this->loadNext('state', $this->filters['state']);
+                } elseif ($this->filters['country']) {
+                    $this->options['cities'] = City::whereIn('state_id', State::where('country_id', $this->filters['country'])->pluck('id'))->orderBy('name')->get(['id', 'name']);
                 }
             }
             // cities selection
             if ($this->multiple) {
                 $cityIds = $record->cities?->pluck('id')->toArray() ?? [];
                 $this->filters['city'] = $cityIds;
-                if (!empty($cityIds)) {
-                    $this->loadNext('city', $cityIds);
-                }
             } else {
                 $this->filters['city'] = $record->city_id ?? null;
-                if ($this->filters['city']) {
-                    $this->loadNext('city', $this->filters['city']);
-                }
             }
         }
     }

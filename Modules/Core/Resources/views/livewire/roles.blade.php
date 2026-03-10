@@ -51,7 +51,7 @@
                                             style="font-size: 14px; {{ $this->isSortedBy($column) ? 'color: #3b82f6;' : '' }}"></i>
                                     </th>
                                 @endforeach
-                                <th class="px-4 py-3"></th>
+                                <th class="px-4 py-3 text-center">{{ __('main.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody id="data_table_tbody">
@@ -78,16 +78,16 @@
                                     <td>{!! highlightSearch(limitedText($role->created_at->format('Y-m-d H:i') ?? '--', 30), $search) !!}</td>
                                     <td class="px-4 py-2 text-end">
                                         <div class="flex gap-2 justify-end">
-                                            @if (showRouteExists('roles') && showFunctionExists('roles'))
+                                            @if (showRouteExists('dashboard.core.roles'))
                                                 @include('components.elements.show-button', [
-                                                    'models' => 'roles',
+                                                    'models' => 'dashboard.core.roles',
                                                     'id' => $role->id,
                                                 ])
                                             @endif
 
                                             @if (getActiveUser()->can('update', $role))
                                                 @include('components.elements.edit-button', [
-                                                    'models' => 'roles',
+                                                    'models' => 'dashboard.core.roles',
                                                     'id' => $role->id,
                                                 ])
                                             @endif
@@ -95,21 +95,15 @@
                                             @if (getActiveUser()->can('delete', $role))
                                                 @include('components.elements.delete-button', [
                                                     'id' => $role->id,
-                                                    'models' => 'roles',
+                                                    'models' => 'dashboard.core.roles',
                                                 ])
                                             @endif
 
-                                            {{-- @if (!in_array($role->name, ['superadmin', 'admin', 'user']))
-                                                @include('components.elements.edit-button', [
-                                                    'models' => 'roles',
+                                            @if (getActiveUser()->can('delete', $role))
+                                                @include('components.elements.forceDelete-button', [
                                                     'id' => $role->id,
                                                 ])
-
-                                                @include('components.elements.delete-button', [
-                                                    'id' => $role->id,
-                                                    'models' => 'roles',
-                                                ])
-                                            @endif --}}
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

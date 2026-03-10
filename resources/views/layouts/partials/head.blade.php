@@ -1,5 +1,5 @@
 <title>@yield('title', 'MixJo Tourism') - World's Largest Geographic Database</title>
-<base href="../../">
+{{-- base href removed: was causing first-load rendering failures on nested routes --}}
 <meta charset="utf-8" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script>
@@ -61,7 +61,7 @@
 <link href="{{ asset('metronic/css/styles.css') }}" rel="stylesheet" />
 {{-- Dynamic Sidebar Width - Must come after styles.css to override --}}
 @php
-    $sidebarWidth = $settings->app_sidebar_width ?? (config('app.app_sidebar_width') ?? 290);
+    $sidebarWidth = optional($settings)->app_sidebar_width ?? (config('app.app_sidebar_width') ?? 290);
 @endphp
 <style>
     /* Sidebar width when expanded */
@@ -69,51 +69,6 @@
         --sidebar-width: {{ $sidebarWidth }}px;
         --sidebar-default-width: {{ $sidebarWidth }}px;
     }
-
-    /* body.kt-sidebar-collapse .sidebar:hover {
-        width: {{ $sidebarWidth }}px !important;
-        z-index: 9999;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    } */
-
-    /* body.kt-sidebar-collapse {
-        --sidebar-width: 70px !important;
-        --sidebar-default-width: 70px !important;
-    }
-
-    body.kt-sidebar-collapse .sidebar:hover {
-        width: {{ $sidebarWidth }}px !important;
-        z-index: 9999;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    body.kt-sidebar-collapse .sidebar:hover .menu-link-text,
-    body.kt-sidebar-collapse .sidebar:hover .menu-title,
-    body.kt-sidebar-collapse .sidebar:hover .menu-arrow {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    body.kt-sidebar-collapse .sidebar:hover .menu-link {
-        justify-content: flex-start;
-    }
-
-    body .sidebar {
-        transition: width 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    }
-
-    body.kt-sidebar-collapse .sidebar .menu-link-text,
-    body.kt-sidebar-collapse .sidebar .menu-title,
-    body.kt-sidebar-collapse .sidebar .menu-arrow {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-    }
-
-    body.kt-sidebar-collapse .sidebar .menu-link {
-        justify-content: center;
-        transition: justify-content 0.2s ease-in-out;
-    } */
 </style>
 
 

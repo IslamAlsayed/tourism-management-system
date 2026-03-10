@@ -24,7 +24,8 @@
     <div class="kt-container-fixed">
         <div class="kt-card p-4">
             <div class="kt-card-body">
-                <form class="space-y-6" method="POST" action="{{ route('dashboard.accommodations.rooms.update', $room->id) }}">
+                <form class="space-y-6" method="POST"
+                    action="{{ route('dashboard.accommodations.rooms.update', $room->id) }}">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="type" value="{{ request()->query('type') }}">
@@ -40,7 +41,8 @@
                             {{-- Name (English) --}}
                             <div class="align-self-end">
                                 <label for="name" class="kt-label mb-1">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $room->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $room->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -49,7 +51,8 @@
                             {{-- Name (Arabic) --}}
                             <div>
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $room->name_ar }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $room->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -60,8 +63,8 @@
                                 <label for="max_occupancy" class="kt-label mb-2">
                                     {{ __('main.max_occupancy') }}
                                 </label>
-                                <input type="number" name="max_occupancy" id="max_occupancy" class="kt-input h-[45px]" value="{{ $room->max_occupancy }}"
-                                    minLength="1">
+                                <input type="number" name="max_occupancy" id="max_occupancy" class="kt-input h-[45px]"
+                                    value="{{ $room->max_occupancy }}" minLength="1">
                                 @error('max_occupancy')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -72,8 +75,8 @@
                                 <label for="occupancy_details" class="kt-label mb-2">
                                     {{ __('main.occupancy_details') }}
                                 </label>
-                                <input type="text" name="occupancy_details" id="occupancy_details" class="kt-input h-[45px]"
-                                    value="{{ $room->occupancy_details }}">
+                                <input type="text" name="occupancy_details" id="occupancy_details"
+                                    class="kt-input h-[45px]" value="{{ $room->occupancy_details }}">
                                 @error('occupancy_details')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -87,7 +90,8 @@
                                 <label for="price_per_person_double" class="kt-label mb-1">
                                     {{ __('main.price_per_person_double') }}
                                 </label>
-                                <input type="number" step="0.01" name="price_per_person_double" id="price_per_person_double" class="kt-input h-[45px]"
+                                <input type="number" step="0.01" name="price_per_person_double"
+                                    id="price_per_person_double" class="kt-input h-[45px]"
                                     value="{{ $room->price_per_person_double }}" minLength="0">
                                 @error('price_per_person_double')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -99,7 +103,8 @@
                                 <label for="single_room_supplement" class="kt-label mb-1">
                                     {{ __('main.single_room_supplement') }}
                                 </label>
-                                <input type="number" step="0.01" name="single_room_supplement" id="single_room_supplement" class="kt-input h-[45px]"
+                                <input type="number" step="0.01" name="single_room_supplement"
+                                    id="single_room_supplement" class="kt-input h-[45px]"
                                     value="{{ $room->single_room_supplement }}" minLength="0">
                                 @error('single_room_supplement')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -111,8 +116,8 @@
                                 <label for="triple_room_discount" class="kt-label mb-1">
                                     {{ __('main.triple_room_discount') }}
                                 </label>
-                                <input type="number" step="0.01" name="triple_room_discount" id="triple_room_discount" class="kt-input h-[45px]"
-                                    value="{{ $room->triple_room_discount }}" minLength="0">
+                                <input type="number" step="0.01" name="triple_room_discount" id="triple_room_discount"
+                                    class="kt-input h-[45px]" value="{{ $room->triple_room_discount }}" minLength="0">
                                 @error('triple_room_discount')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -123,8 +128,8 @@
                                 <label for="third_person_price" class="kt-label mb-1">
                                     {{ __('main.third_person_price') }}
                                 </label>
-                                <input type="number" step="0.01" name="third_person_price" id="third_person_price" class="kt-input h-[45px]"
-                                    value="{{ $room->third_person_price }}" minLength="0">
+                                <input type="number" step="0.01" name="third_person_price" id="third_person_price"
+                                    class="kt-input h-[45px]" value="{{ $room->third_person_price }}" minLength="0">
                                 @error('third_person_price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -135,8 +140,8 @@
                                 <label for="extra_bed_price" class="kt-label mb-1">
                                     {{ __('main.extra_bed_price') }}
                                 </label>
-                                <input type="number" step="0.01" name="extra_bed_price" id="extra_bed_price" class="kt-input h-[45px]"
-                                    value="{{ $room->extra_bed_price }}" minLength="0">
+                                <input type="number" step="0.01" name="extra_bed_price" id="extra_bed_price"
+                                    class="kt-input h-[45px]" value="{{ $room->extra_bed_price }}" minLength="0">
                                 @error('extra_bed_price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -147,8 +152,8 @@
                                 <label for="sea_view_supplement" class="kt-label mb-1">
                                     {{ __('main.sea_view_supplement') }}
                                 </label>
-                                <input type="number" step="0.01" name="sea_view_supplement" id="sea_view_supplement" class="kt-input h-[45px]"
-                                    value="{{ $room->sea_view_supplement }}" minLength="0">
+                                <input type="number" step="0.01" name="sea_view_supplement" id="sea_view_supplement"
+                                    class="kt-input h-[45px]" value="{{ $room->sea_view_supplement }}" minLength="0">
                                 @error('sea_view_supplement')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -174,6 +179,9 @@
                                 ])
                             </div>
                         </div>
+
+                        {{-- Dynamic Custom Fields --}}
+                        <x-custom-fields module-name="accommodations" entity-type="Room" :entity="$room" />
 
                         {{-- Update Submit --}}
                         @include('components.elements.update-submit', [

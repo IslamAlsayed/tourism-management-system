@@ -197,6 +197,51 @@
                 </div>
             </div>
 
+            <!-- Stats Information -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">
+                        <i class="ki-filled ki-chart-pie-3 text-info me-2"></i>
+                        {{ __('main.statistics') }}
+                    </h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="flex flex-wrap" style="gap: 20px 80px;">
+                        @if ($restaurant->meals)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.meals')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $restaurant->meals->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($restaurant->supplements)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.supplements')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $restaurant->supplements->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                        @if ($restaurant->seasons)
+                            <div>
+                                <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.seasons')]) }}</label>
+                                <p class="text-sm text-secondary-foreground">
+                                    <span class="kt-badge kt-badge-info">
+                                        {{ $restaurant->seasons->count() }}
+                                    </span>
+                                </p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+
             <!-- Location Information -->
             <div class="kt-card">
                 <div class="kt-card-header">
@@ -318,7 +363,8 @@
                                 <div class="lg:col-span-2">
                                     <label class="kt-label mb-1">{{ __('main.website') }}</label>
                                     <p class="text-sm text-secondary-foreground">
-                                        <a href="{{ $restaurant->website }}" target="_blank" class="text-primary hover:underline">
+                                        <a href="{{ $restaurant->website }}" target="_blank"
+                                            class="text-primary hover:underline">
                                             {{ $restaurant->website }}
                                         </a>
                                     </p>
@@ -352,7 +398,7 @@
                         (<span class="font-semibold text-primary">{{ $restaurant->seasons->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('dashboard.accommodations.seasons.create', ['type' => 'restaurant', \Illuminate\Support\Str::random(120)]) }}"
+                        <a href="{{ route('dashboard.restaurants.seasons.create', ['model_type' => 'restaurant', 'model_id' => $restaurant->id]) }}"
                             class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.season')]) }}
@@ -362,7 +408,8 @@
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($restaurant->seasons as $season)
-                            <div wire:key="season-{{ $season->id }}" class="kt-card bg-white rounded-lg p-4 pt-2 record-seasons-{{ $season->id }}">
+                            <div wire:key="season-{{ $season->id }}"
+                                class="kt-card bg-white rounded-lg p-4 pt-2 record-seasons-{{ $season->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -410,11 +457,11 @@
                                 ])
                                 <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
-                                        'models' => 'seasons',
+                                        'models' => 'dashboard.restaurants.seasons',
                                         'id' => $season->id,
                                     ])
                                     @include('components.elements.edit-button', [
-                                        'models' => 'seasons',
+                                        'models' => 'dashboard.restaurants.seasons',
                                         'id' => $season->id,
                                     ])
                                     @livewire('delete-bottom', [
@@ -443,7 +490,8 @@
                         (<span class="font-semibold text-primary">{{ $restaurant->meals->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('meals.create') }}" class="kt-btn kt-btn-sm kt-btn-primary">
+                        <a href="{{ route('dashboard.restaurants.meals.create', ['restaurant_id' => $restaurant->id]) }}"
+                            class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.meal')]) }}
                         </a>
@@ -452,7 +500,8 @@
                 <div class="kt-card-body p-4">
                     <div class="grid lg:grid-cols-2 gap-4">
                         @forelse($restaurant->meals as $meal)
-                            <div wire:key="meal-{{ $meal->id }}" class="kt-card bg-white rounded-lg p-4 pt-2 record-meals-{{ $meal->id }}">
+                            <div wire:key="meal-{{ $meal->id }}"
+                                class="kt-card bg-white rounded-lg p-4 pt-2 record-meals-{{ $meal->id }}">
                                 <div class="grid lg:grid-cols-2 gap-4">
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.name') }}</label>
@@ -496,28 +545,87 @@
                                 {{-- Meal Pricing Information --}}
                                 @if ($meal->season || $meal->price)
                                     <div class="lg:col-span-2 mt-3 border-custom-t pt-3">
-                                        <label class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
+                                        <label
+                                            class="kt-label mb-2">{{ __('main.type_information', ['type' => __('main.pricing')]) }}</label>
                                         <div class="bg-blue-50 p-3 rounded-lg">
                                             @if ($meal->season)
                                                 <div class="flex items-center justify-between mb-2">
                                                     <span class="font-medium text-sm">{{ $meal->season->name }}</span>
-                                                    <span class="text-xs text-gray-500">{{ $meal->season->season_from->format('Y-m-d') }}
+                                                    <span
+                                                        class="text-xs text-gray-500">{{ $meal->season->season_from->format('Y-m-d') }}
                                                         → {{ $meal->season->season_to->format('Y-m-d') }}</span>
                                                 </div>
                                             @endif
-                                            <div class="flex items-center gap-4 text-sm">
+                                            <div class="flex items-center gap-4 text-sm flex-wrap">
                                                 @if ($meal->price)
                                                     <div>
                                                         <span class="text-gray-600">{{ __('main.price') }}:</span>
-                                                        <span class="font-semibold text-lg">{{ number_format($meal->price, 2) }}
+                                                        <span
+                                                            class="font-semibold text-lg">{{ number_format($meal->price, 2) }}
                                                             {{ $meal->currency?->code }}</span>
                                                     </div>
                                                 @endif
+                                                @if ($meal->fit_price_adult || $meal->fit_price_child_6_11 || $meal->fit_price_child_under_6)
+                                                    <div class="text-xs font-semibold text-primary mb-1">
+                                                        {{ __('main.fit_pricing') }}</div>
+                                                @endif
+                                                @if ($meal->fit_price_adult)
+                                                    <div>
+                                                        <span class="text-gray-600">{{ __('main.price_adult') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($meal->fit_price_adult, 2) }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($meal->fit_price_child_6_11)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.price_child_6_11') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($meal->fit_price_child_6_11, 2) }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($meal->fit_price_child_under_6)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.price_child_under_6') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($meal->fit_price_child_under_6, 2) }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($meal->group_price_adult || $meal->group_price_child_6_11 || $meal->group_price_child_under_6)
+                                                    <div class="text-xs font-semibold text-primary mt-2 mb-1">
+                                                        {{ __('main.group_pricing') }}</div>
+                                                @endif
+                                                @if ($meal->group_price_adult)
+                                                    <div>
+                                                        <span class="text-gray-600">{{ __('main.price_adult') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($meal->group_price_adult, 2) }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($meal->group_price_child_6_11)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.price_child_6_11') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($meal->group_price_child_6_11, 2) }}</span>
+                                                    </div>
+                                                @endif
+                                                @if ($meal->group_price_child_under_6)
+                                                    <div>
+                                                        <span
+                                                            class="text-gray-600">{{ __('main.price_child_under_6') }}:</span>
+                                                        <span
+                                                            class="font-semibold">{{ number_format($meal->group_price_child_under_6, 2) }}</span>
+                                                    </div>
+                                                @endif
                                                 @if ($meal->is_included)
-                                                    <span class="kt-badge kt-badge-success">{{ __('main.included') }}</span>
+                                                    <span
+                                                        class="kt-badge kt-badge-success">{{ __('main.included') }}</span>
                                                 @endif
                                                 @if ($meal->is_supplement)
-                                                    <span class="kt-badge kt-badge-info">{{ __('main.supplement') }}</span>
+                                                    <span
+                                                        class="kt-badge kt-badge-info">{{ __('main.supplement') }}</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -529,11 +637,11 @@
                                 ])
                                 <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
-                                        'models' => 'meals',
+                                        'models' => 'dashboard.restaurants.meals',
                                         'id' => $meal->id,
                                     ])
                                     @include('components.elements.edit-button', [
-                                        'models' => 'meals',
+                                        'models' => 'dashboard.restaurants.meals',
                                         'id' => $meal->id,
                                     ])
                                     @livewire('delete-bottom', [
@@ -562,7 +670,8 @@
                         (<span class="font-semibold text-primary">{{ $restaurant->supplements->count() }}</span>)
                     </h3>
                     <div class="kt-card-toolbar">
-                        <a href="{{ route('supplements.create', ['accommodation_id' => $restaurant->id]) }}" class="kt-btn kt-btn-sm kt-btn-primary">
+                        <a href="{{ route('dashboard.restaurants.supplements.create', ['restaurant_id' => $restaurant->id]) }}"
+                            class="kt-btn kt-btn-sm kt-btn-primary">
                             <i class="ki-filled ki-plus text-sm me-1"></i>
                             {{ __('main.add_type', ['type' => __('main.supplement')]) }}
                         </a>
@@ -602,7 +711,8 @@
                                     <div>
                                         <label class="kt-label mb-1">{{ __('main.price_type') }}</label>
                                         <div class="flex flex-wrap gap-2">
-                                            <span class="kt-badge kt-badge-info">{{ __('main.' . $supplement->price_type) }}</span>
+                                            <span
+                                                class="kt-badge kt-badge-info">{{ __('main.' . $supplement->price_type) }}</span>
                                         </div>
                                     </div>
                                     <div class="col-span-2 flex items-center gap-10 mb-2">
@@ -638,11 +748,11 @@
                                 ])
                                 <div class="lg:col-span-2 flex gap-2 mt-4">
                                     @include('components.elements.show-button', [
-                                        'models' => 'supplements',
+                                        'models' => 'dashboard.restaurants.supplements',
                                         'id' => $supplement->id,
                                     ])
                                     @include('components.elements.edit-button', [
-                                        'models' => 'supplements',
+                                        'models' => 'dashboard.restaurants.supplements',
                                         'id' => $supplement->id,
                                     ])
                                     @livewire('delete-bottom', [
@@ -666,11 +776,11 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'restaurants',
+                    'models' => 'dashboard.restaurants',
                     'id' => $restaurant->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'restaurants',
+                    'model' => 'dashboard.restaurants',
                     'id' => $restaurant->id,
                 ])
                 <a href="{{ route('dashboard.restaurants.index') }}" class="kt-btn kt-btn-outline">

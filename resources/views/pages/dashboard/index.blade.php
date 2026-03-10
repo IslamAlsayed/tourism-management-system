@@ -32,8 +32,8 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a class="kt-btn kt-btn-primary" href="{{ route('dashboard.core.user.profile') }}">
-                    {{ __('main.view_profile') }}
+                <a class="kt-btn kt-btn-primary" href="{{ route('dashboard.core.profile.index') }}">
+                    {{ __('main.account_settings') }}
                 </a>
             </div>
         </div>
@@ -57,7 +57,8 @@
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_users') }}
                                 </span>
-                                <a href="{{ route('dashboard.core.users.index') }}" class="text-xs text-blue-600 hover:underline">
+                                <a href="{{ route('dashboard.core.users.index') }}"
+                                    class="text-xs text-blue-600 hover:underline">
                                     {{ __('main.view_all') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
@@ -73,7 +74,8 @@
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_countries') }}
                                 </span>
-                                <a href="{{ route('dashboard.geography.countries.index') }}" class="text-xs text-blue-600 hover:underline">
+                                <a href="{{ route('dashboard.geography.countries.index') }}"
+                                    class="text-xs text-blue-600 hover:underline">
                                     {{ __('main.view_all') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
@@ -89,7 +91,8 @@
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_cities') }}
                                 </span>
-                                <a href="{{ route('dashboard.geography.cities.index') }}" class="text-xs text-blue-600 hover:underline">
+                                <a href="{{ route('dashboard.geography.cities.index') }}"
+                                    class="text-xs text-blue-600 hover:underline">
                                     {{ __('main.view_all') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
@@ -105,7 +108,8 @@
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
                                     {{ __('main.total_currencies') }}
                                 </span>
-                                <a href="{{ route('dashboard.localization.currencies.index') }}" class="text-xs text-blue-600 hover:underline">
+                                <a href="{{ route('dashboard.localization.currencies.index') }}"
+                                    class="text-xs text-blue-600 hover:underline">
                                     {{ __('main.view_all') }}
                                     <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary"></i>
                                 </a>
@@ -151,8 +155,75 @@
                             </div>
                         </div>
                         <div class="kt-card-footer justify-center">
-                            <a class="kt-link kt-link-underlined kt-link-dashed" href="{{ route('dashboard.core.user.profile') }}">
-                                {{ __('main.get_started') }}
+                            <a class="kt-link kt-link-underlined kt-link-dashed"
+                                href="{{ route('dashboard.core.profile.index') }}">
+                                {{ __('main.account_settings') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end: grid -->
+
+            <!-- begin: grid -->
+            <div class="grid lg:grid-cols-2 gap-4 lg:gap-6 items-stretch">
+                <!-- WhatsApp Status -->
+                <div class="kt-card h-full">
+                    <div class="kt-card-header border-0 pt-6">
+                        <div class="kt-card-title">
+                            <h3 class="flex items-center gap-2">
+                                <i class="ki-filled ki-whatsapp text-success fs-2"></i>
+                                WhatsApp Connectivity
+                            </h3>
+                        </div>
+                        <div class="kt-card-toolbar">
+                            <span class="badge {{ $stats['whatsapp'] > 0 ? 'badge-light-success' : 'badge-light-danger' }} fs-base px-4 py-2">
+                                {{ $stats['whatsapp'] }} / {{ $stats['whatsapp_total'] }} Connected
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kt-card-body pt-2">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-400 fw-bold">Waziper Status</span>
+                                <span class="fw-bolder text-gray-800">{{ $stats['whatsapp'] > 0 ? 'Operational' : 'No Accounts' }}</span>
+                            </div>
+                            <div class="h-8px w-full bg-light-success rounded overflow-hidden">
+                                <div class="bg-primary rounded h-8px" role="progressbar" style="width: {{ $stats['whatsapp_total'] > 0 ? ($stats['whatsapp'] / $stats['whatsapp_total']) * 100 : 0 }}%" aria-valuenow="{{ $stats['whatsapp'] }}" aria-valuemin="0" aria-valuemax="{{ $stats['whatsapp_total'] }}"></div>
+                            </div>
+                            <a href="{{ route('dashboard.whatsapp.index') }}" class="kt-btn kt-btn-sm kt-btn-light-primary w-full mt-2">
+                                Manage WhatsApp Accounts
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Status -->
+                <div class="kt-card h-full">
+                    <div class="kt-card-header border-0 pt-6">
+                        <div class="kt-card-title">
+                            <h3 class="flex items-center gap-2">
+                                <i class="ki-filled ki-sms text-info fs-2"></i>
+                                Email Services
+                            </h3>
+                        </div>
+                        <div class="kt-card-toolbar">
+                            <span class="badge {{ $stats['emails'] > 0 ? 'badge-light-info' : 'badge-light-danger' }} fs-base px-4 py-2">
+                                {{ $stats['emails'] }} / {{ $stats['emails_total'] }} Active
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kt-card-body pt-2">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-400 fw-bold">SMTP/IMAP Status</span>
+                                <span class="fw-bolder text-gray-800">{{ $stats['emails'] > 0 ? 'Operational' : 'No Accounts' }}</span>
+                            </div>
+                            <div class="h-8px w-full bg-light-info rounded overflow-hidden">
+                                <div class="bg-info rounded h-8px" role="progressbar" style="width: {{ $stats['emails_total'] > 0 ? ($stats['emails'] / $stats['emails_total']) * 100 : 0 }}%" aria-valuenow="{{ $stats['emails'] }}" aria-valuemin="0" aria-valuemax="{{ $stats['emails_total'] }}"></div>
+                            </div>
+                            <a href="{{ route('dashboard.emails.index') }}" class="kt-btn kt-btn-sm kt-btn-light-info w-full mt-2">
+                                Manage Email Settings
                             </a>
                         </div>
                     </div>
@@ -169,12 +240,14 @@
                                 {{ __('main.system_overview') }}
                             </h3>
                             <div class="kt-menu" data-kt-menu="true">
-                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-start"
-                                    data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px"
+                                    data-kt-menu-item-placement="bottom-start" data-kt-menu-item-toggle="dropdown"
+                                    data-kt-menu-item-trigger="click">
                                     <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
                                         <i class="ki-filled ki-dots-vertical text-lg"></i>
                                     </button>
-                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]" data-kt-menu-dismiss="true">
+                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
+                                        data-kt-menu-dismiss="true">
                                         <div class="kt-menu-item">
                                             <a class="kt-menu-link" href="{{ route('dashboard.core.users.index') }}">
                                                 <span class="kt-menu-icon">
@@ -184,7 +257,8 @@
                                             </a>
                                         </div>
                                         <div class="kt-menu-item">
-                                            <a class="kt-menu-link" href="{{ route('dashboard.geography.countries.index') }}">
+                                            <a class="kt-menu-link"
+                                                href="{{ route('dashboard.geography.countries.index') }}">
                                                 <span class="kt-menu-icon">
                                                     <i class="ki-filled ki-geolocation"></i>
                                                 </span>
@@ -192,7 +266,8 @@
                                             </a>
                                         </div>
                                         <div class="kt-menu-item">
-                                            <a class="kt-menu-link" href="{{ route('dashboard.geography.cities.index') }}">
+                                            <a class="kt-menu-link"
+                                                href="{{ route('dashboard.geography.cities.index') }}">
                                                 <span class="kt-menu-icon">
                                                     <i class="ki-filled ki-map"></i>
                                                 </span>
@@ -200,7 +275,8 @@
                                             </a>
                                         </div>
                                         <div class="kt-menu-item">
-                                            <a class="kt-menu-link" href="{{ route('dashboard.localization.currencies.index') }}">
+                                            <a class="kt-menu-link"
+                                                href="{{ route('dashboard.localization.currencies.index') }}">
                                                 <span class="kt-menu-icon">
                                                     <i class="ki-filled ki-dollar"></i>
                                                 </span>
@@ -258,7 +334,8 @@
                                     </div>
                                     <div class="flex items-center text-sm font-medium text-foreground gap-6">
                                         <span class="lg:text-right">{{ $stats['users'] }}</span>
-                                        <a href="{{ route('dashboard.core.users.index') }}" class="kt-btn kt-btn-sm kt-btn-outline">{{ __('main.view') }}</a>
+                                        <a href="{{ route('dashboard.core.users.index') }}"
+                                            class="kt-btn kt-btn-sm kt-btn-outline">{{ __('main.view') }}</a>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between flex-wrap gap-2">
@@ -304,11 +381,16 @@
                             <h3 class="kt-card-title">
                                 {{ __('main.quick_actions') }}
                             </h3>
-                            <div class="flex gap-5 p-2 rounded-xs bg-yellow-100">
-                                <label class="flex items-center gap-2 disabled">
-                                    <input class="kt-switch" name="check" type="checkbox" value="1" />
-                                    <span class="kt-label">{{ __('main.auto_refresh') }}</span>
-                                </label>
+                            <div class="flex items-center gap-2">
+                                <button class="kt-btn kt-btn-primary kt-btn-sm" id="confetti_random_direction_btn" type="button" onclick="randomConfetti()">
+                                    <i class="ki-filled ki-star text-base"></i> Random Confetti
+                                </button>
+                                <div class="flex gap-5 p-2 rounded-xs bg-yellow-100">
+                                    <label class="flex items-center gap-2 disabled">
+                                        <input class="kt-switch" name="check" type="checkbox" value="1" />
+                                        <span class="kt-label">{{ __('main.auto_refresh') }}</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="kt-card-content p-5 lg:p-7.5 content-center">
@@ -320,7 +402,8 @@
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
-                                                <a href="{{ route('dashboard.core.users.index') }}">{{ __('main.manage_users') }}</a>
+                                                <a
+                                                    href="{{ route('dashboard.core.users.index') }}">{{ __('main.manage_users') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['users'] }}
                                                 {{ __('main.total') }}
@@ -335,7 +418,8 @@
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
-                                                <a href="{{ route('dashboard.geography.countries.index') }}">{{ __('main.countries') }}</a>
+                                                <a
+                                                    href="{{ route('dashboard.geography.countries.index') }}">{{ __('main.countries') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['countries'] }}
                                                 {{ __('main.total') }}
@@ -350,7 +434,8 @@
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
-                                                <a href="{{ route('dashboard.geography.cities.index') }}">{{ __('main.cities') }}</a>
+                                                <a
+                                                    href="{{ route('dashboard.geography.cities.index') }}">{{ __('main.cities') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['cities'] }}
                                                 {{ __('main.total') }}
@@ -365,7 +450,8 @@
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
-                                                <a href="{{ route('dashboard.localization.currencies.index') }}">{{ __('main.currencies') }}</a>
+                                                <a
+                                                    href="{{ route('dashboard.localization.currencies.index') }}">{{ __('main.currencies') }}</a>
                                             </div>
                                             <div class="text-xs text-secondary-foreground">{{ $stats['currencies'] }}
                                                 {{ __('main.total') }}

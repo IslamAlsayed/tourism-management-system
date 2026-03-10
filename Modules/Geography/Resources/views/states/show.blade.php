@@ -196,6 +196,30 @@
                                 </p>
                             </div>
                         @endif
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.accommodations')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $state->accommodations()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.restaurants')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $state->restaurants()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.transportation_companies')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $state->transportationCompanies()->count() }}
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

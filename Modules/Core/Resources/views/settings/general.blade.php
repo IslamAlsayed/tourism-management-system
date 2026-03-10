@@ -32,7 +32,7 @@
                     <h3 class="kt-card-title">{{ __('main.app_info') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('dashboard.core.settings.update', $settings->id) }}" enctype="multipart/form-data" class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.core.settings.update', optional($settings)->id ?? 0) }}" enctype="multipart/form-data" class="space-y-6 p-4">
                         @csrf
                         @method('PUT')
 
@@ -45,12 +45,12 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 items-end mb-4">
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="app_name" class="kt-input h-[45px]" value="{{ $settings->app_name }}" />
+                                <input type="text" name="app_name" class="kt-input h-[45px]" value="{{ optional($settings)->app_name }}" />
                             </div>
 
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.app_url') }}</label>
-                                <input type="url" name="app_url" class="kt-input h-[45px]" value="{{ $settings->app_url }}" />
+                                <input type="url" name="app_url" class="kt-input h-[45px]" value="{{ optional($settings)->app_url }}" />
                             </div>
 
                             {{-- Timezone --}}
@@ -58,19 +58,19 @@
 
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.app_version') }}</label>
-                                <input type="text" name="app_version" class="kt-input h-[45px]" value="{{ $settings->app_version }}" />
+                                <input type="text" name="app_version" class="kt-input h-[45px]" value="{{ optional($settings)->app_version }}" />
                             </div>
 
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.app_columns_length') }}</label>
-                                <input type="number" name="app_columns_length" class="kt-input h-[45px]" value="{{ $settings->app_columns_length }}" />
+                                <input type="number" name="app_columns_length" class="kt-input h-[45px]" value="{{ optional($settings)->app_columns_length ?? 5 }}" />
                             </div>
 
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.app_sidebar_width') }}
                                     <span class="font-semibold text-primary">(px)</span>
                                 </label>
-                                <input type="number" name="app_sidebar_width" class="kt-input h-[45px]" value="{{ $settings->app_sidebar_width }}" />
+                                <input type="number" name="app_sidebar_width" class="kt-input h-[45px]" value="{{ optional($settings)->app_sidebar_width ?? 250 }}" />
                             </div>
 
                             <div>
@@ -98,7 +98,7 @@
                                     'name' => 'app_show_uuid_column',
                                     'id' => 'app_show_uuid_column',
                                     'value' => '1',
-                                    'checked' => $settings->app_show_uuid_column,
+                                    'checked' => optional($settings)->app_show_uuid_column ?? 0,
                                     'label' => __('main.app_show_uuid_column'),
                                 ])
                             </div>
@@ -108,7 +108,7 @@
                                     'name' => 'app_display_menu_labels',
                                     'id' => 'app_display_menu_labels',
                                     'value' => '1',
-                                    'checked' => $settings->app_display_menu_labels,
+                                    'checked' => optional($settings)->app_display_menu_labels ?? 1,
                                     'label' => __('main.app_display_menu_labels'),
                                 ])
                             </div>
@@ -134,11 +134,11 @@
                     <div class="grid lg:grid-cols-2 gap-6 p-4">
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.app_version') }}</div>
-                            <div class="font-semibold">{{ $settings->app_version }}</div>
+                            <div class="font-semibold">{{ optional($settings)->app_version ?? '1.0.0' }}</div>
                         </div>
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.php_version') }}</div>
-                            <div class="font-semibold">{{ $settings->app_php_version }}</div>
+                            <div class="font-semibold">{{ optional($settings)->app_php_version ?? PHP_VERSION }}</div>
                         </div>
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.operating_system') }}</div>
@@ -147,7 +147,7 @@
                         <div>
                             <div class="text-sm text-secondary-foreground">{{ __('main.status') }}</div>
                             <div class="font-semibold text-success">
-                                {{ $settings->app_status == 1 || $settings->app_status == true ? __('main.active') : __('main.inactive') }}
+                                {{ optional($settings)->app_status == 1 || optional($settings)->app_status == true ? __('main.active') : __('main.inactive') }}
                             </div>
                         </div>
                     </div>

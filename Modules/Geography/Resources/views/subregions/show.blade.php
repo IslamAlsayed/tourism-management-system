@@ -60,6 +60,68 @@
                 </div>
             </div>
 
+            <!-- Stats Information -->
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title">
+                        <i class="ki-filled ki-chart-pie-3 text-info me-2"></i>
+                        {{ __('main.statistics') }}
+                    </h3>
+                </div>
+                <div class="kt-card-body p-4">
+                    <div class="flex flex-wrap" style="gap: 20px 80px;">
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.countries')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $subregion->countries()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.states')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $subregion->states()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.cities')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $subregion->cities()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.accommodations')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $subregion->accommodations()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.restaurants')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $subregion->restaurants()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.transportation_companies')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $subregion->transportationCompanies()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Metadata -->
             @include('components.metadata', ['record' => $subregion])
 

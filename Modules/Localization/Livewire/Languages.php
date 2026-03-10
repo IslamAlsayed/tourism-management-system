@@ -65,6 +65,7 @@ class Languages extends Component
         }
 
         Language::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Language::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -74,24 +75,23 @@ class Languages extends Component
         ]);
     }
 
-    public function exportSelectedPDF()
+    public function clearSelected()
     {
-        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Language::class, $cols, 'languages');
         $this->selectedIds = [];
         $this->selectPage = false;
         $this->dispatch('reset-checkout-boxes');
-        return $result;
+    }
+
+    public function exportSelectedPDF()
+    {
+        $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Language::class, $cols, 'languages');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Language::class, $cols, 'languages', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Language::class, $cols, 'languages', $extension);
     }
 
     // Toggle between grid and table view
@@ -123,3 +123,4 @@ class Languages extends Component
         return view('localization::livewire.languages', ['data' => $data, 'totalCount' => $this->totalCount ?: Language::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

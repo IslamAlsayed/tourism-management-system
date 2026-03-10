@@ -79,6 +79,7 @@ class Airports extends Component
         }
 
         Airport::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Airport::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -91,21 +92,13 @@ class Airports extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Airport::class, $cols, 'crossings_ports');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Airport::class, $cols, 'crossings_ports');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Airport::class, $cols, 'crossings_ports', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Airport::class, $cols, 'crossings_ports', $extension);
     }
 
     public function resetFilters()
@@ -147,3 +140,4 @@ class Airports extends Component
         return view('entrypoints::livewire.airports', ['data' => $data, 'totalCount' => $this->totalCount ?: Airport::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

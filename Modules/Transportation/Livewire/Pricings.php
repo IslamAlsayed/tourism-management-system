@@ -60,6 +60,7 @@ class Pricings extends Component
         }
 
         Pricing::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Pricing::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -72,21 +73,13 @@ class Pricings extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Pricing::class, $cols, 'transportations-pricings');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Pricing::class, $cols, 'transportations-pricings');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Pricing::class, $cols, 'transportations-pricings', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Pricing::class, $cols, 'transportations-pricings', $extension);
     }
 
     public function render()
@@ -98,3 +91,4 @@ class Pricings extends Component
         return view('transportation::livewire.pricings', ['data' => $data, 'totalCount' => $this->totalCount ?: Pricing::count(), 'selectedIds' => $this->selectedIds]);
     }
 }
+

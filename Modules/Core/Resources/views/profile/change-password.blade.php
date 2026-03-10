@@ -15,8 +15,8 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a class="kt-btn kt-btn-outline" href="{{ route('dashboard.core.user.profile') }}">
-                    {{ __('main.view_profile') }}
+                <a class="kt-btn kt-btn-outline" href="{{ route('dashboard.core.profile.index') }}">
+                    {{ __('main.account_settings') }}
                 </a>
             </div>
         </div>
@@ -44,8 +44,8 @@
                                 <label class="kt-form-label font-normal text-mono">{{ __('main.email') }}</label>
                                 <div class="kt-input h-[45px] disabled opacity-50" data-kt-toggle-password="true">
                                     <input type="email" name="email" value="{{ $user->email }}">
-                                    <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5" data-kt-toggle-password-trigger="true"
-                                        type="button">
+                                    <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
+                                        data-kt-toggle-password-trigger="true" type="button">
                                         <span class="hidden kt-toggle-password-active:block">
                                             <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
                                         </span>
@@ -60,8 +60,8 @@
                                 <label class="kt-form-label font-normal text-mono">{{ __('main.new_password') }}</label>
                                 <div class="kt-input h-[45px]" data-kt-toggle-password="true">
                                     <input type="password" name="password" required autocomplete="new-password">
-                                    <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5" data-kt-toggle-password-trigger="true"
-                                        type="button">
+                                    <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
+                                        data-kt-toggle-password-trigger="true" type="button">
                                         <span class="kt-toggle-password-active:hidden">
                                             <i class="ki-filled ki-eye text-muted-foreground"></i>
                                         </span>
@@ -76,11 +76,13 @@
                             </div>
 
                             <div class="flex flex-col gap-1">
-                                <label class="kt-form-label font-normal text-mono">{{ __('main.confirm_password') }}</label>
+                                <label
+                                    class="kt-form-label font-normal text-mono">{{ __('main.confirm_password') }}</label>
                                 <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                    <input type="password" name="password_confirmation" required autocomplete="new-password">
-                                    <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5" data-kt-toggle-password-trigger="true"
-                                        type="button">
+                                    <input type="password" name="password_confirmation" required
+                                        autocomplete="new-password">
+                                    <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
+                                        data-kt-toggle-password-trigger="true" type="button">
                                         <span class="kt-toggle-password-active:hidden">
                                             <i class="ki-filled ki-eye text-muted-foreground"></i>
                                         </span>

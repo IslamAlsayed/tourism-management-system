@@ -5,7 +5,7 @@
     @include('includes.table-breadcrumb', [
         'title' => $typeLabel,
         'description' => __('main.manage_system_types', ['types' => $typeLabel]),
-        'page_create_url' => route('dashboard.entrypoints.create'),
+        'page_create_url' => route('dashboard.entrypoints.seaports.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.sea-port')]),
     ])
     <!-- End of Container -->

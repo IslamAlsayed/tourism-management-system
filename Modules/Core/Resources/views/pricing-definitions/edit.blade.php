@@ -22,11 +22,13 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('dashboard.core.pricing-definitions.update', $pricing->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.core.pricing-definitions.update', $pricing->id) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="grid gap-4 lg:gap-6">
-                <!-- Transportation pricings Information -->
+
+                {{-- Identity & Info --}}
                 <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
@@ -34,40 +36,60 @@
                         </h3>
                     </div>
                     <div class="kt-card-body p-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            {{-- Code (readonly) --}}
+                            <div>
+                                <label for="code" class="kt-label mb-1">{{ __('main.code') }}</label>
+                                <input type="text" class="kt-input h-[45px] bg-gray-100" id="code"
+                                    value="{{ $pricing->code }}" readonly>
+                            </div>
+
+                            {{-- UUID (readonly) --}}
+                            <div>
+                                <label for="uuid" class="kt-label mb-1">UUID</label>
+                                <input type="text" class="kt-input h-[45px] bg-gray-100 text-xs" id="uuid"
+                                    value="{{ $pricing->uuid }}" readonly>
+                            </div>
+
                             {{-- Name (English) --}}
-                            <div class="align-self-end">
-                                <label for="name" class="kt-label">{{ __('main.name') }}</label>
-                                <input type="text" class="kt-input h-[45px]" id="name" name="name" value="{{ $pricing->name }}">
+                            <div>
+                                <label for="name" class="kt-label mb-1">{{ __('main.name') }}</label>
+                                <input type="text" class="kt-input h-[45px]" id="name" name="name"
+                                    value="{{ $pricing->name }}">
                                 @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             {{-- Name (Arabic) --}}
-                            <div class="align-self-end">
-                                <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                                <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar" value="{{ $pricing->name_ar }}">
-                                @error('name_ar')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- Key --}}
                             <div>
-                                <label for="key" class="kt-label mb-2">{{ __('main.key') }}</label>
-                                <div class="relative">
-                                    <input type="text" name="key" id="key" class="kt-input h-[45px] pr-10" value="{{ $pricing->key }}" readonly>
-                                </div>
-                                @error('key')
-                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                <label for="name_ar" class="kt-label mb-1">{{ __('main.name_ar') }}</label>
+                                <input type="text" class="kt-input h-[45px]" id="name_ar" name="name_ar"
+                                    value="{{ $pricing->name_ar }}">
+                                @error('name_ar')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Category -->
-                            <div class="align-self-end">
-                                <label for="category" class="kt-label">{{ __('main.category') }}</label>
-                                <input type="text" name="category" id="category" class="kt-input h-[45px]" value="{{ $pricing->category }}">
+                            {{-- Key (readonly) --}}
+                            <div>
+                                <label for="key" class="kt-label mb-1">{{ __('main.key') }}</label>
+                                <input type="text" name="key" id="key" class="kt-input h-[45px] bg-gray-100"
+                                    value="{{ $pricing->key }}" readonly>
+                            </div>
+
+                            {{-- Category --}}
+                            <div>
+                                <label for="category" class="kt-label mb-1">{{ __('main.category') }}</label>
+                                <select name="category" id="category" class="kt-select h-[45px]">
+                                    <option value="">-- {{ __('main.select') }} --</option>
+                                    @foreach (\Modules\Core\Entities\PricingDefinition::getCategories() as $catKey => $catLabel)
+                                        <option value="{{ $catKey }}"
+                                            {{ $pricing->category == $catKey ? 'selected' : '' }}>
+                                            {{ $catLabel }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('category')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -76,16 +98,56 @@
                     </div>
                 </div>
 
+                {{-- Module Assignments --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">📦 Used In Modules</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <p class="text-sm text-gray-500 mb-4">
+                            Select which modules and sections this definition should be available in.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            @foreach (\Modules\Core\Entities\PricingDefinition::getAvailableModules() as $modKey => $modLabel)
+                                @php
+                                    $assignment = $pricing->moduleAssignments->where('module_name', $modKey)->first();
+                                @endphp
+                                <div
+                                    class="border rounded-lg p-4 {{ $assignment ? 'bg-blue-50/50 border-blue-200' : 'bg-gray-50/30' }}">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <input type="checkbox" name="modules[{{ $modKey }}][enabled]"
+                                            id="module_{{ $modKey }}" value="1" class="kt-checkbox w-5 h-5"
+                                            {{ $assignment ? 'checked' : '' }}>
+                                        <label for="module_{{ $modKey }}" class="font-semibold cursor-pointer">
+                                            {{ $modLabel }}
+                                        </label>
+                                    </div>
+                                    <div class="ml-8">
+                                        <input type="text" name="modules[{{ $modKey }}][field_name]"
+                                            class="kt-input h-[35px] text-sm"
+                                            placeholder="Field name (e.g. room_price_unit)"
+                                            value="{{ $assignment->field_name ?? '' }}">
+                                        <input type="text" name="modules[{{ $modKey }}][section_label]"
+                                            class="kt-input h-[35px] text-sm mt-1"
+                                            placeholder="Section label (e.g. Additional Pricing)"
+                                            value="{{ $assignment->section_label ?? '' }}">
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
                 {{-- Description --}}
                 @include('components.elements.input-text-editor', [
                     'name' => 'description',
-                    'value' => $pricing->description,
+                    'value' => $pricing->description?->body,
                 ])
 
                 {{-- Notes --}}
                 @include('components.elements.input-text-editor', [
                     'name' => 'notes',
-                    'value' => $pricing->notes,
+                    'value' => $pricing->notes?->body,
                 ])
 
                 <div class="flex flex-wrap" style="gap: 10px 40px;">

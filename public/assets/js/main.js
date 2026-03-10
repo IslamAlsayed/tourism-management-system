@@ -1,10 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
+    initPageComponents();
+});
+
+// Re-initialize components after Livewire SPA navigation
+document.addEventListener("livewire:navigated", () => {
+    initPageComponents();
+});
+
+function initPageComponents() {
     // detect all selects
     const specialMultiples = document.querySelectorAll("[special-multiple]");
     const specialSearches = document.querySelectorAll("[special-search]");
-    specialMultiples.forEach((select) => window.specialSelect(select));
-    specialSearches.forEach((select) => window.specialSearch(select));
-    // window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
+    specialMultiples.forEach((select) => {
+        if (!select.classList.contains("select2-hidden-accessible")) {
+            window.specialSelect(select);
+        }
+    });
+    specialSearches.forEach((select) => {
+        if (!select.classList.contains("select2-hidden-accessible")) {
+            window.specialSearch(select);
+        }
+    });
 
     // close dropdowns on outside click
     document.addEventListener("click", function (e) {
@@ -16,18 +32,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    $(document).ready(function () {
-        let multiples = [
-            document.querySelectorAll(".basic-multiple"),
-            document.querySelectorAll(".basic-single"),
-        ];
-        multiples.forEach((multiple) => {
-            multiple.forEach((select) => {
-                $(select).select2();
+    // Initialize Select2
+    if (typeof $ !== 'undefined') {
+        $(document).ready(function () {
+            let multiples = [
+                document.querySelectorAll(".basic-multiple"),
+                document.querySelectorAll(".basic-single"),
+            ];
+            multiples.forEach((multiple) => {
+                multiple.forEach((select) => {
+                    if (!$(select).hasClass("select2-hidden-accessible")) {
+                        $(select).select2();
+                    }
+                });
             });
         });
-    });
-});
+    }
+}
 
 document.addEventListener("updatedPaginate", () => {
     setTimeout(() => {

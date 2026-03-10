@@ -15,6 +15,7 @@ use Modules\TourGuides\Entities\TourGuideTypeState;
 use Modules\TourGuides\Livewire\Guides;
 use Modules\TourGuides\Livewire\GuidesReviews;
 use Modules\TourGuides\Livewire\GuidesTypes;
+use Modules\TourGuides\Livewire\Seasons;
 use Modules\TourGuides\Policies\TourGuideLanguagePolicy;
 use Modules\TourGuides\Policies\TourGuidePolicy;
 use Modules\TourGuides\Policies\TourGuideReviewPolicy;
@@ -58,6 +59,7 @@ class TourGuidesServiceProvider extends ServiceProvider
         Livewire::component('tourguides::guides', Guides::class);
         Livewire::component('tourguides::guides-types', GuidesTypes::class);
         Livewire::component('tourguides::guides-reviews', GuidesReviews::class);
+        Livewire::component('tourguides::seasons', Seasons::class);
 
         // === Register Policies ===
         foreach ($this->policies as $model => $policy) {

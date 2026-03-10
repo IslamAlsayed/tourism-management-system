@@ -117,11 +117,11 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'users',
+                    'models' => 'dashboard.core.users',
                     'id' => $user->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'users',
+                    'model' => 'dashboard.core.users',
                     'id' => $user->id,
                 ])
                 <a href="{{ route('dashboard.core.users.index') }}" class="kt-btn kt-btn-outline">

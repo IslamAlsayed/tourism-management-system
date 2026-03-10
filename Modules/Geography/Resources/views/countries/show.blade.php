@@ -192,18 +192,25 @@
                         @if ($country)
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.region') }}</label>
-                                <a href="{{ route('dashboard.geography.regions.show', $country?->region?->id) }}" class="block text-sm text-primary underline">
-                                    {{ $country?->region?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
+                                @if($country->region)
+                                    <a href="{{ route('dashboard.geography.regions.show', $country->region->id) }}" class="block text-sm text-primary underline">
+                                        {{ $country->region->name }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                @else
+                                    <span class="block text-sm text-secondary-foreground">{{ __('main.na') }}</span>
+                                @endif
                             </div>
                             <div>
                                 <label class="kt-label mb-1">{{ __('main.subregion') }}</label>
-                                <a href="{{ route('dashboard.geography.subregions.show', $country?->subregion?->id) }}"
-                                    class="block text-sm text-primary underline">
-                                    {{ $country?->subregion?->name ?? __('main.na') }}
-                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                                </a>
+                                @if($country->subregion)
+                                    <a href="{{ route('dashboard.geography.subregions.show', $country->subregion->id) }}" class="block text-sm text-primary underline">
+                                        {{ $country->subregion->name }}
+                                        <i class="fa-duotone fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                                    </a>
+                                @else
+                                    <span class="block text-sm text-secondary-foreground">{{ __('main.na') }}</span>
+                                @endif
                             </div>
                         @endif
                         <div>
@@ -219,6 +226,30 @@
                             <p class="text-sm text-secondary-foreground">
                                 <span class="kt-badge kt-badge-info">
                                     {{ $country->cities->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.accommodations')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $country->accommodations()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.restaurants')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $country->restaurants()->count() }}
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <label class="kt-label mb-1">{{ __('main.total_types', ['types' => __('main.transportation_companies')]) }}</label>
+                            <p class="text-sm text-secondary-foreground">
+                                <span class="kt-badge kt-badge-info">
+                                    {{ $country->transportationCompanies()->count() }}
                                 </span>
                             </p>
                         </div>
@@ -249,6 +280,18 @@
                                     <p class="text-sm text-secondary-foreground">{{ $country->longitude }}</p>
                                 </div>
                             @endif
+
+                            @if ($country->latitude && $country->longitude)
+                                <div class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 mt-2">
+                                    <button type="button" class="btn btn-sm btn-light-primary w-fit" 
+                                        x-data 
+                                        @click="$dispatch('open-map-modal', { lat: '{{ $country->latitude }}', lng: '{{ $country->longitude }}', title: {{ Js::from($country->name) }} })">
+                                        <i class="ki-filled ki-geolocation text-base me-2"></i>
+                                        {{ __('main.view_on_map') }}
+                                    </button>
+                                </div>
+                            @endif
+
                             @if ($country->population)
                                 <div>
                                     <label class="kt-label mb-1">{{ __('main.population') }}</label>

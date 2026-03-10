@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+/* Metronic Custom Styles */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #f9f9f9;
+        /* Light grey background for the whole page */
+    }
+
+    /* Fix autofill background color overriding dark mode styles */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: inherit !important;
+        transition: background-color 5000s ease-in-out 0s;
+        box-shadow: inset 0 0 20px 20px transparent;
+    }
+
+    /* Fix autofill background color overriding dark mode styles */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: inherit !important;
+        transition: background-color 5000s ease-in-out 0s;
+        box-shadow: inset 0 0 20px 20px transparent;
+    }
+
+    /* Force Logo Visibility based on theme */
+    html.dark .dark\:hidden,
+    [data-kt-theme-mode="dark"] .dark\:hidden {
+        display: none !important;
+    }
+
+    html.dark .hidden.dark\:block,
+    [data-kt-theme-mode="dark"] .hidden.dark\:block {
+        display: block !important;
+    }
+
+    html:not(.dark) .hidden.dark\:block,
+    [data-kt-theme-mode="light"] .hidden.dark\:block {
+        display: none !important;
+    }
+
+    /* Fix input text and placeholder color in dark mode */
+    html.dark .kt-input,
+    html.dark input.kt-input,
+    html.dark .kt-input input,
+    html.dark input,
+    [data-kt-theme-mode="dark"] .kt-input,
+    [data-kt-theme-mode="dark"] input.kt-input,
+    [data-kt-theme-mode="dark"] .kt-input input,
+    [data-kt-theme-mode="dark"] input {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+
+    html.dark .kt-input::placeholder,
+    html.dark input.kt-input::placeholder,
+    html.dark .kt-input input::placeholder,
+    [data-kt-theme-mode="dark"] .kt-input::placeholder,
+    [data-kt-theme-mode="dark"] input.kt-input::placeholder,
+    [data-kt-theme-mode="dark"] .kt-input input::placeholder {
+        color: rgba(255, 255, 255, 0.5) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* Universal Autofill Fix to preserve exact theme background */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s !important;
+    }
+
+    /* Dark Mode Autofill override (matches Metronic dark input background) */
+    html.dark input:-webkit-autofill,
+    html.dark input:-webkit-autofill:hover,
+    html.dark input:-webkit-autofill:focus,
+    html.dark input:-webkit-autofill:active,
+    [data-kt-theme-mode="dark"] input:-webkit-autofill,
+    [data-kt-theme-mode="dark"] input:-webkit-autofill:hover,
+    [data-kt-theme-mode="dark"] input:-webkit-autofill:focus,
+    [data-kt-theme-mode="dark"] input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #1b1b29 inset !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+
+    /* Light Mode Autofill override */
+    html:not(.dark) input:-webkit-autofill,
+    html:not(.dark) input:-webkit-autofill:hover,
+    html:not(.dark) input:-webkit-autofill:focus,
+    html:not(.dark) input:-webkit-autofill:active,
+    [data-kt-theme-mode="light"] input:-webkit-autofill,
+    [data-kt-theme-mode="light"] input:-webkit-autofill:hover,
+    [data-kt-theme-mode="light"] input:-webkit-autofill:focus,
+    [data-kt-theme-mode="light"] input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+        -webkit-text-fill-color: #000000 !important;
+    }
+
+    /* Fix for oversized/empty dropdowns */
+    select.kt-input {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+}
+
+@layer components {
+    /* Kept intentionally empty to rely entirely on standard Metronic styles.css */
+}
+
+@layer utilities {
+
+    /* Custom spacing utilities */
+    .space-x-2\.5>*+* {
+        margin-left: 0.625rem;
+    }
+
+    .gap-7\.5 {
+        gap: 1.875rem;
+    }
+
+    /* Hide scrollbar but allow scrolling */
+    .scrollbar-hidden {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hidden::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Trix Editor Responsive Fix */
+    trix-editor {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    trix-toolbar {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    @media (max-width: 768px) {
+
+        trix-editor,
+        trix-toolbar {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+    }
+}

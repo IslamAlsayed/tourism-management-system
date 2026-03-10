@@ -16,6 +16,7 @@ return [
     'activity_date_from' => 'Date From',
     'activity_date_to' => 'Date To',
     'activity_clear_current_log' => 'Clear Current Log',
+    'activity_clear_all_logs' => 'Clear All Logs',
     'activity_breakdown_title' => 'Event Breakdown',
     'activity_selected_title' => 'Selected Activity',
     'activity_id' => 'Activity ID',
@@ -31,6 +32,11 @@ return [
     'clear_selection' => 'Clear Selection',
     'per_page' => 'Per Page',
     'unknown' => 'Unknown',
+    'event_created' => 'Created',
+    'event_updated' => 'Updated',
+    'event_deleted' => 'Deleted',
+    'event_restored' => 'Restored',
+    'event_unknown' => 'Unknown',
 
     // Auth Activities
     'auth' => [

@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Collection;
+use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -30,11 +32,20 @@ trait CustomColumnsRefreshBased
     {
         $excluded = method_exists($model, 'getExcludedColumns') ? $model->getExcludedColumns() : [];
 
-        if (getActiveSettings()->app_show_uuid_column == 0) {
+        if (optional(getActiveSettings())->app_show_uuid_column == 0) {
             $excluded[] = 'uuid';
         }
 
         return $excluded;
+    }
+
+    #[On('filterColumn')]
+    public function filterColumn($column, $value)
+    {
+        $this->searchColumns[$column] = $value;
+        // Assuming resetPage() is a method available in the Livewire component using this trait
+        // If not, this line might cause an error or needs to be implemented in the component.
+        // $this->resetPage(); // Reset pagination when filtering
     }
 
     public function initializeCustomColumns(string $modelClass)
@@ -46,7 +57,7 @@ trait CustomColumnsRefreshBased
         $this->fillable = $model->getFillable();
         array_splice(
             $this->fillable,
-            getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)),
+            optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)),
             0,
             $this->relations
         );
@@ -62,7 +73,7 @@ trait CustomColumnsRefreshBased
             $this->hasCustomColumns = !is_null($savedColumns);
         }
 
-        $defaultColumnsCount = getActiveSettings()->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+        $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
         $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, $defaultColumnsCount);
 
         $this->pendingColumns = $this->columns;

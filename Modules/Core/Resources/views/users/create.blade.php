@@ -24,7 +24,8 @@
     <div class="kt-container-fixed">
         <div class="kt-card p-4">
             <div class="kt-card-body">
-                <form class="space-y-6" method="POST" action="{{ route('dashboard.core.users.store') }}" enctype="multipart/form-data">
+                <form class="space-y-6" method="POST" action="{{ route('dashboard.core.users.store') }}"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="grid gap-4 lg:gap-6">
 
@@ -38,7 +39,8 @@
                             <!-- Name -->
                             <div class="">
                                 <label for="name" class="kt-label mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ old('name') }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -47,7 +49,8 @@
                             <!-- First Name -->
                             <div class="">
                                 <label for="first_name" class="kt-label required mb-2">{{ __('main.first_name') }}</label>
-                                <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]" value="{{ old('first_name') }}" required>
+                                <input type="text" name="first_name" id="first_name" class="kt-input h-[45px]"
+                                    value="{{ old('first_name') }}" required>
                                 @error('first_name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -56,7 +59,8 @@
                             <!-- Last Name -->
                             <div class="">
                                 <label for="last_name" class="kt-label required mb-2">{{ __('main.last_name') }}</label>
-                                <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]" value="{{ old('last_name') }}" required>
+                                <input type="text" name="last_name" id="last_name" class="kt-input h-[45px]"
+                                    value="{{ old('last_name') }}" required>
                                 @error('last_name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -65,7 +69,8 @@
                             <!-- Password -->
                             <div class="">
                                 <label for="password" class="kt-label required mb-2">{{ __('main.password') }}</label>
-                                <input type="password" name="password" id="password" class="kt-input h-[45px]" required autocomplete="off">
+                                <input type="password" name="password" id="password" class="kt-input h-[45px]" required
+                                    autocomplete="off">
                                 @error('password')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -73,9 +78,10 @@
 
                             <!-- Confirmation Password -->
                             <div class="">
-                                <label for="password_confirmation" class="kt-label required mb-2">{{ __('main.confirm_password') }}</label>
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="kt-input h-[45px]" required
-                                    autocomplete="off">
+                                <label for="password_confirmation"
+                                    class="kt-label required mb-2">{{ __('main.confirm_password') }}</label>
+                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                    class="kt-input h-[45px]" required autocomplete="off">
                                 @error('password_confirmation')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -98,7 +104,8 @@
                                     <!-- Email -->
                                     <div class="">
                                         <label for="email" class="kt-label required mb-2">{{ __('main.email') }}</label>
-                                        <input type="email" name="email" id="email" class="kt-input h-[45px]" value="{{ old('email') }}" required>
+                                        <input type="email" name="email" id="email" class="kt-input h-[45px]"
+                                            value="{{ old('email') }}" required>
                                         @error('email')
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -107,7 +114,8 @@
                                     <!-- Phone -->
                                     <div class="">
                                         <label for="phone" class="kt-label mb-2">{{ __('main.phone') }}</label>
-                                        <input type="text" name="phone" id="phone" class="kt-input h-[45px]" value="{{ old('phone') }}">
+                                        <input type="text" name="phone" id="phone" class="kt-input h-[45px]"
+                                            value="{{ old('phone') }}">
                                         @error('phone')
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -116,7 +124,8 @@
                                     <!-- Mobile -->
                                     <div class="">
                                         <label for="mobile" class="kt-label mb-2">{{ __('main.mobile') }}</label>
-                                        <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]" value="{{ old('mobile') }}">
+                                        <input type="text" name="mobile" id="mobile" class="kt-input h-[45px]"
+                                            value="{{ old('mobile') }}">
                                         @error('mobile')
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -140,8 +149,10 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                                     <!-- Employee ID -->
                                     <div class="">
-                                        <label for="employee_id" class="kt-label mb-2">{{ __('main.employee_id') }}</label>
-                                        <input type="text" name="employee_id" id="employee_id" class="kt-input h-[45px]" value="{{ old('employee_id') }}">
+                                        <label for="employee_id"
+                                            class="kt-label mb-2">{{ __('main.employee_id') }}</label>
+                                        <input type="text" name="employee_id" id="employee_id"
+                                            class="kt-input h-[45px]" value="{{ old('employee_id') }}">
                                         @error('employee_id')
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -150,7 +161,8 @@
                                     <!-- Birth Date -->
                                     <div class="">
                                         <label for="birth_date" class="kt-label mb-2">{{ __('main.birth_date') }}</label>
-                                        <input type="date" name="birth_date" id="birth_date" class="kt-input h-[45px]" value="{{ old('birth_date') }}">
+                                        <input type="date" name="birth_date" id="birth_date"
+                                            class="kt-input h-[45px]" value="{{ old('birth_date') }}">
                                         @error('birth_date')
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -159,7 +171,8 @@
                                     <!-- Hire Date -->
                                     <div class="">
                                         <label for="hire_date" class="kt-label mb-2">{{ __('main.hire_date') }}</label>
-                                        <input type="date" name="hire_date" id="hire_date" class="kt-input h-[45px]" value="{{ old('hire_date') }}">
+                                        <input type="date" name="hire_date" id="hire_date" class="kt-input h-[45px]"
+                                            value="{{ old('hire_date') }}">
                                         @error('hire_date')
                                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                         @enderror
@@ -171,7 +184,8 @@
                                         <select name="department" id="department" class="kt-input basic-single">
                                             <option value="" disabled selected></option>
                                             @foreach (config('helpers.departments') as $key => $value)
-                                                <option value="{{ $key }}" {{ old('department') == $key ? 'selected' : '' }}>
+                                                <option value="{{ $key }}"
+                                                    {{ old('department') == $key ? 'selected' : '' }}>
                                                     {{ ucfirst($value) }}
                                                 </option>
                                             @endforeach
@@ -187,7 +201,8 @@
                                         <select name="position" id="position" class="kt-input basic-single">
                                             <option value="" disabled selected></option>
                                             @foreach (config('helpers.positions') as $key => $value)
-                                                <option value="{{ $key }}" {{ old('position') == $key ? 'selected' : '' }}>{{ ucfirst($value) }}
+                                                <option value="{{ $key }}"
+                                                    {{ old('position') == $key ? 'selected' : '' }}>{{ ucfirst($value) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -208,12 +223,16 @@
                                 <div class="grid lg:grid-cols-3 gap-6 mb-4">
                                     <!-- Preferred Language -->
                                     <div class="">
-                                        <label for="preferred_language" class="kt-label mb-2">{{ __('main.preferred_language') }}</label>
-                                        <select name="preferred_language" id="preferred_language" class="kt-select h-[45px]" special-search>
+                                        <label for="preferred_language"
+                                            class="kt-label mb-2">{{ __('main.preferred_language') }}</label>
+                                        <select name="preferred_language" id="preferred_language"
+                                            class="kt-select h-[45px]" special-search>
                                             <option value="">{{ __('main.select_language') }}</option>
-                                            <option value="en" {{ old('preferred_language') == 'en' ? 'selected' : '' }}>
+                                            <option value="en"
+                                                {{ old('preferred_language') == 'en' ? 'selected' : '' }}>
                                                 {{ __('main.english') }}</option>
-                                            <option value="ar" {{ old('preferred_language') == 'ar' ? 'selected' : '' }}>
+                                            <option value="ar"
+                                                {{ old('preferred_language') == 'ar' ? 'selected' : '' }}>
                                                 {{ __('main.arabic') }}</option>
                                         </select>
                                         @error('preferred_language')
@@ -226,16 +245,21 @@
 
                                     <!-- Button Display Mode -->
                                     <div class="">
-                                        <label for="button_display_mode" class="kt-label mb-2">{{ __('main.button_display_mode') }}</label>
-                                        <select name="button_display_mode" id="button_display_mode" class="kt-select basic-single">
+                                        <label for="button_display_mode"
+                                            class="kt-label mb-2">{{ __('main.button_display_mode') }}</label>
+                                        <select name="button_display_mode" id="button_display_mode"
+                                            class="kt-select basic-single">
                                             <option value="" disabled selected></option>
-                                            <option value="icon" {{ old('button_display_mode') == 'icon' ? 'selected' : '' }}>
+                                            <option value="icon"
+                                                {{ old('button_display_mode') == 'icon' ? 'selected' : '' }}>
                                                 {{ __('main.icon') }}
                                             </option>
-                                            <option value="text" {{ old('button_display_mode') == 'text' ? 'selected' : '' }}>
+                                            <option value="text"
+                                                {{ old('button_display_mode') == 'text' ? 'selected' : '' }}>
                                                 {{ __('main.text') }}
                                             </option>
-                                            <option value="both" {{ old('button_display_mode') == 'both' ? 'selected' : '' }}>
+                                            <option value="both"
+                                                {{ old('button_display_mode') == 'both' ? 'selected' : '' }}>
                                                 {{ __('main.both') }}
                                             </option>
                                         </select>
@@ -292,7 +316,10 @@
                         ])
 
                         <!-- Save Submit Buttons -->
-                        @include('components.elements.save-submit', ['models' => 'users'])
+                        @include('components.elements.save-submit', [
+                            'models' => 'users',
+                            'cancel_route' => route('dashboard.core.users.index'),
+                        ])
                     </div>
                 </form>
             </div>

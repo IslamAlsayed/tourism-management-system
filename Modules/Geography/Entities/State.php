@@ -7,11 +7,12 @@ use Modules\Localization\Entities\Timezone;
 use App\Traits\HasSearch;
 use App\Traits\FiltersByUserRole;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class State extends Model
 {
-    use HasSearch, HasUuid, HasRichText, FiltersByUserRole;
+    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, SoftDeletes;
     protected $richTextAttributes = [
         'description',
         'notes',
@@ -42,7 +43,7 @@ class State extends Model
 
     public function getRelationshipNames()
     {
-        return ['timezone', 'country', 'city', 'cities'];
+        return ['timezone', 'country', 'city', 'cities', 'accommodations', 'restaurants', 'transportationCompanies'];
     }
 
     public function getExcludedColumns()
@@ -67,6 +68,26 @@ class State extends Model
 
     public function cities()
     {
+        return $this->hasMany(City::class);
+    }
+
+    public function cities_pivot()
+    {
         return $this->belongsToMany(City::class, 'city_state');
+    }
+
+    public function accommodations()
+    {
+        return $this->hasMany(\Modules\Accommodations\Entities\Accommodation::class);
+    }
+
+    public function restaurants()
+    {
+        return $this->hasMany(\Modules\Restaurants\Entities\Restaurant::class);
+    }
+
+    public function transportationCompanies()
+    {
+        return $this->hasMany(\Modules\Transportation\Entities\Company::class);
     }
 }

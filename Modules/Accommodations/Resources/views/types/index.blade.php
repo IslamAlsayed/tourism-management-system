@@ -6,7 +6,7 @@
         'title' => __('main.types'),
         'description' => __('main.manage_system_types', ['types' => __('main.types')]),
         'import_url' => route('import.data', ['models' => 'types']),
-        'page_create_url' => route('types.create'),
+        'page_create_url' => route('dashboard.accommodations.types.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.type')]),
     ])
     <!-- End of Container -->

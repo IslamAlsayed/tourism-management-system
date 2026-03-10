@@ -2,7 +2,7 @@
 
 namespace Modules\TravelDocuments\Entities;
 
-use Modules\Tourists\Entities\TouristSite;
+use Modules\TouristSites\Entities\TouristSite;
 use App\Traits\HasSearch;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -78,7 +78,7 @@ class TravelPasse extends Model
 
     public function touristSites()
     {
-        return $this->belongsToMany(TouristSite::class, 'travel_pass_sites');
+        return $this->belongsToMany(TouristSite::class, 'travel_pass_sites', 'travel_pass_id', 'tourist_site_id');
     }
 
     public function includedSites()

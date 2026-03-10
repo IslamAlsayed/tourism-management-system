@@ -38,7 +38,8 @@
                                 <label for="name" class="kt-label">
                                     {{ __('main.name') }}
                                 </label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ $route->name }}">
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ $route->name }}">
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -47,7 +48,8 @@
                             <!-- Name Arabic -->
                             <div>
                                 <label for="name_ar" class="kt-label">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ $route->name_ar }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ $route->name_ar }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -57,7 +59,8 @@
                             <div>
                                 <label for="code" class="kt-label">{{ __('main.code') }}</label>
                                 <div class="relative">
-                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10" value="{{ $route->code }}" readonly>
+                                    <input type="text" name="code" id="code" class="kt-input h-[45px] pr-10"
+                                        value="{{ $route->code }}" readonly>
                                 </div>
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -92,8 +95,8 @@
                                     {{ __('main.distance') }}
                                     <span class="text-primary font-semibold">(km)</span>
                                 </label>
-                                <input type="number" name="distance" id="distance" step="0.01" class="kt-input h-[45px]" value="{{ $route->distance }}"
-                                    placeholder="150.5">
+                                <input type="number" name="distance" id="distance" step="0.01"
+                                    class="kt-input h-[45px]" value="{{ $route->distance }}" placeholder="150.5">
                                 @error('distance')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -105,8 +108,8 @@
                                     {{ __('main.estimated_duration') }}
                                     <span class="text-primary font-semibold">({{ __('main.minutes') }})</span>
                                 </label>
-                                <input type="number" name="estimated_duration" id="estimated_duration" class="kt-input h-[45px]"
-                                    value="{{ $route->estimated_duration }}" placeholder="120">
+                                <input type="number" name="estimated_duration" id="estimated_duration"
+                                    class="kt-input h-[45px]" value="{{ $route->estimated_duration }}" placeholder="120">
                                 @error('estimated_duration')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -127,7 +130,8 @@
                             <!-- Origin City -->
                             <div>
                                 <label for="origin_city_id" class="kt-label">{{ __('main.city') }}</label>
-                                <select name="origin_city_id" id="origin_city_id" class="kt-select cities-select" data-value="{{ $route->origin_city_id }}">
+                                <select name="origin_city_id" id="origin_city_id" class="kt-select cities-select"
+                                    data-value="{{ $route->origin_city_id }}">
                                     <option value="" selected>--</option>
                                 </select>
                                 @error('origin_city_id')
@@ -138,8 +142,8 @@
                             <!-- Origin Address -->
                             <div>
                                 <label for="origin_address" class="kt-label">{{ __('main.address') }}</label>
-                                <input type="text" name="origin_address" id="origin_address" class="kt-input h-[45px]" value="{{ $route->origin_address }}"
-                                    placeholder="Central Bus Station">
+                                <input type="text" name="origin_address" id="origin_address" class="kt-input h-[45px]"
+                                    value="{{ $route->origin_address }}" placeholder="Central Bus Station">
                                 @error('origin_address')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -148,8 +152,9 @@
                             <!-- Origin Latitude -->
                             <div>
                                 <label for="origin_latitude" class="kt-label">{{ __('main.latitude') }}</label>
-                                <input type="number" name="origin_latitude" id="origin_latitude" step="0.0000001" class="kt-input h-[45px]"
-                                    value="{{ $route->origin_latitude }}" placeholder="30.0444">
+                                <input type="number" name="origin_latitude" id="origin_latitude" step="0.0000001"
+                                    class="kt-input h-[45px]" value="{{ $route->origin_latitude }}"
+                                    placeholder="30.0444">
                                 @error('origin_latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -158,8 +163,9 @@
                             <!-- Origin Longitude -->
                             <div>
                                 <label for="origin_longitude" class="kt-label">{{ __('main.longitude') }}</label>
-                                <input type="number" name="origin_longitude" id="origin_longitude" step="0.0000001" class="kt-input h-[45px]"
-                                    value="{{ $route->origin_longitude }}" placeholder="31.2357">
+                                <input type="number" name="origin_longitude" id="origin_longitude" step="0.0000001"
+                                    class="kt-input h-[45px]" value="{{ $route->origin_longitude }}"
+                                    placeholder="31.2357">
                                 @error('origin_longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -179,8 +185,8 @@
                             <!-- Destination City -->
                             <div>
                                 <label for="destination_city_id" class="kt-label">{{ __('main.city') }}</label>
-                                <select name="destination_city_id" id="destination_city_id" class="kt-select cities-select"
-                                    data-value="{{ $route->destination_city_id }}">
+                                <select name="destination_city_id" id="destination_city_id"
+                                    class="kt-select cities-select" data-value="{{ $route->destination_city_id }}">
                                     <option value="" selected>--</option>
                                 </select>
                                 @error('destination_city_id')
@@ -191,8 +197,9 @@
                             <!-- Destination Address -->
                             <div>
                                 <label for="destination_address" class="kt-label">{{ __('main.address') }}</label>
-                                <input type="text" name="destination_address" id="destination_address" class="kt-input h-[45px]"
-                                    value="{{ $route->destination_address }}" placeholder="Main Terminal">
+                                <input type="text" name="destination_address" id="destination_address"
+                                    class="kt-input h-[45px]" value="{{ $route->destination_address }}"
+                                    placeholder="Main Terminal">
                                 @error('destination_address')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -201,7 +208,8 @@
                             <!-- Destination Latitude -->
                             <div>
                                 <label for="destination_latitude" class="kt-label">{{ __('main.latitude') }}</label>
-                                <input type="number" name="destination_latitude" id="destination_latitude" step="0.0000001" class="kt-input h-[45px]"
+                                <input type="number" name="destination_latitude" id="destination_latitude"
+                                    step="0.0000001" class="kt-input h-[45px]"
                                     value="{{ $route->destination_latitude }}" placeholder="31.2001">
                                 @error('destination_latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -211,7 +219,8 @@
                             <!-- Destination Longitude -->
                             <div>
                                 <label for="destination_longitude" class="kt-label">{{ __('main.longitude') }}</label>
-                                <input type="number" name="destination_longitude" id="destination_longitude" step="0.0000001" class="kt-input h-[45px]"
+                                <input type="number" name="destination_longitude" id="destination_longitude"
+                                    step="0.0000001" class="kt-input h-[45px]"
                                     value="{{ $route->destination_longitude }}" placeholder="29.9187">
                                 @error('destination_longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -234,7 +243,8 @@
                                 <label for="road_condition" class="kt-label">{{ __('main.road_condition') }}</label>
                                 <select name="road_condition" id="road_condition" class="kt-select basic-single">
                                     <option value="" selected>--</option>
-                                    <option value="excellent" {{ $route->road_condition == 'excellent' ? 'selected' : '' }}>
+                                    <option value="excellent"
+                                        {{ $route->road_condition == 'excellent' ? 'selected' : '' }}>
                                         {{ __('main.excellent') }}
                                     </option>
                                     <option value="good" {{ $route->road_condition == 'good' ? 'selected' : '' }}>
@@ -255,8 +265,8 @@
                             <!-- Toll Fee -->
                             <div>
                                 <label for="toll_fee" class="kt-label">{{ __('main.toll_fee') }}</label>
-                                <input type="number" name="toll_fee" id="toll_fee" step="0.01" class="kt-input h-[45px]" value="{{ $route->toll_fee }}"
-                                    placeholder="0.00">
+                                <input type="number" name="toll_fee" id="toll_fee" step="0.01"
+                                    class="kt-input h-[45px]" value="{{ $route->toll_fee }}" placeholder="0.00">
                                 @error('toll_fee')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -302,6 +312,9 @@
                         ])
                     </div>
                 </div>
+
+                {{-- Custom Fields --}}
+                <x-custom-fields module-name="transportation" entity-type="Route" :entity="$route" />
 
                 {{-- Update Buttons --}}
                 @include('components.elements.update-submit', [

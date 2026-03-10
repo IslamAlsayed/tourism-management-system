@@ -69,6 +69,10 @@ class JeepController extends Controller
                 }
             }
 
+            if ($request->has('custom_fields')) {
+                $jeep->saveCustomFields($request->custom_fields);
+            }
+
             return $request->has('save_and_add')
                 ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.jeep')]))
                 : redirect()->route('dashboard.transportation.jeeps.index')->withSuccess(__('messages.type_created', ['type' => __('main.jeep')]));
@@ -142,6 +146,10 @@ class JeepController extends Controller
                 if ($prices) {
                     $season->nationalityPrices()->createMany(array_values($prices));
                 }
+            }
+
+            if ($request->has('custom_fields')) {
+                $jeep->saveCustomFields($request->custom_fields);
             }
 
             return $updated

@@ -73,6 +73,7 @@ class Clients extends Component
         }
 
         Client::whereIn('id', $this->selectedIds)->delete();
+        $this->resetAutoIncrementIfEmpty(Client::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
 
@@ -85,21 +86,13 @@ class Clients extends Component
     public function exportSelectedPDF()
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], Client::class, $cols, 'clients');
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedPdfForModel($this->selectedIds ?? [], Client::class, $cols, 'clients');
     }
 
     public function exportSelectedExcel($extension)
     {
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], Client::class, $cols, 'clients', $extension);
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
-        return $result;
+        return $this->exportSelectedExcelForModel($this->selectedIds ?? [], Client::class, $cols, 'clients', $extension);
     }
 
     public function resetFilters()

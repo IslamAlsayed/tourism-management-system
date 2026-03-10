@@ -70,6 +70,11 @@ class AccommodationController extends Controller
                 Supplement::create($supplementData);
             }
         }
+
+        if ($accommodation && $request->has('custom_fields')) {
+            $accommodation->saveCustomFields($request->custom_fields);
+        }
+
         return $request->has('save_and_add')
             ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.accommodation')]))
             : redirect()->route('dashboard.accommodations.index')->withSuccess(__('messages.type_created', ['type' => __('main.accommodation')]));
@@ -144,6 +149,11 @@ class AccommodationController extends Controller
                 Supplement::create($supplementData);
             }
         }
+
+        if ($accommodation && $request->has('custom_fields')) {
+            $accommodation->saveCustomFields($request->custom_fields);
+        }
+
         return $updated
             ? redirect()->route('dashboard.accommodations.index')->withSuccess(__('messages.type_updated', ['type' => __('main.accommodation')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.accommodation')]));

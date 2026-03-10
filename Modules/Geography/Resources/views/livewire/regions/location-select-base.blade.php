@@ -8,12 +8,14 @@
                     ({{ count($options['countries']) ?: 0 }})
                 </strong>
             </div>
-            <a href="{{ route('dashboard.geography.countries.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.countries.create') }}"
+                class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
         <select name="country_id" id="country_id" class="kt-select basic-single">
             <option value="" selected>--</option>
             @foreach ($options['countries'] as $item)
-                <option value="{{ $item->id }}" {{ old('country_id', $record->country_id ?? null) == $item->id ? 'selected' : '' }}>
+                <option value="{{ $item->id }}"
+                    {{ old('country_id', $record->country_id ?? null) == $item->id ? 'selected' : '' }}>
                     {{ $item->name }}{{ $item->name_ar ? ' - ' . $item->name_ar : '' }}
                 </option>
             @endforeach
@@ -31,7 +33,8 @@
                     @if (isset($multiple) && in_array('states', $multiple) && false)
                         <input type="hidden" name="all_states" value="0">
                         <div class="custom-input">
-                            <input type="checkbox" name="all_states" id="all_states" value="1" wire:model.live="all_states"
+                            <input type="checkbox" name="all_states" id="all_states" value="1"
+                                wire:model.live="all_states"
                                 {{ ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'checked' : '' }}
                                 data-kt-datatable-row-check="true">
                             <label for="all_states">{{ __('main.states') }}</label>
@@ -43,18 +46,26 @@
                     <strong class="dataLength text-primary">
                         ({{ count($options['states']) ?: 0 }})
                     </strong>
-                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading wire:target="filters.country,updatedFilters"></i>
+                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
+                        wire:target="filters.country,updatedFilters"></i>
                 </div>
-                <span id="state_id-info" class="text-red-600 text-sm span-info {{ !hasEmpty($filters['country']) ? 'show' : '' }}">
+                <span id="state_id-info"
+                    class="text-red-600 text-sm span-info {{ !hasEmpty($filters['country']) ? 'show' : '' }}">
                     ({{ __('main.select_type_first', ['type' => __('main.country')]) }})
                 </span>
             </div>
-            <a href="{{ route('dashboard.geography.states.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.states.create') }}"
+                class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
         <select name="state_id{{ isset($multiple) && in_array('states', $multiple) ? '[]' : '' }}" id="state_id"
             class="kt-select {{ isset($multiple) && in_array('states', $multiple) ? 'basic-multiple' : 'basic-single' }}"
-            {{ !hasEmpty($filters['country']) || ($all_states ?? 0) == 1 || ($all_states ?? 0) == true || ($record->all_states ?? 0) == 1 || ($record->all_states ?? 0) == true ? 'disabled' : '' }}
-            {{ isset($multiple) && in_array('states', $multiple) ? 'multiple' : '' }}>
+            {!! !hasEmpty($filters['country']) ||
+            ($all_states ?? 0) == 1 ||
+            ($all_states ?? 0) == true ||
+            ($record->all_states ?? 0) == 1 ||
+            ($record->all_states ?? 0) == true
+                ? 'style="pointer-events:none;opacity:0.6;" tabindex="-1"'
+                : '' !!} {{ isset($multiple) && in_array('states', $multiple) ? 'multiple' : '' }}>
             @if (!isset($multiple) && !in_array('states', (array) $multiple))
                 <option value="" selected>--</option>
             @endif
@@ -70,7 +81,7 @@
     </div>
 
     {{-- City --}}
-    <div class="align-self-end {{ !hasEmpty($filters['state']) && !$all_states ? 'disabled-option rounded-sm' : '' }}">
+    <div class="align-self-end {{ empty($options['cities']) && !$all_states ? 'disabled-option rounded-sm' : '' }}">
         <label for="city_id" class="kt-label mb-2 flex items-center justify-between">
             <div class="flex items-center justify-between gap-1">
                 <div class="flex items-center justify-between gap-1">
@@ -89,18 +100,24 @@
                     <strong class="dataLength text-primary">
                         ({{ count($options['cities']) ?: 0 }})
                     </strong>
-                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading wire:target="filters.state,updatedFilters"></i>
+                    <i class="i-loader fas fa-refresh fa-spin text-primary" wire:loading
+                        wire:target="filters.state,updatedFilters"></i>
                 </div>
-                <span id="city_id-info" class="text-red-600 text-sm span-info {{ !hasEmpty($filters['state']) && !$all_states ? 'show' : '' }}">
+                <span id="city_id-info"
+                    class="text-red-600 text-sm span-info {{ empty($options['cities']) && !$all_states ? 'show' : '' }}">
                     ({{ __('main.select_type_first', ['type' => __('main.state')]) }})
                 </span>
             </div>
-            <a href="{{ route('dashboard.geography.cities.create') }}" class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
+            <a href="{{ route('dashboard.geography.cities.create') }}"
+                class="text-blue-600 text-2sm">{{ __('main.add') }}</a>
         </label>
         <select name="city_id{{ isset($multiple) && in_array('cities', $multiple) ? '[]' : '' }}" id="city_id"
             class="kt-select {{ isset($multiple) && in_array('cities', $multiple) ? 'basic-multiple' : 'basic-single' }}"
-            {{ (!hasEmpty($filters['state']) && !$all_states) || ($record->all_cities ?? 0) == 1 || ($record->all_cities ?? 0) == true ? 'disabled' : '' }}
-            {{ isset($multiple) && in_array('cities', $multiple) ? 'multiple' : '' }}>
+            {!! (empty($options['cities']) && !$all_states) ||
+            ($record->all_cities ?? 0) == 1 ||
+            ($record->all_cities ?? 0) == true
+                ? 'style="pointer-events:none;opacity:0.6;" tabindex="-1"'
+                : '' !!} {{ isset($multiple) && in_array('cities', $multiple) ? 'multiple' : '' }}>
             @if (!isset($multiple) && !in_array('cities', (array) $multiple))
                 <option value="" selected>--</option>
             @endif

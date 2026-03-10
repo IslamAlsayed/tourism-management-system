@@ -47,7 +47,8 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('dashboard.tourguides.guides-types.store') }}" enctype="multipart/form-data">
+        <form class="space-y-6" method="POST" action="{{ route('dashboard.tourguides.guides-types.store') }}"
+            enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
                 {{-- Location Information --}}
@@ -80,7 +81,8 @@
                             {{-- Type --}}
                             <div class="">
                                 <label for="type" class="kt-label required mb-2">{{ __('main.type') }}</label>
-                                <input type="text" name="type" id="type" class="kt-input h-[45px]" required value="{{ old('type') }}">
+                                <input type="text" name="type" id="type" class="kt-input h-[45px]" required
+                                    value="{{ old('type') }}">
                                 @error('type')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -89,7 +91,8 @@
                             {{-- Price --}}
                             <div class="">
                                 <label for="price" class="kt-label required mb-2">{{ __('main.price') }}</label>
-                                <input type="text" name="price" min="1" id="price" class="kt-input h-[45px]" required value="{{ old('price') }}">
+                                <input type="text" name="price" min="1" id="price" class="kt-input h-[45px]"
+                                    required value="{{ old('price') }}">
                                 @error('price')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -120,6 +123,9 @@
                         'label' => __('main.is_active'),
                     ])
                 </div>
+
+                {{-- Dynamic Custom Fields --}}
+                <x-custom-fields module-name="tour_guides" entity-type="TourGuideType" />
 
                 {{-- Save Buttons --}}
                 @include('components.elements.save-submit', [
