@@ -1,11 +1,10 @@
 <?php
 
-namespace Modules\Tourists\Http\Requests\TouristSite;
+namespace Modules\TouristSites\Http\Requests\TouristSite;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +23,12 @@ class UpdateRequest extends FormRequest
     {
         return [
             // ========== Basic Information ==========
-            'code' => ['nullable', 'string', 'max:255', Rule::unique('tourist_sites')->ignore($this->route('tourist_site'))],
+            'code' => ['nullable', 'string', 'max:255', 'unique:tourist_sites,code'],
             'name' => ['required', 'string', 'max:255'],
             'name_ar' => ['nullable', 'string', 'max:255'],
             'site_type' => ['nullable', 'array'],
             'category' => ['nullable', 'array'],
             'unesco_site' => ['nullable', 'boolean'],
-            'iucn_green_list' => ['nullable', 'boolean'],
-            'gstc_certified' => ['nullable', 'boolean'],
-            'blue_flag' => ['nullable', 'boolean'],
-            'green_destinations' => ['nullable', 'boolean'],
-            'earthcheck_certified' => ['nullable', 'boolean'],
             'supplier_type' => ['nullable', 'array'],
             'sites_theme' => ['nullable', 'array'],
             'supplier_name' => ['nullable', 'string', 'max:255'],
@@ -141,6 +135,8 @@ class UpdateRequest extends FormRequest
             'club_car_price' => ['nullable', 'numeric', 'min:0'],
             'club_car_price_unit_id' => ['nullable', 'integer', 'exists:pricing_definitions,id'],
             'has_unified_ticket' => ['nullable', 'boolean'],
+            'travel_passes' => ['nullable', 'array'],
+            'travel_passes.*' => ['integer', 'exists:travel_passes,id'],
 
             // ========== Media & Content ==========
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
@@ -156,19 +152,17 @@ class UpdateRequest extends FormRequest
             'popularity_score' => ['nullable', 'integer', 'between:0,100'],
             'estimated_visit_duration' => ['nullable', 'integer', 'min:0'],
             'difficulty_level' => ['nullable', 'string'],
-            'age_restrictions' => ['nullable', 'json'],
-            'best_visit_time' => ['nullable', 'json'],
+            'age_restrictions' => ['nullable', 'array'],
+            'best_visit_time' => ['nullable', 'array'],
 
             // ========== Status & Metadata ==========
             'status' => ['nullable', 'string'],
             'is_active' => ['nullable', 'boolean'],
-            'special_hours' => ['nullable', 'json'],
             'is_featured' => ['nullable', 'boolean'],
-            'travel_passes' => ['nullable', 'array'],
-            'travel_passes.*' => ['integer', 'exists:travel_passes,id'],
             'is_verified' => ['nullable', 'boolean'],
-            'tags' => ['nullable', 'json'],
+            'tags' => ['nullable', 'array'],
 
+            // ========== Description & Notes ==========
             'description' => ['nullable', 'string'],
             'notes' => ['nullable', 'string'],
         ];

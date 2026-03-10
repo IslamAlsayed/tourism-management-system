@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('dashboard.tourists.services.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.touristservices.services.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tourist-services')]) }}
                 </a>
             </div>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('dashboard.tourists.services.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.touristservices.services.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-6 lg:gap-4">
                 <!-- 1. Location Information -->
@@ -403,7 +403,7 @@
 
                             {{-- Standard/Flat Rate Table (Always visible for flat_rate mode) --}}
                             <div id="flat_rate_table_container">
-                                @include('tourists::services.services.pricing-table', [
+                                @include('touristservices::services.services.pricing-table', [
                                     'prefix' => 'seasonal_prices[Standard]',
                                     'seasonName' => 'Standard',
                                     'isStandard' => true,
@@ -556,15 +556,15 @@
 
                 <!-- Save Submit -->
                 @include('components.elements.save-submit', [
-                    'models' => 'dashboard.tourists.services',
+                    'models' => 'dashboard.touristservices.services',
                     'model' => 'service',
                 ])
             </div>
         </form>
     </div>
 
-    @include('tourists::services.services.pricing-logic')
-    @include('tourists::services.services.pricing-scripts')
+    @include('touristservices::services.services.pricing-logic')
+    @include('touristservices::services.services.pricing-scripts')
 @endsection
 
 @push('scripts')

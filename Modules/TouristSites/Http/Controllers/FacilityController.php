@@ -14,7 +14,7 @@ class FacilityController extends Controller
      */
     public function index()
     {
-        return view('tourists::facilities.index');
+        return view('touristsites::facilities.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class FacilityController extends Controller
      */
     public function create()
     {
-        return view('tourists::create');
+        return view('touristsites::create');
     }
 
     /**
@@ -43,7 +43,7 @@ class FacilityController extends Controller
      */
     public function show($id)
     {
-        return view('tourists::show');
+        return view('touristsites::show');
     }
 
     /**
@@ -53,7 +53,7 @@ class FacilityController extends Controller
      */
     public function edit($id)
     {
-        return view('tourists::edit');
+        return view('touristsites::edit');
     }
 
     /**

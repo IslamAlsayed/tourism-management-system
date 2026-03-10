@@ -19,11 +19,11 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('dashboard.tourists.services.edit', $touristService->id) }}" class="kt-btn kt-btn-primary">
+                <a href="{{ route('dashboard.touristservices.services.edit', $touristService->id) }}" class="kt-btn kt-btn-primary">
                     <i class="ki-filled ki-pencil text-sm me-2"></i>
                     {{ __('main.edit') }}
                 </a>
-                <a href="{{ route('dashboard.tourists.services.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.touristservices.services.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tourist-services')]) }}
                 </a>
             </div>
@@ -856,7 +856,7 @@
                     'model' => 'tourist-services',
                     'id' => $touristService->id,
                 ])
-                <a href="{{ route('dashboard.tourists.services.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.touristservices.services.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tourist-services')]) }}
                 </a>
             </div>

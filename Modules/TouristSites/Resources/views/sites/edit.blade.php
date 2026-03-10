@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('dashboard.tourists.sites.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.touristsites.sites.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tourist-sites')]) }}
                 </a>
             </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('dashboard.tourists.sites.update', $touristSite->id) }}" method="POST"
+        <form action="{{ route('dashboard.touristsites.sites.update', $touristSite->id) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -1044,7 +1044,7 @@
 
             <!-- Update Submit -->
             @include('components.elements.update-submit', [
-                'models' => 'dashboard.tourists.sites',
+                'models' => 'dashboard.touristsites.sites',
                 'model' => 'tourist-site',
             ])
     </div>

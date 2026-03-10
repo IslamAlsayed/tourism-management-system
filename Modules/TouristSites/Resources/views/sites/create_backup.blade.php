@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('dashboard.tourists.sites.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.touristsites.sites.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tourist-sites')]) }}
                 </a>
             </div>
@@ -42,7 +42,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('dashboard.tourists.sites.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.touristsites.sites.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
                 <!-- Location Information -->
@@ -559,7 +559,7 @@
 
                 <!-- Save Submit -->
                 @include('components.elements.save-submit', [
-                    'models' => 'dashboard.tourists.sites',
+                    'models' => 'dashboard.touristsites.sites',
                     'model' => 'tourist-site',
                 ])
             </div>

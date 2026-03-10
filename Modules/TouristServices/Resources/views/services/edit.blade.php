@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('dashboard.tourists.services.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.touristservices.services.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tourist-services')]) }}
                 </a>
             </div>
@@ -28,7 +28,7 @@
     </div>
 
     <div class="kt-container-fixed">
-        <form action="{{ route('dashboard.tourists.services.update', $touristService->id) }}" method="POST"
+        <form action="{{ route('dashboard.touristservices.services.update', $touristService->id) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -394,7 +394,7 @@
 
                             {{-- Standard/Flat Rate Table (Always visible for flat_rate mode) --}}
                             <div id="flat_rate_table_container">
-                                @include('tourists::services.services.pricing-table', [
+                                @include('touristservices::services.services.pricing-table', [
                                     'prefix' => 'seasonal_prices[Standard]',
                                     'seasonName' => 'Standard',
                                     'isStandard' => true,
@@ -580,15 +580,15 @@
 
                 <!-- Update Submit -->
                 @include('components.elements.update-submit', [
-                    'models' => 'dashboard.tourists.services',
+                    'models' => 'dashboard.touristservices.services',
                     'model' => 'service',
                 ])
             </div>
         </form>
     </div>
 
-    @include('tourists::services.services.pricing-logic')
-    @include('tourists::services.services.pricing-scripts')
+    @include('touristservices::services.services.pricing-logic')
+    @include('touristservices::services.services.pricing-scripts')
 @endsection
 
 @push('scripts')

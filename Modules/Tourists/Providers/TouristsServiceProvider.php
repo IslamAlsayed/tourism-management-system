@@ -7,10 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Modules\TouristSites\Entities\TouristSite;
-use Modules\Tourists\Livewire\TouristSites;
 use Modules\TouristServices\Entities\TouristService;
-use Modules\Tourists\Livewire\TouristServices;
-use Modules\Tourists\Livewire\Facilities;
 use Modules\Tourists\Policies\TouristSitePolicy;
 use Modules\Tourists\Policies\TouristServicePolicy;
 
@@ -42,10 +39,6 @@ class TouristsServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
-
-        Livewire::component('tourists::sites', TouristSites::class);
-        Livewire::component('tourists::services', TouristServices::class);
-        Livewire::component('tourists::facilities', Facilities::class);
 
         // === Register Policies ===
         foreach ($this->policies as $model => $policy) {

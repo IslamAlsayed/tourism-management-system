@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Tourists\Http\Requests\TouristService;
+namespace Modules\TouristServices\Http\Requests\TouristService;
 
 use Illuminate\Foundation\Http\FormRequest;
 

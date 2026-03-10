@@ -79,7 +79,7 @@
             <tbody class="divide-y divide-gray-100 background">
                 {{-- Base Nationalities (Foreigner, Arab, Resident) --}}
                 @foreach ($baseNationalities as $nat)
-                    @include('tourists::services.services.pricing-row', [
+                    @include('touristservices::services.services.pricing-row', [
                         'prefix' => $prefix,
                         'seasonId' => $tableId,
                         'nationalityKey' => $nat['key'],
@@ -94,7 +94,7 @@
             <tbody id="custom-nationalities-{{ $tableId }}" class="custom-nationalities-container">
                 @if (isset($savedData['custom_nationalities']) && is_array($savedData['custom_nationalities']))
                     @foreach ($savedData['custom_nationalities'] as $cIndex => $customRow)
-                        @include('tourists::services.services.pricing-row', [
+                        @include('touristservices::services.services.pricing-row', [
                             'prefix' => $prefix,
                             'seasonId' => $tableId,
                             'nationalityKey' => 'custom',

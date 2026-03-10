@@ -53,7 +53,7 @@
 
     {{-- Adult Cell --}}
     <td class="p-2 border-r border-dashed border-gray-200 bg-blue-100 group-hover:bg-blue-100/50 transition col-adult">
-        @include('tourists::services.services.price-cell', [
+        @include('touristservices::services.services.price-cell', [
             'prefix' => $isCustom ? $prefix . '[custom_nationalities][' . ($customIndex ?? 0) . ']' : $prefix,
             'type' => 'adult',
             'nationalityKey' => $isCustom ? 'custom' : $nationalityKey,
@@ -66,7 +66,7 @@
 
     {{-- Child Young Cell (2-6 years) --}}
     <td class="p-2 border-r border-dashed border-gray-200 bg-pink-100 group-hover:bg-pink-100/50 transition col-child-young">
-        @include('tourists::services.services.price-cell', [
+        @include('touristservices::services.services.price-cell', [
             'prefix' => $isCustom ? $prefix . '[custom_nationalities][' . ($customIndex ?? 0) . ']' : $prefix,
             'type' => 'child_young',
             'nationalityKey' => $isCustom ? 'custom' : $nationalityKey,
@@ -79,7 +79,7 @@
 
     {{-- Child Older Cell (7-11 years) --}}
     <td class="p-2 border-r border-dashed border-gray-200 bg-violet-100 group-hover:bg-indigo-100/50 transition col-child-older">
-        @include('tourists::services.services.price-cell', [
+        @include('touristservices::services.services.price-cell', [
             'prefix' => $isCustom ? $prefix . '[custom_nationalities][' . ($customIndex ?? 0) . ']' : $prefix,
             'type' => 'child_older',
             'nationalityKey' => $isCustom ? 'custom' : $nationalityKey,
@@ -92,7 +92,7 @@
 
     {{-- Infant Cell --}}
     <td class="p-2 border-r border-dashed border-gray-200 bg-orange-100 group-hover:bg-orange-100/50 transition col-infant">
-        @include('tourists::services.services.price-cell', [
+        @include('touristservices::services.services.price-cell', [
             'prefix' => $isCustom ? $prefix . '[custom_nationalities][' . ($customIndex ?? 0) . ']' : $prefix,
             'type' => 'infant',
             'nationalityKey' => $isCustom ? 'custom' : $nationalityKey,

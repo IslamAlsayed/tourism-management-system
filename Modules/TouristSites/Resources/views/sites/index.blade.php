@@ -6,7 +6,7 @@
         'title' => __('main.tourist-sites'),
         'description' => __('main.manage_system_types', ['types' => __('main.tourist-sites')]),
         'import_url' => route('import.data', ['models' => 'tourist-sites']),
-        'page_create_url' => route('dashboard.tourists.sites.create'),
+        'page_create_url' => route('dashboard.touristsites.sites.create'),
         'page_create_title' => __('main.create_type', ['type' => __('main.tourist-site')]),
     ])
         @slot('fake_data')
@@ -20,7 +20,7 @@
     <!-- Container -->
     <div class="grid gap-4 lg:gap-6">
         <div class="kt-card kt-card-grid min-w-full">
-            @livewire('tourists::sites')
+            @livewire('touristsites::sites')
         </div>
     </div>
     <!-- End of Container -->

@@ -18,12 +18,12 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <a href="{{ route('dashboard.tourists.sites.edit', $touristSite->id) }}"
+                <a href="{{ route('dashboard.touristsites.sites.edit', $touristSite->id) }}"
                     class="kt-btn kt-btn-primary md:hidden">
                     <i class="ki-filled ki-pencil text-sm me-2"></i>
                     {{ __('main.edit') }}
                 </a>
-                <a href="{{ route('dashboard.tourists.sites.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.touristsites.sites.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tourist-sites')]) }}
                 </a>
             </div>
@@ -631,7 +631,7 @@
 
             {{-- Services section disabled: tourist_services has no site_id FK --}}
             {{-- @if ($touristSite->services && $touristSite->services->count() > 0)
-                @include('pages.dashboard.related-tourists::services.services', [
+                @include('pages.dashboard.related-touristsites::services.services', [
                     'record' => $touristSite,
                     'type' => 'tourist-sites',
                 ])
@@ -643,14 +643,14 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'dashboard.tourists.sites',
+                    'models' => 'dashboard.touristsites.sites',
                     'id' => $touristSite->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'dashboard.tourists.sites',
+                    'model' => 'dashboard.touristsites.sites',
                     'id' => $touristSite->id,
                 ])
-                <a href="{{ route('dashboard.tourists.sites.index') }}" class="kt-btn kt-btn-outline">
+                <a href="{{ route('dashboard.touristsites.sites.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.tourist-sites')]) }}
                 </a>
             </div>

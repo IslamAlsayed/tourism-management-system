@@ -7,8 +7,8 @@ use Modules\TouristServices\Entities\TouristService;
 use App\Traits\PhotoUploadTrait;
 use App\Http\Controllers\Controller;
 use Modules\Core\Entities\PricingDefinition;
-use Modules\Tourists\Http\Requests\TouristService\StoreRequest;
-use Modules\Tourists\Http\Requests\TouristService\UpdateRequest;
+use Modules\TouristServices\Http\Requests\TouristService\StoreRequest;
+use Modules\TouristServices\Http\Requests\TouristService\UpdateRequest;
 
 class ServiceController extends Controller
 {
@@ -16,7 +16,7 @@ class ServiceController extends Controller
 
     public function index()
     {
-        return view('tourists::services.index');
+        return view('touristservices::services.index');
     }
 
     public function create()
@@ -30,7 +30,7 @@ class ServiceController extends Controller
         $pricing_units = PricingDefinition::where('category', 'pricing_unit')->where('is_active', true)->get();
 
         return view(
-            'tourists::services.create',
+            'touristservices::services.create',
             compact('sites', 'difficulty_level', 'currencies', 'countries', 'nationalities', 'subregions', 'pricing_units')
         );
     }
@@ -58,7 +58,7 @@ class ServiceController extends Controller
         // === 2. CREATE TOURIST SERVICE ===
         $touristService = TouristService::create($serviceData);
         if (!$touristService)
-            return redirect()->route('dashboard.tourists.services.index')->withError(__('messages.type_creation_failed', ['type' => __('main.tourist-service')]));
+            return redirect()->route('dashboard.touristservices.services.index')->withError(__('messages.type_creation_failed', ['type' => __('main.tourist-service')]));
 
         // === 3. SAVE SEASONAL PRICES ===
         if ($validated['pricing_type'] === 'seasonal' && isset($validated['season_groups'])) {
@@ -99,15 +99,15 @@ class ServiceController extends Controller
 
         return $request->has('save_and_add')
             ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.tourist-service')]))
-            : redirect()->route('dashboard.tourists.services.index')->withSuccess(__('messages.type_created', ['type' => __('main.tourist-service')]));
+            : redirect()->route('dashboard.touristservices.services.index')->withSuccess(__('messages.type_created', ['type' => __('main.tourist-service')]));
     }
 
     public function show($id)
     {
         $touristService = TouristService::with((new TouristService())->getRelationshipNames())->find($id);
         if (!$touristService)
-            return redirect()->route('dashboard.tourists.services.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-service')]));
-        return view('tourists::services.show', compact('touristService'));
+            return redirect()->route('dashboard.touristservices.services.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-service')]));
+        return view('touristservices::services.show', compact('touristService'));
     }
 
     public function edit($id)
@@ -122,7 +122,7 @@ class ServiceController extends Controller
         ])->find($id);
 
         if (!$touristService)
-            return redirect()->route('dashboard.tourists.services.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-service')]));
+            return redirect()->route('dashboard.touristservices.services.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-service')]));
 
         $sites = TouristSite::orderBy('sort_order')->get(['id', 'name']);
         $currencies = \Modules\Localization\Entities\Currency::orderBy('name')->get(['id', 'name', 'code']);
@@ -132,7 +132,7 @@ class ServiceController extends Controller
         $pricing_units = PricingDefinition::where('category', 'pricing_unit')->where('is_active', true)->get();
 
         return view(
-            'tourists::services.edit',
+            'touristservices::services.edit',
             compact('touristService', 'sites', 'currencies', 'countries', 'nationalities', 'subregions', 'pricing_units')
         );
     }
@@ -141,7 +141,7 @@ class ServiceController extends Controller
     {
         $touristService = TouristService::find($id);
         if (!$touristService)
-            return redirect()->route('dashboard.tourists.services.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-service')]));
+            return redirect()->route('dashboard.touristservices.services.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-service')]));
 
         $validated = $request->validated();
 
@@ -209,7 +209,7 @@ class ServiceController extends Controller
             $this->deleteGalleryImages($touristService, $removedImages, 'gallery');
         }
 
-        return redirect()->route('dashboard.tourists.services.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tourist-service')]));
+        return redirect()->route('dashboard.touristservices.services.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tourist-service')]));
     }
 
     public function destroy($id)
@@ -219,8 +219,8 @@ class ServiceController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-service')]));
         $deleted = $touristService->delete();
         return $deleted
-            ? redirect()->route('dashboard.tourists.services.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tourist-service')]))
-            : redirect()->route('dashboard.tourists.services.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.tourist-service')]));
+            ? redirect()->route('dashboard.touristservices.services.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tourist-service')]))
+            : redirect()->route('dashboard.touristservices.services.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.tourist-service')]));
     }
 
     /**

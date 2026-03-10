@@ -8,8 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Modules\TouristSites\Entities\TouristSite;
 use Modules\TouristSites\Entities\TouristSiteEntryFee;
-use Modules\Tourists\Http\Requests\TouristSite\StoreRequest;
-use Modules\Tourists\Http\Requests\TouristSite\UpdateRequest;
+use Modules\TouristSites\Http\Requests\TouristSite\StoreRequest;
+use Modules\TouristSites\Http\Requests\TouristSite\UpdateRequest;
 use Modules\Geography\Entities\Nationality;
 use Modules\Geography\Entities\Subregion;
 use Modules\Geography\Entities\Region;
@@ -24,7 +24,7 @@ class SiteController extends Controller
 
     public function index()
     {
-        return view('tourists::sites.index');
+        return view('touristsites::sites.index');
     }
 
     public function create()
@@ -40,7 +40,7 @@ class SiteController extends Controller
         $supplier_types = PricingDefinition::where('category', 'supplier_type')->where('is_active', true)->get();
         $site_themes = PricingDefinition::where('category', 'site_theme')->where('is_active', true)->get();
 
-        return view('tourists::sites.create', compact(
+        return view('touristsites::sites.create', compact(
             'difficulty_level',
             'status',
             'nationalities',
@@ -132,7 +132,7 @@ class SiteController extends Controller
 
             return $request->has('save_and_add')
                 ? redirect()->back()->withSuccess(__('messages.type_created', ['type' => __('main.tourist-site')]))
-                : redirect()->route('dashboard.tourists.sites.index')->withSuccess(__('messages.type_created', ['type' => __('main.tourist-site')]));
+                : redirect()->route('dashboard.touristsites.sites.index')->withSuccess(__('messages.type_created', ['type' => __('main.tourist-site')]));
         });
     }
 
@@ -140,15 +140,15 @@ class SiteController extends Controller
     {
         $touristSite = TouristSite::with((new TouristSite())->getRelationshipNames())->find($id);
         if (!$touristSite)
-            return redirect()->route('dashboard.tourists.sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-site')]));
-        return view('tourists::sites.show', compact('touristSite'));
+            return redirect()->route('dashboard.touristsites.sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-site')]));
+        return view('touristsites::sites.show', compact('touristSite'));
     }
 
     public function edit($id)
     {
         $touristSite = TouristSite::with(['nationalityEntryFees', 'travelPasses', 'holidays', 'seasonalHours'])->find($id);
         if (!$touristSite)
-            return redirect()->route('dashboard.tourists.sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-site')]));
+            return redirect()->route('dashboard.touristsites.sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-site')]));
         $difficulty_level = TouristSite::getDifficultyLevels();
         $status = TouristSite::getStatus();
         $nationalities = Nationality::where('is_active', true)->with('country')->get();
@@ -162,14 +162,14 @@ class SiteController extends Controller
         $site_categories = PricingDefinition::where('category', 'site_category')->where('is_active', true)->get();
         $supplier_types = PricingDefinition::where('category', 'supplier_type')->where('is_active', true)->get();
         $site_themes = PricingDefinition::where('category', 'site_theme')->where('is_active', true)->get();
-        return view('tourists::sites.edit', compact('touristSite', 'difficulty_level', 'status', 'nationalities', 'regions', 'subregions', 'countries', 'travelPasses', 'facilities', 'pricing_units', 'site_types', 'site_categories', 'supplier_types', 'site_themes'));
+        return view('touristsites::sites.edit', compact('touristSite', 'difficulty_level', 'status', 'nationalities', 'regions', 'subregions', 'countries', 'travelPasses', 'facilities', 'pricing_units', 'site_types', 'site_categories', 'supplier_types', 'site_themes'));
     }
 
     public function update(UpdateRequest $request, $id)
     {
         $touristSite = TouristSite::find($id);
         if (!$touristSite)
-            return redirect()->route('dashboard.tourists.sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-site')]));
+            return redirect()->route('dashboard.touristsites.sites.index')->withError(__('messages.not_found_this_type', ['type' => __('main.tourist-site')]));
 
         return DB::transaction(function () use ($request, $touristSite) {
             /* ================= BASIC UPDATE ================= */
@@ -264,7 +264,7 @@ class SiteController extends Controller
             }
 
             return $updated
-                ? redirect()->route('dashboard.tourists.sites.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tourist-site')]))
+                ? redirect()->route('dashboard.touristsites.sites.index')->withSuccess(__('messages.type_updated', ['type' => __('main.tourist-site')]))
                 : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.tourist-site')]));
         });
     }
@@ -280,8 +280,8 @@ class SiteController extends Controller
 
         $deleted = $touristSite->delete();
         return $deleted
-            ? redirect()->route('dashboard.tourists.sites.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tourist-site')]))
-            : redirect()->route('dashboard.tourists.sites.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.tourist-site')]));
+            ? redirect()->route('dashboard.touristsites.sites.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.tourist-site')]))
+            : redirect()->route('dashboard.touristsites.sites.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.tourist-site')]));
     }
 
     /**
