@@ -457,4 +457,6 @@ return [
     'communications' => 'الاتصالات',
     'emails' => 'رسائل البريد',
     'whatsapp' => 'واتساب',
+    'automation' => 'الأتمتة',
+    'automation_settings' => 'إعدادات الأتمتة (n8n)',
 ];

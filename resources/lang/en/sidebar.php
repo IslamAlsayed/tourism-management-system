@@ -457,4 +457,6 @@ return [
     'communications' => 'Communications',
     'emails' => 'Emails',
     'whatsapp' => 'WhatsApp',
+    'automation' => 'Automation',
+    'automation_settings' => 'Automation Settings (n8n)',
 ];

@@ -102,7 +102,7 @@
                 {{-- User Management --}}
                 <div class="menu-item pt-5">
                     <div class="menu-content">
-                        <span class="menu-heading fw-bold text-uppercase fs-7">User Management</span>
+                        <span class="menu-heading fw-bold text-uppercase fs-7">{{ __('sidebar.users management') }}</span>
                     </div>
                 </div>
 
@@ -117,7 +117,27 @@
                                 <span class="path4"></span>
                             </i>
                         </span>
-                        <span class="menu-title">Users</span>
+                        <span class="menu-title">{{ __('sidebar.users') }}</span>
+                    </a>
+                </div>
+
+                {{-- Automation --}}
+                <div class="menu-item pt-5">
+                    <div class="menu-content">
+                        <span class="menu-heading fw-bold text-uppercase fs-7">{{ __('sidebar.automation') }}</span>
+                    </div>
+                </div>
+
+                {{-- Automation Settings --}}
+                <div class="menu-item">
+                    <a class="menu-link {{ request()->routeIs('automation.settings') ? 'active' : '' }}" href="{{ route('automation.settings') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-setting-2 fs-2">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">{{ __('sidebar.automation_settings') }}</span>
                     </a>
                 </div>
 

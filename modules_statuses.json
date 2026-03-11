@@ -15,5 +15,6 @@
     "WhatsApp": true,
     "MCP": true,
     "TouristSites": true,
-    "TouristServices": true
+    "TouristServices": true,
+    "Automation": true
 }

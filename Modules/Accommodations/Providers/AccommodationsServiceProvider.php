@@ -69,6 +69,8 @@ class AccommodationsServiceProvider extends ServiceProvider
         foreach ($this->policies as $model => $policy) {
             Gate::policy($model, $policy);
         }
+
+        Accommodation::observe(\Modules\Accommodations\Observers\AccommodationObserver::class);
     }
 
     /**

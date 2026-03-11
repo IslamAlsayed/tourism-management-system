@@ -1,162 +1,95 @@
-# MixJo2025 - Tourism Management System
+# 🌍 MixJo Tourism Management System (TMS)
 
-A simple tourism management system built with Laravel. It helps manage hotels, restaurants, cities, countries, money types, and users. It supports English and Arabic languages.
+[![Laravel](https://img.shields.io/badge/Laravel-v12.36.1-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-v8.2.29-777BB4?logo=php&logoColor=white)](https://php.net)
+[![Livewire](https://img.shields.io/badge/Livewire-v3.x-FB70A9?logo=livewire&logoColor=white)](https://livewire.laravel.com)
+[![Metronic](https://img.shields.io/badge/UI-Metronic%20Demo1-009EF7)](https://keenthemes.com/metronic)
 
-## About This Project
+A comprehensive, enterprise-grade Tourism Management System designed for travel agencies, tour operators, and destination management companies (DMCs). Built with **Laravel 12**, **Livewire 3**, and the **Metronic** design system.
 
-This system is for managing travel and tourism business. You can:
-- Add and manage users
-- Manage hotels and accommodations
-- Manage restaurants
-- Manage countries and cities
-- Manage currencies
-- Manage transportation
+---
 
-The system makes it easy to import and export data using Excel files.
+## 🚀 Key Modules & Features
 
-## Technical Requirements
+### 🏢 Operations & Services
+- **Jeep Safari**: Full management with seasonal pricing, nationality-based exceptions, and detailed itineraries.
+- **Tourist Services**: Dynamic pricing engine with commission logic and local citizen support.
+- **Accommodations**: Hotel/Resort management with advanced supplement handling and seasons.
+- **Restaurants**: Multi-season meal planning (FIT/Group) with status toggles.
+- **Transportation**: Fleet management and regional transfer pricing.
+- **Automation (n8n)**: Event-driven architecture with Webhooks for seamless integration with external tools.
 
-- **Laravel**: 11.x
-- **PHP**: 8.2+
-- **MySQL**: 8.0+
-- **Livewire**: 3.x
-- **Tailwind CSS**: 3.x
-- **Metronic**: UI Design System
-- **Laravel Excel**: For import/export
-- **Vite**: 5.x
-- **Node.js**: LTS
+### 🗺️ Core Infrastructure
+- **Geography Engine**: Global data import (Regions, Subregions, Countries, States/Cities).
+- **Import/Export Pro**: High-performance Excel handling for all major entities.
+- **Cloud Integration**: Direct "Google Drive Link" import feature for seamless data updates.
 
-## Project Structure
+### 🤖 AI & Development Tools
+- **Gemini CLI (Speckit)**: Intelligent agent orchestration for feature planning and analysis.
+- **Genkit Integration**: AI-powered content generation and text correction.
+- **Diagnostics**: Built-in `checklist.py` for automated health, security, and UI audits.
 
-```
-app/
-├── Excels/                         # Import and Export Files
-├── Http/Controllers/Dashboard/     # Dashboard Controllers
-├── Livewire/                      # Dynamic Components
-├── Models/                        # Database Models
-└── Traits/                        # Reusable Traits
+---
 
-resources/views/
-├── layouts/                       # Page Layouts
-├── pages/dashboard/              # Dashboard Pages
-└── livewire/                     # Livewire Components
+## 🛠️ Tech Stack
 
-lang/                             # Languages
-├── en/                           # English
-└── ar/                           # Arabic
+- **Backend**: Laravel 12.36.1 (PHP 8.2.29)
+- **Frontend**: Livewire 3 (SPA Mode), Alpine.js, Vanilla CSS / Tailwind
+- **UI System**: Metronic Demo 1 Core & Components
+- **Database**: SQLite (Local Dev) / MySQL (Production Ready)
+- **Ecosystem**:
+  - `maatwebsite/excel` for Data Ports
+  - `spatie/laravel-activitylog` for Audit Trails
+  - `ably/ably-php` for Real-time Notifications
 
-config/                           # Settings
-```
+---
 
-## Features
+## 📥 Installation
 
-### Tourism Management
-- **User Management**: Add, edit, and delete users
-- **Accommodation Management**: Manage hotels and resorts
-- **Restaurant Management**: Manage restaurants
-- **Countries and Cities**: Manage locations
-- **Currency Management**: Support different currencies
-- **Transportation**: Manage transportation services
-
-### Import and Export
-- **Excel Import**: Upload data from Excel files
-- **Excel Export**: Download data as Excel files
-- **Validation**: Check data before importing
-- **Examples**: Download example files
-
-### Dashboard
-- **Livewire Components**: Fast and interactive tables
-- **Multi-Language**: English and Arabic support
-- **Responsive Design**: Works on phones and computers
-- **Easy Navigation**: Simple menu to find everything
-
-## Quick Start
-
-### Installation Steps
-
-1. **Clone the project**
 ```bash
-git clone <repository-url>
-cd MixJo2025
-```
-
-2. **Install packages**
-```bash
+# 1. Clone & Install Dependencies
+git clone https://github.com/IslamAlsayed/tourist-site.git
 composer install
 npm install
-```
 
-3. **Setup database**
-```bash
+# 2. Setup Environment
 cp .env.example .env
 php artisan key:generate
 
-# Update .env file
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=mixjo2025
-DB_USERNAME=root
-DB_PASSWORD=your_password
-```
+# 3. Database Initialization
+php artisan migrate --seed
+php artisan core:import-geography # Import global locations
 
-4. **Create database tables**
-```bash
-php artisan migrate
-php artisan db:seed
-```
-
-5. **Start the application**
-```bash
-# First terminal
+# 4. Launch
 php artisan serve
-
-# Second terminal
 npm run dev
 ```
 
-The application will run at: **http://localhost:8000**
+---
 
-## Main Pages
+## 📌 Development Workflow
 
-| URL | Description |
-|-----|-------------|
-| `/dashboard` | Main page |
-| `/dashboard/users` | Manage users |
-| `/dashboard/countries` | Manage countries |
-| `/dashboard/accommodations` | Manage hotels |
-| `/dashboard/restaurants` | Manage restaurants |
-| `/dashboard/currencies` | Manage money |
-| `/dashboard/transportation` | Manage transportation |
+This project uses **Speckit (Gemini CLI)** for structured development:
 
-## How to Use
+1. **Plan**: Define new features in `.gemini/commands`.
+2. **Specify**: Run `npx speckit.specify <feature_name>` to create structures.
+3. **Verify**: Run `python .agent/scripts/checklist.py .` before every push.
 
-### Import Data
-1. Go to the management page
-2. Click "Import"
-3. Upload Excel file
-4. Check for errors
-5. Save
+---
 
-### Export Data
-1. Go to the management page
-2. Click "Export"
-3. Download Excel file
+## ⚡ Troubleshooting
 
-### Add New Item
-1. Click "Add New"
-2. Fill in the form
-3. Click "Save"
+- **405 Method Not Allowed**: Ensure you aren't pressing `Enter` on vanilla inputs inside Livewire components; global protection is implemented in `main.js`.
+- **Route Not Found**: Run `php artisan optimize:clear` to refresh route caches.
+- **Session Expired**: Check `APP_URL` in `.env` matches your local server.
 
-## Important Notes
+---
 
-- **PHP Version**: Need PHP 8.2 or higher
-- **Database**: Use MySQL 8.0+
-- **Backup**: Always backup your data before importing
-- **File Format**: Use .xlsx or .xls format for import
+## 🤝 Contribution & Maintenance
 
-## Need Help?
+- Track tasks in `TASKS.md`.
+- Follow the Socratic Gate protocol for architectural changes.
+- Always use `notify_user` with an implementation plan for approval.
 
-- Check the documentation files
-- Look at the code examples
-- Read Laravel documentation: https://laravel.com/docs
+---
+© 2025 MixJo. All Rights Reserved.
