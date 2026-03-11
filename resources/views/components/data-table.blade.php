@@ -67,7 +67,7 @@
                                     <label class="block text-xs font-bold text-gray-500 uppercase mb-2">
                                         {{ __('main.search_in') }} {{ __('main.' . $column) }}
                                     </label>
-                                    <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-lg px-3 py-2">
+                                    <div class="relative flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-lg px-3 py-2 border border-gray-200 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary overflow-hidden">
                                         <i class="ki-outline ki-magnifier text-gray-400 text-sm flex-shrink-0"></i>
                                         <input type="text"
                                             value="{{ $searchColumns[$column] ?? '' }}"
@@ -77,27 +77,23 @@
                                                     value: $event.target.value
                                                 })
                                             "
+                                            @keydown.enter.prevent=""
                                             @click.stop
-                                            class="flex-1 bg-transparent text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 outline-none border-transparent focus:border-transparent focus:ring-0 focus:outline-none shadow-none p-0"
+                                            class="flex-1 bg-transparent text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 outline-none border-transparent focus:border-transparent focus:ring-0 focus:outline-none shadow-none p-0 pe-6"
                                             placeholder="{{ __('main.type_to_search') }}..."
                                             autocomplete="off" />
+                                        
+                                        @if(isset($searchColumns[$column]) && !empty($searchColumns[$column]))
+                                            <div class="absolute end-2 flex items-center justify-center p-1 cursor-pointer group" 
+                                                @click.prevent="
+                                                    Livewire.dispatch('filterColumn', { column: '{{ $column }}', value: '' });
+                                                    $el.closest('.relative').querySelector('input').value = '';
+                                                    close()
+                                                ">
+                                                <i class="ki-outline ki-cross text-gray-400 group-hover:text-red-500 text-sm transition-colors"></i>
+                                            </div>
+                                        @endif
                                     </div>
-                                    @if(isset($searchColumns[$column]) && !empty($searchColumns[$column]))
-                                    <div class="flex justify-end mt-2">
-                                        <button type="button"
-                                            @click="
-                                                Livewire.dispatch('filterColumn', {
-                                                    column: '{{ $column }}',
-                                                    value: ''
-                                                });
-                                                $el.closest('.bg-white, .bg-\\[\\#1e1e2d\\]').querySelector('input').value = '';
-                                                close()
-                                            "
-                                            class="text-xs text-danger hover:underline">
-                                            {{ __('main.clear') }}
-                                        </button>
-                                    </div>
-                                    @endif
                                     </div>
                                 </template>
                             </div>

@@ -32,11 +32,32 @@ return [
     'clear_selection' => 'إلغاء التحديد',
     'per_page' => 'عدد النتائج',
     'unknown' => 'غير معروف',
-    'event_created' => 'إنشاء',
-    'event_updated' => 'تحديث',
-    'event_deleted' => 'حذف',
-    'event_restored' => 'استعادة',
-    'event_unknown' => 'غير معروف',
+    
+    // Activity Navigation
+    'all_activities' => 'كل الأنشطة',
+    'users_activity' => 'أنشطة المستخدمين',
+    'system_activity' => 'أنشطة النظام',
+
+    // Events
+    'event_created' => 'إنشاء (Created)',
+    'event_create' => 'إنشاء (Created)',
+    'event_updated' => 'تعديل (Updated)',
+    'event_update' => 'تعديل (Updated)',
+    'event_deleted' => 'حذف (Deleted)',
+    'event_delete' => 'حذف (Deleted)',
+    'event_restored' => 'استعادة (Restored)',
+    'event_restore' => 'استعادة (Restored)',
+    'event_error' => 'خطأ (Error)',
+    'event_failed' => 'فشل (Failed)',
+    'event_login' => 'تسجيل دخول (Login)',
+    'event_logout' => 'تسجيل خروج (Logout)',
+    'event_register' => 'تسجيل حساب (Register)',
+    'event_login_failed' => 'فشل تسجيل الدخول',
+    'event_password_reset_request' => 'طلب استعادة كلمة المرور',
+    'event_password_reset' => 'إعادة تعيين كلمة المرور',
+    'event_password_update' => 'تحديث كلمة المرور',
+    'event_force_deleted' => 'حذف نهائي',
+    'event_unknown' => 'حدث غير معروف',
 
     // Auth Activities
     'auth' => [

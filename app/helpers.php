@@ -345,8 +345,12 @@ if (!function_exists('getPaginate')) {
 }
 
 if (!function_exists('highlightSearch')) {
-    function highlightSearch(string $html, ?string $search = null): string
+    function highlightSearch(?string $html, ?string $search = null): string
     {
+        if (!$html) {
+            return '';
+        }
+
         if (!$search) {
             return $html;
         }
@@ -663,19 +667,20 @@ if (!function_exists('activityMessageSummary')) {
 if (!function_exists('badgeClasses')) {
     function badgeClasses($event)
     {
+        $event = str_replace('event_', '', strtolower($event));
         return match ($event) {
-            'created' => 'bg-success/30 text-green-600',
-            'updated' => 'bg-primary/30 text-blue-600',
-            'deleted', 'force_deleted' => 'bg-danger/30 text-red-600',
-            'restored' => 'bg-yellow/30 text-yellow-600',
-            'error' => 'bg-danger/30 text-red-600',
-            'login' => 'bg-success/30 text-green-600',
-            'register' => 'bg-success/30 text-green-600',
-            'logout' => 'bg-success/30 text-green-600',
-            'password_reset' => 'bg-success/30 text-green-600',
-            'password_update' => 'bg-success/30 text-green-600',
-            'password_reset_request' => 'bg-success/30 text-green-600',
-            default => 'bg-gray/30 text-gray-700',
+            'created', 'create', 'register', 'signup' => 'bg-emerald-50 text-emerald-700 border border-emerald-200/50 px-2.5 py-1 rounded-md font-bold',
+            'updated', 'update', 'edit' => 'bg-blue-50 text-blue-700 border border-blue-200/50 px-2.5 py-1 rounded-md font-bold',
+            'deleted', 'delete', 'force_deleted', 'destroy' => 'bg-rose-50 text-rose-700 border border-rose-200/50 px-2.5 py-1 rounded-md font-bold',
+            'restored', 'restore' => 'bg-cyan-50 text-cyan-700 border border-cyan-200/50 px-2.5 py-1 rounded-md font-bold',
+            'error', 'failed', 'exception', 'critical' => 'bg-red-600 text-white shadow-sm px-2.5 py-1 rounded-md font-bold',
+            'login', 'signin' => 'bg-indigo-50 text-indigo-700 border border-indigo-200/50 px-2.5 py-1 rounded-md font-bold',
+            'logout', 'signout' => 'bg-amber-50 text-amber-700 border border-amber-200/50 px-2.5 py-1 rounded-md font-bold',
+            'password_reset', 'password_update', 'password_reset_request' => 'bg-purple-50 text-purple-700 border border-purple-200/50 px-2.5 py-1 rounded-md font-bold',
+            'login_failed' => 'bg-rose-700 text-white px-2.5 py-1 rounded-md font-bold',
+            'download', 'export' => 'bg-teal-50 text-teal-700 border border-teal-200/50 px-2.5 py-1 rounded-md font-bold',
+            'view', 'show' => 'bg-slate-100 text-slate-700 border border-slate-200/50 px-2.5 py-1 rounded-md font-bold',
+            default => 'bg-gray-50 text-gray-600 border border-gray-200/50 px-2.5 py-1 rounded-md font-bold shadow-sm',
         };
     }
 }

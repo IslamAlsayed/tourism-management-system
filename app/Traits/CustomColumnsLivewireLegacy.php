@@ -77,13 +77,22 @@ trait CustomColumnsLivewireLegacy
         // Sort columns
         $this->allColumns = array_values(array_diff($this->fillable, $excluded));
 
-        $this->searchColumns = array_filter($this->allColumns, fn($c) => !in_array($c, $this->relations));
+        $this->searchColumns = [];
 
         // استرجاع الأعمدة من DB للمستخدم الحالي
         $savedColumns = null;
 
         if (Auth::check()) {
             $savedColumns = getActiveUser()->getTableColumnsFor($modelClass);
+            
+            // إذا لم توجد إعدادات خاصة بالمستخدم، ابحث عن إعدادات النظام الافتراضية (user_id = null)
+            if (is_null($savedColumns)) {
+                $savedColumns = \App\Models\TableColumn::where('model_class', $modelClass)
+                    ->whereNull('user_id')
+                    ->first()
+                    ?->columns;
+            }
+
             $this->hasCustomColumns = !is_null($savedColumns); // Set flag if custom columns exist
         }
 
@@ -92,6 +101,27 @@ trait CustomColumnsLivewireLegacy
         $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, $defaultColumnsCount);
 
         $this->pendingColumns = $this->columns;
+    }
+
+    /**
+     * Save current column configuration as system default (for all users)
+     * Requires superadmin role check in UI
+     */
+    public function saveAsSystemDefault()
+    {
+        if (!Auth::check() || !getActiveUser()->hasRole('superadmin')) {
+            return;
+        }
+
+        \App\Models\TableColumn::updateOrCreate(
+            ['model_class' => $this->modelClass, 'user_id' => null],
+            ['columns' => $this->columns]
+        );
+
+        $this->dispatch('notify', [
+            'type' => 'success',
+            'message' => __('messages.system_default_saved') ?? 'System default columns saved successfully.'
+        ]);
     }
 
     public function applyColumns()
@@ -153,9 +183,19 @@ trait CustomColumnsLivewireLegacy
             $this->hasCustomColumns = false; // Mark that custom columns are removed
         }
 
-        $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+        // استرجع الافتراضي العام للنظام إذا وجد، وإلا استخدم الافتراضي البرمجي
+        $systemDefault = \App\Models\TableColumn::where('model_class', $this->modelClass)
+            ->whereNull('user_id')
+            ->first()
+            ?->columns;
 
-        $this->columns = array_slice($this->allColumns, 0, $defaultColumnsCount);
+        if ($systemDefault) {
+            $this->columns = $systemDefault;
+        } else {
+            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+            $this->columns = array_slice($this->allColumns, 0, $defaultColumnsCount);
+        }
+
         $this->pendingColumns = $this->columns;
     }
 

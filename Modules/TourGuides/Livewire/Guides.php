@@ -24,7 +24,7 @@ class Guides extends Component
     public $filterCityId = '';
     public $filterTypeId = '';
     
-    protected $listeners = ['recordUpdated' => '$refresh', 'refresh-page' => '$refresh', 'reset-checkout-boxes' => '$refresh'];
+    protected $listeners = ['recordUpdated' => '$refresh', 'refresh-page' => '$refresh', 'reset-checkout-boxes' => '$refresh', 'filterColumn' => 'filterColumn'];
 
     public function updatingSearch()
     {
@@ -63,6 +63,12 @@ class Guides extends Component
 
     public function updatingFilterTypeId()
     {
+        $this->resetPage();
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['search', 'filterActive', 'filterRegionId', 'filterSubregionId', 'filterCountryId', 'filterStateId', 'filterCityId', 'filterTypeId']);
         $this->resetPage();
     }
 

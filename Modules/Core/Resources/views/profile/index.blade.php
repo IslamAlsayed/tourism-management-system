@@ -7,7 +7,7 @@
     <div class="kt-container-fixed mb-10">
         <div class="kt-card bg-cover bg-no-repeat rounded-xl overflow-hidden"
             style="background-image: url('{{ asset('metronic/media/misc/bg-1.png') }}'); background-position: center;">
-            <div class="kt-card-body p-8 sm:p-12 flex flex-col md:flex-row items-center gap-8 bg-black/20 backdrop-blur-sm">
+            <div class="kt-card-body p-8 sm:p-12 flex flex-col md:flex-row items-center gap-8 bg-black/70 backdrop-blur-lg">
                 <!-- Avatar -->
                 <div class="relative group">
                     <div
@@ -38,19 +38,19 @@
                     <div
                         class="flex flex-wrap items-center justify-center md:justify-start gap-4 text-white/80 text-sm font-medium mb-6">
                         <div class="flex items-center gap-2">
-                            <i class="ki-filled ki-sms text-white/60 fs-5"></i>
-                            {{ $user->email }}
+                            <i class="ki-filled ki-sms text-white fs-5"></i>
+                            <span class="text-white">{{ $user->email }}</span>
                         </div>
                         @if ($user->mobile)
-                            <div class="flex items-center gap-2 border-l border-white/20 pl-4">
-                                <i class="ki-filled ki-phone text-white/60 fs-5"></i>
-                                {{ $user->mobile }}
+                            <div class="flex items-center gap-2 border-l border-white/30 pl-4">
+                                <i class="ki-filled ki-phone text-white fs-5"></i>
+                                <span class="text-white">{{ $user->mobile }}</span>
                             </div>
                         @endif
                         @if ($user->company_name)
-                            <div class="flex items-center gap-2 border-l border-white/20 pl-4">
-                                <i class="ki-filled ki-bank text-white/60 fs-5"></i>
-                                {{ $user->company_name }}
+                            <div class="flex items-center gap-2 border-l border-white/30 pl-4">
+                                <i class="ki-filled ki-bank text-white fs-5"></i>
+                                <span class="text-white">{{ $user->company_name }}</span>
                             </div>
                         @endif
                     </div>
@@ -72,23 +72,22 @@
 
                 <!-- Stats Summary -->
                 <div class="hidden lg:flex flex-col gap-4 min-w-[200px]">
-                    <div class="bg-white/10 rounded-2xl p-4 backdrop-blur-md border border-white/10">
-                        <div class="text-white/60 text-xs font-bold uppercase tracking-wider mb-1">
+                    <div class="bg-white/10 dark:bg-black/20 rounded-2xl p-4 backdrop-blur-md border border-white/20 shadow-sm">
+                        <div class="text-white/70 text-[11px] font-bold uppercase tracking-widest mb-2">
                             {{ __('main.account_status') }}</div>
                         <div class="flex items-center gap-2">
                             @if ($user->is_approved ?? true)
-                                <!-- Default to approved for now -->
-                                <span class="size-2 bg-success rounded-full animate-pulse"></span>
-                                <span class="text-white font-semibold">{{ __('main.active') }}</span>
+                                <span class="size-2.5 bg-success rounded-full shadow-[0_0_10px_rgba(16,185,129,0.5)] animate-pulse"></span>
+                                <span class="text-white font-bold text-sm">{{ __('main.active') }}</span>
                             @else
-                                <span class="size-2 bg-warning rounded-full"></span>
-                                <span class="text-white font-semibold">{{ __('main.pending_approval') }}</span>
+                                <span class="size-2.5 bg-warning rounded-full shadow-[0_0_10px_rgba(245,158,11,0.5)]"></span>
+                                <span class="text-white font-bold text-sm">{{ __('main.pending_approval') }}</span>
                             @endif
                         </div>
                     </div>
-                    <div class="bg-white/10 rounded-2xl p-4 backdrop-blur-md border border-white/10 text-center">
-                        <div class="text-white font-bold text-xl leading-none mb-1">98%</div>
-                        <div class="text-white/60 text-[10px] font-bold uppercase tracking-wider">
+                    <div class="bg-white/10 dark:bg-black/20 rounded-2xl p-4 backdrop-blur-md border border-white/20 shadow-sm text-center">
+                        <div class="text-white font-black text-2xl leading-none mb-1">98%</div>
+                        <div class="text-white/70 text-[10px] font-bold uppercase tracking-widest">
                             {{ __('main.profile_completion') }}</div>
                     </div>
                 </div>
@@ -247,7 +246,7 @@
                     </div>
                     <div class="kt-card-body p-6">
                         <p class="text-sm text-secondary-foreground mb-4">
-                            You currently receive important account activity and security alerts to your primary email.
+                            {{ __('main.notifications_email_desc') }}
                         </p>
                         <a href="{{ route('dashboard.core.profile.settings.notifications') }}"
                             class="kt-btn kt-btn-outline w-full rounded-xl">

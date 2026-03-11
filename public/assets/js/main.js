@@ -298,3 +298,23 @@ document.addEventListener("keydown", function (e) {
         }
     }
 });
+
+/**
+ * Global fix for 405 Method Not Allowed (Livewire)
+ * Prevents accidental GET form submissions when pressing Enter in Livewire components.
+ */
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && e.target.tagName === "INPUT" && !e.ctrlKey && !e.metaKey) {
+        const form = e.target.closest("form");
+        const isLivewire = e.target.closest("[wire\\:id]") || (form && form.closest("[wire\\:id]"));
+        
+        // If it's a Livewire component and NOT a standard form with an action
+        if (isLivewire && (!form || !form.getAttribute("action") || form.getAttribute("action") === "#" || form.getAttribute("action").includes("livewire/update"))) {
+            // Prevent default form submission via Enter
+            e.preventDefault();
+            // Trigger change event to ensure Livewire models are updated
+            e.target.dispatchEvent(new Event("change", { bubbles: true }));
+            console.log("Livewire 405 Prevention: Blocked Enter key submission on input:", e.target.id || e.target.name);
+        }
+    }
+});

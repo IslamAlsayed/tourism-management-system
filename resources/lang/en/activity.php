@@ -32,11 +32,32 @@ return [
     'clear_selection' => 'Clear Selection',
     'per_page' => 'Per Page',
     'unknown' => 'Unknown',
-    'event_created' => 'Created',
-    'event_updated' => 'Updated',
-    'event_deleted' => 'Deleted',
-    'event_restored' => 'Restored',
     'event_unknown' => 'Unknown',
+
+    // Activity Navigation
+    'all_activities' => 'All Activities',
+    'users_activity' => 'Users Activity',
+    'system_activity' => 'System Activity',
+
+    // Events (Full list)
+    'event_created' => 'Created',
+    'event_create' => 'Created',
+    'event_updated' => 'Updated',
+    'event_update' => 'Updated',
+    'event_deleted' => 'Deleted',
+    'event_delete' => 'Deleted',
+    'event_restored' => 'Restored',
+    'event_restore' => 'Restored',
+    'event_error' => 'Error',
+    'event_failed' => 'Failed',
+    'event_login' => 'Login',
+    'event_logout' => 'Logout',
+    'event_register' => 'Registration',
+    'event_login_failed' => 'Login Failed',
+    'event_password_reset_request' => 'Password Reset Request',
+    'event_password_reset' => 'Password Reset',
+    'event_password_update' => 'Password Update',
+    'event_force_deleted' => 'Force Deleted',
 
     // Auth Activities
     'auth' => [

@@ -2,6 +2,12 @@
     @component('includes.pagination-info', [
         'data' => $data,
         'columns' => $columns ?? [],
+        'allColumns' => $allColumns ?? [],
+        'pendingColumns' => $pendingColumns ?? [],
+        'modelClass' => $modelClass ?? '',
+        'relations' => $relations ?? [],
+        'hasCustomColumns' => $hasCustomColumns ?? false,
+        'settings' => $settings ?? null,
         'title' => __('main.tours.guides'),
         'entityName' => __('main.tours.guide'),
         'sortField' => $sortField ?? null,
@@ -11,7 +17,10 @@
         @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
             @include('components.columns', [
                 'allColumns' => $allColumns ?? [],
+                'pendingColumns' => $pendingColumns ?? [],
                 'selectedIds' => $selectedIds ?? [],
+                'modelClass' => $modelClass ?? '',
+                'hasCustomColumns' => $hasCustomColumns ?? false,
             ])
         @endif
     @endcomponent
@@ -231,6 +240,11 @@
                             class="kt-btn kt-btn-sm text-white bg-red-800 hover:bg-red-900 transition-colors">
                             <i class="fas fa-radiation me-1"></i>
                             {{ __('main.force_delete') }}
+                        </button>
+                        <button type="button" wire:click="clearSelected"
+                            class="kt-btn kt-btn-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-times me-1"></i>
+                            {{ __('main.cancel_selection') ?? 'Cancel Selection' }}
                         </button>
                     </div>
                 </div>

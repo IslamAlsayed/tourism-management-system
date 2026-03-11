@@ -8,7 +8,7 @@ use Modules\Core\Entities\User;
 use App\Traits\PhotoUploadTrait;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\User\UpdateRequest;
+use Modules\Core\Http\Requests\ProfileUpdateRequest as UpdateRequest;
 use Illuminate\Support\Facades\Cache;
 
 class ProfileController extends Controller
@@ -66,7 +66,7 @@ class ProfileController extends Controller
         $user->save();
         // Cache::tags(['users'])->flush();
 
-        return redirect()->route('user.profile')->withSuccess(__('messages.type_updated', ['type' => __('main.profile')]));
+        return redirect()->route('dashboard.core.profile.index')->withSuccess(__('messages.type_updated', ['type' => __('main.profile')]));
     }
 
     /**
@@ -92,7 +92,7 @@ class ProfileController extends Controller
         }
         $updated = $user->save();
         if ($updated) {
-            return redirect()->route('user.profile')->withSuccess(__('messages.type_updated', ['type' => __('main.profile')]));
+            return redirect()->route('dashboard.core.profile.index')->withSuccess(__('messages.type_updated', ['type' => __('main.profile')]));
         }
         return redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.profile')]));
     }
@@ -125,9 +125,9 @@ class ProfileController extends Controller
         try {
             $this->uploadPhoto($request, $user, 'photo', 'profile-photos');
             // Cache::tags(['users'])->flush();
-            return redirect()->route('user.profile')->withSuccess(__('messages.photo_uploaded_successfully'));
+            return redirect()->route('dashboard.core.profile.index')->withSuccess(__('messages.photo_uploaded_successfully'));
         } catch (\Exception $e) {
-            return redirect()->route('user.profile')->withError(__('messages.no_photo_uploaded'));
+            return redirect()->route('dashboard.core.profile.index')->withError(__('messages.no_photo_uploaded'));
         }
     }
 

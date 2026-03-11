@@ -39,6 +39,14 @@ class ActivityLog extends Component
     public function mount()
     {
         $this->mountWithCustomPagination();
+        
+        // Detect current log from route
+        if (request()->is('*activity-log/system')) {
+            $this->filterLog = config('activitylog.system_log_name', 'system');
+        } elseif (request()->is('*activity-log/users')) {
+            $this->filterLog = config('activitylog.model_log_name', 'models');
+        }
+
         $this->filterColumns = [
             ['key' => 'created_at', 'label' => 'activity.activity_timestamp'],
             ['key' => 'activity_event_type', 'label' => 'activity.activity_event_type'],
@@ -49,7 +57,7 @@ class ActivityLog extends Component
         ];
     }
 
-    public function updatingSearch()
+    public function updatedSearch()
     {
         $this->resetPage();
     }
@@ -193,8 +201,7 @@ class ActivityLog extends Component
                     ->orWhere('log_name', 'like', $search)
                     ->orWhere('event', 'like', $search)
                     ->orWhere('subject_type', 'like', $search)
-                    ->orWhere('properties->message', 'like', $search)
-                    ->orWhere('properties->exception', 'like', $search)
+                    ->orWhere('properties', 'like', $search) // Search in all generic properties JSON
                     ->orWhereHas('causer', function ($causer) use ($search) {
                         $causer->where(function ($userQuery) use ($search) {
                             foreach ($this->searchableUserColumns() as $column) {
@@ -209,19 +216,24 @@ class ActivityLog extends Component
             $query->where('log_name', $this->filterLog);
         }
         if ($this->filterEvent != '') {
-            $query->where('event', $this->filterEvent);
+            $query->where('event', trim($this->filterEvent));
         }
         if ($this->filterUser != '') {
             $query->where('causer_id', $this->filterUser);
         }
         if ($this->dateFrom) {
-            $query->where('created_at', '>=', $this->dateFrom);
+            $query->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($this->dateFrom)));
         }
         if ($this->dateTo) {
-            $query->where('created_at', '<=', $this->dateTo);
+            $query->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($this->dateTo)));
         }
         $this->applySorting($query);
         return $query;
+    }
+
+    public function applyDateFilters()
+    {
+        $this->resetPage();
     }
 
     protected function formatActivity(Activity $activity): array
