@@ -31,55 +31,102 @@
     @if($hasActiveJobs && $activeJob)
         <!-- Prominent Unskippable Overlay for Active Imports -->
         <div class="fixed inset-0 z-[9999] flex items-center justify-center m-0 p-0" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);">
-            <div class="bg-card w-full max-w-lg rounded-xl shadow-2xl border border-border relative">
+            <div class="bg-card w-full max-w-lg rounded-xl shadow-2xl border border-border relative flex flex-col max-h-[90vh]">
                 <!-- Close Button (Fallback if stuck) -->
-                @if($activeJob->status === 'queued')
-                <button wire:click="cancelJob({{ $activeJob->id }})" class="absolute top-4 right-4 text-muted-foreground hover:text-destructive">
+                @if(in_array($activeJob->status, ['queued', 'pending_start', 'processing']))
+                <button wire:click="cancelJob({{ $activeJob->id }})" class="absolute top-4 right-4 z-10 text-muted-foreground hover:text-destructive transition-colors">
                     <i class="ki-filled ki-cross text-xl"></i>
                 </button>
                 @endif
-                <div class="p-8 text-center shadow-sm">
+                <div class="p-8 text-center shadow-sm flex-1 overflow-auto">
                     <div class="w-20 h-20 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-6">
-                        <i class="ki-filled ki-cloud-download text-5xl text-primary animate-bounce"></i>
+                        @if($activeJob->status === 'pending_start')
+                            <i class="ki-filled ki-rocket text-5xl text-primary"></i>
+                        @elseif($activeJob->status === 'processing')
+                            <i class="ki-filled ki-cloud-download text-5xl text-primary animate-bounce"></i>
+                        @else
+                            <i class="ki-filled ki-cloud-download text-5xl text-primary opacity-50"></i>
+                        @endif
                     </div>
                     
                     <h2 class="text-2xl font-semibold mb-2">{{ __('main.importing_data') }}</h2>
-                    <p class="text-secondary-foreground mb-8 text-base">
-                        {{ __('main.please_wait_importing') }}
+                    <p class="text-secondary-foreground mb-4 text-base">
+                        @if($activeJob->status === 'pending_start')
+                            {{ __('main.ready_to_start_import') ?? 'Ready to start the import process.' }}
+                        @else
+                            {{ __('main.please_wait_importing') }}
+                        @endif
                     </p>
                     
-                    @if($activeJob->status === 'processing')
-                        <div class="mb-2 flex justify-between text-sm font-medium">
-                            <span>{{ __('main.progress') }}</span>
-                            <span>{{ $progressPercentage }}%</span>
+                    @if($activeJob->status === 'pending_start')
+                        <div class="flex justify-center gap-4 mt-6">
+                            <button wire:click="startJob({{ $activeJob->id }})" class="kt-btn kt-btn-primary px-8">
+                                <i class="ki-filled ki-rocket me-2"></i> {{ __('main.start') ?? 'Start' }}
+                            </button>
+                            <button wire:click="cancelJob({{ $activeJob->id }})" class="kt-btn kt-btn-outline px-8">
+                                {{ __('main.cancel') ?? 'Cancel' }}
+                            </button>
                         </div>
-                        <div class="w-full bg-secondary rounded-full h-4 mb-4 overflow-hidden border border-border">
-                            <div class="bg-primary h-4 rounded-full transition-all duration-1000 ease-out flex items-center justify-center" style="width: {{ $progressPercentage }}%">
-                                @if($progressPercentage > 10)
-                                    <span class="text-[10px] text-primary-foreground font-bold px-2">{{ $progressPercentage }}%</span>
-                                @endif
+                    @elseif($activeJob->status === 'processing' || $activeJob->status === 'queued')
+                        @if($activeJob->status === 'processing')
+                            <div class="mb-2 flex justify-between text-sm font-medium">
+                                <span>{{ __('main.progress') }}</span>
+                                <span>{{ $progressPercentage }}%</span>
                             </div>
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-4 text-sm mt-6">
-                            <div class="bg-secondary/50 p-3 rounded-lg border border-border">
-                                <span class="block text-muted-foreground text-xs uppercase cursor-default mb-1">{{ __('main.records_processed') }}</span>
-                                <span class="font-semibold text-xl">{{ number_format($activeJob->processed_records ?? 0) }} / {{ number_format($activeJob->total_records ?? 0) }}</span>
+                            <div class="w-full bg-secondary rounded-full h-4 mb-4 overflow-hidden border border-border">
+                                <div class="bg-primary h-4 rounded-full transition-all duration-1000 ease-out flex items-center justify-center" style="width: {{ $progressPercentage }}%">
+                                    @if($progressPercentage > 10)
+                                        <span class="text-[10px] text-primary-foreground font-bold px-2">{{ $progressPercentage }}%</span>
+                                    @endif
+                                </div>
                             </div>
-                            <div class="bg-secondary/50 p-3 rounded-lg border border-border">
-                                <span class="block text-muted-foreground text-xs uppercase cursor-default mb-1">{{ __('main.estimated_time') }}</span>
-                                <span class="font-semibold text-xl text-primary">{{ $eta }}</span>
+                            
+                            <div class="grid grid-cols-2 gap-4 text-sm mt-4">
+                                <div class="bg-secondary/50 p-3 rounded-lg border border-border">
+                                    <span class="block text-muted-foreground text-xs uppercase cursor-default mb-1">{{ __('main.records_processed') }}</span>
+                                    <span class="font-semibold text-xl">{{ number_format($activeJob->processed_records ?? 0) }} / {{ number_format($activeJob->total_records ?? 0) }}</span>
+                                </div>
+                                <div class="bg-secondary/50 p-3 rounded-lg border border-border">
+                                    <span class="block text-muted-foreground text-xs uppercase cursor-default mb-1">{{ __('main.estimated_time') }}</span>
+                                    <span class="font-semibold text-xl text-primary">{{ $eta }}</span>
+                                </div>
                             </div>
-                        </div>
-                    @else
-                        <div class="flex flex-col items-center justify-center gap-3 text-secondary-foreground bg-secondary/30 p-6 rounded-lg mt-4">
-                            <i class="ki-filled ki-loading animate-spin text-3xl text-primary"></i>
-                            <span class="font-medium text-lg">{{ __('main.queued_waiting') }}</span>
 
-                        </div>
+                            <!-- Log Scrollbar -->
+                            <div class="mt-6 text-left border border-border rounded-lg bg-black text-green-400 font-mono text-xs max-h-32 overflow-y-auto p-3 flex flex-col gap-1 smooth-scroll" id="import-log-container">
+                                <div>> {{ __('main.import_started') ?? 'Import started...' }}</div>
+                                <div>> {{ __('main.found_records') ?? 'Found total records to process:' }} {{ $activeJob->total_records }}</div>
+                                @if($activeJob->processed_records > 0)
+                                    <div>> {{ __('main.fetching_operations') ?? 'Fetching operations completed:' }} {{ $activeJob->processed_records }}</div>
+                                    <div class="opacity-70 animate-pulse">> {{ __('main.processing_next_batch') ?? 'Processing next batch...' }}</div>
+                                @endif
+                                <script>
+                                    // Auto-scroll to bottom
+                                    var container = document.getElementById('import-log-container');
+                                    if(container) {
+                                        container.scrollTop = container.scrollHeight;
+                                    }
+                                </script>
+                            </div>
+                            <div class="flex justify-center mt-4 text-sm">
+                                <button wire:click="cancelJob({{ $activeJob->id }})" class="text-destructive hover:underline opacity-80 transition-opacity">
+                                    <i class="ki-filled ki-cross-circle me-1"></i> {{ __('main.cancel_import') ?? 'Cancel Import' }}
+                                </button>
+                            </div>
+                        @else
+                            <div class="flex flex-col items-center justify-center gap-3 text-secondary-foreground bg-secondary/30 p-6 rounded-lg mt-4">
+                                <i class="ki-filled ki-loading animate-spin text-3xl text-primary"></i>
+                                <span class="font-medium text-lg">{{ __('main.queued_waiting') }}</span>
+                            </div>
+                            <div class="flex justify-center mt-4 text-sm">
+                                <button wire:click="cancelJob({{ $activeJob->id }})" class="text-destructive hover:underline opacity-80 transition-opacity">
+                                    <i class="ki-filled ki-cross-circle me-1"></i> {{ __('main.cancel_queued') ?? 'Cancel' }}
+                                </button>
+                            </div>
+                        @endif
                     @endif
                 </div>
-                <div class="bg-warning/10 p-4 text-center border-t border-warning/20 rounded-b-xl">
+                <div class="bg-warning/10 p-4 text-center border-t border-warning/20 rounded-b-xl shrink-0">
                     <p class="text-warning-foreground text-sm flex items-center justify-center gap-2 font-medium">
                         <i class="ki-filled ki-information-2 text-xl"></i>
                         {{ __('main.do_not_refresh_warning') }}

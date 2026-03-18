@@ -137,9 +137,19 @@ class ImportDataJob implements ShouldQueue
         $counter = 0;
         $headerMap = null; // map normalized header -> actual header key
         $totalRows = 0; // track total rows read
+        $lookupCache = []; // To prevent N+1 queries during import
 
         foreach ($rows as $rowIndex => $row) {
             $totalRows++;
+
+            // Check for cancellation periodically
+            if ($this->historyUuid && $totalRows % 100 === 0) {
+                $currentStatus = \App\Models\ImportHistory::where('uuid', $this->historyUuid)->value('status');
+                if ($currentStatus === 'failed') {
+                    Log::info("Import job {$this->historyUuid} was canceled by the user.");
+                    return; // Abort job completely
+                }
+            }
 
             // Row keys may be the header names (associative). Normalize on first row.
             if ($headerMap === null) {
@@ -577,34 +587,41 @@ class ImportDataJob implements ShouldQueue
                 if (! is_numeric($timezoneValue)) {
                     try {
                         $searchTerm = trim((string) $timezoneValue);
+                        $cacheKey = 'timezone_' . md5(strtolower($searchTerm));
 
-                        // Try exact match first (name, name_ar, or abbreviation)
-                        $timezone = \Modules\Localization\Entities\Timezone::where('name', $searchTerm)
-                            ->orWhere('name_ar', $searchTerm)
-                            ->orWhere('abbreviation', $searchTerm)
-                            ->first();
-
-                        // If not found, try case-insensitive partial match
-                        if (! $timezone) {
-                            try {
-                                $timezone = \Modules\Localization\Entities\Timezone::where('name', 'LIKE', "%{$searchTerm}%")
-                                    ->orWhere('name', 'LIKE', "%{$searchTerm}%")
-                                    ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
-                                    ->orWhere('abbreviation', 'LIKE', "%{$searchTerm}%")
-                                    ->first();
-                                Log::info("Created new timezone: '{$searchTerm}' with ID: {$timezone->id}");
-                            } catch (\Throwable $createError) {
-                                Log::warning("Failed to create new timezone '{$searchTerm}': ".$createError->getMessage());
-                                $prepared['timezone_id'] = null;
-                            }
-                        }
-
-                        if ($timezone) {
-                            $prepared['timezone_id'] = $timezone->id;
-                            Log::debug("Resolved timezone '{$searchTerm}' to ID: {$timezone->id} ({$timezone->name})");
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $prepared['timezone_id'] = $lookupCache[$cacheKey];
                         } else {
-                            Log::warning("Could not resolve timezone: '{$searchTerm}' - setting to null");
-                            $prepared['timezone_id'] = null;
+                            // Try exact match first (name, name_ar, or abbreviation)
+                            $timezone = \Modules\Localization\Entities\Timezone::where('name', $searchTerm)
+                                ->orWhere('name_ar', $searchTerm)
+                                ->orWhere('abbreviation', $searchTerm)
+                                ->first();
+
+                            // If not found, try case-insensitive partial match
+                            if (! $timezone) {
+                                try {
+                                    $timezone = \Modules\Localization\Entities\Timezone::where('name', 'LIKE', "%{$searchTerm}%")
+                                        ->orWhere('name', 'LIKE', "%{$searchTerm}%")
+                                        ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
+                                        ->orWhere('abbreviation', 'LIKE', "%{$searchTerm}%")
+                                        ->first();
+                                    Log::info("Created new timezone: '{$searchTerm}' with ID: {$timezone->id}");
+                                } catch (\Throwable $createError) {
+                                    Log::warning("Failed to create new timezone '{$searchTerm}': ".$createError->getMessage());
+                                    $prepared['timezone_id'] = null;
+                                }
+                            }
+
+                            if ($timezone) {
+                                $prepared['timezone_id'] = $timezone->id;
+                                $lookupCache[$cacheKey] = $timezone->id;
+                                Log::debug("Resolved timezone '{$searchTerm}' to ID: {$timezone->id} ({$timezone->name})");
+                            } else {
+                                Log::warning("Could not resolve timezone: '{$searchTerm}' - setting to null");
+                                $prepared['timezone_id'] = null;
+                                $lookupCache[$cacheKey] = null;
+                            }
                         }
                     } catch (\Throwable $e) {
                         Log::warning('Failed to resolve timezone: '.$e->getMessage());
@@ -622,27 +639,34 @@ class ImportDataJob implements ShouldQueue
                 if (! is_numeric($languageValue)) {
                     try {
                         $searchTerm = trim((string) $languageValue);
+                        $cacheKey = 'language_' . md5(strtolower($searchTerm));
 
-                        // Try exact match first (name, name_ar, code, or iso_code)
-                        $language = \Modules\Localization\Entities\Language::where('name', $searchTerm)
-                            ->orWhere('name_ar', $searchTerm)
-                            ->orWhere('code', $searchTerm)
-                            ->orWhere('iso_code', $searchTerm)
-                            ->first();
-
-                        // If not found, try partial match
-                        if (! $language) {
-                            $language = \Modules\Localization\Entities\Language::where('name', 'LIKE', "%{$searchTerm}%")
-                                ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
-                                ->first();
-                        }
-
-                        if ($language) {
-                            $prepared['language_id'] = $language->id;
-                            Log::debug("Resolved language '{$searchTerm}' to ID: {$language->id} ({$language->name})");
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $prepared['language_id'] = $lookupCache[$cacheKey];
                         } else {
-                            Log::warning("Could not resolve language: '{$searchTerm}' - setting to null");
-                            $prepared['language_id'] = null;
+                            // Try exact match first (name, name_ar, code, or iso_code)
+                            $language = \Modules\Localization\Entities\Language::where('name', $searchTerm)
+                                ->orWhere('name_ar', $searchTerm)
+                                ->orWhere('code', $searchTerm)
+                                ->orWhere('iso_code', $searchTerm)
+                                ->first();
+
+                            // If not found, try partial match
+                            if (! $language) {
+                                $language = \Modules\Localization\Entities\Language::where('name', 'LIKE', "%{$searchTerm}%")
+                                    ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
+                                    ->first();
+                            }
+
+                            if ($language) {
+                                $prepared['language_id'] = $language->id;
+                                $lookupCache[$cacheKey] = $language->id;
+                                Log::debug("Resolved language '{$searchTerm}' to ID: {$language->id} ({$language->name})");
+                            } else {
+                                Log::warning("Could not resolve language: '{$searchTerm}' - setting to null");
+                                $prepared['language_id'] = null;
+                                $lookupCache[$cacheKey] = null;
+                            }
                         }
                     } catch (\Throwable $e) {
                         Log::warning('Failed to resolve language: '.$e->getMessage());
@@ -661,15 +685,22 @@ class ImportDataJob implements ShouldQueue
                         $prepared['currency_id'] = (int) $val;
                     } elseif (is_string($val)) {
                         $valTrim = strtolower(trim($val));
-                        // Lookup by name, code, or symbol
-                        $cObj = \Modules\Localization\Entities\Currency::where('name', 'like', "%{$valTrim}%")
-                            ->orWhere('name_ar', 'like', "%{$valTrim}%")
-                            ->orWhere('code', 'like', "%{$valTrim}%")
-                            ->orWhere('symbol', 'like', "%{$valTrim}%")
-                            ->first();
+                        $cacheKey = 'currency_' . md5($valTrim);
 
-                        // If matching fails by exact name, we default to 138 (JOD)
-                        $prepared['currency_id'] = $cObj ? $cObj->id : 138;
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $prepared['currency_id'] = $lookupCache[$cacheKey];
+                        } else {
+                            // Lookup by name, code, or symbol
+                            $cObj = \Modules\Localization\Entities\Currency::where('name', 'like', "%{$valTrim}%")
+                                ->orWhere('name_ar', 'like', "%{$valTrim}%")
+                                ->orWhere('code', 'like', "%{$valTrim}%")
+                                ->orWhere('symbol', 'like', "%{$valTrim}%")
+                                ->first();
+
+                            // If matching fails by exact name, we default to 138 (JOD)
+                            $prepared['currency_id'] = $cObj ? $cObj->id : 138;
+                            $lookupCache[$cacheKey] = $prepared['currency_id'];
+                        }
                     } else {
                         $prepared['currency_id'] = 138; // Default fallback to Jordanian Dinar
                     }
@@ -717,13 +748,21 @@ class ImportDataJob implements ShouldQueue
                     $typeValue = $prepared['guide_type_id'];
                     if (! is_numeric($typeValue)) {
                         $searchTerm = trim((string) $typeValue);
-                        $type = \Modules\TourGuides\Entities\TourGuideType::where('type', $searchTerm)
-                            ->orWhere('type', 'LIKE', "%{$searchTerm}%")
-                            ->first();
-                        if ($type) {
-                            $prepared['guide_type_id'] = $type->id;
+                        $cacheKey = 'guide_type_' . md5(strtolower($searchTerm));
+
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $prepared['guide_type_id'] = $lookupCache[$cacheKey];
                         } else {
-                            $prepared['guide_type_id'] = null;
+                            $type = \Modules\TourGuides\Entities\TourGuideType::where('type', $searchTerm)
+                                ->orWhere('type', 'LIKE', "%{$searchTerm}%")
+                                ->first();
+                            if ($type) {
+                                $prepared['guide_type_id'] = $type->id;
+                                $lookupCache[$cacheKey] = $type->id;
+                            } else {
+                                $prepared['guide_type_id'] = null;
+                                $lookupCache[$cacheKey] = null;
+                            }
                         }
                     }
                 }
@@ -733,13 +772,21 @@ class ImportDataJob implements ShouldQueue
                     $stateValue = $prepared['state_id'];
                     if (! is_numeric($stateValue)) {
                         $searchTerm = trim((string) $stateValue);
-                        $state = \Modules\Geography\Entities\State::where('name', $searchTerm)
-                            ->orWhere('name_ar', $searchTerm)
-                            ->first();
-                        if ($state) {
-                            $prepared['state_id'] = $state->id;
+                        $cacheKey = 'state_' . md5(strtolower($searchTerm));
+
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $prepared['state_id'] = $lookupCache[$cacheKey];
                         } else {
-                            $prepared['state_id'] = null;
+                            $state = \Modules\Geography\Entities\State::where('name', $searchTerm)
+                                ->orWhere('name_ar', $searchTerm)
+                                ->first();
+                            if ($state) {
+                                $prepared['state_id'] = $state->id;
+                                $lookupCache[$cacheKey] = $state->id;
+                            } else {
+                                $prepared['state_id'] = null;
+                                $lookupCache[$cacheKey] = null;
+                            }
                         }
                     }
                 }
@@ -749,13 +796,21 @@ class ImportDataJob implements ShouldQueue
                     $cityValue = $prepared['city_id'];
                     if (! is_numeric($cityValue)) {
                         $searchTerm = trim((string) $cityValue);
-                        $city = \Modules\Geography\Entities\City::where('name', $searchTerm)
-                            ->orWhere('name_ar', $searchTerm)
-                            ->first();
-                        if ($city) {
-                            $prepared['city_id'] = $city->id;
+                        $cacheKey = 'city_' . md5(strtolower($searchTerm));
+
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $prepared['city_id'] = $lookupCache[$cacheKey];
                         } else {
-                            $prepared['city_id'] = null;
+                            $city = \Modules\Geography\Entities\City::where('name', $searchTerm)
+                                ->orWhere('name_ar', $searchTerm)
+                                ->first();
+                            if ($city) {
+                                $prepared['city_id'] = $city->id;
+                                $lookupCache[$cacheKey] = $city->id;
+                            } else {
+                                $prepared['city_id'] = null;
+                                $lookupCache[$cacheKey] = null;
+                            }
                         }
                     }
                 }
@@ -765,13 +820,21 @@ class ImportDataJob implements ShouldQueue
                     $countryValue = $prepared['country_id'];
                     if (! is_numeric($countryValue)) {
                         $searchTerm = trim((string) $countryValue);
-                        $country = \Modules\Geography\Entities\Country::where('name', $searchTerm)
-                            ->orWhere('name_ar', $searchTerm)
-                            ->first();
-                        if ($country) {
-                            $prepared['country_id'] = $country->id;
+                        $cacheKey = 'country_' . md5(strtolower($searchTerm));
+
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $prepared['country_id'] = $lookupCache[$cacheKey];
                         } else {
-                            $prepared['country_id'] = null;
+                            $country = \Modules\Geography\Entities\Country::where('name', $searchTerm)
+                                ->orWhere('name_ar', $searchTerm)
+                                ->first();
+                            if ($country) {
+                                $prepared['country_id'] = $country->id;
+                                $lookupCache[$cacheKey] = $country->id;
+                            } else {
+                                $prepared['country_id'] = null;
+                                $lookupCache[$cacheKey] = null;
+                            }
                         }
                     }
                 }
@@ -798,6 +861,13 @@ class ImportDataJob implements ShouldQueue
                         }
                         // Match or create the Language dynamically. Assuming \Modules\Localization\Entities\Language
                         $lk = mb_strtolower($langName);
+                        $cacheKey = 'language_code_' . md5($lk);
+                        
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $langIds[] = $lookupCache[$cacheKey];
+                            continue;
+                        }
+                        
                         $langRec = \Modules\Localization\Entities\Language::whereRaw('LOWER(name) = ?', [$lk])
                             ->orWhereRaw('LOWER(name_ar) = ?', [$lk])
                             ->first();
@@ -812,6 +882,7 @@ class ImportDataJob implements ShouldQueue
                         }
                         if ($langRec) {
                             $langIds[] = $langRec->id;
+                            $lookupCache[$cacheKey] = $langRec->id;
                         }
                     }
 
@@ -859,36 +930,43 @@ class ImportDataJob implements ShouldQueue
                         // If it's text, search for it in the database
                         try {
                             $searchTerm = trim((string) $typeValue);
+                            $cacheKey = 'type_' . md5(strtolower($searchTerm));
 
-                            // Try exact match first (name, name_ar)
-                            $type = Type::where('name', $searchTerm)
-                                ->orWhere('name_ar', $searchTerm)
-                                ->first();
-
-                            // If not found, try partial match
-                            if (! $type) {
-                                $type = Type::where('name', 'LIKE', "%{$searchTerm}%")
-                                    ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
-                                    ->first();
-                            }
-
-                            // If still not found, create new type
-                            if (! $type) {
-                                try {
-                                    $type = Type::create(['name' => $searchTerm, 'name_ar' => $searchTerm]);
-                                    Log::info("Created new type: '{$searchTerm}' with ID: {$type->id}");
-                                } catch (\Throwable $createError) {
-                                    Log::warning("Failed to create new type '{$searchTerm}': ".$createError->getMessage());
-                                    $prepared['type_id'] = null;
-                                }
-                            }
-
-                            if ($type) {
-                                $prepared['type_id'] = $type->id;
-                                Log::debug("Resolved type '{$searchTerm}' to ID: {$type->id} ({$type->name})");
+                            if (array_key_exists($cacheKey, $lookupCache)) {
+                                $prepared['type_id'] = $lookupCache[$cacheKey];
                             } else {
-                                Log::warning("Could not resolve or create type: '{$searchTerm}' - setting to null");
-                                $prepared['type_id'] = null;
+                                // Try exact match first (name, name_ar)
+                                $type = Type::where('name', $searchTerm)
+                                    ->orWhere('name_ar', $searchTerm)
+                                    ->first();
+
+                                // If not found, try partial match
+                                if (! $type) {
+                                    $type = Type::where('name', 'LIKE', "%{$searchTerm}%")
+                                        ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
+                                        ->first();
+                                }
+
+                                // If still not found, create new type
+                                if (! $type) {
+                                    try {
+                                        $type = Type::create(['name' => $searchTerm, 'name_ar' => $searchTerm]);
+                                        Log::info("Created new type: '{$searchTerm}' with ID: {$type->id}");
+                                    } catch (\Throwable $createError) {
+                                        Log::warning("Failed to create new type '{$searchTerm}': ".$createError->getMessage());
+                                        $prepared['type_id'] = null;
+                                    }
+                                }
+
+                                if ($type) {
+                                    $prepared['type_id'] = $type->id;
+                                    $lookupCache[$cacheKey] = $type->id;
+                                    Log::debug("Resolved type '{$searchTerm}' to ID: {$type->id} ({$type->name})");
+                                } else {
+                                    Log::warning("Could not resolve or create type: '{$searchTerm}' - setting to null");
+                                    $prepared['type_id'] = null;
+                                    $lookupCache[$cacheKey] = null;
+                                }
                             }
                         } catch (\Throwable $e) {
                             Log::warning('Failed to resolve type: '.$e->getMessage());
@@ -905,19 +983,26 @@ class ImportDataJob implements ShouldQueue
                 if (! is_numeric($regionValue)) {
                     try {
                         $searchTerm = trim((string) $regionValue);
+                        $cacheKey = 'region_' . md5(strtolower($searchTerm));
 
-                        $region = Region::where('name', $searchTerm)
-                            ->orWhere('name_ar', $searchTerm)
-                            ->orWhere('name', 'LIKE', "%{$searchTerm}%")
-                            ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
-                            ->first();
-
-                        if ($region) {
-                            $prepared['region_id'] = $region->id;
-                            Log::debug("Resolved region '{$searchTerm}' to ID: {$region->id} ({$region->name})");
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $prepared['region_id'] = $lookupCache[$cacheKey];
                         } else {
-                            Log::warning("Could not resolve region: '{$searchTerm}' - setting to null");
-                            $prepared['region_id'] = null;
+                            $region = Region::where('name', $searchTerm)
+                                ->orWhere('name_ar', $searchTerm)
+                                ->orWhere('name', 'LIKE', "%{$searchTerm}%")
+                                ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
+                                ->first();
+
+                            if ($region) {
+                                $prepared['region_id'] = $region->id;
+                                $lookupCache[$cacheKey] = $region->id;
+                                Log::debug("Resolved region '{$searchTerm}' to ID: {$region->id} ({$region->name})");
+                            } else {
+                                Log::warning("Could not resolve region: '{$searchTerm}' - setting to null");
+                                $prepared['region_id'] = null;
+                                $lookupCache[$cacheKey] = null;
+                            }
                         }
                     } catch (\Throwable $e) {
                         Log::warning('Failed to resolve region: '.$e->getMessage());
@@ -933,19 +1018,26 @@ class ImportDataJob implements ShouldQueue
                 if (! is_numeric($subregionValue)) {
                     try {
                         $searchTerm = trim((string) $subregionValue);
+                        $cacheKey = 'subregion_' . md5(strtolower($searchTerm));
 
-                        $subregion = Subregion::where('name', $searchTerm)
-                            ->orWhere('name_ar', $searchTerm)
-                            ->orWhere('name', 'LIKE', "%{$searchTerm}%")
-                            ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
-                            ->first();
-
-                        if ($subregion) {
-                            $prepared['subregion_id'] = $subregion->id;
-                            Log::debug("Resolved subregion '{$searchTerm}' to ID: {$subregion->id} ({$subregion->name})");
+                        if (array_key_exists($cacheKey, $lookupCache)) {
+                            $prepared['subregion_id'] = $lookupCache[$cacheKey];
                         } else {
-                            Log::warning("Could not resolve subregion: '{$searchTerm}' - setting to null");
-                            $prepared['subregion_id'] = null;
+                            $subregion = Subregion::where('name', $searchTerm)
+                                ->orWhere('name_ar', $searchTerm)
+                                ->orWhere('name', 'LIKE', "%{$searchTerm}%")
+                                ->orWhere('name_ar', 'LIKE', "%{$searchTerm}%")
+                                ->first();
+
+                            if ($subregion) {
+                                $prepared['subregion_id'] = $subregion->id;
+                                $lookupCache[$cacheKey] = $subregion->id;
+                                Log::debug("Resolved subregion '{$searchTerm}' to ID: {$subregion->id} ({$subregion->name})");
+                            } else {
+                                Log::warning("Could not resolve subregion: '{$searchTerm}' - setting to null");
+                                $prepared['subregion_id'] = null;
+                                $lookupCache[$cacheKey] = null;
+                            }
                         }
                     } catch (\Throwable $e) {
                         Log::warning('Failed to resolve subregion: '.$e->getMessage());

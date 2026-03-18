@@ -20,15 +20,16 @@ class ExcelController extends Controller
     public function import(Request $request)
     {
         $model = $request->input('model');
-        $models = $request->input('models');
-        $view = $request->input('view');
+        $models = $request->models;
+        $model = $request->model;
+        $view = $request->view;
 
         // If model is not provided, derive it from models parameter
         if (empty($model) && !empty($models)) {
             $model = $models;
         }
 
-        // If view is not provided, derive it from models parameter
+        // If view is not provided explicitly, derive it from models parameter using the view map
         if (empty($view) && !empty($models)) {
             // Map models to their view paths (including module namespaces)
             $viewMap = [
@@ -142,22 +143,14 @@ class ExcelController extends Controller
 
         $userId = function_exists('getActiveUserId') && getActiveUserId() ? getActiveUserId() : null;
 
-        // Create history record immediately
+        // Create history record immediately as pending_start wait for user to click Start
         $history = ImportHistory::create([
             'model_type' => $modelClass,
             'user_id' => $userId,
             'source' => 'file',
-            'status' => 'queued',
+            'status' => 'pending_start',
             'file_path' => $filePath,
         ]);
-
-        // The ImportDataJob will:
-        // 1. Automatically ignore extra columns from Excel (not in fillable)
-        // 2. Set NULL for missing columns (not in Excel but in fillable)
-        // 3. Protect against primary key insertion
-        // 4. Handle data type conversions (dates, booleans, etc.)
-        // 5. Log ignored and missing columns for transparency
-        ImportDataJob::dispatch($modelClass, $absolutePath, 1000, $userId, 'file', $history->uuid);
 
         $modelName = __('main.' . $models);
 
@@ -202,12 +195,12 @@ class ExcelController extends Controller
             return back()->withSuccess(__('main.google_drive_link_saved_successfully') ?? 'Google Drive link saved successfully.');
         }
 
-        // Create ONE history record
+        // Create ONE history record as pending_start
         $history = ImportHistory::create([
             'model_type' => $modelClass,
             'user_id' => $userId,
             'source' => 'google_drive',
-            'status' => 'processing',
+            'status' => 'pending_start',
         ]);
 
         // Convert Google Drive view URL to export URL
@@ -310,11 +303,9 @@ class ExcelController extends Controller
 
             // Update history with file path and status
             $history->update([
-                'status' => 'queued',
+                'status' => 'pending_start',
                 'file_path' => $filePath,
             ]);
-
-            ImportDataJob::dispatch($modelClass, $absolutePath, 1000, $userId, 'google_drive', $history->uuid);
 
             $modelName = __('main.' . $models);
 
@@ -353,6 +344,56 @@ class ExcelController extends Controller
         }
 
         return null;
+    }
+
+    public function exportTemplate(Request $request)
+    {
+        $models = $request->query('models');
+        $modelClass = $this->resolveModelClass($models);
+        
+        if (!$modelClass || !class_exists($modelClass)) {
+            return back()->withError(__('messages.invalid_model_specified') ?? 'Invalid model specified for template export.');
+        }
+
+        $model = new $modelClass;
+        if (!method_exists($model, 'getFillable')) {
+            return back()->withError('Model does not have fillable attributes.');
+        }
+
+        $fillable = $model->getFillable();
+        // Include commonly used IDs for robust imports
+        $headers = array_merge(['id'], $fillable);
+
+        $filename = "Template_{$models}.xlsx";
+        $folderName = \Illuminate\Support\Str::plural(strtolower(class_basename($modelClass)));
+        $filePath = "excels/templates/{$folderName}/{$filename}";
+        $absolutePath = \Illuminate\Support\Facades\Storage::disk('public')->path($filePath);
+
+        // Ensure directory exists
+        $dir = dirname($absolutePath);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        // Create the Excel file
+        $writer = \Spatie\SimpleExcel\SimpleExcelWriter::create($absolutePath);
+        
+        // Add headers (SimpleExcel uses associative array keys as headers automatically for the first row)
+        $row = [];
+        foreach ($headers as $header) {
+            // Provide a generic example value based on column name to help user
+            $exampleValue = '';
+            if (str_contains(strtolower($header), 'name')) $exampleValue = 'Example Name';
+            elseif (str_contains(strtolower($header), 'code')) $exampleValue = 'CODE123';
+            elseif (str_contains(strtolower($header), 'is_')) $exampleValue = '1'; // Boolean
+            elseif (str_contains(strtolower($header), 'email')) $exampleValue = 'test@example.com';
+            
+            $row[$header] = $exampleValue;
+        }
+        $writer->addRow($row);
+        $writer->close();
+
+        return response()->download($absolutePath, $filename);
     }
 
     public function clearImportHistory(Request $request)

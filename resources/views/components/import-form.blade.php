@@ -25,9 +25,16 @@
 
 {{-- ===== PAGE HEADER ===== --}}
 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-    <div>
-        <h1 class="text-xl font-semibold text-mono">{{ $title }}</h1>
-        <p class="text-sm text-secondary-foreground mt-1">{{ $description }}</p>
+    <div class="flex items-center gap-3">
+        <div>
+            <h1 class="text-xl font-semibold text-mono">{{ $title }}</h1>
+            <p class="text-sm text-secondary-foreground mt-1">{{ $description }}</p>
+        </div>
+        
+        <a href="{{ route('import.template', ['models' => $models]) }}" class="kt-btn kt-btn-dark kt-btn-sm ms-auto group shadow-sm hover:shadow-md transition-all">
+            <i class="ki-filled ki-file-down text-lg"></i>
+            {{ __('main.export_template') ?? 'Export Template' }}
+        </a>
     </div>
 
     @if (isset($lastImport) && $lastImport['date'])

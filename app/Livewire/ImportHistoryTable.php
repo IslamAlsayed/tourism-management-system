@@ -80,7 +80,7 @@ class ImportHistoryTable extends Component
     public function cancelJob($id)
     {
         $job = \App\Models\ImportHistory::find($id);
-        if ($job && $job->status === 'queued') {
+        if ($job && in_array($job->status, ['queued', 'processing', 'pending_start'])) {
             $job->update(['status' => 'failed', 'error_message' => __('main.canceled_by_user') ?? 'Canceled by user.']);
             
             // Also attempt to remove from the jobs table if it's there
@@ -91,6 +91,34 @@ class ImportHistoryTable extends Component
                 'type' => 'info',
                 'message' => __('main.job_canceled') ?? 'Import job canceled.'
             ]);
+            $this->loadHistory();
+        }
+    }
+
+    public function startJob($id)
+    {
+        $job = \App\Models\ImportHistory::find($id);
+        if ($job && $job->status === 'pending_start') {
+            $job->update(['status' => 'queued']);
+            
+            $absolutePath = '';
+            if ($job->source === 'file' || $job->source === 'google_drive') {
+                $absolutePath = \Illuminate\Support\Facades\Storage::disk('public')->path($job->file_path);
+            }
+            
+            if (file_exists($absolutePath)) {
+                \App\Jobs\ImportDataJob::dispatch($job->model_type, $absolutePath, 1000, $job->user_id, $job->source, $job->uuid);
+                $this->dispatch('alert', [
+                    'type' => 'success',
+                    'message' => __('main.job_started') ?? 'Import job started.'
+                ]);
+            } else {
+                $job->update(['status' => 'failed', 'error_message' => 'File not found.']);
+                $this->dispatch('alert', [
+                    'type' => 'error',
+                    'message' => __('main.file_not_found') ?? 'File not found.'
+                ]);
+            }
             $this->loadHistory();
         }
     }

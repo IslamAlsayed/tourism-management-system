@@ -21,7 +21,7 @@ A comprehensive, enterprise-grade Tourism Management System designed for travel 
 
 ### 🗺️ Core Infrastructure
 - **Geography Engine**: Global data import (Regions, Subregions, Countries, States/Cities).
-- **Import/Export Pro**: High-performance Excel handling for all major entities.
+- **Import/Export Pro**: High-performance Excel handling for all major entities, featuring background job processing, real-time visual progress logs, cancellation controls, and **Export Templates** for easy data structuring.
 - **Cloud Integration**: Direct "Google Drive Link" import feature for seamless data updates.
 
 ### 🤖 AI & Development Tools
@@ -45,6 +45,13 @@ A comprehensive, enterprise-grade Tourism Management System designed for travel 
 ---
 
 ## 📥 Installation
+
+### 💻 Server Requirements
+For optimal performance, especially when importing large Excel datasets containing thousands of records (like Cities and States), please ensure your PHP environment meets these minimum requirements (configurable in your `php.ini` or `.env` depending on your setup):
+- `memory_limit = 2048M` (or `-1` for unlimited during CLI imports)
+- `max_execution_time = 300` (or higher)
+- `post_max_size = 50M`
+- `upload_max_filesize = 50M`
 
 ```bash
 # 1. Clone & Install Dependencies

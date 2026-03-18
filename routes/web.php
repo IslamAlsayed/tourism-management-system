@@ -120,6 +120,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // Route::get('import/data?{model?}&{models?}&{view?}', [ExcelController::class, 'import'])->name('import.data');
     Route::get('import/data', [ExcelController::class, 'import'])->name('import.data');
+    Route::get('import/template', [ExcelController::class, 'exportTemplate'])->name('import.template');
     Route::post('import/{models}/data/{type?}', [ExcelController::class, 'importData'])->name('import.data.post');
     Route::post('import/{models}/drive', [ExcelController::class, 'importFromGoogleDrive'])->name('import.data.drive');
     Route::delete('import/history/clear', [ExcelController::class, 'clearImportHistory'])->name('import.history.clear');
