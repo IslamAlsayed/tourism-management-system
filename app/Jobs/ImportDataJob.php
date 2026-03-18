@@ -1344,11 +1344,23 @@ class ImportDataJob implements ShouldQueue
                             throw new \Exception('Bypassing bulk upsert for TourGuide to prevent MySQL deadlocks. Using per-row fallback.');
                         }
 
-                        $this->modelClass::upsert(
-                            $finalRows,
-                            $uniqueBy,
-                            $updateColumns
-                        );
+                        // To ensure events (Webhooks, n8n, traits) fire, we use iterative updateOrCreate instead of bulk upsert
+                        foreach ($finalRows as $row) {
+                            $uniqueKeyString = $uniqueBy[0] ?? 'name';
+                            if (!isset($row[$uniqueKeyString])) continue;
+
+                            $matchCondition = [$uniqueKeyString => $row[$uniqueKeyString]];
+                            
+                            $query = $this->modelClass::withoutGlobalScopes();
+                            if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($this->modelClass))) {
+                                $query = $query->withTrashed();
+                            }
+                            
+                            $query->updateOrCreate(
+                                $matchCondition,
+                                \Illuminate\Support\Arr::only($row, $updateColumns)
+                            );
+                        }
                         $counter += count($finalRows);
                     }
                 } catch (\Throwable $e) {
@@ -1392,7 +1404,7 @@ class ImportDataJob implements ShouldQueue
                                     $updateCols = array_filter(array_keys($filtered), fn ($col) => ! in_array($col, ['id', 'uuid']));
                                     $uniqueKeyString = isset($filtered['id']) ? 'id' : (isset($filtered['uuid']) ? 'uuid' : (isset($filtered['type']) && $this->modelClass === \Modules\TourGuides\Entities\TourGuideType::class ? 'type' : 'name'));
 
-                                // Safer fallback using updateOrCreate instead of upsert to avoid duplicate key locks
+                                                                    // Safer fallback using updateOrCreate instead of upsert to avoid duplicate key locks
                                     $matchCondition = [$uniqueKeyString => $filtered[$uniqueKeyString]];
                                     
                                     $query = $this->modelClass::withoutGlobalScopes();
@@ -1400,12 +1412,11 @@ class ImportDataJob implements ShouldQueue
                                         $query = $query->withTrashed();
                                     }
                                     
-                                    $this->modelClass::withoutEvents(function () use ($query, $matchCondition, $filtered, $updateCols) {
-                                        $query->updateOrCreate(
-                                            $matchCondition,
-                                            \Illuminate\Support\Arr::only($filtered, $updateCols)
-                                        );
-                                    });
+                                    // NO withoutEvents() wrapper. This allows HasUuid trait and others to run normally.
+                                    $query->updateOrCreate(
+                                        $matchCondition,
+                                        \Illuminate\Support\Arr::only($filtered, $updateCols)
+                                    );
                                 }
                                 $counter++;
                             }
@@ -1528,11 +1539,23 @@ class ImportDataJob implements ShouldQueue
                         throw new \Exception('Bypassing bulk upsert for TourGuide final chunk to prevent MySQL deadlocks.');
                     }
 
-                    $this->modelClass::upsert(
-                        $finalRows,
-                        $uniqueByFinal,
-                        $updateColumnsFinal
-                    );
+                    // To ensure events (Webhooks, n8n, traits) fire, we use iterative updateOrCreate instead of bulk upsert
+                    foreach ($finalRows as $row) {
+                        $uniqueKeyString = $uniqueByFinal[0] ?? 'name';
+                        if (!isset($row[$uniqueKeyString])) continue;
+
+                        $matchCondition = [$uniqueKeyString => $row[$uniqueKeyString]];
+                        
+                        $query = $this->modelClass::withoutGlobalScopes();
+                        if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($this->modelClass))) {
+                            $query = $query->withTrashed();
+                        }
+                        
+                        $query->updateOrCreate(
+                            $matchCondition,
+                            \Illuminate\Support\Arr::only($row, $updateColumnsFinal)
+                        );
+                    }
                     $counter += count($finalRows);
                 }
                 // }
@@ -1566,7 +1589,7 @@ class ImportDataJob implements ShouldQueue
                             $updateCols = array_filter(array_keys($r), fn ($col) => ! in_array($col, ['id', 'uuid']));
                             $uniqueKeyString = isset($r['id']) ? 'id' : (isset($r['uuid']) ? 'uuid' : 'name');
 
-                            // Safer fallback using updateOrCreate instead of upsert to avoid duplicate key locks
+                                                        // Safer fallback using updateOrCreate instead of upsert to avoid duplicate key locks
                             $matchCondition = [$uniqueKeyString => $r[$uniqueKeyString]];
                             
                             $query = $this->modelClass::withoutGlobalScopes();
@@ -1574,12 +1597,11 @@ class ImportDataJob implements ShouldQueue
                                 $query = $query->withTrashed();
                             }
                             
-                            $this->modelClass::withoutEvents(function () use ($query, $matchCondition, $r, $updateCols) {
-                                $query->updateOrCreate(
-                                    $matchCondition,
-                                    \Illuminate\Support\Arr::only($r, $updateCols)
-                                );
-                            });
+                            // NO withoutEvents() wrapper. This allows HasUuid trait and others to run normally.
+                            $query->updateOrCreate(
+                                $matchCondition,
+                                \Illuminate\Support\Arr::only($r, $updateCols)
+                            );
                         }
                         $counter++;
                     } catch (\Throwable $er) {
