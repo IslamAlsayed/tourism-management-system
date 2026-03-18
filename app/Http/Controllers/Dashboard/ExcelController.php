@@ -24,13 +24,20 @@ class ExcelController extends Controller
         $model = $request->model;
         $view = $request->view;
 
-        // If model is not provided, derive it from models parameter
+        // If model is not provided, derive it from models parameter (make it singular)
         if (empty($model) && !empty($models)) {
-            $model = $models;
+            // Some models have custom maps, but generally singularizing works
+            $model = \Illuminate\Support\Str::singular($models);
         }
 
         // If view is not provided explicitly, derive it from models parameter using the view map
         if (empty($view) && !empty($models)) {
+            // First check if models includes dot notation from index pages (e.g. dashboard.transportation.vehicle-types)
+            $lookupModel = $models;
+            if (str_contains($models, '.')) {
+                $segments = explode('.', $models);
+                $lookupModel = end($segments);
+            }
             // Map models to their view paths (including module namespaces)
             $viewMap = [
                 'users' => 'core::users',
@@ -39,7 +46,7 @@ class ExcelController extends Controller
                 'currencies' => 'localization::currencies',
                 'languages' => 'localization::languages',
                 'timezones' => 'localization::timezones',
-                'system-languages' => 'localization::system-languages',
+                'system_languages' => 'localization::system-languages', // Fixed underscore
                 'countries' => 'geography::countries',
                 'cities' => 'geography::cities',
                 'regions' => 'geography::regions',
@@ -50,7 +57,7 @@ class ExcelController extends Controller
                 'restauranttypes' => 'restaurants::types',
                 'restaurantmeals' => 'restaurants::meals',
                 'accommodations' => 'accommodations::accommodations',
-                'accommodationtypes' => 'accommodations::types',
+                'types' => 'accommodations::types', // Added for accommodations/types
                 'rooms' => 'accommodations::rooms',
                 'seasons' => 'accommodations::seasons',
                 'meals' => 'accommodations::meals',
@@ -65,8 +72,12 @@ class ExcelController extends Controller
                 'tours.guides' => 'tourguides::guides',
                 'guide-types' => 'tourguides::types',
                 'guide-reviews' => 'tourguides::reviews',
+                'clients' => 'crm::clients', // Added CRM
+                'airports' => 'entrypoints::airports',
+                'seaports' => 'entrypoints::seaports',
+                'land_crossings' => 'entrypoints::land-crossings',
             ];
-            $view = $viewMap[$models] ?? $models;
+            $view = $viewMap[$lookupModel] ?? $lookupModel;
         }
 
         // Resolve model class dynamically to support Modules
@@ -361,8 +372,19 @@ class ExcelController extends Controller
         }
 
         $fillable = $model->getFillable();
-        // Include commonly used IDs for robust imports
-        $headers = array_merge(['id'], $fillable);
+
+        // Exclude auto-generated columns that users should not fill in
+        $excludedColumns = [
+            'uuid', 'created_at', 'updated_at', 'deleted_at',
+            'created_by', 'updated_by', 'deleted_by',
+            'email_verified_at', 'remember_token',
+        ];
+        $filteredFillable = array_values(array_filter($fillable, function ($col) use ($excludedColumns) {
+            return !in_array($col, $excludedColumns);
+        }));
+
+        // Include 'id' for update-based imports
+        $headers = array_merge(['id'], $filteredFillable);
 
         $filename = "Template_{$models}.xlsx";
         $folderName = \Illuminate\Support\Str::plural(strtolower(class_basename($modelClass)));

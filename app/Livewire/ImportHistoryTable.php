@@ -165,7 +165,7 @@ class ImportHistoryTable extends Component
         $this->checkCompletion(); // Check for newly completed jobs on every render (poll)
 
         // Find the most recent active job for the overlay
-        $this->activeJob = $this->history->whereIn('status', ['queued', 'processing'])->first();
+        $this->activeJob = $this->history->whereIn('status', ['queued', 'processing', 'pending_start'])->first();
         $hasActiveJobs = $this->activeJob !== null;
         
         if ($this->activeJob && $this->activeJob->status === 'processing') {

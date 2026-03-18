@@ -64,7 +64,19 @@ class ImportDataJob implements ShouldQueue
         
         $totalRecords = 0;
         try {
-            $totalRecords = SimpleExcelReader::create($this->filePath)->getRows()->count();
+            $reader = SimpleExcelReader::create($this->filePath);
+            foreach ($reader->getRows() as $countRow) {
+                $rowHasData = false;
+                foreach ($countRow as $val) {
+                    if (trim((string) $val) !== '') {
+                        $rowHasData = true;
+                        break;
+                    }
+                }
+                if ($rowHasData) {
+                    $totalRecords++;
+                }
+            }
         } catch (\Throwable $e) {
             Log::warning("Could not count total rows for progress: " . $e->getMessage());
         }
@@ -137,13 +149,28 @@ class ImportDataJob implements ShouldQueue
         $counter = 0;
         $headerMap = null; // map normalized header -> actual header key
         $totalRows = 0; // track total rows read
+        $validRecordsProcessed = 0; // track only non-empty rows
         $lookupCache = []; // To prevent N+1 queries during import
 
         foreach ($rows as $rowIndex => $row) {
             $totalRows++;
 
+            // Skip empty rows (all values are empty/null)
+            $hasData = false;
+            foreach ((array) $row as $key => $val) {
+                if ($key !== '' && trim((string) $val) !== '') {
+                    $hasData = true;
+                    break;
+                }
+            }
+            if (! $hasData) {
+                continue;
+            }
+
+            $validRecordsProcessed++;
+
             // Check for cancellation periodically
-            if ($this->historyUuid && $totalRows % 100 === 0) {
+            if ($this->historyUuid && $validRecordsProcessed % 100 === 0) {
                 $currentStatus = \App\Models\ImportHistory::where('uuid', $this->historyUuid)->value('status');
                 if ($currentStatus === 'failed') {
                     Log::info("Import job {$this->historyUuid} was canceled by the user.");
@@ -1398,7 +1425,7 @@ class ImportDataJob implements ShouldQueue
                 if ($this->historyUuid) {
                     try {
                         \App\Models\ImportHistory::where('uuid', $this->historyUuid)->update([
-                            'processed_records' => $totalRows
+                            'processed_records' => $validRecordsProcessed
                         ]);
                     } catch (\Throwable $e) {
                         Log::debug('Failed to update processed_records: '.$e->getMessage());
@@ -1595,7 +1622,7 @@ class ImportDataJob implements ShouldQueue
                 \App\Models\ImportHistory::where('uuid', $this->historyUuid)->update([
                     'status' => 'completed',
                     'record_count' => $counter,
-                    'processed_records' => $totalRows,
+                    'processed_records' => $validRecordsProcessed,
                 ]);
             }
         } catch (\Throwable $e) {
