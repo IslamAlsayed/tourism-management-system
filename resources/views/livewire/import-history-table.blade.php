@@ -31,7 +31,7 @@
     @if($hasActiveJobs && $activeJob)
         <!-- Prominent Unskippable Overlay for Active Imports -->
         <div class="fixed inset-0 z-[9999] flex items-center justify-center m-0 p-0" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);">
-            <div class="bg-card w-full max-w-lg rounded-xl shadow-2xl border border-border relative flex flex-col max-h-[90vh]">
+            <div class="bg-card w-full max-w-[400px] sm:w-1/3 rounded-xl shadow-2xl border border-border relative flex flex-col max-h-[90vh]">
                 <!-- Close Button (Fallback if stuck) -->
                 @if(in_array($activeJob->status, ['queued', 'pending_start', 'processing']))
                 <button wire:click="cancelJob({{ $activeJob->id }})" class="absolute top-4 right-4 z-10 text-muted-foreground hover:text-destructive transition-colors">
@@ -93,7 +93,7 @@
                             </div>
 
                             <!-- Log Scrollbar -->
-                            <div class="mt-6 text-left border border-border rounded-lg bg-black text-green-400 font-mono text-xs max-h-32 overflow-y-auto p-3 flex flex-col gap-1 smooth-scroll" id="import-log-container">
+                            <div class="mt-6 text-left border border-border rounded-lg bg-slate-100 dark:bg-black text-slate-800 dark:text-green-400 font-mono text-xs max-h-32 overflow-y-auto p-3 flex flex-col gap-1 smooth-scroll shadow-inner" id="import-log-container">
                                 <div>> {{ __('main.import_started') ?? 'Import started...' }}</div>
                                 <div>> {{ __('main.found_records') ?? 'Found total records to process:' }} {{ $activeJob->total_records }}</div>
                                 @if($activeJob->processed_records > 0)
@@ -108,9 +108,9 @@
                                     }
                                 </script>
                             </div>
-                            <div class="flex justify-center mt-4 text-sm">
-                                <button wire:click="cancelJob({{ $activeJob->id }})" class="text-destructive hover:underline opacity-80 transition-opacity">
-                                    <i class="ki-filled ki-cross-circle me-1"></i> {{ __('main.cancel_import') ?? 'Cancel Import' }}
+                            <div class="flex justify-center mt-5 text-sm">
+                                <button wire:click="cancelJob({{ $activeJob->id }})" class="kt-btn kt-btn-sm kt-btn-destructive w-full max-w-[200px] shadow-sm hover:shadow-md transition-all">
+                                    <i class="ki-filled ki-cross-circle me-1.5 text-base"></i> {{ __('main.cancel_import') ?? 'Cancel Import' }}
                                 </button>
                             </div>
                         @else
@@ -118,17 +118,17 @@
                                 <i class="ki-filled ki-loading animate-spin text-3xl text-primary"></i>
                                 <span class="font-medium text-lg">{{ __('main.queued_waiting') }}</span>
                             </div>
-                            <div class="flex justify-center mt-4 text-sm">
-                                <button wire:click="cancelJob({{ $activeJob->id }})" class="text-destructive hover:underline opacity-80 transition-opacity">
-                                    <i class="ki-filled ki-cross-circle me-1"></i> {{ __('main.cancel_queued') ?? 'Cancel' }}
+                            <div class="flex justify-center mt-5 text-sm">
+                                <button wire:click="cancelJob({{ $activeJob->id }})" class="kt-btn kt-btn-sm kt-btn-destructive w-full max-w-[200px] shadow-sm hover:shadow-md transition-all">
+                                    <i class="ki-filled ki-cross-circle me-1.5 text-base"></i> {{ __('main.cancel_queued') ?? 'Cancel' }}
                                 </button>
                             </div>
                         @endif
                     @endif
                 </div>
-                <div class="bg-warning/10 p-4 text-center border-t border-warning/20 rounded-b-xl shrink-0">
-                    <p class="text-warning-foreground text-sm flex items-center justify-center gap-2 font-medium">
-                        <i class="ki-filled ki-information-2 text-xl"></i>
+                <div class="bg-destructive p-4 text-center rounded-b-xl shrink-0 shadow-[inset_0_2px_10px_rgba(0,0,0,0.1)]">
+                    <p class="text-white text-sm flex items-center justify-center gap-2 font-bold tracking-wide">
+                        <i class="ki-filled ki-information-2 text-xl text-white"></i>
                         {{ __('main.do_not_refresh_warning') }}
                     </p>
                 </div>
