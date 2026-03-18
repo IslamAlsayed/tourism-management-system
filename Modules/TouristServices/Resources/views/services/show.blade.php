@@ -84,7 +84,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristService->id,
-                                    'modelType' => '\\App\\Models\\TouristService',
+                                    'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                     'field' => 'is_active',
                                     'value' => (bool) $touristService->is_active,
                                     'table' => 'tourist_services',
@@ -552,7 +552,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristService->id,
-                                    'modelType' => '\\App\\Models\\TouristService',
+                                    'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                     'field' => 'is_24_7',
                                     'value' => (bool) $touristService->is_24_7,
                                     'table' => 'tourist_services',
@@ -587,7 +587,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristService->id,
-                                    'modelType' => '\\App\\Models\\TouristService',
+                                    'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                     'field' => 'booking_required',
                                     'value' => (bool) $touristService->booking_required,
                                     'table' => 'tourist_services',
@@ -686,7 +686,7 @@
                                 <div class="flex items-center gap-2">
                                     @livewire('toggle-switch', [
                                         'modelId' => $touristService->id,
-                                        'modelType' => '\\App\\Models\\TouristService',
+                                        'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                         'field' => 'is_refundable',
                                         'value' => (bool) $touristService->is_refundable,
                                         'table' => 'tourist_services',
@@ -748,7 +748,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristService->id,
-                                    'modelType' => '\\App\\Models\\TouristService',
+                                    'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                     'field' => 'is_free',
                                     'value' => (bool) $touristService->is_free,
                                     'table' => 'tourist_services',
@@ -760,7 +760,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristService->id,
-                                    'modelType' => '\\App\\Models\\TouristService',
+                                    'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                     'field' => 'is_verified',
                                     'value' => (bool) $touristService->is_verified,
                                     'table' => 'tourist_services',
@@ -772,7 +772,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristService->id,
-                                    'modelType' => '\\App\\Models\\TouristService',
+                                    'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                     'field' => 'is_featured',
                                     'value' => (bool) $touristService->is_featured,
                                     'table' => 'tourist_services',

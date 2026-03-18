@@ -4,7 +4,7 @@
     <div class="app-container container-fluid d-flex align-items-stretch justify-content-between">
         {{-- begin::Sidebar mobile toggle --}}
         <div class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2" title="Show sidebar menu">
-            <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
+            <div class="kt-btn kt-btn-icon kt-btn-light kt-btn-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
                 <i class="ki-duotone ki-abstract-14 fs-2 fs-md-1">
                     <span class="path1"></span>
                     <span class="path2"></span>
@@ -49,7 +49,7 @@
                     {{-- begin::Menu wrapper --}}
                     <div class="cursor-pointer symbol symbol-35px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-                        data-kt-menu-placement="bottom-end">
+                        data-kt-menu-placement="bottom-{{ app()->getLocale() == 'ar' ? 'start' : 'end' }}">
                         <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/blank.png') }}"
                             alt="{{ $user->name }}" class="size-full object-cover">
                     </div>

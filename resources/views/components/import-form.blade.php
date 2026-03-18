@@ -14,6 +14,7 @@
     'googleDriveUrl' => null,
     'lastImport' => null,
     'history' => null,
+    'modelClass' => null,
 ])
 
 @php
@@ -93,8 +94,7 @@
                         {{ __('main.import_url') ?? 'Import URL (e.g. Google Drive, Ical)' }}
                     </label>
                     <input type="url" name="google_drive_url" id="google_drive_url" class="kt-input"
-                        placeholder="https://..." value="{{ $googleDriveUrl ?? '' }}"
-                        required />
+                        placeholder="https://..." value="{{ $googleDriveUrl ?? '' }}" required />
                     @error('google_drive_url')
                         <p class="text-destructive text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -196,112 +196,8 @@
 {{ $slot ?? '' }}
 
 {{-- ===== IMPORT HISTORY TABLE ===== --}}
-@if (isset($history) && count($history) > 0)
-    <div class="kt-card">
-        <div class="kt-card-header min-h-14">
-            <h3 class="kt-card-title">
-                <i class="ki-filled ki-time text-muted-foreground text-lg me-2"></i>
-                {{ __('main.import_history') ?? 'Import History' }}
-            </h3>
-            @if (auth()->user() && auth()->user()->hasRole('superadmin'))
-                <div class="flex items-center gap-2">
-                    <form action="{{ route('import.history.clear') }}" method="POST" id="clear-history-form">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="model_type" value="{{ $history->first()?->model_type }}">
-                        <button type="button" onclick="confirmClearHistory()"
-                            class="kt-btn kt-btn-sm kt-btn-destructive-outline">
-                            <i class="ki-filled ki-trash me-1.5"></i>
-                            {{ __('main.clear_history') ?? 'Clear History' }}
-                        </button>
-                    </form>
-                </div>
-            @endif
-        </div>
-        <div class="kt-card-table">
-            <div class="kt-table-wrapper">
-                <table class="kt-table kt-table-border">
-                    <thead>
-                        <tr>
-                            <th>{{ __('main.date') ?? 'Date' }}</th>
-                            <th>{{ __('main.user') ?? 'User' }}</th>
-                            <th>{{ __('main.source') ?? 'Source' }}</th>
-                            <th>{{ __('main.records') ?? 'Records' }}</th>
-                            <th>{{ __('main.status') ?? 'Status' }}</th>
-                            <th class="text-end">{{ __('main.details') ?? 'Details' }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($history as $item)
-                            <tr>
-                                <td class="text-nowrap text-secondary-foreground text-sm">
-                                    {{ $item->created_at->format('d M Y H:i') }}
-                                </td>
-                                <td>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-sm font-medium">{{ $item->user->name ?? 'System' }}</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    @if ($item->source === 'google_drive')
-                                        <span class="kt-badge kt-badge-primary gap-1">
-                                            <i class="ki-filled ki-cloud text-xs"></i>
-                                            Google Drive
-                                        </span>
-                                    @else
-                                        <span class="kt-badge kt-badge-secondary gap-1">
-                                            <i class="ki-filled ki-file text-xs"></i>
-                                            {{ __('main.file_upload') ?? 'File Upload' }}
-                                        </span>
-                                    @endif
-                                </td>
-                                <td class="font-semibold">
-                                    {{ $item->record_count ? number_format($item->record_count) : '—' }}
-                                </td>
-                                <td>
-                                    @if ($item->status === 'completed')
-                                        <span class="kt-badge kt-badge-success">
-                                            <i class="ki-filled ki-check-circle me-1 text-xs"></i>
-                                            {{ __('main.completed') ?? 'Completed' }}
-                                        </span>
-                                    @elseif ($item->status === 'failed')
-                                        <span class="kt-badge kt-badge-destructive"
-                                            title="{{ $item->error_message }}">
-                                            <i class="ki-filled ki-cross-circle me-1 text-xs"></i>
-                                            {{ __('main.failed') ?? 'Failed' }}
-                                        </span>
-                                    @elseif ($item->status === 'processing')
-                                        <span class="kt-badge kt-badge-warning">
-                                            <i class="ki-filled ki-time me-1 text-xs"></i>
-                                            {{ __('main.processing') ?? 'Processing' }}
-                                        </span>
-                                    @elseif ($item->status === 'queued')
-                                        <span class="kt-badge kt-badge-info">
-                                            <i class="ki-filled ki-information me-1 text-xs"></i>
-                                            {{ __('main.queued') ?? 'Queued' }}
-                                        </span>
-                                    @else
-                                        <span class="kt-badge kt-badge-secondary">{{ $item->status }}</span>
-                                    @endif
-                                </td>
-                                <td class="text-end">
-                                    @if ($item->error_message)
-                                        <span class="text-xs text-destructive max-w-48 truncate inline-block"
-                                            title="{{ $item->error_message }}">
-                                            {{ Str::limit($item->error_message, 40) }}
-                                        </span>
-                                    @else
-                                        <span class="text-xs text-muted-foreground">—</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-@endif
+@livewire('import-history-table', ['modelType' => $modelClass ?? $model])
+
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

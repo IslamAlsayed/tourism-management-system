@@ -132,7 +132,7 @@
 
 @if ($errors->any())
     <div class="toasts">
-        <div class="toast-inner" @if (app()->getLocale() == 'ar') dir="rtl" @endif>
+        <div class="toast-inner" @if (config('languages.system_languages.' . app()->getLocale() . '.dir', app()->getLocale() == 'ar' ? 'rtl' : 'ltr') == 'rtl') dir="rtl" @endif>
             <div
                 class="toast toast-error {{ config('toasts.default_position') }} {{ config('toasts.move') != 'enable' ? 'no_move' : '' }}">
                 <i class="toast-icon fas fa-circle-xmark"></i>

@@ -71,13 +71,13 @@
                                         <td>{{ number_format($supplement['price'], 2) }}</td>
                                         <td>
                                             {!! $supplement['is_per_person']
-                                                ? '<span class="badge bg-success">Yes</span>'
-                                                : '<span class="badge bg-secondary">No</span>' !!}
+                                                ? '<span class="kt-badge kt-badge-success">Yes</span>'
+                                                : '<span class="kt-badge kt-badge-secondary">No</span>' !!}
                                         </td>
                                         <td>
                                             {!! $supplement['is_mandatory']
-                                                ? '<span class="badge bg-danger">Mandatory</span>'
-                                                : '<span class="badge bg-info">Optional</span>' !!}
+                                                ? '<span class="kt-badge kt-badge-destructive">Mandatory</span>'
+                                                : '<span class="kt-badge kt-badge-info">Optional</span>' !!}
                                         </td>
                                         <td>{{ $supplement['applicable_date'] ?? '-' }}</td>
                                     </tr>
@@ -131,11 +131,11 @@
         </div>
 
         <div class="flex justify-between mt-8">
-            <button type="button" class="btn btn-light" onclick="window.history.back();">
+            <button type="button" class="kt-btn kt-btn-light" onclick="window.history.back();">
                 <i class="ki-duotone ki-arrow-left me-2"><span class="path1"></span><span class="path2"></span></i>
                 Previous Step
             </button>
-            <button type="submit" class="btn btn-primary next-step">
+            <button type="submit" class="kt-btn kt-btn-primary next-step">
                 Next Step <i class="ki-duotone ki-arrow-right ms-2"><span class="path1"></span><span
                         class="path2"></span></i>
             </button>

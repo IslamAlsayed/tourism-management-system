@@ -22,7 +22,7 @@
                 </div>
 
                 <!-- Info -->
-                <div class="flex-1 text-center md:text-start text-white">
+                <div class="flex-1 text-center md:text-start text-white dark:text-foreground">
                     <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
                         <h1 class="text-3xl font-bold tracking-tight">
                             {{ $user->name }}
@@ -38,19 +38,19 @@
                     <div
                         class="flex flex-wrap items-center justify-center md:justify-start gap-4 text-white/80 text-sm font-medium mb-6">
                         <div class="flex items-center gap-2">
-                            <i class="ki-filled ki-sms text-white fs-5"></i>
-                            <span class="text-white">{{ $user->email }}</span>
+                            <i class="ki-filled ki-sms text-white dark:text-foreground fs-5"></i>
+                            <span class="text-white dark:text-foreground">{{ $user->email }}</span>
                         </div>
                         @if ($user->mobile)
                             <div class="flex items-center gap-2 border-l border-white/30 pl-4">
-                                <i class="ki-filled ki-phone text-white fs-5"></i>
-                                <span class="text-white">{{ $user->mobile }}</span>
+                                <i class="ki-filled ki-phone text-white dark:text-foreground fs-5"></i>
+                                <span class="text-white dark:text-foreground">{{ $user->mobile }}</span>
                             </div>
                         @endif
                         @if ($user->company_name)
                             <div class="flex items-center gap-2 border-l border-white/30 pl-4">
-                                <i class="ki-filled ki-bank text-white fs-5"></i>
-                                <span class="text-white">{{ $user->company_name }}</span>
+                                <i class="ki-filled ki-bank text-white dark:text-foreground fs-5"></i>
+                                <span class="text-white dark:text-foreground">{{ $user->company_name }}</span>
                             </div>
                         @endif
                     </div>

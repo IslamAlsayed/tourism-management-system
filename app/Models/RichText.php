@@ -24,4 +24,20 @@ class RichText extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Render the rich text as HTML.
+     */
+    public function render()
+    {
+        return $this->body;
+    }
+
+    /**
+     * Convert the model to string (HTML content).
+     */
+    public function __toString()
+    {
+        return (string) ($this->render() ?? '');
+    }
 }

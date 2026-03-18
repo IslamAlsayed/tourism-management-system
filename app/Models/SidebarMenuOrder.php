@@ -25,4 +25,27 @@ class SidebarMenuOrder extends Model
         'order' => 'integer',
         'level' => 'integer',
     ];
+
+    public static function getOrderedMenu()
+    {
+        return self::orderBy('order')->get()->map(function ($item) {
+            return [
+                'menu_key' => $item->menu_key,
+                'order' => $item->order,
+                'parent_key' => $item->parent_key,
+                'level' => $item->level,
+                'is_visible' => $item->is_visible,
+                'custom_data' => $item->custom_data,
+            ];
+        })->toArray();
+    }
+
+    public static function saveConfig($configStructure)
+    {
+        self::truncate();
+        foreach ($configStructure as $item) {
+            self::create($item);
+        }
+        return true;
+    }
 }

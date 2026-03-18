@@ -188,16 +188,16 @@
                                     </td>
                                     <td class="text-end">
                                         <a href="#"
-                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            class="kt-btn kt-btn-icon kt-btn-light kt-btn-primary kt-btn-sm me-1"
                                             title="View">
                                             <i class="ki-filled ki-eye fs-3"></i>
                                         </a>
                                         <a href="#"
-                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                            class="kt-btn kt-btn-icon kt-btn-light kt-btn-primary kt-btn-sm me-1"
                                             title="Edit">
                                             <i class="ki-filled ki-pencil fs-3"></i>
                                         </a>
-                                        <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                        <a href="#" class="kt-btn kt-btn-icon kt-btn-light kt-btn-destructive kt-btn-sm"
                                             title="Delete">
                                             <i class="ki-filled ki-trash fs-3"></i>
                                         </a>

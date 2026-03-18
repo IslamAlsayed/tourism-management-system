@@ -52,12 +52,12 @@
 <link href="{{ asset('assets/plugins/fontawesome-icons/css/all.min.css') }}" rel="stylesheet" />
 {{-- Select multiple plugin --}}
 <link href="{{ asset('assets/plugins/select2@4.1.0-rc.0/css/select2.min.css') }}" rel="stylesheet" />
-{{-- Main CSS --}}
-<link href="{{ asset('assets/css/main.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/checkbox-input.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/toggle-input.css') }}" rel="stylesheet" />
+{{-- Main CSS with cache-busting (auto-detects file changes) --}}
+<link href="{{ asset('assets/css/main.css') }}?v={{ time() }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/checkbox-input.css') }}?v={{ time() }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/toggle-input.css') }}?v={{ time() }}" rel="stylesheet" />
 {{-- Select search CSS --}}
-<link href="{{ asset('assets/css/multi-select.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/multi-select.css') }}?v={{ time() }}" rel="stylesheet">
 <link href="{{ asset('metronic/css/styles.css') }}" rel="stylesheet" />
 {{-- Dynamic Sidebar Width - Must come after styles.css to override --}}
 @php
@@ -97,6 +97,37 @@
         flex-wrap: wrap !important;
     }
 </style>
+
+{{-- Sync Metronic Theme with Tailwind Dark Mode Class --}}
+<script>
+    (function() {
+        // Run immediately to avoid flash of unstyled content
+        function syncTailwindDarkClass() {
+            var theme = document.documentElement.getAttribute('data-bs-theme');
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+        
+        syncTailwindDarkClass();
+        
+        // Use MutationObserver for dynamic changes (user clicking theme switcher)
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'data-bs-theme') {
+                    syncTailwindDarkClass();
+                }
+            });
+        });
+        
+        // Start observing HTML tag
+        document.addEventListener('DOMContentLoaded', function() {
+            observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
+        });
+    })();
+</script>
 
 @yield('styles')
 @stack('styles')

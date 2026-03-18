@@ -32,7 +32,7 @@ return new class extends Migration {
             $table->timestamps();
 
             // Indexes
-            $table->index(['key', 'name', 'name_ar', 'category']);
+            // $table->index(['key', 'name', 'name_ar', 'category']);
         });
     }
 

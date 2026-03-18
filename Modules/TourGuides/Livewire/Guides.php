@@ -2,7 +2,7 @@
 
 namespace Modules\TourGuides\Livewire;
 
-use App\Traits\CustomColumnsLivewireLegacy;
+use App\Traits\CustomColumnsRefreshBased;
 use App\Traits\CustomPagination;
 use App\Traits\ExportsData;
 use App\Traits\HandlesCrudSafely;
@@ -13,7 +13,7 @@ use Modules\TourGuides\Entities\TourGuide;
 
 class Guides extends Component
 {
-    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsRefreshBased, WithSorting, HandlesCrudSafely, ExportsData;
     public $search = '';
     public $totalCount = 0;
     public $filterActive = '';
@@ -26,44 +26,13 @@ class Guides extends Component
     
     protected $listeners = ['recordUpdated' => '$refresh', 'refresh-page' => '$refresh', 'reset-checkout-boxes' => '$refresh', 'filterColumn' => 'filterColumn'];
 
-    public function updatingSearch()
+    public function updated($property)
     {
-        $this->resetPage();
-    }
-
-    public function updatingFilterActive()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingFilterRegionId()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingFilterSubregionId()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingFilterCountryId()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingFilterStateId()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingFilterCityId()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingFilterTypeId()
-    {
-        $this->resetPage();
+        $filters = ['search', 'filterActive', 'filterRegionId', 'filterSubregionId', 'filterCountryId', 'filterStateId', 'filterCityId', 'filterTypeId'];
+        
+        if (in_array($property, $filters)) {
+            $this->resetPage();
+        }
     }
 
     public function resetFilters()
@@ -220,10 +189,57 @@ class Guides extends Component
         $query = $this->buildQuery();
         $data = $query->paginate(getPaginate());
         
+        // جلب أسماء الأعمدة الجغرافية حسب اللغة
+        $nameCol = 'name' . (app()->getLocale() == 'ar' ? '_ar' : '');
+
+        // جلب الأقاليم
+        $regions = \Modules\Geography\Entities\Region::where('is_active', true)->pluck($nameCol, 'id');
+
+        // جلب الأقاليم الفرعية بناءً على الإقليم المختار
+        $subregionsQuery = \Modules\Geography\Entities\Subregion::where('is_active', true);
+        if ($this->filterRegionId && $this->filterRegionId !== 'all') {
+            $subregionsQuery->where('region_id', $this->filterRegionId);
+        }
+        $subregions = $subregionsQuery->pluck($nameCol, 'id');
+
+        // جلب الدول بناءً على الإقليم الفرعي أو الإقليم الأساسي
+        $countriesQuery = \Modules\Geography\Entities\Country::where('is_active', true);
+        if ($this->filterSubregionId && $this->filterSubregionId !== 'all') {
+            $countriesQuery->where('subregion_id', $this->filterSubregionId);
+        } elseif ($this->filterRegionId && $this->filterRegionId !== 'all') {
+            $countriesQuery->whereHas('subregion', function($q) {
+                $q->where('region_id', $this->filterRegionId);
+            });
+        }
+        $countries = $countriesQuery->pluck($nameCol, 'id');
+
+        // جلب المحافظات بناءً على الدولة
+        $statesQuery = \Modules\Geography\Entities\State::where('is_active', true);
+        if ($this->filterCountryId && $this->filterCountryId !== 'all') {
+            $statesQuery->where('country_id', $this->filterCountryId);
+        }
+        $states = $statesQuery->pluck($nameCol, 'id');
+
+        // جلب المدن بناءً على المحافظة
+        $citiesQuery = \Modules\Geography\Entities\City::where('is_active', true);
+        if ($this->filterStateId && $this->filterStateId !== 'all') {
+            $citiesQuery->where('state_id', $this->filterStateId);
+        }
+        $cities = $citiesQuery->pluck($nameCol, 'id');
+
+        // جلب أنواع المرشدين
+        $types = \Modules\TourGuides\Entities\TourGuideType::where('is_active', true)->pluck('type', 'id');
+        
         return view('tourguides::livewire.guides', [
             'data' => $data, 
-            'totalCount' => TourGuide::count(), 
-            'selectedIds' => $this->selectedIds
+            'totalCount' => $data->total(), 
+            'selectedIds' => $this->selectedIds,
+            'regions' => $regions,
+            'subregions' => $subregions,
+            'countries' => $countries,
+            'states' => $states,
+            'cities' => $cities,
+            'types' => $types,
         ]);
     }
 }

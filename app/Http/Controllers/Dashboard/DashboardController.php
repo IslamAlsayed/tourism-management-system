@@ -26,7 +26,6 @@ class DashboardController extends Controller
     {
         // dd(\Illuminate\Support\Facades\DB::table('migrations')->pluck('migration', 'id')->toArray());
 
-        // بيانات ثابتة مؤقتة بدلاً من قاعدة البيانات
         $stats = [
             'countries' => Country::count(),
             'cities' => City::count(),

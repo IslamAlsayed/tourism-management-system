@@ -61,7 +61,7 @@
                         </span>
                         <span class="menu-title">Countries</span>
                         <span class="menu-badge">
-                            <span class="badge badge-success">245</span>
+                            <span class="kt-badge kt-badge-success">245</span>
                         </span>
                     </a>
                 </div>
@@ -77,7 +77,7 @@
                         </span>
                         <span class="menu-title">Cities</span>
                         <span class="menu-badge">
-                            <span class="badge badge-primary">88,092</span>
+                            <span class="kt-badge kt-badge-primary">88,092</span>
                         </span>
                     </a>
                 </div>
@@ -94,7 +94,7 @@
                         </span>
                         <span class="menu-title">Currencies</span>
                         <span class="menu-badge">
-                            <span class="badge badge-warning">49</span>
+                            <span class="kt-badge kt-badge-warning">49</span>
                         </span>
                     </a>
                 </div>

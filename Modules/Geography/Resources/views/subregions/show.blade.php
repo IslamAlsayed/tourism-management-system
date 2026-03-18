@@ -128,11 +128,11 @@
             <!-- Actions -->
             <div class="flex items-center gap-4">
                 @include('components.elements.edit-button', [
-                    'models' => 'subregions',
+                    'models' => 'dashboard.geography.subregions',
                     'id' => $subregion->id,
                 ])
                 @include('components.elements.delete-form', [
-                    'model' => 'subregions',
+                    'model' => 'dashboard.geography.subregions',
                     'id' => $subregion->id,
                 ])
                 <a href="{{ route('dashboard.geography.subregions.index') }}" class="kt-btn kt-btn-outline">

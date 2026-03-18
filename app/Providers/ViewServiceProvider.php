@@ -26,7 +26,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         view()->composer('*', function ($view) {
             $activeUser = Auth::check() ? Auth::user() : null;
-            $system_languages = SystemLanguage::all();
+            $system_languages = SystemLanguage::where('is_active', true)->orderBy('sort_order', 'asc')->get();
             $settings = Setting::first() ?? null;
 
             // Get notifications for authenticated user

@@ -20,11 +20,10 @@
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,toggleGridLength">
 
         {{-- Bulk Action Buttons --}}
-        @if (!empty($selectedIds) && count($selectedIds) > 0)
-            <div
+        <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0"
                 class="mb-4 flex flex-shrink flex-wrap items-center gap-2 px-1 bg-gray-50 p-3 rounded-lg border border-gray-200 shadow-sm">
                 <span class="text-sm font-medium text-gray-700 me-2 p-2 bg-white rounded border border-gray-300">
-                    {{ __('main.selected') }}: <span class="badge badge-primary">{{ count($selectedIds) }}</span>
+                    {{ __('main.selected') }}: <span class="badge badge-primary" x-text="$wire.selectedIds.length"></span>
                 </span>
 
                 <div x-data="{
@@ -40,7 +39,7 @@
                             cancelButtonText: '{{ __('main.no') }}'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                @this.call('deleteSelected');
+                                $wire.call('deleteSelected');
                             }
                         })
                     }
@@ -50,14 +49,15 @@
                         <i class="fas fa-trash me-1"></i>
                         {{ __('main.delete') }}
                     </button>
-                    <button type="button" wire:click.prevent="clearSelected"
+                    <button type="button" @click.prevent="$wire.selectedIds = []"
                         class="kt-btn kt-btn-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
                         <i class="fas fa-times me-1"></i>
                         {{ __('main.cancel_selection') }}
                     </button>
                 </div>
             </div>
-        @endif
+        </div>
+
         @if ($view == 'grid')
             <div class="kt-cards p-4" wire:key="{{ $view ? $view : '' }}-view">
                 <div class="inline-flex text-nowrap items-center gap-2 text-center mb-2 cursor-pointer">
@@ -111,7 +111,7 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
+            
         @else
             <div wire:key="{{ $view ? $view : '' }}-view" data-kt-datatable="true" data-kt-datatable-state-save="false"
                 id="team_crew_table">
@@ -133,3 +133,4 @@
         @endif
     </div>
 </div>
+

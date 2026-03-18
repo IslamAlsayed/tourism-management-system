@@ -77,6 +77,16 @@ class TourGuide extends Model
         });
     }
 
+    public function getSearchableRelations(): array
+    {
+        return [
+            'currency' => ['uuid', 'name', 'name_ar', 'name_en', 'code', 'symbol', 'exchange_rate', 'is_auto_update', 'decimal_places', 'is_active', 'is_major_currency', 'is_base_currency', 'sort_order'],
+            'guide_type' => ['uuid', 'type', 'price', 'all_states', 'all_cities', 'is_active', 'description', 'notes'],
+            'country' => ['name', 'name_en', 'name_ar', 'iso2', 'iso3', 'phone_code', 'capital', 'currency', 'currency_name', 'currency_symbol', 'tld', 'native', 'region', 'subregion', 'nationality', 'latitude', 'longitude', 'is_active', 'language_id', 'currency_id', 'region_id', 'subregion_id', 'description', 'notes'],
+            'state' => ['name', 'name_en', 'name_ar', 'state_code', 'latitude', 'longitude', 'is_active', 'description', 'notes'],
+            'city' => ['name', 'name_en', 'name_ar', 'latitude', 'longitude', 'is_active', 'description', 'notes', 'population'],
+        ];
+    }
 
     public function getRelationshipNames()
     {

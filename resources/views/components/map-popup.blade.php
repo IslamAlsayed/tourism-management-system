@@ -15,7 +15,7 @@
         <div class="bg-background flex flex-col w-full h-full text-current">
             <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
                 <h5 class="font-medium text-lg leading-none" x-text="title"></h5>
-                <button class="btn btn-sm btn-icon btn-active-light-primary text-gray-500 hover:text-primary transition-colors" @click="$dispatch('close-modal', 'generic-map-modal')">
+                <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-light kt-btn-primary text-gray-500 hover:text-primary transition-colors" @click="$dispatch('close-modal', 'generic-map-modal')">
                     <i class="ki-filled ki-cross text-xl"></i>
                 </button>
             </div>

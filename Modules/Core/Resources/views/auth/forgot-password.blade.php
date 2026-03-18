@@ -38,12 +38,19 @@
             <div class="kt-card max-w-[370px] w-full border-0 shadow-none bg-transparent">
                 <div class="flex justify-center mb-10">
                     <a href="{{ url('/') }}">
-                        <img class="dark:hidden max-w-none"
-                            src="{{ asset('metronic/media/app/mixjo-default-logo-dark.svg') }}"
-                            style="height: 100px !important; min-height: 100px !important; width: auto !important; object-fit: contain !important;" />
-                        <img class="hidden dark:block max-w-none"
-                            src="{{ asset('metronic/media/app/mixjo-default-logo.svg') }}"
-                            style="height: 100px !important; min-height: 100px !important; width: auto !important; object-fit: contain !important;" />
+                        @php
+                            $settings = \Modules\Core\Entities\Setting::first();
+                            $aWidth = optional($settings)->auth_logo_width ?? '150px';
+                            if (is_numeric($aWidth)) { $aWidth .= 'px'; }
+                            $aHeight = optional($settings)->auth_logo_height ?? 'auto';
+                            if (is_numeric($aHeight)) { $aHeight .= 'px'; }
+                        @endphp
+                        <img class="dark:hidden max-w-full transition-all duration-300 object-contain"
+                            src="{{ optional($settings)->app_dark_photo ? asset('storage/' . $settings->app_dark_photo) : asset('metronic/media/app/mixjo-default-logo-dark.svg') }}"
+                            style="width: {{ $aWidth }} !important; height: {{ $aHeight }} !important; min-height: {{ $aHeight }} !important;" />
+                        <img class="hidden dark:block max-w-full transition-all duration-300 object-contain"
+                            src="{{ optional($settings)->app_light_photo ? asset('storage/' . $settings->app_light_photo) : asset('metronic/media/app/mixjo-default-logo.svg') }}"
+                            style="width: {{ $aWidth }} !important; height: {{ $aHeight }} !important; min-height: {{ $aHeight }} !important;" />
                     </a>
                 </div>
                 <form action="{{ route('password.email') }}" class="kt-card-content flex flex-col gap-5 p-10"

@@ -1,4 +1,4 @@
-@switch($column)
+﻿@switch($column)
     @case('id')
         <td title="{{ $model->id }}">
             @if(isset($rowIndex))
@@ -72,7 +72,7 @@
         <td title="{{ $model->name }}">
             <div class="flex items-center gap-2.5">
                 <img src="{{ $model->photo ? asset('storage/' . $model->photo) : asset('metronic/media/avatars/blank.png') }}"
-                    alt="{{ $model->name }}" class="rounded-full size-9 shrink-0">
+                    alt="{{ $model->name }}" class="rounded-full w-6 h-6" style="width: 24px; height: 24px; min-width: 24px; shrink-0">
                 <div class="flex flex-col">
                     <a class="text-sm font-medium text-mono hover:text-primary mb-px" href="#">
                         {!! highlightSearch($model->name ?? '--', $search) !!}
@@ -90,33 +90,33 @@
             <div class="relative w-fit">
                 @if ($model->photo && checkExistFile($model->photo))
                     <img src="{{ asset('storage/' . $model->photo) }}" alt="{{ $model->name }}"
-                        class="rounded-full size-9 shrink-0">
+                        class="rounded-full w-6 h-6" style="width: 24px; height: 24px; min-width: 24px; shrink-0">
                 @elseif (!empty($model->emoji))
                     {{-- Show flag emoji as avatar fallback for countries --}}
                     @if(!empty($model->iso2))
-                        <div class="flex items-center justify-center size-9 shrink-0 select-none overflow-hidden rounded-full shadow-sm bg-gray-50 border border-gray-100 dark:border-gray-800" title="{{ $model->emoji }}">
+                        <div class="flex items-center justify-center w-6 h-6" style="width: 24px; height: 24px; min-width: 24px; shrink-0 select-none overflow-hidden rounded-full shadow-sm bg-gray-50 border border-gray-100 dark:border-gray-800" title="{{ $model->emoji }}">
                             <img src="{{ asset('assets/media/flags/' . strtolower($model->iso2) . '.svg') }}" alt="{{ $model->emoji }}" class="w-full h-full object-cover" loading="lazy">
                         </div>
                     @else
-                        <div class="flex items-center justify-center size-9 rounded-full bg-gray-100 dark:bg-gray-700 text-2xl shrink-0 select-none leading-none"
+                        <div class="flex items-center justify-center w-6 h-6" style="width: 24px; height: 24px; min-width: 24px; rounded-full bg-gray-100 dark:bg-gray-700 text-lg shrink-0 select-none leading-none"
                             title="{{ $model->emoji }}">
                             {{ $model->emoji }}
                         </div>
                     @endif
                 @elseif (!empty($model->flag_emoji))
                     @if(!empty($model->iso2))
-                        <div class="flex items-center justify-center size-9 shrink-0 select-none overflow-hidden rounded-full shadow-sm bg-gray-50 border border-gray-100 dark:border-gray-800" title="{{ $model->flag_emoji }}">
+                        <div class="flex items-center justify-center w-6 h-6" style="width: 24px; height: 24px; min-width: 24px; shrink-0 select-none overflow-hidden rounded-full shadow-sm bg-gray-50 border border-gray-100 dark:border-gray-800" title="{{ $model->flag_emoji }}">
                             <img src="{{ asset('assets/media/flags/' . strtolower($model->iso2) . '.svg') }}" alt="{{ $model->flag_emoji }}" class="w-full h-full object-cover" loading="lazy">
                         </div>
                     @else
-                        <div class="flex items-center justify-center size-9 rounded-full bg-gray-100 dark:bg-gray-700 text-2xl shrink-0 select-none leading-none"
+                        <div class="flex items-center justify-center w-6 h-6" style="width: 24px; height: 24px; min-width: 24px; rounded-full bg-gray-100 dark:bg-gray-700 text-lg shrink-0 select-none leading-none"
                             title="{{ $model->flag_emoji }}">
                             {{ $model->flag_emoji }}
                         </div>
                     @endif
                 @else
                     <img src="{{ asset('metronic/media/avatars/blank.png') }}" alt="{{ $model->name }}"
-                        class="rounded-full size-9 shrink-0">
+                        class="rounded-full w-6 h-6" style="width: 24px; height: 24px; min-width: 24px; shrink-0">
                 @endif
                 @if (isset($models) && $models && $models == 'users')
                     <span
@@ -133,9 +133,9 @@
             @if ($flagValue)
                 <div class="flex items-center gap-2">
                     @if(!empty($model->iso2))
-                        <img src="{{ asset('assets/media/flags/' . strtolower($model->iso2) . '.svg') }}" alt="{{ $flagValue }}" class="h-[24px]" title="{{ $model->iso2 }}" loading="lazy">
+                        <img src="{{ asset('assets/media/flags/' . strtolower($model->iso2) . '.svg') }}" alt="{{ $flagValue }}" class="h-4" style="height: 16px; width: auto;" title="{{ $model->iso2 }}" loading="lazy">
                     @else
-                        <span class="text-3xl leading-none select-none" title="{{ $model->iso2 ?? '' }}">{{ $flagValue }}</span>
+                        <span class="text-xl leading-none select-none" title="{{ $model->iso2 ?? '' }}">{{ $flagValue }}</span>
                     @endif
                     @if (!empty($model->iso2))
                         <span class="text-xs font-mono text-gray-400">{{ $model->iso2 }}</span>
@@ -156,10 +156,10 @@
                 @if (Str::isUrl($model->main_image))
                     <img src="{{ $model->main_image }}"
                         alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}"
-                        class="rounded-full size-9 shrink-0">
+                        class="rounded-full w-6 h-6" style="width: 24px; height: 24px; min-width: 24px; shrink-0">
                 @else
                     <img src="{{ $model->main_image && checkExistFile($model->main_image) ? asset('storage/' . $model->main_image) : asset('metronic/media/avatars/blank.png') }}"
-                        alt="{{ $model->main_image }}" class="rounded-full size-9 shrink-0">
+                        alt="{{ $model->main_image }}" class="rounded-full w-6 h-6" style="width: 24px; height: 24px; min-width: 24px; shrink-0">
                 @endif
             </div>
         </td>
@@ -177,7 +177,7 @@
                             @endif
                             <img src="{{ $image && checkExistFile($image) ? asset('storage/' . $image) : asset('metronic/media/avatars/blank.png') }}"
                                 alt="{{ $image }}"
-                                class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
+                                class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background w-7 h-7" style="width: 28px; height: 28px; min-width: 28px;">
                         @endforeach
                         @if (count($model->gallery) > 5)
                             <div
@@ -212,11 +212,11 @@
                             @if (Str::isUrl($image->file_path))
                                 <img src="{{ $image->file_path }}"
                                     alt="{{ $model->name ?? ($model->code ?? ($model->type?->name ?? '')) }}"
-                                    class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
+                                    class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background w-7 h-7" style="width: 28px; height: 28px; min-width: 28px;">
                             @else
                                 <img src="{{ $image->file_path && checkExistFile($image->file_path) ? asset('storage/' . $image->file_path) : asset('metronic/media/avatars/blank.png') }}"
                                     alt="{{ $image->file_path }}"
-                                    class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background size-10">
+                                    class="hover:z-5 relative shrink-0 rounded-full ring-1 ring-background w-7 h-7" style="width: 28px; height: 28px; min-width: 28px;">
                             @endif
                         @endforeach
                         @if (count($galleryImages) > 5)
@@ -290,7 +290,7 @@
                 @endif
                 
                 @if(isset($models) && $models === 'dashboard.core.pricing-definitions' && (getActiveUser()->hasRole('superadmin') || getActiveUser()->can('update', $model)))
-                    <button type="button" wire:click="openQuickEdit({{ $model->id }})" class="btn btn-icon btn-sm btn-light-primary ms-1" title="{{ __('main.quick_edit') }}">
+                    <button type="button" wire:click="openQuickEdit({{ $model->id }})" class="kt-btn kt-btn-icon kt-btn-sm kt-btn-ghost ms-1" title="{{ __('main.quick_edit') }}">
                         <i class="ki-outline ki-pencil fs-6"></i>
                     </button>
                 @endif
@@ -313,7 +313,7 @@
             <div class="flex items-center gap-2">
                 <span>{!! highlightSearch($model->latitude ?? '--', $search) !!}</span>
                 @if($model->latitude && $model->longitude)
-                    <button type="button" class="btn btn-icon btn-sm btn-light-primary" 
+                    <button type="button" class="kt-btn kt-btn-icon kt-btn-sm kt-btn-ghost" 
                         x-data 
                         @click="$dispatch('open-map-modal', { lat: '{{ $model->latitude }}', lng: '{{ $model->longitude }}', title: {{ Js::from($model->name ?? $model->title ?? __('main.location')) }} })"
                         title="{{ __('main.view_on_map') }}">
@@ -329,7 +329,7 @@
             <div class="flex items-center gap-2">
                 <span>{!! highlightSearch($model->longitude ?? '--', $search) !!}</span>
                 @if($model->latitude && $model->longitude)
-                    <button type="button" class="btn btn-icon btn-sm btn-light-primary" 
+                    <button type="button" class="kt-btn kt-btn-icon kt-btn-sm kt-btn-ghost" 
                         x-data 
                         @click="$dispatch('open-map-modal', { lat: '{{ $model->latitude }}', lng: '{{ $model->longitude }}', title: {{ Js::from($model->name ?? $model->title ?? __('main.location')) }} })"
                         title="{{ __('main.view_on_map') }}">
@@ -3449,42 +3449,76 @@
     @break
 
     @case('created_by')
-        <td title="{{ optional($model->created_by)->name ?: '' }}">
-            <a href="{{ route('dashboard.core.users.show', $model->created_by->id) }}"
+        @php
+            $createdByUser = method_exists($model, 'creator') ? $model->creator : null;
+            if (!$createdByUser && $model->getRawOriginal('created_by')) {
+                $createdByUser = \Modules\Core\Entities\User::find($model->getRawOriginal('created_by'));
+            }
+        @endphp
+        <td title="{{ optional($createdByUser)->name ?: '' }}">
+            @if($createdByUser)
+            <a href="{{ route('dashboard.core.users.show', $createdByUser->id) }}"
                 class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! highlightSearch(limitedText(optional($model->created_by)->name ?? '--', 30), $search) !!}
+                {!! highlightSearch(limitedText($createdByUser->name ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
+            @else
+                <span class="text-secondary-foreground text-xs">â€”</span>
+            @endif
         </td>
     @break
 
     @case('createdBy')
-        <td title="{{ optional($model->createdBy)->name ?: '' }}">
-            <a href="{{ route('dashboard.core.users.show', $model->createdBy->id) }}"
+        @php
+            $createdByUser2 = method_exists($model, 'creator') ? $model->creator : (method_exists($model, 'createdBy') ? $model->createdBy : null);
+        @endphp
+        <td title="{{ optional($createdByUser2)->name ?: '' }}">
+            @if($createdByUser2)
+            <a href="{{ route('dashboard.core.users.show', $createdByUser2->id) }}"
                 class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! highlightSearch(limitedText(optional($model->createdBy)->name ?? '--', 30), $search) !!}
+                {!! highlightSearch(limitedText($createdByUser2->name ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
+            @else
+                <span class="text-secondary-foreground text-xs">â€”</span>
+            @endif
         </td>
     @break
 
     @case('updated_by')
-        <td title="{{ optional($model->updated_by)->name ?: '' }}">
-            <a href="{{ route('dashboard.core.users.show', $model->updated_by->id) }}"
+        @php
+            $updatedByUser = method_exists($model, 'updater') ? $model->updater : null;
+            if (!$updatedByUser && $model->getRawOriginal('updated_by')) {
+                $updatedByUser = \Modules\Core\Entities\User::find($model->getRawOriginal('updated_by'));
+            }
+        @endphp
+        <td title="{{ optional($updatedByUser)->name ?: '' }}">
+            @if($updatedByUser)
+            <a href="{{ route('dashboard.core.users.show', $updatedByUser->id) }}"
                 class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! highlightSearch(limitedText(optional($model->updated_by)->name ?? '--', 30), $search) !!}
+                {!! highlightSearch(limitedText($updatedByUser->name ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
+            @else
+                <span class="text-secondary-foreground text-xs">â€”</span>
+            @endif
         </td>
     @break
 
     @case('updatedBy')
-        <td title="{{ optional($model->updatedBy)->name ?: '' }}">
-            <a href="{{ route('dashboard.core.users.show', $model->createdBy->id) }}"
+        @php
+            $updatedByUser2 = method_exists($model, 'updater') ? $model->updater : (method_exists($model, 'updatedBy') ? $model->updatedBy : null);
+        @endphp
+        <td title="{{ optional($updatedByUser2)->name ?: '' }}">
+            @if($updatedByUser2)
+            <a href="{{ route('dashboard.core.users.show', $updatedByUser2->id) }}"
                 class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded-[7px] ms-2">
-                {!! highlightSearch(limitedText(optional($model->createdBy)->name ?? '--', 30), $search) !!}
+                {!! highlightSearch(limitedText($updatedByUser2->name ?? '--', 30), $search) !!}
                 <i class="fa-duotone fa-solid fa-arrow-up-right-from-square text-primary ms-1"></i>
             </a>
+            @else
+                <span class="text-secondary-foreground text-xs">â€”</span>
+            @endif
         </td>
     @break
 
@@ -3665,3 +3699,6 @@
 </td>
 @endif --}}
 @endswitch
+
+
+

@@ -32,28 +32,19 @@ class State extends Model
         'longitude',
         'photo',
         'is_active',
-        'is_independent',
-        'is_developed',
-        'is_landlocked',
         'description',
         'notes',
-        'timezone_id',
         'country_id',
     ];
 
     public function getRelationshipNames()
     {
-        return ['timezone', 'country', 'city', 'cities', 'accommodations', 'restaurants', 'transportationCompanies'];
+        return ['country', 'cities', 'accommodations', 'restaurants', 'transportationCompanies'];
     }
 
     public function getExcludedColumns()
     {
-        return ['timezone_id', 'country_id', 'description', 'notes'];
-    }
-
-    public function timezone()
-    {
-        return $this->belongsTo(Timezone::class);
+        return ['country_id', 'description', 'notes'];
     }
 
     public function country()

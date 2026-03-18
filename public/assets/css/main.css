@@ -1241,15 +1241,56 @@ html.dark {
 
 /* styling scrollbar */
 .top-scroll::-webkit-scrollbar {
-    height: 6px;
+    height: 7px;
+    transition: height 0.2s ease;
 }
 
 .top-scroll::-webkit-scrollbar-thumb {
     border-radius: 10px;
+    background: linear-gradient(90deg, #f97316, #fb923c);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.top-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #ea580c, #f97316);
 }
 
 .top-scroll::-webkit-scrollbar-track {
-    background: #eee;
+    background: rgba(249, 115, 22, 0.08);
+    border-radius: 10px;
+}
+
+.kt-scrollable-x-auto::-webkit-scrollbar {
+    height: 7px !important;
+    transition: height 0.2s ease;
+}
+
+.kt-scrollable-x-auto::-webkit-scrollbar-thumb {
+    border-radius: 10px !important;
+    background: linear-gradient(90deg, #1379f0, #0b55a8) !important;
+    background-color: #1379f0 !important;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.15) !important;
+}
+
+.kt-scrollable-x-auto::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #0b55a8, #0a468c) !important;
+    background-color: #0b55a8 !important;
+}
+
+.kt-scrollable-x-auto::-webkit-scrollbar-track {
+    background: rgba(19, 121, 240, 0.08) !important;
+    background-color: rgba(19, 121, 240, 0.08) !important;
+    border-radius: 10px !important;
+}
+
+.kt-scrollable-x-auto {
+    scrollbar-color: #1379f0 rgba(19, 121, 240, 0.08) !important;
+}
+
+/* Hide the scrollbar container completely when not needed */
+.top-scroll.no-overflow {
+    height: 0 !important;
+    overflow: hidden !important;
 }
 
 /* ============================================

@@ -22,7 +22,7 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $tourGuideId = $this->route('tour_guide'); // Get ID from route
+        $tourGuideId = $this->route('guide'); // Get ID from route using correct parameter name
 
         return [
             'name' => ['nullable', 'string', 'max:255'],

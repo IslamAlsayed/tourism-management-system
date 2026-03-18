@@ -145,9 +145,9 @@
                 </div>
                 <div class="space-y-1">
                     <label for="date-from"
-                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_from') }}</label>
+                        class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2 inline-block">{{ __('activity.activity_date_from') }}</label>
                     <div class="relative group">
-                        <input id="date-from" type="datetime-local" class="kt-input h-[45px] pe-10 font-bold text-blue-700 bg-blue-50/30 border-blue-100 hover:border-blue-400 focus:ring-blue-500/20" wire:model.live="dateFrom">
+                        <input id="date-from" type="datetime-local" class="kt-input h-[45px] pe-10 font-bold text-blue-700 dark:text-blue-400 bg-blue-50/30 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800 hover:border-blue-400 focus:ring-blue-500/20" wire:model.live="dateFrom">
                         @if($dateFrom)
                             <button wire:click="$set('dateFrom', null)" class="absolute end-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-danger p-1">
                                 <i class="fas fa-times-circle"></i>
@@ -160,9 +160,9 @@
                 </div>
                 <div class="space-y-1">
                     <label for="date-to"
-                        class="text-sm font-medium text-gray-600 mb-2 inline-block">{{ __('activity.activity_date_to') }}</label>
+                        class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2 inline-block">{{ __('activity.activity_date_to') }}</label>
                     <div class="relative group">
-                        <input id="date-to" type="datetime-local" class="kt-input h-[45px] pe-10 font-bold text-blue-700 bg-blue-50/30 border-blue-100 hover:border-blue-400 focus:ring-blue-500/20" wire:model.live="dateTo">
+                        <input id="date-to" type="datetime-local" class="kt-input h-[45px] pe-10 font-bold text-blue-700 dark:text-blue-400 bg-blue-50/30 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800 hover:border-blue-400 focus:ring-blue-500/20" wire:model.live="dateTo">
                         @if($dateTo)
                             <button wire:click="$set('dateTo', null)" class="absolute end-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-danger p-1">
                                 <i class="fas fa-times-circle"></i>
@@ -201,7 +201,7 @@
                                     cancelButtonText: '{{ __('main.no') }}'
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        @this.call('clearLog', '{{ $filterLog }}');
+                                        $wire.call('clearLog', '{{ $filterLog }}');
                                     }
                                 })
                             }
@@ -225,7 +225,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('clearAll');
+                                    $wire.call('clearAll');
                                 }
                             })
                         }
@@ -241,13 +241,13 @@
 
         {{-- Selected Activity --}}
         @if (!empty($selectedActivity))
-            <div class="rounded-lg border border-blue-200 bg-blue-50 mb-4 p-4"
+            <div class="rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20 mb-4 p-4"
                 wire:target="selectedActivity,closeDetails" wire:loading.class="loading">
                 <div class="flex items-center justify-between gap-2 activity-details-header">
-                    <h3 class="text-sm font-semibold text-blue-900">{{ __('activity.activity_selected_title') }}
+                    <h3 class="text-sm font-semibold text-blue-900 dark:text-blue-300">{{ __('activity.activity_selected_title') }}
                     </h3>
                     <button type="button" wire:click="closeDetails" toggle-button
-                        class="kt-btn bg-danger text-xs text-white font-medium text-blue-700 cursor-pointer hover:underline h-[26px]">
+                        class="kt-btn bg-danger text-xs text-white font-medium cursor-pointer hover:opacity-90 h-[26px]">
 
                         @if (isset(getActiveUser()->button_display_mode) && getActiveUser()->button_display_mode === 'text')
                             {!! $text ?? __('main.close') !!}
@@ -259,7 +259,7 @@
                         @endif
                     </button>
                 </div>
-                <dl class="mt-3 space-y-1 text-xs text-blue-900">
+                <dl class="mt-3 space-y-1 text-xs text-blue-900 dark:text-blue-300">
                     <div class="grid grid-cols-2 gap-2">
                         <div class="flex items-center justify-between">
                             <dt>{{ __('activity.activity_id') }}</dt>
@@ -295,13 +295,13 @@
                         @endif
                     </div>
                 </dl>
-                <div class="mt-3 rounded bg-blue-100 p-3 text-xs text-blue-900">
+                <div class="mt-3 rounded bg-blue-100 dark:bg-blue-900/40 p-3 text-xs text-blue-900 dark:text-blue-300">
                     <p class="font-semibold">{{ __('activity.activity_description') }}</p>
                     <p class="mt-1 whitespace-pre-wrap">{{ $selectedActivity['description'] }}</p>
                 </div>
                 <div class="mt-3">
-                    <p class="text-xs font-semibold text-blue-900">{{ __('activity.activity_properties') }}</p>
-                    <pre class="mt-2 max-h-48 overflow-auto rounded bg-white/70 p-3 text-[11px] text-blue-900">
+                    <p class="text-xs font-semibold text-blue-900 dark:text-blue-300">{{ __('activity.activity_properties') }}</p>
+                    <pre class="mt-2 max-h-48 overflow-auto rounded bg-white/70 dark:bg-gray-800/70 p-3 text-[11px] text-blue-900 dark:text-blue-300">
                             {{ json_encode($selectedActivity['properties'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) }}
                         </pre>
                 </div>
@@ -314,14 +314,14 @@
             <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
                 <div class="kt-scrollable-x-auto">
                     <table class="kt-table table-auto text-nowrap">
-                        <thead class="bg-gray-50">
+                        <thead class="bg-gray-50 dark:bg-gray-800/50">
                             <tr>
                                 {{-- <th scope="col" class="px-3 py-2">
                                     <input type="checkbox" class="kt-checkbox" wire:model.live="selectPage">
                                 </th> --}}
                                 <th wire:click="sortBy('id')" scope="col"
                                     title="{{ __('main.sort_by') }} {{ __('main.id') }}"
-                                    class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 cursor-pointer hover:bg-gray-100">
+                                    class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
                                     {{ __('main.id') }}
                                     <i class="fas {{ $this->getSortIcon('id') }} ms-2"
                                         style="font-size: 14px; {{ $this->isSortedBy('id') ? 'color: #3b82f6;' : '' }}"></i>
@@ -331,7 +331,7 @@
                                         <th wire:key="filterColumns-{{ $column['key'] }}"
                                             wire:click="sortBy('{{ $column['key'] }}')" scope="col"
                                             title="{{ __('main.sort_by') }} {{ __($column['label']) }}"
-                                            class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 cursor-pointer hover:bg-gray-100">
+                                            class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
                                             {{ __($column['label']) }}
                                             <i class="fas {{ $this->getSortIcon($column['key']) }} ms-2"
                                                 style="font-size: 14px; {{ $this->isSortedBy($column['key']) ? 'color: #3b82f6;' : '' }}"></i>
@@ -339,25 +339,25 @@
                                     @endforeach
                                 @endif
                                 <th scope="col"
-                                    class="px-3 py-2 text-right text-xs font-semibold uppercase tracking-wide text-gray-500 w-[120px]">
+                                    class="px-3 py-2 text-right text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 w-[120px]">
                                     {{ __('main.actions') }}
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 background">
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700 background">
                             @forelse ($data as $activity)
                                 @php $badgeClass = badgeClasses($activity->event); @endphp
-                                <tr wire:key="activity-{{ $activity->id }}" class="hover:bg-gray-50">
-                                    <td class="px-3 py-2">{!! highlightSearch($activity->id, $search) !!}</td>
+                                <tr wire:key="activity-{{ $activity->id }}" class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                    <td class="px-3 py-2 text-gray-800 dark:text-gray-200">{!! highlightSearch($activity->id, $search) !!}</td>
                                     {{-- <td class="px-3 py-2">
                                         <input type="checkbox" class="kt-checkbox" wire:model.live="selectedIds"
                                             value="{{ $activity->id }}">
                                     </td> --}}
-                                    <td class="px-3 py-2 text-sm text-gray-600">
+                                    <td class="px-3 py-2 text-sm text-gray-600 dark:text-gray-400">
                                         <div>
                                             {{ $activity->created_at?->format('Y-m-d H:i:s') }}
                                         </div>
-                                        <div class="text-xs text-gray-500">
+                                        <div class="text-xs text-gray-500 dark:text-gray-500">
                                             {{ $activity->created_at?->diffForHumans() }}
                                         </div>
                                     </td>
@@ -367,35 +367,35 @@
                                             {!! highlightSearch(__('activity.event_' . ($activity->event ?? 'unknown')), $search) !!}
                                         </span>
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-600">
+                                    <td class="px-3 py-2 text-sm text-gray-600 dark:text-gray-400">
                                         <span class="bg-gray-100 dark:bg-gray-700/50 px-2 py-1 rounded text-[11px] font-bold text-gray-700 dark:text-gray-300">
                                             {!! highlightSearch($activity->log_name === 'models' ? __('activity.users_activity') : ucfirst($activity->log_name), $search) !!}
                                         </span>
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-600">
+                                    <td class="px-3 py-2 text-sm text-gray-600 dark:text-gray-400">
                                         @if ($activity->causer)
                                             <div>{!! highlightSearch($activity->causer->name ?? $activity->causer->email, $search) !!}</div>
                                             @if ($activity->causer->email)
-                                                <div class="text-xs text-gray-500">
+                                                <div class="text-xs text-gray-500 dark:text-gray-500">
                                                     {!! highlightSearch($activity->causer->email, $search) !!}
                                                 </div>
                                             @endif
                                         @else
                                             <span
-                                                class="text-xs text-gray-400">{{ __('activity.system_generated') }}</span>
+                                                class="text-xs text-gray-400 dark:text-gray-500">{{ __('activity.system_generated') }}</span>
                                         @endif
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-600">
+                                    <td class="px-3 py-2 text-sm text-gray-600 dark:text-gray-400">
                                         <div class="flex flex-col gap-1">
                                             <span class="font-bold text-gray-800 dark:text-gray-200">
                                                 {!! highlightSearch(class_basename($activity->subject_type), $search) !!}
                                             </span>
-                                            <span class="text-[11px] font-mono bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded-sm self-start">
+                                            <span class="text-[11px] font-mono bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded-sm self-start">
                                                 #{!! highlightSearch($activity->subject_id, $search) !!}
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="px-3 py-2 text-sm text-gray-600"
+                                    <td class="px-3 py-2 text-sm text-gray-600 dark:text-gray-400"
                                         title="{{ activityMessageSummary($activity, 1000) }}">
                                         <div style="text-wrap: wrap; line-height: 1.5;">
                                             {!! highlightSearch(activityMessageSummary($activity, 200), $search) !!}
@@ -475,7 +475,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('deleteSelected');
+                                    $wire.call('deleteSelected');
                                 }
                             })
                         }
@@ -516,3 +516,4 @@
         });
     </script>
 @endpush
+

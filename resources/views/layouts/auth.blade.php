@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="h-full" data-kt-theme="true" data-kt-theme-mode="{{ config('app.app_theme', 'light') }}"
-    dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" lang="{{ app()->getLocale() }}">
+    dir="{{ getLocaleDirection() }}" lang="{{ app()->getLocale() }}">
 
 <head>
     <title>@yield('title', 'MixJo Tourism')</title>
@@ -22,6 +22,10 @@
 
     {{-- Page-specific styles --}}
     @stack('styles')
+    {{-- Custom RTL Fixes --}}
+    @if(getLocaleDirection() === 'rtl')
+        <link href="{{ asset('css/custom-rtl.css') }}" rel="stylesheet" />
+    @endif
 </head>
 
 <body class="antialiased flex h-full text-base text-foreground bg-background">

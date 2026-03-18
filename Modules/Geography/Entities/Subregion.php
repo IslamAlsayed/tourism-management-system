@@ -31,7 +31,8 @@ class Subregion extends Model
 
     public function getRelationshipNames()
     {
-        return ['region', 'countries', 'accommodations', 'restaurants', 'transportationCompanies'];
+        // Only include proper Eloquent relationships (not multi-level through queries)
+        return ['region', 'countries', 'states'];
     }
 
     public function getExcludedColumns()
@@ -54,9 +55,17 @@ class Subregion extends Model
         return $this->hasManyThrough(State::class, Country::class);
     }
 
+    /**
+     * Cities accessible via states.country chain.
+     * NOTE: Not a standard Eloquent relation - do NOT include in getRelationshipNames()
+     */
     public function cities()
     {
-        return $this->hasManyThrough(City::class, Country::class);
+        return City::whereHas('state', function ($q) {
+            $q->whereHas('country', function ($q2) {
+                $q2->where('subregion_id', $this->id);
+            });
+        });
     }
 
     public function accommodations()

@@ -2,6 +2,10 @@
     @component('includes.pagination-info', [
         'data' => $data,
         'columns' => $columns ?? [],
+        'allColumns' => $allColumns ?? [],
+        'pendingColumns' => $pendingColumns ?? [],
+        'relations' => $relations ?? [],
+        'hasCustomColumns' => $hasCustomColumns ?? false,
         'title' => __('main.system_languages'),
         'entityName' => __('main.language'),
         'sortField' => $sortField ?? null,
@@ -20,11 +24,10 @@
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,exportSelectedPDF,exportSelectedExcel,toggleGridLength">
 
         {{-- Bulk Action Buttons --}}
-        @if (!empty($selectedIds) && count($selectedIds) > 0)
-            <div
+        <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0"
                 class="mb-4 flex flex-shrink flex-wrap items-center gap-2 px-1 bg-gray-50 p-3 rounded-lg border border-gray-200 shadow-sm">
                 <span class="text-sm font-medium text-gray-700 me-2 p-2 bg-white rounded border border-gray-300">
-                    {{ __('main.selected') }}: <span class="badge badge-primary">{{ count($selectedIds) }}</span>
+                    {{ __('main.selected') }}: <span class="badge badge-primary" x-text="$wire.selectedIds.length"></span>
                 </span>
 
                 <div x-data="{
@@ -40,24 +43,35 @@
                             cancelButtonText: '{{ __('main.no') }}'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                @this.call('deleteSelected');
+                                $wire.call('deleteSelected');
                             }
                         })
                     }
                 }" class="flex flex-wrap gap-2 items-center">
+                    <button type="button" wire:click.prevent="bulkActivate"
+                        class="kt-btn kt-btn-sm text-white bg-green-600 hover:bg-green-700 transition-colors">
+                        <i class="fas fa-check me-1"></i>
+                        {{ __('main.activate') }}
+                    </button>
+                    <button type="button" wire:click.prevent="bulkDeactivate"
+                        class="kt-btn kt-btn-sm text-white bg-yellow-500 hover:bg-yellow-600 transition-colors">
+                        <i class="fas fa-ban me-1"></i>
+                        {{ __('main.deactivate') }}
+                    </button>
                     <button type="button" x-on:click.prevent="confirmDelete"
                         class="kt-btn kt-btn-sm text-white bg-red-600 hover:bg-red-700 transition-colors">
                         <i class="fas fa-trash me-1"></i>
                         {{ __('main.delete') }}
                     </button>
-                    <button type="button" wire:click.prevent="clearSelected"
-                        class="kt-btn kt-btn-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                    <button type="button" @click.prevent="$wire.selectedIds = []"
+                        class="kt-btn kt-btn-sm text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors border border-gray-300">
                         <i class="fas fa-times me-1"></i>
-                        {{ __('main.cancel_selection') }}
+                        {{ __('main.clear_all') }}
                     </button>
                 </div>
             </div>
-        @endif
+        </div>
+
         @if ($view == 'grid')
             <div class="kt-cards p-4" wire:key="{{ $view ? $view : '' }}-view">
                 <div class="inline-flex text-nowrap items-center gap-2 text-center mb-2 cursor-pointer">
@@ -78,35 +92,101 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap gap-4 mb-4">
+                <div class="flex flex-wrap gap-4 mb-4" id="sortable-languages-grid">
                     @foreach ($data as $language)
-                        <div wire:key="{{ $language->id }}"
-                            style="width: calc((100% / {{ $gridLength }}) - {{ (($gridLength - 1) * 16) / $gridLength }}px)"
-                            class="kt-card text-center p-4 rounded-lg shadow-sm {{ getCurrentLocale() == $language->code ? 'bg-gray-100 border-2 border-green-500' : 'hover:bg-gray-100' }}">
-                            <span class="text-start">
+                        <div wire:key="{{ $language->id }}" 
+                             data-id="{{ $language->id }}"
+                             style="width: calc((100% / {{ $gridLength }}) - {{ (($gridLength - 1) * 16) / $gridLength }}px)"
+                             class="kt-card relative flex flex-col justify-between p-0 rounded-lg shadow-sm {{ getCurrentLocale() == $language->code ? 'border border-primary bg-primary-light' : 'hover:shadow-md transition-shadow' }}">
+                            
+                            {{-- Drag Handle & Checkbox --}}
+                            <div class="absolute top-3 right-3 flex items-center gap-2 z-10">
                                 @include('components.elements.checkbox-button', [
                                     'name' => 'selectedItems[]',
                                     'id' => 'selectedItems' . $language->id,
                                     'value' => $language->id,
                                 ])
-                            </span>
-                            <div class="kt-card-title">{!! highlightSearch($language->code ?? '--', $search) !!}</div>
-                            <div class="kt-card-body pb-2">
-                                <p>{!! highlightSearch($language->name ?? '--', $search) !!}</p>
-                                @if ($language->name_ar)
-                                    <p>{!! highlightSearch($language->name_ar ?? '--', $search) !!}</p>
-                                @endif
+                                <div class="cursor-move p-1 text-gray-400 hover:text-gray-700 drag-handle" title="{{ __('main.drag_to_reorder') }}">
+                                    <i class="ki-filled ki-burger-menu text-lg"></i>
+                                </div>
                             </div>
-                            <div class="kt-card-footer flex justify-center p-0 pt-2">
-                                <div class="flex justify-center gap-2">
+
+                            {{-- Header section: Avatar + Text --}}
+                            <div class="p-5 flex flex-col items-center justify-center w-full gap-3 mt-4">
+                                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-dashed border-gray-300 flex items-center justify-center p-1">
+                                    @if($language->photo)
+                                        <img src="{{ asset('storage/' . $language->photo) }}" class="w-full h-full rounded-full object-cover" alt="{{ $language->code }} flag">
+                                    @else
+                                        <div class="w-full h-full rounded-full bg-gray-100 flex items-center justify-center text-gray-500 font-bold text-lg uppercase">
+                                            {{ substr($language->code, 0, 2) }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-base font-semibold text-gray-900">{!! highlightSearch($language->name ?? '--', $search) !!}</div>
+                                    <div class="text-sm font-medium text-gray-500 mt-1 uppercase tracking-wider">{!! highlightSearch($language->code ?? '--', $search) !!}</div>
+                                </div>
+                            </div>
+
+                            {{-- Body section: Details (Arabic Name, Native, Dir & Status Toggle) --}}
+                            <div class="px-5 py-3 border-t border-gray-100 flex flex-col gap-2">
+                                @if ($language->name_ar)
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-gray-500">{{ __('main.arabic_name') }}</span>
+                                        <span class="text-sm font-medium">{!! highlightSearch($language->name_ar, $search) !!}</span>
+                                    </div>
+                                @endif
+                                @if ($language->native)
+                                    <div class="flex justify-between items-center mt-1">
+                                        <span class="text-xs text-gray-500">{{ __('main.native_name') }}</span>
+                                        <span class="text-sm font-medium">{!! highlightSearch($language->native, $search) !!}</span>
+                                    </div>
+                                @endif
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-xs text-gray-500">{{ __('main.direction') }}</span>
+                                    <span class="text-sm font-medium uppercase">{{ $language->dir }}</span>
+                                </div>
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-xs text-gray-500">{{ __('main.status') }}</span>
+                                    <label>
+                                        <input class="kt-switch kt-switch-sm" type="checkbox" wire:click="toggleActive({{ $language->id }})" {{ $language->is_active ? 'checked' : '' }} value="1" {{ $language->is_default ? 'disabled' : '' }} />
+                                    </label>
+                                </div>
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-xs text-gray-500">{{ __('main.default_language') }}</span>
+                                    @if ($language->is_default)
+                                        <span class="kt-badge kt-badge-sm kt-badge-warning kt-badge-outline">
+                                            <i class="fas fa-star text-yellow-500 me-1"></i> {{ __('main.default') }}
+                                        </span>
+                                    @else
+                                        <button wire:click="setAsDefault({{ $language->id }})" class="kt-btn kt-btn-xs kt-btn-outline text-gray-500 hover:text-yellow-500 transition-colors" title="{{ __('main.set_as_default') }}">
+                                            <i class="far fa-star"></i>
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Footer section: Actions --}}
+                            <div class="p-4 border-t border-gray-100 bg-gray-50/50 rounded-b-lg flex items-center justify-between gap-2">
+                                <div>
                                     @if (getCurrentLocale() != $language->code)
                                         <a href="{{ route('dashboard.localization.system-languages.change', $language->code) }}"
-                                            class="kt-btn kt-btn-sm kt-btn-outline bg-success text-white">
+                                            class="kt-btn kt-btn-sm kt-btn-light-success px-3">
                                             {{ __('main.active') }}
                                         </a>
+                                    @else
+                                        <span class="kt-badge kt-badge-outline kt-badge-primary kt-badge-sm">
+                                            <i class="ki-filled ki-check-circle me-1"></i> {{ __('main.currently') }}
+                                        </span>
                                     @endif
+                                </div>
+                                <div class="flex gap-1">
+                                    @include('components.elements.show-button', [
+                                        'models' => 'dashboard.localization.system-languages',
+                                        'id' => $language->id,
+                                    ])
                                     @include('components.elements.edit-button', [
-                                        'models' => 'system-languages',
+                                        'models' => 'dashboard.localization.system-languages',
                                         'id' => $language->id,
                                     ])
                                     @include('components.elements.delete-button', [
@@ -114,6 +194,7 @@
                                     ])
                                 </div>
                             </div>
+
                         </div>
                     @endforeach
                 </div>
@@ -126,6 +207,7 @@
                     <table class="kt-table table-auto text-nowrap">
                         <thead>
                             <tr>
+                                <th class="w-10 px-4 py-3 text-center"></th>
                                 <th class="w-[60px] px-4 py-3 text-center">
                                     @include('components.elements.all-checkbox-button', [
                                         'name' => 'selectAllItems',
@@ -138,13 +220,34 @@
                                         {{ __('main.' . $column) }}
                                     </th>
                                 @endforeach
+                                <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('main.status') }}</th>
                                 <th class="px-4 py-3"></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable-languages-table">
                             @foreach ($data as $language)
                                 <tr wire:key="{{ $language->id }}"
+                                    data-id="{{ $language->id }}"
                                     class="{{ getCurrentLocale() == $language->code ? 'bg-gray-100' : 'hover:bg-gray-100' }}">
+                                    <td class="px-4 py-2 text-center align-middle">
+                                        <div class="flex flex-col items-center gap-1">
+                                            @if(!$loop->first)
+                                                <button type="button" wire:click.prevent="moveUp({{ $language->id }})" class="p-1 text-gray-400 hover:text-blue-600 focus:outline-none" title="{{ __('main.move_up') }}">
+                                                    <i class="fas fa-chevron-up text-xs"></i>
+                                                </button>
+                                            @endif
+                                            
+                                            <div class="cursor-move p-1 text-gray-400 hover:text-gray-700 drag-handle" title="{{ __('main.drag_to_reorder') }}">
+                                                <i class="ki-filled ki-burger-menu text-lg"></i>
+                                            </div>
+
+                                            @if(!$loop->last)
+                                                <button type="button" wire:click.prevent="moveDown({{ $language->id }})" class="p-1 text-gray-400 hover:text-blue-600 focus:outline-none" title="{{ __('main.move_down') }}">
+                                                    <i class="fas fa-chevron-down text-xs"></i>
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </td>
                                     <td class="text-center">
                                         @include('components.elements.checkbox-button', [
                                             'name' => 'selectedItems[]',
@@ -153,12 +256,40 @@
                                         ])
                                     </td>
                                     @foreach ($columns as $column)
-                                        @include('components.static-columns', [
-                                            'column' => $column,
-                                            'model' => $language,
-                                            'search' => $search,
-                                        ])
+                                        @if ($column == 'name')
+                                            <td class="px-4 py-2">
+                                                <div class="flex items-center gap-2">
+                                                    @if($language->photo)
+                                                        <img src="{{ asset('storage/' . $language->photo) }}" class="w-6 h-4 rounded shadow-sm object-cover" alt="{{ $language->code }} flag">
+                                                    @endif
+                                                    <span>{!! highlightSearch($language->name, $search) !!}</span>
+                                                </div>
+                                            </td>
+                                        @else
+                                            @include('components.static-columns', [
+                                                'column' => $column,
+                                                'model' => $language,
+                                                'models' => 'system-languages',
+                                                'search' => $search,
+                                            ])
+                                        @endif
                                     @endforeach
+                                    <td class="px-4 py-2">
+                                        <div class="flex items-center gap-2">
+                                            <label>
+                                                <input class="kt-switch kt-switch-sm" type="checkbox" wire:click="toggleActive({{ $language->id }})" {{ $language->is_active ? 'checked' : '' }} value="1" {{ $language->is_default ? 'disabled' : '' }} />
+                                            </label>
+                                            @if ($language->is_default)
+                                                <span class="kt-badge kt-badge-xs kt-badge-warning kt-badge-outline" title="{{ __('main.default_language') }}">
+                                                    <i class="fas fa-star text-yellow-500"></i>
+                                                </span>
+                                            @else
+                                                <button wire:click="setAsDefault({{ $language->id }})" class="text-gray-400 hover:text-yellow-500 transition-colors" title="{{ __('main.set_as_default') }}">
+                                                    <i class="far fa-star text-sm"></i>
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </td>
                                     <td class="px-4 py-2 text-end">
                                         <div class="flex items-center justify-end gap-2">
                                             @if (getCurrentLocale() != $language->code)
@@ -172,8 +303,12 @@
                                                     {{ __('main.currently') }}
                                                 </span>
                                             @endif
+                                            @include('components.elements.show-button', [
+                                                'models' => 'dashboard.localization.system-languages',
+                                                'id' => $language->id,
+                                            ])
                                             @include('components.elements.edit-button', [
-                                                'models' => 'system-languages',
+                                                'models' => 'dashboard.localization.system-languages',
                                                 'id' => $language->id,
                                             ])
                                             @include('components.elements.delete-button', [
@@ -194,3 +329,39 @@
         @endif
     </div>
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+    document.addEventListener('livewire:initialized', () => {
+        const initSortable = (id) => {
+            const el = document.getElementById(id);
+            if (el) {
+                Sortable.create(el, {
+                    animation: 150,
+                    delay: 50,
+                    delayOnTouchOnly: true,
+                    handle: '.drag-handle',
+                    ghostClass: 'opacity-50',
+                    onEnd: function (evt) {
+                        const orderIds = Array.from(el.children).map(item => item.getAttribute('data-id')).filter(id => id);
+                        $wire.call('updateOrder', orderIds);
+                    }
+                });
+            }
+        };
+
+        const initAllSortables = () => {
+            initSortable('sortable-languages-grid');
+            initSortable('sortable-languages-table');
+        };
+
+        initAllSortables();
+
+        Livewire.hook('morph.updated', ({ el, component }) => {
+            initAllSortables();
+        });
+    });
+</script>
+@endpush
+

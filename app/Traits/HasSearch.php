@@ -128,10 +128,44 @@ trait HasSearch
         $modelTable = $query->getModel()->getTable();
         // Apply column-specific filters
         if (!empty($searchColumnsFilters)) {
-            $query->where(function ($q) use ($searchColumnsFilters, $modelTable) {
+            $query->where(function ($q) use ($searchColumnsFilters, $modelTable, $availableRelations) {
                 foreach ($searchColumnsFilters as $column => $searchTerm) {
                     if (!empty($searchTerm) && is_string($column)) {
-                        $q->whereRaw("LOWER({$modelTable}.{$column}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                        // Check if the column is actually a defined relation
+                        if (in_array($column, $availableRelations)) {
+                            // Apply search inside the related model
+                            $q->whereHas($column, function ($relQuery) use ($searchTerm) {
+                                $relModel = $relQuery->getModel();
+                                $relTable = $relModel->getTable();
+                                
+                                // Get searchable columns for the related model
+                                if (method_exists($relModel, 'getSearchableColumns')) {
+                                    $relCols = $relModel->getSearchableColumns();
+                                } else {
+                                    $relCols = array_filter($relModel->getFillable(), function ($col) {
+                                        return !in_array($col, ['id', 'created_at', 'updated_at', 'deleted_at'])
+                                            && !str_ends_with($col, '_id');
+                                    });
+                                }
+                                
+                                $relSchemaCols = \Illuminate\Support\Facades\Schema::getColumnListing($relTable);
+                                $relCols = array_intersect($relCols, $relSchemaCols);
+                                
+                                // Default fallback if no columns found
+                                if (empty($relCols)) {
+                                    $relCols = ['name'];
+                                }
+                                
+                                $relQuery->where(function ($qq) use ($relCols, $searchTerm, $relTable) {
+                                    foreach ($relCols as $c) {
+                                        $qq->orWhereRaw("LOWER({$relTable}.{$c}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                                    }
+                                });
+                            });
+                        } else {
+                            // Standard column search
+                            $q->whereRaw("LOWER({$modelTable}.{$column}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                        }
                     }
                 }
             });
@@ -171,10 +205,40 @@ trait HasSearch
         $modelTable = $query->getModel()->getTable();
         // Apply column-specific filters
         if (!empty($searchColumnsFilters)) {
-            $query->where(function ($q) use ($searchColumnsFilters, $modelTable) {
+            $query->where(function ($q) use ($searchColumnsFilters, $modelTable, $availableRelations) {
                 foreach ($searchColumnsFilters as $column => $searchTerm) {
                     if (!empty($searchTerm) && is_string($column)) {
-                        $q->whereRaw("LOWER({$modelTable}.{$column}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                        // Check if the column is actually a defined relation
+                        if (in_array($column, $availableRelations)) {
+                            $q->whereHas($column, function ($relQuery) use ($searchTerm) {
+                                $relModel = $relQuery->getModel();
+                                $relTable = $relModel->getTable();
+                                
+                                if (method_exists($relModel, 'getSearchableColumns')) {
+                                    $relCols = $relModel->getSearchableColumns();
+                                } else {
+                                    $relCols = array_filter($relModel->getFillable(), function ($col) {
+                                        return !in_array($col, ['id', 'created_at', 'updated_at', 'deleted_at'])
+                                            && !str_ends_with($col, '_id');
+                                    });
+                                }
+                                
+                                $relSchemaCols = \Illuminate\Support\Facades\Schema::getColumnListing($relTable);
+                                $relCols = array_intersect($relCols, $relSchemaCols);
+                                
+                                if (empty($relCols)) {
+                                    $relCols = ['name'];
+                                }
+                                
+                                $relQuery->where(function ($qq) use ($relCols, $searchTerm, $relTable) {
+                                    foreach ($relCols as $c) {
+                                        $qq->orWhereRaw("LOWER({$relTable}.{$c}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                                    }
+                                });
+                            });
+                        } else {
+                            $q->whereRaw("LOWER({$modelTable}.{$column}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                        }
                     }
                 }
             });

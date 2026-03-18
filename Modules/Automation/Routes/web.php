@@ -12,6 +12,6 @@
 */
 
 Route::prefix('automation')->group(function() {
-    Route::get('/', 'AutomationController@index');
+    Route::get('/', [\Modules\Automation\Http\Controllers\AutomationController::class, 'index']);
     Route::get('/settings', \Modules\Automation\Livewire\WebhookSettings::class)->name('automation.settings');
 });

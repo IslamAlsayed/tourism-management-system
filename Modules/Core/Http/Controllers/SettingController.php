@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Cache;
 use Modules\Core\Entities\Setting;
 use Modules\Core\Entities\User;
 use Modules\Core\Http\Requests\Settings\UpdateRequest;
+use App\Traits\PhotoUploadTrait;
 
 class SettingController extends Controller
 {
+    use PhotoUploadTrait;
     public function index()
     {
         return view('core::settings.index');
@@ -24,13 +26,20 @@ class SettingController extends Controller
         $validated = $request->validated();
         $validated = $request->safe()->except(['app_light_photo', 'app_dark_photo', 'app_mini_photo']);
 
-        if ($request->has('app_light_photo')) {
+        // Remove null values for columns that do not accept NULL in the database
+        foreach (['app_timezone', 'app_template_version', 'app_version', 'app_language'] as $field) {
+            if (array_key_exists($field, $validated) && $validated[$field] === null) {
+                unset($validated[$field]);
+            }
+        }
+
+        if ($request->hasFile('app_light_photo')) {
             $this->uploadPhoto($request, $setting, 'app_light_photo', "logos");
         }
-        if ($request->has('app_dark_photo')) {
+        if ($request->hasFile('app_dark_photo')) {
             $this->uploadPhoto($request, $setting, 'app_dark_photo', "logos");
         }
-        if ($request->has('app_mini_photo')) {
+        if ($request->hasFile('app_mini_photo')) {
             $this->uploadPhoto($request, $setting, 'app_mini_photo', "logos");
         }
 
@@ -41,6 +50,26 @@ class SettingController extends Controller
             $user = getActiveUser();
             $user->button_display_mode = $request->button_display_mode;
             $user->save();
+        }
+        
+        // Update APP_URL in .env file if it has changed
+        if ($request->has('app_url') && $request->app_url) {
+            $path = base_path('.env');
+            if (file_exists($path)) {
+                $envContent = file_get_contents($path);
+                $oldUrl = env('APP_URL');
+                $newUrl = rtrim($request->app_url, '/');
+                
+                if ($oldUrl !== $newUrl) {
+                    $pattern = '/^APP_URL=.*$/m';
+                    if (preg_match($pattern, $envContent)) {
+                        $envContent = preg_replace($pattern, 'APP_URL=' . $newUrl, $envContent);
+                    } else {
+                        $envContent .= "\nAPP_URL=" . $newUrl;
+                    }
+                    file_put_contents($path, $envContent);
+                }
+            }
         }
 
         if ($updated) {

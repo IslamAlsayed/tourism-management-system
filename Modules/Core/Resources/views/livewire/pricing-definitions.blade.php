@@ -68,7 +68,7 @@
                         cancelButtonText: '{{ __('main.no') }}'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            @this.call('activateSelected');
+                            $wire.call('activateSelected');
                         }
                     })
                 },
@@ -84,7 +84,7 @@
                         cancelButtonText: '{{ __('main.no') }}'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            @this.call('deactivateSelected');
+                            $wire.call('deactivateSelected');
                         }
                     })
                 },
@@ -100,28 +100,28 @@
                         cancelButtonText: '{{ __('main.cancel') }}'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            @this.call('deleteSelected');
+                            $wire.call('deleteSelected');
                         }
                     })
                 }
             }">
                 <div class="bg-primary/5 border border-primary/20 rounded-lg p-3 flex flex-wrap items-center justify-between gap-4">
                     <div class="flex items-center gap-2">
-                        <span class="badge badge-primary badge-lg">{{ count($selectedIds) }}</span>
+                        <span class="kt-badge kt-badge-primary">{{ count($selectedIds) }}</span>
                         <span class="text-sm font-medium text-gray-700">{{ __('main.records_selected') }}</span>
                     </div>
                     <div class="flex items-center gap-2 flex-wrap">
-                        <button type="button" x-on:click.prevent="confirmActivate" class="btn btn-success btn-sm flex items-center gap-1.5 px-3">
+                        <button type="button" x-on:click.prevent="confirmActivate" class="kt-btn kt-btn-success kt-btn-sm flex items-center gap-1.5 px-3">
                             <i class="ki-outline ki-check-circle fs-3"></i> {{ __('main.activate') ?? 'Activate' }}
                         </button>
-                        <button type="button" x-on:click.prevent="confirmDeactivate" class="btn btn-warning btn-sm flex items-center gap-1.5 px-3">
+                        <button type="button" x-on:click.prevent="confirmDeactivate" class="kt-btn kt-btn-warning kt-btn-sm flex items-center gap-1.5 px-3">
                             <i class="ki-outline ki-minus-circle fs-3"></i> {{ __('main.deactivate') ?? 'Deactivate' }}
                         </button>
-                        <button type="button" x-on:click.prevent="confirmDelete" class="btn btn-danger btn-sm flex items-center gap-1.5 px-3">
+                        <button type="button" x-on:click.prevent="confirmDelete" class="kt-btn kt-btn-destructive kt-btn-sm flex items-center gap-1.5 px-3">
                             <i class="ki-outline ki-trash fs-3"></i> {{ __('main.delete') }}
                         </button>
                         <div class="w-px h-6 bg-gray-300 mx-1"></div>
-                        <button type="button" wire:click="clearSelected" class="btn btn-light btn-sm flex items-center gap-1.5 px-3">
+                        <button type="button" wire:click="clearSelected" class="kt-btn kt-btn-light kt-btn-sm flex items-center gap-1.5 px-3">
                             <i class="ki-outline ki-cross fs-3"></i> {{ __('main.cancel_selection') }}
                         </button>
                     </div>
@@ -170,13 +170,13 @@
                         </div>
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
-                        <button type="button" wire:click="saveQuickEdit" wire:loading.attr="disabled" class="btn btn-primary sm:ml-3 sm:w-auto w-full">
+                        <button type="button" wire:click="saveQuickEdit" wire:loading.attr="disabled" class="kt-btn kt-btn-primary sm:ml-3 sm:w-auto w-full">
                             <span wire:loading.remove wire:target="saveQuickEdit">{{ __('main.save_changes') }}</span>
                             <span wire:loading wire:target="saveQuickEdit" class="flex items-center gap-2">
                                 <span class="spinner-border spinner-border-sm align-middle"></span> {{ __('main.saving') }}...
                             </span>
                         </button>
-                        <button type="button" wire:click="closeQuickEdit" class="btn btn-light mt-3 sm:mt-0 sm:w-auto w-full">
+                        <button type="button" wire:click="closeQuickEdit" class="kt-btn kt-btn-light mt-3 sm:mt-0 sm:w-auto w-full">
                             {{ __('main.cancel') }}
                         </button>
                     </div>
@@ -185,3 +185,4 @@
         @endif
     </div>
 </div>
+

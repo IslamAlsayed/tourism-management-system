@@ -18,7 +18,7 @@
         @endif
     </div>
     <div class="kt-dropdown-menu
-            w-[300px]" data-kt-dropdown-menu="true">
+            w-[300px] z-[9999]" data-kt-dropdown-menu="true">
         <div class="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
             <div class="flex items-center gap-2">
                 @if ($activeUser && $activeUser->photo && checkExistFile($activeUser->photo))
@@ -60,7 +60,7 @@
                     {{ __('main.my_profile') }}
                 </a>
             </li>
-            <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-trigger="hover">
+            <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-placement-rtl="left-start" data-kt-dropdown-trigger="hover">
                 <button class="py-1 kt-dropdown-menu-toggle" data-kt-dropdown-toggle="true">
                     <span class="flex items-center gap-2">
                         <i class="ki-filled ki-global"></i>
@@ -68,18 +68,41 @@
                     </span>
                     <span class="kt-badge kt-badge-stroke ms-auto shrink-0">
                         {{ config('languages.languages.' . getCurrentLocale()) }}
-                        <img alt="" class="inline-block size-3.5 rounded-full"
-                            src="{{ asset('metronic/media/flags/languages/' . getCurrentLocale() . '.svg') }}" />
+                        @php
+                            $currentCountryCodeMap = [
+                                'en' => 'gb', 'ar' => 'sa', 'es' => 'es', 'it' => 'it',
+                                'fr' => 'fr', 'ja' => 'jp', 'tr' => 'tr', 'de' => 'de',
+                                'ru' => 'ru', 'he' => 'il'
+                            ];
+                            $cCode = $currentCountryCodeMap[getCurrentLocale()] ?? getCurrentLocale();
+                            $currentLangPath = 'assets/media/flags/' . $cCode . '.svg';
+                            $currentLangExists = file_exists(public_path($currentLangPath));
+                            $currentFlagUrl = $currentLangExists ? asset($currentLangPath) : asset('assets/images/logos/default-logo.svg');
+                        @endphp
+                        <img alt="" class="inline-block size-3.5 rounded-full object-cover"
+                            src="{{ $currentFlagUrl }}" />
                     </span>
                 </button>
-                <div class="kt-dropdown-menu w-[180px] languages-dropdown-menu" data-kt-dropdown-menu="true">
+                <div class="kt-dropdown-menu w-[180px] languages-dropdown-menu z-[9999]" data-kt-dropdown-menu="true">
                     <ul class="kt-dropdown-menu-sub">
                         @foreach ($system_languages as $key => $language)
                             <li class="{{ getCurrentLocale() == $language->code ? 'active disabled' : '' }}">
                                 <a class="kt-dropdown-menu-link" href="{{ route('dashboard.localization.system-languages.change', $language->code) }}">
                                     <span class="flex items-center gap-2">
-                                        <img src="{{ $key <= 1 ? asset('metronic/media/flags/languages/' . $language->code . '.svg') : asset('storage/' . $language->photo) }}"
-                                            class="inline-block rounded-full size-4">
+                                        @php
+                                            // Fallback for standard ISO country flags to match the local files
+                                            $countryCodeMap = [
+                                                'en' => 'gb', 'ar' => 'sa', 'es' => 'es', 'it' => 'it',
+                                                'fr' => 'fr', 'ja' => 'jp', 'tr' => 'tr', 'de' => 'de',
+                                                'ru' => 'ru', 'he' => 'il'
+                                            ];
+                                            $countryCode = $countryCodeMap[$language->code] ?? $language->code;
+                                            $flagPath = 'assets/media/flags/' . $countryCode . '.svg';
+                                            $flagExists = file_exists(public_path($flagPath));
+                                            
+                                            $flagUrl = $flagExists ? asset($flagPath) : ($language->photo ? asset('storage/' . $language->photo) : asset('assets/images/logos/default-logo.svg'));
+                                        @endphp
+                                        <img src="{{ $flagUrl }}" class="inline-block rounded-full size-4 object-cover">
                                         <span class="kt-menu-title">
                                             {{ __('languages.' . lcfirst($language->name)) ?? '' }}
                                         </span>

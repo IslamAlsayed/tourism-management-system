@@ -98,4 +98,91 @@ trait CustomColumnsRefreshBased
     {
         return $this->hasCustomColumns;
     }
+
+    /**
+     * Save current column configuration as system default (for all users)
+     * Requires superadmin role check in UI
+     */
+    public function saveAsSystemDefault()
+    {
+        if (!Auth::check() || !getActiveUser()->hasRole('superadmin')) {
+            return;
+        }
+
+        \App\Models\TableColumn::updateOrCreate(
+            ['model_class' => $this->modelClass, 'user_id' => null],
+            ['columns' => $this->columns]
+        );
+
+        $this->dispatch('notify', [
+            'type' => 'success',
+            'message' => __('messages.system_default_saved') ?? 'System default columns saved successfully.'
+        ]);
+        
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => __('main.system_default_saved') ?? 'System default columns saved successfully.'
+        ]);
+    }
+
+    public function applyColumns()
+    {
+        $model = new $this->modelClass();
+        $excluded = $this->getExcludedColumnsWithSettings($model);
+
+        $cleanPending = array_diff($this->pendingColumns, $excluded);
+        $this->columns = array_values(array_intersect($cleanPending, $this->allColumns));
+
+        if (Auth::check()) {
+            getActiveUser()->saveTableColumnsFor($this->modelClass, $this->columns);
+            $this->hasCustomColumns = true;
+        }
+        
+        $this->dispatch('close-modal');
+        $this->dispatch('refresh-page');
+    }
+
+    public function toggleAll(): void
+    {
+        $model = new $this->modelClass();
+        $excluded = $this->getExcludedColumnsWithSettings($model);
+
+        if ($this->isAllSelected) {
+            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+            $this->pendingColumns = array_slice($this->allColumns, 0, $defaultColumnsCount);
+        } else {
+            $this->pendingColumns = $this->allColumns;
+        }
+
+        $this->applyColumns();
+    }
+
+    public function resetColumns(): void
+    {
+        if (Auth::check()) {
+            getActiveUser()->deleteTableColumnsFor($this->modelClass);
+            $this->hasCustomColumns = false; 
+        }
+
+        $systemDefault = \App\Models\TableColumn::where('model_class', $this->modelClass)
+            ->whereNull('user_id')
+            ->first()
+            ?->columns;
+
+        if ($systemDefault) {
+            $this->columns = $systemDefault;
+        } else {
+            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+            $this->columns = array_slice($this->allColumns, 0, $defaultColumnsCount);
+        }
+
+        $this->pendingColumns = $this->columns;
+    }
+
+    public function updatedPendingColumns(): void
+    {
+        $model = new $this->modelClass();
+        $excluded = $this->getExcludedColumnsWithSettings($model);
+        $this->pendingColumns = array_values(array_diff($this->pendingColumns, $excluded));
+    }
 }

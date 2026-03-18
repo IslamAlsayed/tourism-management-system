@@ -34,7 +34,7 @@
                     @if (isset($child['badge']))
                         <span class="menu-badge">
                             <span
-                                class="badge badge-{{ $child['badge']['type'] ?? 'secondary' }} badge-circle">{{ $child['badge']['text'] }}</span>
+                                class="kt-badge kt-badge-{{ $child['badge']['type'] ?? 'secondary' }} kt-badge-circle">{{ $child['badge']['text'] }}</span>
                         </span>
                     @endif
                 </a>

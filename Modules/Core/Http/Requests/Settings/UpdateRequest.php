@@ -23,11 +23,16 @@ class UpdateRequest extends FormRequest
     {
         return [
             'app_name' => ['nullable', 'string'],
-            'app_url' => ['nullable', 'url'],
+            'app_url' => ['nullable', 'string'],
+            'app_template_version' => ['nullable', 'string'],
             'app_timezone' => ['nullable', 'string'],
             'app_language' => ['nullable', 'string'],
             'app_version' => ['nullable', 'string'],
             'app_php_version' => ['nullable', 'string'],
+            'app_logo_width' => ['nullable', 'string'],
+            'app_logo_height' => ['nullable', 'string'],
+            'auth_logo_width' => ['nullable', 'string'],
+            'auth_logo_height' => ['nullable', 'string'],
             'app_columns_length' => ['nullable', 'integer'],
             'app_light_photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],
             'app_dark_photo' => ['nullable', 'max:2048', 'mimes:png,jpg,jpeg,gif,svg'],

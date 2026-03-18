@@ -45,7 +45,32 @@ class SetLocale
         $systemLanguageController->loadActiveLanguages();
 
         if (session()->has('locale')) {
-            App::setLocale(session()->get('locale'));
+            $sessLocale = session()->get('locale');
+            // Check if stored language is still active or fallback
+            if (SystemLanguageController::isActiveLocale($sessLocale)) {
+                App::setLocale($sessLocale);
+            } else {
+                // Determine a fallback language if current session language is not active
+                $activeLangs = config('languages.system_languages');
+                if (!empty($activeLangs)) {
+                    $fallback = array_key_first($activeLangs);
+                    App::setLocale($fallback);
+                    session()->put('locale', $fallback);
+                } else {
+                    App::setLocale('en'); // Absolute fallback
+                }
+            }
+        } else {
+            // No locale set, let's set a default one
+            $activeLangs = config('languages.system_languages');
+            if (!empty($activeLangs)) {
+                $fallback = config('app.locale', 'en');
+                if(!array_key_exists($fallback, $activeLangs)) {
+                    $fallback = array_key_first($activeLangs);
+                }
+                App::setLocale($fallback);
+                session()->put('locale', $fallback);
+            }
         }
 
         return $next($request);

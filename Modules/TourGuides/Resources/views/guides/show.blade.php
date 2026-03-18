@@ -24,15 +24,15 @@
                         {{ $tourGuide->name }}
                     </h1>
                     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                        <span class="badge badge-lg badge-light-primary font-bold">
+                        <span class="kt-badge kt-badge-light kt-badge-primary font-bold">
                             {{ $tourGuide->guide_type?->type ?? __('main.na') }}
                         </span>
                         @if($tourGuide->is_active)
-                            <span class="badge badge-lg badge-light-success font-bold">
+                            <span class="kt-badge kt-badge-light kt-badge-success font-bold">
                                 {{ __('main.active') }}
                             </span>
                         @else
-                            <span class="badge badge-lg badge-light-danger font-bold">
+                            <span class="kt-badge kt-badge-light kt-badge-destructive font-bold">
                                 {{ __('main.inactive') }}
                             </span>
                         @endif
@@ -41,11 +41,11 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="{{ route('dashboard.tourguides.guides.edit', $tourGuide->id) }}" class="btn btn-primary btn-sm">
+                <a href="{{ route('dashboard.tourguides.guides.edit', $tourGuide->id) }}" class="kt-btn kt-btn-primary kt-btn-sm">
                     <i class="ki-outline ki-pencil fs-4 me-1"></i>
                     {{ __('main.edit') }}
                 </a>
-                <a href="{{ route('dashboard.tourguides.guides.index') }}" class="btn btn-outline btn-outline-default btn-sm">
+                <a href="{{ route('dashboard.tourguides.guides.index') }}" class="kt-btn kt-btn-outline kt-btn-sm">
                     <i class="ki-outline ki-arrow-left fs-4 me-1"></i>
                     {{ __('main.back') }}
                 </a>
@@ -74,7 +74,7 @@
                             <div>
                                 <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.gender') }}</label>
                                 <div class="fs-6 text-gray-800 fw-bold">
-                                    <span class="badge badge-light-info">{{ $tourGuide->gender ?: __('main.na') }}</span>
+                                    <span class="kt-badge kt-badge-light kt-badge-info">{{ $tourGuide->gender ?: __('main.na') }}</span>
                                 </div>
                             </div>
                             <div>
@@ -114,7 +114,7 @@
                                 <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.languages') }}</label>
                                 <div class="flex flex-wrap gap-1 mt-1">
                                     @forelse ($tourGuide->tourGuideLanguages as $tgl)
-                                        <span class="badge badge-light-primary fw-bold">
+                                        <span class="kt-badge kt-badge-light kt-badge-primary fw-bold">
                                             {{ $tgl->language?->name }}
                                             @if($tgl->proficiency) <span class="ms-1 opacity-50 text-xs">({{ $tgl->proficiency }})</span> @endif
                                         </span>
@@ -306,17 +306,17 @@
                     <form action="{{ route('dashboard.tourguides.guides.destroy', $tourGuide->id) }}" method="POST" class="d-inline border-e pe-4">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-icon btn-light-danger btn-sm border-0 border-transparent bg-transparent" onclick="return confirm('{{ __('main.confirm_delete') }}')">
+                        <button type="submit" class="kt-btn kt-btn-icon kt-btn-light kt-btn-destructive kt-btn-sm border-0 border-transparent bg-transparent" onclick="return confirm('{{ __('main.confirm_delete') }}')">
                             <i class="ki-outline ki-trash fs-3"></i>
                         </button>
                     </form>
                     
-                    <a href="{{ route('dashboard.tourguides.guides.edit', $tourGuide->id) }}" class="btn btn-icon btn-light-primary btn-sm bg-transparent">
+                    <a href="{{ route('dashboard.tourguides.guides.edit', $tourGuide->id) }}" class="kt-btn kt-btn-icon kt-btn-light kt-btn-sm bg-transparent">
                         <i class="ki-outline ki-pencil fs-3"></i>
                     </a>
 
                     <div class="border-s ps-4">
-                        <a href="{{ route('dashboard.tourguides.guides.index') }}" class="btn btn-sm btn-light-default bg-transparent">
+                        <a href="{{ route('dashboard.tourguides.guides.index') }}" class="kt-btn kt-btn-sm kt-btn-light bg-transparent">
                             <i class="ki-outline ki-arrow-left fs-4 me-2"></i>
                             {{ __('main.back_to_list') }}
                         </a>

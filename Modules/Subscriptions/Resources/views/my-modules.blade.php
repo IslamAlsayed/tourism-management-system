@@ -31,7 +31,8 @@
             <div class="background rounded-lg shadow-sm border border-gray-200 p-6">
                 <div class="text-center">
                     <div class="text-3xl font-bold text-blue-600 mb-2">
-                        {{ config('subscriptions.available_modules', []) ? count(config('subscriptions.available_modules')) : 0 }}</div>
+                        {{ config('subscriptions.available_modules', []) ? count(config('subscriptions.available_modules')) : 0 }}
+                    </div>
                     <div class="text-gray-600 text-sm">{{ __('main.total_modules') }}</div>
                 </div>
             </div>
@@ -40,7 +41,9 @@
             <div class="background rounded-lg shadow-sm border border-gray-200 p-6">
                 <div class="text-center">
                     @php
-                        $expiringSoon = $subscriptions->filter(fn($s) => $s->daysRemaining() !== null && $s->daysRemaining() <= 30)->count();
+                        $expiringSoon = $subscriptions
+                            ->filter(fn($s) => $s->daysRemaining() !== null && $s->daysRemaining() <= 30)
+                            ->count();
                     @endphp
                     <div class="text-3xl font-bold text-amber-600 mb-2">{{ $expiringSoon }}</div>
                     <div class="text-gray-600 text-sm">{{ __('main.expiring_soon') }}</div>
@@ -86,8 +89,10 @@
                                         </div>
                                     </div>
                                     <div class="flex-grow">
-                                        <h5 class="text-lg font-semibold text-gray-600 mb-1">{{ $moduleConfig['name'] }}</h5>
-                                        <span class="inline-block px-3 py-1 text-xs font-semibold text-white bg-green-600 rounded-full">
+                                        <h5 class="text-lg font-semibold text-gray-600 mb-1">{{ $moduleConfig['name'] }}
+                                        </h5>
+                                        <span
+                                            class="inline-block px-3 py-1 text-xs font-semibold text-white bg-green-600 rounded-full">
                                             <i class="fas fa-check-circle mr-1"></i> {{ __('main.active') }}
                                         </span>
                                     </div>
@@ -104,8 +109,10 @@
                                         <div class="flex items-start gap-3">
                                             <i class="fas fa-calendar-start text-blue-600 mt-0.5"></i>
                                             <div>
-                                                <div class="text-xs font-semibold text-gray-600">{{ __('main.started') }}</div>
-                                                <div class="text-sm text-gray-600">{{ $subscription->starts_at->format('Y-m-d') }}</div>
+                                                <div class="text-xs font-semibold text-gray-600">{{ __('main.started') }}
+                                                </div>
+                                                <div class="text-sm text-gray-600">
+                                                    {{ $subscription->starts_at->format('Y-m-d') }}</div>
                                             </div>
                                         </div>
                                     @endif
@@ -114,26 +121,43 @@
                                         <div class="flex items-start gap-3">
                                             <i class="fas fa-calendar-end text-red-600 mt-0.5"></i>
                                             <div>
-                                                <div class="text-xs font-semibold text-gray-600">{{ __('main.expires') }}</div>
-                                                <div class="text-sm text-gray-600">{{ $subscription->ends_at->format('Y-m-d') }}</div>
+                                                <div class="text-xs font-semibold text-gray-600">{{ __('main.expires') }}
+                                                </div>
+                                                <div class="text-sm text-gray-600">
+                                                    {{ $subscription->ends_at->format('Y-m-d') }}</div>
                                             </div>
                                         </div>
 
                                         @if ($subscription->daysRemaining() !== null)
                                             @php
                                                 $daysLeft = $subscription->daysRemaining();
-                                                $progressColor = $daysLeft > 30 ? 'emerald' : ($daysLeft > 7 ? 'amber' : 'red');
-                                                $badgeColor = $daysLeft > 30 ? 'bg-emerald-600' : ($daysLeft > 7 ? 'bg-amber-600' : 'bg-red-600');
-                                                $barColor = $daysLeft > 30 ? 'bg-emerald-500' : ($daysLeft > 7 ? 'bg-amber-500' : 'bg-red-500');
-                                                $totalDays = $subscription->starts_at ? $subscription->starts_at->diffInDays($subscription->ends_at) : 365;
-                                                $progress = $totalDays > 0 ? (($totalDays - $daysLeft) / $totalDays) * 100 : 0;
+                                                $progressColor =
+                                                    $daysLeft > 30 ? 'emerald' : ($daysLeft > 7 ? 'amber' : 'red');
+                                                $badgeColor =
+                                                    $daysLeft > 30
+                                                        ? 'bg-emerald-600'
+                                                        : ($daysLeft > 7
+                                                            ? 'bg-amber-600'
+                                                            : 'bg-red-600');
+                                                $barColor =
+                                                    $daysLeft > 30
+                                                        ? 'bg-emerald-500'
+                                                        : ($daysLeft > 7
+                                                            ? 'bg-amber-500'
+                                                            : 'bg-red-500');
+                                                $totalDays = $subscription->starts_at
+                                                    ? $subscription->starts_at->diffInDays($subscription->ends_at)
+                                                    : 365;
+                                                $progress =
+                                                    $totalDays > 0 ? (($totalDays - $daysLeft) / $totalDays) * 100 : 0;
                                             @endphp
                                             <div class="w-full mt-2">
                                                 <div class="flex items-center justify-between mb-2">
                                                     <span class="text-xs font-semibold text-gray-600">
                                                         <i class="fas fa-clock mr-1"></i> {{ __('main.time_remaining') }}
                                                     </span>
-                                                    <span class="px-2 py-1 text-xs font-semibold text-white {{ $badgeColor }} rounded-full">
+                                                    <span
+                                                        class="px-2 py-1 text-xs font-semibold text-white {{ $badgeColor }} rounded-full">
                                                         {{ $daysLeft }} {{ __('main.days') }}
                                                     </span>
                                                 </div>
@@ -144,7 +168,8 @@
                                             </div>
                                         @endif
                                     @else
-                                        <div class="px-4 py-2 bg-blue-100 border border-blue-400 rounded-lg text-sm text-blue-700">
+                                        <div
+                                            class="px-4 py-2 bg-blue-100 border border-blue-400 rounded-lg text-sm text-blue-700">
                                             <i class="fas fa-infinity mr-2"></i> {{ __('main.unlimited_subscription') }}
                                         </div>
                                     @endif
@@ -152,7 +177,9 @@
 
                                 <!-- Actions -->
                                 <div class="border-t border-gray-200 pt-4 mt-4">
-                                    <form action="{{ route('dashboard.subscriptions.deactivate', $subscription->module_key) }}" method="POST"
+                                    <form
+                                        action="{{ route('dashboard.subscriptions.deactivate', $subscription->module_key) }}"
+                                        method="POST"
                                         onsubmit="return confirm('{{ __('main.confirm_deactivate_module') }}')">
                                         @csrf
                                         <button type="submit"

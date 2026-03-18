@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" lang="{{ app()->getLocale() }}">
+<html class="h-full" dir="{{ getLocaleDirection() }}" lang="{{ app()->getLocale() }}">
 
 <head>
     @include('layouts.partials.head')
@@ -28,6 +28,10 @@
             }
         }
     </style>
+    {{-- Custom RTL Fixes --}}
+    @if(getLocaleDirection() === 'rtl')
+        <link href="{{ asset('css/custom-rtl.css') }}" rel="stylesheet" />
+    @endif
 </head>
 
 <body id="kt_app_body" class="app-default">

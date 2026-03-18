@@ -16,7 +16,7 @@
                 <p class="text-gray-400 fs-4 fw-bold mb-10">
                     This tool will allow you to search for and import tourism locations directly into the system.
                 </p>
-                <span class="badge badge-light-warning fs-base px-4 py-3">Coming Soon</span>
+                <span class="kt-badge kt-badge-light kt-badge-warning fs-base px-4 py-3">Coming Soon</span>
             </div>
         </div>
     </div>

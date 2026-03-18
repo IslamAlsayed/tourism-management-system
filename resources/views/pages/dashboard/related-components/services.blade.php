@@ -195,7 +195,7 @@
                                     <div class="flex items-center gap-2">
                                         @livewire('toggle-switch', [
                                             'modelId' => $service->id,
-                                            'modelType' => '\\App\\Models\\TouristService',
+                                            'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                             'field' => 'is_active',
                                             'value' => (bool) $service->is_active,
                                             'table' => 'tourist_sites',
@@ -207,7 +207,7 @@
                                     <div class="flex items-center gap-2">
                                         @livewire('toggle-switch', [
                                             'modelId' => $service->id,
-                                            'modelType' => '\\App\\Models\\TouristService',
+                                            'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                             'field' => 'include_unified_ticket',
                                             'value' => (bool) $service->include_unified_ticket,
                                             'table' => 'tourist_sites',
@@ -219,7 +219,7 @@
                                     <div class="flex items-center gap-2">
                                         @livewire('toggle-switch', [
                                             'modelId' => $service->id,
-                                            'modelType' => '\\App\\Models\\TouristService',
+                                            'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                             'field' => 'local_guide_available',
                                             'value' => (bool) $service->local_guide_available,
                                             'table' => 'tourist_sites',
@@ -231,7 +231,7 @@
                                     <div class="flex items-center gap-2">
                                         @livewire('toggle-switch', [
                                             'modelId' => $service->id,
-                                            'modelType' => '\\App\\Models\\TouristService',
+                                            'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                             'field' => 'credit_cards',
                                             'value' => (bool) $service->credit_cards,
                                             'table' => 'tourist_sites',
@@ -272,7 +272,7 @@
                             @livewire('delete-bottom', [
                                 'type' => 'tourist-services',
                                 'modelId' => $service->id,
-                                'modelType' => '\\App\\Models\\TouristService',
+                                'modelType' => '\\Modules\\TouristServices\\Entities\\TouristService',
                                 'table' => 'tourist_services',
                             ])
                         </div>

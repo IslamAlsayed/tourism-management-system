@@ -54,7 +54,7 @@ class WebhookSettings extends Component
 
         $this->resetForm();
         $this->loadData();
-        session()->flash('success', 'Webhook saved successfully.');
+        session()->flash('success', __('automation.webhook_saved'));
     }
 
     public function edit($id)
@@ -92,6 +92,8 @@ class WebhookSettings extends Component
 
     public function render()
     {
-        return view('automation::livewire.webhook-settings');
+        return view('automation::livewire.webhook-settings')
+            ->extends('layouts.master')
+            ->section('content');
     }
 }

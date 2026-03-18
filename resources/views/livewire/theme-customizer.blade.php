@@ -16,13 +16,13 @@
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <a href="{{ route('dashboard.core.settings.general') }}" class="btn btn-secondary btn-sm flex items-center gap-2 px-4 shadow-sm">
+                <a href="{{ route('dashboard.core.settings.general') }}" class="kt-btn kt-btn-secondary kt-btn-sm flex items-center gap-2 px-4 shadow-sm">
                     <i class="ki-outline ki-arrow-left fs-3"></i>  {{ __('main.back') }}
                 </a>
-                <button type="button" wire:click="resetDefaults" class="btn btn-light btn-sm flex items-center gap-2 px-4 shadow-sm">
+                <button type="button" wire:click="resetDefaults" class="kt-btn kt-btn-light kt-btn-sm flex items-center gap-2 px-4 shadow-sm">
                     <i class="ki-outline ki-arrows-circle fs-3"></i> {{ __('main.reset_defaults') ?? 'Reset Defaults' }}
                 </button>
-                <button wire:click="save" wire:loading.attr="disabled" class="btn btn-primary btn-sm flex items-center gap-2 px-6 shadow-md transition-shadow hover:shadow-lg">
+                <button wire:click="save" wire:loading.attr="disabled" class="kt-btn kt-btn-primary kt-btn-sm flex items-center gap-2 px-6 shadow-md transition-shadow hover:shadow-lg">
                     <span wire:loading.remove wire:target="save"><i class="ki-outline ki-save-2 fs-3"></i> {{ __('main.save_changes') ?? 'Save Changes' }}</span>
                     <span wire:loading wire:target="save" class="flex gap-2 items-center"><i class="fas fa-spinner fa-spin"></i> {{ __('main.loading') ?? 'Saving...' }}</span>
                 </button>
@@ -161,13 +161,13 @@
                         <div class="flex flex-wrap gap-4 items-center">
                             <p class="text-sm font-medium text-foreground w-full mb-2">{{ __('main.ui_elements_preview') ?? 'UI Elements Preview' }}:</p>
                             
-                            <button type="button" class="btn text-white" style="background-color: {{ $primary }};">Primary Action</button>
-                            <button type="button" class="btn text-white" style="background-color: {{ $secondary }};">Secondary Action</button>
-                            <button type="button" class="btn text-white" style="background-color: {{ $success }};">Success</button>
-                            <button type="button" class="btn text-white" style="background-color: {{ $info }};">Info</button>
-                            <button type="button" class="btn" style="background-color: {{ $warning }}; color: #000;">Warning</button>
-                            <button type="button" class="btn text-white" style="background-color: {{ $danger }};">Danger</button>
-                            <button type="button" class="btn text-white" style="background-color: {{ $dark }};">Dark</button>
+                            <button type="button" class="kt-btn text-white" style="background-color: {{ $primary }};">Primary Action</button>
+                            <button type="button" class="kt-btn text-white" style="background-color: {{ $secondary }};">Secondary Action</button>
+                            <button type="button" class="kt-btn text-white" style="background-color: {{ $success }};">Success</button>
+                            <button type="button" class="kt-btn text-white" style="background-color: {{ $info }};">Info</button>
+                            <button type="button" class="kt-btn" style="background-color: {{ $warning }}; color: #000;">Warning</button>
+                            <button type="button" class="kt-btn text-white" style="background-color: {{ $danger }};">Danger</button>
+                            <button type="button" class="kt-btn text-white" style="background-color: {{ $dark }};">Dark</button>
                         </div>
                         
                         <div class="mt-4 pt-4 border-t border-border">

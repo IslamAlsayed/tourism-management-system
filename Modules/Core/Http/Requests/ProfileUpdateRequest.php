@@ -29,7 +29,7 @@ class ProfileUpdateRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:255'],
             'mobile' => ['nullable', 'string', 'max:255'],
             'company_name' => ['nullable', 'string', 'max:255'],
-            'company_website' => ['nullable', 'url', 'max:255'],
+            'company_website' => ['nullable', 'string', 'max:255'],
             'country_id' => ['nullable', 'exists:countries,id'],
             'bio' => ['nullable', 'string'],
         ];

@@ -105,7 +105,7 @@
 
                         <!-- Add Meal Button -->
                         <div class="flex justify-end mt-6">
-                            <button type="button" class="btn btn-primary font-bold shadow-sm" onclick="addMealBlock()">
+                            <button type="button" class="kt-btn kt-btn-primary font-bold shadow-sm" onclick="addMealBlock()">
                                 <i class="ki-outline ki-plus fs-3"></i>
                                 {{ __('main.add_another_meal_or_price') ?? 'Add Another Meal / Price' }}
                             </button>
@@ -130,7 +130,7 @@
             data-index="__INDEX__">
             <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
                 <h3 class="font-bold text-lg text-primary meal-title">Meal #__NUM__</h3>
-                <button type="button" class="btn btn-sm btn-light-danger remove-meal-btn" onclick="removeMealBlock(this)">
+                <button type="button" class="kt-btn kt-btn-sm kt-btn-light kt-btn-destructive remove-meal-btn" onclick="removeMealBlock(this)">
                     <i class="ki-outline ki-trash fs-4"></i> {{ __('main.remove') ?? 'Remove' }}
                 </button>
             </div>

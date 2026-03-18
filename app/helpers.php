@@ -140,7 +140,8 @@ if (!function_exists('getCurrentLocale')) {
 
 if (!function_exists('isRtlLocale')) {
     /**
-     * Check if current locale is RTL
+     * Check if a locale is RTL (Right-to-Left).
+     * First checks the system_languages DB table, then falls back to a hardcoded list.
      *
      * @param string|null $locale
      * @return bool
@@ -148,9 +149,54 @@ if (!function_exists('isRtlLocale')) {
     function isRtlLocale($locale = null)
     {
         $locale = $locale ?? getCurrentLocale();
-        $rtlLocales = ['ar', 'he', 'fa', 'ur'];
+        $baseLocale = explode('-', str_replace('_', '-', $locale))[0];
 
-        return in_array($locale, $rtlLocales);
+        // Try DB first (cached per request)
+        static $dbDirCache = [];
+        if (!isset($dbDirCache[$locale])) {
+            try {
+                $lang = \Modules\Localization\Entities\SystemLanguage::where('code', $locale)->first();
+                $dbDirCache[$locale] = $lang ? $lang->dir : null;
+            } catch (\Throwable $e) {
+                $dbDirCache[$locale] = null;
+            }
+        }
+        if ($dbDirCache[$locale] !== null) {
+            return $dbDirCache[$locale] === 'rtl';
+        }
+
+        // Comprehensive RTL language codes (Smartling + CLDR standards)
+        $rtlLocales = [
+            'ar', 'he', 'fa', 'ur', 'yi', 'ps', 'ug', 'ku', 'sd',
+            'dv', 'ks', 'ckb', 'syr', 'arc', 'nqo', 'ks', 'khw',
+            'bal', 'lah', 'iw', 'kd',
+            // Arabic variants
+            'ar-AE', 'ar-BH', 'ar-DJ', 'ar-DZ', 'ar-EG', 'ar-IQ',
+            'ar-JO', 'ar-KW', 'ar-LB', 'ar-LY', 'ar-MA', 'ar-OM',
+            'ar-QA', 'ar-SA', 'ar-SD', 'ar-SY', 'ar-TN', 'ar-YE',
+            // Persian variants
+            'fa-AF', 'fa-IR',
+            // Hebrew variants
+            'he-IL',
+            // Urdu variants
+            'ur-IN', 'ur-PK',
+            // Yiddish variants
+            'yi-US',
+            // Panjabi-Shahmuki
+            'pk-PK',
+        ];
+
+        return in_array($locale, $rtlLocales) || in_array($baseLocale, $rtlLocales);
+    }
+}
+
+if (!function_exists('getLocaleDirection')) {
+    /**
+     * Get the text direction for a locale ('rtl' or 'ltr')
+     */
+    function getLocaleDirection($locale = null)
+    {
+        return isRtlLocale($locale) ? 'rtl' : 'ltr';
     }
 }
 

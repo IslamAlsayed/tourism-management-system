@@ -71,11 +71,10 @@
         </div>
 
         {{-- Bulk Action Buttons --}}
-        @if (!empty($selectedIds) && count($selectedIds) > 0)
-            <div
+        <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0"
                 class="mb-4 flex flex-wrap items-center gap-2 px-1 bg-gray-50 p-3 rounded-lg border border-gray-200 shadow-sm">
                 <span class="text-sm font-medium text-gray-700 me-2 p-2 bg-white rounded border border-gray-300">
-                    {{ __('main.selected') }}: <span class="badge badge-primary">{{ count($selectedIds) }}</span>
+                    {{ __('main.selected') }}: <span class="badge badge-primary" x-text="$wire.selectedIds.length"></span>
                 </span>
 
                 <div x-data="{
@@ -91,7 +90,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('activateSelected');
+                                    $wire.call('activateSelected');
                                 }
                             })
                         },
@@ -107,7 +106,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('deactivateSelected');
+                                    $wire.call('deactivateSelected');
                                 }
                             })
                         },
@@ -123,7 +122,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('enableAutoUpdateSelected');
+                                    $wire.call('enableAutoUpdateSelected');
                                 }
                             })
                         },
@@ -139,7 +138,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('disableAutoUpdateSelected');
+                                    $wire.call('disableAutoUpdateSelected');
                                 }
                             })
                         },
@@ -155,7 +154,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('markMajorSelected');
+                                    $wire.call('markMajorSelected');
                                 }
                             })
                         },
@@ -171,7 +170,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('unmarkMajorSelected');
+                                    $wire.call('unmarkMajorSelected');
                                 }
                             })
                         },
@@ -187,7 +186,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('markBaseSelected');
+                                    $wire.call('markBaseSelected');
                                 }
                             })
                         },
@@ -203,7 +202,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('deleteSelected');
+                                    $wire.call('deleteSelected');
                                 }
                             })
                         },
@@ -219,44 +218,45 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('forceDeleteSelected');
+                                    $wire.call('forceDeleteSelected');
                                 }
                             })
                         }
                 }" class="flex flex-wrap gap-2 items-center">
-                    <button type="button" x-on:click.prevent="confirmActivate" class="btn btn-success btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmActivate" class="kt-btn kt-btn-success kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-check-circle fs-3"></i> {{ __('main.activate') }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmDeactivate" class="btn btn-warning btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmDeactivate" class="kt-btn kt-btn-warning kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-cross-circle fs-3"></i> {{ __('main.deactivate') }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmEnableAutoUpdate" class="btn btn-primary btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmEnableAutoUpdate" class="kt-btn kt-btn-primary kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-arrows-circle fs-3"></i> {{ __('main.enable_auto_update') ?? 'Enable Auto Update' }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmDisableAutoUpdate" class="btn btn-dark btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmDisableAutoUpdate" class="kt-btn kt-btn-dark kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-lock-2 fs-3"></i> {{ __('main.disable_auto_update') ?? 'Fix Exchange Rate' }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmMarkMajor" class="btn btn-info btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmMarkMajor" class="kt-btn kt-btn-info kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-star fs-3"></i> {{ __('main.mark_major') ?? 'Mark as Major' }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmUnmarkMajor" class="btn btn-secondary btn-sm flex items-center gap-1.5 px-3 border border-border">
+                    <button type="button" x-on:click.prevent="confirmUnmarkMajor" class="kt-btn kt-btn-secondary kt-btn-sm flex items-center gap-1.5 px-3 border border-border">
                         <i class="ki-outline ki-cross-circle fs-3"></i> {{ __('main.unmark_major') ?? 'Unmark Major' }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmMarkBase" class="btn btn-success btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmMarkBase" class="kt-btn kt-btn-success kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-bank fs-3"></i> {{ __('main.mark_base') ?? 'Set as Base' }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmDelete" class="btn btn-danger btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmDelete" class="kt-btn kt-btn-destructive kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-trash fs-3"></i> {{ __('main.delete') }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmForceDelete" class="btn btn-danger btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmForceDelete" class="kt-btn kt-btn-destructive kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-trash-square fs-3"></i> {{ __('main.force_delete') }}
                     </button>
-                    <button type="button" wire:click.prevent="clearSelected" class="btn btn-secondary btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" @click.prevent="$wire.selectedIds = []" class="kt-btn kt-btn-secondary kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-cross fs-3"></i> {{ __('main.cancel_selection') }}
                     </button>
                 </div>
             </div>
-        @endif
+        
+
         <div data-kt-datatable-state-save="false" id="currencies_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
@@ -275,3 +275,4 @@
         </div>
     </div>
 </div>
+

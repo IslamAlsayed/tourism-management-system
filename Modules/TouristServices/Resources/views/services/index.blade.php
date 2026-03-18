@@ -10,7 +10,7 @@
         'page_create_title' => __('main.create_type', ['type' => __('main.tourist-service')]),
     ])
         @slot('fake_data')
-            <span class="inline-block bg-danger text-white font-medium px-2 py-0.5 rounded-[7px] ms-2">
+            <span class="inline-block kt-badge kt-badge-destructive px-2 py-0.5 rounded-[7px] ms-2">
                 {{ __('main.fake_data') }}
             </span>
         @endslot

@@ -5,15 +5,15 @@ namespace Modules\Geography\Entities;
 use App\Traits\BroadcastsRecordEvents;
 use App\Traits\ClearsEmptyRichText;
 use App\Traits\FiltersByUserRole;
-use App\Traits\HasUuid;
 use App\Traits\HasSearch;
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Tonysm\RichTextLaravel\Models\Traits\HasRichText;
 
 class Region extends Model
 {
-    use HasSearch, HasUuid, HasRichText, FiltersByUserRole, BroadcastsRecordEvents, ClearsEmptyRichText, SoftDeletes;
+    use BroadcastsRecordEvents, ClearsEmptyRichText, FiltersByUserRole, HasRichText, HasSearch, HasUuid, SoftDeletes;
 
     protected $richTextAttributes = [
         'description',
@@ -56,9 +56,17 @@ class Region extends Model
         return $this->hasManyThrough(State::class, Country::class);
     }
 
+    /**
+     * Cities accessible via states.country chain.
+     * NOTE: Not a standard Eloquent relation - do NOT include in getRelationshipNames()
+     */
     public function cities()
     {
-        return $this->hasManyThrough(City::class, Country::class);
+        return City::whereHas('state', function ($q) {
+            $q->whereHas('country', function ($q2) {
+                $q2->where('region_id', $this->id);
+            });
+        });
     }
 
     public function accommodations()
@@ -76,4 +84,3 @@ class Region extends Model
         return $this->hasManyThrough(\Modules\Transportation\Entities\Company::class, Country::class);
     }
 }
-

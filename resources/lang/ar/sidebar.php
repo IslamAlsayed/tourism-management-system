@@ -2,6 +2,7 @@
 
 return [
     'dashboard' => 'لوحة التحكم',
+    'Ai-Agent' => 'المساعد الذكي',
     'quotation requests' => 'طلبات الاقتباس',
     'quotation requests v1' => 'طلبات الاقتباس V1',
     'quotation requests v2' => 'طلبات الاقتباس V2',
@@ -176,6 +177,17 @@ return [
     'currencies' => 'العملات',
     'currencies management' => 'إدارة العملات',
     'add new currency' => 'إضافة عملة جديدة',
+    'system languages' => 'لغات النظام',
+    'currencies' => 'العملات',
+    'timezones' => 'المناطق الزمنية',
+
+    // Banners
+    'page banners' => 'بانرات الصفحات',
+
+    // System Columns
+    'system columns' => 'أعمدة الجداول',
+
+    // Roles and Permissionst' => 'إدارة المناطق الزمنية',
     'create currency' => 'إنشاء عملة جديدة',
     'import currencies' => 'استيراد عملات',
     'timezones' => 'المناطق الزمنية',

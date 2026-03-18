@@ -10,6 +10,13 @@ return [
             'route' => 'dashboard',
         ],
 
+        // ================= Ai Agent =================
+        [
+            'title' => 'Ai-Agent',
+            'icon' => 'fas fa-robot',
+            'route' => 'ai-agent.chat.ui', 
+        ],
+
         // ================= Subscriptions =================
         // [
         //     'title' => 'subscriptions',
@@ -402,6 +409,22 @@ return [
             ],
         ],
 
+        // ================= System Columns - أعمدة النظام =================
+        [
+            'title' => 'system_columns',
+            'icon' => 'fas fa-columns',
+            'fixed' => 'done',
+            'label' => 'system_columns',
+            'children' => [
+                [
+                    'title' => 'manage columns',
+                    'icon' => 'fas fa-table-columns',
+                    'route' => 'core.system-columns.index',
+                    'roles' => ['admin', 'superadmin']
+                ],
+            ]
+        ],
+
         // ================= Localization - التعريب =================
         [
             'title' => 'localization',
@@ -442,6 +465,12 @@ return [
                             'route' => 'dashboard.localization.system-languages.create'
                         ]
                     ],
+                ],
+                // ================= Page Banners - بانرات الأقسام =================
+                [
+                    'title' => 'page banners',
+                    'icon' => 'fas fa-image',
+                    'route' => 'localization.page-banners'
                 ],
                 // ================= Currencies - العملات =================
                 [
@@ -1555,6 +1584,20 @@ return [
                     'title' => 'google drive',
                     'icon' => 'ki-outline ki-folder',
                     'route' => 'dashboard.mcp.google-drive',
+                ],
+            ],
+        ],
+        // ================= Automation - الأتمتة =================
+        [
+            'title' => 'automation',
+            'icon' => 'fas fa-robot',
+            'label' => 'automation',
+            'children' => [
+                [
+                    'title' => 'automation_settings',
+                    'icon' => 'fas fa-cog',
+                    'route' => 'automation.settings',
+                    'roles' => ['admin', 'superadmin']
                 ],
             ],
         ],

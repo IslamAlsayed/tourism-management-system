@@ -61,6 +61,7 @@ class ExcelController extends Controller
                 'transportation-departments' => 'transportation-departments',
                 'transportation-vehicles' => 'transportation-vehicles',
                 'tours-guides' => 'tourguides::guides',
+                'tours.guides' => 'tourguides::guides',
                 'guide-types' => 'tourguides::types',
                 'guide-reviews' => 'tourguides::reviews',
             ];
@@ -98,7 +99,7 @@ class ExcelController extends Controller
         
         $viewToUse = view()->exists($specificView) ? $specificView : $genericView;
         
-        return view($viewToUse, compact('title', 'description', 'models', 'model', 'view', 'googleDriveUrl', 'lastImport', 'history'));
+        return view($viewToUse, compact('title', 'description', 'models', 'model', 'view', 'googleDriveUrl', 'lastImport', 'history', 'modelClass'));
     }
 
     public function importData(Request $request, $models)

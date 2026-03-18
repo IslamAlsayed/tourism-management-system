@@ -62,7 +62,7 @@
                         <div>
                             <label class="kt-label mb-1">{{ __('main.field_type') }}</label>
                             <p class="text-sm text-secondary-foreground">
-                                <span class="badge badge-info px-2 py-1 rounded text-xs">
+                                <span class="kt-badge kt-badge-info px-2 py-1 rounded text-xs">
                                     {{ $fieldTypes[$fieldDefinition->field_type] ?? $fieldDefinition->field_type }}
                                 </span>
                             </p>
@@ -75,9 +75,9 @@
                             <label class="kt-label mb-1">{{ __('main.required') }}</label>
                             <p class="text-sm">
                                 @if ($fieldDefinition->is_required)
-                                    <span class="badge badge-warning px-2 py-1 rounded text-xs">{{ __('main.yes') }}</span>
+                                    <span class="kt-badge kt-badge-warning px-2 py-1 rounded text-xs">{{ __('main.yes') }}</span>
                                 @else
-                                    <span class="badge badge-light px-2 py-1 rounded text-xs">{{ __('main.no') }}</span>
+                                    <span class="kt-badge kt-badge-light px-2 py-1 rounded text-xs">{{ __('main.no') }}</span>
                                 @endif
                             </p>
                         </div>
@@ -86,10 +86,10 @@
                             <p class="text-sm">
                                 @if ($fieldDefinition->is_active)
                                     <span
-                                        class="badge badge-success px-2 py-1 rounded text-xs">{{ __('main.active') }}</span>
+                                        class="kt-badge kt-badge-success px-2 py-1 rounded text-xs">{{ __('main.active') }}</span>
                                 @else
                                     <span
-                                        class="badge badge-danger px-2 py-1 rounded text-xs">{{ __('main.inactive') }}</span>
+                                        class="kt-badge kt-badge-destructive px-2 py-1 rounded text-xs">{{ __('main.inactive') }}</span>
                                 @endif
                             </p>
                         </div>
@@ -105,7 +105,7 @@
                     <div class="kt-card-body p-4">
                         <div class="flex flex-wrap gap-2">
                             @foreach ($fieldDefinition->options as $option)
-                                <span class="badge badge-outline px-3 py-1 rounded-full text-sm">{{ $option }}</span>
+                                <span class="kt-badge kt-badge-outline px-3 py-1 rounded-full text-sm">{{ $option }}</span>
                             @endforeach
                         </div>
                     </div>

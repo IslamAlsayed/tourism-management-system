@@ -620,7 +620,7 @@
             const html = `
                     <div class="season-group border-custom rounded-lg p-4 bg-gray-50 relative mb-6" data-group-id="${groupId}">
                         <div class="flex justify-end mb-2">
-                            <button type="button" onclick="window.manualRemoveSeason(this)" class="btn btn-sm btn-light-danger flex items-center gap-2 remove-season-btn">
+                            <button type="button" onclick="window.manualRemoveSeason(this)" class="kt-btn kt-btn-sm kt-btn-light kt-btn-destructive flex items-center gap-2 remove-season-btn">
                                 <i class="ki-outline ki-trash fs-5"></i>
                                 {{ __('main.remove_season') }}
                             </button>

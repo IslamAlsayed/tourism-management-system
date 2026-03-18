@@ -12,6 +12,9 @@
                 </a>
                 <span class="text-secondary-foreground">
                     v{{ optional($settings)->app_version ?: config('app.app_version', '4.1.0') }}
+                    @if(optional($settings)->app_template_version)
+                        | <span class="font-medium">Theme {{ $settings->app_template_version }}</span>
+                    @endif
                 </span>
             </div>
             <nav class="order-1 flex gap-4 text-sm font-normal text-secondary-foreground md:order-2">

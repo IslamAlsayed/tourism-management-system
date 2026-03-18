@@ -283,7 +283,7 @@
 
                             @if ($country->latitude && $country->longitude)
                                 <div class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 mt-2">
-                                    <button type="button" class="btn btn-sm btn-light-primary w-fit" 
+                                    <button type="button" class="kt-btn kt-btn-sm kt-btn-light w-fit" 
                                         x-data 
                                         @click="$dispatch('open-map-modal', { lat: '{{ $country->latitude }}', lng: '{{ $country->longitude }}', title: {{ Js::from($country->name) }} })">
                                         <i class="ki-filled ki-geolocation text-base me-2"></i>

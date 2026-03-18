@@ -23,6 +23,7 @@
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
+                    'allColumns' => $allColumns ?? [],
                     'search' => $search,
                     'models' => 'dashboard.tourguides.guides-types',
                     'selectedIds' => $selectedIds ?? [],

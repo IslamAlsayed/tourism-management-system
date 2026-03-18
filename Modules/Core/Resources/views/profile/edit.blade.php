@@ -187,9 +187,9 @@
                             <div class="flex flex-col gap-2">
                                 <label class="text-sm font-bold text-foreground">{{ __('main.company_website') }}</label>
                                 <div class="kt-input rounded-xl h-[45px]">
-                                    <input type="url" name="company_website"
+                                    <input type="text" name="company_website"
                                         value="{{ old('company_website', $user->company_website) }}"
-                                        placeholder="https://example.com">
+                                        placeholder="example.com">
                                 </div>
                                 @error('company_website')
                                     <span class="text-danger text-xs">{{ $message }}</span>

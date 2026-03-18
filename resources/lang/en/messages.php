@@ -43,6 +43,9 @@ return [
     'validation_error' => 'Validation Error',
     'server_error' => 'Server Error',
     'are_you_sure' => 'Are you sure?',
+    'are_you_sure_delete' => 'This item will be moved to the archive (soft delete). You can restore it later.',
+    'are_you_sure_force_delete' => 'This will PERMANENTLY delete this record from the database.',
+    'force_delete_warning' => 'This action cannot be undone. All related data may be affected.',
 
     // Type Creation
     'type_created' => ':type Created',
@@ -177,4 +180,24 @@ return [
     'confirm_bulk_disable_auto_update' => 'Are you sure you want to disable auto-update (fix exchange rate) for the selected items?',
     'confirm_bulk_delete' => "Are you sure you want to delete the selected items? NOTE: This is a 'Soft Delete'. The items will be hidden from the screen but remain in the database archive. Their IDs are preserved, meaning you cannot re-import or create new items with the same IDs.",
     'confirm_bulk_force_delete' => "WARNING: Are you sure you want to PERMANENTLY delete the selected items? CRITICAL: This will completely erase the data from the database. Next time you create or import items, they will get NEW, higher IDs, which may break relationships with other modules (like Hotels or Restaurants). Use only if absolutely necessary!",
+
+    // System Languages
+    'status_updated' => 'تم تحديث حالة :type بنجاح.',
+    'columns_cleared_to_minimum' => 'Columns cleared, keeping minimum required.',
+    'default_language_updated' => 'تم تحديث اللغة الافتراضية بنجاح.',
+
+    // Banners
+    'page_banners' => 'Page Banners',
+    'add_banner' => 'Add New Banner',
+    'edit_banner' => 'Edit Banner',
+    'banner_image' => 'Banner Image',
+    'route' => 'Route',
+    'select_route' => 'Select Route...',
+
+    // System Columns
+    'system_columns' => 'System Columns Management',
+    'manage_system_columns' => 'Manage System Columns',
+    'select_module' => 'Select Module',
+    'available_columns' => 'Available Columns',
+    'columns_updated_successfully' => 'System columns updated successfully.',
 ];

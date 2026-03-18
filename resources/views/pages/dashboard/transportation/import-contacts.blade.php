@@ -14,7 +14,7 @@
                     <p class="text-muted mt-2">{{ $description }}</p>
                 </div>
                 <div class="col-auto">
-                    <a href="{{ route('dashboard.transportation.companies.index') }}" class="btn btn-outline-primary">
+                    <a href="{{ route('dashboard.transportation.companies.index') }}" class="kt-btn kt-btn-outline kt-btn-primary">
                         <i class="fas fa-arrow-left me-2"></i>{{ __('main.back') }}
                     </a>
                 </div>
@@ -63,7 +63,7 @@
 
                             <!-- Submit Button -->
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary btn-lg">
+                                <button type="submit" class="kt-btn kt-btn-primary kt-btn-lg">
                                     <i class="fas fa-upload me-2"></i>{{ __('main.import_contacts') }}
                                 </button>
                             </div>
@@ -92,7 +92,7 @@
                             </div>
 
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-success btn-lg">
+                                <button type="submit" class="kt-btn kt-btn-success kt-btn-lg">
                                     <i class="fas fa-download me-2"></i>{{ __('main.export_contacts') }}
                                 </button>
                             </div>

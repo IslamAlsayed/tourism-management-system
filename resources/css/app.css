@@ -125,6 +125,56 @@
     }
 }
 
+/* ═══════════════════════════════════════════════════════════════ */
+/* Search Container & Input - Dark Mode Fix                       */
+/* Prevents black border/ring on focus and fixes text visibility   */
+/* ═══════════════════════════════════════════════════════════════ */
+@layer base {
+    /* Dark mode container background */
+    html.dark #search-container,
+    [data-kt-theme-mode="dark"] #search-container {
+        background-color: #1b1b29 !important;
+        border-color: #2d2d3f !important;
+    }
+
+    html.dark #search-container:focus-within,
+    [data-kt-theme-mode="dark"] #search-container:focus-within {
+        border-color: var(--tw-color-primary, #3b82f6) !important;
+    }
+
+    /* Kill ALL black borders/rings/shadows on the search input */
+    #search,
+    #search:focus,
+    #search:active,
+    #search:hover {
+        border: none !important;
+        outline: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Dark mode text and placeholder */
+    html.dark #search,
+    [data-kt-theme-mode="dark"] #search {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        background-color: transparent !important;
+    }
+
+    html.dark #search::placeholder,
+    [data-kt-theme-mode="dark"] #search::placeholder {
+        color: rgba(255, 255, 255, 0.45) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.45) !important;
+    }
+
+    /* Light mode text */
+    html:not(.dark) #search,
+    [data-kt-theme-mode="light"] #search {
+        color: #1f2937 !important;
+        -webkit-text-fill-color: #1f2937 !important;
+    }
+}
+
 @layer components {
     /* Align FontAwesome icons in the Metronic sidebar */
     .menu-icon i[class*="fa-"],

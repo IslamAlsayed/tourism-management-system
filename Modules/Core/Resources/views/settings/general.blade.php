@@ -17,7 +17,7 @@
                 <a href="{{ route('dashboard.core.settings.index') }}" class="kt-btn kt-btn-outline">
                     {{ __('main.back_to_types', ['types' => __('main.settings')]) }}
                 </a>
-                <button class="kt-btn kt-btn-primary">
+                <button type="button" onclick="document.getElementById('general-settings-form').submit()" class="kt-btn kt-btn-primary">
                     {{ __('main.save_changes') }}
                 </button>
             </div>
@@ -32,7 +32,7 @@
                     <h3 class="kt-card-title">{{ __('main.app_info') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('dashboard.core.settings.update', optional($settings)->id ?? 0) }}" enctype="multipart/form-data" class="space-y-6 p-4">
+                    <form method="POST" action="{{ route('dashboard.core.settings.update', optional($settings)->id ?? 0) }}" enctype="multipart/form-data" class="space-y-6 p-4" id="general-settings-form">
                         @csrf
                         @method('PUT')
 
@@ -54,11 +54,36 @@
                             </div>
 
                             {{-- Timezone --}}
-                            @include('components.selects.timezone', ['record' => $settings])
+                            @include('components.selects.timezone', ['record' => $settings, 'name' => 'app_timezone'])
 
                             <div>
                                 <label class="kt-label mb-2">{{ __('main.app_version') }}</label>
                                 <input type="text" name="app_version" class="kt-input h-[45px]" value="{{ optional($settings)->app_version }}" />
+                            </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.template_version') }}</label>
+                                <input type="text" name="app_template_version" class="kt-input h-[45px]" value="{{ optional($settings)->app_template_version }}" placeholder="e.g. v12.37.0" />
+                            </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.logo_width') ?? 'Logo Width' }} <span class="font-semibold text-primary">(px / %, e.g. 150px)</span></label>
+                                <input type="text" name="app_logo_width" class="kt-input h-[45px]" value="{{ optional($settings)->app_logo_width ?? '150px' }}" placeholder="150px" />
+                            </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.logo_height') ?? 'Logo Height' }} <span class="font-semibold text-primary">(px / %, e.g. auto)</span></label>
+                                <input type="text" name="app_logo_height" class="kt-input h-[45px]" value="{{ optional($settings)->app_logo_height ?? 'auto' }}" placeholder="auto" />
+                            </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.auth_logo_width') ?? 'Auth Logo Width' }} <span class="font-semibold text-primary">(px / %, e.g. 150px)</span></label>
+                                <input type="text" name="auth_logo_width" class="kt-input h-[45px]" value="{{ optional($settings)->auth_logo_width ?? '150px' }}" placeholder="150px" />
+                            </div>
+
+                            <div>
+                                <label class="kt-label mb-2">{{ __('main.auth_logo_height') ?? 'Auth Logo Height' }} <span class="font-semibold text-primary">(px / %, e.g. auto)</span></label>
+                                <input type="text" name="auth_logo_height" class="kt-input h-[45px]" value="{{ optional($settings)->auth_logo_height ?? 'auto' }}" placeholder="auto" />
                             </div>
 
                             <div>
@@ -94,23 +119,19 @@
                         <div class="flex gap-6 mb-4">
                             <div class="flex items-center gap-3">
                                 <input type="hidden" name="app_show_uuid_column" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'app_show_uuid_column',
-                                    'id' => 'app_show_uuid_column',
-                                    'value' => '1',
-                                    'checked' => optional($settings)->app_show_uuid_column ?? 0,
-                                    'label' => __('main.app_show_uuid_column'),
-                                ])
+                                <div class="custom-input">
+                                    <input type="checkbox" name="app_show_uuid_column" id="app_show_uuid_column"
+                                        value="1" {{ optional($settings)->app_show_uuid_column ? 'checked' : '' }}>
+                                    <label for="app_show_uuid_column">{{ __('main.app_show_uuid_column') }}</label>
+                                </div>
                             </div>
                             <div class="flex items-center gap-3">
                                 <input type="hidden" name="app_display_menu_labels" value="0">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'app_display_menu_labels',
-                                    'id' => 'app_display_menu_labels',
-                                    'value' => '1',
-                                    'checked' => optional($settings)->app_display_menu_labels ?? 1,
-                                    'label' => __('main.app_display_menu_labels'),
-                                ])
+                                <div class="custom-input">
+                                    <input type="checkbox" name="app_display_menu_labels" id="app_display_menu_labels"
+                                        value="1" {{ optional($settings)->app_display_menu_labels ? 'checked' : '' }}>
+                                    <label for="app_display_menu_labels">{{ __('main.app_display_menu_labels') }}</label>
+                                </div>
                             </div>
                         </div>
 

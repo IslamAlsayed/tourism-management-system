@@ -13,7 +13,7 @@
             @foreach(['foreigner', 'arab', 'resident'] as $nat)
                 <tr>
                     <td class="font-weight-bold text-capitalize">
-                        <span class="kt-badge kt-badge--dot kt-badge--{{ $nat === 'foreigner' ? 'primary' : ($nat === 'arab' ? 'success' : 'warning') }}"></span>
+                        <span class="kt-badge kt-badge-dot kt-badge-{{ $nat === 'foreigner' ? 'primary' : ($nat === 'arab' ? 'success' : 'warning') }}"></span>
                         {{ $nat }}
                     </td>
                     
@@ -22,7 +22,7 @@
                         @if(isset($seasonData['adult'][$nat]['cost']))
                             <span class="font-weight-bold text-dark display-5 d-block">{{ $seasonData['adult'][$nat]['cost'] }}</span>
                             @if(isset($seasonData['adult'][$nat]['commission']) && $seasonData['adult'][$nat]['commission'] == 1)
-                                <span class="badge badge-sm badge-success mt-1">Comm</span>
+                                <span class="kt-badge kt-badge-sm kt-badge-success mt-1">Comm</span>
                             @endif
                         @else
                             <span class="text-muted">-</span>
@@ -34,7 +34,7 @@
                         @if(isset($seasonData['child'][$nat]['cost']))
                             <span class="font-weight-bold text-dark d-block">{{ $seasonData['child'][$nat]['cost'] }}</span>
                             @if(isset($seasonData['child'][$nat]['commission']) && $seasonData['child'][$nat]['commission'] == 1)
-                                <span class="badge badge-sm badge-success mt-1">Comm</span>
+                                <span class="kt-badge kt-badge-sm kt-badge-success mt-1">Comm</span>
                             @endif
                         @else
                             <span class="text-muted">-</span>
@@ -46,7 +46,7 @@
                          @if(isset($seasonData['infant'][$nat]['cost']))
                             <span class="font-weight-bold text-dark d-block">{{ $seasonData['infant'][$nat]['cost'] }}</span>
                             @if(isset($seasonData['infant'][$nat]['commission']) && $seasonData['infant'][$nat]['commission'] == 1)
-                                <span class="badge badge-sm badge-success mt-1">Comm</span>
+                                <span class="kt-badge kt-badge-sm kt-badge-success mt-1">Comm</span>
                             @endif
                         @else
                             <span class="text-muted">-</span>

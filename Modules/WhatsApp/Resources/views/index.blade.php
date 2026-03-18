@@ -18,7 +18,7 @@
                 <p class="text-gray-400 fs-4 fw-bold mb-10">
                     ربط وإدارة خدمة رسائل واتساب وإرسال الإشعارات للمرشدين والسياح بشكل تلقائي.
                 </p>
-                <span class="badge badge-light-warning fs-base px-4 py-3">قريباً</span>
+                <span class="kt-badge kt-badge-light kt-badge-warning fs-base px-4 py-3">قريباً</span>
             </div>
         </div>
     </div>

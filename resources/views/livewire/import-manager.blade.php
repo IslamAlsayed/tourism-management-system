@@ -8,7 +8,7 @@
     </div>
 
     <div class="flex items-center space-x-2">
-        <button wire:click.prevent="startImport" class="btn btn-primary">Start Import</button>
+        <button wire:click.prevent="startImport" class="kt-btn kt-btn-primary">Start Import</button>
         <span class="text-sm text-gray-600">{{ $status }}</span>
     </div>
 

@@ -19,12 +19,12 @@
     <div class="kt-card-content px-2" wire:loading.class="loading"
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,activateSelected,deactivateSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterActive,filterTypeId,filterRegionId">
 
-        <!-- Filters -->
-        <div class="mb-4 grid grid-cols-1 md-grid-cols-2 lg:grid-cols-4 gap-4 filterTable">
+        <!-- Unified Dropdown Filters -->
+        <div class="mb-5 flex flex-wrap items-end gap-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200/60 dark:border-amber-700/30 p-3 rounded-xl relative z-[5] shadow-sm">
             {{-- Active Filter --}}
-            <div>
-                <label for="filterActive" class="text-sm">{{ __('main.active') }}</label>
-                <select wire:model.live="filterActive" class="kt-select h-[40px] w-full max-w-full" id="filterActive">
+            <div class="min-w-[140px] flex-1 max-w-[200px]">
+                <label for="filterActive" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.status') }}</label>
+                <select wire:model.live="filterActive" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterActive">
                     <option value="all">{{ __('main.all') }}</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
@@ -32,9 +32,9 @@
             </div>
 
             {{-- Type Filter --}}
-            <div>
-                <label for="filterTypeId" class="text-sm">{{ __('main.type') }}</label>
-                <select wire:model.live="filterTypeId" class="kt-select h-[40px] w-full max-w-full" id="filterTypeId">
+            <div class="min-w-[140px] flex-1 max-w-[200px]">
+                <label for="filterTypeId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.type') }}</label>
+                <select wire:model.live="filterTypeId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterTypeId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($types as $typeId => $typeName)
                         <option value="{{ $typeId }}">{{ $typeName }}</option>
@@ -43,10 +43,9 @@
             </div>
 
             {{-- Region Filter --}}
-            <div>
-                <label for="filterRegionId" class="text-sm">{{ __('main.region') }}</label>
-                <select wire:model.live="filterRegionId" class="kt-select h-[40px] w-full max-w-full"
-                    id="filterRegionId">
+            <div class="min-w-[140px] flex-1 max-w-[200px]">
+                <label for="filterRegionId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.regions') }}</label>
+                <select wire:model.live="filterRegionId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterRegionId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($regions as $regionId => $regionName)
                         <option value="{{ $regionId }}">{{ $regionName }}</option>
@@ -55,12 +54,13 @@
             </div>
 
             {{-- Reset Button --}}
-            @include('components.elements.reset-button')
+            <div class="flex items-end h-[36px]">
+                @include('components.elements.reset-button')
+            </div>
         </div>
 
         {{-- Bulk Action Buttons --}}
-        @if (!empty($selectedIds) && count($selectedIds) > 0)
-            <div x-data="{
+        <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0" x-data="{
                 confirmActivate() {
                         Swal.fire({
                             title: '{{ __('messages.are_you_sure') }}',
@@ -73,7 +73,7 @@
                             cancelButtonText: '{{ __('main.no') }}'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                @this.call('activateSelected');
+                                $wire.call('activateSelected');
                             }
                         })
                     },
@@ -89,7 +89,7 @@
                             cancelButtonText: '{{ __('main.no') }}'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                @this.call('deactivateSelected');
+                                $wire.call('deactivateSelected');
                             }
                         })
                     },
@@ -105,7 +105,7 @@
                             cancelButtonText: '{{ __('main.no') }}'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                @this.call('deleteSelected');
+                                $wire.call('deleteSelected');
                             }
                         })
                     }
@@ -146,3 +146,4 @@
         </div>
     </div>
 </div>
+

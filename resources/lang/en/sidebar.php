@@ -176,6 +176,15 @@ return [
     'currencies management' => 'Currencies Management',
     'all currencies' => 'All Currencies',
     'add new currency' => 'Add New Currency',
+    'system languages' => 'System Languages',
+    'currencies' => 'Currencies',
+    // Banners
+    'page banners' => 'Page Banners',
+
+    // System Columns
+    'Ai-Agent' => 'AI Assistant',
+    'system_columns' => 'System Columns',
+
     'create currency' => 'Create Currency',
     'import currencies' => 'Import Currencies',
     'timezones' => 'Timezones',

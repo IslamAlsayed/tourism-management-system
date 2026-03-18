@@ -22,7 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string|max:255|unique:accommodations,name',
+            'name' => ['nullable', 'string', 'max:255', \Illuminate\Validation\Rule::unique('transportations_companies', 'name')->ignore($this->route('company'))],
             'name_ar' => 'nullable|string|max:255',
             'rating' => 'nullable|integer|min:1|max:5',
             'postal_code' => 'nullable|string|max:20',

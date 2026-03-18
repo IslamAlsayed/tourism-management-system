@@ -113,15 +113,29 @@ trait CustomColumnsLivewireLegacy
             return;
         }
 
+        $model = new $this->modelClass();
+        $excluded = $this->getExcludedColumnsWithSettings($model);
+        $cleanPending = array_diff($this->pendingColumns, $excluded);
+        $columnsToSave = array_values(array_intersect($cleanPending, $this->allColumns));
+
+        // Save as system default
         \App\Models\TableColumn::updateOrCreate(
             ['model_class' => $this->modelClass, 'user_id' => null],
-            ['columns' => $this->columns]
+            ['columns' => $columnsToSave]
         );
 
-        $this->dispatch('notify', [
+        // Also apply to current user view
+        $this->columns = $columnsToSave;
+        getActiveUser()->saveTableColumnsFor($this->modelClass, $this->columns);
+        $this->hasCustomColumns = true;
+
+        $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.system_default_saved') ?? 'System default columns saved successfully.'
+            'message' => __('main.system_default_saved') ?? 'System default columns saved successfully.'
         ]);
+        
+        // Refresh page so rows are updated
+        $this->dispatch('refresh-page');
     }
 
     public function applyColumns()
@@ -142,6 +156,8 @@ trait CustomColumnsLivewireLegacy
             getActiveUser()->saveTableColumnsFor($this->modelClass, $this->columns);
             $this->hasCustomColumns = true; // Mark that user now has custom columns
         }
+        
+        $this->dispatch('close-modal');
     }
 
     /**
@@ -171,6 +187,31 @@ trait CustomColumnsLivewireLegacy
 
         // Apply changes immediately for toggleAll for better UX
         $this->applyColumns();
+    }
+
+    /**
+     * Clear all selected columns (keeps minimum essential columns)
+     */
+    public function clearAllColumns(): void
+    {
+        // Keep essential columns to prevent empty table
+        $essentialColumns = array_values(array_intersect(
+            ['id', 'name'],
+            $this->allColumns
+        ));
+
+        // If no essential columns found, keep at least the first column
+        if (empty($essentialColumns) && !empty($this->allColumns)) {
+            $essentialColumns = [reset($this->allColumns)];
+        }
+
+        $this->pendingColumns = $essentialColumns;
+        $this->applyColumns();
+
+        $this->dispatch('show-toast', [
+            'type' => 'info',
+            'message' => __('messages.columns_cleared_to_minimum', ['default' => 'Columns reset to minimum essentials.']),
+        ]);
     }
 
     /**

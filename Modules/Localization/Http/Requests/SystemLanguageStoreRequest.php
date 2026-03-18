@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Modules\Localization\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,9 +22,12 @@ class SystemLanguageStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|unique:languages,name",
-            "code" => "required|unique:languages,code",
-            'photo' => ['required', 'string', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120']
+            "name" => "required|unique:system_languages,name",
+            "name_ar" => "nullable|string",
+            "code" => "required|unique:system_languages,code",
+            "native" => "nullable|string|max:255",
+            "dir" => "required|in:ltr,rtl",
+            'photo' => ['nullable', 'file', 'mimes:jpeg,png,jpg,gif,webp,svg', 'max:5120']
         ];
     }
 }

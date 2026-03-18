@@ -1,56 +1,110 @@
-<div class="top-scroll" id="topScroll" wire:ignore>
-    <div class="top-scroll-inner" id="topScrollInner"></div>
-</div>
+@php
+    $tableColumnsForLoop = isset($allColumns) && !empty($allColumns) ? $allColumns : $columns;
+@endphp
+
+    <!-- CSS for top scrollbar styling to match the table's bottom scrollbar -->
+    <style>
+        #topScroll::-webkit-scrollbar { height: 7px; }
+        #topScroll::-webkit-scrollbar-thumb { background: linear-gradient(90deg,theme('colors.blue.600'),theme('colors.blue.500')) !important; border-radius: 10px; }
+        #topScroll::-webkit-scrollbar-track { background: rgba(37,99,235,0.08); border-radius: 10px; }
+        #topScroll.no-overflow { height: 0 !important; overflow: hidden !important; }
+    </style>
+    <div class="top-scroll" id="topScroll" wire:ignore style="scrollbar-color: #2563eb rgba(37,99,235,0.08);">
+        <div class="top-scroll-inner" id="topScrollInner"></div>
+    </div>
 
 <div class="table-wrapper" id="tableWrapper">
-    <table class="kt-table table-auto text-nowrap" id="data_table">
+    <table class="kt-table table-auto text-nowrap" id="data_table"
+           x-data="{ 
+               liveCols: JSON.parse('{{ addslashes(json_encode($columns)) }}'), 
+               selectedIds: @entangle('selectedIds').live,
+               pageIds: JSON.parse('{{ isset($data) && count($data) > 0 ? addslashes(json_encode(array_values(array_map('strval', $data->pluck('id')->toArray())))) : '[]' }}'),
+               init() { 
+                   document.addEventListener('live-cols-update', e => { this.liveCols = e.detail.cols; }); 
+               }, 
+               colVisible(col) { 
+                   return this.liveCols.includes(col); 
+               },
+               get allSelected() {
+                   return this.pageIds.length > 0 && this.pageIds.every(id => this.selectedIds.map(String).includes(String(id)));
+               },
+               toggleAll() {
+                   let isAllSelected = this.allSelected;
+                   if (isAllSelected) {
+                       this.selectedIds = this.selectedIds.filter(id => !this.pageIds.includes(String(id)));
+                   } else {
+                       let newSet = new Set(this.selectedIds.map(String));
+                       this.pageIds.forEach(id => newSet.add(String(id)));
+                       this.selectedIds = Array.from(newSet);
+                   }
+               }
+           }">
         <thead>
-            <tr>
+            <tr wire:key="header-row-{{ md5(implode(',', $columns)) }}">
                 <th class="w-[60px] px-4 py-3 text-center" style="padding-inline-start: 21px">
                     @if (isset($data) && !empty($data) && $data->count() > 0)
-                        @include('components.elements.all-checkbox-button', [
-                            'name' => 'selectPage',
-                            'id' => 'selectPage',
-                        ])
+                        <div class="custom-input cursor-pointer">
+                            <input type="checkbox" name="selectPage" id="selectPage{{ md5(implode(',', $columns)) }}"
+                                :checked="allSelected"
+                                @click="toggleAll()">
+                            <label for="selectPage{{ md5(implode(',', $columns)) }}"></label>
+                        </div>
                     @endif
                 </th>
-                @foreach ($columns as $column)
+                @foreach ($tableColumnsForLoop as $column)
                     @if ($column == 'uuid' && optional($settings)->app_show_uuid_column == 0)
                         @continue
                     @endif
-                    <th class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider relative group">
-                        <div class="flex items-center justify-between min-w-[120px]">
-                            {{-- Clickable Sort Area --}}
-                            <div wire:click="sortBy('{{ $column }}')"
-                                title="{{ __('main.sort_by') }} {{ __('main.' . $column) }}"
-                                class="flex items-center cursor-pointer hover:text-primary transition-colors flex-grow">
-                                {{ __('main.' . $column) }}
-                                <i class="fas {{ $this->getSortIcon($column) }} ms-2 text-[10px]"
-                                    style="{{ $this->isSortedBy($column) ? 'color: #3b82f6;' : '' }}"></i>
-                            </div>
+                    <th wire:key="th-{{ $column }}" 
+                        x-show="colVisible('{{ $column }}')" x-transition
+                        class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider relative group">
+                        <div class="flex items-center gap-2 min-w-[120px]">
+                            
+                            {{-- Clickable Sort Area & Title --}}
+                            <div class="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors">
+                                <span class="uppercase" wire:click="sortBy('{{ $column }}')" title="{{ __('main.sort_by') }} {{ __('main.' . $column) }}">
+                                    {{ __('main.' . $column) }}
+                                </span>
+                                
+                                {{-- Sort Icon Logic --}}
+                                <div wire:click="sortBy('{{ $column }}')" class="flex items-center">
+                                    @if (isset($sortColumn) && $sortColumn == $column)
+                                        @if (isset($sortDirection) && $sortDirection == 'asc')
+                                            <i class="ki-outline ki-arrow-up text-primary ms-1 text-xs"></i>
+                                        @else
+                                            <i class="ki-outline ki-arrow-down text-primary ms-1 text-xs"></i>
+                                        @endif
+                                    @else
+                                        <i class="ki-outline ki-arrow-up-down text-gray-400 ms-1 opacity-0 group-hover:opacity-100 transition-opacity text-xs"></i>
+                                    @endif
+                                </div>
 
-                            {{-- Filter Dropdown (Livewire.dispatch approach for fixed-position dropdown) --}}
-                            <div class="relative"
-                                x-data="{
-                                    open: false,
-                                    fixedTop: 0,
-                                    fixedLeft: 0,
-                                    toggle(btn) {
-                                        const rect = btn.getBoundingClientRect();
-                                        this.fixedTop = rect.bottom + 4;
-                                        this.fixedLeft = rect.left;
-                                        this.open = !this.open;
-                                    },
-                                    close() { this.open = false; }
-                                }"
-                                @click.outside="close()"
-                                x-cloak>
-                                <button type="button"
-                                    @click="toggle($el)"
-                                    class="btn btn-sm btn-icon btn-clear btn-light text-gray-400 hover:text-primary {{ isset($searchColumns[$column]) && !empty($searchColumns[$column]) ? '!text-primary' : '' }}"
-                                    title="{{ __('main.filter_by') }} {{ __('main.' . $column) }}">
-                                    <i class="ki-outline ki-filter text-lg"></i>
-                                </button>
+                                {{-- Filter Funnel Icon (Integrated into Header) --}}
+                                <div class="relative ms-1 flex items-center"
+                                    x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['search_filter_{{ $column }}'] !== false"
+                                    x-data="{
+                                        open: false,
+                                        colId: 'search_filter_{{ $column }}',
+                                        fixedTop: 0,
+                                        fixedLeft: 0,
+                                        toggle(btn) {
+                                            $dispatch('close-all-search-popups');
+                                            const rect = btn.getBoundingClientRect();
+                                            this.fixedTop = rect.bottom + 4;
+                                            this.fixedLeft = rect.left;
+                                            this.open = true;
+                                        },
+                                        close() { this.open = false; }
+                                    }"
+                                    @close-all-search-popups.window="if (open) close()"
+                                    @click.outside="close()"
+                                    x-cloak>
+                                    <button type="button"
+                                        @click.prevent.stop="open ? close() : toggle($el)"
+                                        class="text-gray-400 hover:text-primary {{ !empty($searchColumns[$column] ?? null) ? '!text-primary' : '' }} cursor-pointer"
+                                        title="{{ __('main.filter_by') }} {{ __('main.' . $column) }}">
+                                        <i class="ki-outline ki-filter text-sm"></i>
+                                    </button>
 
                                 <template x-teleport="body">
                                     {{-- Dropdown Panel: fixed via style, dispatches Livewire event --}}
@@ -62,12 +116,12 @@
                                         x-transition:leave-start="opacity-100"
                                         x-transition:leave-end="opacity-0 scale-95"
                                         :style="`position:fixed; top:${fixedTop}px; left:${fixedLeft}px; z-index:99999; width:280px;`"
-                                        class="bg-white dark:bg-[#1e1e2d] border border-gray-200 dark:border-gray-600 rounded-xl shadow-2xl p-4 text-start"
+                                        class="bg-white dark:bg-gray-800 border border-indigo-200 dark:border-indigo-700/50 rounded-xl shadow-2xl p-4 text-start"
                                         @click.outside="close()">
-                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">
+                                    <label class="block text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase mb-2">
                                         {{ __('main.search_in') }} {{ __('main.' . $column) }}
                                     </label>
-                                    <div class="relative flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-lg px-3 py-2 border border-gray-200 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary overflow-hidden">
+                                    <div class="relative flex items-center gap-2 bg-gray-50 dark:bg-gray-900 rounded-lg px-3 py-2 border border-indigo-200 dark:border-indigo-700/50 focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 overflow-hidden">
                                         <i class="ki-outline ki-magnifier text-gray-400 text-sm flex-shrink-0"></i>
                                         <input type="text"
                                             value="{{ $searchColumns[$column] ?? '' }}"
@@ -83,7 +137,7 @@
                                             placeholder="{{ __('main.type_to_search') }}..."
                                             autocomplete="off" />
                                         
-                                        @if(isset($searchColumns[$column]) && !empty($searchColumns[$column]))
+                                        @if(!empty($searchColumns[$column] ?? null))
                                             <div class="absolute end-2 flex items-center justify-center p-1 cursor-pointer group" 
                                                 @click.prevent="
                                                     Livewire.dispatch('filterColumn', { column: '{{ $column }}', value: '' });
@@ -97,61 +151,96 @@
                                     </div>
                                 </template>
                             </div>
-                        </div>
+                         </div>
                     </th>
                 @endforeach
-                <th class="px-4 py-3"></th>
+                <th class="px-4 py-3 text-end min-w-[120px]"
+                    x-data
+                    x-show="!$store.filtersVisibility || 
+                           $store.filtersVisibility.filters['show'] !== false || 
+                           $store.filtersVisibility.filters['edit'] !== false || 
+                           $store.filtersVisibility.filters['delete'] !== false || 
+                           $store.filtersVisibility.filters['force_delete'] !== false"
+                    x-transition x-cloak>
+                    {{ __('main.actions') }}
+                </th>
             </tr>
         </thead>
         <tbody id="data_table_tbody">
             @forelse ($data as $item)
-                <tr wire:key="row-{{ $item->id }}" class="hover:bg-primary/10 transition-colors cursor-pointer unique-record-{{ $item->id }}">
+                <tr wire:key="row-{{ $item->id }}-{{ md5(implode(',', $columns)) }}" class="hover:bg-primary/10 transition-colors cursor-pointer unique-record-{{ $item->id }}">
                     <td class="text-center">
-                        @include('components.elements.checkbox-button', [
-                            'name' => 'selectItem[]',
-                            'id' => 'selectItem' . $item->id,
-                            'value' => $item->id,
-                            'checked' => in_array($item->id, $selectedIds),
-                        ])
+                        <div class="custom-input">
+                            <input type="checkbox" name="selectItem[]" id="selectItem{{ $item->id }}" 
+                                x-model="selectedIds"
+                                value="{{ $item->id }}">
+                            <label for="selectItem{{ $item->id }}"></label>
+                        </div>
                     </td>
-                    @foreach ($columns as $column)
-                        @include('components.static-columns', [
-                            'column' => $column,
-                            'model' => $item,
-                            'search' => $search,
-                            'models' => $models,
-                            'rowIndex' => method_exists($data, 'currentPage') ? ($data->currentPage() - 1) * $data->perPage() + $loop->parent->iteration : $loop->parent->iteration,
-                        ])
+                    @foreach ($tableColumnsForLoop as $column)
+                        <template x-if="colVisible('{{ $column }}')">
+                            @include('components.static-columns', [
+                                'column' => $column,
+                                'model' => $item,
+                                'search' => $search,
+                                'models' => $models,
+                                'rowIndex' => method_exists($data, 'currentPage') ? ($data->currentPage() - 1) * $data->perPage() + $loop->parent->iteration : $loop->parent->iteration,
+                            ])
+                        </template>
                     @endforeach
-                    <td class="px-4 py-2 text-end">
+                    {{-- Actions Column --}}
+                    <td class="px-4 py-2 text-end"
+                        x-data
+                        x-show="!$store.filtersVisibility || 
+                               $store.filtersVisibility.filters['show'] !== false || 
+                               $store.filtersVisibility.filters['edit'] !== false || 
+                               $store.filtersVisibility.filters['delete'] !== false || 
+                               $store.filtersVisibility.filters['force_delete'] !== false"
+                        x-transition x-cloak>
                         <div class="flex gap-2 justify-end">
-                            @if (isset($models) && (getActiveUser()->hasRole('superadmin') || getActiveUser()->can('view', $item)))
-                                @include('components.elements.show-button', [
-                                    'models' => $models,
-                                    'id' => $item->id,
-                                ])
-                            @endif
+                            @if (isset($models))
+                                @if (Auth::check())
+                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['show'] !== false" x-transition x-cloak>
+                                        @include('components.elements.show-button', ['models' => $models, 'id' => $item->id])
+                                    </div>
+                                @endif
 
-                            @if (isset($models) && $models != 'notifications' && (getActiveUser()->hasRole('superadmin') || getActiveUser()->can('update', $item)))
-                                @include('components.elements.edit-button', [
-                                    'models' => $models,
-                                    'id' => $item->id,
-                                ])
-                            @endif
+                                @if ($models != 'notifications' && Auth::check())
+                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['edit'] !== false" x-transition x-cloak>
+                                        @include('components.elements.edit-button', ['models' => $models, 'id' => $item->id])
+                                    </div>
+                                @endif
 
-                            @if (isset($models) && $models == 'notifications' && $item->data && isset($item->data['cta_url']))
-                                <a href="{{ $item->data['cta_url'] }}" class="kt-btn kt-btn-sm kt-btn-primary"
-                                    target="_blank">
-                                    {{ $item->data['cta_text'] ?? __('main.view_action') }}
-                                </a>
-                            @endif
+                                @if ($models == 'notifications' && $item->data && isset($item->data['cta_url']))
+                                    <a href="{{ $item->data['cta_url'] }}" class="btn btn-sm btn-primary" target="_blank">
+                                        {{ $item->data['cta_text'] ?? __('main.view_action') }}
+                                    </a>
+                                @endif
 
-                            @if (isset($models) && (getActiveUser()->hasRole('superadmin') || getActiveUser()->can('delete', $item)))
-                                @include('components.elements.delete-button', ['id' => $item->id])
-                            @endif
+                                @if (Auth::check())
+                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['delete'] !== false" x-transition x-cloak>
+                                        @include('components.elements.delete-button', ['id' => $item->id])
+                                    </div>
+                                @endif
 
-                            @if (isset($models) && (getActiveUser()->hasRole('superadmin') || getActiveUser()->can('forceDelete', $item)))
-                                @include('components.elements.forceDelete-button', ['id' => $item->id])
+                                @if (Auth::check())
+                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['force_delete'] !== false" x-transition x-cloak>
+                                        @include('components.elements.forceDelete-button', ['id' => $item->id])
+                                    </div>
+                                @endif
+                            @else
+                                {{-- Fallback if no models route provided --}}
+                                @if (Auth::check())
+                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['show'] !== false" x-transition x-cloak>
+                                        @include('components.elements.show-button', ['id' => $item->id])
+                                    </div>
+                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['edit'] !== false" x-transition x-cloak>
+                                        @include('components.elements.edit-button', ['id' => $item->id])
+                                    </div>
+                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['delete'] !== false" x-transition x-cloak>
+                                        @include('components.elements.delete-button', ['id' => $item->id])
+                                    </div>
+                                @endif
                             @endif
                         </div>
                     </td>
@@ -170,8 +259,8 @@
     </table>
 </div>
 
-{{-- <script>
+<script>
     document.addEventListener('livewire:initialized', () => {
         Livewire.on('refresh-page', () => setTimeout(() => location.reload(), 0));
     });
-</script> --}}
+</script>

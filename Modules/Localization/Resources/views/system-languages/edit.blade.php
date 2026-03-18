@@ -29,7 +29,7 @@
                     <h3 class="kt-card-title">{{ __('main.basic_language_info') }}</h3>
                 </div>
                 <div class="kt-card-body">
-                    <form method="POST" action="{{ route('dashboard.localization.languages.update', $language->id) }}"
+                    <form method="POST" action="{{ route('dashboard.localization.system-languages.update', $language->id) }}"
                         enctype="multipart/form-data" class="space-y-6 p-4">
                         @csrf
                         @method('PUT')
@@ -69,6 +69,28 @@
                                 <input type="text" name="name" id="name" class="kt-input h-[45px]"
                                     value="{{ $language->name }}">
                                 @error('name')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Native Name -->
+                            <div class="">
+                                <label for="native" class="kt-label mb-2">{{ __('main.native_name') }}</label>
+                                <input type="text" name="native" id="native" class="kt-input h-[45px]" placeholder="e.g. العربية"
+                                    value="{{ $language->native }}">
+                                @error('native')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Language Direction -->
+                            <div class="">
+                                <label for="dir" class="kt-label required mb-2">{{ __('main.direction') }}</label>
+                                <select name="dir" id="dir" class="kt-select h-[45px]" required>
+                                    <option value="ltr" {{ $language->dir == 'ltr' ? 'selected' : '' }}>Left to Right (LTR)</option>
+                                    <option value="rtl" {{ $language->dir == 'rtl' ? 'selected' : '' }}>Right to Left (RTL)</option>
+                                </select>
+                                @error('dir')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

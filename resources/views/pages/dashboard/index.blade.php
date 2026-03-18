@@ -177,7 +177,7 @@
                             </h3>
                         </div>
                         <div class="kt-card-toolbar">
-                            <span class="badge {{ $stats['whatsapp'] > 0 ? 'badge-light-success' : 'badge-light-danger' }} fs-base px-4 py-2">
+                            <span class="kt-badge {{ $stats['whatsapp'] > 0 ? 'kt-badge-success kt-badge-light' : 'kt-badge-destructive kt-badge-light' }} fs-base px-4 py-2">
                                 {{ $stats['whatsapp'] }} / {{ $stats['whatsapp_total'] }} Connected
                             </span>
                         </div>
@@ -208,7 +208,7 @@
                             </h3>
                         </div>
                         <div class="kt-card-toolbar">
-                            <span class="badge {{ $stats['emails'] > 0 ? 'badge-light-info' : 'badge-light-danger' }} fs-base px-4 py-2">
+                            <span class="kt-badge {{ $stats['emails'] > 0 ? 'kt-badge-info kt-badge-light' : 'kt-badge-destructive kt-badge-light' }} fs-base px-4 py-2">
                                 {{ $stats['emails'] }} / {{ $stats['emails_total'] }} Active
                             </span>
                         </div>

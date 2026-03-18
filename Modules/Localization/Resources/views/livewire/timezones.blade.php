@@ -58,11 +58,10 @@
         </div>
 
         {{-- Bulk Action Buttons --}}
-        @if (!empty($selectedIds) && count($selectedIds) > 0)
-            <div
+        <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0"
                 class="mb-4 flex flex-wrap items-center gap-2 px-1 bg-gray-50 p-3 rounded-lg border border-gray-200 shadow-sm">
                 <span class="text-sm font-medium text-gray-700 me-2 p-2 bg-white rounded border border-gray-300">
-                    {{ __('main.selected') }}: <span class="badge badge-primary">{{ count($selectedIds) }}</span>
+                    {{ __('main.selected') }}: <span class="badge badge-primary" x-text="$wire.selectedIds.length"></span>
                 </span>
 
                 <div x-data="{
@@ -78,7 +77,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('activateSelected');
+                                    $wire.call('activateSelected');
                                 }
                             })
                         },
@@ -94,7 +93,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('deactivateSelected');
+                                    $wire.call('deactivateSelected');
                                 }
                             })
                         },
@@ -110,26 +109,27 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('deleteSelected');
+                                    $wire.call('deleteSelected');
                                 }
                             })
                         }
                 }" class="flex flex-wrap gap-2 items-center">
-                    <button type="button" x-on:click.prevent="confirmActivate" class="btn btn-success btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmActivate" class="kt-btn kt-btn-success kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-check-circle fs-3"></i> {{ __('main.activate') }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmDeactivate" class="btn btn-warning btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmDeactivate" class="kt-btn kt-btn-warning kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-cross-circle fs-3"></i> {{ __('main.deactivate') }}
                     </button>
-                    <button type="button" x-on:click.prevent="confirmDelete" class="btn btn-danger btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" x-on:click.prevent="confirmDelete" class="kt-btn kt-btn-destructive kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-trash fs-3"></i> {{ __('main.delete') }}
                     </button>
-                    <button type="button" wire:click.prevent="clearSelected" class="btn btn-secondary btn-sm flex items-center gap-1.5 px-3">
+                    <button type="button" @click.prevent="$wire.selectedIds = []" class="kt-btn kt-btn-secondary kt-btn-sm flex items-center gap-1.5 px-3">
                         <i class="ki-outline ki-cross fs-3"></i> {{ __('main.cancel_selection') }}
                     </button>
                 </div>
             </div>
-        @endif
+        
+
         <div data-kt-datatable-state-save="false" id="timezones_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
@@ -148,3 +148,4 @@
         </div>
     </div>
 </div>
+

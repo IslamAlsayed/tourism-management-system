@@ -32,8 +32,7 @@
             </div>
 
             {{-- Bulk Action Buttons --}}
-            @if (!empty($selectedIds) && count($selectedIds) > 0)
-                <div x-data="{
+            <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0" x-data="{
                     confirmActivate() {
                             Swal.fire({
                                 title: '{{ __('messages.are_you_sure') }}',
@@ -46,7 +45,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('activateSelected');
+                                    $wire.call('activateSelected');
                                 }
                             })
                         },
@@ -62,7 +61,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('deactivateSelected');
+                                    $wire.call('deactivateSelected');
                                 }
                             })
                         },
@@ -78,7 +77,7 @@
                                 cancelButtonText: '{{ __('main.no') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    @this.call('deleteSelected');
+                                    $wire.call('deleteSelected');
                                 }
                             })
                         }
@@ -119,3 +118,4 @@
             </div>
         </div>
     </div>
+

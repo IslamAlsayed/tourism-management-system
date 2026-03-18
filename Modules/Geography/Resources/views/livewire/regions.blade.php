@@ -36,10 +36,9 @@
         </div>
 
         {{-- Bulk Action Buttons --}}
-        @if (!empty($selectedIds) && count($selectedIds) > 0)
-            <div class="mb-4 flex flex-wrap items-center gap-2 px-1 bg-gray-50 p-3 rounded-lg border border-gray-200">
+        <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0" class="mb-4 flex flex-wrap items-center gap-2 px-1 bg-gray-50 p-3 rounded-lg border border-gray-200">
                 <span class="text-sm font-medium text-gray-700 me-2">
-                    {{ __('main.selected') }}: <span class="badge badge-primary">{{ count($selectedIds) }}</span>
+                    {{ __('main.selected') }}: <span class="badge badge-primary" x-text="$wire.selectedIds.length"></span>
                 </span>
 
                 <div x-data="{
@@ -130,13 +129,13 @@
                     </button>
                 </div>
 
-                <button type="button" wire:click.prevent="clearSelected"
+                <button type="button" @click.prevent="$wire.selectedIds = []"
                     class="kt-btn kt-btn-sm text-white bg-indigo-600 hover:bg-indigo-700">
                     <i class="fas fa-times me-1"></i>
                     {{ __('main.cancel_selection') }}
                 </button>
             </div>
-        @endif
+        
 
         <div data-kt-datatable-state-save="false" id="regions_table">
             <div class="kt-scrollable-x-auto">

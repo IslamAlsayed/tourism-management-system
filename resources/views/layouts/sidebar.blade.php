@@ -2,16 +2,24 @@
 <div class="kt-sidebar bg-background border-e border-e-border fixed top-0 bottom-0 z-2001 hidden lg:flex flex-col items-stretch shrink-0 [--kt-drawer-enable:true] lg:[--kt-drawer-enable:false]"
     data-kt-drawer="true" data-kt-drawer-class="kt-drawer kt-drawer-start top-0 bottom-0" id="sidebar">
     {{-- Sidebar Header --}}
-    <div class="kt-sidebar-header hidden lg:flex text-center justify-center relative px-3 lg:px-4 shrink-0 py-2"
+    <div class="kt-sidebar-header hidden lg:flex text-center justify-center relative px-3 lg:px-4 shrink-0 py-10 mb-4"
         id="sidebar_header">
+        @php
+            $lWidth = optional($settings)->app_logo_width ?? '150px';
+            if (is_numeric($lWidth)) { $lWidth .= 'px'; }
+            $lHeight = optional($settings)->app_logo_height ?? 'auto';
+            if (is_numeric($lHeight)) { $lHeight .= 'px'; }
+        @endphp
         <a class="dark:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
-            <img class="default-logo h-[45px] w-auto max-w-none"
+            <img class="default-logo max-w-none"
+                style="width: {{ $lWidth }}; height: {{ $lHeight }}; object-fit: contain;"
                 src="{{ optional($settings)->app_light_photo ? asset('storage/' . $settings->app_light_photo) : asset('assets/images/logos/default-logo.svg') }}" />
             <img class="small-logo h-[45px] w-auto max-w-none"
                 src="{{ optional($settings)->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('assets/images/logos/mini-logo.svg') }}" />
         </a>
         <a class="light:hidden flex items-center justify-center" href="{{ route('dashboard') }}">
-            <img class="default-logo h-[45px] w-auto max-w-none"
+            <img class="default-logo max-w-none"
+                style="width: {{ $lWidth }}; height: {{ $lHeight }}; object-fit: contain;"
                 src="{{ optional($settings)->app_dark_photo ? asset('storage/' . $settings->app_dark_photo) : asset('assets/images/logos/default-logo.svg') }}" />
             <img class="small-logo h-[45px] w-auto max-w-none"
                 src="{{ optional($settings)->app_mini_photo ? asset('storage/' . $settings->app_mini_photo) : asset('assets/images/logos/mini-logo.svg') }}" />
@@ -98,10 +106,10 @@
                             @endif
                             <div
                                 class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $hasActiveChild ? 'active bg-accent/60' : '' }} hover:bg-accent/60 rounded-[9px] hover:rounded-[9px]">
-                                <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
+                                {{-- <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
                                     <i
                                         class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
-                                </span>
+                                </span> --}}
 
                                 <span
                                     class="kt-menu-title text-sm font-medium text-foreground {{ $hasActiveChild ? 'text-primary font-semibold' : '' }}">
@@ -228,11 +236,11 @@
                                             <div
                                                 class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $childHasActiveChild ? 'active bg-accent/60' : '' }} hover:bg-accent/60 rounded-[9px] hover:rounded-[9px]">
                                                 @if (isset($child['icon']))
-                                                    <span
+                                                    {{-- <span
                                                         class="kt-menu-icon items-start text-muted-foreground w-[20px]">
                                                         <i
-                                                            class="{{ $child['icon'] }} {{ $childHasActiveChild ? 'text-primary' : '' }}"></i>
-                                                    </span>
+                                                            class="{{ $child['icon'] ?? 'ki-filled ki-minus' }} text-[10px] {{ $childIsActive ? 'text-primary' : '' }}"></i>
+                                                    </span> --}}
                                                 @endif
 
                                                 <span
@@ -248,10 +256,10 @@
 
                                                     @if (isset($child['fixed']) && env('DB_MODE') != 'production')
                                                         <span
-                                                            class="inline-block bg-primary/10 text-red-600 font-medium px-2 py-0.5 rounded-full ms-2"
+                                                            class="inline-block bg-primary/10 text-green-600 font-medium px-2 py-0.5 rounded-full ms-2"
                                                             style="font-size: 10px">
                                                             @if (gettype($child['fixed']) == 'boolean')
-                                                                <i class="fas fa-xmark"></i>
+                                                                <i class="fas fa-check"></i>
                                                             @else
                                                                 {{ __('sidebar.' . $child['fixed']) }}
                                                             @endif
@@ -327,10 +335,10 @@
 
                                                                 @if (isset($subChild['fixed']) && env('DB_MODE') != 'production')
                                                                     <span
-                                                                        class="inline-block bg-primary/10 text-red-600 font-medium px-2 py-0.5 rounded-full ms-2"
+                                                                        class="inline-block bg-primary/10 text-green-600 font-medium px-2 py-0.5 rounded-full ms-2"
                                                                         style="font-size: 10px">
                                                                         @if (gettype($subChild['fixed']) == 'boolean')
-                                                                            <i class="fas fa-xmark"></i>
+                                                                            <i class="fas fa-check"></i>
                                                                         @else
                                                                             {{ __('sidebar.' . $subChild['fixed']) }}
                                                                         @endif

@@ -13,6 +13,15 @@
         'sortField' => $sortField ?? null,
         'searchValue' => $search ?? null,
         'showSearch' => true,
+        'manageableFilters' => [
+            'active' => __('main.status'),
+            'region' => __('main.regions'),
+            'subregion' => __('main.subregions'),
+            'country' => __('main.countries'),
+            'state' => __('main.states'),
+            'city' => __('main.cities'),
+            'type' => __('main.type'),
+        ]
     ])
         @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
             @include('components.columns', [
@@ -28,12 +37,32 @@
     <div class="kt-card-content px-2 pb-4" wire:loading.class="loading"
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,activateSelected,deactivateSelected,forceDeleteSelected,exportSelectedPDF,exportSelectedExcel,filterActive,filterRegionId,filterSubregionId,filterCountryId,filterStateId,filterCityId,filterTypeId">
 
-        <!-- Filters -->
-        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 filterTable">
+        <!-- Unified Dropdown Filters -->
+        <div class="flex flex-wrap items-center gap-3 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 rounded-xl mb-5"
+         x-data="{ 
+             showAny: false,
+             filterKeys: {{ json_encode(array_keys($manageableFilters ?? [])) }}
+         }"
+         x-effect="
+             if ($store.filtersVisibility && $store.filtersVisibility.filters) {
+                 showAny = filterKeys.some(f => $store.filtersVisibility.filters['filter_' + f] !== false);
+             } else {
+                 showAny = true;
+             }
+         "
+         x-show="showAny"
+         x-cloak>
+        <div class="flex items-center gap-2 pe-3 border-e border-amber-200 dark:border-amber-700/50">
+            <i class="ki-outline ki-filter text-amber-500 text-xl"></i>
+            <span class="text-sm font-semibold text-amber-800 dark:text-amber-400">
+                {{ __('main.filters') }}
+            </span>
+        </div>
+            
             {{-- Active Filter --}}
-            <div>
-                <label for="filterActive" class="text-sm font-medium">{{ __('main.status') }}</label>
-                <select wire:model.live="filterActive" class="kt-select h-[40px] w-full max-w-full" id="filterActive">
+            <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['active'] !== false" x-transition.opacity x-cloak>
+                <label for="filterActive" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.status') }}</label>
+                <select wire:model.live="filterActive" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterActive">
                     <option value="all">{{ __('main.all') }}</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
@@ -41,11 +70,10 @@
             </div>
 
             {{-- Region Filter --}}
-            <div>
-                <label for="filterRegionId" class="text-sm font-medium">{{ __('main.regions') }}</label>
-                <select wire:model.live="filterRegionId" class="kt-select h-[40px] w-full max-w-full" id="filterRegionId">
+            <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['region'] !== false" x-transition.opacity x-cloak>
+                <label for="filterRegionId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.regions') }}</label>
+                <select wire:model.live="filterRegionId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterRegionId">
                     <option value="all">{{ __('main.all') }}</option>
-                    @php $regions = \Modules\Geography\Entities\Region::where('is_active', true)->pluck('name' . (app()->getLocale() == 'ar' ? '_ar' : ''), 'id'); @endphp
                     @foreach ($regions as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
                     @endforeach
@@ -53,17 +81,10 @@
             </div>
 
             {{-- Subregion Filter --}}
-            <div>
-                <label for="filterSubregionId" class="text-sm font-medium">{{ __('main.subregions') }}</label>
-                <select wire:model.live="filterSubregionId" class="kt-select h-[40px] w-full max-w-full" id="filterSubregionId">
+            <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['subregion'] !== false" x-transition.opacity x-cloak>
+                <label for="filterSubregionId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.subregions') }}</label>
+                <select wire:model.live="filterSubregionId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterSubregionId">
                     <option value="all">{{ __('main.all') }}</option>
-                    @php 
-                        $subregionsQuery = \Modules\Geography\Entities\Subregion::where('is_active', true);
-                        if ($filterRegionId && $filterRegionId !== 'all') {
-                            $subregionsQuery->where('region_id', $filterRegionId);
-                        }
-                        $subregions = $subregionsQuery->pluck('name' . (app()->getLocale() == 'ar' ? '_ar' : ''), 'id'); 
-                    @endphp
                     @foreach ($subregions as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
                     @endforeach
@@ -71,21 +92,10 @@
             </div>
 
             {{-- Country Filter --}}
-            <div>
-                <label for="filterCountryId" class="text-sm font-medium">{{ __('main.countries') }}</label>
-                <select wire:model.live="filterCountryId" class="kt-select h-[40px] w-full max-w-full" id="filterCountryId">
+            <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['country'] !== false" x-transition.opacity x-cloak>
+                <label for="filterCountryId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.countries') }}</label>
+                <select wire:model.live="filterCountryId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterCountryId">
                     <option value="all">{{ __('main.all') }}</option>
-                    @php 
-                        $countriesQuery = \Modules\Geography\Entities\Country::where('is_active', true);
-                        if ($filterSubregionId && $filterSubregionId !== 'all') {
-                            $countriesQuery->where('subregion_id', $filterSubregionId);
-                        } elseif ($filterRegionId && $filterRegionId !== 'all') {
-                            $countriesQuery->whereHas('subregion', function($q) use ($filterRegionId) {
-                                $q->where('region_id', $filterRegionId);
-                            });
-                        }
-                        $countries = $countriesQuery->pluck('name' . (app()->getLocale() == 'ar' ? '_ar' : ''), 'id'); 
-                    @endphp
                     @foreach ($countries as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
                     @endforeach
@@ -93,17 +103,10 @@
             </div>
 
             {{-- State Filter --}}
-            <div>
-                <label for="filterStateId" class="text-sm font-medium">{{ __('main.states') }}</label>
-                <select wire:model.live="filterStateId" class="kt-select h-[40px] w-full max-w-full" id="filterStateId">
+            <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['state'] !== false" x-transition.opacity x-cloak>
+                <label for="filterStateId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.states') }}</label>
+                <select wire:model.live="filterStateId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterStateId">
                     <option value="all">{{ __('main.all') }}</option>
-                    @php 
-                        $statesQuery = \Modules\Geography\Entities\State::where('is_active', true);
-                        if ($filterCountryId && $filterCountryId !== 'all') {
-                            $statesQuery->where('country_id', $filterCountryId);
-                        }
-                        $states = $statesQuery->pluck('name' . (app()->getLocale() == 'ar' ? '_ar' : ''), 'id'); 
-                    @endphp
                     @foreach ($states as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
                     @endforeach
@@ -111,17 +114,10 @@
             </div>
 
             {{-- City Filter --}}
-            <div>
-                <label for="filterCityId" class="text-sm font-medium">{{ __('main.cities') }}</label>
-                <select wire:model.live="filterCityId" class="kt-select h-[40px] w-full max-w-full" id="filterCityId">
+            <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['city'] !== false" x-transition.opacity x-cloak>
+                <label for="filterCityId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.cities') }}</label>
+                <select wire:model.live="filterCityId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterCityId">
                     <option value="all">{{ __('main.all') }}</option>
-                    @php 
-                        $citiesQuery = \Modules\Geography\Entities\City::where('is_active', true);
-                        if ($filterStateId && $filterStateId !== 'all') {
-                            $citiesQuery->where('state_id', $filterStateId);
-                        }
-                        $cities = $citiesQuery->pluck('name' . (app()->getLocale() == 'ar' ? '_ar' : ''), 'id'); 
-                    @endphp
                     @foreach ($cities as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
                     @endforeach
@@ -129,11 +125,10 @@
             </div>
 
             {{-- Type Filter --}}
-            <div>
-                <label for="filterTypeId" class="text-sm font-medium">{{ __('main.type') }}</label>
-                <select wire:model.live="filterTypeId" class="kt-select h-[40px] w-full max-w-full" id="filterTypeId">
+            <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['type'] !== false" x-transition.opacity x-cloak>
+                <label for="filterTypeId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.type') }}</label>
+                <select wire:model.live="filterTypeId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterTypeId">
                     <option value="all">{{ __('main.all') }}</option>
-                    @php $types = \Modules\TourGuides\Entities\TourGuideType::where('is_active', true)->pluck('type', 'id'); @endphp
                     @foreach ($types as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
                     @endforeach
@@ -141,17 +136,16 @@
             </div>
 
             {{-- Reset Button --}}
-            <div class="flex items-end">
+            <div class="flex items-end h-[36px]">
                 @include('components.elements.reset-button', ['resetTarget' => 'filterActive,filterRegionId,filterSubregionId,filterCountryId,filterStateId,filterCityId,filterTypeId'])
             </div>
         </div>
 
         {{-- Bulk Action Buttons --}}
-        @if (!empty($selectedIds) && count($selectedIds) > 0)
-            <div
+        <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0"
                 class="mb-4 flex flex-wrap items-center gap-2 px-1 bg-gray-50 p-3 rounded-lg border border-gray-200 shadow-sm">
                 <span class="text-sm font-medium text-gray-700 me-2 p-2 bg-white rounded border border-gray-300">
-                    {{ __('main.selected') }}: <span class="badge badge-primary">{{ count($selectedIds) }}</span>
+                    {{ __('main.selected') }}: <span class="badge badge-primary" x-text="$wire.selectedIds.length"></span>
                 </span>
 
                 <div class="flex flex-wrap gap-2">
@@ -241,7 +235,7 @@
                             <i class="fas fa-radiation me-1"></i>
                             {{ __('main.force_delete') }}
                         </button>
-                        <button type="button" wire:click="clearSelected"
+                        <button type="button" @click.prevent="$wire.selectedIds = []"
                             class="kt-btn kt-btn-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors">
                             <i class="fas fa-times me-1"></i>
                             {{ __('main.cancel_selection') ?? 'Cancel Selection' }}
@@ -249,13 +243,15 @@
                     </div>
                 </div>
             </div>
-        @endif
+        
+
 
         <div data-kt-datatable-state-save="false" id="tour_guides_table">
             <div class="kt-scrollable-x-auto">
                 @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
+                    'allColumns' => $allColumns ?? [],
                     'search' => $search,
                     'models' => 'dashboard.tourguides.guides',
                     'selectedIds' => $selectedIds ?? [],
@@ -269,3 +265,4 @@
         </div>
     </div>
 </div>
+

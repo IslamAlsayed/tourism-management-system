@@ -16,5 +16,6 @@
     "MCP": true,
     "TouristSites": true,
     "TouristServices": true,
-    "Automation": true
+    "Automation": true,
+    "System": true
 }

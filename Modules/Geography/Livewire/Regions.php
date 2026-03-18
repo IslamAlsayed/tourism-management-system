@@ -10,10 +10,11 @@ use Livewire\WithPagination;
 use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
 use App\Traits\HandlesCrudSafely;
+use App\Traits\HandlesBulkActions;
 
 class Regions extends Component
 {
-    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData, HandlesBulkActions;
 
     public $search = '';
     public $message = [];
@@ -40,21 +41,6 @@ class Regions extends Component
     public function destroy($id)
     {
         $this->safeDestroy($id, Region::class, 'region');
-    }
-
-    public function updatedSelectPage($value)
-    {
-        $this->selectedIds = $value ? $this->currentPageDataIds()->toArray() : [];
-    }
-
-    public function updatedSelectedIds()
-    {
-        $this->selectPage = count($this->selectedIds) === $this->currentPageDataIds()->count();
-    }
-
-    protected function currentPageDataIds()
-    {
-        return $this->buildQuery()->paginate(getPaginate())->getCollection()->pluck('id');
     }
 
     protected function buildQuery()
@@ -84,47 +70,6 @@ class Regions extends Component
         $this->applySorting($query);
 
         return $query;
-    }
-
-    public function activateSelected()
-    {
-        if (empty($this->selectedIds)) return;
-        Region::whereIn('id', $this->selectedIds)->update(['is_active' => true]);
-        $this->clearSelected();
-        $this->dispatch('refresh-page');
-    }
-
-    public function deactivateSelected()
-    {
-        if (empty($this->selectedIds)) return;
-        Region::whereIn('id', $this->selectedIds)->update(['is_active' => false]);
-        $this->clearSelected();
-        $this->dispatch('refresh-page');
-    }
-
-    public function deleteSelected()
-    {
-        if (empty($this->selectedIds)) return;
-        Region::whereIn('id', $this->selectedIds)->delete();
-        $this->resetAutoIncrementIfEmpty(Region::class);
-        $this->clearSelected();
-        $this->dispatch('refresh-page');
-    }
-
-    public function forceDeleteSelected()
-    {
-        if (empty($this->selectedIds)) return;
-        Region::whereIn('id', $this->selectedIds)->forceDelete();
-        $this->resetAutoIncrementIfEmpty(Region::class);
-        $this->clearSelected();
-        $this->dispatch('refresh-page');
-    }
-
-    public function clearSelected()
-    {
-        $this->selectedIds = [];
-        $this->selectPage = false;
-        $this->dispatch('reset-checkout-boxes');
     }
 
     public function resetFilters()

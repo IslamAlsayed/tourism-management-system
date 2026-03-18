@@ -1,3 +1,31 @@
+// Inject scrollbar styles into <head> - red for light, bright red for dark theme
+(function injectScrollbarStyles() {
+    const id = 'top-scroll-style';
+    if (document.getElementById(id)) return;
+    const style = document.createElement('style');
+    style.id = id;
+    style.textContent = `
+        /* Light theme - green */
+        #topScroll::-webkit-scrollbar { height: 7px !important; }
+        #topScroll::-webkit-scrollbar-thumb { background: linear-gradient(90deg, #16a34a, #22c55e) !important; border-radius: 10px !important; }
+        #topScroll::-webkit-scrollbar-thumb:hover { background: #15803d !important; }
+        #topScroll::-webkit-scrollbar-track { background: rgba(22,163,74,0.08) !important; border-radius: 10px !important; }
+        #topScroll.no-overflow { height: 0 !important; overflow: hidden !important; }
+        .table-wrapper::-webkit-scrollbar { height: 7px; }
+        .table-wrapper::-webkit-scrollbar-thumb { background: linear-gradient(90deg, #16a34a, #22c55e); border-radius: 10px; }
+        .table-wrapper::-webkit-scrollbar-track { background: rgba(22,163,74,0.08); border-radius: 10px; }
+        /* Dark theme - bright green */
+        .dark #topScroll::-webkit-scrollbar-thumb { background: linear-gradient(90deg, #22c55e, #4ade80) !important; }
+        .dark #topScroll::-webkit-scrollbar-thumb:hover { background: #16a34a !important; }
+        .dark #topScroll::-webkit-scrollbar-track { background: rgba(34,197,94,0.12) !important; }
+        .dark .table-wrapper::-webkit-scrollbar-thumb { background: linear-gradient(90deg, #22c55e, #4ade80); }
+        .dark .table-wrapper::-webkit-scrollbar-track { background: rgba(34,197,94,0.12); }
+        /* SweetAlert z-index fix */
+        .swal2-container { z-index: 9999 !important; }
+    `;
+    document.head.appendChild(style);
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
     initPageComponents();
 });
@@ -48,13 +76,26 @@ function initPageComponents() {
             });
         });
     }
+
+    // Re-initialize top scroll sync after page components load
+    setTimeout(() => initScrollSync(), 300);
 }
+
+// Re-sync top scrollbar after Livewire DOM updates
+document.addEventListener("livewire:navigated", () => {
+    setTimeout(() => initScrollSync(), 300);
+});
 
 document.addEventListener("updatedPaginate", () => {
     setTimeout(() => {
         window.resetDeleteSelection();
-        // window.specialDelete("selectAllItems", "input[name='selectedItems[]']");
+        initScrollSync();
     }, 200);
+});
+
+// Re-sync top scrollbar after Alpine live preview column changes
+document.addEventListener("live-cols-update", () => {
+    setTimeout(() => initScrollSync(), 50);
 });
 
 // Re-initialize checkbox selection after Livewire updates
@@ -143,11 +184,21 @@ function initScrollSync() {
     const table = document.getElementById("data_table");
 
     if (topScroll && topScrollInner && tableWrapper && table) {
+        const tableScrollWidth = table.scrollWidth;
+        const wrapperClientWidth = tableWrapper.clientWidth;
+
         // Update inner width to match table width
-        topScrollInner.style.width = table.scrollWidth + "px";
+        topScrollInner.style.width = tableScrollWidth + "px";
 
         // Sync scroll positions
         topScroll.scrollLeft = tableWrapper.scrollLeft;
+
+        // Hide the top scrollbar entirely when no horizontal overflow
+        if (tableScrollWidth <= wrapperClientWidth) {
+            topScroll.classList.add("no-overflow");
+        } else {
+            topScroll.classList.remove("no-overflow");
+        }
     }
 }
 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Modules\Localization\Entities\SystemLanguage;
 use Modules\Localization\Http\Requests\SystemLanguageStoreRequest;
+use Modules\Localization\Http\Requests\SystemLanguageUpdateRequest;
 
 class SystemLanguageController extends Controller
 {
@@ -42,6 +43,38 @@ class SystemLanguageController extends Controller
             return redirect()->back()->with('error', __('messages.not_found_this_type', ['type' => __('main.language')]));
         }
         return view('localization::system-languages.edit', compact('language'));
+    }
+
+    public function update(SystemLanguageUpdateRequest $request, $id)
+    {
+        $language = SystemLanguage::find($id);
+        if (!$language) {
+            return redirect()->back()->with('error', __('messages.not_found_this_type', ['type' => __('main.language')]));
+        }
+
+        $validated = $request->validated();
+        $data = array_merge($validated, $request->safe()->except('photo'));
+        
+        $updated = $language->update($data);
+        if ($updated) {
+            $this->loadActiveLanguages();
+            if ($request->hasFile('photo')) {
+                $this->uploadPhoto($request, $language, 'photo', "languages");
+            }
+            return redirect()->route('dashboard.localization.system-languages.index')->with('success', __('messages.type_updated', ['type' => __('main.language')]));
+        }
+        return redirect()->route('dashboard.localization.system-languages.index')->with('error', __('messages.type_update_failed', ['type' => __('main.language')]));
+    }
+
+    public function show($id)
+    {
+        $language = SystemLanguage::find($id);
+        if (!$language) {
+            return redirect()->back()->with('error', __('messages.not_found_this_type', ['type' => __('main.language')]));
+        }
+        
+        // Use the existing edit view but we can create a dedicated show view later if needed. For now just passing to show view.
+        return view('localization::system-languages.show', compact('language'));
     }
 
     public function locale($locale = 'en')
@@ -79,7 +112,13 @@ class SystemLanguageController extends Controller
 
     public function loadActiveLanguages()
     {
-        $languages = SystemLanguage::pluck('name', 'code')->toArray();
+        $languages = SystemLanguage::where('is_active', 1)->get()->keyBy('code')->map(function($lang) {
+            return [
+                'name' => $lang->name,
+                'native' => $lang->native,
+                'dir' => $lang->dir,
+            ];
+        })->toArray();
         Config::set('languages.system_languages', $languages);
     }
 

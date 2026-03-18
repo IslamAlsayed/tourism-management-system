@@ -61,6 +61,11 @@ Route::get('/fix-rich-texts', function () {
         ->with('success', "Cleaned {$deleted} corrupted rich text records. Fields should now be empty and ready for clean content.");
 });
 
+// AI Agent routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/ai-agent/chat', fn() => view('ai-agent.chat'))->name('ai-agent.chat.ui');
+});
+
 // Admin routes
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Dashboard Main
@@ -91,6 +96,14 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::post('/reset', [SidebarManagerController::class, 'resetToDefault'])->name('reset');
         Route::get('/export', [SidebarManagerController::class, 'exportConfig'])->name('export');
     });
+
+    // === SYSTEM SETTINGS Extensions ===
+    Route::get('/localization/page-banners', \App\Livewire\Dashboard\PageBanners::class)->name('localization.page-banners');
+
+    // === SYSTEM COLUMNS (Global Setting) ===
+    Route::get('/core/system-columns', \App\Livewire\Dashboard\SystemColumnManager::class)
+        ->name('core.system-columns.index')
+        ->middleware('admin');
 
     // === NOTIFICATIONS ===
     Route::prefix('notifications')->name('notifications.')->group(function () {

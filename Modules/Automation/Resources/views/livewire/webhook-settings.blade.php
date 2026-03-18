@@ -4,44 +4,44 @@
         <div class="kt-card-header px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <h3 class="text-lg font-bold text-gray-800 dark:text-white flex items-center gap-2">
                 <i class="ki-outline ki-setting-2 text-primary"></i>
-                {{ $editingWebhookId ? 'Edit Webhook' : 'Add New Webhook (n8n)' }}
+                {{ $editingWebhookId ? __('automation.edit_webhook') : __('automation.add_new_webhook') }}
             </h3>
         </div>
         <div class="kt-card-body p-6">
             <form wire:submit.prevent="save" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Friendly Name</label>
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('automation.friendly_name') }}</label>
                     <input type="text" wire:model="name" class="kt-input w-full" placeholder="e.g., n8n Production Server">
                     @error('name') <span class="text-danger text-xs">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Webhook URL</label>
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('automation.webhook_url') }}</label>
                     <input type="url" wire:model="url" class="kt-input w-full" placeholder="https://n8n.your-domain.com/webhook/...">
                     @error('url') <span class="text-danger text-xs">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Event Type</label>
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('automation.event_type') }}</label>
                     <select wire:model="event_type" class="kt-select w-full">
-                        <option value="*">All Events (*)</option>
-                        <option value="restaurant.stored">Restaurant Created</option>
-                        <option value="restaurant.updated">Restaurant Updated</option>
-                        <option value="accommodation.stored">Hotel Created</option>
-                        <option value="booking.created">Booking Created</option>
+                        <option value="*">{{ __('automation.all_events') }}</option>
+                        <option value="restaurant.stored">{{ __('automation.restaurant_created') }}</option>
+                        <option value="restaurant.updated">{{ __('automation.restaurant_updated') }}</option>
+                        <option value="accommodation.stored">{{ __('automation.hotel_created') }}</option>
+                        <option value="booking.created">{{ __('automation.booking_created') }}</option>
                     </select>
                     @error('event_type') <span class="text-danger text-xs">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Secret Token (Optional)</label>
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('automation.secret_token') }}</label>
                     <input type="text" wire:model="secret_token" class="kt-input w-full" placeholder="X-Webhook-Secret value">
                 </div>
 
                 <div class="md:col-span-2 flex justify-end gap-3 mt-4">
-                    <button type="button" wire:click="resetForm" class="kt-btn kt-btn-light">Cancel</button>
+                    <button type="button" wire:click="resetForm" class="kt-btn kt-btn-light">{{ __('automation.cancel') }}</button>
                     <button type="submit" class="kt-btn kt-btn-primary px-10 shadow-lg">
-                        {{ $editingWebhookId ? 'Update Bridge' : 'Connect to n8n' }}
+                        {{ $editingWebhookId ? __('automation.update_bridge') : __('automation.connect_to_n8n') }}
                     </button>
                 </div>
             </form>
@@ -51,17 +51,17 @@
     {{-- Webhooks List --}}
     <div class="kt-card shadow-sm border border-gray-200 rounded-xl bg-white dark:bg-gray-800">
         <div class="kt-card-header px-6 py-4 border-b border-gray-100 italic text-gray-500 text-sm">
-            Active Automation Bridges
+            {{ __('automation.active_automation_bridges') }}
         </div>
         <div class="kt-card-body p-0">
             <div class="kt-scrollable-x-auto">
                 <table class="kt-table w-full">
                     <thead class="bg-gray-50 dark:bg-gray-700/30">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Name</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Event</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Status</th>
-                            <th class="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider text-gray-500">Actions</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.name') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.event') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.status') }}</th>
+                            <th class="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
@@ -72,16 +72,16 @@
                                 <div class="text-[10px] text-gray-400 font-mono truncate max-w-xs">{{ $webhook->url }}</div>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="badge badge-light-primary uppercase text-[10px]">{{ $webhook->event_type }}</span>
+                                <span class="kt-badge kt-badge-light kt-badge-primary uppercase text-[10px]">{{ $webhook->event_type }}</span>
                             </td>
                             <td class="px-6 py-4">
-                                <button wire:click="toggleStatus({{ $webhook->id }})" class="badge {{ $webhook->is_active ? 'badge-success' : 'badge-danger' }} cursor-pointer border-0">
-                                    {{ $webhook->is_active ? 'Active' : 'Paused' }}
+                                <button wire:click="toggleStatus({{ $webhook->id }})" class="kt-badge {{ $webhook->is_active ? 'kt-badge-success' : 'kt-badge-destructive' }} cursor-pointer border-0">
+                                    {{ $webhook->is_active ? __('automation.active') : __('automation.paused') }}
                                 </button>
                             </td>
                             <td class="px-6 py-4 text-right space-x-2">
-                                <button wire:click="edit({{ $webhook->id }})" class="kt-btn kt-btn-sm kt-btn-light-primary border-0 shadow-none"><i class="ki-outline ki-pencil text-md"></i></button>
-                                <button wire:click="delete({{ $webhook->id }})" wire:confirm="Are you sure?" class="kt-btn kt-btn-sm kt-btn-light-danger border-0 shadow-none"><i class="ki-outline ki-trash text-md"></i></button>
+                                <button wire:click="edit({{ $webhook->id }})" class="kt-btn kt-btn-sm kt-btn-light kt-btn-primary border-0 shadow-none"><i class="ki-outline ki-pencil text-md"></i></button>
+                                <button wire:click="delete({{ $webhook->id }})" wire:confirm="Are you sure?" class="kt-btn kt-btn-sm kt-btn-light kt-btn-destructive border-0 shadow-none"><i class="ki-outline ki-trash text-md"></i></button>
                             </td>
                         </tr>
                         @endforeach
@@ -95,17 +95,17 @@
     <div class="kt-card shadow-sm border border-gray-200 rounded-xl bg-white dark:bg-gray-800">
         <div class="kt-card-header px-6 py-4 border-b border-gray-100 flex items-center gap-2">
             <i class="ki-outline ki-monitor text-success text-xl"></i>
-            <h3 class="text-sm font-bold text-gray-700 uppercase tracking-tight">Recent Synchronizations</h3>
+            <h3 class="text-sm font-bold text-gray-700 uppercase tracking-tight">{{ __('automation.recent_synchronizations') }}</h3>
         </div>
         <div class="kt-card-body p-0">
             <div class="kt-scrollable-x-auto">
                 <table class="kt-table w-full">
                     <thead class="bg-gray-50 dark:bg-gray-700/30">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Time</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Bridge</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Response</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.time') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.bridge') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.status') }}</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.response') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
