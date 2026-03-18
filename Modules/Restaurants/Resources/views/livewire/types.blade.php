@@ -98,7 +98,6 @@
                         {{ __('main.delete') }} ({{ count($selectedIds) }})
                     </button>
                 </div>
-            @endif
 
             <div data-kt-datatable-state-save="false" id="restaurant_types_table">
                 <div class="kt-scrollable-x-auto">
