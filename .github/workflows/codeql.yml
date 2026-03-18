@@ -4,7 +4,6 @@ on:
   push:
     branches: [ "emix37", "main" ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ "emix37", "main" ]
   schedule:
     - cron: '15 16 * * 3'
@@ -21,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript-typescript', 'php' ]
+        language: [ 'javascript-typescript' ]
 
     steps:
     - name: Checkout repository
