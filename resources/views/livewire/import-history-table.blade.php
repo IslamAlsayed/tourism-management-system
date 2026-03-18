@@ -51,7 +51,7 @@
     @if($hasActiveJobs && $activeJob)
         <!-- Prominent Unskippable Overlay for Active Imports -->
         <div class="fixed inset-0 z-[9999] flex items-center justify-center m-0 p-0" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);">
-            <div class="bg-card w-full max-w-[400px] sm:w-1/3 rounded-xl shadow-2xl border border-border relative flex flex-col max-h-[90vh]">
+            <div class="bg-white dark:bg-[#1e1e2d] w-full md:w-1/3 min-w-[320px] rounded-xl shadow-2xl border border-border relative flex flex-col max-h-[90vh] text-gray-900 dark:text-gray-100 opacity-100 isolate">
                 <!-- Close Button (Fallback if stuck) -->
                 @if(in_array($activeJob->status, ['queued', 'pending_start', 'processing']))
                 <button wire:click="cancelJob({{ $activeJob->id }})" class="absolute top-4 right-4 z-10 text-muted-foreground hover:text-destructive transition-colors">
@@ -69,8 +69,8 @@
                         @endif
                     </div>
                     
-                    <h2 class="text-2xl font-semibold mb-2">{{ __('main.importing_data') }}</h2>
-                    <p class="text-secondary-foreground mb-4 text-base">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{{ __('main.importing_data') }}</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 text-base font-medium">
                         @if($activeJob->status === 'pending_start')
                             {{ __('main.ready_to_start_import') ?? 'Ready to start the import process.' }}
                         @else
@@ -146,7 +146,7 @@
                         @endif
                     @endif
                 </div>
-                <div class="bg-destructive p-4 text-center rounded-b-xl shrink-0 shadow-[inset_0_2px_10px_rgba(0,0,0,0.1)]">
+                <div class="bg-red-600 dark:bg-red-700 p-4 text-center rounded-b-xl shrink-0 shadow-[inset_0_2px_10px_rgba(0,0,0,0.1)]">
                     <p class="text-white text-sm flex items-center justify-center gap-2 font-bold tracking-wide">
                         <i class="ki-filled ki-information-2 text-xl text-white"></i>
                         {{ __('main.do_not_refresh_warning') }}
