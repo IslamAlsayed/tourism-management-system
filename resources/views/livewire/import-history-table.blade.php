@@ -18,10 +18,30 @@
         @if (auth()->user() && auth()->user()->hasRole('superadmin') && count($history) > 0)
             <div class="flex items-center gap-2">
                  <button type="button" 
-                         wire:click="clearHistory" 
-                         wire:confirm="{{ __('main.clear_history_confirm_message') ?? 'This will delete all import history records. This action cannot be undone.' }}"
-                         class="kt-btn kt-btn-sm kt-btn-destructive-outline">
-                     <i class="ki-filled ki-trash me-1.5"></i>
+                         x-data
+                         x-on:click="
+                             if (typeof Swal !== 'undefined') {
+                                 Swal.fire({
+                                     title: '{{ __('main.clear_history_confirm_title') ?? 'Clear Import History?' }}',
+                                     text: '{{ __('main.clear_history_confirm_message') ?? 'This will delete all import history records. This action cannot be undone.' }}',
+                                     icon: 'warning',
+                                     showCancelButton: true,
+                                     confirmButtonColor: '#d33',
+                                     confirmButtonText: '{{ __('main.yes_clear') ?? 'Yes, clear it!' }}',
+                                     cancelButtonText: '{{ __('main.cancel') ?? 'Cancel' }}'
+                                 }).then((result) => {
+                                     if (result.isConfirmed) {
+                                         $wire.clearHistory()
+                                     }
+                                 })
+                             } else {
+                                 if(confirm('{{ __('main.clear_history_confirm_message') ?? 'Are you sure?' }}')) { 
+                                     $wire.clearHistory() 
+                                 }
+                             }
+                         "
+                         class="kt-btn kt-btn-sm kt-btn-destructive-outline group">
+                     <i class="ki-filled ki-trash me-1.5 group-hover:animate-pulse"></i>
                      {{ __('main.clear_history') ?? 'Clear History' }}
                  </button>
             </div>
