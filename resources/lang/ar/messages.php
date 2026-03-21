@@ -19,8 +19,6 @@ return [
     'select_at_least_one_notification_type' => 'يرجى اختيار نوع إشعار واحد على الأقل',
     'invalid_type' => 'هذا النوع غير صالح',
     'session_expired' => 'انتهت الجلسة. برجاء تسجيل الدخول مرة أخرى.',
-
-    // Status Messages
     'profile_updated' => 'تم تحديث الملف الشخصي',
     'profile_photo_updated' => 'تم تحديث صورة الملف الشخصي',
     'password_updated' => 'تم تحديث كلمة المرور',
@@ -33,8 +31,6 @@ return [
     'photo_uploaded_successfully' => 'تم تحميل الصورة بنجاح',
     'no_photo_uploaded' => 'لم يتم تحميل أي صورة',
     'changes_saved' => 'تم حفظ التغييرات',
-
-    // Error Messages
     'error_occurred' => 'حدث خطأ',
     'access_denied' => 'تم الرفض',
     'not_found' => 'غير موجود',
@@ -46,8 +42,6 @@ return [
     'are_you_sure_delete' => 'سيتم نقل هذا العنصر إلى الأرشيف (حذف مؤقت). يمكنك استعادته لاحقاً.',
     'are_you_sure_force_delete' => 'سيتم حذف هذا السجل نهائياً من قاعدة البيانات.',
     'force_delete_warning' => 'لا يمكن التراجع عن هذا الإجراء. قد تتأثر جميع البيانات المرتبطة.',
-
-    // Type Creation
     'type_created' => 'تم إنشاء :type',
     'type_created_by' => 'تم إضافة :record_name من :type_name بواسطة :user_name',
     'type_creation_failed' => 'فشل إنشاء :type',
@@ -67,48 +61,36 @@ return [
     'ably_key_not_configured' => 'مفتاح Ably غير مضبوط، تم تجاوز إرسال البث',
     'no_items_selected' => 'لم يتم اختيار أي عناصر.',
     'selected_items_deleted' => 'تم حذف العناصر المحددة بنجاح. تم إزالة :count عنصر.',
-
-    // User Creation
     'user_created' => 'تم إنشاء المستخدم',
     'user_creation_failed' => 'فشل إنشاء المستخدم',
     'user_updated' => 'تم تحديث المستخدم',
     'user_update_failed' => 'فشل تحديث المستخدم',
     'user_deleted' => 'تم حذف المستخدم',
     'user_deletion_failed' => 'فشل حذف المستخدم',
-
-    // Currency Management
     'currency_created' => 'تم إنشاء العملة',
     'currency_creation_failed' => 'فشل إنشاء العملة',
     'currency_updated' => 'تم تحديث العملة',
     'currency_update_failed' => 'فشل تحديث العملة',
     'currency_deleted' => 'تم حذف العملة',
     'currency_deletion_failed' => 'فشل حذف العملة',
-
-    // Country Management
     'country_created' => 'تم إنشاء الدولة',
     'country_creation_failed' => 'فشل إنشاء الدولة',
     'country_updated' => 'تم تحديث الدولة',
     'country_update_failed' => 'فشل تحديث الدولة',
     'country_deleted' => 'تم حذف الدولة',
     'country_deletion_failed' => 'فشل حذف الدولة',
-
-    // City Management
     'city_created' => 'تم إنشاء المدينة',
     'city_creation_failed' => 'فشل إنشاء المدينة',
     'city_updated' => 'تم تحديث المدينة',
     'city_update_failed' => 'فشل تحديث المدينة',
     'city_deleted' => 'تم حذف المدينة',
     'city_deletion_failed' => 'فشل حذف المدينة',
-
-    // Language Management
     'created_language_successfully' => 'تم إنشاء اللغة بنجاح.',
     'created_not_language_successfully' => 'لم يتم إنشاء اللغة بنجاح.',
     'change_language_successfully' => 'تم تغيير اللغة بنجاح.',
     'change_language_not_successfully' => 'لم يتم تغيير اللغة بنجاح.',
     'language_deleted_successfully' => 'تم حذف اللغة بنجاح.',
     'language_deletion_failed' => 'فشل حذف اللغة.',
-
-    // Restaurant Management
     'restaurant_created' => 'تم إنشاء المطعم',
     'restaurant_creation_failed' => 'فشل إنشاء المطعم',
     'restaurant_updated' => 'تم تحديث المطعم',
@@ -116,8 +98,6 @@ return [
     'restaurant_deleted' => 'تم حذف المطعم',
     'restaurant_deletion_failed' => 'فشل حذف المطعم',
     'general_error' => 'حدث خطأ عام. يرجى المحاولة مرة أخرى.',
-
-    // Sidebar management
     'sidebar_order_updated' => 'تم تحديث ترتيب القائمة بنجاح',
     'sidebar_order_update_error' => 'حدث خطأ في تحديث الترتيب: :error',
     'sidebar_item_shown' => 'تم إظهار العنصر',
@@ -125,8 +105,6 @@ return [
     'sidebar_reset_default' => 'تم إعادة تعيين القائمة للترتيب الافتراضي',
     'sidebar_reset_error' => 'حدث خطأ في إعادة التعيين: :error',
     'sidebar_export_error' => 'حدث خطأ في التصدير: :error',
-
-    // Crossing Port Validation Messages
     'the crossing port code must be unique.' => 'يجب أن يكون رمز المعبر/الميناء فريداً.',
     'the crossing port name is required.' => 'اسم المعبر/الميناء مطلوب.',
     'the crossing port type is required.' => 'نوع المعبر/الميناء مطلوب.',
@@ -135,15 +113,12 @@ return [
     'longitude must be between -180 and 180.' => 'يجب أن يكون خط الطول بين -180 و 180.',
     'closing time must be after opening time.' => 'يجب أن يكون وقت الإغلاق بعد وقت الافتتاح.',
     'capacity must be at least 1.' => 'يجب أن تكون السعة 1 على الأقل.',
-    // Notification messages
     'notification_marked_read' => 'تم وضع الإشعار كمقروء.',
     'notification_marked_unread' => 'تم وضع الإشعار كغير مقروء.',
     'all_notifications_marked_read' => 'تم وضع كل الإشعارات كمقروءة.',
     'notification_deleted' => 'تم حذف الإشعار.',
     'backup_created_test' => 'تم إنشاء النسخة الاحتياطية بنجاح (وضع تجريبي).',
     'accommodation_rates_records_info' => 'سيتم إنشاء سجلات الأسعار تلقائياً لكل تركيبة (موسم × غرفة) و (موسم × وجبة) بقيم افتراضية (0). يمكنك تعديل الأسعار لاحقاً من قسم <a href=":link" class="font-semibold underline" style="color: var(--color-blue-900) !important">أسعار الإقامات</a>.',
-
-    // Toggle Messages
     'model_not_found' => 'النموذج غير موجود.',
     'record_not_found' => 'السجل غير موجود.',
     'field_updated_successfully' => 'تم :status :field بنجاح.',
@@ -151,8 +126,6 @@ return [
     'data_refreshed_successfully' => 'تم تحديث البيانات بنجاح.',
     'no_seasons_found' => 'لم يتم العثور على مواسم نشطة.',
     'no_results_found' => 'لم يتم العثور على نتائج',
-
-    // Roles & Permissions
     'role_created_successfully' => 'تم إنشاء الدور بنجاح.',
     'role_creation_failed' => 'فشل إنشاء الدور.',
     'role_updated_successfully' => 'تم تحديث الدور بنجاح.',
@@ -170,32 +143,28 @@ return [
     'no_permissions_assigned' => 'لم يتم تعيين أي صلاحيات لهذا الدور.',
     'permissions_count' => 'عدد الصلاحيات: :count',
     'permission_name_format' => 'استخدم صيغة الثعبان (snake_case) مثل: create_users, edit_posts, delete_comments',
-
-    // Bulk Action Confirmations
     'confirm_bulk_activate' => 'هل أنت متأكد من تفعيل العناصر المحددة؟',
     'confirm_bulk_deactivate' => 'هل أنت متأكد من تعطيل العناصر المحددة؟',
     'confirm_bulk_enable_auto_update' => 'هل أنت متأكد من تفعيل التحديث التلقائي للعناصر المحددة؟',
     'confirm_bulk_disable_auto_update' => 'هل أنت متأكد من تعطيل التحديث التلقائي (تثبيت سعر الصرف) للعناصر المحددة؟',
-    'confirm_bulk_delete' => "هل أنت متأكد من حذف العناصر المحددة؟ ملاحظة هامة: هذا التخفيض يعتبر 'حذف مرن' (Soft Delete). سيتم إخفاء العناصر من الشاشة فقط ولكنها ستبقى في أرشيف قاعدة البيانات. ستحتفظ هذه العناصر بأرقامها (IDs) الأصلية، مما يعني أنه لا يمكنك إعادة استيرادها أو إنشاء عناصر جديدة بنفس الأرقام المخفية.",
-    'confirm_bulk_force_delete' => "تحذير خطير: هل أنت متأكد 100% أنك تريد تدمير العناصر المحددة نهائياً؟ تنبيه: هذا الإجراء سيقوم بمسح البيانات من جذورها في قاعدة البيانات (Force Delete). في المرة القادمة التي تقوم فيها بإضافة أو استيراد بيانات جديدة، سيتجاوز النظام الأرقام القديمة ويبدأ بأرقام (IDs) جديدة تماماً. هذا الإجراء قد يسبب خللاً في ترابط البيانات مع الأقسام الأخرى (مثل الفنادق أو المطاعم). لا تستخدم هذا الزر إلا إذا كنت خبيراً!",
-
-    // System Languages
+    'confirm_bulk_delete' => 'هل أنت متأكد من حذف العناصر المحددة؟ ملاحظة هامة: هذا التخفيض يعتبر \'حذف مرن\' (Soft Delete). سيتم إخفاء العناصر من الشاشة فقط ولكنها ستبقى في أرشيف قاعدة البيانات. ستحتفظ هذه العناصر بأرقامها (IDs) الأصلية، مما يعني أنه لا يمكنك إعادة استيرادها أو إنشاء عناصر جديدة بنفس الأرقام المخفية.',
+    'confirm_bulk_force_delete' => 'تحذير خطير: هل أنت متأكد 100% أنك تريد تدمير العناصر المحددة نهائياً؟ تنبيه: هذا الإجراء سيقوم بمسح البيانات من جذورها في قاعدة البيانات (Force Delete). في المرة القادمة التي تقوم فيها بإضافة أو استيراد بيانات جديدة، سيتجاوز النظام الأرقام القديمة ويبدأ بأرقام (IDs) جديدة تماماً. هذا الإجراء قد يسبب خللاً في ترابط البيانات مع الأقسام الأخرى (مثل الفنادق أو المطاعم). لا تستخدم هذا الزر إلا إذا كنت خبيراً!',
     'status_updated' => 'تم تحديث حالة :type بنجاح.',
     'columns_cleared_to_minimum' => 'تم مسح الأعمدة وإبقاء الحد الأدنى (ID والاسم).',
     'default_language_updated' => 'تم تحديث اللغة الافتراضية بنجاح.',
-
-    // Banners
     'page_banners' => 'بانرات الصفحات',
     'add_banner' => 'إضافة بانر جديد',
     'edit_banner' => 'تعديل البانر',
     'banner_image' => 'صورة البانر',
     'route' => 'المسار (Route)',
     'select_route' => 'اختر المسار...',
-
-    // System Columns
     'system_columns' => 'إدارة أعمدة النظام',
     'manage_system_columns' => 'إدارة أعمدة النظام',
     'select_module' => 'اختر القسم/الموديول',
     'available_columns' => 'الأعمدة المتاحة',
     'columns_updated_successfully' => 'تم تحديث أعمدة النظام بنجاح.',
+    'session_lifetime_min_5' => 'يجب أن يكون عمر الجلسة 5 دقائق على الأقل',
+    'field_deleted_successfully' => 'تم :status :field بنجاح.',
+    'quick_edit_saved' => 'تم تحديث :type بنجاح.',
+    'hold_ctrl_to_select_multiple' => 'اضغط باستمرار على Ctrl (ويندوز) أو Cmd (ماك) لتحديد عناصر متعددة.',
 ];

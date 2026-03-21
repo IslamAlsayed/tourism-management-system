@@ -85,11 +85,34 @@ class Restaurants extends Component
         $this->resetAutoIncrementIfEmpty(Restaurant::class);
         $count = count($this->selectedIds);
         $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
 
         $this->dispatch('show-toast', [
             'type' => 'success',
             'message' => __('messages.type_deleted_count', ['type' => __('main.restaurants'), 'count' => $count]),
         ]);
+    }
+
+    public function forceDeleteSelected()
+    {
+        if (empty($this->selectedIds)) {
+            return;
+        }
+
+        Restaurant::whereIn('id', $this->selectedIds)->forceDelete();
+        $this->resetAutoIncrementIfEmpty(Restaurant::class);
+        $count = count($this->selectedIds);
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            // Re-using the deleted message since there isn't a specific force_deleted_count message easily available without changing lang files
+            'message' => __('messages.type_deleted_count', ['type' => __('main.restaurants'), 'count' => $count]), 
+        ]);
+        $this->dispatch('refresh-page');
     }
 
     public function activateSelected()

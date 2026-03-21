@@ -79,32 +79,79 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap gap-4 mb-4">
+                @php
+                    $flagMap = [
+                        'en' => 'us', 'ar' => 'sa', 'he' => 'il', 'ja' => 'jp', 'zh' => 'cn',
+                        'ko' => 'kr', 'pt' => 'pt', 'ur' => 'pk', 'hi' => 'in', 'ru' => 'ru',
+                        'tr' => 'tr', 'de' => 'de', 'es' => 'es', 'fr' => 'fr', 'it' => 'it'
+                    ];
+                @endphp
+
+                <div class="grid gap-6 mb-4" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
                     @foreach ($data as $language)
-                        <div wire:key="{{ $language->id }}"
-                            style="width: calc((100% / {{ $gridLength }}) - {{ (($gridLength - 1) * 16) / $gridLength }}px)"
-                            class="kt-card hover:bg-gray-100 text-center p-4 rounded-lg shadow-sm">
-                            <span class="text-start">
-                                @include('components.elements.checkbox-button', [
-                                    'name' => 'selectedItems[]',
-                                    'id' => 'selectedItems' . $language->id,
-                                    'value' => $language->id,
-                                ])
-                            </span>
-                            <div class="kt-card-title">{!! highlightSearch($language->code ?? '--', $search) !!}</div>
-                            <div class="kt-card-body pb-2">
-                                <p>{!! highlightSearch($language->name ?? '--', $search) !!}</p>
-                                <p>{!! highlightSearch($language->name_ar ?? '--', $search) !!}</p>
+                        @php
+                            $sysLang = \Modules\Localization\Entities\SystemLanguage::where('code', $language->code)->first();
+                            $photo = $sysLang ? $sysLang->photo : null;
+                            $flagUrl = null;
+                            if ($photo) {
+                                $flagUrl = str_contains($photo, '/') ? asset('storage/' . $photo) : asset('assets/media/flags/' . $photo);
+                            } elseif (isset($flagMap[$language->code])) {
+                                $flagUrl = asset('assets/media/flags/' . $flagMap[$language->code] . '.svg');
+                            }
+                        @endphp
+                        
+                        <div wire:key="{{ $language->id }}" 
+                             class="kt-card group relative overflow-hidden bg-white hover:bg-gray-50 text-center rounded-xl shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md p-0">
+                            
+                            @if($flagUrl)
+                                <!-- Background Watermark -->
+                                <div class="absolute inset-0 opacity-10 pointer-events-none bg-cover rtl:bg-[left_top_-1.7rem] bg-[right_top_-1.7rem] bg-no-repeat transition-opacity duration-300 group-hover:opacity-15"
+                                     style="background-image: url('{{ $flagUrl }}'); z-index: 0;"></div>
+                            @endif
+                            
+                            {{-- Checkbox --}}
+                            <div class="absolute top-4 right-4 z-10 flex items-center justify-between w-full px-4" style="width: auto; left: 0;">
+                                <div class="text-start">
+                                    @include('components.elements.checkbox-button', [
+                                        'name' => 'selectedItems[]',
+                                        'id' => 'selectedItems' . $language->id,
+                                        'value' => $language->id,
+                                    ])
+                                </div>
                             </div>
-                            <div class="kt-card-footer flex justify-center p-0 pt-2">
-                                <div class="flex justify-center gap-2">
+                            
+                            <!-- Content -->
+                            <div class="p-5 flex flex-col items-center justify-center w-full gap-3 mt-4 relative z-10">
+                                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-dashed border-gray-300 flex items-center justify-center p-1 bg-white">
+                                    @if($flagUrl)
+                                        <img src="{{ $flagUrl }}" class="w-full h-full rounded-full object-cover" alt="{{ $language->code }} flag">
+                                    @else
+                                        <div class="w-full h-full rounded-full bg-gray-100 flex items-center justify-center text-gray-500 font-bold text-lg uppercase">
+                                            {{ substr($language->code, 0, 2) }}
+                                        </div>
+                                    @endif
+                                </div>
+                                
+                                <div class="flex flex-col items-center gap-1 mt-2">
+                                    <div class="kt-badge kt-badge-light kt-badge-primary rounded-full px-3 py-1 font-bold text-xs uppercase tracking-wider mb-1">
+                                        {!! highlightSearch($language->code ?? '--', $search) !!}
+                                    </div>
+                                    <h3 class="font-bold text-gray-900 text-lg mb-0">{!! highlightSearch($language->name ?? '--', $search) !!}</h3>
+                                    <span class="text-gray-500 text-sm">{!! highlightSearch($language->name_ar ?? '--', $search) !!}</span>
+                                </div>
+                                
+                                <div class="w-full h-px bg-gray-100 my-2"></div>
+                                
+                                <div class="flex justify-center gap-2 w-full mt-1">
                                     @include('components.elements.edit-button', [
                                         'models' => 'dashboard.localization.languages',
                                         'id' => $language->id,
+                                        'classes' => 'flex-1 justify-center'
                                     ])
 
                                     @include('components.elements.delete-button', [
                                         'id' => $language->id,
+                                        'classes' => 'flex-1 justify-center'
                                     ])
                                 </div>
                             </div>
@@ -115,8 +162,7 @@
         @else
             <div wire:key="{{ $view ? $view : '' }}-view" data-kt-datatable="true" data-kt-datatable-state-save="false"
                 id="team_crew_table">
-                <div class="kt-scrollable-x-auto">
-                    @component('components.data-table', [
+                @component('components.data-table', [
                         'data' => $data,
                         'columns' => $columns,
                         'search' => $search,
@@ -124,7 +170,6 @@
                         'selectedIds' => $selectedIds ?? [],
                     ])
                     @endcomponent
-                </div>
             </div>
         @endif
 

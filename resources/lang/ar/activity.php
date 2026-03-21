@@ -30,15 +30,11 @@ return [
     'activity_log_cleared' => 'تم مسح سجل :type بنجاح.',
     'system_generated' => 'النظام',
     'clear_selection' => 'إلغاء التحديد',
-    'per_page' => 'عدد النتائج',
+    'per_page' => 'للصفحة',
     'unknown' => 'غير معروف',
-    
-    // Activity Navigation
     'all_activities' => 'كل الأنشطة',
     'users_activity' => 'أنشطة المستخدمين',
     'system_activity' => 'أنشطة النظام',
-
-    // Events
     'event_created' => 'إنشاء (Created)',
     'event_create' => 'إنشاء (Created)',
     'event_updated' => 'تعديل (Updated)',
@@ -58,8 +54,6 @@ return [
     'event_password_update' => 'تحديث كلمة المرور',
     'event_force_deleted' => 'حذف نهائي',
     'event_unknown' => 'حدث غير معروف',
-
-    // Auth Activities
     'auth' => [
         'login' => 'تسجيل دخول',
         'logout' => 'تسجيل خروج',
@@ -74,4 +68,15 @@ return [
         'password_has_been_reset' => 'تم إعادة تعيين كلمة مرور :user',
         'password_has_been_updated' => 'تم تحديث كلمة مرور :user',
     ],
+    'dashboard' => [
+        'tasks' => [
+            'showing' => 'عرض',
+            'to' => 'إلى',
+            'of' => 'من',
+            'results' => 'نتائج',
+            'previous' => 'السابق',
+            'next' => 'التالي',
+        ],
+    ],
+    'testtest' => 'اختبار',
 ];

@@ -78,6 +78,26 @@ class RestaurantTypes extends Component
         ]);
     }
 
+    public function forceDeleteSelected()
+    {
+        if (empty($this->selectedIds)) {
+            return;
+        }
+
+        RestaurantType::whereIn('id', $this->selectedIds)->forceDelete();
+        $this->resetAutoIncrementIfEmpty(RestaurantType::class);
+        $count = count($this->selectedIds);
+        $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->dispatch('reset-checkout-boxes');
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => __('messages.type_deleted_count', ['type' => __('main.types'), 'count' => $count]),
+        ]);
+        $this->dispatch('refresh-page');
+    }
+
     public function activateSelected()
     {
         if (empty($this->selectedIds)) {

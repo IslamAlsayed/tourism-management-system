@@ -34,7 +34,7 @@
 
                 <!-- Module Selection -->
                 <div class="mb-10 max-w-xl bg-gray-50 dark:bg-dark p-6 rounded-xl border border-gray-100 dark:border-gray-800">
-                    <label class="form-label block mb-3 font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                    <label class="form-label mb-3 font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
                         <i class="ki-duotone ki-category text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
                         {{ __('main.select_module') ?? 'Select Module/Section' }}
                     </label>
@@ -70,18 +70,18 @@
                                 @php 
                                     $isChecked = in_array($column, $selectedColumns);
                                 @endphp
-                                <label class="flex items-start gap-3 cursor-pointer p-3 rounded-lg border transition-all duration-200 {{ $isChecked ? 'bg-primary/5 border-primary/30 dark:bg-primary/10 dark:border-primary/40' : 'bg-white border-gray-100 hover:border-gray-300 dark:bg-dark-light dark:border-gray-800 dark:hover:border-gray-600 shadow-sm' }}">
+                                <label class="flex items-start gap-3 cursor-pointer p-3 rounded-lg border transition-all duration-200 {{ $isChecked ? 'bg-blue-50 border-blue-500 shadow-md ring-1 ring-blue-500 dark:bg-blue-900/20 dark:border-blue-500' : 'bg-white border-gray-200 hover:border-gray-300 shadow-sm dark:bg-[#1e1e2d] dark:border-gray-700 dark:hover:border-gray-500' }}">
                                     <div class="mt-0.5">
                                         <input 
                                             type="checkbox" 
-                                            class="kt-checkbox w-5 h-5 border-gray-300 dark:border-gray-600 {{ $isChecked ? 'bg-primary border-primary' : '' }}" 
+                                            class="kt-checkbox w-5 h-5 border-gray-300 dark:border-gray-600 {{ $isChecked ? 'bg-blue-500 border-blue-500 text-white' : '' }}" 
                                             value="{{ $column }}" 
                                             wire:click="toggleColumn('{{ $column }}')"
                                             @if($isChecked) checked @endif
                                         >
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-sm font-semibold select-none break-all {{ $isChecked ? 'text-primary-700 dark:text-primary-300' : 'text-gray-700 dark:text-gray-300' }}">
+                                        <span class="text-sm font-semibold select-none break-all {{ $isChecked ? 'text-blue-700 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300' }}">
                                             {{ __('main.'.$column) !== 'main.'.$column ? __('main.'.$column) : str_replace('_', ' ', Str::title($column)) }}
                                         </span>
                                         <span class="text-xs text-muted font-mono mt-1 opacity-70">{{ $column }}</span>

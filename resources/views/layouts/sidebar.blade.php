@@ -106,10 +106,10 @@
                             @endif
                             <div
                                 class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $hasActiveChild ? 'active bg-accent/60' : '' }} hover:bg-accent/60 rounded-[9px] hover:rounded-[9px]">
-                                {{-- <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
+                                <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
                                     <i
                                         class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
-                                </span> --}}
+                                </span>
 
                                 <span
                                     class="kt-menu-title text-sm font-medium text-foreground {{ $hasActiveChild ? 'text-primary font-semibold' : '' }}">
@@ -236,11 +236,11 @@
                                             <div
                                                 class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $childHasActiveChild ? 'active bg-accent/60' : '' }} hover:bg-accent/60 rounded-[9px] hover:rounded-[9px]">
                                                 @if (isset($child['icon']))
-                                                    {{-- <span
+                                                    <span
                                                         class="kt-menu-icon items-start text-muted-foreground w-[20px]">
                                                         <i
                                                             class="{{ $child['icon'] ?? 'ki-filled ki-minus' }} text-[10px] {{ $childIsActive ? 'text-primary' : '' }}"></i>
-                                                    </span> --}}
+                                                    </span>
                                                 @endif
 
                                                 <span

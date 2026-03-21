@@ -131,8 +131,7 @@
         
 
         <div data-kt-datatable-state-save="false" id="timezones_table">
-            <div class="kt-scrollable-x-auto">
-                @component('components.data-table', [
+            @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
@@ -140,7 +139,6 @@
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent
-            </div>
 
             @if (isset($data) && !empty($data) && $data->count() > 0)
                 @include('includes.pagination', ['data' => $data])

@@ -72,9 +72,10 @@
 
         {{-- Bulk Action Buttons --}}
         <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0"
-                class="mb-4 flex flex-wrap items-center gap-2 px-1 bg-gray-50 p-3 rounded-lg border border-gray-200 shadow-sm">
-                <span class="text-sm font-medium text-gray-700 me-2 p-2 bg-white rounded border border-gray-300">
+                class="mb-4 flex flex-wrap items-center gap-2 px-1 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300 me-2 p-2 bg-white dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600">
                     {{ __('main.selected') }}: <span class="badge badge-primary" x-text="$wire.selectedIds.length"></span>
+                </span>
 
                 <div class="flex flex-wrap gap-2">
                     <div x-data="{
@@ -176,8 +177,7 @@
 
 
         <div data-kt-datatable-state-save="false" id="nationalities_table">
-            <div class="kt-scrollable-x-auto">
-                @component('components.data-table', [
+            @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
@@ -185,7 +185,6 @@
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent
-            </div>
 
             @if (isset($data) && !empty($data) && $data->count() > 0)
                 @include('includes.pagination', ['data' => $data])

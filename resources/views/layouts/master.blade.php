@@ -10,8 +10,29 @@
     @stack('css')
     {{-- Custom RTL Fixes --}}
     @if(getLocaleDirection() === 'rtl')
-        <link href="{{ asset('css/custom-rtl.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/custom-rtl.css') }}?v={{ filemtime(public_path('css/custom-rtl.css')) }}" rel="stylesheet" />
     @endif
+    <style>
+        /* Fix FontAwesome misalignment in collapsed sidebar */
+        body.kt-sidebar-collapse .kt-sidebar .kt-menu-icon i.fas,
+        body.kt-sidebar-collapse .kt-sidebar .kt-menu-icon i.fab,
+        body.kt-sidebar-collapse .kt-sidebar .kt-menu-icon i.fa-regular,
+        body.kt-sidebar-collapse .kt-sidebar .kt-menu-icon i.fa-solid {
+            font-size: 1.5rem !important;
+            line-height: 1 !important;
+            margin: 0 auto !important;
+            text-align: center !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            width: 100% !important;
+        }
+        body.kt-sidebar-collapse .kt-sidebar .kt-menu-link {
+            justify-content: center !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+    </style>
 </head>
 
 <body class="demo1 kt-sidebar-fixed kt-header-fixed flex h-full bg-background text-base text-foreground antialiased">

@@ -1,0 +1,11 @@
+{
+    "name": "TranslationManager",
+    "alias": "translationmanager",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\TranslationManager\\Providers\\TranslationManagerServiceProvider"
+    ],
+    "files": []
+}

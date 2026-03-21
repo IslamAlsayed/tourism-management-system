@@ -1,5 +1,5 @@
 <div class="flex-wrap gap-2 p-2">
-    <div class="w-full flex justify-between items-start">
+    <div class="w-full flex flex-wrap justify-between items-start gap-4">
         {{-- Pagination Info --}}
         @if (isset($data) && !empty($data) && $data->count() > 0)
             <div class="pagination-showing">
@@ -18,7 +18,7 @@
         @endif
 
         {{-- selected items count --}}
-        <div class="flex gap-2">
+        <div class="flex flex-wrap gap-2 items-center">
             <span id="selectedCount" style="align-self: anchor-center;"></span>
             <div class="flex flex-wrap gap-2 lg:gap-5">
                 <button type="button" id="deleteAllBtn" data-route="{{ route('deleteAll') }}"
@@ -352,7 +352,7 @@
                 {{-- Grid of Columns --}}
                 <div class="h-[350px] overflow-y-auto overflow-x-hidden pe-2 custom-scrollbar">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 relative pb-4">
-                        @foreach ($activeCats as $k => $cols)
+                        @foreach (array_filter($activeCats, fn($key) => $key !== 'all', ARRAY_FILTER_USE_KEY) as $k => $cols)
                             <div class="contents" id="sortable-{{ $k }}">
                                 @foreach ($cols as $itemKey)
                                     @php
@@ -362,13 +362,15 @@
                                         
                                         $col = str_replace(['type1_', 'type2_', 'action_'], '', $itemKey);
                                         
+                                        // Standardized blue styling across all types
+                                        $activeBorder = 'border-primary bg-primary/5 dark:bg-primary/10 ring-1 ring-primary/20 shadow-sm';
+                                        $activeText = 'text-primary dark:text-blue-400';
+                                        
                                         if ($isType1) {
                                             $cleanCol = str_replace('_id', '', $col);
                                             $trObj = __('main.' . $cleanCol);
                                             $colName = (is_string($trObj) && $trObj !== 'main.' . $cleanCol) ? $trObj : ucfirst(str_replace('_', ' ', $col));
                                             $lb = __('main.type_1_filters') . ' : ' . ($mFiltersNames[$col] ?? $colName);
-                                            $activeBorder = 'border-amber-500 bg-amber-50 dark:bg-amber-900/30 ring-1 ring-amber-500/20 shadow-sm';
-                                            $activeText = 'text-amber-700 dark:text-amber-400';
                                             $alpineChecked = "isType1Checked('{$col}')";
                                             $alpineToggle = "toggleType1('{$col}')";
                                         } elseif ($isType2) {
@@ -376,15 +378,11 @@
                                             $trObj = __('main.' . $cleanCol);
                                             $colName = (is_string($trObj) && $trObj !== 'main.' . $cleanCol) ? $trObj : ucfirst(str_replace('_', ' ', $col));
                                             $lb = __('main.type_2_filters') . ' : ' . $colName;
-                                            $activeBorder = 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 ring-1 ring-indigo-500/20 shadow-sm';
-                                            $activeText = 'text-indigo-700 dark:text-indigo-400';
                                             $alpineChecked = "isType2Checked('{$col}')";
                                             $alpineToggle = "toggleType2('{$col}')";
                                         } else { // Action
                                             $actTranslated = __('main.' . $col);
                                             $lb = __('main.actions') . ' : ' . ((is_string($actTranslated) && $actTranslated !== 'main.' . $col) ? $actTranslated : ucfirst(str_replace('_', ' ', $col)));
-                                            $activeBorder = 'border-rose-500 bg-rose-50 dark:bg-rose-900/30 ring-1 ring-rose-500/20 shadow-sm';
-                                            $activeText = 'text-rose-700 dark:text-rose-400';
                                             $alpineChecked = "(!\$store.filtersVisibility || \$store.filtersVisibility.filters['{$col}'] !== false)";
                                             $alpineToggle = "if(\$store.filtersVisibility) { \$store.filtersVisibility.toggle('{$col}'); saveStore(); }";
                                         }

@@ -54,21 +54,17 @@ return [
     'import accommodation seasons' => 'استيراد مواسم الإقامة',
     'link accommodation to season' => 'ربط الإقامة بالموسم',
     'accommodation seasons' => 'مواسم الإقامة',
-
     'transportation' => 'المواصلات',
     'transportation management' => 'إدارة المواصلات',
     'all transportation' => 'جميع وسائل المواصلات',
     'create transportation' => 'إنشاء وسيلة مواصلات',
     'import transportation' => 'استيراد وسائل المواصلات',
     'transportation types' => 'أنواع وسائل المواصلات',
-
     'transportations' => 'المواصلات',
     'transportations management' => 'إدارة المواصلات',
     'all transportations' => 'جميع وسائل المواصلات',
-    'create transportation' => 'إنشاء وسيلة مواصلات',
     'import transportations' => 'استيراد وسائل المواصلات',
     'transportations types' => 'أنواع وسائل المواصلات',
-
     'all companies' => 'جميع الشركات',
     'create company' => 'إنشاء شركة',
     'import companies' => 'استيراد شركات',
@@ -178,19 +174,11 @@ return [
     'currencies management' => 'إدارة العملات',
     'add new currency' => 'إضافة عملة جديدة',
     'system languages' => 'لغات النظام',
-    'currencies' => 'العملات',
     'timezones' => 'المناطق الزمنية',
-
-    // Banners
     'page banners' => 'بانرات الصفحات',
-
-    // System Columns
     'system columns' => 'أعمدة الجداول',
-
-    // Roles and Permissionst' => 'إدارة المناطق الزمنية',
     'create currency' => 'إنشاء عملة جديدة',
     'import currencies' => 'استيراد عملات',
-    'timezones' => 'المناطق الزمنية',
     'timezones management' => 'إدارة المناطق الزمنية',
     'all timezones' => 'جميع المناطق الزمنية',
     'add new timezone' => 'إضافة منطقة زمنية جديدة',
@@ -208,32 +196,23 @@ return [
     'facilities' => 'المرافق',
     'all facilities' => 'جميع المرافق',
     'create facility' => 'إنشاء مرفق',
-
     'all jeeps' => 'جميع سيارات الجيب',
     'create jeep' => 'إنشاء سيارة جيب',
     'import jeeps' => 'استيراد سيارات الجيب',
-
     'all visa requirements' => 'جميع متطلبات التأشيرة',
     'create visa requirement' => 'إنشاء متطلب تأشيرة',
     'import visa requirements' => 'استيراد متطلبات التأشيرة',
-
     'all travel passes' => 'جميع تصاريح السفر',
     'create travel pass' => 'إنشاء تصريح سفر',
     'import travel passes' => 'استيراد تصاريح السفر',
-
     'travel_passes' => 'تصاريح السفر',
     'travel passes' => 'تصاريح السفر',
-    'all travel passes' => 'جميع تصاريح السفر',
-    'create travel pass' => 'إنشاء تصريح سفر',
-    'import travel passes' => 'استيراد تصاريح السفر',
-
     'jeep_safari' => 'سفاري جيب',
     'all_jeeps' => 'جميع سيارات الجيب',
     'create_jeep' => 'إضافة سيارة',
     'import_jeeps' => 'استيراد السيارت والرحلات',
-
     'tourist services' => 'الخدمات السياحية',
-    'service entrance fees' => 'رسوم دخول المواقع',
+    'service entrance fees' => 'رسوم دخول الخدمات',
     'services' => 'الخدمات',
     'group services' => 'خدمات المجموعات',
     'individual services' => 'خدمات الأفراد',
@@ -242,7 +221,6 @@ return [
     'create service' => 'إنشاء خدمة سياحية جديدة',
     'import services' => 'استيراد الخدمات السياحية',
     'hostel services' => 'خدمات النزل',
-    'service entrance fees' => 'رسوم دخول الخدمات',
     'restaurants' => 'المطاعم',
     'restaurants management' => 'إدارة المطاعم',
     'all restaurants' => 'جميع المطاعم',
@@ -282,7 +260,6 @@ return [
     'add new crossing port' => 'إضافة معبر/ميناء جديد',
     'create crossing port' => 'إنشاء معبر/ميناء جديد',
     'import crossings ports' => 'استيراد معابر/موانئ',
-
     'entry points' => 'نقاط الدخول',
     'land crossings' => 'المعابر البرية',
     'all land crossings' => 'جميع المعابر البرية',
@@ -296,7 +273,6 @@ return [
     'all airports' => 'جميع المطارات',
     'create airport' => 'إنشاء مطار',
     'import airports' => 'استيراد المطارات',
-
     'exchange rates' => 'أسعار الصرف',
     'update rates' => 'تحديث الأسعار',
     'profile' => 'الملف الشخصي',
@@ -325,7 +301,6 @@ return [
     'backup' => 'نسخ احتياطي',
     'booking' => 'الحجز',
     'integration' => 'التكامل',
-    'system' => 'النظام',
     'theme_customizer' => 'تخصيص المظهر',
     'all hotels' => 'جميع الفنادق',
     'add hotel' => 'إضافة فندق',
@@ -368,7 +343,6 @@ return [
     'all airlines' => 'جميع شركات الطيران',
     'create airline' => 'إنشاء شركة طيران',
     'import airlines' => 'استيراد شركات الطيران',
-    'airports' => 'المطارات',
     'airlines' => 'شركات الطيران',
     'charter companies' => 'شركات الطيران الخاصة',
     'cargo airlines' => 'شركات الطيران الشحن',
@@ -383,7 +357,6 @@ return [
     'company bus types' => 'أنواع الحافلات الخاصة بالشركات',
     '4x4 vehicles' => 'مركبات 4x4',
     'crossings & ports' => 'المعابر والموانئ',
-    'land crossings' => 'المعابر البرية',
     'international airports' => 'المطارات الدولية',
     'domestic airports' => 'المطارات المحلية',
     'seaports' => 'الموانئ البحرية',
@@ -432,7 +405,6 @@ return [
     'logout' => 'تسجيل الخروج',
     'languages' => 'اللغات',
     'languages management' => 'إدارة اللغات',
-    'system languages' => 'لغات النظام',
     'system languages management' => 'إدارة لغات النظام',
     'view languages' => 'عرض اللغات',
     'create language' => 'إنشاء لغة',
@@ -443,12 +415,10 @@ return [
     'rooms types' => 'أنواع الغرف',
     'topic' => 'موضوع',
     'topics' => 'المواضيع',
-
     'subscription' => 'الاشتراك',
     'subscriptions' => 'الاشتراكات',
     'my modules' => 'وحداتي',
     'all subscriptions' => 'جميع الاشتراكات',
-
     'soon' => 'قريبا',
     'new' => 'جديد',
     'update' => 'تحديث',
@@ -461,8 +431,6 @@ return [
     'testing' => 'جارٍ الاختبار...',
     'editing...' => 'جارٍ التعديل...',
     'done' => 'تم ',
-
-    // Integrations & Communications
     'mcp' => 'MCP',
     'google maps' => 'خرائط جوجل',
     'google drive' => 'جوجل درايف',
@@ -471,4 +439,6 @@ return [
     'whatsapp' => 'واتساب',
     'automation' => 'الأتمتة',
     'automation_settings' => 'إعدادات الأتمتة (n8n)',
+    'translation manager' => 'مدير الترجمة',
+    'system_columns' => 'أعمدة النظام',
 ];

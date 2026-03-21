@@ -33,13 +33,9 @@ return [
     'per_page' => 'Per Page',
     'unknown' => 'Unknown',
     'event_unknown' => 'Unknown',
-
-    // Activity Navigation
     'all_activities' => 'All Activities',
     'users_activity' => 'Users Activity',
     'system_activity' => 'System Activity',
-
-    // Events (Full list)
     'event_created' => 'Created',
     'event_create' => 'Created',
     'event_updated' => 'Updated',
@@ -58,8 +54,6 @@ return [
     'event_password_reset' => 'Password Reset',
     'event_password_update' => 'Password Update',
     'event_force_deleted' => 'Force Deleted',
-
-    // Auth Activities
     'auth' => [
         'login' => 'Login',
         'logout' => 'Logout',
@@ -74,4 +68,15 @@ return [
         'password_has_been_reset' => ':user password has been reset',
         'password_has_been_updated' => ':user password has been updated',
     ],
+    'dashboard' => [
+        'tasks' => [
+            'showing' => 'dashboard.tasks.showing',
+            'to' => 'dashboard.tasks.to',
+            'of' => 'dashboard.tasks.of',
+            'results' => 'dashboard.tasks.results',
+            'previous' => 'dashboard.tasks.previous',
+            'next' => 'dashboard.tasks.next',
+        ],
+    ],
+    'testtest' => 'testets',
 ];

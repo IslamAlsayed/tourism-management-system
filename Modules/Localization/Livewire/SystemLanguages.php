@@ -95,6 +95,29 @@ class SystemLanguages extends Component
         ]);
     }
 
+    public function forceDelete($id)
+    {
+        $this->safeForceDelete($id, SystemLanguage::class, 'system_language');
+    }
+
+    public function forceDeleteSelected()
+    {
+        if (empty($this->selectedIds)) {
+            return;
+        }
+
+        SystemLanguage::whereIn('id', $this->selectedIds)->forceDelete();
+        $this->resetAutoIncrementIfEmpty(SystemLanguage::class);
+        $count = count($this->selectedIds);
+        $this->selectedIds = [];
+
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => __('messages.type_force_deleted_count', ['type' => __('main.system_languages'), 'count' => $count]),
+        ]);
+        $this->dispatch('reset-checkout-boxes');
+    }
+
     public function clearSelected()
     {
         $this->selectedIds = [];

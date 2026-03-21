@@ -2,19 +2,28 @@
     $tableColumnsForLoop = isset($allColumns) && !empty($allColumns) ? $allColumns : $columns;
 @endphp
 
-    <!-- CSS for top scrollbar styling to match the table's bottom scrollbar -->
-    <style>
-        #topScroll::-webkit-scrollbar { height: 7px; }
-        #topScroll::-webkit-scrollbar-thumb { background: linear-gradient(90deg,theme('colors.blue.600'),theme('colors.blue.500')) !important; border-radius: 10px; }
-        #topScroll::-webkit-scrollbar-track { background: rgba(37,99,235,0.08); border-radius: 10px; }
-        #topScroll.no-overflow { height: 0 !important; overflow: hidden !important; }
-    </style>
-    <div class="top-scroll" id="topScroll" wire:ignore style="scrollbar-color: #2563eb rgba(37,99,235,0.08);">
-        <div class="top-scroll-inner" id="topScrollInner"></div>
+<div x-data="{
+        init() {
+            setTimeout(() => this.updateWidth(), 200);
+            window.addEventListener('resize', () => { setTimeout(() => this.updateWidth(), 100); });
+            const observer = new MutationObserver(() => this.updateWidth());
+            if (this.$refs.actualTable) observer.observe(this.$refs.actualTable, { childList: true, subtree: true });
+        },
+        syncTop(e) { this.$refs.bottomScroll.scrollLeft = e.target.scrollLeft; },
+        syncBottom(e) { this.$refs.topScroll.scrollLeft = e.target.scrollLeft; },
+        updateWidth() {
+            if(this.$refs.actualTable && this.$refs.dummyContent) {
+                this.$refs.dummyContent.style.width = this.$refs.actualTable.scrollWidth + 'px';
+            }
+        }
+    }">
+    <!-- CSS for top scrollbar styling now managed in main.css -->
+    <div class="top-scroll w-full overflow-x-auto overflow-y-hidden custom-scrollbar" id="topScroll" x-ref="topScroll" @scroll="syncTop" wire:ignore style="scrollbar-color: #2563eb rgba(37,99,235,0.08);">
+        <div class="top-scroll-inner" id="topScrollInner" x-ref="dummyContent" style="height: 1px;"></div>
     </div>
 
-<div class="table-wrapper" id="tableWrapper">
-    <table class="kt-table table-auto text-nowrap" id="data_table"
+<div class="table-wrapper w-full overflow-x-auto custom-scrollbar" id="tableWrapper" x-ref="bottomScroll" @scroll="syncBottom">
+    <table x-ref="actualTable" class="kt-table table-auto text-nowrap" id="data_table"
            x-data="{ 
                liveCols: JSON.parse('{{ addslashes(json_encode($columns)) }}'), 
                selectedIds: @entangle('selectedIds').live,

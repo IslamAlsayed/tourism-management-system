@@ -74,6 +74,9 @@ class SystemColumnManager extends Component
             $this->availableColumns = array_merge($this->availableColumns, $relations);
         }
 
+        // Ensure no duplicates exist
+        $this->availableColumns = array_values(array_unique($this->availableColumns));
+
         // Fetch existing system configuration (where user_id is null)
         $systemConfig = TableColumn::where('model_class', $modelClass)
             ->whereNull('user_id')

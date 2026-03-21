@@ -600,4 +600,8 @@ return [
     'work_phone' => 'Work Phone',
     'work_phone_ext' => 'Work Phone Ext',
     'year_of_foundation' => 'Year Of Foundation',
+
+    'mark_major' => 'Marquer comme principal',
+    'unmark_major' => 'Démarquer principal',
+    'mark_base' => 'Marquer comme base',
 ];

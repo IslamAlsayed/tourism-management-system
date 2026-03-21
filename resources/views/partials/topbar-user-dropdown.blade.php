@@ -1,6 +1,4 @@
-<!-- User -->
-<div class="shrink-0" data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px" data-kt-dropdown-offset-rtl="-20px, 10px" data-kt-dropdown-placement="bottom-end"
-    data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
+<div class="shrink-0" data-kt-dropdown="true" data-kt-dropdown-trigger="click" data-kt-dropdown-placement="bottom-end" data-kt-dropdown-placement-rtl="bottom-end">
     <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
         @if ($activeUser && $activeUser->photo && checkExistFile($activeUser->photo))
             <img alt="{{ $activeUser?->name ?? __('main.unknown_user') }}" class="border-2 border-green-500 rounded-full size-9 shrink-0"
@@ -17,8 +15,7 @@
             </span>
         @endif
     </div>
-    <div class="kt-dropdown-menu
-            w-[300px] z-[9999]" data-kt-dropdown-menu="true">
+    <div class="kt-dropdown-menu w-[300px] z-[9999]" data-kt-dropdown-menu="true">
         <div class="flex items-center justify-between gap-1.5 px-2.5 py-1.5">
             <div class="flex items-center gap-2">
                 @if ($activeUser && $activeUser->photo && checkExistFile($activeUser->photo))
@@ -67,8 +64,10 @@
                         {{ __('main.language') }}
                     </span>
                     <span class="kt-badge kt-badge-stroke ms-auto shrink-0">
-                        {{ config('languages.languages.' . getCurrentLocale()) }}
                         @php
+                            $currentLang = $system_languages->firstWhere('code', getCurrentLocale());
+                            $currentLangName = $currentLang ? ($currentLang->native ?? $currentLang->name) : strtoupper(getCurrentLocale());
+                            
                             $currentCountryCodeMap = [
                                 'en' => 'gb', 'ar' => 'sa', 'es' => 'es', 'it' => 'it',
                                 'fr' => 'fr', 'ja' => 'jp', 'tr' => 'tr', 'de' => 'de',
@@ -77,9 +76,10 @@
                             $cCode = $currentCountryCodeMap[getCurrentLocale()] ?? getCurrentLocale();
                             $currentLangPath = 'assets/media/flags/' . $cCode . '.svg';
                             $currentLangExists = file_exists(public_path($currentLangPath));
-                            $currentFlagUrl = $currentLangExists ? asset($currentLangPath) : asset('assets/images/logos/default-logo.svg');
+                            $currentFlagUrl = $currentLangExists ? asset($currentLangPath) : ($currentLang && $currentLang->photo ? asset('storage/' . $currentLang->photo) : asset('assets/images/logos/default-logo.svg'));
                         @endphp
-                        <img alt="" class="inline-block size-3.5 rounded-full object-cover"
+                        {{ $currentLangName }}
+                        <img alt="{{ $currentLangName }}" class="inline-block size-3.5 rounded-full object-cover ms-2"
                             src="{{ $currentFlagUrl }}" />
                     </span>
                 </button>
@@ -104,7 +104,7 @@
                                         @endphp
                                         <img src="{{ $flagUrl }}" class="inline-block rounded-full size-4 object-cover">
                                         <span class="kt-menu-title">
-                                            {{ __('languages.' . lcfirst($language->name)) ?? '' }}
+                                            {{ $language->native ?? $language->name }}
                                         </span>
                                     </span>
                                     @if (getCurrentLocale() === $language->code)

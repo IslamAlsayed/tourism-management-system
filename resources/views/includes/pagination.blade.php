@@ -1,5 +1,5 @@
 {{-- Enhanced pagination information component --}}
-<div class="kt-card-footer border-t border-gray-200 bg-gray-50">
+<div class="kt-card-footer border-t border-gray-200 bg-transparent">
     <div class="w-full flex justify-between items-center gap-4">
         {{-- Records per page selector --}}
         <div class="flex items-center gap-2 text-sm text-gray-600">

@@ -22,4 +22,9 @@ class SystemLanguage extends Model
         'is_default',
         'sort_order',
     ];
+
+    public function getExcludedColumns()
+    {
+        return ['is_active', 'is_default', 'uuid'];
+    }
 }

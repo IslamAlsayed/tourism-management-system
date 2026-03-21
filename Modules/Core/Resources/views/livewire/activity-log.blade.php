@@ -312,8 +312,28 @@
         <div class="kt-card-content" wire:target="search,selectedActivity,closeDetails,viewDetails,delete"
             wire:loading.class="loading">
             <div data-kt-datatable="true" data-kt-datatable-state-save="false" id="team_crew_table">
-                <div class="kt-scrollable-x-auto">
-                    <table class="kt-table table-auto text-nowrap">
+                <div x-data="{
+                        init() {
+                            setTimeout(() => this.updateWidth(), 200);
+                            window.addEventListener('resize', () => { setTimeout(() => this.updateWidth(), 100); });
+                            const observer = new MutationObserver(() => this.updateWidth());
+                            if (this.$refs.actualTable) observer.observe(this.$refs.actualTable, { childList: true, subtree: true });
+                        },
+                        syncTop(e) { this.$refs.bottomScroll.scrollLeft = e.target.scrollLeft; },
+                        syncBottom(e) { this.$refs.topScroll.scrollLeft = e.target.scrollLeft; },
+                        updateWidth() {
+                            if(this.$refs.actualTable && this.$refs.dummyContent) {
+                                this.$refs.dummyContent.style.width = this.$refs.actualTable.scrollWidth + 'px';
+                            }
+                        }
+                    }">
+                    <!-- CSS for top scrollbar styling now managed in main.css -->
+                    <div class="top-scroll w-full overflow-x-auto overflow-y-hidden custom-scrollbar" id="topScrollAct" x-ref="topScroll" @scroll="syncTop" wire:ignore style="scrollbar-color: #2563eb rgba(37,99,235,0.08);">
+                        <div class="top-scroll-inner" x-ref="dummyContent" style="height: 1px;"></div>
+                    </div>
+                
+                    <div class="kt-scrollable-x-auto w-full overflow-x-auto custom-scrollbar" x-ref="bottomScroll" @scroll="syncBottom">
+                        <table x-ref="actualTable" class="kt-table table-auto text-nowrap">
                         <thead class="bg-gray-50 dark:bg-gray-800/50">
                             <tr>
                                 {{-- <th scope="col" class="px-3 py-2">
@@ -452,6 +472,7 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
             </div>
         </div>
 

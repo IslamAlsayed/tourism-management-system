@@ -216,10 +216,14 @@ class ExcelController extends Controller
 
         // Convert Google Drive view URL to export URL
         $fileId = $this->extractGoogleDriveFileId($url);
+        $gid = $this->extractGoogleDriveGid($url);
         
         if ($fileId) {
             // Try CSV export first (for native Google Sheets)
             $csvExportUrl = "https://docs.google.com/spreadsheets/d/{$fileId}/export?format=csv";
+            if ($gid) {
+                $csvExportUrl .= "&gid={$gid}";
+            }
             // Fallback: Direct download link (for uploaded XLSX/CSV files)
             $directDownloadUrl = "https://docs.google.com/uc?export=download&id={$fileId}";
         } else {
@@ -349,11 +353,31 @@ class ExcelController extends Controller
         }
         
         // Handle id= format
-        parse_str(parse_url($url, PHP_URL_QUERY), $queries);
+        parse_str(parse_url($url, PHP_URL_QUERY) ?? '', $queries);
         if (isset($queries['id'])) {
             return $queries['id'];
         }
 
+        return null;
+    }
+
+    private function extractGoogleDriveGid($url)
+    {
+        // Handle gid= format in query string
+        parse_str(parse_url($url, PHP_URL_QUERY) ?? '', $queries);
+        if (isset($queries['gid'])) {
+            return $queries['gid'];
+        }
+
+        // Also check fragments (hash) for gid= (often used in Google Sheets links)
+        $fragment = parse_url($url, PHP_URL_FRAGMENT);
+        if ($fragment) {
+            parse_str($fragment, $fragments);
+            if (isset($fragments['gid'])) {
+                return $fragments['gid'];
+            }
+        }
+        
         return null;
     }
 
@@ -570,6 +594,8 @@ class ExcelController extends Controller
             'guidereview' => \Modules\TourGuides\Entities\TourGuideReview::class,
             'tourguides' => \Modules\TourGuides\Entities\TourGuide::class,
             'tourguide' => \Modules\TourGuides\Entities\TourGuide::class,
+            'toursguides' => \Modules\TourGuides\Entities\TourGuide::class,
+            'toursguide' => \Modules\TourGuides\Entities\TourGuide::class,
             'tourguidetypes' => \Modules\TourGuides\Entities\TourGuideType::class,
             'tourguidetype' => \Modules\TourGuides\Entities\TourGuideType::class,
             'tourguidereviews' => \Modules\TourGuides\Entities\TourGuideReview::class,

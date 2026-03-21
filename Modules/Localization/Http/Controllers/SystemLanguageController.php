@@ -20,17 +20,29 @@ class SystemLanguageController extends Controller
 
     public function create()
     {
-        return view('localization::system-languages.create');
+        $flags = \Illuminate\Support\Facades\File::exists(public_path('assets/media/flags')) ? array_map('basename', \Illuminate\Support\Facades\File::files(public_path('assets/media/flags'))) : [];
+        return view('localization::system-languages.create', compact('flags'));
     }
 
     public function store(SystemLanguageStoreRequest $request)
     {
         $validated = $request->validated();
-        $data = array_merge($validated, $request->safe()->except('photo'));
+        $data = array_merge($validated, $request->safe()->except(['photo', 'selected_flag']));
         $language = SystemLanguage::create($data);
         if ($language) {
             $this->loadActiveLanguages();
-            $this->uploadPhoto($request, $language, 'photo', "languages");
+            
+            if ($request->hasFile('photo')) {
+                $this->uploadPhoto($request, $language, 'photo', "languages");
+            } elseif ($request->filled('selected_flag')) {
+                $source = public_path('assets/media/flags/' . $request->selected_flag);
+                if (file_exists($source)) {
+                    $destPath = 'languages/' . time() . '_' . $request->selected_flag;
+                    \Illuminate\Support\Facades\Storage::disk('public')->put($destPath, file_get_contents($source));
+                    $language->update(['photo' => $destPath]);
+                }
+            }
+
             return redirect()->route('dashboard.localization.system-languages.index')->with('success', __('messages.type_created', ['type' => __('main.language')]));
         }
         return redirect()->route('dashboard.localization.system-languages.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.language')]));
@@ -42,7 +54,8 @@ class SystemLanguageController extends Controller
         if (!$language) {
             return redirect()->back()->with('error', __('messages.not_found_this_type', ['type' => __('main.language')]));
         }
-        return view('localization::system-languages.edit', compact('language'));
+        $flags = \Illuminate\Support\Facades\File::exists(public_path('assets/media/flags')) ? array_map('basename', \Illuminate\Support\Facades\File::files(public_path('assets/media/flags'))) : [];
+        return view('localization::system-languages.edit', compact('language', 'flags'));
     }
 
     public function update(SystemLanguageUpdateRequest $request, $id)
@@ -53,13 +66,21 @@ class SystemLanguageController extends Controller
         }
 
         $validated = $request->validated();
-        $data = array_merge($validated, $request->safe()->except('photo'));
+        $data = array_merge($validated, $request->safe()->except(['photo', 'selected_flag']));
         
         $updated = $language->update($data);
         if ($updated) {
             $this->loadActiveLanguages();
             if ($request->hasFile('photo')) {
                 $this->uploadPhoto($request, $language, 'photo', "languages");
+            } elseif ($request->filled('selected_flag')) {
+                $source = public_path('assets/media/flags/' . $request->selected_flag);
+                if (file_exists($source)) {
+                    $destPath = 'languages/' . time() . '_' . $request->selected_flag;
+                    \Illuminate\Support\Facades\Storage::disk('public')->put($destPath, file_get_contents($source));
+                    $this->deletePhoto($language, 'photo');
+                    $language->update(['photo' => $destPath]);
+                }
             }
             return redirect()->route('dashboard.localization.system-languages.index')->with('success', __('messages.type_updated', ['type' => __('main.language')]));
         }

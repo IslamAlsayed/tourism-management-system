@@ -49,7 +49,7 @@
         </div>
 
         {{-- Bulk Action Toolbar --}}
-        <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0" class="mb-4 flex flex-wrap items-center gap-2 px-1 bg-gray-50 p-3 rounded-lg border border-gray-200" x-data="{
+        <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0" class="mb-4 flex flex-wrap items-center gap-2 px-1 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm" x-data="{
                 confirmAction(action, opts) {
                     Swal.fire({
                         title: opts.title || '{{ __('messages.are_you_sure') }}',
@@ -67,7 +67,7 @@
                     })
                 }
             }">
-                <span class="text-sm font-medium text-gray-700 me-2">
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300 me-2 p-2 bg-white dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600">
                     {{ __('main.selected') }}: <span class="kt-badge kt-badge-primary" x-text="$wire.selectedIds.length"></span>
                 </span>
 
@@ -106,8 +106,7 @@
             </div>
 
         <div data-kt-datatable-state-save="false" id="subregions_table">
-            <div class="kt-scrollable-x-auto">
-                @component('components.data-table', [
+            @component('components.data-table', [
                     'data' => $data,
                     'columns' => $columns,
                     'search' => $search,
@@ -115,7 +114,6 @@
                     'selectedIds' => $selectedIds ?? [],
                 ])
                 @endcomponent
-            </div>
 
             @if (isset($data) && !empty($data) && $data->count() > 0)
                 @include('includes.pagination', ['data' => $data])

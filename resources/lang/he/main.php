@@ -600,4 +600,8 @@ return [
     'work_phone' => 'Work Phone',
     'work_phone_ext' => 'Work Phone Ext',
     'year_of_foundation' => 'Year Of Foundation',
+
+    'mark_major' => 'סמן כראשי',
+    'unmark_major' => 'בטל סימון ראשי',
+    'mark_base' => 'סמן כבסיס',
 ];

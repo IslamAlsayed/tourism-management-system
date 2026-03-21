@@ -34,10 +34,16 @@
                         @csrf
 
                         <!-- Language Photo -->
-                        @include('components.input-image', [
-                            'column' => 'language',
-                            'columnName' => 'flag',
-                        ])
+                        <div class="flex flex-col flex-wrap items-center gap-4 mb-4">
+                            @include('components.input-image', [
+                                'column' => 'language',
+                                'columnName' => 'flag',
+                            ])
+                            <input type="hidden" name="selected_flag" id="selected_flag">
+                            <button type="button" class="btn btn-sm btn-light-primary" data-kt-modal-toggle="#flags_modal">
+                                <i class="ki-filled ki-picture"></i> {{ __('main.choose_from_media') }}
+                            </button>
+                        </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-4">
                             <!-- Language Code -->
@@ -126,4 +132,128 @@
             </div>
         </div>
     </div>
+
+    <!-- Flags Modal -->
+    <div class="kt-modal" data-kt-modal="true" id="flags_modal">
+        <div class="kt-modal-content max-w-[600px]">
+            <div class="kt-modal-header py-4 px-5 border-b border-border">
+                <h3 class="font-bold text-lg">{{ __('main.choose_from_media') }}</h3>
+                <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-dim shrink-0" data-kt-modal-dismiss="true">
+                    <i class="ki-filled ki-cross"></i>
+                </button>
+            </div>
+            
+            <!-- Sticky Search Box -->
+            <div class="px-5 py-3 border-b border-border bg-background/95 backdrop-blur-sm sticky-top z-10">
+                <div class="relative">
+                    <i class="ki-filled ki-magnifier absolute rtl:right-3 ltr:left-3 top-1/2 -translate-y-1/2 text-muted-foreground"></i>
+                    <input type="text" id="flagSearchInput" class="kt-input rtl:pr-10 ltr:pl-10 w-full" placeholder="{{ __('main.search') }}...">
+                </div>
+            </div>
+
+            <div class="kt-modal-body p-5 max-h-[60vh] overflow-y-auto relative">
+                <div class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3" id="flagsContainer">
+                    @foreach($flags as $flag)
+                        <div class="flex flex-col items-center justify-center p-3 border border-gray-100 rounded-xl hover:bg-gray-50 hover:border-gray-200 hover:shadow-sm cursor-pointer flag-selector transition-all duration-200" data-flag="{{ $flag }}">
+                            <img src="{{ asset('assets/media/flags/' . $flag) }}" alt="{{ Str::beforeLast($flag, '.') }}" title="{{ Str::beforeLast($flag, '.') }}" class="w-10 h-10 rounded-full mb-2 object-cover border border-gray-200 shadow-sm">
+                            <span class="text-[11px] text-center text-gray-500 font-medium truncate w-full" title="{{ Str::beforeLast($flag, '.') }}">{{ Str::beforeLast($flag, '.') }}</span>
+                        </div>
+                    @endforeach
+                </div>
+                <!-- No Results Message -->
+                <div id="noFlagsFound" class="hidden flex-col items-center justify-center py-12 text-gray-400">
+                    <i class="ki-filled ki-magnifier text-5xl mb-4 opacity-50"></i>
+                    <p class="text-base font-medium">{{ __('main.no_results_found') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Flag search functionality
+            const searchInput = document.getElementById('flagSearchInput');
+            const flagItems = document.querySelectorAll('.flag-selector');
+            const noResults = document.getElementById('noFlagsFound');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    const term = e.target.value.toLowerCase();
+                    let hasVisible = false;
+
+                    flagItems.forEach(item => {
+                        const flagName = item.getAttribute('data-flag').toLowerCase();
+                        if (flagName.includes(term)) {
+                            item.style.display = 'flex';
+                            hasVisible = true;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    if (noResults) {
+                        noResults.classList.toggle('hidden', hasVisible);
+                        noResults.classList.toggle('flex', !hasVisible);
+                    }
+                });
+                
+                // Focus search input when modal opens
+                const flagsModal = document.getElementById('flags_modal');
+                if (flagsModal) {
+                    flagsModal.addEventListener('shown.kt.modal', function () {
+                        setTimeout(() => { searchInput.focus(); }, 100);
+                    });
+                }
+            }
+
+            document.querySelectorAll('.flag-selector').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var flag = this.getAttribute('data-flag');
+                    var flagUrl = "{{ asset('assets/media/flags') }}/" + flag;
+                    
+                    // Set the hidden input value
+                    var selectedFlagInput = document.getElementById('selected_flag');
+                    if(selectedFlagInput) {
+                        selectedFlagInput.value = flag;
+                    }
+                    
+                    // Clear the file input
+                    var photoInput = document.getElementById('photo');
+                    if(photoInput) {
+                        photoInput.value = '';
+                    }
+                    
+                    // Update the preview
+                    var photoPreview = document.querySelector('.photo-preview');
+                    if(photoPreview) {
+                        photoPreview.classList.remove('image-character');
+                        photoPreview.innerHTML = '<img id="photo" src="' + flagUrl + '" class="w-full h-full object-cover">';
+                    }
+                    
+                    // Close the modal
+                    var modalEl = document.getElementById('flags_modal');
+                    if (modalEl && typeof KTModal !== 'undefined') {
+                        var modal = KTModal.getInstance(modalEl);
+                        if (modal) {
+                            modal.hide();
+                        }
+                    }
+                });
+            });
+            
+            // Also if user selects a file, clear the selected_flag
+            var photoInput = document.getElementById('photo');
+            if(photoInput) {
+                photoInput.addEventListener('change', function() {
+                    var selectedFlagInput = document.getElementById('selected_flag');
+                    if(selectedFlagInput) {
+                        selectedFlagInput.value = '';
+                    }
+                });
+            }
+        });
+    </script>
+    @endpush
 @endsection
+

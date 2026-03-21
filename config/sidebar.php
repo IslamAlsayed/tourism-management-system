@@ -1601,6 +1601,15 @@ return [
                 ],
             ],
         ],
+
+        // ================= Translation Manager - مدير الترجمة =================
+        [
+            'title' => 'translation manager',
+            'icon' => 'fas fa-language',
+            'route' => 'dashboard.translation-manager.index',
+            'fixed' => 'new',
+            'roles' => ['admin', 'superadmin'],
+        ],
     ],
 ];
 

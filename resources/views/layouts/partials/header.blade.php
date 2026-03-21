@@ -49,7 +49,7 @@
                     {{-- begin::Menu wrapper --}}
                     <div class="cursor-pointer symbol symbol-35px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-                        data-kt-menu-placement="bottom-{{ app()->getLocale() == 'ar' ? 'start' : 'end' }}">
+                        data-kt-menu-placement="bottom-end">
                         <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/blank.png') }}"
                             alt="{{ $user->name }}" class="size-full object-cover">
                     </div>

@@ -35,53 +35,67 @@
                 </span>
             </button>
         </div>
+    </div>
 
-        <div class="kt-menu" data-kt-menu="true">
-            <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-end"
-                data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown"
-                data-kt-menu-item-trigger="click">
-                <button
-                    class="user-action relative kt-menu-toggle kt-btn kt-btn-outline bg-primary text-white px-3 h-[45px] cursor-default">
-                    <span class="kt-menu-title">
-                        <span>{{ __('main.export') }} (<span x-text="$wire.selectedIds.length"></span> {{ __('main.items') }})</span>
-                    </span>
-                    <span class="hidden absolute top-50 left-50 translate-50" id="loading-spinner">
-                        @include('components.load-data', ['color' => 'var(--color-white)'])
-                    </span>
-                </button>
-                <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]" data-kt-menu-dismiss="true">
-                    <div class="kt-menu-item">
-                        <button class="kt-menu-link" wire:click="exportSelectedPDF" wire:loading.attr="disabled" wire:target="exportSelectedPDF">
-                            <span class="kt-menu-title">
-                                <span>{{ __('main.pdf') }} (<span x-text="$wire.selectedIds.length"></span> {{ __('main.items') }})</span>
-                            </span>
-                            <span wire:loading wire:target="exportSelectedPDF">
-                                <i class="fas fa-spinner fa-spin ms-2"></i>
-                            </span>
-                        </button>
-                    </div>
-                    <div class="kt-menu-item">
-                        <button class="kt-menu-link" wire:click="exportSelectedExcel('csv')"
-                            wire:loading.attr="disabled" wire:target="exportSelectedExcel">
-                            <span class="kt-menu-title">
-                                <span>{{ __('main.csv') }} (<span x-text="$wire.selectedIds.length"></span> {{ __('main.items') }})</span>
-                            </span>
-                            <span wire:loading wire:target="exportSelectedExcel">
-                                <i class="fas fa-spinner fa-spin ms-2"></i>
-                            </span>
-                        </button>
-                    </div>
-                    <div class="kt-menu-item">
-                        <button class="kt-menu-link" wire:click="exportSelectedExcel('xlsx')"
-                            wire:loading.attr="disabled" wire:target="exportSelectedExcel">
-                            <span class="kt-menu-title">
-                                <span>{{ __('main.xlsx') }} (<span x-text="$wire.selectedIds.length"></span> {{ __('main.items') }})</span>
-                            </span>
-                            <span wire:loading wire:target="exportSelectedExcel">
-                                <i class="fas fa-spinner fa-spin ms-2"></i>
-                            </span>
-                        </button>
-                    </div>
+    {{-- Global Export Dropdown --}}
+    <div class="kt-menu" data-kt-menu="true">
+        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-end"
+            data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown"
+            data-kt-menu-item-trigger="click">
+            <button
+                class="user-action relative kt-menu-toggle kt-btn kt-btn-outline bg-primary text-white px-3 h-[45px] cursor-pointer">
+                <span class="kt-menu-title flex items-center gap-2">
+                    <i class="fas fa-file-export"></i>
+                    <span>{{ __('main.export') }} <span x-show="$wire.selectedIds && $wire.selectedIds.length > 0">(<span x-text="$wire.selectedIds.length"></span>)</span></span>
+                </span>
+                <span class="hidden absolute top-50 left-50 translate-50" id="loading-spinner">
+                    @include('components.load-data', ['color' => 'var(--color-white)'])
+                </span>
+            </button>
+            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]" data-kt-menu-dismiss="true">
+                {{-- Export Full / Selected Data --}}
+                <div class="kt-menu-item">
+                    <button class="kt-menu-link" wire:click="exportSelectedPDF" wire:loading.attr="disabled" wire:target="exportSelectedPDF" :disabled="!$wire.selectedIds || $wire.selectedIds.length === 0">
+                        <span class="kt-menu-title flex items-center gap-2">
+                            <i class="fas fa-file-pdf text-danger"></i>
+                            <span>{{ __('main.pdf') }}</span>
+                        </span>
+                        <span wire:loading wire:target="exportSelectedPDF">
+                            <i class="fas fa-spinner fa-spin ms-2"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="kt-menu-item">
+                    <button class="kt-menu-link" wire:click="exportSelectedExcel('csv')" wire:loading.attr="disabled" wire:target="exportSelectedExcel" :disabled="!$wire.selectedIds || $wire.selectedIds.length === 0">
+                        <span class="kt-menu-title flex items-center gap-2">
+                            <i class="fas fa-file-csv text-success"></i>
+                            <span>{{ __('main.csv') }}</span>
+                        </span>
+                        <span wire:loading wire:target="exportSelectedExcel">
+                            <i class="fas fa-spinner fa-spin ms-2"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="kt-menu-item">
+                    <button class="kt-menu-link" wire:click="exportSelectedExcel('xlsx')" wire:loading.attr="disabled" wire:target="exportSelectedExcel" :disabled="!$wire.selectedIds || $wire.selectedIds.length === 0">
+                        <span class="kt-menu-title flex items-center gap-2">
+                            <i class="fas fa-file-excel text-success"></i>
+                            <span>{{ __('main.xlsx') }}</span>
+                        </span>
+                        <span wire:loading wire:target="exportSelectedExcel">
+                            <i class="fas fa-spinner fa-spin ms-2"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="kt-menu-separator my-1"></div>
+                {{-- Export Template --}}
+                <div class="kt-menu-item">
+                    <a href="{{ route('import.template', ['models' => $routePrefix ?? preg_replace('/^([a-z])/', '$1', strtolower(class_basename($this)))]) }}" class="kt-menu-link" target="_blank">
+                        <span class="kt-menu-title flex items-center gap-2">
+                            <i class="fas fa-download text-primary"></i>
+                            <span>{{ __('main.export_template') }}</span>
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>

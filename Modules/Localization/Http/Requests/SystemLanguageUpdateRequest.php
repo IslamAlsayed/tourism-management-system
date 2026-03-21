@@ -30,7 +30,8 @@ class SystemLanguageUpdateRequest extends FormRequest
             "code" => ["required", Rule::unique('system_languages', 'code')->ignore($id)],
             "native" => "nullable|string|max:255",
             "dir" => "required|in:ltr,rtl",
-            'photo' => ['nullable', 'file', 'mimes:jpeg,png,jpg,gif,webp,svg', 'max:5120']
+            'photo' => ['nullable', 'file', 'mimes:jpeg,png,jpg,gif,webp,svg', 'max:5120'],
+            'selected_flag' => 'nullable|string'
         ];
     }
 }

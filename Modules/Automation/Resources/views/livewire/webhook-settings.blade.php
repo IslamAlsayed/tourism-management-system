@@ -54,39 +54,65 @@
             {{ __('automation.active_automation_bridges') }}
         </div>
         <div class="kt-card-body p-0">
-            <div class="kt-scrollable-x-auto">
-                <table class="kt-table w-full">
-                    <thead class="bg-gray-50 dark:bg-gray-700/30">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.name') }}</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.event') }}</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.status') }}</th>
-                            <th class="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.actions') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                        @foreach($webhooks as $webhook)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/20 transition-colors">
-                            <td class="px-6 py-4">
-                                <div class="font-bold text-gray-900 dark:text-white">{{ $webhook->name }}</div>
-                                <div class="text-[10px] text-gray-400 font-mono truncate max-w-xs">{{ $webhook->url }}</div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="kt-badge kt-badge-light kt-badge-primary uppercase text-[10px]">{{ $webhook->event_type }}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <button wire:click="toggleStatus({{ $webhook->id }})" class="kt-badge {{ $webhook->is_active ? 'kt-badge-success' : 'kt-badge-destructive' }} cursor-pointer border-0">
-                                    {{ $webhook->is_active ? __('automation.active') : __('automation.paused') }}
-                                </button>
-                            </td>
-                            <td class="px-6 py-4 text-right space-x-2">
-                                <button wire:click="edit({{ $webhook->id }})" class="kt-btn kt-btn-sm kt-btn-light kt-btn-primary border-0 shadow-none"><i class="ki-outline ki-pencil text-md"></i></button>
-                                <button wire:click="delete({{ $webhook->id }})" wire:confirm="Are you sure?" class="kt-btn kt-btn-sm kt-btn-light kt-btn-destructive border-0 shadow-none"><i class="ki-outline ki-trash text-md"></i></button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div x-data="{ 
+                init() {
+                    setTimeout(() => this.updateWidth(), 200);
+                    window.addEventListener('resize', () => { setTimeout(() => this.updateWidth(), 100); });
+                    const observer = new MutationObserver(() => this.updateWidth());
+                    if (this.$refs.actualTable) observer.observe(this.$refs.actualTable, { childList: true, subtree: true });
+                },
+                syncScroll(source) {
+                    if (source === 'top') {
+                        this.$refs.bottomScroll.scrollLeft = this.$refs.topScroll.scrollLeft;
+                    } else {
+                        this.$refs.topScroll.scrollLeft = this.$refs.bottomScroll.scrollLeft;
+                    }
+                },
+                updateWidth() {
+                    if (this.$refs.actualTable && this.$refs.topScrollInner) {
+                        this.$refs.topScrollInner.style.width = this.$refs.actualTable.scrollWidth + 'px';
+                    }
+                }
+            }" class="w-full">
+            <!-- Global scrolling styles now in main.css -->
+                <div class="top-scroll w-full overflow-x-auto overflow-y-hidden custom-scrollbar" x-ref="topScroll" @scroll="syncScroll('top')">
+                    <div class="top-scroll-inner" x-ref="topScrollInner" style="height: 1px;"></div>
+                </div>
+
+                <div class="kt-scrollable-x-auto w-full overflow-x-auto custom-scrollbar" x-ref="bottomScroll" @scroll="syncScroll('bottom')">
+                    <table x-ref="actualTable" class="kt-table w-full">
+                        <thead class="bg-gray-50 dark:bg-gray-700/30">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.name') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.event') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.status') }}</th>
+                                <th class="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                            @foreach($webhooks as $webhook)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-gray-900 dark:text-white">{{ $webhook->name }}</div>
+                                    <div class="text-[10px] text-gray-400 font-mono truncate max-w-xs">{{ $webhook->url }}</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="kt-badge kt-badge-light kt-badge-primary uppercase text-[10px]">{{ $webhook->event_type }}</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button wire:click="toggleStatus({{ $webhook->id }})" class="kt-badge {{ $webhook->is_active ? 'kt-badge-success' : 'kt-badge-destructive' }} cursor-pointer border-0">
+                                        {{ $webhook->is_active ? __('automation.active') : __('automation.paused') }}
+                                    </button>
+                                </td>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button wire:click="edit({{ $webhook->id }})" class="kt-btn kt-btn-sm kt-btn-light kt-btn-primary border-0 shadow-none"><i class="ki-outline ki-pencil text-md"></i></button>
+                                    <button wire:click="delete({{ $webhook->id }})" wire:confirm="Are you sure?" class="kt-btn kt-btn-sm kt-btn-light kt-btn-destructive border-0 shadow-none"><i class="ki-outline ki-trash text-md"></i></button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -98,37 +124,94 @@
             <h3 class="text-sm font-bold text-gray-700 uppercase tracking-tight">{{ __('automation.recent_synchronizations') }}</h3>
         </div>
         <div class="kt-card-body p-0">
-            <div class="kt-scrollable-x-auto">
-                <table class="kt-table w-full">
-                    <thead class="bg-gray-50 dark:bg-gray-700/30">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.time') }}</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.bridge') }}</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.status') }}</th>
-                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.response') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                        @foreach($logs as $log)
-                        <tr>
-                            <td class="px-6 py-3 text-xs text-gray-500">{{ $log->created_at->diffForHumans() }}</td>
-                            <td class="px-6 py-3 text-xs font-bold">{{ $log->webhook->name ?? 'Deleted' }}</td>
-                            <td class="px-6 py-3">
-                                @if($log->response_status >= 200 && $log->response_status < 300)
-                                    <span class="text-success flex items-center gap-1 font-bold text-xs"><i class="ki-filled ki-check-circle text-md"></i> {{ $log->response_status }}</span>
-                                @else
-                                    <span class="text-danger flex items-center gap-1 font-bold text-xs"><i class="ki-filled ki-cross-circle text-md"></i> {{ $log->response_status ?? 'FAIL' }}</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-3">
-                                <div class="text-[10px] text-gray-400 italic truncate max-w-[200px]" title="{{ $log->response_body }}">
-                                    {{ $log->response_body ?: $log->error }}
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div x-data="{ 
+                init() {
+                    setTimeout(() => this.updateWidth(), 200);
+                    window.addEventListener('resize', () => { setTimeout(() => this.updateWidth(), 100); });
+                    const observer = new MutationObserver(() => this.updateWidth());
+                    if (this.$refs.actualTable) observer.observe(this.$refs.actualTable, { childList: true, subtree: true });
+                },
+                syncScroll(source) {
+                    if (source === 'top') {
+                        this.$refs.bottomScroll.scrollLeft = this.$refs.topScroll.scrollLeft;
+                    } else {
+                        this.$refs.topScroll.scrollLeft = this.$refs.bottomScroll.scrollLeft;
+                    }
+                },
+                updateWidth() {
+                    if (this.$refs.actualTable && this.$refs.topScrollInner) {
+                        this.$refs.topScrollInner.style.width = this.$refs.actualTable.scrollWidth + 'px';
+                    }
+                }
+            }" class="w-full">
+            <style>
+                .top-scroll {
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    height: 12px;
+                    margin-bottom: 4px;
+                    scrollbar-width: thin;
+                    scrollbar-color: #2563eb rgba(37, 99, 235, 0.08); /* Blue thumb, very light blue track */
+                    border-radius: 6px;
+                }
+                .top-scroll::-webkit-scrollbar {
+                    height: 8px; /* Slightly thicker for better usability */
+                }
+                .top-scroll::-webkit-scrollbar-track {
+                    background: rgba(37, 99, 235, 0.08);
+                    border-radius: 6px;
+                }
+                .top-scroll::-webkit-scrollbar-thumb {
+                    background-color: #2563eb;
+                    border-radius: 6px;
+                    border: 2px solid transparent;
+                    background-clip: padding-box; /* Makes thumb look floating */
+                }
+                .top-scroll::-webkit-scrollbar-thumb:hover {
+                    background-color: #1d4ed8; /* Darker blue on hover */
+                }
+                /* Hide bottom scrollbar to prevent double scrollbars if intended, or keep it styled */
+                .bottom-scroll {
+                    overflow-x: auto;
+                    padding-bottom: 10px; /* Space for the text/content */
+                }
+            </style>
+                <div class="top-scroll" x-ref="topScroll" @scroll="syncScroll('top')">
+                    <div x-ref="topScrollInner" style="height: 1px;"></div>
+                </div>
+
+                <div class="bottom-scroll" x-ref="bottomScroll" @scroll="syncScroll('bottom')">
+                    <table x-ref="actualTable" class="kt-table w-full">
+                        <thead class="bg-gray-50 dark:bg-gray-700/30">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.time') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.bridge') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.status') }}</th>
+                                <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">{{ __('automation.response') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                            @foreach($logs as $log)
+                            <tr>
+                                <td class="px-6 py-3 text-xs text-gray-500">{{ $log->created_at->diffForHumans() }}</td>
+                                <td class="px-6 py-3 text-xs font-bold">{{ $log->webhook->name ?? 'Deleted' }}</td>
+                                <td class="px-6 py-3">
+                                    @if($log->response_status >= 200 && $log->response_status < 300)
+                                        <span class="text-success flex items-center gap-1 font-bold text-xs"><i class="ki-filled ki-check-circle text-md"></i> {{ $log->response_status }}</span>
+                                    @else
+                                        <span class="text-danger flex items-center gap-1 font-bold text-xs"><i class="ki-filled ki-cross-circle text-md"></i> {{ $log->response_status ?? 'FAIL' }}</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-3">
+                                    <div class="text-[10px] text-gray-400 italic truncate max-w-[200px]" title="{{ $log->response_body }}">
+                                        {{ $log->response_body ?: $log->error }}
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

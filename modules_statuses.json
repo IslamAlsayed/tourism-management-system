@@ -17,5 +17,6 @@
     "TouristSites": true,
     "TouristServices": true,
     "Automation": true,
-    "System": true
+    "System": true,
+    "TranslationManager": true
 }
