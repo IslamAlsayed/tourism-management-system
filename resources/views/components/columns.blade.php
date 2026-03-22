@@ -38,6 +38,7 @@
     </div>
 
     {{-- Global Export Dropdown --}}
+    @if(!isset($hideExport) || !$hideExport)
     <div class="kt-menu" data-kt-menu="true">
         <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-end"
             data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown"
@@ -100,6 +101,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     {{-- Column Picker Toggle Button --}}
     <button @click="$store.colPicker.toggle()" type="button"
