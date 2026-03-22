@@ -430,6 +430,18 @@
                                         </span>
                                     @endif
                                 </span>
+
+                                {{-- Dynamic Badge --}}
+                                @if (isset($item['badge']) && $item['badge'] === 'pending_translations')
+                                    @php
+                                        $badgeCount = \Modules\TranslationManager\Entities\TranslationSuggestion::where('status', 'pending')->count();
+                                    @endphp
+                                    @if ($badgeCount > 0)
+                                        <span class="inline-flex items-center justify-center min-w-[20px] h-[20px] px-1.5 text-[11px] font-bold text-white bg-red-500 rounded-full ms-auto shrink-0 animate-pulse">
+                                            {{ $badgeCount }}
+                                        </span>
+                                    @endif
+                                @endif
                             </a>
                         </div>
                     @endif

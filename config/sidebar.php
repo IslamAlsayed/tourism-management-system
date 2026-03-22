@@ -1609,6 +1609,7 @@ return [
             'route' => 'dashboard.translation-manager.index',
             'fixed' => 'new',
             'roles' => ['admin', 'superadmin'],
+            'badge' => 'pending_translations',
         ],
     ],
 ];
