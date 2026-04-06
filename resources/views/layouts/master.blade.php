@@ -83,7 +83,7 @@
             @endif
 
             <!-- Content -->
-            <main class="grow content pt-5" id="content" role="content">
+            <main class="grow p-6 lg:p-8" id="content" role="content">
                 @yield('content')
                 {{ $slot ?? '' }}
             </main>

@@ -25,40 +25,40 @@ class SidebarManagerController extends Controller
                 $sidebarConfig = [
                     [
                         'title' => ['ar' => 'لوحة التحكم', 'en' => 'Dashboard'],
-                        'icon' => 'ki-filled ki-element-11',
+                        'icon' => 'fa-duotone fa-solid fa-grid-2',
                         'route' => 'dashboard',
                         'permission' => null,
                     ],
                     [
                         'title' => ['ar' => 'إدارة المستخدمين', 'en' => 'User Management'],
-                        'icon' => 'ki-filled ki-profile-user',
+                        'icon' => 'fa-duotone fa-solid fa-user',
                         'permission' => 'manage_users',
                         'children' => [
                             [
                                 'title' => ['ar' => 'جميع المستخدمين', 'en' => 'All Users'],
-                                'icon' => 'ki-filled ki-people',
+                                'icon' => 'fa-duotone fa-solid fa-users',
                                 'route' => 'users.index',
                             ],
                             [
                                 'title' => ['ar' => 'إضافة مستخدم جديد', 'en' => 'Add New User'],
-                                'icon' => 'ki-filled ki-plus',
+                                'icon' => 'fa-duotone fa-solid fa-plus',
                                 'route' => 'users.create',
                             ]
                         ]
                     ],
                     [
                         'title' => ['ar' => 'إدارة المواقع', 'en' => 'Location Management'],
-                        'icon' => 'ki-filled ki-geolocation',
+                        'icon' => 'fa-duotone fa-solid fa-location-dot',
                         'permission' => null,
                         'children' => [
                             [
                                 'title' => ['ar' => 'البلدان', 'en' => 'Countries'],
-                                'icon' => 'ki-filled ki-flag',
+                                'icon' => 'fa-duotone fa-solid fa-flag',
                                 'route' => 'countries.index',
                             ],
                             [
                                 'title' => ['ar' => 'المدن', 'en' => 'Cities'],
-                                'icon' => 'ki-filled ki-home-2',
+                                'icon' => 'fa-duotone fa-solid fa-city',
                                 'route' => 'cities.index',
                             ]
                         ]
@@ -77,7 +77,7 @@ class SidebarManagerController extends Controller
             $menuItems = [
                 [
                     'key' => 'dashboard',
-                    'icon' => 'ki-filled ki-element-11',
+                    'icon' => 'fa-duotone fa-solid fa-grid-2',
                     'title' => ['ar' => 'لوحة التحكم', 'en' => 'Dashboard'],
                     'route' => 'dashboard',
                     'level' => 0,
@@ -85,7 +85,7 @@ class SidebarManagerController extends Controller
                 ],
                 [
                     'key' => 'user_management',
-                    'icon' => 'ki-filled ki-profile-user',
+                    'icon' => 'fa-duotone fa-solid fa-user',
                     'title' => ['ar' => 'إدارة المستخدمين', 'en' => 'User Management'],
                     'route' => '',
                     'level' => 0,
