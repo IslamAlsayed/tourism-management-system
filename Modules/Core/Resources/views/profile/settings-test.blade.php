@@ -180,7 +180,7 @@
 @endpush
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
 
         <!-- Hero Section -->
         <div class="profile-hero">
@@ -192,13 +192,13 @@
                         <div>
                             <h1 class="text-white fw-bold mb-2">{{ $user->name }}</h1>
                             <div class="d-flex align-items-center text-white opacity-75 mb-3">
-                                <i class="ki-filled ki-briefcase fs-4 me-2"></i>
+                                <i class="fa-duotone fa-solid fa-briefcase fs-4 me-2"></i>
                                 <span class="me-4">{{ $user->position ?? 'Software Developer' }}</span>
-                                <i class="ki-filled ki-geolocation fs-4 me-2"></i>
+                                <i class="fa-duotone fa-solid fa-location-dot fs-4 me-2"></i>
                                 <span>{{ $user->address ?? 'Amman, Jordan' }}</span>
                             </div>
                             <div class="d-flex align-items-center">
-                                <i class="ki-filled ki-verify fs-4 me-2"></i>
+                                <i class="fa-duotone fa-solid fa-badge-check fs-4 me-2"></i>
                                 <span class="text-white opacity-75">Verified Account</span>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                 <div class="col-lg-4">
                     <div class="text-center">
                         <div class="badge badge-light-success fs-7 fw-bold px-3 py-2">
-                            <i class="ki-filled ki-check-circle me-1"></i>
+                            <i class="fa-duotone fa-solid fa-check-circle me-1"></i>
                             Profile Complete
                         </div>
                     </div>
@@ -221,7 +221,7 @@
                 <div class="stat-card primary">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <div class="text-primary">
-                            <i class="ki-filled ki-abstract-26 fs-2x"></i>
+                            <i class="fa-duotone fa-solid fa-shapes fs-2x"></i>
                         </div>
                         <div class="text-end">
                             <div class="fs-2 fw-bold text-gray-800">15</div>
@@ -234,7 +234,7 @@
                 <div class="stat-card success">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <div class="text-success">
-                            <i class="ki-filled ki-abstract-35 fs-2x"></i>
+                            <i class="fa-duotone fa-solid fa-shapes fs-2x"></i>
                         </div>
                         <div class="text-end">
                             <div class="fs-2 fw-bold text-gray-800">8</div>
@@ -247,7 +247,7 @@
                 <div class="stat-card warning">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <div class="text-warning">
-                            <i class="ki-filled ki-abstract-13 fs-2x"></i>
+                            <i class="fa-duotone fa-solid fa-cube fs-2x"></i>
                         </div>
                         <div class="text-end">
                             <div class="fs-2 fw-bold text-gray-800">42</div>
@@ -260,7 +260,7 @@
                 <div class="stat-card info">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <div class="text-info">
-                            <i class="ki-filled ki-abstract-11 fs-2x"></i>
+                            <i class="fa-duotone fa-solid fa-cubes fs-2x"></i>
                         </div>
                         <div class="text-end">
                             <div class="fs-2 fw-bold text-gray-800">96%</div>
@@ -277,25 +277,25 @@
                 <ul class="nav nav-pills nav-pills-custom mb-8" id="profileTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="overview-tab" data-bs-toggle="pill" data-bs-target="#overview" type="button" role="tab">
-                            <i class="ki-filled ki-element-11 me-2"></i>
+                            <i class="fa-duotone fa-solid fa-grid-2 me-2"></i>
                             Overview
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="personal-tab" data-bs-toggle="pill" data-bs-target="#personal" type="button" role="tab">
-                            <i class="ki-filled ki-profile-user me-2"></i>
+                            <i class="fa-duotone fa-solid fa-id-card me-2"></i>
                             Personal Info
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="security-tab" data-bs-toggle="pill" data-bs-target="#security" type="button" role="tab">
-                            <i class="ki-filled ki-security-user me-2"></i>
+                            <i class="fa-duotone fa-solid fa-user-shield me-2"></i>
                             Security
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="notifications-tab" data-bs-toggle="pill" data-bs-target="#notifications" type="button" role="tab">
-                            <i class="ki-filled ki-notification-bing me-2"></i>
+                            <i class="fa-duotone fa-solid fa-bell-bing me-2"></i>
                             Notifications
                         </button>
                     </li>
@@ -312,7 +312,7 @@
                     <div class="col-lg-8">
                         <div class="form-section">
                             <h3 class="section-title">
-                                <i class="ki-filled ki-user"></i>
+                                <i class="fa-duotone fa-solid fa-user"></i>
                                 Profile Summary
                             </h3>
                             <div class="row">
@@ -342,7 +342,7 @@
 
                             <div class="d-flex justify-content-end">
                                 <a href="{{ route('dashboard.core.profile.edit') }}" class="btn-upload">
-                                    <i class="ki-filled ki-pencil me-2"></i>
+                                    <i class="fa-duotone fa-solid fa-pen me-2"></i>
                                     Edit Profile
                                 </a>
                             </div>
@@ -352,7 +352,7 @@
                     <div class="col-lg-4">
                         <div class="form-section">
                             <h3 class="section-title">
-                                <i class="ki-filled ki-chart-line-up-2"></i>
+                                <i class="fa-duotone fa-solid fa-chart-line-up-2"></i>
                                 Recent Activity
                             </h3>
                             <div class="timeline-modern">
@@ -382,7 +382,7 @@
                     <div class="col-lg-8">
                         <div class="form-section">
                             <h3 class="section-title">
-                                <i class="ki-filled ki-badge"></i>
+                                <i class="fa-duotone fa-solid fa-id-badge"></i>
                                 Personal Information
                             </h3>
                             <form>
@@ -395,7 +395,7 @@
                                                 alt="photo" class="custom-avatar">
                                             <div>
                                                 <button type="button" class="btn-upload me-3">
-                                                    <i class="ki-filled ki-cloud-upload me-2"></i>
+                                                    <i class="fa-duotone fa-solid fa-cloud-arrow-up me-2"></i>
                                                     Upload New Photo
                                                 </button>
                                                 <button type="button" class="btn btn-light-danger btn-sm">
@@ -456,7 +456,7 @@
                                 <div class="d-flex justify-content-end gap-3">
                                     <button type="button" class="btn btn-light">Cancel</button>
                                     <button type="submit" class="btn-upload">
-                                        <i class="ki-filled ki-check me-2"></i>
+                                        <i class="fa-duotone fa-solid fa-check me-2"></i>
                                         Save Changes
                                     </button>
                                 </div>
@@ -467,12 +467,12 @@
                     <div class="col-lg-4">
                         <div class="form-section">
                             <h3 class="section-title">
-                                <i class="ki-filled ki-information"></i>
+                                <i class="fa-duotone fa-solid fa-circle-info"></i>
                                 Profile Tips
                             </h3>
                             <div class="notice notice-light-primary rounded border-primary border border-dashed p-4">
                                 <div class="notice-icon">
-                                    <i class="ki-filled ki-information-5 fs-2tx text-primary"></i>
+                                    <i class="fa-duotone fa-solid fa-circle-info-5 fs-2tx text-primary"></i>
                                 </div>
                                 <div class="notice-content">
                                     <div class="fw-semibold">Complete Your Profile</div>
@@ -513,7 +513,7 @@
 
                         <!-- 2FA Section -->
                         <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6 mb-6">
-                            <i class="ki-filled ki-information fs-2tx text-warning me-4"></i>
+                            <i class="fa-duotone fa-solid fa-circle-info fs-2tx text-warning me-4"></i>
                             <div class="d-flex flex-stack flex-grow-1">
                                 <div class="fw-semibold">
                                     <h4 class="text-gray-900 fw-bold">Two-Factor Authentication</h4>
@@ -609,16 +609,16 @@
             <h3 class="mb-5">🔄 مقارنة الصفحات</h3>
             <div class="d-flex justify-content-center gap-4 flex-wrap">
                 <a href="{{ route('dashboard.core.profile.edit') }}" class="kt-btn kt-btn-light kt-btn-primary">
-                    <i class="ki-filled ki-arrow-left fs-3 me-1"></i>الصفحة الحالية (القديمة)
+                    <i class="fa-duotone fa-solid fa-arrow-left fs-3 me-1"></i>الصفحة الحالية (القديمة)
                 </a>
                 <a href="{{ route('dashboard.core.profile.settings.test') }}" class="kt-btn kt-btn-primary">
-                    <i class="ki-filled ki-design-1 fs-3 me-1"></i>هذه الصفحة (التجريبية الأولى)
+                    <i class="fa-duotone fa-solid fa-palette-1 fs-3 me-1"></i>هذه الصفحة (التجريبية الأولى)
                 </a>
                 <a href="{{ route('dashboard.core.profile.settings.new') }}" class="kt-btn kt-btn-light kt-btn-success">
-                    <i class="ki-filled ki-design fs-3 me-1"></i>الصفحة الاحترافية الجديدة ⭐
+                    <i class="fa-duotone fa-solid fa-palette fs-3 me-1"></i>الصفحة الاحترافية الجديدة ⭐
                 </a>
                 <a href="{{ route('dashboard.core.user.profile') }}" class="kt-btn kt-btn-light kt-btn-info">
-                    <i class="ki-filled ki-profile-user fs-3 me-1"></i>صفحة البروفايل الرئيسية
+                    <i class="fa-duotone fa-solid fa-id-card fs-3 me-1"></i>صفحة البروفايل الرئيسية
                 </a>
             </div>
         </div>

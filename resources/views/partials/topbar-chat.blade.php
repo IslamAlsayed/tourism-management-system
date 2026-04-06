@@ -2,7 +2,7 @@
     <!-- Chat -->
     <button class="kt-btn kt-btn-ghost kt-btn-icon hover:bg-primary/10 hover:[&_i]:text-primary size-9 rounded-full"
         data-kt-drawer-toggle="#chat_drawer">
-        <i class="ki-filled ki-messages text-lg"></i>
+        <i class="fa-duotone fa-solid fa-comments text-lg"></i>
     </button>
 
     @include('partials.chat-drawer')

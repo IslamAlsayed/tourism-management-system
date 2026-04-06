@@ -5,7 +5,7 @@
     <button
         class="kt-btn kt-btn-ghost kt-btn-icon hover:bg-primary/10 hover:[&_i]:text-primary kt-dropdown-open:bg-primary/10 kt-dropdown-open:[&_i]:text-primary size-9 rounded-full"
         data-kt-dropdown-toggle="true">
-        <i class="ki-filled ki-element-11 text-lg">
+        <i class="fa-duotone fa-solid fa-grid-2 text-lg">
         </i>
     </button>
     <div class="kt-dropdown-menu w-screen max-w-[320px] p-0" data-kt-dropdown-menu="true">

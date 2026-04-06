@@ -3,7 +3,7 @@
 @section('title', __('main.edit_type', ['type' => __('main.travel-pass')]))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <form action="{{ route('dashboard.traveldocuments.travel-passes.update', $travelPass->id) }}" method="POST">
             @csrf
             @method('PUT')

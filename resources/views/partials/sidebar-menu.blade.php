@@ -11,7 +11,7 @@
                     href="#">
                     <span
                         class="kt-menu-icon items-start text-lg text-secondary-foreground kt-menu-item-active:text-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground dark:menu-item-active:text-mono dark:menu-item-here:text-mono dark:menu-item-show:text-mono dark:menu-link-hover:text-mono">
-                        <i class="ki-filled ki-home-3">
+                        <i class="fa-duotone fa-solid fa-house-3">
                         </i>
                     </span>
                     <span
@@ -25,7 +25,7 @@
                 <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md border border-transparent">
                     <span
                         class="kt-menu-icon items-start text-secondary-foreground text-lg kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground dark:menu-item-here:text-mono dark:menu-item-show:text-mono dark:menu-link-hover:text-mono">
-                        <i class="ki-filled ki-profile-circle">
+                        <i class="fa-duotone fa-solid fa-user-circle">
                         </i>
                     </span>
                     <span
@@ -35,11 +35,11 @@
                     <span
                         class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                         <span class="inline-flex kt-menu-item-show:hidden">
-                            <i class="ki-filled ki-down text-xs">
+                            <i class="fa-solid fa-chevron-down text-xs">
                             </i>
                         </span>
                         <span class="hidden kt-menu-item-show:inline-flex">
-                            <i class="ki-filled ki-up text-xs">
+                            <i class="fa-solid fa-chevron-up text-xs">
                             </i>
                         </span>
                     </span>
@@ -55,11 +55,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -134,11 +134,11 @@
                                     <span
                                         class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                         <span class="inline-flex kt-menu-item-show:hidden">
-                                            <i class="ki-filled ki-down text-xs">
+                                            <i class="fa-solid fa-chevron-down text-xs">
                                             </i>
                                         </span>
                                         <span class="hidden kt-menu-item-show:inline-flex">
-                                            <i class="ki-filled ki-up text-xs">
+                                            <i class="fa-solid fa-chevron-up text-xs">
                                             </i>
                                         </span>
                                     </span>
@@ -194,11 +194,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -275,11 +275,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -321,7 +321,7 @@
                 <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md border border-transparent">
                     <span
                         class="kt-menu-icon items-start text-secondary-foreground text-lg kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground dark:menu-item-here:text-mono dark:menu-item-show:text-mono dark:menu-link-hover:text-mono">
-                        <i class="ki-filled ki-setting-2">
+                        <i class="fa-duotone fa-solid fa-gear">
                         </i>
                     </span>
                     <span
@@ -331,11 +331,11 @@
                     <span
                         class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                         <span class="inline-flex kt-menu-item-show:hidden">
-                            <i class="ki-filled ki-down text-xs">
+                            <i class="fa-solid fa-chevron-down text-xs">
                             </i>
                         </span>
                         <span class="hidden kt-menu-item-show:inline-flex">
-                            <i class="ki-filled ki-up text-xs">
+                            <i class="fa-solid fa-chevron-up text-xs">
                             </i>
                         </span>
                     </span>
@@ -351,11 +351,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -436,11 +436,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -494,11 +494,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -588,11 +588,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -723,11 +723,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -769,7 +769,7 @@
                 <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md border border-transparent">
                     <span
                         class="kt-menu-icon items-start text-secondary-foreground text-lg kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground dark:menu-item-here:text-mono dark:menu-item-show:text-mono dark:menu-link-hover:text-mono">
-                        <i class="ki-filled ki-users">
+                        <i class="fa-duotone fa-solid fa-users">
                         </i>
                     </span>
                     <span
@@ -779,11 +779,11 @@
                     <span
                         class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                         <span class="inline-flex kt-menu-item-show:hidden">
-                            <i class="ki-filled ki-down text-xs">
+                            <i class="fa-solid fa-chevron-down text-xs">
                             </i>
                         </span>
                         <span class="hidden kt-menu-item-show:inline-flex">
-                            <i class="ki-filled ki-up text-xs">
+                            <i class="fa-solid fa-chevron-up text-xs">
                             </i>
                         </span>
                     </span>
@@ -808,11 +808,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -875,11 +875,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -948,7 +948,7 @@
                 <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md border border-transparent">
                     <span
                         class="kt-menu-icon items-start text-secondary-foreground text-lg kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground dark:menu-item-here:text-mono dark:menu-item-show:text-mono dark:menu-link-hover:text-mono">
-                        <i class="ki-filled ki-security-user">
+                        <i class="fa-duotone fa-solid fa-user-shield">
                         </i>
                     </span>
                     <span
@@ -958,11 +958,11 @@
                     <span
                         class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                         <span class="inline-flex kt-menu-item-show:hidden">
-                            <i class="ki-filled ki-down text-xs">
+                            <i class="fa-solid fa-chevron-down text-xs">
                             </i>
                         </span>
                         <span class="hidden kt-menu-item-show:inline-flex">
-                            <i class="ki-filled ki-up text-xs">
+                            <i class="fa-solid fa-chevron-up text-xs">
                             </i>
                         </span>
                     </span>
@@ -978,11 +978,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -1034,11 +1034,11 @@
                                     <span
                                         class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                         <span class="inline-flex kt-menu-item-show:hidden">
-                                            <i class="ki-filled ki-down text-xs">
+                                            <i class="fa-solid fa-chevron-down text-xs">
                                             </i>
                                         </span>
                                         <span class="hidden kt-menu-item-show:inline-flex">
-                                            <i class="ki-filled ki-up text-xs">
+                                            <i class="fa-solid fa-chevron-up text-xs">
                                             </i>
                                         </span>
                                     </span>
@@ -1094,11 +1094,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -1150,11 +1150,11 @@
                                     <span
                                         class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                         <span class="inline-flex kt-menu-item-show:hidden">
-                                            <i class="ki-filled ki-down text-xs">
+                                            <i class="fa-solid fa-chevron-down text-xs">
                                             </i>
                                         </span>
                                         <span class="hidden kt-menu-item-show:inline-flex">
-                                            <i class="ki-filled ki-up text-xs">
+                                            <i class="fa-solid fa-chevron-up text-xs">
                                             </i>
                                         </span>
                                     </span>
@@ -1243,7 +1243,7 @@
                 <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md border border-transparent">
                     <span
                         class="kt-menu-icon items-start text-secondary-foreground text-lg kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground dark:menu-item-here:text-mono dark:menu-item-show:text-mono dark:menu-link-hover:text-mono">
-                        <i class="ki-filled ki-users">
+                        <i class="fa-duotone fa-solid fa-users">
                         </i>
                     </span>
                     <span
@@ -1253,11 +1253,11 @@
                     <span
                         class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                         <span class="inline-flex kt-menu-item-show:hidden">
-                            <i class="ki-filled ki-down text-xs">
+                            <i class="fa-solid fa-chevron-down text-xs">
                             </i>
                         </span>
                         <span class="hidden kt-menu-item-show:inline-flex">
-                            <i class="ki-filled ki-up text-xs">
+                            <i class="fa-solid fa-chevron-up text-xs">
                             </i>
                         </span>
                     </span>
@@ -1327,11 +1327,11 @@
                             <span
                                 class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
                                 <span class="inline-flex kt-menu-item-show:hidden">
-                                    <i class="ki-filled ki-down text-xs">
+                                    <i class="fa-solid fa-chevron-down text-xs">
                                     </i>
                                 </span>
                                 <span class="hidden kt-menu-item-show:inline-flex">
-                                    <i class="ki-filled ki-up text-xs">
+                                    <i class="fa-solid fa-chevron-up text-xs">
                                     </i>
                                 </span>
                             </span>
@@ -1409,11 +1409,11 @@
                         class="kt-menu-toggle cursor-pointer pb-2 pt-3 ps-[14.5px] rounded-md border border-transparent">
                         <span class="kt-menu-arrow me-2.5">
                             <span class="inline-flex kt-menu-item-show:hidden">
-                                <i class="ki-filled ki-down text-xs">
+                                <i class="fa-solid fa-chevron-down text-xs">
                                 </i>
                             </span>
                             <span class="hidden kt-menu-item-show:inline-flex">
-                                <i class="ki-filled ki-up text-xs">
+                                <i class="fa-solid fa-chevron-up text-xs">
                                 </i>
                             </span>
                         </span>
@@ -1423,7 +1423,7 @@
                     </div>
                     <a class="kt-btn kt-btn-ghost kt-btn-sm kt-btn-icon kt-btn-icon-sm text-muted-foreground hover:text-foreground me-1.25"
                         href="#">
-                        <i class="ki-filled ki-plus">
+                        <i class="fa-duotone fa-solid fa-plus">
                         </i>
                     </a>
                 </div>
@@ -1433,7 +1433,7 @@
                             href="#">
                             <span
                                 class="kt-menu-icon text-secondary-foreground kt-menu-link-hover:text-mono rounded-md flex place-content-center size-7 me-2.5 bg-border border border-input kt-menu-item-active:border-none kt-menu-link-hover:border-light kt-menu-item-active:bg-background kt-menu-link-hover:bg-background kt-menu-link-hover:border-none dark:menu-item-active:text-mono kt-menu-icon-xs">
-                                <i class="ki-filled ki-abstract-26">
+                                <i class="fa-duotone fa-solid fa-shapes">
                                 </i>
                             </span>
                             <span
@@ -1447,7 +1447,7 @@
                             href="#">
                             <span
                                 class="kt-menu-icon text-secondary-foreground kt-menu-link-hover:text-mono rounded-md flex place-content-center size-7 me-2.5 bg-border border border-input kt-menu-item-active:border-none kt-menu-link-hover:border-light kt-menu-item-active:bg-background kt-menu-link-hover:bg-background kt-menu-link-hover:border-none dark:menu-item-active:text-mono kt-menu-icon-xs">
-                                <i class="ki-filled ki-abstract-41">
+                                <i class="fa-duotone fa-solid fa-diagram-project">
                                 </i>
                             </span>
                             <span
@@ -1461,7 +1461,7 @@
                             href="#">
                             <span
                                 class="kt-menu-icon text-secondary-foreground kt-menu-link-hover:text-mono rounded-md flex place-content-center size-7 me-2.5 bg-border border border-input kt-menu-item-active:border-none kt-menu-link-hover:border-light kt-menu-item-active:bg-background kt-menu-link-hover:bg-background kt-menu-link-hover:border-none dark:menu-item-active:text-mono kt-menu-icon-xs">
-                                <i class="ki-filled ki-abstract-39">
+                                <i class="fa-duotone fa-solid fa-cube">
                                 </i>
                             </span>
                             <span
@@ -1475,7 +1475,7 @@
                             href="#">
                             <span
                                 class="kt-menu-icon text-secondary-foreground kt-menu-link-hover:text-mono rounded-md flex place-content-center size-7 me-2.5 bg-border border border-input kt-menu-item-active:border-none kt-menu-link-hover:border-light kt-menu-item-active:bg-background kt-menu-link-hover:bg-background kt-menu-link-hover:border-none dark:menu-item-active:text-mono kt-menu-icon-xs">
-                                <i class="ki-filled ki-abstract-35">
+                                <i class="fa-duotone fa-solid fa-shapes">
                                 </i>
                             </span>
                             <span
@@ -1495,11 +1495,11 @@
                         class="kt-menu-toggle cursor-pointer pb-2 pt-3 ps-[14.5px] rounded-md border border-transparent">
                         <span class="kt-menu-arrow me-2.5">
                             <span class="inline-flex kt-menu-item-show:hidden">
-                                <i class="ki-filled ki-down text-xs">
+                                <i class="fa-solid fa-chevron-down text-xs">
                                 </i>
                             </span>
                             <span class="hidden kt-menu-item-show:inline-flex">
-                                <i class="ki-filled ki-up text-xs">
+                                <i class="fa-solid fa-chevron-up text-xs">
                                 </i>
                             </span>
                         </span>
@@ -1514,7 +1514,7 @@
                             href="#">
                             <span
                                 class="kt-menu-icon text-secondary-foreground kt-menu-link-hover:text-mono rounded-md flex place-content-center size-7 me-2.5 bg-border border border-input kt-menu-item-active:border-none kt-menu-link-hover:border-light kt-menu-item-active:bg-background kt-menu-link-hover:bg-background kt-menu-link-hover:border-none dark:menu-item-active:text-mono kt-menu-icon-xs">
-                                <i class="ki-filled ki-badge">
+                                <i class="fa-duotone fa-solid fa-id-badge">
                                 </i>
                             </span>
                             <span
@@ -1528,7 +1528,7 @@
                             href="#">
                             <span
                                 class="kt-menu-icon text-secondary-foreground kt-menu-link-hover:text-mono rounded-md flex place-content-center size-7 me-2.5 bg-border border border-input kt-menu-item-active:border-none kt-menu-link-hover:border-light kt-menu-item-active:bg-background kt-menu-link-hover:bg-background kt-menu-link-hover:border-none dark:menu-item-active:text-mono kt-menu-icon-xs">
-                                <i class="ki-filled ki-cheque">
+                                <i class="fa-duotone fa-solid fa-money-check">
                                 </i>
                             </span>
                             <span
@@ -1542,7 +1542,7 @@
                             href="#">
                             <span
                                 class="kt-menu-icon text-secondary-foreground kt-menu-link-hover:text-mono rounded-md flex place-content-center size-7 me-2.5 bg-border border border-input kt-menu-item-active:border-none kt-menu-link-hover:border-light kt-menu-item-active:bg-background kt-menu-link-hover:bg-background kt-menu-link-hover:border-none dark:menu-item-active:text-mono kt-menu-icon-xs">
-                                <i class="ki-filled ki-users">
+                                <i class="fa-duotone fa-solid fa-users">
                                 </i>
                             </span>
                             <span
@@ -1556,7 +1556,7 @@
                             href="#">
                             <span
                                 class="kt-menu-icon text-secondary-foreground kt-menu-link-hover:text-mono rounded-md flex place-content-center size-7 me-2.5 bg-border border border-input kt-menu-item-active:border-none kt-menu-link-hover:border-light kt-menu-item-active:bg-background kt-menu-link-hover:bg-background kt-menu-link-hover:border-none dark:menu-item-active:text-mono kt-menu-icon-xs">
-                                <i class="ki-filled ki-security-user">
+                                <i class="fa-duotone fa-solid fa-user-shield">
                                 </i>
                             </span>
                             <span

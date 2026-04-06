@@ -112,17 +112,17 @@
                     </div>
                     <div class="flex items-center gap-2 flex-wrap">
                         <button type="button" x-on:click.prevent="confirmActivate" class="kt-btn kt-btn-success kt-btn-sm flex items-center gap-1.5 px-3">
-                            <i class="ki-outline ki-check-circle fs-3"></i> {{ __('main.activate') ?? 'Activate' }}
+                            <i class="fa-duotone fa-solid fa-check-circle fs-3"></i> {{ __('main.activate') ?? 'Activate' }}
                         </button>
                         <button type="button" x-on:click.prevent="confirmDeactivate" class="kt-btn kt-btn-warning kt-btn-sm flex items-center gap-1.5 px-3">
-                            <i class="ki-outline ki-minus-circle fs-3"></i> {{ __('main.deactivate') ?? 'Deactivate' }}
+                            <i class="fa-duotone fa-solid fa-minus-circle fs-3"></i> {{ __('main.deactivate') ?? 'Deactivate' }}
                         </button>
                         <button type="button" x-on:click.prevent="confirmDelete" class="kt-btn kt-btn-destructive kt-btn-sm flex items-center gap-1.5 px-3">
-                            <i class="ki-outline ki-trash fs-3"></i> {{ __('main.delete') }}
+                            <i class="fa-duotone fa-solid fa-trash fs-3"></i> {{ __('main.delete') }}
                         </button>
                         <div class="w-px h-6 bg-gray-300 mx-1"></div>
                         <button type="button" wire:click="clearSelected" class="kt-btn kt-btn-light kt-btn-sm flex items-center gap-1.5 px-3">
-                            <i class="ki-outline ki-cross fs-3"></i> {{ __('main.cancel_selection') }}
+                            <i class="fa-duotone fa-solid fa-xmark fs-3"></i> {{ __('main.cancel_selection') }}
                         </button>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
                                             <option value="{{ $modKey }}">{{ $modLabel }}</option>
                                         @endforeach
                                     </select>
-                                    <p class="text-xs text-slate-500 mt-2"><i class="ki-outline ki-information-2"></i> {{ __('messages.hold_ctrl_to_select_multiple') ?? 'Hold Ctrl (Windows) or Cmd (Mac) to select multiple items.' }}</p>
+                                    <p class="text-xs text-slate-500 mt-2"><i class="fa-duotone fa-solid fa-circle-info-2"></i> {{ __('messages.hold_ctrl_to_select_multiple') ?? 'Hold Ctrl (Windows) or Cmd (Mac) to select multiple items.' }}</p>
                                 </div>
                             </div>
                         </div>

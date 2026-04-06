@@ -3,7 +3,7 @@
 @section('title', __('main.create_type', ['type' => __('main.language')]))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-5 lg:gap-6">
             <!-- Language Form -->
             <div class="kt-card">
@@ -41,7 +41,7 @@
                             ])
                             <input type="hidden" name="selected_flag" id="selected_flag">
                             <button type="button" class="btn btn-sm btn-light-primary" data-kt-modal-toggle="#flags_modal">
-                                <i class="ki-filled ki-picture"></i> {{ __('main.choose_from_media') }}
+                                <i class="fa-duotone fa-solid fa-image"></i> {{ __('main.choose_from_media') }}
                             </button>
                         </div>
 
@@ -107,7 +107,7 @@
                     <div class="space-y-3">
                         <div class="flex items-center gap-3">
                             <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-primary"></i>
+                                <i class="fa-duotone fa-solid fa-circle-info text-primary"></i>
                             </div>
                             <div>
                                 <div class="mb-2 font-semibold">{{ __('main.ensure_data_accuracy') }}</div>
@@ -119,7 +119,7 @@
 
                         <div class="flex items-center gap-3">
                             <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-geolocation text-success"></i>
+                                <i class="fa-duotone fa-solid fa-location-dot text-success"></i>
                             </div>
                             <div>
                                 <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>
@@ -139,14 +139,14 @@
             <div class="kt-modal-header py-4 px-5 border-b border-border">
                 <h3 class="font-bold text-lg">{{ __('main.choose_from_media') }}</h3>
                 <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-dim shrink-0" data-kt-modal-dismiss="true">
-                    <i class="ki-filled ki-cross"></i>
+                    <i class="fa-duotone fa-solid fa-xmark"></i>
                 </button>
             </div>
             
             <!-- Sticky Search Box -->
             <div class="px-5 py-3 border-b border-border bg-background/95 backdrop-blur-sm sticky-top z-10">
                 <div class="relative">
-                    <i class="ki-filled ki-magnifier absolute rtl:right-3 ltr:left-3 top-1/2 -translate-y-1/2 text-muted-foreground"></i>
+                    <i class="fa-duotone fa-solid fa-magnifying-glass absolute rtl:right-3 ltr:left-3 top-1/2 -translate-y-1/2 text-muted-foreground"></i>
                     <input type="text" id="flagSearchInput" class="kt-input rtl:pr-10 ltr:pl-10 w-full" placeholder="{{ __('main.search') }}...">
                 </div>
             </div>
@@ -162,7 +162,7 @@
                 </div>
                 <!-- No Results Message -->
                 <div id="noFlagsFound" class="hidden flex-col items-center justify-center py-12 text-gray-400">
-                    <i class="ki-filled ki-magnifier text-5xl mb-4 opacity-50"></i>
+                    <i class="fa-duotone fa-solid fa-magnifying-glass text-5xl mb-4 opacity-50"></i>
                     <p class="text-base font-medium">{{ __('main.no_results_found') }}</p>
                 </div>
             </div>

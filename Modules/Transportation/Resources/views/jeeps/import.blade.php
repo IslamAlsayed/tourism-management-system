@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
 
         <!-- Hero Section -->
         <div class="bg-primary/5 border border-primary/10 rounded-xl p-8 mb-8 flex flex-col items-center text-center">
@@ -62,7 +62,7 @@
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 sticky top-6">
                     <h3 class="font-bold text-lg text-gray-900 mb-6 flex items-center gap-2">
-                        <i class="ki-filled ki-file-up text-primary"></i> Upload File
+                        <i class="fa-duotone fa-solid fa-file-arrow-up text-primary"></i> Upload File
                     </h3>
 
                     <form action="{{ route('import.data.post', ['models' => 'jeeps']) }}" method="POST" enctype="multipart/form-data">
@@ -87,7 +87,7 @@
                         </div>
 
                         <button type="submit" class="w-full btn btn-primary flex items-center justify-center gap-2 py-3">
-                            <i class="ki-filled ki-check-circle"></i> Start Import Process
+                            <i class="fa-duotone fa-solid fa-check-circle"></i> Start Import Process
                         </button>
 
                         <div class="mt-4 pt-4 border-t border-gray-100 text-center">

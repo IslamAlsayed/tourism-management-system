@@ -3,7 +3,7 @@
 @section('title', __('main.show_type', ['type' => __('main.language')]))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-5 lg:gap-6">
             <!-- Language Form -->
             <div class="kt-card">
@@ -40,7 +40,7 @@
                             <div class="mb-4">
                                 <label class="kt-label mb-2 block">{{ __('main.flag') }}</label>
                                 <div class="w-32 h-20 bg-gray-100 flex items-center justify-center rounded border text-gray-400">
-                                    <i class="ki-outline ki-geolocation text-2xl"></i>
+                                    <i class="fa-duotone fa-solid fa-location-dot text-2xl"></i>
                                 </div>
                             </div>
                         @endif
@@ -84,7 +84,7 @@
 
                         <div class="mt-5 pt-4 border-t border-gray-100 flex items-center gap-3">
                              <a href="{{ route('dashboard.localization.system-languages.edit', $language->id) }}" class="kt-btn kt-btn-primary">
-                                 <i class="ki-outline ki-edit text-md"></i> {{ __('main.edit') }}
+                                 <i class="fa-duotone fa-solid fa-pen-to-square text-md"></i> {{ __('main.edit') }}
                              </a>
                              <a href="{{ route('dashboard.localization.system-languages.index') }}" class="kt-btn kt-btn-ghost text-gray-600">
                                  {{ __('main.cancel') }}

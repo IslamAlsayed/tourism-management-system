@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         {{-- Page Header --}}
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>
@@ -10,11 +10,11 @@
             </div>
             <div class="flex items-center gap-3">
                 <a href="{{ route('media-files.edit', $mediaFile->id) }}" class="kt-btn kt-btn-primary md:hidden">
-                    <i class="ki-filled ki-pencil"></i>
+                    <i class="fa-duotone fa-solid fa-pen"></i>
                     {{ __('main.edit') }}
                 </a>
                 <a href="{{ route('media-files.index') }}" class="kt-btn kt-btn-outline">
-                    <i class="ki-filled ki-left"></i>
+                    <i class="fa-solid fa-chevron-left"></i>
                     {{ __('main.back') }}
                 </a>
             </div>
@@ -34,12 +34,12 @@
                             </div>
                         @else
                             <div class="flex flex-col items-center justify-center py-12">
-                                <i class="ki-filled ki-file text-8xl text-gray-400"></i>
+                                <i class="fa-duotone fa-solid fa-file text-8xl text-gray-400"></i>
                                 <p class="text-xl font-medium text-gray-700 mt-4">{{ strtoupper($mediaFile->extension) }}
                                     {{ __('main.file') }}</p>
                                 <p class="text-gray-600 mt-2">{{ $mediaFile->human_file_size }}</p>
                                 <a href="{{ $mediaFile->url }}" download="{{ $mediaFile->file_name }}" class="kt-btn kt-btn-primary mt-6">
-                                    <i class="ki-filled ki-download"></i>
+                                    <i class="fa-solid fa-chevron-download"></i>
                                     {{ __('main.download') }}
                                 </a>
                             </div>
@@ -74,7 +74,7 @@
 
                             <div>
                                 <dt class="text-sm font-medium text-gray-600">{{ __('main.description') }}</dt>
-                                <dd class="text-sm text-gray-500 mt-1">{!! $mediaFile->description !!}</dd>
+                                <dd class="text-sm text-gray-500 mt-1">{!! strip_tags($mediaFile->description ?? '', '<p><br><b><strong><i><em><ul><ol><li>') !!}</dd>
                             </div>
 
                             <div>
@@ -180,17 +180,17 @@
                     </div>
                     <div class="kt-card-body p-6 space-y-3">
                         <a href="{{ $mediaFile->url }}" target="_blank" class="kt-btn kt-btn-light w-full">
-                            <i class="ki-filled ki-eye"></i>
+                            <i class="fa-duotone fa-solid fa-eye"></i>
                             {{ __('main.view_original') }}
                         </a>
 
                         <a href="{{ $mediaFile->url }}" download="{{ $mediaFile->file_name }}" class="kt-btn kt-btn-light w-full">
-                            <i class="ki-filled ki-download"></i>
+                            <i class="fa-solid fa-chevron-download"></i>
                             {{ __('main.download') }}
                         </a>
 
                         <button type="button" data-url="{{ $mediaFile->url }}" class="kt-btn kt-btn-light w-full" id="copyToClipboard">
-                            <i class="ki-filled ki-copy"></i>
+                            <i class="fa-duotone fa-solid fa-copy"></i>
                             {{ __('main.copy_url') }}
                         </button>
 
@@ -198,7 +198,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="kt-btn bg-danger w-full">
-                                <i class="ki-filled ki-trash"></i>
+                                <i class="fa-duotone fa-solid fa-trash"></i>
                                 {{ __('main.delete') }}
                             </button>
                         </form>
@@ -225,11 +225,11 @@
                 });
 
                 this.disabled = true;
-                this.innerHTML = '<i class="ki-filled ki-copied"></i> {{ __('main.copied') }}';
+                this.innerHTML = '<i class="fa-duotone fa-solid fa-clipboard-check"></i> {{ __('main.copied') }}';
 
                 setTimeout(() => {
                     this.disabled = false;
-                    this.innerHTML = `<i class="ki-filled ki-copy"></i>{{ __('main.copy_url') }}`;
+                    this.innerHTML = `<i class="fa-duotone fa-solid fa-copy"></i>{{ __('main.copy_url') }}`;
                 }, 4000);
             }).catch(() => {
                 window.showToast({

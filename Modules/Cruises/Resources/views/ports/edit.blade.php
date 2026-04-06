@@ -1,0 +1,191 @@
+@extends('layouts.master')
+
+@section('title', __('main.edit'))
+
+@section('content')
+    <div class="container-fixed">
+        <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
+            <div class="flex flex-col justify-center gap-2">
+                <h1 class="text-xl font-medium leading-none text-mono">
+                    {{ __('main.edit') }}
+                </h1>
+            </div>
+            <div class="flex items-center gap-2.5">
+                <a href="{{ route('dashboard.cruises.ports.index') }}" class="kt-btn kt-btn-outline">
+                    {{ __('main.back') }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fixed">
+        <form class="space-y-6" method="POST" action="{{ route('dashboard.cruises.ports.update', $port) }}" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="grid gap-4 lg:gap-6">
+
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">
+                            {{ __('main.general_information') }}
+                        </h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {{-- Name --}}
+                            <div>
+                                <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ old('name', $port->name) }}" required>
+                                @error('name')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Arabic Name --}}
+                            <div>
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ old('name_ar', $port->name_ar) }}">
+                                @error('name_ar')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Type --}}
+                            <div>
+                                <label for="type" class="kt-label mb-2">{{ __('main.type') }}</label>
+                                <select name="type" id="type" class="kt-input">
+                                    <option value="" disabled>{{ __('main.select_option') }}</option>
+                                    <option value="Ocean" {{ old('type', $port->type) == 'Ocean' ? 'selected' : '' }}>Ocean</option>
+                                    <option value="River" {{ old('type', $port->type) == 'River' ? 'selected' : '' }}>River</option>
+                                </select>
+                                @error('type')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Location --}}
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title">{{ __('main.location') }}</h3>
+                    </div>
+                    <div class="kt-card-body p-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            {{-- Country --}}
+                            <div>
+                                <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
+                                <select name="country_id" id="country_id" class="kt-input">
+                                    <option value="">{{ __('main.select_option') }}</option>
+                                    @foreach($countries as $country)
+                                        <option value="{{ $country->id }}" {{ old('country_id', $port->country_id) == $country->id ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- City --}}
+                            <div>
+                                <label for="city_id" class="kt-label mb-2">{{ __('main.city') }}</label>
+                                <select name="city_id" id="city_id" class="kt-input">
+                                    <option value="">{{ __('main.select_option') }}</option>
+                                    @if($port->city)
+                                        <option value="{{ $port->city_id }}" selected>{{ $port->city->name }}</option>
+                                    @endif
+                                </select>
+                                @error('city_id')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Latitude --}}
+                            <div>
+                                <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
+                                <input type="number" step="any" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ old('latitude', $port->latitude) }}">
+                                @error('latitude')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Longitude --}}
+                            <div>
+                                <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
+                                <input type="number" step="any" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ old('longitude', $port->longitude) }}">
+                                @error('longitude')
+                                    <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Action Buttons --}}
+                <div class="flex justify-end gap-3 mt-4">
+                    <a href="{{ route('dashboard.cruises.ports.index') }}" class="kt-btn kt-btn-outline">{{ __('main.cancel') }}</a>
+                    <button type="submit" class="kt-btn kt-btn-primary">{{ __('main.save') }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+@endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const countrySelect = document.getElementById('country_id');
+        const citySelect = document.getElementById('city_id');
+        const currentCityId = '{{ old('city_id', $port->city_id) }}';
+
+        function loadCities(countryId, selectedCityId = null) {
+            // Keep the current selection visual if the country hasn't changed from original
+            const originalLoad = !citySelect.disabled && citySelect.options.length > 1;
+
+            citySelect.innerHTML = '<option value="">{{ __("main.loading") }}...</option>';
+            citySelect.disabled = true;
+
+            if (!countryId) {
+                citySelect.innerHTML = '<option value="">{{ __("main.select_option") }}</option>';
+                citySelect.disabled = false;
+                return;
+            }
+
+            fetch(`/api/countries/${countryId}/cities`)
+                .then(response => response.json())
+                .then(data => {
+                    citySelect.innerHTML = '<option value="">{{ __("main.select_option") }}</option>';
+                    if (data && data.length > 0) {
+                        data.forEach(city => {
+                            const option = document.createElement('option');
+                            option.value = city.id;
+                            option.textContent = city.name + (city.name_ar ? ' / ' + city.name_ar : '');
+                            if (selectedCityId && selectedCityId == city.id) {
+                                option.selected = true;
+                            }
+                            citySelect.appendChild(option);
+                        });
+                    }
+                    citySelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error fetching cities:', error);
+                    citySelect.innerHTML = '<option value="">{{ __("main.select_option") }}</option>';
+                    citySelect.disabled = false;
+                });
+        }
+
+        countrySelect.addEventListener('change', function() {
+            loadCities(this.value);
+        });
+
+        // Initialize on page load to fetch the full list of cities for the selected country
+        if (countrySelect.value) {
+            loadCities(countrySelect.value, currentCityId);
+        }
+    });
+</script>
+@endpush

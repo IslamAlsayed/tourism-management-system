@@ -32,14 +32,14 @@
         </div>
         
         <a href="{{ route('import.template', ['models' => $models]) }}" class="kt-btn kt-btn-dark kt-btn-sm ms-auto group shadow-sm hover:shadow-md transition-all">
-            <i class="ki-filled ki-file-down text-lg"></i>
+            <i class="fa-duotone fa-solid fa-file-arrow-down text-lg"></i>
             {{ __('main.export_template') ?? 'Export Template' }}
         </a>
     </div>
 
     @if (isset($lastImport) && $lastImport['date'])
         <div class="kt-badge kt-badge-success gap-1.5 px-3 py-2 text-sm">
-            <i class="ki-filled ki-check-circle text-base"></i>
+            <i class="fa-duotone fa-solid fa-check-circle text-base"></i>
             {{ __('main.last_import') ?? 'Last Import' }}:
             <strong>{{ number_format($lastImport['count']) }}</strong>
             {{ __('main.records') ?? 'records' }}
@@ -53,7 +53,7 @@
     @php $hasUnmetRequirements = collect($requirements)->contains(fn($r) => !$r['condition']); @endphp
     @if ($hasUnmetRequirements)
         <div class="kt-alert kt-alert-icon kt-alert-destructive mb-6">
-            <i class="ki-filled ki-information-2 kt-alert-icon-item text-lg"></i>
+            <i class="fa-duotone fa-solid fa-circle-info-2 kt-alert-icon-item text-lg"></i>
             <div class="kt-alert-content">
                 <div class="kt-alert-title">{{ __('main.requirements_not_met') ?? 'Requirements Not Met' }}</div>
                 <div class="kt-alert-description">
@@ -84,7 +84,7 @@
     <div class="kt-card">
         <div class="kt-card-header">
             <h3 class="kt-card-title">
-                <i class="ki-filled ki-cloud-download text-primary text-xl me-2"></i>
+                <i class="fa-duotone fa-solid fa-cloud-arrow-down text-primary text-xl me-2"></i>
                 {{ __('main.import_from_url') ?? 'Import from URL' }}
             </h3>
         </div>
@@ -106,18 +106,18 @@
                         <p class="text-destructive text-xs mt-1">{{ $message }}</p>
                     @enderror
                     <p class="text-xs text-secondary-foreground mt-1.5">
-                        <i class="ki-filled ki-information-2 me-1"></i>
+                        <i class="fa-duotone fa-solid fa-circle-info-2 me-1"></i>
                         {{ __('main.make_sure_url_is_public') ?? 'Make sure the URL is publicly accessible.' }}
                     </p>
                 </div>
 
                 <div class="flex flex-wrap gap-2">
                     <button type="button" class="kt-btn kt-btn-sm kt-btn-outline" onclick="confirmDriveSave()">
-                        <i class="ki-filled ki-bookmark me-1.5"></i>
+                        <i class="fa-duotone fa-solid fa-bookmark me-1.5"></i>
                         {{ __('main.save_link_only') ?? 'Save Link Only' }}
                     </button>
                     <button type="button" class="kt-btn kt-btn-sm kt-btn-primary" onclick="confirmDriveUpdate()">
-                        <i class="ki-filled ki-arrows-circle me-1.5"></i>
+                        <i class="fa-duotone fa-solid fa-arrows-rotate me-1.5"></i>
                         {{ __('main.update_from_url') ?? 'Update Data' }}
                     </button>
                 </div>
@@ -129,7 +129,7 @@
     <div class="kt-card">
         <div class="kt-card-header">
             <h3 class="kt-card-title">
-                <i class="ki-filled ki-file-up text-success text-xl me-2"></i>
+                <i class="fa-duotone fa-solid fa-file-arrow-up text-success text-xl me-2"></i>
                 {{ __('main.manual_file_upload') ?? 'Manual File Upload' }}
             </h3>
         </div>
@@ -152,7 +152,7 @@
                                         onchange="handleFileChange()">
                                     <span class="text-sm">
                                         @if (in_array($item, $disabledOptions))
-                                            <i class="ki-filled ki-cross text-destructive me-1"></i>
+                                            <i class="fa-duotone fa-solid fa-xmark text-destructive me-1"></i>
                                         @endif
                                         {{ __('main.' . $item) }}
                                     </span>
@@ -187,7 +187,7 @@
 
                 <div class="flex items-center gap-3">
                     <button type="submit" class="kt-btn kt-btn-sm kt-btn-primary" id="submit-button" toggle-button>
-                        <i class="ki-filled ki-file-up me-1.5"></i>
+                        <i class="fa-duotone fa-solid fa-file-arrow-up me-1.5"></i>
                         {{ __('main.upload_and_import') }}
                     </button>
                     <a href="{{ $backRoute }}" class="kt-btn kt-btn-sm kt-btn-outline">

@@ -6,8 +6,7 @@
 <script src="{{ asset('assets/plugins/jquery@3.7.1/jquery-3.7.1.min.js') }}"></script>
 {{-- Multiple select plugin --}}
 <script src="{{ asset('assets/plugins/select2@4.1.0-rc.0/js/select2.min.js') }}"></script>
-{{-- Bootstrap --}}
-<script src="{{ asset('assets/plugins/bootstrap@5.3.0/bootstrap.bundle.min.js') }}"></script>
+{{-- Bootstrap removed — Metronic 9 Tailwind uses KTUI natively (see ktui.io/docs/modal) --}}
 {{-- Text editor --}}
 <script src="{{ asset('assets/plugins/trix@2.0.0/trix@2.0.0.js') }}"></script>
 {{-- Fontawesome icons pro --}}

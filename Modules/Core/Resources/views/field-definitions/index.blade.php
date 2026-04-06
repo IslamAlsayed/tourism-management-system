@@ -3,7 +3,7 @@
 @section('title', __('main.field-definitions'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -15,14 +15,14 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('dashboard.core.field-definitions.create') }}" class="kt-btn kt-btn-primary">
-                    <i class="ki-outline ki-plus-squared"></i>
+                    <i class="fa-duotone fa-solid fa-plus-squared"></i>
                     {{ __('main.create_type', ['type' => __('main.field-definition')]) }}
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         @livewire('core::field-definitions')
     </div>
 @endsection

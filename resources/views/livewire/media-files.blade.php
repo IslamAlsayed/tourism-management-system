@@ -69,7 +69,7 @@
                         </span>
                         <button wire:click="deleteSelected" wire:confirm="{{ __('main.are_you_sure') }}"
                             class="kt-btn kt-btn-sm kt-btn-danger">
-                            <i class="ki-filled ki-trash"></i>
+                            <i class="fa-duotone fa-solid fa-trash"></i>
                             {{ __('main.delete_selected') }}
                         </button>
                     </div>
@@ -124,7 +124,7 @@
                                         </a>
                                     @else
                                         <div class="text-center p-4">
-                                            <i class="ki-filled ki-file text-4xl text-gray-400"></i>
+                                            <i class="fa-duotone fa-solid fa-file text-4xl text-gray-400"></i>
                                             <div class="text-xs text-gray-600 mt-2">
                                                 {{ strtoupper($file->extension) }}
                                             </div>
@@ -154,19 +154,19 @@
                                                 'models' => 'media-files',
                                                 'id' => $file->id,
                                                 'text' => '',
-                                                // 'text' => '<i class="ki-filled ki-eye text-white"></i>',
+                                                // 'text' => '<i class="fa-duotone fa-solid fa-eye text-white"></i>',
                                             ])
                                             @include('components.elements.edit-button', [
                                                 'models' => 'media-files',
                                                 'id' => $file->id,
                                                 'text' => '',
-                                                // 'text' => '<i class="ki-filled ki-pencil text-white"></i>',
+                                                // 'text' => '<i class="fa-duotone fa-solid fa-pen text-white"></i>',
                                             ])
                                             @include('components.elements.delete-button', [
                                                 'models' => 'media-files',
                                                 'id' => $file->id,
                                                 'text' => '',
-                                                // 'text' => '<i class="ki-filled ki-trash text-white"></i>',
+                                                // 'text' => '<i class="fa-duotone fa-solid fa-trash text-white"></i>',
                                             ])
                                         </div>
                                     </div>
@@ -179,7 +179,7 @@
                             </div>
                         @empty
                             <div class="col-span-full text-center py-12">
-                                <i class="ki-filled ki-picture text-6xl text-gray-300"></i>
+                                <i class="fa-duotone fa-solid fa-image text-6xl text-gray-300"></i>
                                 <p class="text-gray-500 mt-4">{{ __('main.no_files_found') }}</p>
                             </div>
                         @endforelse

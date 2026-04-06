@@ -5,9 +5,9 @@
         {{-- begin::Sidebar mobile toggle --}}
         <div class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2" title="Show sidebar menu">
             <div class="kt-btn kt-btn-icon kt-btn-light kt-btn-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
-                <i class="ki-duotone ki-abstract-14 fs-2 fs-md-1">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
+                <i class="fa-duotone fa-solid fa-grip fs-2 fs-md-1">
+                    
+                    
                 </i>
             </div>
         </div>

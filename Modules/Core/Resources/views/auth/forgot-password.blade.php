@@ -88,7 +88,7 @@
 
                     <button class="kt-btn kt-btn-primary flex justify-center grow mt-2">
                         Continue
-                        <i class="ki-filled ki-black-right ms-1"></i>
+                        <i class="fa-solid fa-arrow-right ms-1"></i>
                     </button>
 
                     <div class="flex items-center justify-center mt-2">

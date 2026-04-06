@@ -48,9 +48,9 @@
                     @json(__('main.light_mode'));
             }
             // Update icon
-            iconThemeMode.classList.toggle('ki-sun', mode === 'light');
+            iconThemeMode.classList.toggle('fa-sun', mode === 'light');
             iconThemeMode.classList.toggle('text-yellow-500', mode === 'light');
-            iconThemeMode.classList.toggle('ki-moon', mode === 'dark');
+            iconThemeMode.classList.toggle('fa-moon', mode === 'dark');
             iconThemeMode.classList.toggle('text-blue-200', mode === 'dark');
         }
     }

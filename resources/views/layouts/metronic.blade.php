@@ -42,7 +42,7 @@
     <div id="kt_theme_mode_menu">
         <div class="flex items-center justify-between gap-2">
             <span class="flex items-center gap-2">
-                <i class="text-base ki-filled ki-moon" id="icon-theme-mode"></i>
+                <i class="text-base fa-duotone fa-solid fa-moon" id="icon-theme-mode"></i>
             </span>
             <input class="kt-switch" id="switch-theme-mode" type="checkbox" value="1" />
         </div>

@@ -16,7 +16,7 @@
 
     <div class="bg-center bg-cover bg-no-repeat hero-bg">
         <!-- Container -->
-        <div class="kt-container-fixed">
+        <div class="container-fixed">
             <div class="flex flex-col items-center gap-2 lg:gap-3.5 py-4 lg:pt-5 lg:pb-10">
                 <img class="rounded-full border-3 border-green-500 size-[100px] shrink-0"
                     src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('metronic/media/avatars/300-2.png') }}">
@@ -33,19 +33,19 @@
                 </div>
                 <div class="flex flex-wrap justify-center gap-1 lg:gap-4.5 text-sm">
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-abstract-41 text-muted-foreground text-sm"></i>
+                        <i class="fa-duotone fa-solid fa-diagram-project text-muted-foreground text-sm"></i>
                         <span class="text-secondary-foreground font-medium">
                             {{ $user->department ?? 'KeenThemes' }}
                         </span>
                     </div>
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-geolocation text-muted-foreground text-sm"></i>
+                        <i class="fa-duotone fa-solid fa-location-dot text-muted-foreground text-sm"></i>
                         <span class="text-secondary-foreground font-medium">
                             {{ $user->address ?? 'SF, Bay Area' }}
                         </span>
                     </div>
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-sms text-muted-foreground text-sm"></i>
+                        <i class="fa-duotone fa-solid fa-envelope text-muted-foreground text-sm"></i>
                         <a class="text-secondary-foreground font-medium hover:text-primary" href="mailto:{{ $user->email }}">
                             {{ $user->email }}
                         </a>
@@ -543,14 +543,14 @@
                         <div>
                             <h1 class="text-white fw-bold mb-3" style="font-size: 2.5rem;">{{ $user->name }}</h1>
                             <div class="d-flex align-items-center text-white opacity-90 mb-3">
-                                <i class="ki-filled ki-briefcase fs-4 me-2"></i>
+                                <i class="fa-duotone fa-solid fa-briefcase fs-4 me-2"></i>
                                 <span class="me-4 fw-semibold">{{ $user->position ?? 'Software Developer' }}</span>
-                                <i class="ki-filled ki-geolocation fs-4 me-2"></i>
+                                <i class="fa-duotone fa-solid fa-location-dot fs-4 me-2"></i>
                                 <span class="fw-semibold">{{ $user->address ?? 'Amman, Jordan' }}</span>
                             </div>
                             <div class="d-flex align-items-center">
                                 <div class="badge bg-success bg-opacity-20 text-success px-3 py-2 rounded-pill">
-                                    <i class="ki-filled ki-verify fs-6 me-1"></i>
+                                    <i class="fa-duotone fa-solid fa-badge-check fs-6 me-1"></i>
                                     <span class="fw-semibold">Verified Account</span>
                                 </div>
                             </div>
@@ -559,7 +559,7 @@
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="badge bg-white bg-opacity-20 text-white fs-6 fw-bold px-4 py-3 rounded-pill">
-                        <i class="ki-filled ki-check-circle me-2"></i>
+                        <i class="fa-duotone fa-solid fa-check-circle me-2"></i>
                         Profile 95% Complete
                     </div>
                 </div>
@@ -567,7 +567,7 @@
         </div>
 
         <!-- Container -->
-        <div class="kt-container-fixed">
+        <div class="container-fixed">
             <div class="flex items-center flex-wrap md:flex-nowrap lg:items-end justify-between border-b border-b-border gap-3 lg:gap-6 mb-5 lg:mb-10">
                 <div class="grid">
                     <div class="kt-scrollable-x-auto">
@@ -609,11 +609,11 @@
                 </div>
                 <div class="flex items-center justify-end grow lg:grow-0 lg:pb-4 gap-2.5 mb-3 lg:mb-0">
                     <a href="{{ route('dashboard.core.profile.edit') }}" class="kt-btn kt-btn-primary">
-                        <i class="ki-filled ki-setting-2"></i>
+                        <i class="fa-duotone fa-solid fa-gear"></i>
                         Edit Profile
                     </a>
                     <button class="kt-btn kt-btn-icon kt-btn-outline">
-                        <i class="ki-filled ki-messages"></i>
+                        <i class="fa-duotone fa-solid fa-comments"></i>
                     </button>
                 </div>
             </div>
@@ -621,7 +621,7 @@
         <!-- End of Container -->
 
         <!-- Container -->
-        <div class="kt-container-fixed">
+        <div class="container-fixed">
             <!-- begin: grid -->
             <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
 
@@ -703,7 +703,7 @@
                                                 <div class="flex items-start gap-3.5">
                                                     <div
                                                         class="flex items-center justify-center size-8 bg-success-light rounded-full border border-success-clarity">
-                                                        <i class="ki-filled ki-check text-success text-xs"></i>
+                                                        <i class="fa-duotone fa-solid fa-check text-success text-xs"></i>
                                                     </div>
                                                     <div class="flex flex-col gap-1">
                                                         <div class="text-sm font-medium">Profile Updated</div>
@@ -715,7 +715,7 @@
                                                 <div class="flex items-start gap-3.5">
                                                     <div
                                                         class="flex items-center justify-center size-8 bg-primary-light rounded-full border border-primary-clarity">
-                                                        <i class="ki-filled ki-user text-primary text-xs"></i>
+                                                        <i class="fa-duotone fa-solid fa-user text-primary text-xs"></i>
                                                     </div>
                                                     <div class="flex flex-col gap-1">
                                                         <div class="text-sm font-medium">Account Created</div>
@@ -841,7 +841,7 @@
                                     </div>
                                     <div class="kt-card-content pb-7.5">
                                         <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
-                                            <i class="ki-filled ki-information fs-2tx text-primary me-4"></i>
+                                            <i class="fa-duotone fa-solid fa-circle-info fs-2tx text-primary me-4"></i>
                                             <div class="d-flex flex-stack flex-grow-1">
                                                 <div class="fw-semibold">
                                                     <h4 class="text-gray-900 fw-bold">Complete Your Profile</h4>
@@ -912,7 +912,7 @@
                                             <div class="col-12">
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <div class="d-flex align-items-center">
-                                                        <i class="ki-filled ki-shield-cross fs-2x text-primary me-4"></i>
+                                                        <i class="fa-duotone fa-solid fa-shield-xmark fs-2x text-primary me-4"></i>
                                                         <div>
                                                             <h5 class="mb-1">Secure your account with 2FA</h5>
                                                             <div class="text-muted">Add an extra layer of security to your
@@ -981,7 +981,7 @@
                                     <div class="kt-card-content pb-7.5">
                                         <div class="d-flex flex-column gap-4">
                                             <div class="d-flex align-items-start">
-                                                <i class="ki-filled ki-check-circle fs-3 text-success me-3 mt-1"></i>
+                                                <i class="fa-duotone fa-solid fa-check-circle fs-3 text-success me-3 mt-1"></i>
                                                 <div>
                                                     <h6 class="mb-1">Use a strong password</h6>
                                                     <div class="text-muted fs-7">At least 8 characters with numbers and
@@ -989,14 +989,14 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-start">
-                                                <i class="ki-filled ki-check-circle fs-3 text-success me-3 mt-1"></i>
+                                                <i class="fa-duotone fa-solid fa-check-circle fs-3 text-success me-3 mt-1"></i>
                                                 <div>
                                                     <h6 class="mb-1">Enable 2FA</h6>
                                                     <div class="text-muted fs-7">Add an extra layer of security</div>
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-start">
-                                                <i class="ki-filled ki-information-5 fs-3 text-warning me-3 mt-1"></i>
+                                                <i class="fa-duotone fa-solid fa-circle-info-5 fs-3 text-warning me-3 mt-1"></i>
                                                 <div>
                                                     <h6 class="mb-1">Monitor login activity</h6>
                                                     <div class="text-muted fs-7">Review and revoke suspicious sessions
@@ -1018,7 +1018,7 @@
                                                 <div class="timeline-line w-40px"></div>
                                                 <div class="timeline-icon symbol symbol-circle symbol-40px">
                                                     <div class="symbol-label bg-light-success">
-                                                        <i class="ki-filled ki-check fs-2 text-success"></i>
+                                                        <i class="fa-duotone fa-solid fa-check fs-2 text-success"></i>
                                                     </div>
                                                 </div>
                                                 <div class="timeline-content mb-10 mt-n1">
@@ -1035,7 +1035,7 @@
                                                 <div class="timeline-line w-40px"></div>
                                                 <div class="timeline-icon symbol symbol-circle symbol-40px">
                                                     <div class="symbol-label bg-light-warning">
-                                                        <i class="ki-filled ki-profile-user fs-2 text-warning"></i>
+                                                        <i class="fa-duotone fa-solid fa-id-card fs-2 text-warning"></i>
                                                     </div>
                                                 </div>
                                                 <div class="timeline-content mb-10 mt-n1">
@@ -1162,7 +1162,7 @@
                                     </div>
                                     <div class="kt-card-content pb-7.5">
                                         <div class="notice d-flex bg-light-info rounded border-info border border-dashed p-6 mb-6">
-                                            <i class="ki-filled ki-information fs-2tx text-info me-4"></i>
+                                            <i class="fa-duotone fa-solid fa-circle-info fs-2tx text-info me-4"></i>
                                             <div class="d-flex flex-stack flex-grow-1">
                                                 <div class="fw-semibold">
                                                     <h4 class="text-gray-900 fw-bold">Stay Informed</h4>
@@ -1174,11 +1174,11 @@
 
                                         <div class="d-flex flex-column gap-3">
                                             <button type="button" class="kt-btn kt-btn-light-primary kt-btn-sm">
-                                                <i class="ki-filled ki-notification-on me-2"></i>
+                                                <i class="fa-duotone fa-solid fa-bell-on me-2"></i>
                                                 Enable All Notifications
                                             </button>
                                             <button type="button" class="kt-btn kt-btn-light-danger kt-btn-sm">
-                                                <i class="ki-filled ki-notification-off me-2"></i>
+                                                <i class="fa-duotone fa-solid fa-bell-off me-2"></i>
                                                 Disable All Notifications
                                             </button>
                                         </div>
@@ -1226,16 +1226,16 @@
                     <h3 class="mb-4" style="color: #1e293b;">🔄 مقارنة الصفحات</h3>
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
                         <a href="{{ route('dashboard.core.profile.edit') }}" class="btn btn-outline-primary">
-                            <i class="ki-filled ki-arrow-left fs-4 me-2"></i>الصفحة الحالية (القديمة)
+                            <i class="fa-duotone fa-solid fa-arrow-left fs-4 me-2"></i>الصفحة الحالية (القديمة)
                         </a>
                         <a href="{{ route('dashboard.core.profile.settings.test') }}" class="btn btn-outline-warning">
-                            <i class="ki-filled ki-design-1 fs-4 me-2"></i>الصفحة التجريبية (الأولى)
+                            <i class="fa-duotone fa-solid fa-palette-1 fs-4 me-2"></i>الصفحة التجريبية (الأولى)
                         </a>
                         <a href="{{ route('dashboard.core.profile.settings.final') }}" class="btn btn-outline-success">
-                            <i class="ki-filled ki-rocket fs-4 me-2"></i>الصفحة النهائية الاحترافية 🚀
+                            <i class="fa-duotone fa-solid fa-rocket fs-4 me-2"></i>الصفحة النهائية الاحترافية 🚀
                         </a>
                         <a href="{{ route('dashboard.core.user.profile') }}" class="btn btn-outline-info">
-                            <i class="ki-filled ki-profile-user fs-4 me-2"></i>صفحة البروفايل الرئيسية
+                            <i class="fa-duotone fa-solid fa-id-card fs-4 me-2"></i>صفحة البروفايل الرئيسية
                         </a>
                     </div>
                 </div>

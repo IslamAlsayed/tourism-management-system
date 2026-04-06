@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Dashboard Header -->
-    <div class="kt-container-fixed py-5 border-b mb-8">
+    <div class="container-fixed py-5 border-b mb-8">
         <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
             <div class="flex flex-col md:flex-row items-center gap-6 text-center md:text-start">
                 <!-- Avatar Section -->
@@ -13,7 +13,7 @@
                         <img src="{{ asset('storage/' . $tourGuide->image) }}" alt="{{ $tourGuide->name }}" class="object-cover w-full h-full">
                     @else
                         <div class="flex items-center justify-center w-full h-full text-gray-400">
-                            <i class="ki-outline ki-user fs-1"></i>
+                            <i class="fa-duotone fa-solid fa-user fs-1"></i>
                         </div>
                     @endif
                 </div>
@@ -42,18 +42,18 @@
 
             <div class="flex items-center gap-3">
                 <a href="{{ route('dashboard.tourguides.guides.edit', $tourGuide->id) }}" class="kt-btn kt-btn-primary kt-btn-sm">
-                    <i class="ki-outline ki-pencil fs-4 me-1"></i>
+                    <i class="fa-duotone fa-solid fa-pen fs-4 me-1"></i>
                     {{ __('main.edit') }}
                 </a>
                 <a href="{{ route('dashboard.tourguides.guides.index') }}" class="kt-btn kt-btn-outline kt-btn-sm">
-                    <i class="ki-outline ki-arrow-left fs-4 me-1"></i>
+                    <i class="fa-duotone fa-solid fa-arrow-left fs-4 me-1"></i>
                     {{ __('main.back') }}
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
             <!-- Left Column: Primary Details -->
             <div class="xl:col-span-2 space-y-6">
@@ -132,7 +132,7 @@
                     <div class="card shadow-sm h-100">
                         <div class="card-header py-4">
                             <h3 class="card-title fw-bold text-gray-900">
-                                <i class="ki-outline ki-text-align-left fs-4 text-primary me-2"></i>
+                                <i class="fa-duotone fa-solid fa-align-left fs-4 text-primary me-2"></i>
                                 {{ __('main.description') }}
                             </h3>
                         </div>
@@ -151,7 +151,7 @@
                     <div class="card shadow-sm h-100 border-dashed border-gray-300">
                         <div class="card-header py-4">
                             <h3 class="card-title fw-bold text-gray-900">
-                                <i class="ki-outline ki-note fs-4 text-warning me-2"></i>
+                                <i class="fa-duotone fa-solid fa-note-sticky fs-4 text-warning me-2"></i>
                                 {{ __('main.notes') }}
                             </h3>
                         </div>
@@ -176,14 +176,14 @@
                 <div class="card shadow-sm">
                     <div class="card-header py-4 bg-light-primary bg-opacity-10">
                         <h3 class="card-title fw-bold text-gray-900">
-                            <i class="ki-outline ki-geolocation fs-3 text-primary me-2"></i>
+                            <i class="fa-duotone fa-solid fa-location-dot fs-3 text-primary me-2"></i>
                             {{ __('main.location_info') }}
                         </h3>
                     </div>
                     <div class="card-body py-6 space-y-4">
                         <div class="flex items-center gap-4">
                             <div class="symbol symbol-40px symbol-circle bg-light-primary">
-                                <span class="symbol-label text-primary"><i class="ki-outline ki-global fs-2"></i></span>
+                                <span class="symbol-label text-primary"><i class="fa-duotone fa-solid fa-globe fs-2"></i></span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-muted fs-8 fw-bold uppercase">{{ __('main.country') }}</span>
@@ -192,7 +192,7 @@
                         </div>
                         <div class="flex items-center gap-4">
                             <div class="symbol symbol-40px symbol-circle bg-light-success">
-                                <span class="symbol-label text-success"><i class="ki-outline ki-pointers fs-2"></i></span>
+                                <span class="symbol-label text-success"><i class="fa-duotone fa-solid fa-signs-post fs-2"></i></span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-muted fs-8 fw-bold uppercase">{{ __('main.state') }}</span>
@@ -201,7 +201,7 @@
                         </div>
                         <div class="flex items-center gap-4">
                             <div class="symbol symbol-40px symbol-circle bg-light-info">
-                                <span class="symbol-label text-info"><i class="ki-outline ki-map fs-2"></i></span>
+                                <span class="symbol-label text-info"><i class="fa-duotone fa-solid fa-map-location-dot fs-2"></i></span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-muted fs-8 fw-bold uppercase">{{ __('main.city') }} ({{ __('main.home_city') }})</span>
@@ -232,14 +232,14 @@
                 <div class="card shadow-sm border-2 border-primary border-opacity-10">
                     <div class="card-header py-4">
                         <h3 class="card-title fw-bold text-gray-900">
-                            <i class="ki-outline ki-phone fs-4 text-success me-2"></i>
+                            <i class="fa-duotone fa-solid fa-phone fs-4 text-success me-2"></i>
                             {{ __('main.contact_info') }}
                         </h3>
                     </div>
                     <div class="card-body py-6 space-y-5">
                         <div class="flex items-center gap-4 bg-light-light p-3 rounded hover:bg-light transition-colors">
                             <div class="symbol symbol-35px bg-white border">
-                                <span class="symbol-label text-gray-600"><i class="ki-outline ki-sms fs-2"></i></span>
+                                <span class="symbol-label text-gray-600"><i class="fa-duotone fa-solid fa-envelope fs-2"></i></span>
                             </div>
                             <div class="flex flex-col overflow-hidden">
                                 <span class="text-muted fs-9 fw-bold uppercase">{{ __('main.email') }}</span>
@@ -251,7 +251,7 @@
 
                         <div class="flex items-center gap-4 bg-light-light p-3 rounded">
                             <div class="symbol symbol-35px bg-white border">
-                                <span class="symbol-label text-success"><i class="ki-outline ki-whatsapp fs-2"></i></span>
+                                <span class="symbol-label text-success"><i class="fa-brands fa-whatsapp fs-2"></i></span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-muted fs-9 fw-bold uppercase">{{ __('main.mobile_01') }}</span>
@@ -263,7 +263,7 @@
 
                         <div class="flex items-center gap-4 bg-light-light p-3 rounded">
                             <div class="symbol symbol-35px bg-white border">
-                                <span class="symbol-label text-gray-600"><i class="ki-outline ki-phone fs-2"></i></span>
+                                <span class="symbol-label text-gray-600"><i class="fa-duotone fa-solid fa-phone fs-2"></i></span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-muted fs-9 fw-bold uppercase">{{ __('main.mobile_02') }}</span>
@@ -307,17 +307,17 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="kt-btn kt-btn-icon kt-btn-light kt-btn-destructive kt-btn-sm border-0 border-transparent bg-transparent" onclick="return confirm('{{ __('main.confirm_delete') }}')">
-                            <i class="ki-outline ki-trash fs-3"></i>
+                            <i class="fa-duotone fa-solid fa-trash fs-3"></i>
                         </button>
                     </form>
                     
                     <a href="{{ route('dashboard.tourguides.guides.edit', $tourGuide->id) }}" class="kt-btn kt-btn-icon kt-btn-light kt-btn-sm bg-transparent">
-                        <i class="ki-outline ki-pencil fs-3"></i>
+                        <i class="fa-duotone fa-solid fa-pen fs-3"></i>
                     </a>
 
                     <div class="border-s ps-4">
                         <a href="{{ route('dashboard.tourguides.guides.index') }}" class="kt-btn kt-btn-sm kt-btn-light bg-transparent">
-                            <i class="ki-outline ki-arrow-left fs-4 me-2"></i>
+                            <i class="fa-duotone fa-solid fa-arrow-left fs-4 me-2"></i>
                             {{ __('main.back_to_list') }}
                         </a>
                     </div>

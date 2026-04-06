@@ -28,7 +28,7 @@
             class="kt-btn kt-btn-outline kt-btn-icon size-[30px] absolute start-full top-2/4 -translate-x-2/4 -translate-y-2/4 rtl:translate-x-2/4"
             data-kt-toggle="body" data-kt-toggle-class="kt-sidebar-collapse" id="sidebar_toggle">
             <i
-                class="ki-filled ki-black-left-line kt-toggle-active:rotate-180 transition-all duration-300 rtl:translate rtl:rotate-180 rtl:kt-toggle-active:rotate-0">
+                class="fa-duotone fa-solid fa-angles-left kt-toggle-active:rotate-180 transition-all duration-300 rtl:translate rtl:rotate-180 rtl:kt-toggle-active:rotate-0">
             </i>
         </button>
     </div>
@@ -108,7 +108,7 @@
                                 class="kt-menu-link mb-1 flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $hasActiveChild ? 'active bg-accent/60' : '' }} hover:bg-accent/60 rounded-[9px] hover:rounded-[9px]">
                                 <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
                                     <i
-                                        class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
+                                        class="{{ $item['icon'] ?? 'fa-duotone fa-solid fa-folder' }} {{ $hasActiveChild ? 'text-primary' : '' }}"></i>
                                 </span>
 
                                 <span
@@ -139,10 +139,10 @@
                                 <span
                                     class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $hasActiveChild ? 'text-primary' : '' }}">
                                     <span class="inline-flex kt-menu-item-show:hidden">
-                                        <i class="ki-filled ki-plus text-[11px]"></i>
+                                        <i class="fa-duotone fa-solid fa-plus text-[11px]"></i>
                                     </span>
                                     <span class="hidden kt-menu-item-show:inline-flex">
-                                        <i class="ki-filled ki-minus text-[11px]"></i>
+                                        <i class="fa-duotone fa-solid fa-minus text-[11px]"></i>
                                     </span>
                                 </span>
                             </div>
@@ -239,7 +239,7 @@
                                                     <span
                                                         class="kt-menu-icon items-start text-muted-foreground w-[20px]">
                                                         <i
-                                                            class="{{ $child['icon'] ?? 'ki-filled ki-minus' }} text-[10px] {{ $childIsActive ? 'text-primary' : '' }}"></i>
+                                                            class="{{ $child['icon'] ?? 'fa-duotone fa-solid fa-minus' }} text-[10px] {{ $childIsActive ? 'text-primary' : '' }}"></i>
                                                     </span>
                                                 @endif
 
@@ -269,10 +269,10 @@
                                                 <span
                                                     class="kt-menu-arrow text-muted-foreground shrink-0 justify-end ms-1 me-[-10px] {{ $childHasActiveChild ? 'text-primary' : '' }}">
                                                     <span class="inline-flex kt-menu-item-show:hidden">
-                                                        <i class="ki-filled ki-plus text-[11px]"></i>
+                                                        <i class="fa-duotone fa-solid fa-plus text-[11px]"></i>
                                                     </span>
                                                     <span class="hidden kt-menu-item-show:inline-flex">
-                                                        <i class="ki-filled ki-minus text-[11px]"></i>
+                                                        <i class="fa-duotone fa-solid fa-minus text-[11px]"></i>
                                                     </span>
                                                 </span>
                                             </div>
@@ -318,7 +318,7 @@
                                                             <span
                                                                 class="kt-menu-icon items-start text-muted-foreground w-[10px]">
                                                                 <i
-                                                                    class="{{ $subChild['icon'] ?? 'ki-filled ki-folder' }} text-sm {{ $subChildIsActive ? 'text-primary' : '' }}"></i>
+                                                                    class="{{ $subChild['icon'] ?? 'fa-duotone fa-solid fa-folder' }} text-sm {{ $subChildIsActive ? 'text-primary' : '' }}"></i>
                                                             </span>
 
                                                             <span
@@ -362,7 +362,7 @@
 
                                                 <span class="kt-menu-icon items-start text-muted-foreground w-[10px]">
                                                     <i
-                                                        class="{{ $child['icon'] ?? 'ki-filled ki-folder' }} text-sm {{ $childIsActive ? 'text-primary' : '' }}"></i>
+                                                        class="{{ $child['icon'] ?? 'fa-duotone fa-solid fa-folder' }} text-sm {{ $childIsActive ? 'text-primary' : '' }}"></i>
                                                 </span>
 
                                                 <span
@@ -403,7 +403,7 @@
                                 {{ ($item['route'] ?? '') === '#' ? 'onclick="alert(\'هذه الصفحة قيد الإنشاء - Page under construction\')"' : '' }}>
                                 <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
                                     <i
-                                        class="{{ $item['icon'] ?? 'ki-filled ki-folder' }} {{ $isActive ? 'text-primary' : '' }}"></i>
+                                        class="{{ $item['icon'] ?? 'fa-duotone fa-solid fa-folder' }} {{ $isActive ? 'text-primary' : '' }}"></i>
                                 </span>
 
                                 <span

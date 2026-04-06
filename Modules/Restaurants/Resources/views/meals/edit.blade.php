@@ -3,7 +3,7 @@
 @section('title', __('main.edit_type', ['type' => __('main.meal')]))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="kt-card p-4">
             <div class="kt-card-body">
                 <form class="space-y-6" method="POST"
@@ -114,7 +114,7 @@
                         <!-- FIT Pricing -->
                         <div class="mt-4 mb-4 bg-white p-4 rounded-lg border border-gray-100">
                             <h4 class="text-md font-bold text-primary mb-3 border-b pb-2">
-                                <i class="ki-outline ki-dollar fs-3"></i> {{ __('main.fit_pricing') }}
+                                <i class="fa-duotone fa-solid fa-dollar-sign fs-3"></i> {{ __('main.fit_pricing') }}
                             </h4>
                             <div class="flex flex-wrap md:flex-nowrap gap-4 items-end">
                                 {{-- Meal Type --}}
@@ -188,7 +188,7 @@
                         <!-- Group Pricing -->
                         <div class="mt-4 mb-4 bg-white p-4 rounded-lg border border-gray-100">
                             <h4 class="text-md font-bold text-primary mb-3 border-b pb-2">
-                                <i class="ki-outline ki-profile-2user fs-3"></i> {{ __('main.group_pricing') }}
+                                <i class="fa-duotone fa-solid fa-user-group fs-3"></i> {{ __('main.group_pricing') }}
                             </h4>
                             <div class="flex flex-wrap md:flex-nowrap gap-4 items-end">
                                 <div class="flex-1 min-w-[120px]">

@@ -291,7 +291,7 @@
                 
                 @if(isset($models) && $models === 'dashboard.core.pricing-definitions' && (getActiveUser()->hasRole('superadmin') || getActiveUser()->can('update', $model)))
                     <button type="button" wire:click="openQuickEdit({{ $model->id }})" class="kt-btn kt-btn-icon kt-btn-sm kt-btn-ghost ms-1" title="{{ __('main.quick_edit') }}">
-                        <i class="ki-outline ki-pencil fs-6"></i>
+                        <i class="fa-duotone fa-solid fa-pen fs-6"></i>
                     </button>
                 @endif
             </div>
@@ -317,7 +317,7 @@
                         x-data 
                         @click="$dispatch('open-map-modal', { lat: '{{ $model->latitude }}', lng: '{{ $model->longitude }}', title: {{ Js::from($model->name ?? $model->title ?? __('main.location')) }} })"
                         title="{{ __('main.view_on_map') }}">
-                        <i class="ki-filled ki-geolocation"></i>
+                        <i class="fa-duotone fa-solid fa-location-dot"></i>
                     </button>
                 @endif
             </div>
@@ -333,7 +333,7 @@
                         x-data 
                         @click="$dispatch('open-map-modal', { lat: '{{ $model->latitude }}', lng: '{{ $model->longitude }}', title: {{ Js::from($model->name ?? $model->title ?? __('main.location')) }} })"
                         title="{{ __('main.view_on_map') }}">
-                        <i class="ki-filled ki-geolocation"></i>
+                        <i class="fa-duotone fa-solid fa-location-dot"></i>
                     </button>
                 @endif
             </div>

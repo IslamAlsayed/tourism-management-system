@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -20,7 +20,7 @@
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('dashboard.touristsites.sites.edit', $touristSite->id) }}"
                     class="kt-btn kt-btn-primary md:hidden">
-                    <i class="ki-filled ki-pencil text-sm me-2"></i>
+                    <i class="fa-duotone fa-solid fa-pen text-sm me-2"></i>
                     {{ __('main.edit') }}
                 </a>
                 <a href="{{ route('dashboard.touristsites.sites.index') }}" class="kt-btn kt-btn-outline">
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
 
             <!-- Basic Information -->

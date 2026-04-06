@@ -19,7 +19,7 @@
                     <button class="kt-menu-toggle font-medium text-mono">
                         Account
                         <span class="kt-menu-arrow">
-                            <i class="ki-filled ki-down">
+                            <i class="fa-solid fa-chevron-down">
                             </i>
                         </span>
                     </button>
@@ -27,7 +27,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#" tabindex="0">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-profile-circle">
+                                    <i class="fa-duotone fa-solid fa-user-circle">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -38,7 +38,7 @@
                         <div class="kt-menu-item active">
                             <a class="kt-menu-link" href="#" tabindex="0">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-setting-2">
+                                    <i class="fa-duotone fa-solid fa-gear">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -49,7 +49,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#" tabindex="0">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-users">
+                                    <i class="fa-duotone fa-solid fa-users">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -60,7 +60,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#" tabindex="0">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-security-user">
+                                    <i class="fa-duotone fa-solid fa-user-shield">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -71,7 +71,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#" tabindex="0">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-handcart">
+                                    <i class="fa-duotone fa-solid fa-cart-shopping">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">

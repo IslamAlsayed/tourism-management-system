@@ -52,7 +52,7 @@
             </li>
             <li>
                 <a class="kt-dropdown-menu-link" href="{{ route('dashboard.core.user.profile') }}">
-                    <i class="ki-filled ki-profile-circle">
+                    <i class="fa-duotone fa-solid fa-user-circle">
                     </i>
                     {{ __('main.my_profile') }}
                 </a>
@@ -60,7 +60,7 @@
             <li data-kt-dropdown="true" data-kt-dropdown-placement="right-start" data-kt-dropdown-placement-rtl="left-start" data-kt-dropdown-trigger="hover">
                 <button class="py-1 kt-dropdown-menu-toggle" data-kt-dropdown-toggle="true">
                     <span class="flex items-center gap-2">
-                        <i class="ki-filled ki-global"></i>
+                        <i class="fa-duotone fa-solid fa-globe"></i>
                         {{ __('main.language') }}
                     </span>
                     <span class="kt-badge kt-badge-stroke ms-auto shrink-0">
@@ -108,7 +108,7 @@
                                         </span>
                                     </span>
                                     @if (getCurrentLocale() === $language->code)
-                                        <i class="text-base text-green-500 ki-solid ki-check-circle ms-auto"></i>
+                                        <i class="text-base text-green-500 fa-solid fa-circle-check ms-auto"></i>
                                     @endif
                                 </a>
                             </li>
@@ -124,7 +124,7 @@
         <div class="mb-2.5 flex flex-col gap-3.5 px-2.5 pt-1.5">
             <div class="flex items-center justify-between gap-2">
                 <span class="flex items-center gap-2">
-                    <i class="text-base ki-filled ki-moon" id="icon-theme-mode"></i>
+                    <i class="text-base fa-duotone fa-solid fa-moon" id="icon-theme-mode"></i>
                     <span class="font-medium text-2sm" id="text-theme-mode">
                         {{ __('main.dark_mode') }}
                     </span>

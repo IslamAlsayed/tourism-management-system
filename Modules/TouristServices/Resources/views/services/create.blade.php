@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -47,7 +47,7 @@
         ])
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <form action="{{ route('dashboard.touristservices.services.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-6 lg:gap-4">
@@ -105,7 +105,7 @@
                                 <h4
                                     class="flex items-center gap-2 font-bold text-sm uppercase mb-6 text-slate-700 tracking-wide border-custom-b pb-3">
                                     <span class="p-1.5 bg-blue-100 text-blue-600 rounded-md">
-                                        <i class="ki-filled ki-setting-2 fs-5"></i>
+                                        <i class="fa-duotone fa-solid fa-gear fs-5"></i>
                                     </span>
                                     {{ __('main.pricing_configuration') }}
                                 </h4>
@@ -120,7 +120,7 @@
                                     <div class="relative group">
                                         <label
                                             class="text-xs font-bold text-gray-600 uppercase mb-2 block flex items-center gap-1">
-                                            <i class="ki-outline ki-category text-gray-400"></i>
+                                            <i class="fa-duotone fa-solid fa-grid-2 text-gray-400"></i>
                                             {{ __('main.pricing_unit') }}
                                         </label>
                                         <div class="relative">
@@ -140,7 +140,7 @@
                                     <div class="relative group">
                                         <label
                                             class="text-xs font-bold text-gray-600 uppercase mb-2 block flex items-center gap-1">
-                                            <i class="ki-outline ki-calculator text-gray-400"></i>
+                                            <i class="fa-duotone fa-solid fa-calculator text-gray-400"></i>
                                             {{ __('main.qty') }}
                                         </label>
                                         <input type="number" name="pricing_unit_value"
@@ -178,14 +178,14 @@
                                 <div class="flex items-center justify-between mb-3">
                                     <label
                                         class="kt-label font-bold text-sm uppercase text-blue-900 flex items-center gap-2">
-                                        <i class="ki-filled ki-element-11 text-blue-600"></i>
+                                        <i class="fa-duotone fa-solid fa-grid-2 text-blue-600"></i>
                                         {{ __('main.target_modules_context') }}
                                         <span
                                             class="text-xs font-normal normal-case text-blue-600">({{ __('main.select_one_or_more') }})</span>
                                     </label>
                                     <button type="button" id="toggleAllBtn" onclick="toggleAllModules()"
                                         class="kt-btn kt-btn-sm">
-                                        <i class="ki-filled ki-check-circle me-1"></i>
+                                        <i class="fa-duotone fa-solid fa-check-circle me-1"></i>
                                         <span id="toggleAllText">{{ __('main.select_all') }}</span>
                                     </button>
                                 </div>
@@ -193,63 +193,63 @@
                                     // Define modules just like in Edit page for consistency
                                     $modules = [
                                         'accommodations' => [
-                                            'icon' => 'ki-home-2',
+                                            'icon' => 'fa-duotone fa-solid fa-hotel',
                                             'label' => 'Accommodations',
                                             'color' => 'blue',
                                         ],
                                         'transportation' => [
-                                            'icon' => 'ki-delivery-2',
+                                            'icon' => 'fa-duotone fa-solid fa-truck-fast',
                                             'label' => 'Transportation',
                                             'color' => 'green',
                                         ],
                                         'food' => [
-                                            'icon' => 'ki-coffee',
+                                            'icon' => 'fa-duotone fa-solid fa-mug-hot',
                                             'label' => 'Restaurants',
                                             'color' => 'orange',
                                         ],
                                         'tour_guides' => [
-                                            'icon' => 'ki-user',
+                                            'icon' => 'fa-duotone fa-solid fa-user',
                                             'label' => 'Tour Guides',
                                             'color' => 'purple',
                                         ],
                                         'activities' => [
-                                            'icon' => 'ki-rocket',
+                                            'icon' => 'fa-duotone fa-solid fa-rocket',
                                             'label' => 'Activities',
                                             'color' => 'red',
                                         ],
                                         'visa_requirements' => [
-                                            'icon' => 'ki-security-user',
+                                            'icon' => 'fa-duotone fa-solid fa-shield-halved',
                                             'label' => 'Visa Requirements',
                                             'color' => 'indigo',
                                         ],
                                         'travel_passes' => [
-                                            'icon' => 'ki-document',
+                                            'icon' => 'fa-duotone fa-solid fa-file-lines',
                                             'label' => 'Travel Passes',
                                             'color' => 'teal',
                                         ],
                                         'crossings_ports' => [
-                                            'icon' => 'ki-entrance-left',
+                                            'icon' => 'fa-duotone fa-solid fa-right-to-bracket',
                                             'label' => 'Crossings & Ports',
                                             'color' => 'gray',
                                         ],
-                                        'tours' => ['icon' => 'ki-map', 'label' => 'Tours', 'color' => 'cyan'],
+                                        'tours' => ['icon' => 'fa-duotone fa-solid fa-map', 'label' => 'Tours', 'color' => 'cyan'],
                                         'jeep_safari' => [
-                                            'icon' => 'ki-car',
+                                            'icon' => 'fa-duotone fa-solid fa-car',
                                             'label' => 'Jeep Safari',
                                             'color' => 'yellow',
                                         ],
                                         'tourist_sites' => [
-                                            'icon' => 'ki-flag',
+                                            'icon' => 'fa-duotone fa-solid fa-flag',
                                             'label' => 'Tourist Sites',
                                             'color' => 'pink',
                                         ],
                                         'airlines' => [
-                                            'icon' => 'ki-airplane',
+                                            'icon' => 'fa-duotone fa-solid fa-plane',
                                             'label' => 'Airlines',
                                             'color' => 'sky',
                                         ],
                                         'quotation' => [
-                                            'icon' => 'ki-bill',
+                                            'icon' => 'fa-duotone fa-solid fa-file-invoice',
                                             'label' => 'Quotation',
                                             'color' => 'emerald',
                                         ],
@@ -263,7 +263,7 @@
                                             <div
                                                 class="module-btn flex items-center gap-2 p-2 rounded-lg border-custom-1 transition-all duration-200 background text-gray-700 hover:shadow-md peer-checked:bg-blue-600 peer-checked:text-white peer-checked:shadow-lg peer-checked:scale-105 shadow-sm">
                                                 <i
-                                                    class="ki-filled {{ $module['icon'] }} text-lg text-gray-600 peer-checked:text-white"></i>
+                                                    class="{{ $module['icon'] }} text-lg text-gray-600 peer-checked:text-white"></i>
                                                 <span class="text-xs font-bold">{{ $module['label'] }}</span>
                                             </div>
                                         </label>
@@ -287,7 +287,7 @@
                                         class="p-5 rounded-xl border-custom-1 background transition-all h-full flex flex-col items-center text-center">
                                         <div
                                             class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3 transition-colors">
-                                            <i class="ki-filled ki-dollar fs-2"></i>
+                                            <i class="fa-duotone fa-solid fa-dollar-sign fs-2"></i>
                                         </div>
                                         <h4
                                             class="font-bold text-lg text-gray-600 mb-1 group-hover:text-blue-600 transition-colors">
@@ -298,7 +298,7 @@
                                         <div class="mt-4 opacity-0 transition-opacity">
                                             <span
                                                 class="inline-flex items-center gap-1 text-xs font-bold text-blue-700 bg-blue-100 px-2 py-1 rounded">
-                                                <i class="ki-filled ki-check fs-4"></i>
+                                                <i class="fa-duotone fa-solid fa-check fs-4"></i>
                                                 {{ __('main.selected') }}
                                             </span>
                                         </div>
@@ -313,7 +313,7 @@
                                         class="p-5 rounded-xl border-custom-1 background transition-all h-full flex flex-col items-center text-center">
                                         <div
                                             class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-3 transition-colors">
-                                            <i class="ki-filled ki-calendar fs-2"></i>
+                                            <i class="fa-duotone fa-solid fa-calendar fs-2"></i>
                                         </div>
                                         <h4
                                             class="font-bold text-lg text-gray-600 mb-1 group-hover:text-green-600 transition-colors">
@@ -324,7 +324,7 @@
                                         <div class="mt-4 opacity-0 transition-opacity">
                                             <span
                                                 class="inline-flex items-center gap-1 text-xs font-bold text-green-700 bg-green-100 px-2 py-1 rounded">
-                                                <i class="ki-filled ki-check fs-4"></i>
+                                                <i class="fa-duotone fa-solid fa-check fs-4"></i>
                                                 {{ __('main.selected') }}
                                             </span>
                                         </div>
@@ -376,7 +376,7 @@
                             <div class="mt-4">
                                 <button type="button" onclick="addSeasonGroup()"
                                     class="kt-btn kt-btn-sm kt-btn-primary">
-                                    <i class="ki-outline ki-plus fs-3"></i> {{ __('main.add_season_group') }}
+                                    <i class="fa-duotone fa-solid fa-plus fs-3"></i> {{ __('main.add_season_group') }}
                                 </button>
                             </div>
                         </div>
@@ -433,7 +433,7 @@
                     <div class="kt-card-body p-4">
                         <!-- Tax Explanation -->
                         <div class="mb-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
-                            <p class="text-sm text-amber-800"><i class="ki-filled ki-information-2 me-1"></i>
+                            <p class="text-sm text-amber-800"><i class="fa-duotone fa-solid fa-circle-info-2 me-1"></i>
                                 {{ __('main.taxes_explanation') }}</p>
                         </div>
 
@@ -621,7 +621,7 @@
                     <div class="season-group border-custom rounded-lg p-4 bg-gray-50 relative mb-6" data-group-id="${groupId}">
                         <div class="flex justify-end mb-2">
                             <button type="button" onclick="window.manualRemoveSeason(this)" class="kt-btn kt-btn-sm kt-btn-light kt-btn-destructive flex items-center gap-2 remove-season-btn">
-                                <i class="ki-outline ki-trash fs-5"></i>
+                                <i class="fa-duotone fa-solid fa-trash fs-5"></i>
                                 {{ __('main.remove_season') }}
                             </button>
                         </div>
@@ -640,11 +640,11 @@
                             <div class="ranges-container background rounded-lg border-custom p-4 lg:col-span-2">
                                  <div class="flex items-center justify-between mb-3">
                                     <label class="text-xs font-bold text-gray-600 uppercase flex items-center gap-1">
-                                        <i class="ki-outline ki-calendar fs-4"></i>
+                                        <i class="fa-duotone fa-solid fa-calendar fs-4"></i>
                                         {{ __('main.date_ranges') }}
                                     </label>
                                      <button type="button" onclick="addRangeToGroup(this, ${groupId})" class="text-xs text-blue-600 hover:text-blue-800 font-bold background hover:bg-blue-100 py-1 px-2 rounded transition">
-                                        <i class="ki-outline ki-plus fs-5"></i> {{ __('main.add') }}
+                                        <i class="fa-duotone fa-solid fa-plus fs-5"></i> {{ __('main.add') }}
                                     </button>
                                  </div>
                                  <div class="ranges-list flex flex-col gap-2">
@@ -673,7 +673,7 @@
                         <div class="flex-1 w-full md:w-auto flex items-center gap-2">
                                 <div class="flex items-center w-full gap-2">
                                     <div class="h-[35px] px-3 bg-gray-50 border border-r-0 border-gray-300 rounded-l flex items-center justify-center">
-                                        <i class="ki-outline ki-calendar text-blue-500 text-lg"></i>
+                                        <i class="fa-duotone fa-solid fa-calendar text-blue-500 text-lg"></i>
                                     </div>
                                     <input type="text" name="season_groups[${groupId}][ranges][${rangeId}][start]" 
                                            class="kt-input h-[35px] text-sm season-start-date w-full pluck-calendar background rounded-l-none" 
@@ -687,7 +687,7 @@
                             <div class="relative flex-1 w-full md:w-auto">
                                 <div class="flex items-center w-full gap-2">
                                     <div class="h-[35px] px-3 bg-gray-50 border border-r-0 border-gray-300 rounded-l flex items-center justify-center">
-                                        <i class="ki-outline ki-calendar text-blue-500 text-lg"></i>
+                                        <i class="fa-duotone fa-solid fa-calendar text-blue-500 text-lg"></i>
                                     </div>
                                     <input type="text" name="season_groups[${groupId}][ranges][${rangeId}][end]" 
                                            class="kt-input h-[35px] text-sm season-end-date w-full pluck-calendar background rounded-l-none" 
@@ -697,7 +697,7 @@
                             </div>
                         </div>
                         <button type="button" onclick="removeRangeRow(this)" class="text-gray-400 hover:text-red-600 p-1 rounded-full hover:bg-red-50 transition self-end md:self-center" title="{{ __('main.delete') }}">
-                            <i class="ki-outline ki-trash fs-3"></i>
+                            <i class="fa-duotone fa-solid fa-trash fs-3"></i>
                         </button>
                     </div>
                 `;
@@ -860,7 +860,7 @@
                             </div>
                         </div>
                         <button type="button" onclick="removeTaxRow(this)" class="mt-5 text-red-600 cursor-pointer hover:text-red-700 p-1.5 hover:bg-red-50 rounded transition" title="{{ __('main.delete') }}" toggle-button>
-                             <i class="ki-outline ki-trash fs-2"></i>
+                             <i class="fa-duotone fa-solid fa-trash fs-2"></i>
                         </button>
                     </div>
                 </div>
@@ -942,7 +942,7 @@
                             </div>
                         </div>
                         <button type="button" onclick="removeCommissionRow(this)" class="mt-5 text-red-600 hover:text-red-700 p-1.5 hover:bg-red-50 rounded transition" title="{{ __('main.delete') }}">
-                            <i class="ki-outline ki-trash fs-2"></i>
+                            <i class="fa-duotone fa-solid fa-trash fs-2"></i>
                         </button>
                     </div>
                 </div>

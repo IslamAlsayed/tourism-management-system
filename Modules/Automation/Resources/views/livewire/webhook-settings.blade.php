@@ -3,7 +3,7 @@
     <div class="kt-card shadow-sm border border-gray-200 rounded-xl bg-white dark:bg-gray-800">
         <div class="kt-card-header px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <h3 class="text-lg font-bold text-gray-800 dark:text-white flex items-center gap-2">
-                <i class="ki-outline ki-setting-2 text-primary"></i>
+                <i class="fa-duotone fa-solid fa-gear-2 text-primary"></i>
                 {{ $editingWebhookId ? __('automation.edit_webhook') : __('automation.add_new_webhook') }}
             </h3>
         </div>
@@ -105,8 +105,8 @@
                                     </button>
                                 </td>
                                 <td class="px-6 py-4 text-right space-x-2">
-                                    <button wire:click="edit({{ $webhook->id }})" class="kt-btn kt-btn-sm kt-btn-light kt-btn-primary border-0 shadow-none"><i class="ki-outline ki-pencil text-md"></i></button>
-                                    <button wire:click="delete({{ $webhook->id }})" wire:confirm="Are you sure?" class="kt-btn kt-btn-sm kt-btn-light kt-btn-destructive border-0 shadow-none"><i class="ki-outline ki-trash text-md"></i></button>
+                                    <button wire:click="edit({{ $webhook->id }})" class="kt-btn kt-btn-sm kt-btn-light kt-btn-primary border-0 shadow-none"><i class="fa-duotone fa-solid fa-pen text-md"></i></button>
+                                    <button wire:click="delete({{ $webhook->id }})" wire:confirm="Are you sure?" class="kt-btn kt-btn-sm kt-btn-light kt-btn-destructive border-0 shadow-none"><i class="fa-duotone fa-solid fa-trash text-md"></i></button>
                                 </td>
                             </tr>
                             @endforeach
@@ -120,7 +120,7 @@
     {{-- Execution Logs --}}
     <div class="kt-card shadow-sm border border-gray-200 rounded-xl bg-white dark:bg-gray-800">
         <div class="kt-card-header px-6 py-4 border-b border-gray-100 flex items-center gap-2">
-            <i class="ki-outline ki-monitor text-success text-xl"></i>
+            <i class="fa-duotone fa-solid fa-desktop text-success text-xl"></i>
             <h3 class="text-sm font-bold text-gray-700 uppercase tracking-tight">{{ __('automation.recent_synchronizations') }}</h3>
         </div>
         <div class="kt-card-body p-0">
@@ -197,9 +197,9 @@
                                 <td class="px-6 py-3 text-xs font-bold">{{ $log->webhook->name ?? 'Deleted' }}</td>
                                 <td class="px-6 py-3">
                                     @if($log->response_status >= 200 && $log->response_status < 300)
-                                        <span class="text-success flex items-center gap-1 font-bold text-xs"><i class="ki-filled ki-check-circle text-md"></i> {{ $log->response_status }}</span>
+                                        <span class="text-success flex items-center gap-1 font-bold text-xs"><i class="fa-duotone fa-solid fa-check-circle text-md"></i> {{ $log->response_status }}</span>
                                     @else
-                                        <span class="text-danger flex items-center gap-1 font-bold text-xs"><i class="ki-filled ki-cross-circle text-md"></i> {{ $log->response_status ?? 'FAIL' }}</span>
+                                        <span class="text-danger flex items-center gap-1 font-bold text-xs"><i class="fa-duotone fa-solid fa-xmark-circle text-md"></i> {{ $log->response_status ?? 'FAIL' }}</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-3">

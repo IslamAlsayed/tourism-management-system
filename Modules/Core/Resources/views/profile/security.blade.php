@@ -4,10 +4,10 @@
 
 @section('content')
     <!-- Security Center Header -->
-    <div class="kt-container-fixed mb-10">
+    <div class="container-fixed mb-10">
         <div class="flex flex-col gap-2">
             <h1 class="text-2xl font-bold text-foreground">
-                <i class="ki-filled ki-shield-tick text-primary fs-2me-2"></i>
+                <i class="fa-duotone fa-solid fa-shield-check text-primary fs-2me-2"></i>
                 {{ __('main.security_settings') }}
             </h1>
             <p class="text-secondary-foreground text-sm font-medium">
@@ -17,7 +17,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
 
             <!-- Left: Sign-in Method & Password -->
@@ -39,7 +39,7 @@
                                 <span class="text-sm font-bold text-foreground">{{ $user->email }}</span>
                             </div>
                             <div class="mt-4 sm:mt-0 text-success text-xs font-bold flex items-center gap-1.5">
-                                <i class="ki-solid ki-check-circle fs-6"></i>
+                                <i class="fa-solid fa-circle-check fs-6"></i>
                                 Verified Account
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="kt-card-body p-8 text-center bg-muted/5">
                         <div class="size-16 bg-muted/40 rounded-3xl flex items-center justify-center mx-auto mb-4">
-                            <i class="ki-filled ki-monitor text-secondary-foreground fs-1"></i>
+                            <i class="fa-duotone fa-solid fa-desktop text-secondary-foreground text-2xl"></i>
                         </div>
                         <h4 class="text-lg font-bold mb-2">Device Management</h4>
                         <p class="text-sm text-secondary-foreground max-w-sm mx-auto mb-6">
@@ -114,14 +114,14 @@
                 <div class="kt-card bg-primary/5 border-primary/20">
                     <div class="kt-card-header border-b-primary/10">
                         <h3 class="kt-card-title text-lg font-bold text-primary">
-                            <i class="ki-filled ki-shield-search fs-3 me-2"></i>
+                            <i class="fa-duotone fa-solid fa-shield-halved fs-3 me-2"></i>
                             Two-Factor Auth
                         </h3>
                     </div>
                     <div class="kt-card-body p-6">
                         <div class="flex items-start gap-4 mb-6">
                             <div class="size-10 bg-primary/20 rounded-xl flex items-center justify-center shrink-0">
-                                <i class="ki-filled ki-key text-primary fs-4"></i>
+                                <i class="fa-duotone fa-solid fa-key text-primary fs-4"></i>
                             </div>
                             <div class="flex-1">
                                 <div class="text-sm font-bold text-foreground mb-1">Status:

@@ -35,7 +35,7 @@
 
 
 {{-- @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex justify-center">
             <div class="w-full max-w-4xl">
                 <div class="card card-flush mb-6">

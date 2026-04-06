@@ -3,7 +3,7 @@
 @section('title', __('main.user_reports'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- User Statistics -->
             <div class="grid lg:grid-cols-4 gap-5">

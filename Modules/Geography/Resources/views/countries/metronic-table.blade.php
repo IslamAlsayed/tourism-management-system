@@ -10,13 +10,13 @@
         <div class="card-toolbar">
             <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                 <button type="button" class="kt-btn kt-btn-light kt-btn-primary me-3" id="kt_export_button">
-                    <i class="ki-duotone ki-exit-up fs-2"></i>تصدير
+                    <i class="fa-duotone fa-solid fa-arrow-up-from-bracket fs-2"></i>تصدير
                 </button>
                 <button type="button" class="kt-btn kt-btn-light kt-btn-success me-3" id="kt_bulk_edit_button">
-                    <i class="ki-duotone ki-pencil fs-2"></i>تعديل جماعي
+                    <i class="fa-duotone fa-solid fa-pen fs-2"></i>تعديل جماعي
                 </button>
                 <button type="button" class="kt-btn kt-btn-light kt-btn-secondary" id="kt_toggle_columns">
-                    <i class="ki-duotone ki-layout fs-2"></i>إظهار/إخفاء الأعمدة
+                    <i class="fa-duotone fa-solid fa-table-columns fs-2"></i>إظهار/إخفاء الأعمدة
                 </button>
             </div>
         </div>
@@ -54,7 +54,7 @@
                     <td>
                         <button class="kt-btn kt-btn-sm kt-btn-light kt-btn-ghost" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">إجراءات
                             <span class="svg-icon svg-icon-5 m-0">
-                                <i class="ki-duotone ki-down fs-5"></i>
+                                <i class="fa-duotone fa-solid fa-chevron-down fs-5"></i>
                             </span>
                         </button>
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-150px" data-kt-menu="true">
@@ -84,7 +84,7 @@
                     <td>
                         <button class="kt-btn kt-btn-sm kt-btn-light kt-btn-ghost" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">إجراءات
                             <span class="svg-icon svg-icon-5 m-0">
-                                <i class="ki-duotone ki-down fs-5"></i>
+                                <i class="fa-duotone fa-solid fa-chevron-down fs-5"></i>
                             </span>
                         </button>
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-150px" data-kt-menu="true">

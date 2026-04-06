@@ -115,16 +115,16 @@
                         }
                 }" class="flex flex-wrap gap-2 items-center">
                     <button type="button" x-on:click.prevent="confirmActivate" class="kt-btn kt-btn-success kt-btn-sm flex items-center gap-1.5 px-3">
-                        <i class="ki-outline ki-check-circle fs-3"></i> {{ __('main.activate') }}
+                        <i class="fa-duotone fa-solid fa-check-circle fs-3"></i> {{ __('main.activate') }}
                     </button>
                     <button type="button" x-on:click.prevent="confirmDeactivate" class="kt-btn kt-btn-warning kt-btn-sm flex items-center gap-1.5 px-3">
-                        <i class="ki-outline ki-cross-circle fs-3"></i> {{ __('main.deactivate') }}
+                        <i class="fa-duotone fa-solid fa-xmark-circle fs-3"></i> {{ __('main.deactivate') }}
                     </button>
                     <button type="button" x-on:click.prevent="confirmDelete" class="kt-btn kt-btn-destructive kt-btn-sm flex items-center gap-1.5 px-3">
-                        <i class="ki-outline ki-trash fs-3"></i> {{ __('main.delete') }}
+                        <i class="fa-duotone fa-solid fa-trash fs-3"></i> {{ __('main.delete') }}
                     </button>
                     <button type="button" @click.prevent="$wire.selectedIds = []" class="kt-btn kt-btn-secondary kt-btn-sm flex items-center gap-1.5 px-3">
-                        <i class="ki-outline ki-cross fs-3"></i> {{ __('main.cancel_selection') }}
+                        <i class="fa-duotone fa-solid fa-xmark fs-3"></i> {{ __('main.cancel_selection') }}
                     </button>
                 </div>
             </div>

@@ -16,13 +16,13 @@
                 </div>
                 <div class="flex flex-wrap justify-center gap-1 lg:gap-4.5 text-sm">
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-abstract-41 text-gray-500 text-sm"></i>
+                        <i class="fa-duotone fa-solid fa-diagram-project text-gray-500 text-sm"></i>
                         <span class="text-gray-600 font-medium">
                             {{ $user->department ?? 'KeenThemes' }}
                         </span>
                     </div>
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-sms text-gray-500 text-sm"></i>
+                        <i class="fa-duotone fa-solid fa-envelope text-gray-500 text-sm"></i>
                         <a class="text-gray-600 font-medium hover:text-primary" href="mailto:{{ $user->email }}">
                             {{ $user->email }}
                         </a>
@@ -54,7 +54,7 @@
                             <div class="menu-item">
                                 <button class="menu-link active" data-bs-toggle="pill" data-bs-target="#overview" type="button" role="tab">
                                     <span class="menu-icon">
-                                        <i class="ki-filled ki-profile-circle fs-2"></i>
+                                        <i class="fa-duotone fa-solid fa-user-circle fs-2"></i>
                                     </span>
                                     <span class="menu-title">Overview</span>
                                 </button>
@@ -62,7 +62,7 @@
                             <div class="menu-item">
                                 <button class="menu-link" data-bs-toggle="pill" data-bs-target="#personal" type="button" role="tab">
                                     <span class="menu-icon">
-                                        <i class="ki-filled ki-badge fs-2"></i>
+                                        <i class="fa-duotone fa-solid fa-id-badge fs-2"></i>
                                     </span>
                                     <span class="menu-title">Personal Info</span>
                                 </button>
@@ -70,7 +70,7 @@
                             <div class="menu-item">
                                 <button class="menu-link" data-bs-toggle="pill" data-bs-target="#security" type="button" role="tab">
                                     <span class="menu-icon">
-                                        <i class="ki-filled ki-shield-tick fs-2"></i>
+                                        <i class="fa-duotone fa-solid fa-shield-check fs-2"></i>
                                     </span>
                                     <span class="menu-title">Security</span>
                                 </button>
@@ -78,7 +78,7 @@
                             <div class="menu-item">
                                 <button class="menu-link" data-bs-toggle="pill" data-bs-target="#notifications" type="button" role="tab">
                                     <span class="menu-icon">
-                                        <i class="ki-filled ki-notification-status fs-2"></i>
+                                        <i class="fa-duotone fa-solid fa-bell-status fs-2"></i>
                                     </span>
                                     <span class="menu-title">Notifications</span>
                                 </button>
@@ -165,15 +165,15 @@
                                     <div class="card-body">
                                         <div class="d-flex flex-column gap-3">
                                             <button type="button" class="btn btn-primary btn-sm">
-                                                <i class="ki-filled ki-profile-user me-2"></i>
+                                                <i class="fa-duotone fa-solid fa-id-card me-2"></i>
                                                 Edit Profile
                                             </button>
                                             <button type="button" class="btn btn-warning btn-sm">
-                                                <i class="ki-filled ki-key me-2"></i>
+                                                <i class="fa-duotone fa-solid fa-key me-2"></i>
                                                 Change Password
                                             </button>
                                             <button type="button" class="btn btn-info btn-sm">
-                                                <i class="ki-filled ki-notification-bing me-2"></i>
+                                                <i class="fa-duotone fa-solid fa-bell-bing me-2"></i>
                                                 Notification Settings
                                             </button>
                                         </div>
@@ -306,19 +306,19 @@
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">🔗 روابط التنقل</h3>
                 <div class="flex flex-wrap justify-center gap-3">
                     <a href="{{ route('dashboard.core.profile.edit') }}" class="btn btn-outline btn-outline-primary">
-                        <i class="ki-filled ki-arrow-left me-2"></i>الصفحة القديمة
+                        <i class="fa-duotone fa-solid fa-arrow-left me-2"></i>الصفحة القديمة
                     </a>
                     <a href="{{ route('dashboard.core.profile.settings.test') }}" class="btn btn-outline btn-outline-warning">
-                        <i class="ki-filled ki-design-1 me-2"></i>التجريبية الأولى
+                        <i class="fa-duotone fa-solid fa-palette-1 me-2"></i>التجريبية الأولى
                     </a>
                     <a href="{{ route('dashboard.core.profile.settings.new') }}" class="btn btn-outline btn-outline-info">
-                        <i class="ki-filled ki-design me-2"></i>التجريبية الثانية
+                        <i class="fa-duotone fa-solid fa-palette me-2"></i>التجريبية الثانية
                     </a>
                     <a href="{{ route('dashboard.core.profile.settings.final') }}" class="btn btn-primary">
-                        <i class="ki-filled ki-design me-2"></i>الصفحة النهائية الاحترافية ⭐
+                        <i class="fa-duotone fa-solid fa-palette me-2"></i>الصفحة النهائية الاحترافية ⭐
                     </a>
                     <a href="{{ route('dashboard.core.user.profile') }}" class="btn btn-outline btn-outline-success">
-                        <i class="ki-filled ki-profile-user me-2"></i>البروفايل الرئيسي
+                        <i class="fa-duotone fa-solid fa-id-card me-2"></i>البروفايل الرئيسي
                     </a>
                 </div>
             </div>

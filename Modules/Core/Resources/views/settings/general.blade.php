@@ -3,7 +3,7 @@
 @section('title', __('main.general_settings'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- Application Settings -->
             <div class="kt-card">
@@ -138,7 +138,7 @@
                         <!-- Submit Buttons -->
                         <div class="flex items-center justify-start gap-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
+                                <i class="fa-duotone fa-solid fa-check text-sm me-2"></i>
                                 {{ __('main.save_type', ['type' => __('main.settings')]) }}
                             </button>
                         </div>

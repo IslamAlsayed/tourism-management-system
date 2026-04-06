@@ -11,7 +11,7 @@
         <div class="d-flex gap-2">
             {{-- <button wire:click="refreshData" class="kt-btn btn-icon kt-btn-sm btn-light-primary" toggle-button
                 title="{{ __('main.refresh') }}">
-                <i class="ki-outline ki-arrows-circle fs-2"></i>
+                <i class="fa-duotone fa-solid fa-arrows-rotate fs-2"></i>
             </button> --}}
             @if (isset($data) && !empty($data) && $data->count() > 0 && isset($allColumns))
                 @include('components.columns', [

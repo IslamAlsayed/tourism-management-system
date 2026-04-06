@@ -32,11 +32,11 @@
                     {{-- <a class="menu-link active" href="{{ route('home') }}"> --}}
                     <a class="menu-link active" href="#">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-element-11 fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
+                            <i class="fa-duotone fa-solid fa-grid-2 fs-2">
+                                
+                                
+                                
+                                
                             </i>
                         </span>
                         <span class="menu-title">Dashboard</span>
@@ -54,9 +54,9 @@
                 <div class="menu-item">
                     <a class="menu-link" href="#">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-flag fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
+                            <i class="fa-duotone fa-solid fa-flag fs-2">
+                                
+                                
                             </i>
                         </span>
                         <span class="menu-title">Countries</span>
@@ -70,9 +70,9 @@
                 <div class="menu-item">
                     <a class="menu-link" href="#">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-abstract-46 fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
+                            <i class="fa-duotone fa-solid fa-circle-nodes fs-2">
+                                
+                                
                             </i>
                         </span>
                         <span class="menu-title">Cities</span>
@@ -86,10 +86,10 @@
                 <div class="menu-item">
                     <a class="menu-link" href="#">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-dollar fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
+                            <i class="fa-duotone fa-solid fa-dollar-sign fs-2">
+                                
+                                
+                                
                             </i>
                         </span>
                         <span class="menu-title">Currencies</span>
@@ -110,11 +110,11 @@
                 <div class="menu-item">
                     <a class="menu-link" href="#">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-profile-user fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
+                            <i class="fa-duotone fa-solid fa-id-card fs-2">
+                                
+                                
+                                
+                                
                             </i>
                         </span>
                         <span class="menu-title">{{ __('sidebar.users') }}</span>
@@ -132,9 +132,9 @@
                 <div class="menu-item">
                     <a class="menu-link {{ request()->routeIs('automation.settings') ? 'active' : '' }}" href="{{ route('automation.settings') }}">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-setting-2 fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
+                            <i class="fa-duotone fa-solid fa-gear-2 fs-2">
+                                
+                                
                             </i>
                         </span>
                         <span class="menu-title">{{ __('sidebar.automation_settings') }}</span>

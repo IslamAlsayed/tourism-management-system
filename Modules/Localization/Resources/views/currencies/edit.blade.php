@@ -3,7 +3,7 @@
 @section('title', __('main.edit_type', ['type' => __('main.currency')]))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-6">
             <!-- Currency Form -->
             <div class="kt-card">
@@ -161,7 +161,7 @@
                     <div class="space-y-3">
                         <div class="flex items-center gap-3">
                             <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-primary"></i>
+                                <i class="fa-duotone fa-solid fa-circle-info text-primary"></i>
                             </div>
                             <div>
                                 <div class="mb-2 font-semibold">{{ __('main.iso_4217_codes') }}</div>
@@ -173,7 +173,7 @@
 
                         <div class="flex items-center gap-3">
                             <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-chart-line text-success"></i>
+                                <i class="fa-duotone fa-solid fa-chart-line text-success"></i>
                             </div>
                             <div>
                                 <div class="mb-2 font-semibold">{{ __('main.exchange_rates') }}</div>
@@ -184,7 +184,7 @@
 
                         <div class="flex items-center gap-3">
                             <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-dollar text-warning"></i>
+                                <i class="fa-duotone fa-solid fa-dollar-sign text-warning"></i>
                             </div>
                             <div>
                                 <div class="mb-2 font-semibold">{{ __('main.formatting_display') }}</div>

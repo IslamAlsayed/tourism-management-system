@@ -3,7 +3,7 @@
 @section('title', 'أسعار صرف العملات')
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -20,7 +20,7 @@
                 <form method="POST" action="{{ route('dashboard.localization.currencies.rates.update') }}" class="inline">
                     @csrf
                     <button type="submit" class="kt-btn kt-btn-primary">
-                        <i class="ki-filled ki-arrows-circle text-sm me-2"></i>
+                        <i class="fa-duotone fa-solid fa-arrows-rotate text-sm me-2"></i>
                         تحديث الأسعار
                     </button>
                 </form>
@@ -28,14 +28,14 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- Exchange Rate Stats -->
             <div class="grid lg:grid-cols-4 gap-5">
                 <div class="kt-card">
                     <div class="kt-card-body text-center">
                         <div class="bg-primary-light rounded-full p-4 mx-auto mb-3 w-fit">
-                            <i class="ki-filled ki-dollar text-2xl text-primary"></i>
+                            <i class="fa-duotone fa-solid fa-dollar-sign text-2xl text-primary"></i>
                         </div>
                         <div class="text-sm text-secondary-foreground">USD/EUR</div>
                         <div class="font-semibold text-lg">0.85</div>
@@ -46,7 +46,7 @@
                 <div class="kt-card">
                     <div class="kt-card-body text-center">
                         <div class="bg-success-light rounded-full p-4 mx-auto mb-3 w-fit">
-                            <i class="ki-filled ki-bill text-2xl text-success"></i>
+                            <i class="fa-duotone fa-solid fa-receipt text-2xl text-success"></i>
                         </div>
                         <div class="text-sm text-secondary-foreground">USD/SAR</div>
                         <div class="font-semibold text-lg">3.75</div>
@@ -57,7 +57,7 @@
                 <div class="kt-card">
                     <div class="kt-card-body text-center">
                         <div class="bg-warning-light rounded-full p-4 mx-auto mb-3 w-fit">
-                            <i class="ki-filled ki-chart-line text-2xl text-warning"></i>
+                            <i class="fa-duotone fa-solid fa-chart-line text-2xl text-warning"></i>
                         </div>
                         <div class="text-sm text-secondary-foreground">EUR/SAR</div>
                         <div class="font-semibold text-lg">4.41</div>
@@ -68,7 +68,7 @@
                 <div class="kt-card">
                     <div class="kt-card-body text-center">
                         <div class="bg-info-light rounded-full p-4 mx-auto mb-3 w-fit">
-                            <i class="ki-filled ki-calendar text-2xl text-info"></i>
+                            <i class="fa-duotone fa-solid fa-calendar text-2xl text-info"></i>
                         </div>
                         <div class="text-sm text-secondary-foreground">آخر تحديث</div>
                         <div class="font-semibold">اليوم</div>

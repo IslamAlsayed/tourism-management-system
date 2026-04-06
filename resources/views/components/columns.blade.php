@@ -2,7 +2,7 @@
 
     @if (isset($view) && $view)
         <button wire:click="toggleView" class="kt-btn kt-btn-icon kt-btn-outline bg-secondary text-white h-[45px] w-[45px] cursor-pointer hover:bg-opacity-80 transition-colors" title="{{ $view == 'grid' ? __('main.list') : __('main.grid') }}">
-            <i class="ki-outline ki-{{ $view == 'grid' ? 'row-horizontal' : 'element-11' }} fs-2"></i>
+            <i class="fa-duotone fa-solid fa-{{ $view == 'grid' ? 'list' : 'grid-2' }} text-base"></i>
         </button>
     @endif
 
@@ -108,7 +108,7 @@
         class="kt-btn kt-btn-sm flex items-center gap-1.5 px-3 h-[38px] border rounded-lg transition-all duration-200"
         :class="$store.colPicker.open ? 'bg-primary text-white border-primary shadow-md' : 'btn-light border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800'"
         title="{{ __('main.columns') }}">
-        <i class="ki-filled ki-screen text-red-500 text-base"></i>
+        <i class="fa-duotone fa-solid fa-desktop text-red-500 text-base"></i>
         <span class="text-sm font-medium hidden sm:inline">{{ __('main.columns') }}</span>
         
         <span x-data
@@ -116,7 +116,7 @@
             :class="$store.colPicker.open ? 'bg-white text-primary' : 'bg-primary text-white'" 
             x-text="$store.colPicker.count || {{ count($pendingColumns ?? []) }}">{{ count($pendingColumns ?? []) }}</span>
             
-        <i class="ki-outline ki-down text-xs ms-0.5 transition-transform duration-200" :class="$store.colPicker.open && 'rotate-180'"></i>
+        <i class="fa-solid fa-chevron-down text-xs ms-0.5 transition-transform duration-200" :class="$store.colPicker.open && 'rotate-180'"></i>
     </button>
 </div>
 

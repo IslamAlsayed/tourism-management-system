@@ -65,7 +65,7 @@
         }
     </style>
     <div id="kt_auth_theme_toggle">
-        <i class="text-base ki-filled ki-moon" id="icon-theme-mode"></i>
+        <i class="text-base fa-duotone fa-solid fa-moon" id="icon-theme-mode"></i>
         <input class="kt-switch" id="switch-theme-mode" type="checkbox" value="1" />
     </div>
 
@@ -97,8 +97,8 @@
 
                 if (switchEl) switchEl.checked = resolved === 'dark';
                 if (iconEl) iconEl.className = resolved === 'dark' ?
-                    'text-base ki-filled ki-moon' :
-                    'text-base ki-filled ki-sun';
+                    'text-base fa-duotone fa-solid fa-moon' :
+                    'text-base fa-duotone fa-solid fa-sun';
 
                 localStorage.setItem('kt-theme', mode);
             };

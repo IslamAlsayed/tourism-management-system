@@ -102,11 +102,11 @@
                             <div class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                 data-kt-toggle-password-trigger="true">
                                 <span class="kt-toggle-password-active:hidden">
-                                    <i class="ki-filled ki-eye text-muted-foreground">
+                                    <i class="fa-duotone fa-solid fa-eye text-muted-foreground">
                                     </i>
                                 </span>
                                 <span class="hidden kt-toggle-password-active:block">
-                                    <i class="ki-filled ki-eye-slash text-muted-foreground">
+                                    <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground">
                                     </i>
                                 </span>
                             </div>
@@ -125,11 +125,11 @@
                             <div class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                 data-kt-toggle-password-trigger="true">
                                 <span class="kt-toggle-password-active:hidden">
-                                    <i class="ki-filled ki-eye text-muted-foreground">
+                                    <i class="fa-duotone fa-solid fa-eye text-muted-foreground">
                                     </i>
                                 </span>
                                 <span class="hidden kt-toggle-password-active:block">
-                                    <i class="ki-filled ki-eye-slash text-muted-foreground">
+                                    <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground">
                                     </i>
                                 </span>
                             </div>

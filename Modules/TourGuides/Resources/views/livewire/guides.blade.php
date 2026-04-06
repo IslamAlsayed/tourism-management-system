@@ -53,7 +53,7 @@
          x-show="showAny"
          x-cloak>
         <div class="flex items-center gap-2 pe-3 border-e border-amber-200 dark:border-amber-700/50">
-            <i class="ki-outline ki-filter text-amber-500 text-xl"></i>
+            <i class="fa-duotone fa-solid fa-filter text-amber-500 text-xl"></i>
             <span class="text-sm font-semibold text-amber-800 dark:text-amber-400">
                 {{ __('main.filters') }}
             </span>

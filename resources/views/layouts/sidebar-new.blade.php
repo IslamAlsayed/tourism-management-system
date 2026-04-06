@@ -15,7 +15,7 @@
         <button class="kt-btn kt-btn-outline kt-btn-icon size-[30px] absolute start-full top-2/4 -translate-x-2/4 -translate-y-2/4 rtl:translate-x-2/4"
             data-kt-toggle="body" data-kt-toggle-class="kt-sidebar-collapse" id="sidebar_toggle">
             <i
-                class="ki-filled ki-black-left-line kt-toggle-active:rotate-180 transition-all duration-300 rtl:translate rtl:rotate-180 rtl:kt-toggle-active:rotate-0">
+                class="fa-duotone fa-solid fa-angles-left kt-toggle-active:rotate-180 transition-all duration-300 rtl:translate rtl:rotate-180 rtl:kt-toggle-active:rotate-0">
             </i>
         </button>
     </div>
@@ -72,10 +72,10 @@
                                     </span>
                                     <span class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px]">
                                         <span class="inline-flex kt-menu-item-show:hidden">
-                                            <i class="ki-filled ki-plus text-[11px]"></i>
+                                            <i class="fa-duotone fa-solid fa-plus text-[11px]"></i>
                                         </span>
                                         <span class="hidden kt-menu-item-show:inline-flex">
-                                            <i class="ki-filled ki-minus text-[11px]"></i>
+                                            <i class="fa-duotone fa-solid fa-minus text-[11px]"></i>
                                         </span>
                                     </span>
                                 </div>
@@ -114,10 +114,10 @@
                                                     </span>
                                                     <span class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px]">
                                                         <span class="inline-flex kt-menu-item-show:hidden">
-                                                            <i class="ki-filled ki-plus text-[11px]"></i>
+                                                            <i class="fa-duotone fa-solid fa-plus text-[11px]"></i>
                                                         </span>
                                                         <span class="hidden kt-menu-item-show:inline-flex">
-                                                            <i class="ki-filled ki-minus text-[11px]"></i>
+                                                            <i class="fa-duotone fa-solid fa-minus text-[11px]"></i>
                                                         </span>
                                                     </span>
                                                 </div>
@@ -188,7 +188,7 @@
                     <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] hover:bg-accent/60 hover:rounded-lg"
                         href="{{ route('dashboard.core.profile.edit') }}" tabindex="0">
                         <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
-                            <i class="ki-filled ki-profile-user text-lg"></i>
+                            <i class="fa-duotone fa-solid fa-id-card text-lg"></i>
                         </span>
                         <span class="kt-menu-title text-sm font-medium text-foreground kt-menu-link-hover:!text-primary">
                             تحديث البروفايل
@@ -204,7 +204,7 @@
                     <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] hover:bg-red-50 hover:rounded-lg text-red-600"
                         href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" tabindex="0">
                         <span class="kt-menu-icon items-start w-[20px]">
-                            <i class="ki-filled ki-entrance-left text-lg"></i>
+                            <i class="fa-duotone fa-solid fa-right-from-bracket text-lg"></i>
                         </span>
                         <span class="kt-menu-title text-sm font-medium">
                             تسجيل الخروج

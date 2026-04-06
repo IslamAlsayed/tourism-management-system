@@ -132,12 +132,11 @@
 
         <div class="flex justify-between mt-8">
             <button type="button" class="kt-btn kt-btn-light" onclick="window.history.back();">
-                <i class="ki-duotone ki-arrow-left me-2"><span class="path1"></span><span class="path2"></span></i>
+                <i class="fa-duotone fa-solid fa-arrow-left me-2"></i>
                 Previous Step
             </button>
             <button type="submit" class="kt-btn kt-btn-primary next-step">
-                Next Step <i class="ki-duotone ki-arrow-right ms-2"><span class="path1"></span><span
-                        class="path2"></span></i>
+                Next Step <i class="fa-duotone fa-solid fa-arrow-right ms-2"></i>
             </button>
         </div>
     </form>

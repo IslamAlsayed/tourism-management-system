@@ -3,7 +3,7 @@
 @section('title', __('main.backup_settings'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -20,7 +20,7 @@
                 <form method="POST" action="{{ route('dashboard.core.settings.backup.create') }}" class="inline">
                     @csrf
                     <button type="submit" class="kt-btn kt-btn-primary">
-                        <i class="text-sm ki-filled ki-cloud-download me-2"></i>
+                        <i class="text-sm fa-duotone fa-solid fa-cloud-arrow-down me-2"></i>
                         {{ __('main.backup_now') }}
                     </button>
                 </form>
@@ -28,14 +28,14 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- Backup Status -->
             <div class="grid gap-5 lg:grid-cols-3">
                 <div class="p-4 kt-card">
                     <div class="text-center kt-card-body">
                         <div class="mx-auto mb-3 rounded-full bg-primary-light w-fit">
-                            <i class="text-2xl ki-filled ki-calendar text-primary"></i>
+                            <i class="text-2xl fa-duotone fa-solid fa-calendar text-primary"></i>
                         </div>
                         <div class="text-sm text-secondary-foreground">{{ __('main.last_backup') }}</div>
                         <div class="font-semibold">{{ $backupInfo['last_backup'] }}</div>
@@ -45,7 +45,7 @@
                 <div class="p-4 kt-card">
                     <div class="text-center kt-card-body">
                         <div class="mx-auto mb-3 rounded-full bg-success-light w-fit">
-                            <i class="text-2xl ki-filled ki-size text-success"></i>
+                            <i class="text-2xl fa-duotone fa-solid fa-expand text-success"></i>
                         </div>
                         <div class="text-sm text-secondary-foreground">{{ __('main.backup_status') }}</div>
                         <div class="font-semibold">{{ $backupInfo['backup_size'] }}</div>
@@ -55,7 +55,7 @@
                 <div class="p-4 kt-card">
                     <div class="text-center kt-card-body">
                         <div class="mx-auto mb-3 rounded-full bg-info-light w-fit">
-                            <i class="text-2xl ki-filled ki-setting-2 text-info"></i>
+                            <i class="text-2xl fa-duotone fa-solid fa-gear text-info"></i>
                         </div>
                         <div class="text-sm text-secondary-foreground">{{ __('main.automatic_backup') }}</div>
                         <div class="font-semibold">
@@ -105,7 +105,7 @@
                         <!-- Submit Buttons -->
                         <div class="flex items-center justify-start gap-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
+                                <i class="fa-duotone fa-solid fa-check text-sm me-2"></i>
                                 {{ __('main.save_type', ['type' => __('main.settings')]) }}
                             </button>
                         </div>
@@ -125,7 +125,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-3">
                                         <div class="rounded-full bg-success-light">
-                                            <i class="ki-filled ki-check-circle text-success"></i>
+                                            <i class="fa-duotone fa-solid fa-check-circle text-success"></i>
                                         </div>
                                         <div>
                                             <div class="font-semibold">{{ __('main.backup_now') }}</div>
@@ -147,7 +147,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-3">
                                         <div class="rounded-full bg-success-light">
-                                            <i class="ki-filled ki-check-circle text-success"></i>
+                                            <i class="fa-duotone fa-solid fa-check-circle text-success"></i>
                                         </div>
                                         <div>
                                             <div class="font-semibold">{{ __('main.automatic_backup') }}</div>
@@ -170,7 +170,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-3">
                                         <div class="rounded-full bg-success-light">
-                                            <i class="ki-filled ki-check-circle text-success"></i>
+                                            <i class="fa-duotone fa-solid fa-check-circle text-success"></i>
                                         </div>
                                         <div>
                                             <div class="font-semibold">{{ __('main.backup_now') }}</div>
@@ -201,7 +201,7 @@
                 <div class="p-4 kt-card-body">
                     <div class="mb-4 rounded bg-warning-light">
                         <div class="flex items-center gap-3">
-                            <i class="text-xl ki-filled ki-information text-warning"></i>
+                            <i class="text-xl fa-duotone fa-solid fa-circle-info text-warning"></i>
                             <div>
                                 <div class="font-semibold">{{ __('main.restore_warning') }}</div>
                                 <div class="text-sm">{{ __('main.proceed_with_caution') }}</div>
@@ -217,7 +217,7 @@
 
                     <div class="pt-4">
                         <button class="kt-btn kt-btn-danger" disabled>
-                            <i class="text-sm ki-filled ki-arrows-circle me-2"></i>
+                            <i class="text-sm fa-duotone fa-solid fa-arrows-rotate me-2"></i>
                             {{ __('main.restore') }}
                         </button>
                     </div>

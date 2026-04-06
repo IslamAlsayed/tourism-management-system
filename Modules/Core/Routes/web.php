@@ -83,6 +83,7 @@ Route::prefix('dashboard/core')->name('dashboard.core.')->middleware('auth')->gr
         Route::get('booking', [SettingController::class, 'booking'])->name('booking');
         Route::get('integration', [SettingController::class, 'integration'])->name('integration');
         Route::get('system', [SettingController::class, 'system'])->name('system');
+        Route::get('ui-icons', fn() => view('core::settings.ui_icons'))->name('ui-icons');
         Route::post('backup/create', [SettingController::class, 'createBackup'])->name('backup.create');
     });
     Route::resource('settings', SettingController::class)->names('settings')->only(['index', 'edit', 'update']);

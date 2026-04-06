@@ -7,11 +7,11 @@
         </h3>
         <div class="kt-card-toolbar">
             <button type="button" class="text-gray-500 hover:text-primary cursor-pointer toggle-all-services">
-                <i class="ki-outline ki-arrow-down fs-2 inline-block"></i>
+                <i class="fa-duotone fa-solid fa-arrow-down fs-2 inline-block"></i>
             </button>
 
             <a href="{{ route('dashboard.tourists.services.create', ['site_id' => $record->id]) }}" class="kt-btn kt-btn-sm kt-btn-primary">
-                <i class="ki-filled ki-plus text-sm me-1"></i>
+                <i class="fa-duotone fa-solid fa-plus text-sm me-1"></i>
                 {{ __('main.add_type', ['type' => __('main.service')]) }}
             </a>
         </div>
@@ -25,7 +25,7 @@
                         <div class="flex justify-between gap-4 p-3">
                             <h4 class="font-semibold text-sm">{{ __('main.pricing') }} <span class="dots hidden">...</span></h4>
                             <button type="button" class="text-gray-500 hover:text-primary cursor-pointer toggle-service">
-                                <i class="ki-outline ki-arrow-down fs-2 inline-block"></i>
+                                <i class="fa-duotone fa-solid fa-arrow-down fs-2 inline-block"></i>
                             </button>
                         </div>
                         <div class="grid lg:grid-cols-4 gap-4 p-4 pt-0 price">
@@ -280,7 +280,7 @@
                 </div>
             @empty
                 <div class="text-center py-8 text-secondary-foreground">
-                    <i class="ki-filled ki-information text-4xl mb-2"></i>
+                    <i class="fa-duotone fa-solid fa-circle-info text-4xl mb-2"></i>
                     <p>{{ __('main.no_data_available') }}</p>
                 </div>
             @endforelse
@@ -301,8 +301,8 @@
                 item.querySelector('.dots').classList.add('hidden');
 
                 const icon = item.querySelector('.toggle-service i');
-                icon.classList.remove('ki-arrow-down');
-                icon.classList.add('ki-arrow-up');
+                icon.classList.remove('fa-arrow-down');
+                icon.classList.add('fa-arrow-up');
             }
 
             function closeService(item) {
@@ -311,8 +311,8 @@
                 item.querySelector('.dots').classList.remove('hidden');
 
                 const icon = item.querySelector('.toggle-service i');
-                icon.classList.remove('ki-arrow-up');
-                icon.classList.add('ki-arrow-down');
+                icon.classList.remove('fa-arrow-up');
+                icon.classList.add('fa-arrow-down');
             }
 
             function isServiceOpen(item) {
@@ -349,11 +349,11 @@
 
                 // أيقونة زر الكل
                 if (shouldOpenAll) {
-                    mainIcon.classList.remove('ki-arrow-down');
-                    mainIcon.classList.add('ki-arrow-up');
+                    mainIcon.classList.remove('fa-arrow-down');
+                    mainIcon.classList.add('fa-arrow-up');
                 } else {
-                    mainIcon.classList.remove('ki-arrow-up');
-                    mainIcon.classList.add('ki-arrow-down');
+                    mainIcon.classList.remove('fa-arrow-up');
+                    mainIcon.classList.add('fa-arrow-down');
                 }
             }
 

@@ -3,7 +3,7 @@
 >
     <div class="kt-card-header min-h-14">
         <h3 class="kt-card-title flex items-center gap-2">
-            <i class="ki-filled ki-time text-muted-foreground text-lg"></i>
+            <i class="fa-duotone fa-solid fa-clock text-muted-foreground text-lg"></i>
             {{ __('main.import_history') ?? 'Import History' }}
             
             @if($hasActiveJobs)
@@ -41,7 +41,7 @@
                              }
                          "
                          class="kt-btn kt-btn-sm kt-btn-destructive-outline group">
-                     <i class="ki-filled ki-trash me-1.5 group-hover:animate-pulse"></i>
+                     <i class="fa-duotone fa-solid fa-trash me-1.5 group-hover:animate-pulse"></i>
                      {{ __('main.clear_history') ?? 'Clear History' }}
                  </button>
             </div>
@@ -55,17 +55,17 @@
                 <!-- Close Button (Fallback if stuck) -->
                 @if(in_array($activeJob->status, ['queued', 'pending_start', 'processing']))
                 <button wire:click="cancelJob({{ $activeJob->id }})" class="absolute top-4 right-4 z-10 text-muted-foreground hover:text-destructive transition-colors">
-                    <i class="ki-filled ki-cross text-xl"></i>
+                    <i class="fa-duotone fa-solid fa-xmark text-xl"></i>
                 </button>
                 @endif
                 <div class="p-8 text-center shadow-sm flex-1 overflow-auto">
                     <div class="w-20 h-20 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-6">
                         @if($activeJob->status === 'pending_start')
-                            <i class="ki-filled ki-rocket text-5xl text-primary"></i>
+                            <i class="fa-duotone fa-solid fa-rocket text-5xl text-primary"></i>
                         @elseif($activeJob->status === 'processing')
-                            <i class="ki-filled ki-cloud-download text-5xl text-primary animate-bounce"></i>
+                            <i class="fa-duotone fa-solid fa-cloud-arrow-down text-5xl text-primary animate-bounce"></i>
                         @else
-                            <i class="ki-filled ki-cloud-download text-5xl text-primary opacity-50"></i>
+                            <i class="fa-duotone fa-solid fa-cloud-arrow-down text-5xl text-primary opacity-50"></i>
                         @endif
                     </div>
                     
@@ -81,7 +81,7 @@
                     @if($activeJob->status === 'pending_start')
                         <div class="flex justify-center gap-4 mt-6">
                             <button wire:click="startJob({{ $activeJob->id }})" class="kt-btn kt-btn-primary px-8">
-                                <i class="ki-filled ki-rocket me-2"></i> {{ __('main.start') ?? 'Start' }}
+                                <i class="fa-duotone fa-solid fa-rocket me-2"></i> {{ __('main.start') ?? 'Start' }}
                             </button>
                             <button wire:click="cancelJob({{ $activeJob->id }})" class="kt-btn kt-btn-outline px-8">
                                 {{ __('main.cancel') ?? 'Cancel' }}
@@ -130,17 +130,17 @@
                             </div>
                             <div class="flex justify-center mt-5 text-sm">
                                 <button wire:click="cancelJob({{ $activeJob->id }})" class="kt-btn kt-btn-sm kt-btn-destructive w-full max-w-[200px] shadow-sm hover:shadow-md transition-all">
-                                    <i class="ki-filled ki-cross-circle me-1.5 text-base"></i> {{ __('main.cancel_import') ?? 'Cancel Import' }}
+                                    <i class="fa-duotone fa-solid fa-xmark-circle me-1.5 text-base"></i> {{ __('main.cancel_import') ?? 'Cancel Import' }}
                                 </button>
                             </div>
                         @else
                             <div class="flex flex-col items-center justify-center gap-3 text-secondary-foreground bg-secondary/30 p-6 rounded-lg mt-4">
-                                <i class="ki-filled ki-loading animate-spin text-3xl text-primary"></i>
+                                <i class="fa-duotone fa-solid fa-spinner animate-spin text-3xl text-primary"></i>
                                 <span class="font-medium text-lg">{{ __('main.queued_waiting') }}</span>
                             </div>
                             <div class="flex justify-center mt-5 text-sm">
                                 <button wire:click="cancelJob({{ $activeJob->id }})" class="kt-btn kt-btn-sm kt-btn-destructive w-full max-w-[200px] shadow-sm hover:shadow-md transition-all">
-                                    <i class="ki-filled ki-cross-circle me-1.5 text-base"></i> {{ __('main.cancel_queued') ?? 'Cancel' }}
+                                    <i class="fa-duotone fa-solid fa-xmark-circle me-1.5 text-base"></i> {{ __('main.cancel_queued') ?? 'Cancel' }}
                                 </button>
                             </div>
                         @endif
@@ -148,7 +148,7 @@
                 </div>
                 <div class="bg-red-600 dark:bg-red-700 p-4 text-center rounded-b-xl shrink-0 shadow-[inset_0_2px_10px_rgba(0,0,0,0.1)]">
                     <p class="text-white text-sm flex items-center justify-center gap-2 font-bold tracking-wide">
-                        <i class="ki-filled ki-information-2 text-xl text-white"></i>
+                        <i class="fa-duotone fa-solid fa-circle-info-2 text-xl text-white"></i>
                         {{ __('main.do_not_refresh_warning') }}
                     </p>
                 </div>
@@ -185,12 +185,12 @@
                             <td>
                                 @if ($item->source === 'google_drive')
                                     <span class="kt-badge kt-badge-primary gap-1">
-                                        <i class="ki-filled ki-cloud text-xs"></i>
+                                        <i class="fa-duotone fa-solid fa-cloud text-xs"></i>
                                         Google Drive
                                     </span>
                                 @else
                                     <span class="kt-badge kt-badge-secondary gap-1">
-                                        <i class="ki-filled ki-file text-xs"></i>
+                                        <i class="fa-duotone fa-solid fa-file text-xs"></i>
                                         {{ __('main.file_upload') ?? 'File Upload' }}
                                     </span>
                                 @endif
@@ -201,23 +201,23 @@
                             <td>
                                 @if ($item->status === 'completed')
                                     <span class="kt-badge kt-badge-success">
-                                        <i class="ki-filled ki-check-circle me-1 text-xs"></i>
+                                        <i class="fa-duotone fa-solid fa-check-circle me-1 text-xs"></i>
                                         {{ __('main.completed') ?? 'Completed' }}
                                     </span>
                                 @elseif ($item->status === 'failed')
                                     <span class="kt-badge kt-badge-destructive"
                                         title="{{ $item->error_message }}">
-                                        <i class="ki-filled ki-cross-circle me-1 text-xs"></i>
+                                        <i class="fa-duotone fa-solid fa-xmark-circle me-1 text-xs"></i>
                                         {{ __('main.failed') ?? 'Failed' }}
                                     </span>
                                 @elseif ($item->status === 'processing')
                                     <span class="kt-badge kt-badge-warning animate-pulse">
-                                        <i class="ki-filled ki-time me-1 text-xs"></i>
+                                        <i class="fa-duotone fa-solid fa-clock me-1 text-xs"></i>
                                         {{ __('main.processing') ?? 'Processing' }}
                                     </span>
                                 @elseif ($item->status === 'queued')
                                     <span class="kt-badge kt-badge-info">
-                                        <i class="ki-filled ki-information me-1 text-xs"></i>
+                                        <i class="fa-duotone fa-solid fa-circle-info me-1 text-xs"></i>
                                         {{ __('main.queued') ?? 'Queued' }}
                                     </span>
                                 @else
@@ -231,7 +231,7 @@
                                         {{ Str::limit($item->error_message, 40) }}
                                     </span>
                                 @elseif($item->status === 'completed')
-                                    <span class="text-xs text-success"><i class="ki-filled ki-verify"></i></span>
+                                    <span class="text-xs text-success"><i class="fa-duotone fa-solid fa-badge-check"></i></span>
                                 @else
                                     <span class="text-xs text-muted-foreground"><span class="animate-ping max-w-1 max-h-1 bg-current rounded-full inline-block"></span></span>
                                 @endif
@@ -245,7 +245,7 @@
     @else
     <div class="kt-card-body pb-6 flex flex-col items-center justify-center text-center">
         <div class="bg-secondary/30 rounded-full h-16 w-16 flex items-center justify-center mb-3">
-            <i class="ki-filled ki-data text-2xl text-muted-foreground"></i>
+            <i class="fa-duotone fa-solid fa-database text-2xl text-muted-foreground"></i>
         </div>
         <p class="text-muted-foreground text-sm">{{ __('main.no_history_records') ?? 'No import history found.' }}</p>
     </div>

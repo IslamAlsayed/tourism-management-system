@@ -6,7 +6,7 @@
             <div class="flex items-center justify-between gap-2.5 px-5 py-3.5 text-sm font-semibold text-mono">
                 Chat
                 <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-dim shrink-0" data-kt-drawer-dismiss="true">
-                    <i class="ki-filled ki-cross"></i>
+                    <i class="fa-duotone fa-solid fa-xmark"></i>
                 </button>
             </div>
             <div class="border-b border-b-border">
@@ -54,7 +54,7 @@
                                 data-kt-menu-item-placement="bottom-end" data-kt-menu-item-placement-rtl="bottom-start"
                                 data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click|lg:hover">
                                 <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                    <i class="ki-filled ki-dots-vertical text-lg">
+                                    <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                     </i>
                                 </button>
                                 <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]"
@@ -62,7 +62,7 @@
                                     <div class="kt-menu-item">
                                         <a class="kt-menu-link" href="#">
                                             <span class="kt-menu-icon">
-                                                <i class="ki-filled ki-users">
+                                                <i class="fa-duotone fa-solid fa-users">
                                                 </i>
                                             </span>
                                             <span class="kt-menu-title">
@@ -75,14 +75,14 @@
                                         data-kt-menu-item-trigger="click|lg:hover">
                                         <div class="kt-menu-link">
                                             <span class="kt-menu-icon">
-                                                <i class="ki-filled ki-people">
+                                                <i class="fa-duotone fa-solid fa-users">
                                                 </i>
                                             </span>
                                             <span class="kt-menu-title">
                                                 Team
                                             </span>
                                             <span class="kt-menu-arrow">
-                                                <i class="ki-filled ki-right text-xs rtl:rotate-180 rtl:transform">
+                                                <i class="fa-solid fa-chevron-right text-xs rtl:rotate-180 rtl:transform">
                                                 </i>
                                             </span>
                                         </div>
@@ -90,7 +90,7 @@
                                             <div class="kt-menu-item">
                                                 <a class="kt-menu-link" href="#">
                                                     <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-shield-search">
+                                                        <i class="fa-duotone fa-solid fa-shield-halved">
                                                         </i>
                                                     </span>
                                                     <span class="kt-menu-title">
@@ -101,7 +101,7 @@
                                             <div class="kt-menu-item">
                                                 <a class="kt-menu-link" href="#">
                                                     <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-calendar">
+                                                        <i class="fa-duotone fa-solid fa-calendar">
                                                         </i>
                                                     </span>
                                                     <span class="kt-menu-title">
@@ -112,7 +112,7 @@
                                             <div class="kt-menu-item">
                                                 <a class="kt-menu-link" href="#">
                                                     <span class="kt-menu-icon">
-                                                        <i class="ki-filled ki-filter-edit">
+                                                        <i class="fa-duotone fa-solid fa-filter">
                                                         </i>
                                                     </span>
                                                     <span class="kt-menu-title">
@@ -125,7 +125,7 @@
                                     <div class="kt-menu-item">
                                         <a class="kt-menu-link" href="#">
                                             <span class="kt-menu-icon">
-                                                <i class="ki-filled ki-setting-3">
+                                                <i class="fa-duotone fa-solid fa-gear-3">
                                                 </i>
                                             </span>
                                             <span class="kt-menu-title">
@@ -167,7 +167,7 @@
                             <span class="text-xs font-medium text-secondary-foreground">
                                 14:08
                             </span>
-                            <i class="ki-filled ki-double-check absolute text-lg text-green-500">
+                            <i class="fa-duotone fa-solid fa-check-double absolute text-lg text-green-500">
                             </i>
                         </div>
                     </div>
@@ -221,7 +221,7 @@
                             <span class="text-xs font-medium text-secondary-foreground">
                                 15:52
                             </span>
-                            <i class="ki-filled ki-double-check absolute text-lg text-muted-foreground">
+                            <i class="fa-duotone fa-solid fa-check-double absolute text-lg text-muted-foreground">
                             </i>
                         </div>
                     </div>
@@ -249,7 +249,7 @@
                             <span class="text-xs font-medium text-secondary-foreground">
                                 15:52
                             </span>
-                            <i class="ki-filled ki-double-check absolute text-lg text-muted-foreground">
+                            <i class="fa-duotone fa-solid fa-check-double absolute text-lg text-muted-foreground">
                             </i>
                         </div>
                     </div>
@@ -328,7 +328,7 @@
                     type="text" value="" />
                 <div class="absolute end-3 top-1/2 flex -translate-y-1/2 items-center gap-2.5">
                     <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                        <i class="ki-filled ki-exit-up">
+                        <i class="fa-duotone fa-solid fa-arrow-up-from-bracket">
                         </i>
                     </button>
                     <a class="kt-btn kt-btn-mono kt-btn-sm" href="#">

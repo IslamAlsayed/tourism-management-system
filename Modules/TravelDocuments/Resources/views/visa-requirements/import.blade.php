@@ -7,7 +7,7 @@
             <div>
                 <h1 class="text-xl font-bold text-gray-900 flex items-center gap-3">
                     <span class="size-10 rounded-lg bg-white border border-gray-200 text-primary flex items-center justify-center shadow-sm">
-                        <i class="ki-filled ki-folder-add text-xl"></i>
+                        <i class="fa-duotone fa-solid fa-folder-plus text-xl"></i>
                     </span>
                     {{ __('main.visa_data_manager') }}
                 </h1>
@@ -15,11 +15,11 @@
             <div class="flex gap-2">
                 <a href="{{ route('export.data', ['models' => 'visa-requirements']) }}"
                     class="px-3 py-2 rounded-lg border border-gray-200 text-xs font-bold hover:bg-gray-50 bg-white transition-colors flex items-center gap-2">
-                    <i class="ki-filled ki-file-up"></i> {{ __('main.export') }}
+                    <i class="fa-duotone fa-solid fa-file-arrow-up"></i> {{ __('main.export') }}
                 </a>
                 <a href="{{ route('dashboard.traveldocuments.visa-requirements.index') }}"
                     class="px-3 py-2 rounded-lg bg-gray-100 text-gray-700 text-xs font-bold hover:bg-gray-200 transition-colors flex items-center gap-2">
-                    <i class="ki-filled ki-arrow-left"></i> {{ __('main.back') }}
+                    <i class="fa-duotone fa-solid fa-arrow-left"></i> {{ __('main.back') }}
                 </a>
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="kt-card bg-white border border-gray-200 rounded-xl shadow-sm mb-8 overflow-hidden">
             <div class="bg-gray-50/50 px-6 py-4 border-b border-gray-100 flex items-center gap-3">
                 <span class="size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center ring-4 ring-white">
-                    <i class="ki-filled ki-pencil text-sm"></i>
+                    <i class="fa-duotone fa-solid fa-pen text-sm"></i>
                 </span>
                 <div>
                     <h2 class="text-sm font-bold text-gray-900">Quick Manual Entry</h2>
@@ -145,7 +145,7 @@
                         <div class="flex items-end">
                             <button type="submit"
                                 class="w-full h-10 bg-gray-900 hover:bg-black text-white rounded-lg text-xs font-bold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 border border-black">
-                                <i class="ki-filled ki-plus-square text-sm"></i>
+                                <i class="fa-duotone fa-solid fa-plus-square text-sm"></i>
                                 {{ __('main.save') }}
                             </button>
                         </div>
@@ -180,7 +180,7 @@
                     </div>
                     <button type="button" onclick="downloadTemplate()"
                         class="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded border border-dashed border-blue-300 text-blue-600 text-[10px] font-bold hover:bg-blue-50 transition-all">
-                        <i class="ki-filled ki-file-down"></i>
+                        <i class="fa-duotone fa-solid fa-file-arrow-down"></i>
                         <span>Download CSV</span>
                     </button>
                 </div>
@@ -208,7 +208,7 @@
                         <label
                             class="flex flex-col items-center justify-center w-full h-16 border border-dashed border-gray-300 rounded cursor-pointer hover:bg-gray-50 hover:border-primary transition-all group bg-gray-50/50">
                             <div class="flex items-center gap-2">
-                                <i class="ki-filled ki-cloud-add text-lg text-gray-400 group-hover:text-primary transition-colors"></i>
+                                <i class="fa-duotone fa-solid fa-cloud-arrow-up text-lg text-gray-400 group-hover:text-primary transition-colors"></i>
                                 <span
                                     class="text-[10px] text-gray-600 font-medium group-hover:text-primary transition-colors">{{ __('main.drop_files_here') }}</span>
                             </div>
@@ -216,7 +216,7 @@
                         </label>
                         <div id="file_name_container"
                             class="mt-1 hidden text-[10px] flex items-center gap-1 text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
-                            <i class="ki-filled ki-file"></i> <span id="file_name_display" class="truncate"></span>
+                            <i class="fa-duotone fa-solid fa-file"></i> <span id="file_name_display" class="truncate"></span>
                         </div>
                     </div>
 
@@ -264,7 +264,7 @@
                     <button type="submit"
                         class="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded bg-blue-600 text-white text-[10px] font-bold hover:bg-blue-700 transition-all shadow-sm border border-transparent">
                         {{ __('main.import_now') }}
-                        <i class="ki-filled ki-send"></i>
+                        <i class="fa-duotone fa-solid fa-paper-plane"></i>
                     </button>
                 </div>
             </div>
@@ -273,7 +273,7 @@
             <div class="kt-card shadow-sm border border-gray-200 bg-white rounded-lg overflow-hidden">
                 <div class="px-3 py-2 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                     <h3 class="text-xs font-bold text-gray-800 flex items-center gap-1.5">
-                        <i class="ki-filled ki-brifecase-timer text-gray-400"></i>
+                        <i class="fa-duotone fa-solid fa-briefcase-clock text-gray-400"></i>
                         Fields & Structure (name fields supported)
                     </h3>
                 </div>

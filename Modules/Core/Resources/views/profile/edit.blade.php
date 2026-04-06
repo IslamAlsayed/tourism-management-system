@@ -38,11 +38,11 @@
     @endpush
 
     <!-- Header -->
-    <div class="kt-container-fixed mb-10">
+    <div class="container-fixed mb-10">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex flex-col gap-2">
                 <h1 class="text-2xl font-bold text-foreground">
-                    <i class="ki-filled ki-user-edit text-primary fs-2 me-2"></i>
+                    <i class="fa-duotone fa-solid fa-user-edit text-primary fs-2 me-2"></i>
                     {{ __('main.edit_profile') }}
                 </h1>
                 <p class="text-secondary-foreground text-sm font-medium">
@@ -61,7 +61,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <form action="{{ route('dashboard.core.profile.update') }}" method="POST" id="profile-edit-form"
             class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             @csrf
@@ -82,7 +82,7 @@
                             </div>
                             <label for="photo-input"
                                 class="absolute -bottom-2 -right-2 size-10 bg-primary text-white rounded-xl shadow-lg flex items-center justify-center cursor-pointer hover:bg-primary-emphasis transition-colors">
-                                <i class="ki-filled ki-camera fs-4"></i>
+                                <i class="fa-duotone fa-solid fa-camera fs-4"></i>
                             </label>
                         </div>
                         <input type="file" id="photo-input" name="photo" class="hidden" accept="image/*">
@@ -97,7 +97,7 @@
                 <div class="kt-card bg-muted/10 border-dashed border-2">
                     <div class="kt-card-body p-6 flex items-center gap-4">
                         <div class="size-10 bg-success/20 rounded-xl flex items-center justify-center shrink-0">
-                            <i class="ki-filled ki-verify text-success fs-4"></i>
+                            <i class="fa-duotone fa-solid fa-badge-check text-success fs-4"></i>
                         </div>
                         <div>
                             <div class="text-sm font-bold text-foreground">Verified User</div>

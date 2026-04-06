@@ -21,7 +21,7 @@
 
 @section('content')
     <!-- Container -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -41,7 +41,7 @@
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- begin: grid -->
             <div class="grid lg:grid-cols-3 gap-y-5 lg:gap-7.5 items-stretch">
@@ -51,7 +51,7 @@
                             class="kt-card flex-col justify-between gap-6 h-full bg-cover rtl:bg-[left_top_-1.7rem] bg-[right_top_-1.7rem] bg-no-repeat channel-stats-bg">
                             <div class="flex flex-col gap-1 p-4">
                                 <span class="font-semibold text-mono">
-                                    <i class="ki-filled ki-users text-2xl text-primary"></i>
+                                    <i class="fa-duotone fa-solid fa-users text-2xl text-primary"></i>
                                     <span class="text-2xl">{{ number_format($stats['users']) }}</span>
                                 </span>
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
@@ -68,7 +68,7 @@
                             class="kt-card flex-col justify-between gap-6 h-full bg-cover rtl:bg-[left_top_-1.7rem] bg-[right_top_-1.7rem] bg-no-repeat channel-stats-bg">
                             <div class="flex flex-col gap-1 p-4">
                                 <span class="font-semibold text-mono">
-                                    <i class="ki-filled ki-geolocation text-2xl text-green-500"></i>
+                                    <i class="fa-duotone fa-solid fa-location-dot text-2xl text-green-500"></i>
                                     <span class="text-2xl">{{ number_format($stats['countries']) }}</span>
                                 </span>
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
@@ -85,7 +85,7 @@
                             class="kt-card flex-col justify-between gap-6 h-full bg-cover rtl:bg-[left_top_-1.7rem] bg-[right_top_-1.7rem] bg-no-repeat channel-stats-bg">
                             <div class="flex flex-col gap-1 p-4">
                                 <span class="font-semibold text-mono">
-                                    <i class="ki-filled ki-map text-2xl text-blue-500"></i>
+                                    <i class="fa-duotone fa-solid fa-map-location-dot text-2xl text-blue-500"></i>
                                     <span class="text-2xl">{{ number_format($stats['cities']) }}</span>
                                 </span>
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
@@ -102,7 +102,7 @@
                             class="kt-card flex-col justify-between gap-6 h-full bg-cover rtl:bg-[left_top_-1.7rem] bg-[right_top_-1.7rem] bg-no-repeat channel-stats-bg">
                             <div class="flex flex-col gap-1 p-4">
                                 <span class="font-semibold text-mono">
-                                    <i class="ki-filled ki-dollar text-2xl text-yellow-500"></i>
+                                    <i class="fa-duotone fa-solid fa-dollar-sign text-2xl text-yellow-500"></i>
                                     <span class="text-2xl">{{ number_format($stats['currencies']) }}</span>
                                 </span>
                                 <span class="text-sm mb-2 font-normal text-secondary-foreground">
@@ -172,7 +172,7 @@
                     <div class="kt-card-header border-0 pt-6">
                         <div class="kt-card-title">
                             <h3 class="flex items-center gap-2">
-                                <i class="ki-filled ki-whatsapp text-success fs-2"></i>
+                                <i class="fa-duotone fa-solid fa-comment-dots text-success fs-2"></i>
                                 WhatsApp Connectivity
                             </h3>
                         </div>
@@ -203,7 +203,7 @@
                     <div class="kt-card-header border-0 pt-6">
                         <div class="kt-card-title">
                             <h3 class="flex items-center gap-2">
-                                <i class="ki-filled ki-sms text-info fs-2"></i>
+                                <i class="fa-duotone fa-solid fa-envelope text-info fs-2"></i>
                                 Email Services
                             </h3>
                         </div>
@@ -244,14 +244,14 @@
                                     data-kt-menu-item-placement="bottom-start" data-kt-menu-item-toggle="dropdown"
                                     data-kt-menu-item-trigger="click">
                                     <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                                        <i class="ki-filled ki-dots-vertical text-lg"></i>
+                                        <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg"></i>
                                     </button>
                                     <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]"
                                         data-kt-menu-dismiss="true">
                                         <div class="kt-menu-item">
                                             <a class="kt-menu-link" href="{{ route('dashboard.core.users.index') }}">
                                                 <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-users"></i>
+                                                    <i class="fa-duotone fa-solid fa-users"></i>
                                                 </span>
                                                 <span class="kt-menu-title">{{ __('main.users') }}</span>
                                             </a>
@@ -260,7 +260,7 @@
                                             <a class="kt-menu-link"
                                                 href="{{ route('dashboard.geography.countries.index') }}">
                                                 <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-geolocation"></i>
+                                                    <i class="fa-duotone fa-solid fa-location-dot"></i>
                                                 </span>
                                                 <span class="kt-menu-title">{{ __('main.countries') }}</span>
                                             </a>
@@ -269,7 +269,7 @@
                                             <a class="kt-menu-link"
                                                 href="{{ route('dashboard.geography.cities.index') }}">
                                                 <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-map"></i>
+                                                    <i class="fa-duotone fa-solid fa-map-location-dot"></i>
                                                 </span>
                                                 <span class="kt-menu-title">{{ __('main.cities') }}</span>
                                             </a>
@@ -278,7 +278,7 @@
                                             <a class="kt-menu-link"
                                                 href="{{ route('dashboard.localization.currencies.index') }}">
                                                 <span class="kt-menu-icon">
-                                                    <i class="ki-filled ki-dollar"></i>
+                                                    <i class="fa-duotone fa-solid fa-dollar-sign"></i>
                                                 </span>
                                                 <span class="kt-menu-title">{{ __('main.all_currencies') }}</span>
                                             </a>
@@ -329,7 +329,7 @@
                             <div class="grid gap-3">
                                 <div class="flex items-center justify-between flex-wrap gap-2">
                                     <div class="flex items-center gap-1.5">
-                                        <i class="ki-filled ki-users text-base text-muted-foreground"></i>
+                                        <i class="fa-duotone fa-solid fa-users text-base text-muted-foreground"></i>
                                         <span class="text-sm font-normal text-mono">{{ __('main.users') }}</span>
                                     </div>
                                     <div class="flex items-center text-sm font-medium text-foreground gap-6">
@@ -340,7 +340,7 @@
                                 </div>
                                 <div class="flex items-center justify-between flex-wrap gap-2">
                                     <div class="flex items-center gap-1.5">
-                                        <i class="ki-filled ki-geolocation text-base text-muted-foreground"></i>
+                                        <i class="fa-duotone fa-solid fa-location-dot text-base text-muted-foreground"></i>
                                         <span class="text-sm font-normal text-mono">{{ __('main.countries') }}</span>
                                     </div>
                                     <div class="flex items-center text-sm font-medium text-foreground gap-6">
@@ -351,7 +351,7 @@
                                 </div>
                                 <div class="flex items-center justify-between flex-wrap gap-2">
                                     <div class="flex items-center gap-1.5">
-                                        <i class="ki-filled ki-map text-base text-muted-foreground"></i>
+                                        <i class="fa-duotone fa-solid fa-map-location-dot text-base text-muted-foreground"></i>
                                         <span class="text-sm font-normal text-mono">{{ __('main.cities') }}</span>
                                     </div>
                                     <div class="flex items-center text-sm font-medium text-foreground gap-6">
@@ -362,7 +362,7 @@
                                 </div>
                                 <div class="flex items-center justify-between flex-wrap gap-2">
                                     <div class="flex items-center gap-1.5">
-                                        <i class="ki-filled ki-dollar text-base text-muted-foreground"></i>
+                                        <i class="fa-duotone fa-solid fa-dollar-sign text-base text-muted-foreground"></i>
                                         <span class="text-sm font-normal text-mono">{{ __('main.currencies') }}</span>
                                     </div>
                                     <div class="flex items-center text-sm font-medium text-foreground gap-6">
@@ -383,7 +383,7 @@
                             </h3>
                             <div class="flex items-center gap-2">
                                 <button class="kt-btn kt-btn-primary kt-btn-sm" id="confetti_random_direction_btn" type="button" onclick="randomConfetti()">
-                                    <i class="ki-filled ki-star text-base"></i> Random Confetti
+                                    <i class="fa-duotone fa-solid fa-star text-base"></i> Random Confetti
                                 </button>
                                 <div class="flex gap-5 p-2 rounded-xs bg-yellow-100">
                                     <label class="flex items-center gap-2 disabled">
@@ -398,7 +398,7 @@
                                 <div class="kt-card kt-card-outline hover:bg-accent/60 p-5">
                                     <div class="flex flex-col items-center gap-3">
                                         <div class="flex items-center justify-center size-12 rounded-full bg-success/10">
-                                            <i class="ki-filled ki-users text-xl text-success"></i>
+                                            <i class="fa-duotone fa-solid fa-users text-xl text-success"></i>
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
@@ -414,7 +414,7 @@
                                 <div class="kt-card kt-card-outline hover:bg-accent/60 p-5">
                                     <div class="flex flex-col items-center gap-3">
                                         <div class="flex items-center justify-center size-12 rounded-full bg-primary/10">
-                                            <i class="ki-filled ki-geolocation text-xl text-primary"></i>
+                                            <i class="fa-duotone fa-solid fa-location-dot text-xl text-primary"></i>
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
@@ -430,7 +430,7 @@
                                 <div class="kt-card kt-card-outline hover:bg-accent/60 p-5">
                                     <div class="flex flex-col items-center gap-3">
                                         <div class="flex items-center justify-center size-12 rounded-full bg-primary/10">
-                                            <i class="ki-filled ki-map text-xl text-info"></i>
+                                            <i class="fa-duotone fa-solid fa-map-location-dot text-xl text-info"></i>
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">
@@ -446,7 +446,7 @@
                                 <div class="kt-card kt-card-outline hover:bg-accent/60 p-5">
                                     <div class="flex flex-col items-center gap-3">
                                         <div class="flex items-center justify-center size-12 rounded-full bg-yellow/10">
-                                            <i class="ki-filled ki-dollar text-xl text-warning"></i>
+                                            <i class="fa-duotone fa-solid fa-dollar-sign text-xl text-warning"></i>
                                         </div>
                                         <div class="text-center">
                                             <div class="text-sm mb-2 font-semibold text-mono text-primary">

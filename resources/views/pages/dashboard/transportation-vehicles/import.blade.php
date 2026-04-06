@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         {{ __('main.export') }}
         </a>
     </div>

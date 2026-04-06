@@ -7,7 +7,7 @@
 
         <div class="flex flex-wrap gap-2 lg:gap-5">
             <div class="flex items-center gap-2 text-red-500 no_results_found hidden">
-                <i class="ki-filled ki-information-2 text-lg"></i>
+                <i class="fa-duotone fa-solid fa-circle-info-2 text-lg"></i>
                 <p>{{ __('messages.no_results_found') }}</p>
             </div>
             <div class="flex items-center">

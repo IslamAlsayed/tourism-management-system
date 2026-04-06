@@ -3,7 +3,7 @@
 @section('title', __('main.system_settings'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- Settings Menu -->
             <div class="grid lg:grid-cols-2 xl:grid-cols-4 gap-5">
@@ -24,7 +24,7 @@
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-body text-center p-4">
                         <div class="bg-primary-light rounded-full mx-auto mb-4 w-fit">
-                            <i class="ki-filled ki-setting-2 text-3xl text-primary"></i>
+                            <i class="fa-duotone fa-solid fa-gear text-3xl text-primary"></i>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">{{ __('main.general_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
@@ -40,7 +40,7 @@
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-body text-center p-4">
                         <div class="bg-success-light rounded-full mx-auto mb-4 w-fit">
-                            <i class="ki-filled ki-shield-tick text-3xl text-success"></i>
+                            <i class="fa-duotone fa-solid fa-shield-check text-3xl text-success"></i>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">{{ __('main.security_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
@@ -56,7 +56,7 @@
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-body text-center p-4">
                         <div class="bg-warning-light rounded-full mx-auto mb-4 w-fit">
-                            <i class="ki-filled ki-notification-bing text-3xl text-warning"></i>
+                            <i class="fa-duotone fa-solid fa-bell-bing text-3xl text-warning"></i>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">{{ __('main.notification_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
@@ -72,7 +72,7 @@
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-body text-center p-4">
                         <div class="bg-info-light rounded-full mx-auto mb-4 w-fit">
-                            <i class="ki-filled ki-cloud-download text-3xl text-info"></i>
+                            <i class="fa-duotone fa-solid fa-cloud-arrow-down text-3xl text-info"></i>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">{{ __('main.backup_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
@@ -88,7 +88,7 @@
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-body text-center p-4">
                         <div class="bg-primary-light rounded-full mx-auto mb-4 w-fit">
-                            <i class="ki-filled ki-calendar text-3xl text-primary"></i>
+                            <i class="fa-duotone fa-solid fa-calendar text-3xl text-primary"></i>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">{{ __('main.booking_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
@@ -104,7 +104,7 @@
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-body text-center p-4">
                         <div class="bg-success-light rounded-full mx-auto mb-4 w-fit">
-                            <i class="ki-filled ki-share text-3xl text-success"></i>
+                            <i class="fa-duotone fa-solid fa-share-nodes text-3xl text-success"></i>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">{{ __('main.integration_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
@@ -120,7 +120,7 @@
                 <div class="kt-card hover:shadow-lg transition-shadow">
                     <div class="kt-card-body text-center p-4">
                         <div class="bg-warning-light rounded-full mx-auto mb-4 w-fit">
-                            <i class="ki-filled ki-gear text-3xl text-warning"></i>
+                            <i class="fa-duotone fa-solid fa-gear text-3xl text-warning"></i>
                         </div>
                         <h3 class="text-lg font-semibold mb-2">{{ __('main.system_settings') }}</h3>
                         <p class="text-sm text-secondary-foreground mb-4">
@@ -141,15 +141,15 @@
                 <div class="kt-card-body">
                     <div class="grid lg:grid-cols-3 gap-4 p-4">
                         <button class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                            <i class="ki-filled ki-arrows-circle text-sm me-2"></i>
+                            <i class="fa-duotone fa-solid fa-arrows-rotate text-sm me-2"></i>
                             {{ __('main.clear_cache') }}
                         </button>
                         <button class="kt-btn kt-btn-outline kt-btn-outline-success">
-                            <i class="ki-filled ki-check-circle text-sm me-2"></i>
+                            <i class="fa-duotone fa-solid fa-check-circle text-sm me-2"></i>
                             {{ __('main.system_check') }}
                         </button>
                         <button class="kt-btn kt-btn-outline kt-btn-outline-warning">
-                            <i class="ki-filled ki-file-up text-sm me-2"></i>
+                            <i class="fa-duotone fa-solid fa-file-arrow-up text-sm me-2"></i>
                             {{ __('main.update_system') }}
                         </button>
                     </div>

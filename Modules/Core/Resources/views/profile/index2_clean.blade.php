@@ -15,7 +15,7 @@
     </style>
     <div class="bg-center bg-cover bg-no-repeat hero-bg">
         <!-- Container -->
-        <div class="kt-container-fixed">
+        <div class="container-fixed">
             <div class="flex flex-col items-center gap-2 lg:gap-3.5 py-4 lg:pt-5 lg:pb-10">
                 <img class="rounded-full border-3 border-green-500 size-[100px] shrink-0" src="{{ asset('metronic/media/avatars/300-1.png') }}">
                 <div class="flex items-center gap-1.5">
@@ -31,21 +31,21 @@
                 </div>
                 <div class="flex flex-wrap justify-center gap-1 lg:gap-4.5 text-sm">
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-abstract-41 text-muted-foreground text-sm">
+                        <i class="fa-duotone fa-solid fa-diagram-project text-muted-foreground text-sm">
                         </i>
                         <span class="text-secondary-foreground font-medium">
                             KeenThemes
                         </span>
                     </div>
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-geolocation text-muted-foreground text-sm">
+                        <i class="fa-duotone fa-solid fa-location-dot text-muted-foreground text-sm">
                         </i>
                         <span class="text-secondary-foreground font-medium">
                             SF, Bay Area
                         </span>
                     </div>
                     <div class="flex gap-1.25 items-center">
-                        <i class="ki-filled ki-sms text-muted-foreground text-sm">
+                        <i class="fa-duotone fa-solid fa-envelope text-muted-foreground text-sm">
                         </i>
                         <a class="text-secondary-foreground font-medium hover:text-primary" href="mailto:{{ $user->email ?? 'jenny@kteam.com' }}">
                             {{ $user->email ?? 'jenny@kteam.com' }}
@@ -58,7 +58,7 @@
         <!-- End of Container -->
     </div>
     <!-- Container -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex items-center flex-wrap md:flex-nowrap lg:items-end justify-between border-b border-b-border gap-3 lg:gap-6 mb-5 lg:mb-10">
             <div class="grid">
                 <div class="kt-scrollable-x-auto">
@@ -100,38 +100,38 @@
             </div>
             <div class="flex items-center justify-end grow lg:grow-0 lg:pb-4 gap-2.5 mb-3 lg:mb-0">
                 <a href="{{ route('dashboard.core.profile.edit') }}" class="kt-btn kt-btn-primary">
-                    <i class="ki-filled ki-users">
+                    <i class="fa-duotone fa-solid fa-users">
                     </i>
                     Edit Profile
                 </a>
                 <button class="kt-btn kt-btn-icon kt-btn-outline">
-                    <i class="ki-filled ki-messages">
+                    <i class="fa-duotone fa-solid fa-comments">
                     </i>
                 </button>
                 <div data-kt-dropdown="true" data-kt-dropdown-placement="bottom-end" data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click">
                     <button class="kt-dropdown-toggle kt-btn kt-btn-icon kt-btn-outline" data-kt-dropdown-toggle="true">
-                        <i class="ki-filled ki-dots-vertical">
+                        <i class="fa-duotone fa-solid fa-ellipsis-vertical">
                         </i>
                     </button>
                     <div class="kt-dropdown-menu w-full max-w-[220px]" data-kt-dropdown-menu="true">
                         <ul class="kt-dropdown-menu-sub">
                             <li>
                                 <button class="kt-dropdown-menu-link" data-kt-dropdown-dismiss="true">
-                                    <i class="ki-filled ki-coffee">
+                                    <i class="fa-duotone fa-solid fa-mug-hot">
                                     </i>
                                     Share Profile
                                 </button>
                             </li>
                             <li>
                                 <button class="kt-dropdown-menu-link" data-kt-dropdown-dismiss="true">
-                                    <i class="ki-filled ki-award">
+                                    <i class="fa-duotone fa-solid fa-trophy">
                                     </i>
                                     Give Award
                                 </button>
                             </li>
                             <li>
                                 <div class="kt-dropdown-menu-link">
-                                    <i class="ki-filled ki-coffee">
+                                    <i class="fa-duotone fa-solid fa-mug-hot">
                                     </i>
                                     Stay Updated
                                     <input class="ms-auto kt-switch kt-switch-sm" name="check" type="checkbox" value="1" />
@@ -145,7 +145,7 @@
     </div>
     <!-- End of Container -->
     <!-- Container -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <!-- begin: grid -->
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
             <div class="col-span-1">
@@ -171,7 +171,7 @@
                                         </path>
                                     </svg>
                                     <div class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                        <i class="ki-filled ki-abstract-39 text-xl ps-px text-primary">
+                                        <i class="fa-duotone fa-solid fa-cube text-xl ps-px text-primary">
                                         </i>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
                                         </path>
                                     </svg>
                                     <div class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                        <i class="ki-filled ki-abstract-44 text-xl ps-px text-yellow-600">
+                                        <i class="fa-duotone fa-solid fa-star text-xl ps-px text-yellow-600">
                                         </i>
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@
                                         </path>
                                     </svg>
                                     <div class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                        <i class="ki-filled ki-abstract-25 text-xl ps-px text-green-600">
+                                        <i class="fa-duotone fa-solid fa-shield-check text-xl ps-px text-green-600">
                                         </i>
                                     </div>
                                 </div>
@@ -222,7 +222,7 @@
                                         </path>
                                     </svg>
                                     <div class="absolute leading-none start-2/4 top-2/4 -translate-y-2/4 -translate-x-2/4 rtl:translate-x-2/4">
-                                        <i class="ki-filled ki-delivery-24 text-xl ps-px text-violet-600">
+                                        <i class="fa-duotone fa-solid fa-truck-24 text-xl ps-px text-violet-600">
                                         </i>
                                     </div>
                                 </div>

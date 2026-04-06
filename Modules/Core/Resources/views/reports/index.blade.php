@@ -3,7 +3,7 @@
 @section('title', __('main.reports_dashboard'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -15,14 +15,14 @@
             </div>
             <div class="flex items-center gap-2.5">
                 <button class="kt-btn kt-btn-primary" onclick="window.print()">
-                    <i class="ki-filled ki-printer text-sm"></i>
+                    <i class="fa-duotone fa-solid fa-print text-sm"></i>
                     {{ __('main.print_report') }}
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- Statistics Overview -->
             <div class="grid lg:grid-cols-4 gap-4 lg:gap-6">
@@ -39,7 +39,7 @@
                                 </span>
                             </div>
                             <div class="bg-primary-light rounded-full p-3">
-                                <i class="ki-filled ki-users text-2xl text-primary"></i>
+                                <i class="fa-duotone fa-solid fa-users text-2xl text-primary"></i>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                                 </span>
                             </div>
                             <div class="bg-success-light rounded-full p-3">
-                                <i class="ki-filled ki-check-circle text-2xl text-success"></i>
+                                <i class="fa-duotone fa-solid fa-check-circle text-2xl text-success"></i>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                                 </span>
                             </div>
                             <div class="bg-info-light rounded-full p-3">
-                                <i class="ki-filled ki-geolocation text-2xl text-info"></i>
+                                <i class="fa-duotone fa-solid fa-location-dot text-2xl text-info"></i>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                                 </span>
                             </div>
                             <div class="bg-warning-light rounded-full p-3">
-                                <i class="ki-filled ki-home-2 text-2xl text-warning"></i>
+                                <i class="fa-duotone fa-solid fa-house-2 text-2xl text-warning"></i>
                             </div>
                         </div>
                     </div>

@@ -4,10 +4,10 @@
 
 @section('content')
     <!-- Header -->
-    <div class="kt-container-fixed mb-10">
+    <div class="container-fixed mb-10">
         <div class="flex flex-col gap-2">
             <h1 class="text-2xl font-bold text-foreground">
-                <i class="ki-filled ki-notification-on text-primary fs-2 me-2"></i>
+                <i class="fa-duotone fa-solid fa-bell-on text-primary fs-2 me-2"></i>
                 {{ __('main.notifications_settings') }}
             </h1>
             <p class="text-secondary-foreground text-sm font-medium">
@@ -17,7 +17,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid grid-cols-1 gap-8">
 
             <!-- Notifications Card -->
@@ -139,7 +139,7 @@
                 <div class="kt-card-body p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
                     <div class="flex items-center gap-4">
                         <div class="size-12 bg-warning/20 rounded-2xl flex items-center justify-center shrink-0">
-                            <i class="ki-filled ki-moon text-warning fs-2"></i>
+                            <i class="fa-duotone fa-solid fa-moon text-warning fs-2"></i>
                         </div>
                         <div>
                             <h4 class="text-lg font-bold text-warning-emphasis">Do Not Disturb Mode</h4>

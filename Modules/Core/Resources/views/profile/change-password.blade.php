@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Container -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -24,7 +24,7 @@
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <!-- begin: grid -->
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
             <!-- Profile Information Column -->
@@ -47,7 +47,7 @@
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="hidden kt-toggle-password-active:block">
-                                            <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
+                                            <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground"></i>
                                         </span>
                                     </button>
                                 </div>
@@ -63,10 +63,10 @@
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="kt-toggle-password-active:hidden">
-                                            <i class="ki-filled ki-eye text-muted-foreground"></i>
+                                            <i class="fa-duotone fa-solid fa-eye text-muted-foreground"></i>
                                         </span>
                                         <span class="hidden kt-toggle-password-active:block">
-                                            <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
+                                            <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground"></i>
                                         </span>
                                     </button>
                                 </div>
@@ -84,10 +84,10 @@
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="kt-toggle-password-active:hidden">
-                                            <i class="ki-filled ki-eye text-muted-foreground"></i>
+                                            <i class="fa-duotone fa-solid fa-eye text-muted-foreground"></i>
                                         </span>
                                         <span class="hidden kt-toggle-password-active:block">
-                                            <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
+                                            <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground"></i>
                                         </span>
                                     </button>
                                 </div>
@@ -117,12 +117,12 @@
 
             if (input.type === "password") {
                 input.type = "text";
-                icon.classList.remove("ki-eye");
-                icon.classList.add("ki-eye-slash");
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
             } else {
                 input.type = "password";
-                icon.classList.remove("ki-eye-slash");
-                icon.classList.add("ki-eye");
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
             }
         }
     </script>

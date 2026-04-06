@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
     <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
         [
             'condition' => \Modules\Transportation\Entities\Company::count() > 0,

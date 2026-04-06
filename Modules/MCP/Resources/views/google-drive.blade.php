@@ -3,14 +3,14 @@
 @section('title', __('main.mcp'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="kt-card">
             <div class="kt-card-header">
                 <h3 class="kt-card-title">{{ __('main.mcp') }} - Google Drive</h3>
             </div>
             <div class="kt-card-body p-10 text-center">
                 <div class="mb-5">
-                    <i class="ki-outline ki-folder text-success fs-4x"></i>
+                    <i class="fa-duotone fa-solid fa-folder text-success fs-4x"></i>
                 </div>
                 <h2 class="fs-2x fw-bolder mb-2">Google Drive Integration</h2>
                 <p class="text-gray-400 fs-4 fw-bold mb-10">

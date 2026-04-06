@@ -1,0 +1,11 @@
+{
+    "name": "Definitions",
+    "alias": "definitions",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Definitions\\Providers\\DefinitionsServiceProvider"
+    ],
+    "files": []
+}

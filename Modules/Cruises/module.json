@@ -1,0 +1,11 @@
+{
+    "name": "Cruises",
+    "alias": "cruises",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Cruises\\Providers\\CruisesServiceProvider"
+    ],
+    "files": []
+}

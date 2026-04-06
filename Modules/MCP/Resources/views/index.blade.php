@@ -3,7 +3,7 @@
 @section('title', __('main.mcp'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="kt-card">
             <div class="kt-card-header border-0 pt-6">
                 <div class="kt-card-title">
@@ -20,7 +20,7 @@
                     <a href="{{ route('dashboard.mcp.google-maps') }}" class="kt-card shadow-sm hover:shadow-md transition-all p-8 flex items-center gap-4">
                         <div class="symbol symbol-50px">
                             <div class="symbol-label bg-light-primary">
-                                <i class="ki-outline ki-map text-primary fs-2"></i>
+                                <i class="fa-duotone fa-solid fa-map-location-dot text-primary fs-2"></i>
                             </div>
                         </div>
                         <div>
@@ -33,7 +33,7 @@
                     <a href="{{ route('dashboard.mcp.google-drive') }}" class="kt-card shadow-sm hover:shadow-md transition-all p-8 flex items-center gap-4">
                         <div class="symbol symbol-50px">
                             <div class="symbol-label bg-light-success">
-                                <i class="ki-outline ki-folder text-success fs-2"></i>
+                                <i class="fa-duotone fa-solid fa-folder text-success fs-2"></i>
                             </div>
                         </div>
                         <div>

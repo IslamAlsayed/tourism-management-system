@@ -32,15 +32,15 @@
                         <span class="kt-menu-title text-nowrap">
                             Shortcuts
                             <!-- icon arrow down drop menu -->
-                            <i class="ki-filled ki-down fs-5 ms-1 mt-1"></i>
+                            <i class="fa-solid fa-chevron-down fs-5 ms-1 mt-1"></i>
                         </span>
                         <span class="kt-menu-arrow flex lg:hidden">
                             <span class="kt-menu-item-show:hidden text-muted-foreground">
-                                <i class="ki-filled ki-plus text-xs">
+                                <i class="fa-duotone fa-solid fa-plus text-xs">
                                 </i>
                             </span>
                             <span class="kt-menu-item-show:inline-flex hidden">
-                                <i class="ki-filled ki-minus text-xs">
+                                <i class="fa-duotone fa-solid fa-minus text-xs">
                                 </i>
                             </span>
                         </span>

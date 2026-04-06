@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
 
         {{-- Page Header --}}
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
@@ -11,7 +11,7 @@
             </div>
             <div>
                 <a href="{{ route('media-files.index') }}" class="kt-btn kt-btn-outline">
-                    <i class="ki-filled ki-left"></i>
+                    <i class="fa-solid fa-chevron-left"></i>
                     {{ __('main.back') }}
                 </a>
             </div>
@@ -32,7 +32,7 @@
                                 class="max-w-md mx-auto rounded-lg shadow-lg">
                         @else
                             <div class="inline-flex items-center justify-center w-32 h-32 bg-gray-100 rounded-lg">
-                                <i class="ki-filled ki-file text-5xl text-gray-400"></i>
+                                <i class="fa-duotone fa-solid fa-file text-5xl text-gray-400"></i>
                             </div>
                         @endif
                         <div class="mt-4 text-sm text-gray-600">
@@ -160,7 +160,7 @@
                         </label>
                         <div class="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer"
                             id="drop-zone" onclick="document.getElementById('replace_file').click()">
-                            <i class="ki-filled ki-cloud-change text-4xl text-gray-400"></i>
+                            <i class="fa-duotone fa-solid fa-cloud-arrow-up text-4xl text-gray-400"></i>
                             <p class="text-gray-600 mt-2">{{ __('main.click_to_upload_or_drag_and_drop') }}</p>
                             <p class="text-sm text-gray-500 mt-1">{{ __('main.leave_empty_to_keep_current_file') }}</p>
                             <input type="file" name="replace_file" id="replace_file" class="hidden"
@@ -225,7 +225,7 @@
                     const iconDiv = document.createElement('div');
                     iconDiv.className = 'w-24 h-24 flex items-center justify-center bg-gray-100 rounded';
                     const icon = document.createElement('i');
-                    icon.className = 'ki-filled ki-file text-4xl text-gray-400';
+                    icon.className = 'fa-duotone fa-solid fa-file text-4xl text-gray-400';
                     iconDiv.appendChild(icon);
                     fileDiv.appendChild(iconDiv);
                 }

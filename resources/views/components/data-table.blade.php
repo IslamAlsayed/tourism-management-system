@@ -79,12 +79,12 @@
                                 <div wire:click="sortBy('{{ $column }}')" class="flex items-center">
                                     @if (isset($sortColumn) && $sortColumn == $column)
                                         @if (isset($sortDirection) && $sortDirection == 'asc')
-                                            <i class="ki-outline ki-arrow-up text-primary ms-1 text-xs"></i>
+                                            <i class="fa-duotone fa-solid fa-arrow-up text-primary ms-1 text-xs"></i>
                                         @else
-                                            <i class="ki-outline ki-arrow-down text-primary ms-1 text-xs"></i>
+                                            <i class="fa-duotone fa-solid fa-arrow-down text-primary ms-1 text-xs"></i>
                                         @endif
                                     @else
-                                        <i class="ki-outline ki-arrow-up-down text-gray-400 ms-1 opacity-0 group-hover:opacity-100 transition-opacity text-xs"></i>
+                                        <i class="fa-duotone fa-solid fa-arrow-up-down text-gray-400 ms-1 opacity-0 group-hover:opacity-100 transition-opacity text-xs"></i>
                                     @endif
                                 </div>
 
@@ -112,7 +112,7 @@
                                         @click.prevent.stop="open ? close() : toggle($el)"
                                         class="text-gray-400 hover:text-primary {{ !empty($searchColumns[$column] ?? null) ? '!text-primary' : '' }} cursor-pointer"
                                         title="{{ __('main.filter_by') }} {{ __('main.' . $column) }}">
-                                        <i class="ki-outline ki-filter text-sm"></i>
+                                        <i class="fa-duotone fa-solid fa-filter text-sm"></i>
                                     </button>
 
                                 <template x-teleport="body">
@@ -131,7 +131,7 @@
                                         {{ __('main.search_in') }} {{ __('main.' . $column) }}
                                     </label>
                                     <div class="relative flex items-center gap-2 bg-gray-50 dark:bg-gray-900 rounded-lg px-3 py-2 border border-indigo-200 dark:border-indigo-700/50 focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 overflow-hidden">
-                                        <i class="ki-outline ki-magnifier text-gray-400 text-sm flex-shrink-0"></i>
+                                        <i class="fa-duotone fa-solid fa-magnifying-glass text-gray-400 text-sm flex-shrink-0"></i>
                                         <input type="text"
                                             value="{{ $searchColumns[$column] ?? '' }}"
                                             @input.debounce.500ms="
@@ -153,7 +153,7 @@
                                                     $el.closest('.relative').querySelector('input').value = '';
                                                     close()
                                                 ">
-                                                <i class="ki-outline ki-cross text-gray-400 group-hover:text-red-500 text-sm transition-colors"></i>
+                                                <i class="fa-duotone fa-solid fa-xmark text-gray-400 group-hover:text-red-500 text-sm transition-colors"></i>
                                             </div>
                                         @endif
                                     </div>
@@ -197,7 +197,7 @@
                             ])
                         </template>
                     @endforeach
-                    {{-- Actions Column --}}
+                    {{-- Actions Column — KTUI 3-Dot Dropdown --}}
                     <td class="px-4 py-2 text-end"
                         x-data
                         x-show="!$store.filtersVisibility || 
@@ -206,52 +206,18 @@
                                $store.filtersVisibility.filters['delete'] !== false || 
                                $store.filtersVisibility.filters['force_delete'] !== false"
                         x-transition x-cloak>
-                        <div class="flex gap-2 justify-end">
-                            @if (isset($models))
-                                @if (Auth::check())
-                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['show'] !== false" x-transition x-cloak>
-                                        @include('components.elements.show-button', ['models' => $models, 'id' => $item->id])
-                                    </div>
-                                @endif
-
-                                @if ($models != 'notifications' && Auth::check())
-                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['edit'] !== false" x-transition x-cloak>
-                                        @include('components.elements.edit-button', ['models' => $models, 'id' => $item->id])
-                                    </div>
-                                @endif
-
-                                @if ($models == 'notifications' && $item->data && isset($item->data['cta_url']))
-                                    <a href="{{ $item->data['cta_url'] }}" class="btn btn-sm btn-primary" target="_blank">
-                                        {{ $item->data['cta_text'] ?? __('main.view_action') }}
-                                    </a>
-                                @endif
-
-                                @if (Auth::check())
-                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['delete'] !== false" x-transition x-cloak>
-                                        @include('components.elements.delete-button', ['id' => $item->id])
-                                    </div>
-                                @endif
-
-                                @if (Auth::check())
-                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['force_delete'] !== false" x-transition x-cloak>
-                                        @include('components.elements.forceDelete-button', ['id' => $item->id])
-                                    </div>
-                                @endif
-                            @else
-                                {{-- Fallback if no models route provided --}}
-                                @if (Auth::check())
-                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['show'] !== false" x-transition x-cloak>
-                                        @include('components.elements.show-button', ['id' => $item->id])
-                                    </div>
-                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['edit'] !== false" x-transition x-cloak>
-                                        @include('components.elements.edit-button', ['id' => $item->id])
-                                    </div>
-                                    <div x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['delete'] !== false" x-transition x-cloak>
-                                        @include('components.elements.delete-button', ['id' => $item->id])
-                                    </div>
-                                @endif
-                            @endif
-                        </div>
+                        @if (Auth::check() && isset($models))
+                            @include('components.elements.action-dropdown', [
+                                'id' => $item->id,
+                                'models' => $models,
+                                'item' => $item,
+                            ])
+                        @elseif (Auth::check())
+                            @include('components.elements.action-dropdown', [
+                                'id' => $item->id,
+                                'item' => $item,
+                            ])
+                        @endif
                     </td>
                 </tr>
             @empty
@@ -272,4 +238,50 @@
     document.addEventListener('livewire:initialized', () => {
         Livewire.on('refresh-page', () => setTimeout(() => location.reload(), 0));
     });
+
+    // Event Delegation: Handle delete & forceDelete from action dropdown menus
+    (function() {
+        const tableBody = document.getElementById('data_table_tbody');
+        if (!tableBody) return;
+
+        tableBody.addEventListener('click', function(e) {
+            const trigger = e.target.closest('.action-delete-trigger');
+            if (!trigger) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            const action = trigger.getAttribute('data-action');
+            const recordId = trigger.getAttribute('data-record-id');
+            if (!recordId) return;
+
+            const isForce = (action === 'forceDelete');
+
+            Swal.fire({
+                title: isForce
+                    ? '⚠️ {{ addslashes(__("messages.are_you_sure")) }}'
+                    : '{{ addslashes(__("messages.are_you_sure")) }}',
+                html: isForce
+                    ? '<p style="color:#dc2626;font-weight:600;">{{ addslashes(__("messages.are_you_sure_force_delete")) }}</p><p style="color:#6b7280;font-size:0.85rem;margin-top:6px;">{{ addslashes(__("messages.force_delete_warning")) }}</p>'
+                    : '{{ addslashes(__("messages.are_you_sure_delete")) }}',
+                icon: isForce ? 'error' : 'warning',
+                showCancelButton: true,
+                confirmButtonColor: isForce ? '#7f1d1d' : '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: isForce
+                    ? '<i class="fa-duotone fa-solid fa-trash-square me-1"></i> {{ addslashes(__("main.force_delete")) }}'
+                    : '<i class="fa-duotone fa-solid fa-trash me-1"></i> {{ addslashes(__("main.delete")) }}',
+                cancelButtonText: '{{ addslashes(__("main.cancel")) }}',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const comp = trigger.closest('[wire\\:id]');
+                    if (comp) {
+                        const lwMethod = isForce ? 'forceDelete' : 'destroy';
+                        window.Livewire.find(comp.getAttribute('wire:id')).call(lwMethod, recordId);
+                    }
+                }
+            });
+        });
+    })();
 </script>

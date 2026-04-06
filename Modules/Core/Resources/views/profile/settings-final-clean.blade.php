@@ -13,11 +13,11 @@
                 <h2 class="text-white fw-bold mb-2">{{ $user->name }}</h2>
                 <div class="d-flex justify-content-center flex-wrap gap-3 text-white-50">
                     <div class="d-flex align-items-center">
-                        <i class="ki-filled ki-abstract-41 me-2"></i>
+                        <i class="fa-duotone fa-solid fa-diagram-project me-2"></i>
                         <span>{{ $user->department ?? 'KeenThemes' }}</span>
                     </div>
                     <div class="d-flex align-items-center">
-                        <i class="ki-filled ki-sms me-2"></i>
+                        <i class="fa-duotone fa-solid fa-envelope me-2"></i>
                         <a class="text-white text-decoration-none" href="mailto:{{ $user->email }}">
                             {{ $user->email }}
                         </a>
@@ -45,22 +45,22 @@
                         <div class="nav nav-pills flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <button class="nav-link active rounded-0 border-0 text-start" id="v-pills-overview-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-pills-overview" type="button" role="tab">
-                                <i class="ki-filled ki-profile-circle me-3"></i>
+                                <i class="fa-duotone fa-solid fa-user-circle me-3"></i>
                                 {{ __('main.overview') }}
                             </button>
                             <button class="nav-link rounded-0 border-0 text-start" id="v-pills-personal-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-pills-personal" type="button" role="tab">
-                                <i class="ki-filled ki-badge me-3"></i>
+                                <i class="fa-duotone fa-solid fa-id-badge me-3"></i>
                                 {{ __('main.personal_info') }}
                             </button>
                             <button class="nav-link rounded-0 border-0 text-start" id="v-pills-security-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-pills-security" type="button" role="tab">
-                                <i class="ki-filled ki-shield-tick me-3"></i>
+                                <i class="fa-duotone fa-solid fa-shield-check me-3"></i>
                                 {{ __('main.security') }}
                             </button>
                             <button class="nav-link rounded-0 border-0 text-start" id="v-pills-notifications-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-pills-notifications" type="button" role="tab">
-                                <i class="ki-filled ki-notification-status me-3"></i>
+                                <i class="fa-duotone fa-solid fa-bell-status me-3"></i>
                                 {{ __('main.notifications') }}
                             </button>
                         </div>
@@ -145,15 +145,15 @@
                                     <div class="card-body">
                                         <div class="d-grid gap-2">
                                             <button type="button" class="btn btn-primary btn-sm">
-                                                <i class="ki-filled ki-profile-user me-2"></i>
+                                                <i class="fa-duotone fa-solid fa-id-card me-2"></i>
                                                 {{ __('main.edit_profile') }}
                                             </button>
                                             <button type="button" class="btn btn-warning btn-sm">
-                                                <i class="ki-filled ki-key me-2"></i>
+                                                <i class="fa-duotone fa-solid fa-key me-2"></i>
                                                 {{ __('main.change_password') }}
                                             </button>
                                             <button type="button" class="btn btn-info btn-sm">
-                                                <i class="ki-filled ki-notification-bing me-2"></i>
+                                                <i class="fa-duotone fa-solid fa-bell-bing me-2"></i>
                                                 {{ __('main.notification_settings') }}
                                             </button>
                                         </div>
@@ -278,19 +278,19 @@
             <h5 class="mb-4">🔗 {{ __('main.navigation_links') }}</h5>
             <div class="d-flex flex-wrap justify-content-center gap-2">
                 <a href="{{ route('dashboard.core.profile.edit') }}" class="btn btn-outline-primary">
-                    <i class="ki-filled ki-arrow-left me-2"></i>{{ __('main.old_page') }}
+                    <i class="fa-duotone fa-solid fa-arrow-left me-2"></i>{{ __('main.old_page') }}
                 </a>
                 <a href="{{ route('dashboard.core.profile.settings.test') }}" class="btn btn-outline-warning">
-                    <i class="ki-filled ki-design-1 me-2"></i>{{ __('main.first_test') }}
+                    <i class="fa-duotone fa-solid fa-palette-1 me-2"></i>{{ __('main.first_test') }}
                 </a>
                 <a href="{{ route('dashboard.core.profile.settings.new') }}" class="btn btn-outline-info">
-                    <i class="ki-filled ki-design me-2"></i>{{ __('main.second_test') }}
+                    <i class="fa-duotone fa-solid fa-palette me-2"></i>{{ __('main.second_test') }}
                 </a>
                 <a href="{{ route('dashboard.core.profile.settings.final') }}" class="btn btn-primary">
-                    <i class="ki-filled ki-design me-2"></i>{{ __('main.final_professional_page') }} ⭐
+                    <i class="fa-duotone fa-solid fa-palette me-2"></i>{{ __('main.final_professional_page') }} ⭐
                 </a>
                 <a href="{{ route('dashboard.core.user.profile') }}" class="btn btn-outline-success">
-                    <i class="ki-filled ki-profile-user me-2"></i>{{ __('main.main_profile') }}
+                    <i class="fa-duotone fa-solid fa-id-card me-2"></i>{{ __('main.main_profile') }}
                 </a>
             </div>
         </div>

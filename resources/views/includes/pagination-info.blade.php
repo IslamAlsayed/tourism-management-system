@@ -52,7 +52,7 @@
                         id="search-container">
                         <div class="relative flex-grow flex items-center bg-transparent">
                             <div class="ps-3 text-gray-500 dark:text-gray-400 pointer-events-none">
-                                <i class="ki-outline ki-magnifier text-md"></i>
+                                <i class="fa-duotone fa-solid fa-magnifying-glass text-md"></i>
                             </div>
                             <input type="text" wire:model.live="search" id="search" @keydown.enter.prevent=""
                                 class="w-full bg-transparent border-0 text-sm px-2 py-2.5 outline-none focus:outline-none focus:ring-0 focus:border-transparent shadow-none text-gray-800 dark:text-white dark:placeholder-gray-400 min-w-0"
@@ -61,7 +61,7 @@
                             @if (isset($search) && $search !== '')
                                 <div class="absolute end-1 top-1/2 -translate-y-1/2 flex items-center justify-center p-2 bg-transparent cursor-pointer group hover:text-red-500 transition-colors z-[10]"
                                     wire:click="$set('search', '')" title="{{ __('main.clear_search') }}">
-                                    <i class="ki-outline ki-cross text-xs font-bold text-gray-500 dark:text-gray-400"></i>
+                                    <i class="fa-duotone fa-solid fa-xmark text-xs font-bold text-gray-500 dark:text-gray-400"></i>
                                 </div>
                             @endif
                             <div class="search-load absolute end-8 top-1/2 -translate-y-1/2 pointer-events-none"
@@ -72,7 +72,7 @@
                         </div>
                         <button type="button"
                             class="bg-primary flex items-center justify-center text-white px-3 hover:bg-blue-700 transition-colors shrink-0 border-0 outline-none ring-0">
-                            <i class="ki-outline ki-magnifier text-md"></i>
+                            <i class="fa-duotone fa-solid fa-magnifying-glass text-md"></i>
                         </button>
                     </div>
                 </div>
@@ -315,7 +315,7 @@
                 {{-- Header --}}
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-2">
-                        <i class="ki-filled ki-setting-2 text-primary text-sm"></i>
+                        <i class="fa-duotone fa-solid fa-gear text-primary text-sm"></i>
                         <span
                             class="text-sm font-semibold text-gray-800 dark:text-gray-200">{{ __('main.manage_columns') }}</span>
                         <span class="kt-badge kt-badge-xs kt-badge-outline kt-badge-primary rounded-full bg-blue-50"
@@ -332,13 +332,13 @@
                                 'bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'"
                             class="px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all duration-200 flex items-center gap-2 border border-gray-200 dark:border-gray-700">
                             @if ($k === 'all')
-                                <i class="ki-filled ki-element-11 text-sm"></i>
+                                <i class="fa-duotone fa-solid fa-grid-2 text-sm"></i>
                             @elseif($k === 'type_1')
-                                <i class="ki-outline ki-filter text-sm"></i>
+                                <i class="fa-duotone fa-solid fa-filter text-sm"></i>
                             @elseif($k === 'type_2')
-                                <i class="ki-outline ki-element-4 text-sm"></i>
+                                <i class="fa-duotone fa-solid fa-table-cells text-sm"></i>
                             @elseif($k === 'actions')
-                                <i class="ki-outline ki-setting-2 text-sm"></i>
+                                <i class="fa-duotone fa-solid fa-gear-2 text-sm"></i>
                             @endif
                             <span>{{ $getTab($k) }}</span>
                             <span
@@ -419,20 +419,20 @@
                             <button type="button" wire:click="saveAsSystemDefault" wire:loading.attr="disabled"
                                 title="حفظ هذه الأعمدة كإعدادات افتراضية لجميع مستخدمي النظام"
                                 class="kt-btn kt-btn-sm bg-amber-100 dark:bg-amber-900/30 text-amber-600 hover:bg-amber-200 dark:hover:bg-amber-800/50  px-4 py-2 font-bold shadow-sm">
-                                <i class="ki-outline ki-save-2 text-md"></i>
+                                <i class="fa-duotone fa-solid fa-floppy-disk-2 text-md"></i>
                                 {{ __('main.save_as_system_default') ?? 'Set as System Default' }}
                             </button>
                         @endif
 
                         <button type="button" wire:loading.attr="disabled" @click="selectAll()"
                             class="kt-btn kt-btn-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 font-bold shadow-sm">
-                            <i class="ki-outline ki-element-equal text-md"></i>
+                            <i class="fa-duotone fa-solid fa-equals text-md"></i>
                             {{ __('main.all_columns') }}
                         </button>
 
                         <button type="button" wire:loading.attr="disabled" @click="clearAll()"
                             class="kt-btn kt-btn-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 font-bold shadow-sm">
-                            <i class="ki-outline ki-eraser text-md"></i>
+                            <i class="fa-duotone fa-solid fa-eraser text-md"></i>
                             {{ __('main.clear_all') ?? 'تفريغ الكل' }}
                         </button>
 
@@ -441,7 +441,7 @@
                                 title="{{ __('main.reset_to_default_desc') ?? 'يعيد الحقول إلى الإعدادات الافتراضية الخاصة بالنظام' }}"
                                 class="kt-btn kt-btn-sm bg-red-100 dark:bg-red-900/30 text-red-600 hover:bg-red-200 dark:hover:bg-red-800/50 px-4 py-2 font-bold shadow-sm">
                                 <span wire:loading.remove wire:target="resetColumns" class="flex items-center gap-2">
-                                    <i class="ki-outline ki-arrows-circle text-md"></i>
+                                    <i class="fa-duotone fa-solid fa-arrows-rotate text-md"></i>
                                     {{ __('main.reset_to_default') }}
                                 </span>
                                 <span wire:loading wire:target="resetColumns"><i
@@ -458,7 +458,7 @@
                         <button type="button" wire:click="applyColumns" wire:loading.attr="disabled"
                             class="kt-btn kt-btn-sm kt-btn-primary px-8 py-2 font-bold shadow-lg active:scale-95 transition-all">
                             <span wire:loading.remove wire:target="applyColumns" class="flex items-center gap-2">
-                                <i class="ki-outline ki-check text-md"></i> {{ __('main.apply') }}
+                                <i class="fa-duotone fa-solid fa-check text-md"></i> {{ __('main.apply') }}
                             </span>
                             <span wire:loading wire:target="applyColumns"><i
                                     class="fas fa-spinner fa-spin text-sm"></i></span>

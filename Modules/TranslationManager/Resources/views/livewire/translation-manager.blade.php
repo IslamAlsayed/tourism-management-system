@@ -1,5 +1,5 @@
 <div>
-<div class="px-5 py-5 pt-7 w-full min-w-0 overflow-x-hidden sm:overflow-visible text-gray-900 dark:text-gray-100" x-data>
+<div class="py-5 pt-7 w-full min-w-0 overflow-x-hidden sm:overflow-visible text-gray-900 dark:text-gray-100" x-data>
     <style>
         .dropdown-item-hover {
             transition: background-color 0.2s, color 0.2s;
@@ -152,7 +152,7 @@
                         class="kt-btn kt-btn-sm kt-btn-light kt-btn-info font-bold flex items-center gap-2">
                         <i class="fas fa-file-export text-xl"></i>
                         <span>{{ __('Export') }}</span>
-                        <i class="ki-outline ki-down text-xs"></i>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
                     </button>
                     <div x-show="exportOpen" x-transition x-cloak
                         class="absolute start-0 mt-2 z-50 w-52 py-2 tm-dropdown dark:!bg-[#7f7f7f] rounded-lg"
@@ -474,14 +474,19 @@
 </div>
 @endif
 
-<!-- Language Progress Overview -->
-<div class="kt-card shadow-sm mb-5 w-full min-w-0 overflow-hidden relative">
-    <div class="kt-card-header py-5 px-6">
-        <h3 class="kt-card-title font-bold text-lg">
+<!-- Language Progress Overview (Collapsible) -->
+<div class="kt-card shadow-sm mb-5 w-full min-w-0 overflow-hidden relative" x-data="{ progressOpen: false }">
+    <div class="kt-card-header py-5 px-6 cursor-pointer flex justify-between items-center" @click="progressOpen = !progressOpen">
+        <h3 class="kt-card-title font-bold text-lg m-0 flex items-center">
             <i class="fas fa-chart-pie text-primary me-2"></i> {{ __('Translation Progress') }}
+            <span class="kt-badge kt-badge-light kt-badge-sm ms-3 text-xs font-bold">{{ count($localeStats) }} {{ __('main.languages') }}</span>
         </h3>
+        <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-gray-500" x-text="progressOpen ? '{{ __('Click to collapse') }}' : '{{ __('Click to expand') }}'"></span>
+            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300" :class="progressOpen ? 'rotate-180' : ''"></i>
+        </div>
     </div>
-    <div class="kt-card-body p-6 w-full min-w-0">
+    <div class="kt-card-body p-6 w-full min-w-0" x-show="progressOpen" x-collapse x-cloak>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
             @foreach ($localeStats as $code => $stat)
                 <div class="w-full min-w-0">
@@ -611,7 +616,7 @@
                     @endphp
                     <span class="truncate font-bold" style="color: var(--bs-heading-color);"><i
                             class="fas fa-file-code me-2 text-primary opacity-50"></i> {{ $selectedFileLabel }}</span>
-                    <i class="ki-outline ki-down transition-transform duration-200"
+                    <i class="fa-solid fa-chevron-down transition-transform duration-200"
                         :class="fileOpen ? 'rotate-180' : ''" style="color: var(--bs-text-muted);"></i>
                 </button>
 
@@ -662,7 +667,7 @@
                             style="color: var(--bs-heading-color);">{{ $availableLocales[$selectedLocale] ?? strtoupper($selectedLocale) }}
                             ({{ strtoupper($selectedLocale) }})</span>
                     </div>
-                    <i class="ki-outline ki-down transition-transform duration-200"
+                    <i class="fa-solid fa-chevron-down transition-transform duration-200"
                         :class="langOpen ? 'rotate-180' : ''" style="color: var(--bs-text-muted);"></i>
                 </button>
 
@@ -695,27 +700,34 @@
         </div>
     </div>
 
-    <div class="flex items-center gap-3 flex-wrap w-full lg:w-auto">
-        <button wire:click="$set('filterMode', 'all')"
-            class="kt-btn kt-btn-lg font-bold flex items-center justify-center gap-2 transition-all shadow-sm {{ $filterMode === 'all' ? 'kt-btn-primary' : 'kt-btn-light' }}">
-            <i class="fas fa-list text-xl"></i><span>{{ __('All') }}</span><span
-                class="ms-1 text-normal font-normal opacity-75">({{ $stats['total'] ?? 0 }})</span>
-        </button>
+</div>
+</div>
 
-        <button wire:click="$set('filterMode', 'missing')"
-            class="kt-btn kt-btn-lg font-bold flex items-center justify-center gap-2 transition-all shadow-sm {{ $filterMode === 'missing' ? 'kt-btn-danger' : 'kt-btn-light' }}">
-            <i class="fas fa-exclamation-triangle text-xl"></i><span>{{ __('Missing') }}</span><span
-                class="ms-1 text-normal font-normal opacity-75">({{ $stats['missing'] ?? 0 }})</span>
-        </button>
+<!-- Table Card (Unified Border) -->
+<div class="kt-card kt-card-grid min-w-full">
 
-        <button wire:click="$set('filterMode', 'translated')"
-            class="kt-btn kt-btn-lg font-bold flex items-center justify-center gap-2 transition-all shadow-sm {{ $filterMode === 'translated' ? 'kt-btn-success' : 'kt-btn-light' }}">
-            <i class="fas fa-check-circle text-xl"></i><span>{{ __('Done') }}</span><span
-                class="ms-1 text-normal font-normal opacity-75">({{ $stats['translated'] ?? 0 }})</span>
-        </button>
+    {{-- Filter Buttons --}}
+    <div class="kt-card-header border-b border-gray-200 dark:border-gray-800 pt-5 pb-5 px-6 w-full min-w-0">
+        <div class="flex items-center gap-3 flex-wrap w-full">
+            <button wire:click="$set('filterMode', 'all')"
+                class="kt-btn kt-btn-lg font-bold flex items-center justify-center gap-2 transition-all shadow-sm {{ $filterMode === 'all' ? 'kt-btn-primary' : 'kt-btn-light' }}">
+                <i class="fas fa-list text-xl"></i><span>{{ __('All') }}</span><span
+                    class="ms-1 text-normal font-normal opacity-75">({{ $stats['total'] ?? 0 }})</span>
+            </button>
+
+            <button wire:click="$set('filterMode', 'missing')"
+                class="kt-btn kt-btn-lg font-bold flex items-center justify-center gap-2 transition-all shadow-sm {{ $filterMode === 'missing' ? 'kt-btn-danger' : 'kt-btn-light' }}">
+                <i class="fas fa-exclamation-triangle text-xl"></i><span>{{ __('Missing') }}</span><span
+                    class="ms-1 text-normal font-normal opacity-75">({{ $stats['missing'] ?? 0 }})</span>
+            </button>
+
+            <button wire:click="$set('filterMode', 'translated')"
+                class="kt-btn kt-btn-lg font-bold flex items-center justify-center gap-2 transition-all shadow-sm {{ $filterMode === 'translated' ? 'kt-btn-success' : 'kt-btn-light' }}">
+                <i class="fas fa-check-circle text-xl"></i><span>{{ __('Done') }}</span><span
+                    class="ms-1 text-normal font-normal opacity-75">({{ $stats['translated'] ?? 0 }})</span>
+            </button>
+        </div>
     </div>
-</div>
-</div>
 
 <div class="kt-card-header border-0 pt-6 px-6 w-full min-w-0">
     <div class="flex-wrap gap-2 p-2">
@@ -751,7 +763,7 @@
                         style="background-color: var(--bs-body-bg); border-color: var(--bs-border-color);">
                         <div class="relative flex-grow flex items-center bg-transparent">
                             <div class="ps-3 pointer-events-none" style="color: var(--bs-text-muted);">
-                                <i class="ki-outline ki-magnifier text-lg"></i>
+                                <i class="fa-duotone fa-solid fa-magnifying-glass text-lg"></i>
                             </div>
                             <input type="text" wire:model.live="search" id="search" @keydown.enter.prevent=""
                                 class="w-full border-0 text-sm ps-2 pe-10 py-2.5 outline-none focus:outline-none focus:ring-0 focus:border-transparent min-w-0"
@@ -761,7 +773,7 @@
                             @if (isset($search) && $search !== '')
                                 <div class="absolute end-2 top-1/2 -translate-y-1/2 flex items-center justify-center p-1.5 bg-transparent cursor-pointer group transition-colors z-[10]"
                                     wire:click="$set('search', '')" title="{{ __('main.clear_search') }}">
-                                    <i class="ki-outline ki-cross text-base font-bold group-hover:text-red-500"
+                                    <i class="fa-duotone fa-solid fa-xmark text-base font-bold group-hover:text-red-500"
                                         style="color: var(--bs-text-muted);"></i>
                                 </div>
                             @endif
@@ -773,7 +785,7 @@
                         </div>
                         <button type="button"
                             class="bg-primary flex items-center justify-center text-white px-4 hover:bg-blue-700 transition-colors shrink-0 border-0 outline-none ring-0">
-                            <i class="ki-outline ki-magnifier text-lg"></i>
+                            <i class="fa-duotone fa-solid fa-magnifying-glass text-lg"></i>
                         </button>
                     </div>
                 </div>
@@ -935,7 +947,7 @@
                                 <td class="px-4 py-2 text-center">
                                     <button wire:click="openSuggestionModal('{{ addslashes($key) }}')"
                                         class="kt-btn kt-btn-sm kt-btn-light kt-btn-color-warning">
-                                        <i class="ki-outline ki-lightbulb text-sm me-1"></i> {{ __('Suggest') }}
+                                        <i class="fa-duotone fa-solid fa-lightbulb text-sm me-1"></i> {{ __('Suggest') }}
                                     </button>
                                 </td>
                             @endif
@@ -1058,6 +1070,9 @@
             </div>
         </div>
     </div>
+</div>
+<!-- End of Table Card -->
+
 <!-- Suggestion Modal -->
 <div x-data="{ show: @entangle('showSuggestionModal') }">
     <template x-teleport="body">

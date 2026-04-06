@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <form action="{{ route('dashboard.transportation.jeeps.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
@@ -313,7 +313,7 @@
                                 <span class="text-xs text-gray-500">{{ __('main.seasonal_pricing_desc') }}</span>
                             </div>
                             <button type="button" class="kt-btn kt-btn-sm kt-btn-primary" id="add-season-btn">
-                                <i class="ki-outline ki-plus fs-3"></i> {{ __('main.add_season') }}
+                                <i class="fa-duotone fa-solid fa-plus fs-3"></i> {{ __('main.add_season') }}
                             </button>
                         </div>
                     </div>
@@ -330,18 +330,18 @@
                         <div
                             class="bg-gray-50 px-4 py-2 flex justify-between items-center border-b border-gray-200 cursor-pointer season-header-toggle">
                             <div class="flex items-center gap-2 font-semibold">
-                                <i class="ki-outline ki-calendar-tick fs-2 text-primary"></i>
+                                <i class="fa-duotone fa-solid fa-calendar-tick fs-2 text-primary"></i>
                                 <span class="season-title">New Season</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <button type="button"
                                     class="text-gray-500 hover:text-primary transition-colors toggle-season">
-                                    <i class="ki-outline ki-arrow-down fs-2"></i>
+                                    <i class="fa-duotone fa-solid fa-arrow-down fs-2"></i>
                                 </button>
                                 <button type="button"
                                     class="text-red-500 hover:text-red-700 transition-colors remove-season"
                                     title="{{ __('main.remove_season') }}">
-                                    <i class="ki-outline ki-trash fs-2"></i>
+                                    <i class="fa-duotone fa-solid fa-trash fs-2"></i>
                                 </button>
                             </div>
                         </div>
@@ -370,7 +370,7 @@
 
                             <div class="border-t border-gray-200 pt-3 mt-3">
                                 <h4 class="text-sm font-bold mb-3 flex items-center gap-2">
-                                    <i class="ki-outline ki-dollar fs-3"></i> {{ __('main.base_prices') }}
+                                    <i class="fa-duotone fa-solid fa-dollar-sign fs-3"></i> {{ __('main.base_prices') }}
                                 </h4>
                                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                                     <div class="background p-2 rounded border border-gray-200">
@@ -459,7 +459,7 @@
                                 class="kt-input h-[45px] text-sm" placeholder="{{ __('main.price') }}" required>
                         </div>
                         <button type="button" class="text-red-500 hover:text-red-700 remove-nationality-price p-1">
-                            <i class="ki-outline ki-cross fs-3"></i>
+                            <i class="fa-duotone fa-solid fa-xmark fs-3"></i>
                         </button>
                     </div>
                 </template>
@@ -586,8 +586,8 @@
                 if (target.classList.contains('toggle-season')) {
                     const body = target.closest('.season-item').querySelector('.season-body');
                     body.classList.toggle('hidden');
-                    target.querySelector('i').classList.toggle('ki-arrow-up');
-                    target.querySelector('i').classList.toggle('ki-arrow-down');
+                    target.querySelector('i').classList.toggle('fa-arrow-up');
+                    target.querySelector('i').classList.toggle('fa-arrow-down');
                 }
 
                 // Add Nationality Exception

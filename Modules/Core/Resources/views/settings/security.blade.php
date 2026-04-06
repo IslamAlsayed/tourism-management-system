@@ -3,7 +3,7 @@
 @section('title', __('main.security_settings'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- Password Settings -->
             <div class="kt-card">
@@ -45,7 +45,7 @@
                                 <input type="number" name="app_session_lifetime" class="kt-input h-[45px]" value="{{ $settings->app_session_lifetime }}"
                                     minLength="0" />
                                 <div class="text-xs text-info mt-1">
-                                    <i class="ki-filled ki-information-2"></i>
+                                    <i class="fa-duotone fa-solid fa-circle-info-2"></i>
                                     {{ __('main.zero_for_unlimited_session') }}
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                         <!-- Submit Buttons -->
                         <div class="flex items-center justify-start gap-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
+                                <i class="fa-duotone fa-solid fa-check text-sm me-2"></i>
                                 {{ __('main.save_type', ['type' => __('main.settings')]) }}
                             </button>
                         </div>
@@ -136,7 +136,7 @@
                                 <div class="flex items-center gap-3">
                                     <div>
                                         <div class="font-semibold">
-                                            <i class="ki-filled ki-shield-tick text-success text-xl"></i>
+                                            <i class="fa-duotone fa-solid fa-shield-check text-success text-xl"></i>
                                             {{ __('main.data_encryption') }}
                                         </div>
                                         <div class="text-sm text-secondary-foreground my-2">
@@ -150,7 +150,7 @@
                                 <div class="flex items-center gap-3">
                                     <div>
                                         <div class="font-semibold">
-                                            <i class="ki-filled ki-shield-tick text-success text-xl"></i>
+                                            <i class="fa-duotone fa-solid fa-shield-check text-success text-xl"></i>
                                             {{ __('main.csrf_protection') }}
                                         </div>
                                         <div class="text-sm text-secondary-foreground my-2">
@@ -165,7 +165,7 @@
                                 <div class="flex items-center gap-3">
                                     <div>
                                         <div class="font-semibold">
-                                            <i class="ki-filled ki-shield-tick text-success text-xl"></i>
+                                            <i class="fa-duotone fa-solid fa-shield-check text-success text-xl"></i>
                                             {{ __('main.two_factor_auth') }}
                                         </div>
                                         <div class="text-sm text-secondary-foreground my-2">

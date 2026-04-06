@@ -5,7 +5,7 @@
             {{ __('main.page_banners') }}
         </h3>
         <button wire:click="$dispatch('open-modal')" class="kt-btn kt-btn-primary" data-modal-toggle="#add_banner_modal">
-            <i class="ki-outline ki-plus"></i>
+            <i class="fa-duotone fa-solid fa-plus"></i>
             {{ __('main.add_banner') }}
         </button>
     </div>
@@ -49,12 +49,12 @@
                                     <div class="d-flex flex-column gap-1">
                                         @if($banner->apply_to === 'module')
                                             <span class="kt-badge kt-badge-info kt-badge-outline fw-bold w-fit mb-1 px-2 py-1">
-                                                <i class="ki-outline ki-category text-info me-1"></i> Module
+                                                <i class="fa-duotone fa-solid fa-grid-2 text-info me-1"></i> Module
                                             </span>
                                             <span class="text-gray-800 fs-6">{{ __('main.' . strtolower($banner->module_name)) !== 'main.' . strtolower($banner->module_name) ? __('main.' . strtolower($banner->module_name)) : $banner->module_name }}</span>
                                         @else
                                             <span class="kt-badge kt-badge-primary kt-badge-outline fw-bold w-fit mb-1 px-2 py-1">
-                                                <i class="ki-outline ki-route text-primary me-1"></i> Route
+                                                <i class="fa-duotone fa-solid fa-route text-primary me-1"></i> Route
                                             </span>
                                             <span class="text-gray-800 fs-7" title="{{ $banner->route_name }}">
                                                 {{ Str::limit($banner->route_name, 35) }}
@@ -72,10 +72,10 @@
                                 </td>
                                 <td class="text-end pe-4">
                                     <button wire:click="edit({{ $banner->id }})" class="kt-btn kt-btn-icon kt-btn-outline kt-btn-sm me-1" title="Edit">
-                                        <i class="ki-outline ki-pencil fs-3"></i>
+                                        <i class="fa-duotone fa-solid fa-pen fs-3"></i>
                                     </button>
                                     <button wire:click="delete({{ $banner->id }})" onclick="return confirm('<?= __('main.are_you_sure') ?>')" class="kt-btn kt-btn-icon kt-btn-outline kt-btn-sm text-danger" title="Delete">
-                                        <i class="ki-outline ki-trash fs-3"></i>
+                                        <i class="fa-duotone fa-solid fa-trash fs-3"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -83,7 +83,7 @@
                             <tr>
                                 <td colspan="5" class="text-center p-10 text-muted">
                                     <div class="d-flex flex-column align-items-center">
-                                        <i class="ki-outline ki-picture fs-3x text-muted mb-3"></i>
+                                        <i class="fa-duotone fa-solid fa-image fs-3x text-muted mb-3"></i>
                                         <span class="fw-semibold fs-5">{{ __('main.no_data_found') }}</span>
                                     </div>
                                 </td>
@@ -103,7 +103,7 @@
                     <div class="modal-header bg-light py-4">
                         <h2 class="fw-bold fs-3 mb-0">{{ $isEditMode ? __('main.edit_banner') : __('main.add_banner') }}</h2>
                         <button type="button" class="kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost" data-bs-dismiss="modal" wire:click="resetFields">
-                            <i class="ki-outline ki-cross fs-1"></i>
+                            <i class="fa-duotone fa-solid fa-xmark fs-1"></i>
                         </button>
                     </div>
 
@@ -165,7 +165,7 @@
                                 <li class="nav-item mb-3 me-3 me-lg-6" role="presentation">
                                     <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden h-85px pt-5 pb-2 cursor-pointer {{ $banner_type === 'image' ? 'active' : '' }}" wire:click="$set('banner_type', 'image')">
                                         <div class="nav-icon mb-3">
-                                            <i class="ki-outline ki-picture fs-1"></i>
+                                            <i class="fa-duotone fa-solid fa-image fs-1"></i>
                                         </div>
                                         <span class="nav-text fw-bold fs-6 lh-1">{{ __('main.upload_image') }}</span>
                                         <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
@@ -174,7 +174,7 @@
                                 <li class="nav-item mb-3 me-3 me-lg-6" role="presentation">
                                     <a class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-column overflow-hidden h-85px pt-5 pb-2 cursor-pointer {{ $banner_type === 'text_color' ? 'active' : '' }}" wire:click="$set('banner_type', 'text_color')">
                                         <div class="nav-icon mb-3">
-                                            <i class="ki-outline ki-text-align-center fs-1"></i>
+                                            <i class="fa-duotone fa-solid fa-align-center fs-1"></i>
                                         </div>
                                         <span class="nav-text fw-bold fs-6 lh-1">{{ __('main.color_and_text') }}</span>
                                         <span class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"></span>
@@ -190,8 +190,8 @@
                                     
                                     <!-- SEO & Speed Instructions -->
                                     <div class="alert bg-white border border-info border-dashed p-4 mb-5 flex flex-col sm:flex-row align-items-center gap-4 shadow-sm">
-                                        <i class="ki-duotone ki-information-5 text-info fs-3x">
-                                            <span class="path1"></span><span class="path2"></span><span class="path3"></span>
+                                        <i class="fa-duotone fa-solid fa-circle-info text-info fs-3x">
+                                            
                                         </i>
                                         <div>
                                             <h5 class="fw-bold text-info mb-1">{{ __('main.image_tips_title') }}</h5>
@@ -320,7 +320,7 @@
                         </button>
                         <button type="submit" class="kt-btn kt-btn-primary px-8 fw-bold">
                             <span wire:loading.remove wire:target="save">
-                                <i class="ki-outline ki-check-circle fs-3 me-2"></i> {{ __('main.save_changes') }}
+                                <i class="fa-duotone fa-solid fa-check-circle fs-3 me-2"></i> {{ __('main.save_changes') }}
                             </span>
                             <span wire:loading wire:target="save">
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span> {{ __('main.saving') }}

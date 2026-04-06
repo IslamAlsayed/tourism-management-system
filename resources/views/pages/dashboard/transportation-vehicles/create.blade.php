@@ -3,7 +3,7 @@
 @section('title', __('main.create_type', ['type' => __('main.transportations-vehicles')]))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -31,7 +31,7 @@
         ])
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- transportations-vehicles Form -->
             <div class="kt-card">
@@ -130,7 +130,7 @@
                     <div class="space-y-3">
                         <div class="flex items-center gap-3">
                             <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-primary"></i>
+                                <i class="fa-duotone fa-solid fa-circle-info text-primary"></i>
                             </div>
                             <div>
                                 <div class="mb-2 font-semibold">{{ __('main.ensure_data_accuracy') }}</div>
@@ -141,7 +141,7 @@
 
                         <div class="flex items-center gap-3">
                             <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-geolocation text-success"></i>
+                                <i class="fa-duotone fa-solid fa-location-dot text-success"></i>
                             </div>
                             <div>
                                 <div class="mb-2 font-semibold">{{ __('main.geographic_coordinates') }}</div>

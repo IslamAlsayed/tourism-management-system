@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <div class="kt-container-fixed mb-10">
+    <div class="container-fixed mb-10">
         <div class="kt-card bg-cover bg-no-repeat rounded-xl overflow-hidden"
             style="background-image: url('{{ asset('metronic/media/misc/bg-1.png') }}'); background-position: center;">
             <div class="kt-card-body p-8 sm:p-12 flex flex-col md:flex-row items-center gap-8 bg-black/70 backdrop-blur-lg">
@@ -17,7 +17,7 @@
                     </div>
                     <a href="{{ route('dashboard.core.profile.edit') }}"
                         class="absolute -bottom-2 -right-2 size-10 bg-primary text-white rounded-xl shadow-lg flex items-center justify-center hover:bg-primary-emphasis transition-colors">
-                        <i class="ki-filled ki-pencil fs-4"></i>
+                        <i class="fa-duotone fa-solid fa-pen fs-4"></i>
                     </a>
                 </div>
 
@@ -30,7 +30,7 @@
                         @if ($user->email_verified_at)
                             <div class="size-6 bg-success rounded-full flex items-center justify-center shadow-sm"
                                 title="Verified">
-                                <i class="ki-solid ki-check text-white fs-8"></i>
+                                <i class="fa-solid fa-check text-white fs-8"></i>
                             </div>
                         @endif
                     </div>
@@ -38,18 +38,18 @@
                     <div
                         class="flex flex-wrap items-center justify-center md:justify-start gap-4 text-white/80 text-sm font-medium mb-6">
                         <div class="flex items-center gap-2">
-                            <i class="ki-filled ki-sms text-white dark:text-foreground fs-5"></i>
+                            <i class="fa-duotone fa-solid fa-envelope text-white dark:text-foreground fs-5"></i>
                             <span class="text-white dark:text-foreground">{{ $user->email }}</span>
                         </div>
                         @if ($user->mobile)
                             <div class="flex items-center gap-2 border-l border-white/30 pl-4">
-                                <i class="ki-filled ki-phone text-white dark:text-foreground fs-5"></i>
+                                <i class="fa-duotone fa-solid fa-phone text-white dark:text-foreground fs-5"></i>
                                 <span class="text-white dark:text-foreground">{{ $user->mobile }}</span>
                             </div>
                         @endif
                         @if ($user->company_name)
                             <div class="flex items-center gap-2 border-l border-white/30 pl-4">
-                                <i class="ki-filled ki-bank text-white dark:text-foreground fs-5"></i>
+                                <i class="fa-duotone fa-solid fa-building-columns text-white dark:text-foreground fs-5"></i>
                                 <span class="text-white dark:text-foreground">{{ $user->company_name }}</span>
                             </div>
                         @endif
@@ -59,12 +59,12 @@
                     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
                         <a href="{{ route('dashboard.core.profile.edit') }}"
                             class="kt-btn kt-btn-primary bg-white text-primary hover:bg-white/90 shadow-xl border-0 px-6">
-                            <i class="ki-filled ki-setting-2"></i>
+                            <i class="fa-duotone fa-solid fa-gear"></i>
                             {{ __('main.edit_profile') }}
                         </a>
                         <a href="{{ route('dashboard.core.profile.settings.security') }}"
                             class="kt-btn kt-btn-light bg-white/10 hover:bg-white/20 border-white/20 text-white backdrop-blur-md px-6">
-                            <i class="ki-filled ki-shield-tick"></i>
+                            <i class="fa-duotone fa-solid fa-shield-check"></i>
                             {{ __('main.security') }}
                         </a>
                     </div>
@@ -96,7 +96,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
             <!-- Left Column: Primary Details -->
             <div class="xl:col-span-2 space-y-6 lg:space-y-8">
@@ -104,7 +104,7 @@
                 <div class="kt-card">
                     <div class="kt-card-header flex items-center justify-between border-b-border/60">
                         <h3 class="kt-card-title text-lg font-bold">
-                            <i class="ki-filled ki-note-2 text-primary fs-3 me-2"></i>
+                            <i class="fa-duotone fa-solid fa-note-sticky text-primary fs-3 me-2"></i>
                             {{ __('main.account_overview') }}
                         </h3>
                     </div>
@@ -204,7 +204,7 @@
                                 <div class="flex items-center gap-3">
                                     <div
                                         class="size-10 bg-white dark:bg-muted/40 rounded-xl shadow-sm flex items-center justify-center">
-                                        <i class="ki-filled ki-security-user text-primary fs-3"></i>
+                                        <i class="fa-duotone fa-solid fa-user-shield text-primary fs-3"></i>
                                     </div>
                                     <div>
                                         <div class="text-sm font-bold">{{ __('main.two_factor') }}</div>
@@ -223,7 +223,7 @@
                                 <div class="flex items-center gap-3">
                                     <div
                                         class="size-10 bg-white dark:bg-muted/40 rounded-xl shadow-sm flex items-center justify-center">
-                                        <i class="ki-filled ki-key text-warning fs-3"></i>
+                                        <i class="fa-duotone fa-solid fa-key text-warning fs-3"></i>
                                     </div>
                                     <div>
                                         <div class="text-sm font-bold">{{ __('main.password') }}</div>
@@ -232,7 +232,7 @@
                                 </div>
                                 <a href="{{ route('dashboard.core.profile.settings.security') }}"
                                     class="text-primary hover:text-primary-emphasis transition-colors">
-                                    <i class="ki-filled ki-right-square fs-xl"></i>
+                                    <i class="fa-solid fa-chevron-right-square fs-xl"></i>
                                 </a>
                             </div>
                         </div>

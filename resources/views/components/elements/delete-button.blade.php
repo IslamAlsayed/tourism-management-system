@@ -10,7 +10,7 @@
     title="{{ __('main.delete') }}"
     data-id="{{ $id ?? '' }}"
     wire:ignore>
-    <i class="ki-outline ki-trash text-base"></i>
+    <i class="fa-duotone fa-solid fa-trash text-base"></i>
     <span>{{ __('main.delete') }}</span>
 </button>
 
@@ -27,7 +27,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#dc2626',
                 cancelButtonColor: '#6b7280',
-                confirmButtonText: '<i class="ki-outline ki-trash me-1"></i> {{ addslashes(__('main.delete')) }}',
+                confirmButtonText: '<i class="fa-duotone fa-solid fa-trash me-1"></i> {{ addslashes(__('main.delete')) }}',
                 cancelButtonText: '{{ addslashes(__('main.cancel')) }}',
                 reverseButtons: true,
             }).then((result) => {

@@ -49,7 +49,7 @@
             <div class="menu-item">
                 <a class="menu-link" href="{{ route('dashboard.core.users.create') }}">
                     <span class="menu-icon">
-                        <i class="ki-filled ki-user-plus fs-2"></i>
+                        <i class="fa-duotone fa-solid fa-user-plus fs-2"></i>
                     </span>
                     <span class="menu-title">إضافة مستخدم سريع</span>
                 </a>
@@ -58,7 +58,7 @@
             <div class="menu-item">
                 <a class="menu-link" href="{{ route('dashboard.core.profile.edit') }}">
                     <span class="menu-icon">
-                        <i class="ki-filled ki-profile-user fs-2"></i>
+                        <i class="fa-duotone fa-solid fa-id-card fs-2"></i>
                     </span>
                     <span class="menu-title">تحديث البروفايل</span>
                 </a>
@@ -71,7 +71,7 @@
                 </form>
                 <a class="menu-link text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <span class="menu-icon">
-                        <i class="ki-filled ki-entrance-left fs-2"></i>
+                        <i class="fa-duotone fa-solid fa-right-from-bracket fs-2"></i>
                     </span>
                     <span class="menu-title">تسجيل الخروج</span>
                 </a>

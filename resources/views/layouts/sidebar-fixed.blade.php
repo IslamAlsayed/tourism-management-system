@@ -15,7 +15,7 @@
         <button class="kt-btn kt-btn-outline kt-btn-icon size-[30px] absolute start-full top-2/4 -translate-x-2/4 -translate-y-2/4 rtl:translate-x-2/4"
             data-kt-toggle="body" data-kt-toggle-class="kt-sidebar-collapse" id="sidebar_toggle">
             <i
-                class="ki-filled ki-black-left-line kt-toggle-active:rotate-180 transition-all duration-300 rtl:translate rtl:rotate-180 rtl:kt-toggle-active:rotate-0">
+                class="fa-duotone fa-solid fa-angles-left kt-toggle-active:rotate-180 transition-all duration-300 rtl:translate rtl:rotate-180 rtl:kt-toggle-active:rotate-0">
             </i>
         </button>
     </div>
@@ -66,7 +66,7 @@
                                 <div class="kt-menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px]"
                                     tabindex="0">
                                     <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
-                                        <i class="{{ $item['icon'] }} text-lg"></i>
+                                        {!! getSidebarIcon($item['route'] ?? \Str::slug(is_array($item['title']) ? ($item['title']['en'] ?? '') : $item['title']), $item['icon'] ?? 'fa-duotone fa-solid fa-grid-2', 'text-lg') !!}
                                     </span>
                                     <span
                                         class="kt-menu-title text-sm font-medium text-foreground kt-menu-item-active:text-primary kt-menu-link-hover:!text-primary">
@@ -74,10 +74,10 @@
                                     </span>
                                     <span class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px]">
                                         <span class="inline-flex kt-menu-item-show:hidden">
-                                            <i class="ki-filled ki-plus text-[11px]"></i>
+                                            <i class="fa-duotone fa-solid fa-plus text-[11px]"></i>
                                         </span>
                                         <span class="hidden kt-menu-item-show:inline-flex">
-                                            <i class="ki-filled ki-minus text-[11px]"></i>
+                                            <i class="fa-duotone fa-solid fa-minus text-[11px]"></i>
                                         </span>
                                     </span>
                                 </div>
@@ -110,7 +110,7 @@
                                                     tabindex="0">
                                                     @if (isset($child['icon']))
                                                         <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
-                                                            <i class="{{ $child['icon'] }} text-lg"></i>
+                                                            {!! getSidebarIcon($child['route'] ?? \Str::slug(is_array($child['title']) ? ($child['title']['en'] ?? '') : $child['title']), $child['icon'] ?? 'fa-duotone fa-solid fa-grid-2', 'text-lg') !!}
                                                         </span>
                                                     @endif
                                                     <span
@@ -119,10 +119,10 @@
                                                     </span>
                                                     <span class="kt-menu-arrow text-muted-foreground w-[20px] shrink-0 justify-end ms-1 me-[-10px]">
                                                         <span class="inline-flex kt-menu-item-show:hidden">
-                                                            <i class="ki-filled ki-plus text-[11px]"></i>
+                                                            <i class="fa-duotone fa-solid fa-plus text-[11px]"></i>
                                                         </span>
                                                         <span class="hidden kt-menu-item-show:inline-flex">
-                                                            <i class="ki-filled ki-minus text-[11px]"></i>
+                                                            <i class="fa-duotone fa-solid fa-minus text-[11px]"></i>
                                                         </span>
                                                     </span>
                                                 </div>
@@ -172,7 +172,7 @@
                                 <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] {{ $isActive ? 'kt-menu-item-active:bg-accent/60' : '' }} hover:bg-accent/60 hover:rounded-lg"
                                     href="{{ isset($item['route']) ? route($item['route']) : '#' }}" tabindex="0">
                                     <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
-                                        <i class="{{ $item['icon'] }} text-lg"></i>
+                                        {!! getSidebarIcon($item['route'] ?? \Str::slug(is_array($item['title']) ? ($item['title']['en'] ?? '') : $item['title']), $item['icon'] ?? 'fa-duotone fa-solid fa-grid-2', 'text-lg') !!}
                                     </span>
                                     <span
                                         class="kt-menu-title text-sm font-medium text-foreground {{ $isActive ? 'text-primary' : '' }} kt-menu-link-hover:!text-primary">
@@ -213,7 +213,7 @@
                             <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] hover:rounded-lg {{ $quickItemClass }}"
                                 href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" tabindex="0">
                                 <span class="kt-menu-icon items-start w-[20px]">
-                                    <i class="{{ $quickItem['icon'] }} text-lg"></i>
+                                    {!! getSidebarIcon($quickItem['route'] ?? \Str::slug(is_array($quickItem['title']) ? ($quickItem['title']['en'] ?? '') : $quickItem['title']), $quickItem['icon'] ?? 'fa-duotone fa-solid fa-grid-2', 'text-lg') !!}
                                 </span>
                                 <span class="kt-menu-title text-sm font-medium">
                                     {{ $quickItemTitle }}
@@ -223,7 +223,7 @@
                             <a class="kt-menu-link flex items-center grow border border-transparent gap-[10px] ps-[10px] pe-[10px] py-[6px] hover:bg-accent/60 hover:rounded-lg {{ $quickItemClass }}"
                                 href="{{ isset($quickItem['route']) ? route($quickItem['route']) : '#' }}" tabindex="0">
                                 <span class="kt-menu-icon items-start text-muted-foreground w-[20px]">
-                                    <i class="{{ $quickItem['icon'] }} text-lg"></i>
+                                    {!! getSidebarIcon($quickItem['route'] ?? \Str::slug(is_array($quickItem['title']) ? ($quickItem['title']['en'] ?? '') : $quickItem['title']), $quickItem['icon'] ?? 'fa-duotone fa-solid fa-grid-2', 'text-lg') !!}
                                 </span>
                                 <span class="kt-menu-title text-sm font-medium text-foreground kt-menu-link-hover:!text-primary">
                                     {{ $quickItemTitle }}

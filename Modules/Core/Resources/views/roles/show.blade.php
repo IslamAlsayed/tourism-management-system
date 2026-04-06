@@ -3,7 +3,7 @@
 @section('title', __('main.type_details', ['type' => __('main.role')]))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -16,7 +16,7 @@
             <div class="flex items-center gap-2.5">
                 @if (!in_array($role->name, ['superadmin', 'admin', 'user']))
                     <a href="{{ route('dashboard.core.roles.edit', $role->id) }}" class="kt-btn kt-btn-primary md:hidden">
-                        <i class="ki-filled ki-pencil text-sm me-2"></i>
+                        <i class="fa-duotone fa-solid fa-pen text-sm me-2"></i>
                         {{ __('main.edit') }}
                     </a>
                 @endif
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
 
             <!-- Role Information -->
@@ -65,7 +65,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($rolePermissions as $permission)
                                 <div class="flex items-center gap-3 p-3 bg-muted rounded-lg">
-                                    <i class="ki-filled ki-check text-green-600"></i>
+                                    <i class="fa-duotone fa-solid fa-check text-green-600"></i>
                                     <span class="text-sm font-medium">{{ $permission }}</span>
                                 </div>
                             @endforeach
@@ -83,7 +83,7 @@
                 <div class="flex items-center gap-3">
                     <a href="{{ route('dashboard.core.roles.edit', $role->id) }}"
                         class="kt-btn kt-btn-primary hidden md:inline-flex">
-                        <i class="ki-filled ki-pencil text-sm me-2"></i>
+                        <i class="fa-duotone fa-solid fa-pen text-sm me-2"></i>
                         {{ __('main.edit') }}
                     </a>
                 </div>

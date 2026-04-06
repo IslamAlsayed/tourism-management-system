@@ -7,7 +7,7 @@
         </h3>
         <div class="kt-card-toolbar">
             <a href="{{ route('transportations.vehicle-types.create', [Str::random(120), 'type' => 'transportation']) }}" class="kt-btn kt-btn-sm kt-btn-primary">
-                <i class="ki-filled ki-plus text-sm me-1"></i>
+                <i class="fa-duotone fa-solid fa-plus text-sm me-1"></i>
                 {{ __('main.add_type', ['type' => __('main.vehicle-type')]) }}
             </a>
         </div>
@@ -110,7 +110,7 @@
                 </div>
             @empty
                 <div class="col-span-2 text-center py-8 text-secondary-foreground">
-                    <i class="ki-filled ki-information text-4xl mb-2"></i>
+                    <i class="fa-duotone fa-solid fa-circle-info text-4xl mb-2"></i>
                     <p>{{ __('main.no_data_available') }}</p>
                 </div>
             @endforelse

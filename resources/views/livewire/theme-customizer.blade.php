@@ -2,12 +2,12 @@
     @section('title', __('main.theme_customizer') ?? 'Theme Customizer')
     
     @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7 mb-7 border-b border-border">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-foreground flex items-center gap-2">
                     <div class="bg-primary/10 rounded-lg p-2 flex items-center justify-center">
-                        <i class="ki-outline ki-color-swatch text-primary fs-2 px-1"></i>
+                        <i class="fa-duotone fa-solid fa-palette text-primary fs-2 px-1"></i>
                     </div>
                     {{ __('main.theme_customizer') ?? 'Theme Customizer' }}
                 </h1>
@@ -17,13 +17,13 @@
             </div>
             <div class="flex items-center gap-2">
                 <a href="{{ route('dashboard.core.settings.general') }}" class="kt-btn kt-btn-secondary kt-btn-sm flex items-center gap-2 px-4 shadow-sm">
-                    <i class="ki-outline ki-arrow-left fs-3"></i>  {{ __('main.back') }}
+                    <i class="fa-duotone fa-solid fa-arrow-left fs-3"></i>  {{ __('main.back') }}
                 </a>
                 <button type="button" wire:click="resetDefaults" class="kt-btn kt-btn-light kt-btn-sm flex items-center gap-2 px-4 shadow-sm">
-                    <i class="ki-outline ki-arrows-circle fs-3"></i> {{ __('main.reset_defaults') ?? 'Reset Defaults' }}
+                    <i class="fa-duotone fa-solid fa-arrows-rotate fs-3"></i> {{ __('main.reset_defaults') ?? 'Reset Defaults' }}
                 </button>
                 <button wire:click="save" wire:loading.attr="disabled" class="kt-btn kt-btn-primary kt-btn-sm flex items-center gap-2 px-6 shadow-md transition-shadow hover:shadow-lg">
-                    <span wire:loading.remove wire:target="save"><i class="ki-outline ki-save-2 fs-3"></i> {{ __('main.save_changes') ?? 'Save Changes' }}</span>
+                    <span wire:loading.remove wire:target="save"><i class="fa-duotone fa-solid fa-floppy-disk-2 fs-3"></i> {{ __('main.save_changes') ?? 'Save Changes' }}</span>
                     <span wire:loading wire:target="save" class="flex gap-2 items-center"><i class="fas fa-spinner fa-spin"></i> {{ __('main.loading') ?? 'Saving...' }}</span>
                 </button>
             </div>
@@ -33,7 +33,7 @@
             <div class="card shadow-sm border border-border">
                 <div class="card-header border-b border-border py-4">
                     <h3 class="card-title font-semibold flex items-center gap-2">
-                        <i class="ki-outline ki-pencil text-muted-foreground fs-3 items-center"></i>
+                        <i class="fa-duotone fa-solid fa-pen text-muted-foreground fs-3 items-center"></i>
                         {{ __('main.brand_colors') ?? 'Brand Colors' }}
                     </h3>
                 </div>
@@ -72,7 +72,7 @@
             <div class="card shadow-sm border border-border">
                 <div class="card-header border-b border-border py-4">
                     <h3 class="card-title font-semibold flex items-center gap-2">
-                        <i class="ki-outline ki-information-2 text-muted-foreground fs-3 items-center"></i>
+                        <i class="fa-duotone fa-solid fa-circle-info-2 text-muted-foreground fs-3 items-center"></i>
                         {{ __('main.state_colors') ?? 'State Colors' }}
                     </h3>
                 </div>
@@ -116,7 +116,7 @@
             <div class="card shadow-sm border border-border mb-7">
                 <div class="card-header border-b border-border py-4">
                     <h3 class="card-title font-semibold flex items-center gap-2">
-                        <i class="ki-outline ki-setting-4 text-muted-foreground fs-3 items-center"></i>
+                        <i class="fa-duotone fa-solid fa-gear-4 text-muted-foreground fs-3 items-center"></i>
                         {{ __('main.sidebar_colors') ?? 'Sidebar Colors' }}
                     </h3>
                 </div>
@@ -152,7 +152,7 @@
             <div class="card shadow-sm border border-border mb-7">
                 <div class="card-header border-b border-border py-4">
                     <h3 class="card-title font-semibold flex items-center gap-2">
-                        <i class="ki-outline ki-eye text-muted-foreground fs-3 items-center"></i>
+                        <i class="fa-duotone fa-solid fa-eye text-muted-foreground fs-3 items-center"></i>
                         {{ __('main.live_preview') ?? 'Live Preview Panel' }}
                     </h3>
                 </div>
@@ -174,11 +174,11 @@
                             <p class="text-sm font-medium text-foreground mb-4">Sidebar Preview:</p>
                             <div class="rounded-xl w-64 p-4 shadow-sm" style="background-color: {{ $sidebar_bg }};">
                                 <div class="flex items-center gap-3 mb-4 rounded-lg px-3 py-2 cursor-pointer" style="background-color: transparent">
-                                    <i class="ki-outline ki-element-11 fs-4" style="color: {{ $sidebar_text }};"></i>
+                                    <i class="fa-duotone fa-solid fa-grid-2 fs-4" style="color: {{ $sidebar_text }};"></i>
                                     <span class="font-medium" style="color: {{ $sidebar_text }};">Dashboard</span>
                                 </div>
                                 <div class="flex items-center gap-3 rounded-lg px-3 py-2 cursor-pointer shadow-sm" style="background-color: {{ $sidebar_active }}1A;">
-                                    <i class="ki-outline ki-setting-2 fs-4" style="color: {{ $sidebar_active }};"></i>
+                                    <i class="fa-duotone fa-solid fa-gear-2 fs-4" style="color: {{ $sidebar_active }};"></i>
                                     <span class="font-medium" style="color: {{ $sidebar_active }};">Settings</span>
                                 </div>
                             </div>

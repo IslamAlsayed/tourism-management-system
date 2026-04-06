@@ -3,7 +3,7 @@
 @section('title', __('main.notification_settings'))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <form method="POST" action="{{ route('dashboard.core.settings.update', $settings->id) }}">
                 @csrf
@@ -41,7 +41,7 @@
                                 <div class="kt-card p-4">
                                     <div class="flex flex-nowrap items-center justify-between">
                                         <div class="flex items-center gap-3">
-                                            <i class="ki-filled ki-sms text-xl text-primary"></i>
+                                            <i class="fa-duotone fa-solid fa-envelope text-xl text-primary"></i>
                                             <div>
                                                 <div class="font-semibold">{{ __('main.email_notifications') }}</div>
                                                 <div class="text-sm text-secondary-foreground">
@@ -58,7 +58,7 @@
                                 <div class="kt-card p-4">
                                     <div class="flex flex-nowrap items-center justify-between">
                                         <div class="flex items-center gap-3">
-                                            <i class="ki-filled ki-phone text-xl text-success"></i>
+                                            <i class="fa-duotone fa-solid fa-phone text-xl text-success"></i>
                                             <div>
                                                 <div class="font-semibold">{{ __('main.sms_notifications') }}</div>
                                                 <div class="text-sm text-secondary-foreground">
@@ -75,7 +75,7 @@
                                 <div class="kt-card p-4">
                                     <div class="flex flex-nowrap items-center justify-between">
                                         <div class="flex items-center gap-3">
-                                            <i class="ki-filled ki-notification-bing text-xl text-warning"></i>
+                                            <i class="fa-duotone fa-solid fa-bell-bing text-xl text-warning"></i>
                                             <div>
                                                 <div class="font-semibold">{{ __('main.push_notifications') }}</div>
                                                 <div class="text-sm text-secondary-foreground">
@@ -152,7 +152,7 @@
                         <!-- Submit Buttons -->
                         <div class="flex items-center justify-start gap-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
+                                <i class="fa-duotone fa-solid fa-check text-sm me-2"></i>
                                 {{ __('main.save_type', ['type' => __('main.settings')]) }}
                             </button>
                         </div>
@@ -173,15 +173,15 @@
                     </p>
                     <div class="flex gap-3">
                         <button class="kt-btn kt-btn-outline kt-btn-outline-primary">
-                            <i class="ki-filled ki-sms text-sm me-2"></i>
+                            <i class="fa-duotone fa-solid fa-envelope text-sm me-2"></i>
                             {{ __('main.test_email') }}
                         </button>
                         <button class="kt-btn kt-btn-outline kt-btn-outline-success">
-                            <i class="ki-filled ki-phone text-sm me-2"></i>
+                            <i class="fa-duotone fa-solid fa-phone text-sm me-2"></i>
                             {{ __('main.test_sms') }}
                         </button>
                         <button class="kt-btn kt-btn-outline kt-btn-outline-warning">
-                            <i class="ki-filled ki-notification-bing text-sm me-2"></i>
+                            <i class="fa-duotone fa-solid fa-bell-bing text-sm me-2"></i>
                             {{ __('main.test_push_notification') }}
                         </button>
                     </div>

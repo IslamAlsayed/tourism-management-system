@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -45,7 +45,7 @@
         ])
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <form class="space-y-6" method="POST" action="{{ route('dashboard.entrypoints.land-crossings.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">

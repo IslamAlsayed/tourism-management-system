@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Profile Page -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <!-- Header/Cover Section -->
         <div class="kt-card mb-10 overflow-hidden">
             <!-- Cover Image -->
@@ -29,11 +29,11 @@
                             <div
                                 class="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-sm font-medium text-secondary-foreground">
                                 <span class="flex items-center gap-1.5">
-                                    <i class="ki-filled ki-briefcase fs-5 text-primary"></i>
+                                    <i class="fa-duotone fa-solid fa-briefcase fs-5 text-primary"></i>
                                     {{ $user->position ?? 'Software Developer' }}
                                 </span>
                                 <span class="flex items-center gap-1.5 border-l border-border pl-4">
-                                    <i class="ki-filled ki-geolocation fs-5 text-success"></i>
+                                    <i class="fa-duotone fa-solid fa-location-dot fs-5 text-success"></i>
                                     {{ strip_tags($user->address ?? 'Amman, Jordan') }}
                                 </span>
                             </div>
@@ -41,15 +41,15 @@
 
                         <div class="flex items-center justify-center gap-2.5">
                             <button class="kt-btn kt-btn-primary rounded-xl px-8 shadow-lg shadow-primary/20">
-                                <i class="ki-filled ki-plus"></i> Follow
+                                <i class="fa-duotone fa-solid fa-plus"></i> Follow
                             </button>
                             <button class="kt-btn kt-btn-icon kt-btn-outline rounded-xl shrink-0">
-                                <i class="ki-filled ki-messages"></i>
+                                <i class="fa-duotone fa-solid fa-comments"></i>
                             </button>
                             <div class="relative">
                                 <button class="kt-btn kt-btn-icon kt-btn-outline rounded-xl shrink-0"
                                     data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                    <i class="ki-filled ki-setting-4"></i>
+                                    <i class="fa-duotone fa-solid fa-gear-4"></i>
                                 </button>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                     class="kt-card min-h-[400px] flex items-center justify-center text-center p-12 bg-muted/10 border-dashed border-2">
                     <div class="max-w-sm">
                         <div class="size-20 bg-muted/40 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                            <i class="ki-filled ki-abstract-26 text-secondary-foreground fs-1"></i>
+                            <i class="fa-duotone fa-solid fa-shapes text-secondary-foreground fs-1"></i>
                         </div>
                         <h3 class="text-2xl font-bold text-foreground mb-4">No Activity Yet</h3>
                         <p class="text-secondary-foreground">

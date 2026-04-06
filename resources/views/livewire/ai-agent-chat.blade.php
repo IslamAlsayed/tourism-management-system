@@ -92,7 +92,7 @@
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center me-2">
                     <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Upload File (Coming Soon)">
-                        <i class="ki-duotone ki-paper-clip fs-3"></i>
+                        <i class="fa-duotone fa-solid fa-paperclip fs-3"></i>
                     </button>
                 </div>
                 <!--end::Actions-->

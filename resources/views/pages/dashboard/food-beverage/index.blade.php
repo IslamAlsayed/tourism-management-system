@@ -19,13 +19,13 @@
                     <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-start"
                         data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
                         <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
-                            <i class="ki-filled ki-dots-vertical text-lg"></i>
+                            <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg"></i>
                         </button>
                         <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]" data-kt-menu-dismiss="true">
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="#">
                                     <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-download"></i>
+                                        <i class="fa-solid fa-chevron-download"></i>
                                     </span>
                                     <span class="kt-menu-title">Export Data</span>
                                 </a>
@@ -33,7 +33,7 @@
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="#">
                                     <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-upload"></i>
+                                        <i class="fa-solid fa-chevron-upload"></i>
                                     </span>
                                     <span class="kt-menu-title">Import Data</span>
                                 </a>
@@ -174,7 +174,7 @@
                                         <div class="d-flex align-items-center">
                                             @for ($i = 1; $i <= 5; $i++)
                                                 <i
-                                                    class="ki-filled ki-star text-{{ $i <= $restaurant['rating'] ? 'warning' : 'muted' }} fs-7"></i>
+                                                    class="fa-duotone fa-solid fa-star text-{{ $i <= $restaurant['rating'] ? 'warning' : 'muted' }} fs-7"></i>
                                             @endfor
                                             <span
                                                 class="text-muted fw-semibold text-muted ms-1">{{ $restaurant['rating'] }}/5</span>
@@ -193,16 +193,16 @@
                                         <a href="#"
                                             class="kt-btn kt-btn-icon kt-btn-light kt-btn-primary kt-btn-sm me-1"
                                             title="View">
-                                            <i class="ki-filled ki-eye fs-3"></i>
+                                            <i class="fa-duotone fa-solid fa-eye fs-3"></i>
                                         </a>
                                         <a href="#"
                                             class="kt-btn kt-btn-icon kt-btn-light kt-btn-primary kt-btn-sm me-1"
                                             title="Edit">
-                                            <i class="ki-filled ki-pencil fs-3"></i>
+                                            <i class="fa-duotone fa-solid fa-pen fs-3"></i>
                                         </a>
                                         <a href="#" class="kt-btn kt-btn-icon kt-btn-light kt-btn-destructive kt-btn-sm"
                                             title="Delete">
-                                            <i class="ki-filled ki-trash fs-3"></i>
+                                            <i class="fa-duotone fa-solid fa-trash fs-3"></i>
                                         </a>
                                     </td>
                                 </tr>

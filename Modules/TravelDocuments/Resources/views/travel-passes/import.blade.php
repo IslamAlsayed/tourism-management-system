@@ -79,11 +79,11 @@
 
             <div class="mt-4">
                 <div class="alert alert-info">
-                    <i class="ki-filled ki-information-2 text-info me-2"></i>
+                    <i class="fa-duotone fa-solid fa-circle-info-2 text-info me-2"></i>
                     <span><strong>pass_type values:</strong> wanderer, explorer, expert, basic, premium, custom</span>
                 </div>
                 <div class="alert alert-info mt-2">
-                    <i class="ki-filled ki-information-2 text-info me-2"></i>
+                    <i class="fa-duotone fa-solid fa-circle-info-2 text-info me-2"></i>
                     <span><strong>sites_ids:</strong> Comma separated IDs of tourist sites (e.g., "1,2,5")</span>
                 </div>
             </div>

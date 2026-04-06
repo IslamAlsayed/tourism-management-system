@@ -122,7 +122,7 @@
                                     'value' => $language->id,
                                 ])
                                 <div class="cursor-move p-1 text-gray-400 hover:text-gray-700 drag-handle" title="{{ __('main.drag_to_reorder') }}">
-                                    <i class="ki-filled ki-burger-menu text-lg"></i>
+                                    <i class="fa-duotone fa-solid fa-grip-lines text-lg"></i>
                                 </div>
                             </div>
 
@@ -197,7 +197,7 @@
                                     </a>
                                 @else
                                     <span class="kt-btn kt-btn-sm kt-btn-outline kt-btn-primary">
-                                        <i class="ki-filled ki-check-circle me-1"></i> {{ __('main.currently') }}
+                                        <i class="fa-duotone fa-solid fa-check-circle me-1"></i> {{ __('main.currently') }}
                                     </span>
                                 @endif
                                 
@@ -303,7 +303,7 @@
                                             @endif
                                             
                                             <div class="cursor-move p-1 text-gray-400 hover:text-gray-700 drag-handle" title="{{ __('main.drag_to_reorder') }}">
-                                                <i class="ki-filled ki-burger-menu text-lg"></i>
+                                                <i class="fa-duotone fa-solid fa-grip-lines text-lg"></i>
                                             </div>
 
                                             @if(!$loop->last)

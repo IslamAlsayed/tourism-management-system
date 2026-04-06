@@ -10,7 +10,7 @@
         id="notifications_header">
         Notifications
         <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-dim shrink-0" data-kt-drawer-dismiss="true">
-            <i class="ki-filled ki-cross">
+            <i class="fa-duotone fa-solid fa-xmark">
             </i>
         </button>
     </div>
@@ -37,14 +37,14 @@
                 data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown"
                 data-kt-menu-item-trigger="click|lg:hover">
                 <button class="kt-menu-toggle kt-btn kt-btn-icon kt-btn-ghost">
-                    <i class="ki-filled ki-setting-2">
+                    <i class="fa-duotone fa-solid fa-gear">
                     </i>
                 </button>
                 <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]" data-kt-menu-dismiss="true">
                     <div class="kt-menu-item">
                         <a class="kt-menu-link" href="#">
                             <span class="kt-menu-icon">
-                                <i class="ki-filled ki-document">
+                                <i class="fa-duotone fa-solid fa-file">
                                 </i>
                             </span>
                             <span class="kt-menu-title">
@@ -57,14 +57,14 @@
                         data-kt-menu-item-trigger="click|lg:hover">
                         <div class="kt-menu-link">
                             <span class="kt-menu-icon">
-                                <i class="ki-filled ki-notification-status">
+                                <i class="fa-duotone fa-solid fa-bell-status">
                                 </i>
                             </span>
                             <span class="kt-menu-title">
                                 Export
                             </span>
                             <span class="kt-menu-arrow">
-                                <i class="ki-filled ki-right text-xs rtl:transform rtl:rotate-180">
+                                <i class="fa-solid fa-chevron-right text-xs rtl:transform rtl:rotate-180">
                                 </i>
                             </span>
                         </div>
@@ -72,7 +72,7 @@
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="html/demo1/account/home/settings-sidebar.html">
                                     <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-sms">
+                                        <i class="fa-duotone fa-solid fa-envelope">
                                         </i>
                                     </span>
                                     <span class="kt-menu-title">
@@ -83,7 +83,7 @@
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="html/demo1/account/home/settings-sidebar.html">
                                     <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-message-notify">
+                                        <i class="fa-duotone fa-solid fa-bell">
                                         </i>
                                     </span>
                                     <span class="kt-menu-title">
@@ -94,7 +94,7 @@
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="html/demo1/account/home/settings-sidebar.html">
                                     <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-notification-status">
+                                        <i class="fa-duotone fa-solid fa-bell-status">
                                         </i>
                                     </span>
                                     <span class="kt-menu-title">
@@ -107,7 +107,7 @@
                     <div class="kt-menu-item">
                         <a class="kt-menu-link" href="#">
                             <span class="kt-menu-icon">
-                                <i class="ki-filled ki-pencil">
+                                <i class="fa-duotone fa-solid fa-pen">
                                 </i>
                             </span>
                             <span class="kt-menu-title">
@@ -118,7 +118,7 @@
                     <div class="kt-menu-item">
                         <a class="kt-menu-link" href="#">
                             <span class="kt-menu-icon">
-                                <i class="ki-filled ki-trash">
+                                <i class="fa-duotone fa-solid fa-trash">
                                 </i>
                             </span>
                             <span class="kt-menu-title">
@@ -183,7 +183,7 @@
                 @endif
                 @empty
                 <div class="flex flex-col items-center justify-center py-12 px-5 text-center">
-                    <i class="ki-filled ki-notification-off text-4xl text-muted-foreground mb-4"></i>
+                    <i class="fa-duotone fa-solid fa-bell-off text-4xl text-muted-foreground mb-4"></i>
                     <h3 class="text-lg font-semibold text-secondary-foreground mb-2">
                         {{ __('main.no_notifications') }}
                     </h3>
@@ -322,7 +322,7 @@
             <div class="flex grow gap-2.5 px-5">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-11.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-11.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -413,7 +413,7 @@
             <div class="flex grow gap-2.5 px-5" id="notification_request_13">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-25.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-25.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -470,7 +470,7 @@
             <div class="flex items-center grow gap-2.5 px-5">
                 <div
                     class="flex items-center justify-center size-8 bg-green-50 rounded-full border border-green-200 dark:border-green-950">
-                    <i class="ki-filled ki-check text-lg text-green-500">
+                    <i class="fa-duotone fa-solid fa-check text-lg text-green-500">
                     </i>
                 </div>
                 <div class="flex flex-col gap-1">
@@ -549,7 +549,7 @@
             <div class="flex grow gap-2 px-5">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-29.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-29.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -617,7 +617,7 @@
             <div class="flex grow gap-2.5 px-5" id="notification_request_3">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-30.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-30.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -661,7 +661,7 @@
             <div class="flex grow gap-2.5 px-5">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-24.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-24.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -797,7 +797,7 @@
             <div class="flex grow gap-2.5 px-5">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-6.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-6.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -831,7 +831,7 @@
             <div class="flex grow gap-2.5 px-5">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-12.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-12.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -925,7 +925,7 @@
             <div class="flex grow gap-2.5 px-5">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-21.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-21.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -968,7 +968,7 @@
                         <div class="kt-input h-[45px]">
                             <input placeholder="Reply" type="text" value="" />
                             <button class="kt-btn kt-btn-ghost kt-btn-icon size-6 -me-1.5">
-                                <i class="ki-filled ki-picture">
+                                <i class="fa-duotone fa-solid fa-image">
                                 </i>
                             </button>
                         </div>
@@ -980,7 +980,7 @@
             <div class="flex grow gap-2.5 px-5" id="notification_request_3">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-13.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-13.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -1042,7 +1042,7 @@
             <div class="flex grow gap-2.5 px-5">
                 <div class="kt-avatar size-8">
                     <div class="kt-avatar-image">
-                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-1.p') }}ng">
+                        <img alt="photo" src="{{ asset('metronic/media/avatars/300-1.png') }}">
                         </img>
                     </div>
                     <div class="kt-avatar-indicator -end-2 -bottom-2">
@@ -1190,7 +1190,7 @@
                     </div>
                     <div
                         class="kt-card shadow-none flex items-center flex-row gap-1.5 px-2.5 py-1.5 rounded-lg bg-muted/70">
-                        <i class="ki-filled ki-user-tick text-green-500 text-base">
+                        <i class="fa-duotone fa-solid fa-user-tick text-green-500 text-base">
                         </i>
                         <span class="font-medium text-green-500 text-sm">
                             You allowed Aaron to view
@@ -1262,7 +1262,7 @@
                     </div>
                     <div class="flex flex-wrap gap-2.5">
                         <button class="kt-btn kt-btn-sm kt-btn-outline">
-                            <i class="ki-filled ki-check-circle">
+                            <i class="fa-duotone fa-solid fa-check-circle">
                             </i>
                             Connected
                         </button>

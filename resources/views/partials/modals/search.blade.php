@@ -1,12 +1,12 @@
 <div class="kt-modal" data-kt-modal="true" id="search_modal">
     <div class="kt-modal-content max-w-[600px]">
         <div class="kt-modal-header py-4 px-5">
-            <i class="ki-filled ki-magnifier text-muted-foreground text-xl">
+            <i class="fa-duotone fa-solid fa-magnifying-glass text-muted-foreground text-xl">
             </i>
             <input class="kt-input h-[45px] kt-input-ghost" name="query" placeholder="Tap to start search" type="text"
                 value="" />
             <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-dim shrink-0" data-kt-modal-dismiss="true">
-                <i class="ki-filled ki-cross">
+                <i class="fa-duotone fa-solid fa-xmark">
                 </i>
             </button>
         </div>
@@ -40,14 +40,14 @@
                         data-kt-menu-item-placement="bottom-end" data-kt-menu-item-placement-rtl="bottom-start"
                         data-kt-menu-item-offset="0, 10px">
                         <button class="kt-menu-toggle kt-btn kt-btn-icon kt-btn-ghost">
-                            <i class="ki-filled ki-setting-2">
+                            <i class="fa-duotone fa-solid fa-gear">
                             </i>
                         </button>
                         <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]" data-kt-menu-dismiss="true">
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="#">
                                     <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-document">
+                                        <i class="fa-duotone fa-solid fa-file">
                                         </i>
                                     </span>
                                     <span class="kt-menu-title">
@@ -60,14 +60,14 @@
                                 data-kt-menu-item-offset="-15px, 0">
                                 <div class="kt-menu-link">
                                     <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-notification-status">
+                                        <i class="fa-duotone fa-solid fa-bell-status">
                                         </i>
                                     </span>
                                     <span class="kt-menu-title">
                                         Export
                                     </span>
                                     <span class="kt-menu-arrow">
-                                        <i class="ki-filled ki-right text-xs rtl:transform rtl:rotate-180">
+                                        <i class="fa-solid fa-chevron-right text-xs rtl:transform rtl:rotate-180">
                                         </i>
                                     </span>
                                 </div>
@@ -75,7 +75,7 @@
                                     <div class="kt-menu-item">
                                         <a class="kt-menu-link" href="{{ url('demo5/account/home/settings-sidebar') }}">
                                             <span class="kt-menu-icon">
-                                                <i class="ki-filled ki-sms">
+                                                <i class="fa-duotone fa-solid fa-envelope">
                                                 </i>
                                             </span>
                                             <span class="kt-menu-title">
@@ -86,7 +86,7 @@
                                     <div class="kt-menu-item">
                                         <a class="kt-menu-link" href="{{ url('demo5/account/home/settings-sidebar') }}">
                                             <span class="kt-menu-icon">
-                                                <i class="ki-filled ki-message-notify">
+                                                <i class="fa-duotone fa-solid fa-bell">
                                                 </i>
                                             </span>
                                             <span class="kt-menu-title">
@@ -97,7 +97,7 @@
                                     <div class="kt-menu-item">
                                         <a class="kt-menu-link" href="{{ url('demo5/account/home/settings-sidebar') }}">
                                             <span class="kt-menu-icon">
-                                                <i class="ki-filled ki-notification-status">
+                                                <i class="fa-duotone fa-solid fa-bell-status">
                                                 </i>
                                             </span>
                                             <span class="kt-menu-title">
@@ -110,7 +110,7 @@
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="#">
                                     <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-pencil">
+                                        <i class="fa-duotone fa-solid fa-pen">
                                         </i>
                                     </span>
                                     <span class="kt-menu-title">
@@ -121,7 +121,7 @@
                             <div class="kt-menu-item">
                                 <a class="kt-menu-link" href="#">
                                     <span class="kt-menu-icon">
-                                        <i class="ki-filled ki-trash">
+                                        <i class="fa-duotone fa-solid fa-trash">
                                         </i>
                                     </span>
                                     <span class="kt-menu-title">
@@ -145,7 +145,7 @@
                                 <div class="kt-menu-item">
                                     <a class="kt-menu-link" href="#">
                                         <span class="kt-menu-icon">
-                                            <i class="ki-filled ki-badge">
+                                            <i class="fa-duotone fa-solid fa-id-badge">
                                             </i>
                                         </span>
                                         <span class="kt-menu-title">
@@ -156,7 +156,7 @@
                                 <div class="kt-menu-item">
                                     <a class="kt-menu-link" href="#">
                                         <span class="kt-menu-icon">
-                                            <i class="ki-filled ki-setting-2">
+                                            <i class="fa-duotone fa-solid fa-gear">
                                             </i>
                                         </span>
                                         <span class="kt-menu-title">
@@ -167,7 +167,7 @@
                                 <div class="kt-menu-item">
                                     <a class="kt-menu-link" href="#">
                                         <span class="kt-menu-icon">
-                                            <i class="ki-filled ki-message-programming">
+                                            <i class="fa-duotone fa-solid fa-terminal">
                                             </i>
                                         </span>
                                         <span class="kt-menu-title">
@@ -295,7 +295,7 @@
                                                     In Office
                                                 </div>
                                                 <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                                    <i class="ki-filled ki-dots-vertical text-lg">
+                                                    <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                                     </i>
                                                 </button>
                                             </div>
@@ -324,7 +324,7 @@
                                                     On Leave
                                                 </div>
                                                 <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                                    <i class="ki-filled ki-dots-vertical text-lg">
+                                                    <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                                     </i>
                                                 </button>
                                             </div>
@@ -343,7 +343,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-home-2">
+                                    <i class="fa-duotone fa-solid fa-house-2">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -354,7 +354,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-badge">
+                                    <i class="fa-duotone fa-solid fa-id-badge">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -365,7 +365,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-profile-circle">
+                                    <i class="fa-duotone fa-solid fa-user-circle">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -376,7 +376,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-setting-2">
+                                    <i class="fa-duotone fa-solid fa-gear">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -387,7 +387,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-message-programming">
+                                    <i class="fa-duotone fa-solid fa-terminal">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -401,7 +401,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-user">
+                                    <i class="fa-duotone fa-solid fa-user">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -412,7 +412,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-user-edit">
+                                    <i class="fa-duotone fa-solid fa-user-edit">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -423,7 +423,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-subtitle">
+                                    <i class="fa-duotone fa-solid fa-closed-captioning">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -434,7 +434,7 @@
                         <div class="kt-menu-item">
                             <a class="kt-menu-link" href="#">
                                 <span class="kt-menu-icon">
-                                    <i class="ki-filled ki-setting">
+                                    <i class="fa-duotone fa-solid fa-gear">
                                     </i>
                                 </span>
                                 <span class="kt-menu-title">
@@ -659,7 +659,7 @@
                                             In Office
                                         </div>
                                         <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                            <i class="ki-filled ki-dots-vertical text-lg">
+                                            <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                             </i>
                                         </button>
                                     </div>
@@ -688,7 +688,7 @@
                                             On Leave
                                         </div>
                                         <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                            <i class="ki-filled ki-dots-vertical text-lg">
+                                            <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                             </i>
                                         </button>
                                     </div>
@@ -716,7 +716,7 @@
                                             Remote
                                         </div>
                                         <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                            <i class="ki-filled ki-dots-vertical text-lg">
+                                            <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                             </i>
                                         </button>
                                     </div>
@@ -744,7 +744,7 @@
                                             In Office
                                         </div>
                                         <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                            <i class="ki-filled ki-dots-vertical text-lg">
+                                            <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                             </i>
                                         </button>
                                     </div>
@@ -772,7 +772,7 @@
                                             Remote
                                         </div>
                                         <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                            <i class="ki-filled ki-dots-vertical text-lg">
+                                            <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                             </i>
                                         </button>
                                     </div>
@@ -804,7 +804,7 @@
                                         </div>
                                     </div>
                                     <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                        <i class="ki-filled ki-dots-vertical text-lg">
+                                        <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                         </i>
                                     </button>
                                 </div>
@@ -824,7 +824,7 @@
                                         </div>
                                     </div>
                                     <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                        <i class="ki-filled ki-dots-vertical text-lg">
+                                        <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                         </i>
                                     </button>
                                 </div>
@@ -844,7 +844,7 @@
                                         </div>
                                     </div>
                                     <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                        <i class="ki-filled ki-dots-vertical text-lg">
+                                        <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                         </i>
                                     </button>
                                 </div>
@@ -864,7 +864,7 @@
                                         </div>
                                     </div>
                                     <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                        <i class="ki-filled ki-dots-vertical text-lg">
+                                        <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                         </i>
                                     </button>
                                 </div>
@@ -884,7 +884,7 @@
                                         </div>
                                     </div>
                                     <button class="kt-btn kt-btn-icon kt-btn-ghost kt-btn-sm">
-                                        <i class="ki-filled ki-dots-vertical text-lg">
+                                        <i class="fa-duotone fa-solid fa-ellipsis-vertical text-lg">
                                         </i>
                                     </button>
                                 </div>

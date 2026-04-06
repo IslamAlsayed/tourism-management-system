@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Container -->
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         @yield('table-content')
     </div>
     <!-- End of Container -->

@@ -3,7 +3,7 @@
 @section('title', __('main.create_type', ['type' => __('main.meal')]))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -31,7 +31,7 @@
         ])
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="kt-card p-4">
             <div class="kt-card-body">
                 <form class="space-y-6" method="POST" action="{{ route('dashboard.restaurants.meals.store') }}">
@@ -106,7 +106,7 @@
                         <!-- Add Meal Button -->
                         <div class="flex justify-end mt-6">
                             <button type="button" class="kt-btn kt-btn-primary font-bold shadow-sm" onclick="addMealBlock()">
-                                <i class="ki-outline ki-plus fs-3"></i>
+                                <i class="fa-duotone fa-solid fa-plus fs-3"></i>
                                 {{ __('main.add_another_meal_or_price') ?? 'Add Another Meal / Price' }}
                             </button>
                         </div>
@@ -131,7 +131,7 @@
             <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
                 <h3 class="font-bold text-lg text-primary meal-title">Meal #__NUM__</h3>
                 <button type="button" class="kt-btn kt-btn-sm kt-btn-light kt-btn-destructive remove-meal-btn" onclick="removeMealBlock(this)">
-                    <i class="ki-outline ki-trash fs-4"></i> {{ __('main.remove') ?? 'Remove' }}
+                    <i class="fa-duotone fa-solid fa-trash fs-4"></i> {{ __('main.remove') ?? 'Remove' }}
                 </button>
             </div>
 
@@ -156,7 +156,7 @@
             <!-- FIT Pricing -->
             <div class="mt-4 mb-4 bg-white p-4 rounded-lg border border-gray-100">
                 <h4 class="text-md font-bold text-primary mb-3 flex items-center gap-2">
-                    <i class="ki-outline ki-dollar fs-3"></i> {{ __('main.fit_pricing') }}
+                    <i class="fa-duotone fa-solid fa-dollar-sign fs-3"></i> {{ __('main.fit_pricing') }}
                     <span class="text-xs font-bold text-blue-700 bg-blue-100 px-2 py-1 rounded currency-label">-</span>
                 </h4>
                 <div class="flex flex-wrap md:flex-nowrap gap-4 items-end">
@@ -210,7 +210,7 @@
             <!-- Group Pricing -->
             <div class="mt-4 mb-4 bg-white p-4 rounded-lg border border-gray-100">
                 <h4 class="text-md font-bold text-primary mb-3 flex items-center gap-2">
-                    <i class="ki-outline ki-profile-2user fs-3"></i> {{ __('main.group_pricing') }}
+                    <i class="fa-duotone fa-solid fa-user-group fs-3"></i> {{ __('main.group_pricing') }}
                     <span class="text-xs font-bold text-blue-700 bg-blue-100 px-2 py-1 rounded currency-label">-</span>
                 </h4>
                 <div class="flex flex-wrap md:flex-nowrap gap-4 items-end">

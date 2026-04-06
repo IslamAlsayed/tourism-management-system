@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between">
         <div class="flex items-center gap-4">
             <div class="bg-blue-500 text-white p-3 rounded-full">
-                <i class="{{ $icon ?? 'ki-filled ki-abstract-28' }} text-xl"></i>
+                <i class="{{ $icon ?? 'fa-duotone fa-solid fa-chart-pie' }} text-xl"></i>
             </div>
             <div>
                 <h2 class="text-lg font-semibold text-gray-800">{{ $title }}</h2>
@@ -32,14 +32,14 @@
                 @if (isset($createRoute))
                     <a href="{{ $createRoute }}"
                         class="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600 transition-colors">
-                        <i class="ki-filled ki-plus text-sm"></i>
+                        <i class="fa-duotone fa-solid fa-plus text-sm"></i>
                         {{ __('main.add') }} {{ $entityName }}
                     </a>
                 @endif
                 @if (isset($exportRoute))
                     <a href="{{ $exportRoute }}"
                         class="px-4 py-2 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition-colors">
-                        <i class="ki-filled ki-exit-down text-sm"></i>
+                        <i class="fa-duotone fa-solid fa-arrow-down-from-line text-sm"></i>
                         {{ __('main.export') }}
                     </a>
                 @endif

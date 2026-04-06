@@ -2,7 +2,7 @@
 <header class="kt-header fixed end-0 start-0 top-0 z-2000 flex shrink-0 items-stretch bg-background" data-kt-sticky="true"
     data-kt-sticky-class="border-b border-border" data-kt-sticky-name="header" id="header">
     <!-- Container -->
-    <div class="kt-container-fixed flex items-stretch justify-between lg:gap-4" id="headerContainer">
+    <div class="container-fixed flex items-stretch justify-between lg:gap-4" id="headerContainer">
         <!-- Mobile Logo -->
         <div class="-ms-1 flex items-center gap-2.5 lg:hidden">
             <a class="shrink-0" href="{{ route('dashboard') }}">
@@ -10,11 +10,11 @@
             </a>
             <div class="flex items-center">
                 <button class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-drawer-toggle="#sidebar">
-                    <i class="ki-filled ki-menu">
+                    <i class="fa-duotone fa-solid fa-bars">
                     </i>
                 </button>
                 <button class="kt-btn kt-btn-icon kt-btn-ghost" data-kt-drawer-toggle="#mega_menu_wrapper">
-                    <i class="ki-filled ki-burger-menu-2"></i>
+                    <i class="fa-duotone fa-solid fa-grip-lines-2"></i>
                 </button>
             </div>
         </div>

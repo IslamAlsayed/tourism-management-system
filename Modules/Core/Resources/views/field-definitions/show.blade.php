@@ -3,7 +3,7 @@
 @section('title', __('main.show_type', ['type' => __('main.field-definition')]))
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -16,7 +16,7 @@
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('dashboard.core.field-definitions.edit', $fieldDefinition->id) }}"
                     class="kt-btn kt-btn-primary">
-                    <i class="ki-outline ki-pencil"></i>
+                    <i class="fa-duotone fa-solid fa-pen"></i>
                     {{ __('main.edit') }}
                 </a>
                 <a href="{{ route('dashboard.core.field-definitions.index') }}" class="kt-btn kt-btn-outline">
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <div class="kt-card">
                 <div class="kt-card-header">

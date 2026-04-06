@@ -32,16 +32,16 @@
                         <div class="flex items-center gap-2 justify-end">
                             <a href="{{ route('permissions.show', $permission->id) }}"
                                 class="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100">
-                                <i class="ki-filled ki-eye text-gray-600"></i>
+                                <i class="fa-duotone fa-solid fa-eye text-gray-600"></i>
                             </a>
                             <a href="{{ route('permissions.edit', $permission->id) }}"
                                 class="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-100">
-                                <i class="ki-filled ki-pencil text-gray-600"></i>
+                                <i class="fa-duotone fa-solid fa-pen text-gray-600"></i>
                             </a>
                             <button wire:click="destroy({{ $permission->id }})"
                                 wire:confirm="{{ __('messages.confirm_delete') }}"
                                 class="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-red-50">
-                                <i class="ki-filled ki-trash text-red-600"></i>
+                                <i class="fa-duotone fa-solid fa-trash text-red-600"></i>
                             </button>
                         </div>
                     </td>

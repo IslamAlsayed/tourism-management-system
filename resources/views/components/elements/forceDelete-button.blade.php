@@ -11,7 +11,7 @@
     title="{{ __('main.force_delete') }}"
     data-id="{{ $id ?? '' }}"
     wire:ignore>
-    <i class="ki-outline ki-trash-square text-base"></i>
+    <i class="fa-duotone fa-solid fa-trash-can text-base"></i>
     <span>{{ __('main.force_delete') }}</span>
 </button>
 
@@ -32,7 +32,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#7f1d1d',
                 cancelButtonColor: '#6b7280',
-                confirmButtonText: '<i class="ki-outline ki-trash-square me-1"></i> {{ addslashes(__('main.force_delete')) }}',
+                confirmButtonText: '<i class="fa-duotone fa-solid fa-trash-can me-1"></i> {{ addslashes(__('main.force_delete')) }}',
                 cancelButtonText: '{{ addslashes(__('main.cancel')) }}',
                 reverseButtons: true,
             }).then((result) => {

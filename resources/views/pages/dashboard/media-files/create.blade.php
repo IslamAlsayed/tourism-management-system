@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         {{-- Page Header --}}
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>
@@ -10,7 +10,7 @@
             </div>
             <div>
                 <a href="{{ route('media-files.index') }}" class="kt-btn kt-btn-outline">
-                    <i class="ki-filled ki-left"></i>
+                    <i class="fa-solid fa-chevron-left"></i>
                     {{ __('main.back') }}
                 </a>
             </div>
@@ -28,7 +28,7 @@
                             <label for="area_image" class="kt-label required">{{ __('main.files') }}</label>
                             <div class="dropzone mt-2 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors cursor-pointer"
                                 data-input="area_image">
-                                <i class="ki-filled ki-cloud-add text-5xl text-gray-400"></i>
+                                <i class="fa-duotone fa-solid fa-cloud-arrow-up text-5xl text-gray-400"></i>
                                 <p class="mt-4">{{ __('main.click_or_drag_images_here') }}</p>
                             </div>
                             <input type="file" id="area_image" name="files[]" accept="image/*" multiple hidden>

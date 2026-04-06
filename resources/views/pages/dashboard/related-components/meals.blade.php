@@ -8,7 +8,7 @@
         <div class="kt-card-toolbar">
             <a href="{{ route('dashboard.restaurants.meals.create', isset($type) ? ['type' => $type, randomToken()] : []) }}"
                 class="kt-btn kt-btn-sm kt-btn-primary">
-                <i class="ki-filled ki-plus text-sm me-1"></i>
+                <i class="fa-duotone fa-solid fa-plus text-sm me-1"></i>
                 {{ __('main.add_type', ['type' => __('main.meal')]) }}
             </a>
         </div>
@@ -113,7 +113,7 @@
                 </div>
             @empty
                 <div class="col-span-2 text-center py-8 text-secondary-foreground">
-                    <i class="ki-filled ki-information text-4xl mb-2"></i>
+                    <i class="fa-duotone fa-solid fa-circle-info text-4xl mb-2"></i>
                     <p>{{ __('main.no_data_available') }}</p>
                 </div>
             @endforelse

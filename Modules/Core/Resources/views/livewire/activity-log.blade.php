@@ -21,17 +21,17 @@
         <div class="flex flex-wrap gap-3 mb-6 bg-gray-100 dark:bg-gray-800/40 p-3 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
             <a href="{{ url('/dashboard/core/activity-log') }}" 
                class="kt-btn kt-btn-sm flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 {{ Request::is('*activity-log') && !Request::is('*users') && !Request::is('*system') ? 'kt-btn-primary shadow-lg scale-105' : 'bg-white dark:bg-gray-800 text-gray-700 hover:bg-gray-50' }}">
-                <i class="ki-outline ki-category text-md"></i>
+                <i class="fa-duotone fa-solid fa-grid-2 text-md"></i>
                 <span class="font-bold tracking-tight">{{ __('activity.all_activities') ?? 'All Activity' }}</span>
             </a>
             <a href="{{ url('/dashboard/core/activity-log/users') }}" 
                class="kt-btn kt-btn-sm flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 {{ Request::is('*activity-log/users') ? 'bg-success text-white shadow-lg scale-105' : 'bg-white dark:bg-gray-800 text-gray-700 hover:bg-gray-50' }}">
-                <i class="ki-outline ki-user text-md"></i>
+                <i class="fa-duotone fa-solid fa-user text-md"></i>
                 <span class="font-bold tracking-tight">{{ __('activity.users_activity') ?? 'Users Activity' }}</span>
             </a>
             <a href="{{ url('/dashboard/core/activity-log/system') }}" 
                class="kt-btn kt-btn-sm flex items-center gap-2 px-6 py-2.5 rounded-xl transition-all duration-300 {{ Request::is('*activity-log/system') ? 'bg-warning text-white shadow-lg scale-105' : 'bg-white dark:bg-gray-800 text-gray-700 hover:bg-gray-50' }}">
-                <i class="ki-outline ki-setting-2 text-md"></i>
+                <i class="fa-duotone fa-solid fa-gear-2 text-md"></i>
                 <span class="font-bold tracking-tight">{{ __('activity.system_activity') ?? 'System Activity' }}</span>
             </a>
         </div>
@@ -42,7 +42,7 @@
                 <div class="rounded-xl border border-gray-200 bg-white dark:bg-gray-800 p-5 shadow-sm transition-transform hover:scale-[1.02]">
                     <div class="flex items-center gap-3 mb-2">
                         <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                            <i class="ki-outline ki-chart-line text-primary text-xl"></i>
+                            <i class="fa-duotone fa-solid fa-chart-simple-line text-primary text-xl"></i>
                         </div>
                         <p class="text-[13px] font-bold text-gray-500 uppercase tracking-wider">{{ __('activity.activity_total_events') }}</p>
                     </div>
@@ -51,7 +51,7 @@
                 <div class="rounded-xl border border-gray-200 bg-white dark:bg-gray-800 p-5 shadow-sm transition-transform hover:scale-[1.02]">
                     <div class="flex items-center gap-3 mb-2">
                         <div class="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
-                            <i class="ki-outline ki-cube-2 text-success text-xl"></i>
+                            <i class="fa-duotone fa-solid fa-cubes text-success text-xl"></i>
                         </div>
                         <p class="text-[13px] font-bold text-gray-500 uppercase tracking-wider">{{ __('activity.activity_model_events') }}</p>
                     </div>
@@ -60,7 +60,7 @@
                 <div class="rounded-xl border border-gray-200 bg-white dark:bg-gray-800 p-5 shadow-sm transition-transform hover:scale-[1.02]">
                     <div class="flex items-center gap-3 mb-2">
                         <div class="w-10 h-10 rounded-lg bg-warning/10 flex items-center justify-center">
-                            <i class="ki-outline ki-setting-4 text-warning text-xl"></i>
+                            <i class="fa-duotone fa-solid fa-gear-4 text-warning text-xl"></i>
                         </div>
                         <p class="text-[13px] font-bold text-gray-500 uppercase tracking-wider">{{ __('activity.activity_system_events') }}</p>
                     </div>
@@ -69,7 +69,7 @@
                 <div class="rounded-xl border border-gray-200 bg-white dark:bg-gray-800 p-5 shadow-sm transition-transform hover:scale-[1.02]">
                     <div class="flex items-center gap-3 mb-2">
                         <div class="w-10 h-10 rounded-lg bg-danger/10 flex items-center justify-center">
-                            <i class="ki-outline ki-error-circle text-danger text-xl"></i>
+                            <i class="fa-duotone fa-solid fa-circle-exclamation-circle text-danger text-xl"></i>
                         </div>
                         <p class="text-[13px] font-bold text-gray-500 uppercase tracking-wider">{{ __('activity.activity_error_events') }}</p>
                     </div>
@@ -81,7 +81,7 @@
             <div class="rounded-2xl border border-gray-200 bg-white dark:bg-gray-800 mb-6 p-5 shadow-sm"
                 id="activity-breakdown-container">
                 <div class="flex items-center gap-2 mb-4">
-                    <i class="ki-outline ki-sort-amount-down text-primary text-lg"></i>
+                    <i class="fa-duotone fa-solid fa-sort-amount-down text-primary text-lg"></i>
                     <h3 class="text-sm font-bold text-gray-800 dark:text-white uppercase tracking-tight">{{ __('activity.activity_breakdown_title') }}</h3>
                 </div>
                 <div class="flex flex-wrap gap-2 md:gap-3">
@@ -207,7 +207,7 @@
                             }
                         }">
                             <button type="button" class="kt-btn bg-danger h-[45px]" x-on:click.prevent="confirmClearLog">
-                                <i class="ki-filled ki-trash me-1"></i>
+                                <i class="fa-duotone fa-solid fa-trash me-1"></i>
                                 {{ __('activity.activity_clear_current_log') }}
                             </button>
                         </div>
@@ -231,7 +231,7 @@
                         }
                     }">
                         <button type="button" class="kt-btn bg-danger h-[45px]" x-on:click.prevent="confirmClearAll">
-                            <i class="ki-filled ki-trash me-1"></i>
+                            <i class="fa-duotone fa-solid fa-trash me-1"></i>
                             {{ __('activity.activity_clear_all_logs') }}
                         </button>
                     </div>
@@ -503,7 +503,7 @@
                     }">
                         <button type="button" class="kt-btn kt-btn-sm kt-btn-danger"
                             x-on:click.prevent="confirmDelete">
-                            <i class="ki-filled ki-trash me-1"></i>
+                            <i class="fa-duotone fa-solid fa-trash me-1"></i>
                             {{ __('main.delete_selected') }}
                         </button>
                     </div>

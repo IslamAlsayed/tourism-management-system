@@ -3,7 +3,7 @@
 @section('title', 'Edit Vehicle')
 
 @section('content')
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="kt-container-fixed">
+    <div class="container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- Vehicle Form -->
             <div class="kt-card">
@@ -40,7 +40,7 @@
                                 </div>
                                 <label for="photo"
                                     class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer hover:bg-primary-dark">
-                                    <i class="ki-filled ki-camera text-sm"></i>
+                                    <i class="fa-duotone fa-solid fa-camera text-sm"></i>
                                 </label>
                                 <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
                             </div>
@@ -305,7 +305,7 @@
                         <!-- Submit Buttons -->
                         <div class="flex items-center gap-4 pt-4">
                             <button type="submit" class="kt-btn kt-btn-primary">
-                                <i class="ki-filled ki-check text-sm me-2"></i>
+                                <i class="fa-duotone fa-solid fa-check text-sm me-2"></i>
                                 Update Vehicle
                             </button>
                             <a href="#" class="kt-btn kt-btn-outline">
@@ -325,7 +325,7 @@
                     <div class="space-y-3">
                         <div class="flex items-center gap-3">
                             <div class="bg-success-light rounded-full p-2">
-                                <i class="ki-filled ki-information text-success"></i>
+                                <i class="fa-duotone fa-solid fa-circle-info text-success"></i>
                             </div>
                             <div>
                                 <div class="font-semibold">Keep Records Updated</div>
@@ -336,7 +336,7 @@
 
                         <div class="flex items-center gap-3">
                             <div class="bg-warning-light rounded-full p-2">
-                                <i class="ki-filled ki-shield-tick text-warning"></i>
+                                <i class="fa-duotone fa-solid fa-shield-check text-warning"></i>
                             </div>
                             <div>
                                 <div class="font-semibold">Monitor Performance</div>
@@ -347,7 +347,7 @@
 
                         <div class="flex items-center gap-3">
                             <div class="bg-primary-light rounded-full p-2">
-                                <i class="ki-filled ki-star text-primary"></i>
+                                <i class="fa-duotone fa-solid fa-star text-primary"></i>
                             </div>
                             <div>
                                 <div class="font-semibold">Schedule Maintenance</div>
