@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('dashboard/mcp')->name('dashboard.mcp.')->middleware('auth')->group(function() {
+Route::prefix('dashboard/mcp')->name('dashboard.mcp.')->middleware(['auth', 'admin'])->group(function() {
     Route::get('/', 'MCPController@index')->name('index');
     Route::get('/google-maps', 'MCPController@googleMaps')->name('google-maps');
     Route::get('/google-drive', 'MCPController@googleDrive')->name('google-drive');

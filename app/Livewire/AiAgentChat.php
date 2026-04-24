@@ -46,14 +46,14 @@ class AiAgentChat extends Component
 
     public function sendMessage()
     {
-        // Don't send empty messages
-        if (empty(trim($this->newMessage))) {
-            return;
-        }
+        // Validate message
+        $this->validate([
+            'newMessage' => 'required|string|min:1|max:2000',
+        ]);
 
         $session_id = session()->getId();
         $user_id = auth()->id();
-        $prompt = $this->newMessage;
+        $prompt = trim($this->newMessage);
 
         // Add user message to UI immediately
         $this->messages[] = ['role' => 'user', 'content' => $prompt];

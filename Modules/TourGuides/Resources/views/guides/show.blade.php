@@ -58,14 +58,14 @@
             <!-- Left Column: Primary Details -->
             <div class="xl:col-span-2 space-y-6">
                 <!-- Personal Information Card -->
-                <div class="card shadow-sm">
-                    <div class="card-header py-4">
-                        <h3 class="card-title align-items-start flex-column">
+                <div class="kt-card">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title align-items-start flex-column">
                             <span class="card-label fw-bold text-gray-900">{{ __('main.type_information', ['type' => __('main.tours.guide')]) }}</span>
                             <span class="text-muted mt-1 fw-semibold fs-7">{{ __('main.personal_details') }}</span>
                         </h3>
                     </div>
-                    <div class="card-body py-6">
+                    <div class="kt-card-body p-4 lg:p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
                                 <label class="text-muted fs-7 fw-bold text-uppercase mb-2 d-block">{{ __('main.name_ar') }}</label>
@@ -129,14 +129,14 @@
 
                 <!-- Description & Notes -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-header py-4">
-                            <h3 class="card-title fw-bold text-gray-900">
+                    <div class="kt-card h-100">
+                        <div class="kt-card-header">
+                            <h3 class="kt-card-title fw-bold text-gray-900">
                                 <i class="fa-duotone fa-solid fa-align-left fs-4 text-primary me-2"></i>
                                 {{ __('main.description') }}
                             </h3>
                         </div>
-                        <div class="card-body">
+                        <div class="kt-card-body">
                             @if($tourGuide->description)
                                 <div class="text-gray-700 fs-6 leading-relaxed">
                                     {!! $tourGuide->description !!}
@@ -148,14 +148,14 @@
                             @endif
                         </div>
                     </div>
-                    <div class="card shadow-sm h-100 border-dashed border-gray-300">
-                        <div class="card-header py-4">
-                            <h3 class="card-title fw-bold text-gray-900">
+                    <div class="kt-card h-100 border-dashed border-gray-300">
+                        <div class="kt-card-header">
+                            <h3 class="kt-card-title fw-bold text-gray-900">
                                 <i class="fa-duotone fa-solid fa-note-sticky fs-4 text-warning me-2"></i>
                                 {{ __('main.notes') }}
                             </h3>
                         </div>
-                        <div class="card-body bg-light-warning bg-opacity-10 rounded">
+                        <div class="kt-card-body bg-light-warning bg-opacity-10 rounded">
                             @if($tourGuide->notes)
                                 <div class="text-gray-700 fs-6 italic leading-relaxed">
                                     {!! $tourGuide->notes !!}
@@ -173,14 +173,14 @@
             <!-- Right Column: Location & Contact -->
             <div class="space-y-6">
                 <!-- Location Card -->
-                <div class="card shadow-sm">
-                    <div class="card-header py-4 bg-light-primary bg-opacity-10">
-                        <h3 class="card-title fw-bold text-gray-900">
+                <div class="kt-card">
+                    <div class="kt-card-header bg-light-primary bg-opacity-10">
+                        <h3 class="kt-card-title fw-bold text-gray-900">
                             <i class="fa-duotone fa-solid fa-location-dot fs-3 text-primary me-2"></i>
                             {{ __('main.location_info') }}
                         </h3>
                     </div>
-                    <div class="card-body py-6 space-y-4">
+                    <div class="kt-card-body p-4 lg:p-6 space-y-4">
                         <div class="flex items-center gap-4">
                             <div class="symbol symbol-40px symbol-circle bg-light-primary">
                                 <span class="symbol-label text-primary"><i class="fa-duotone fa-solid fa-globe fs-2"></i></span>
@@ -229,14 +229,14 @@
                 </div>
 
                 <!-- Contact Card -->
-                <div class="card shadow-sm border-2 border-primary border-opacity-10">
-                    <div class="card-header py-4">
-                        <h3 class="card-title fw-bold text-gray-900">
+                <div class="kt-card border-2 border-primary border-opacity-10">
+                    <div class="kt-card-header">
+                        <h3 class="kt-card-title fw-bold text-gray-900">
                             <i class="fa-duotone fa-solid fa-phone fs-4 text-success me-2"></i>
                             {{ __('main.contact_info') }}
                         </h3>
                     </div>
-                    <div class="card-body py-6 space-y-5">
+                    <div class="kt-card-body p-4 lg:p-6 space-y-5">
                         <div class="flex items-center gap-4 bg-light-light p-3 rounded hover:bg-light transition-colors">
                             <div class="symbol symbol-35px bg-white border">
                                 <span class="symbol-label text-gray-600"><i class="fa-duotone fa-solid fa-envelope fs-2"></i></span>
@@ -274,8 +274,8 @@
                 </div>
 
                 <!-- Status Card -->
-                <div class="card shadow-sm">
-                    <div class="card-body py-6">
+                <div class="kt-card">
+                    <div class="kt-card-body p-4 lg:p-6">
                         <div class="flex items-center justify-between">
                             <div class="flex flex-col">
                                 <span class="fs-6 fw-bold text-gray-800">{{ __('main.status_label') }}</span>

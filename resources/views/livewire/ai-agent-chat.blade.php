@@ -1,4 +1,4 @@
-<div class="card-body p-0 d-flex flex-column" id="kt_chat_messenger_body">
+<div class="kt-card-body p-0 d-flex flex-column" id="kt_chat_messenger_body">
     <!--begin::Messages-->
     <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" style="min-height: 500px; padding: 2rem;" id="kt_chat_messenger_scroll">
         @foreach($messages as $message)
@@ -91,14 +91,14 @@
             <div class="d-flex flex-stack">
                 <!--begin::Actions-->
                 <div class="d-flex align-items-center me-2">
-                    <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip" title="Upload File (Coming Soon)">
+                    <button class="kt-btn kt-btn-sm kt-btn-icon kt-btn-light text-gray-500 hover:text-primary me-1" type="button" title="Upload File (Coming Soon)">
                         <i class="fa-duotone fa-solid fa-paperclip fs-3"></i>
                     </button>
                 </div>
                 <!--end::Actions-->
 
                 <!--begin::Send-->
-                <button class="btn btn-primary" type="submit" data-kt-element="send" wire:loading.attr="disabled">
+                <button class="kt-btn kt-btn-primary" type="submit" data-kt-element="send" wire:loading.attr="disabled">
                     <span wire:loading.remove>Send</span>
                     <span wire:loading><i class="fas fa-spinner fa-spin"></i></span>
                 </button>

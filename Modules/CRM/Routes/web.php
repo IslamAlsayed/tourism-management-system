@@ -14,6 +14,6 @@ use Modules\CRM\Http\Controllers\ClientController;
 |
 */
 
-Route::prefix('dashboard/crm')->name('dashboard.crm.')->middleware('auth')->group(function () {
+Route::prefix('dashboard/crm')->name('dashboard.crm.')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('clients', ClientController::class)->names('clients');
 });

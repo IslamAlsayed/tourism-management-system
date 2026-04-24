@@ -10,12 +10,13 @@ trait CustomPagination
 
     public function mountWithCustomPagination()
     {
-        $this->paginate = getPaginate();
+        $currentPaginate = getPaginate();
+        $this->paginate = ($currentPaginate == config('app.paginate_max')) ? 'all' : $currentPaginate;
     }
 
     public function updatedPaginate($value)
     {
-        $mainValue = $value == 'all' ? config('app.paginate_max') : $value;
+        $mainValue = $value == 'all' ? config('app.paginate_max') : (int) $value;
         session(['paginate_count' => $mainValue]);
         $this->dispatch('updatedPaginate', ['value' => $value]);
         Setting::updateOrCreate(['id' => 1], ['app_paginate_count' => $mainValue]);

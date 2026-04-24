@@ -117,12 +117,13 @@ class Notification extends Model
 
     public function scopeWithMe($query, $userId)
     {
-        return $query->where('user_id', $userId);
+        return $query->where('target_user_id', $userId)
+            ->orWhere('performer_id', $userId);
     }
 
     public function scopeNotMe($query, $userId)
     {
-        return $query->where('user_id', '!=', $userId);
+        return $query->where('performer_id', '!=', $userId);
     }
 
     public function scopeOfType($query, $type)

@@ -57,7 +57,7 @@ trait CustomColumnsRefreshBased
         $this->fillable = $model->getFillable();
         array_splice(
             $this->fillable,
-            optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)),
+            optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', 5),
             0,
             $this->relations
         );
@@ -73,7 +73,7 @@ trait CustomColumnsRefreshBased
             $this->hasCustomColumns = !is_null($savedColumns);
         }
 
-        $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+        $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', 5);
         $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, $defaultColumnsCount);
 
         $this->pendingColumns = $this->columns;
@@ -148,7 +148,7 @@ trait CustomColumnsRefreshBased
         $excluded = $this->getExcludedColumnsWithSettings($model);
 
         if ($this->isAllSelected) {
-            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', 5);
             $this->pendingColumns = array_slice($this->allColumns, 0, $defaultColumnsCount);
         } else {
             $this->pendingColumns = $this->allColumns;
@@ -172,7 +172,7 @@ trait CustomColumnsRefreshBased
         if ($systemDefault) {
             $this->columns = $systemDefault;
         } else {
-            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', 5);
             $this->columns = array_slice($this->allColumns, 0, $defaultColumnsCount);
         }
 

@@ -4,7 +4,7 @@ namespace Modules\Accommodations\Providers;
 
 use Livewire\Livewire;
 use Illuminate\Support\Facades\Gate;
-use App\Livewire\Accommodations\Types;
+use Modules\Accommodations\Livewire\Types;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Modules\Accommodations\Entities\Meal;

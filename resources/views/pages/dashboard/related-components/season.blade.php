@@ -40,7 +40,7 @@
                         <div class="flex items-center gap-2">
                             @livewire('toggle-switch', [
                                 'modelId' => $record->id,
-                                'modelType' => '\\App\\Models\\Season',
+                                'modelType' => '\\Modules\\Accommodations\\Entities\\Season',
                                 'field' => 'is_active',
                                 'value' => (bool) $record->is_active,
                                 'table' => 'seasons',
@@ -65,7 +65,7 @@
                 @livewire('delete-bottom', [
                     'type' => 'season',
                     'modelId' => $record->id,
-                    'modelType' => '\\App\\Models\\Season',
+                    'modelType' => '\\Modules\\Accommodations\\Entities\\Season',
                     'table' => 'seasons',
                 ])
             </div>

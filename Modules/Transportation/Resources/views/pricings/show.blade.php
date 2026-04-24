@@ -52,7 +52,7 @@
                                 <div class="flex items-center gap-2">
                                     @livewire('toggle-switch', [
                                         'modelId' => $pricing->id,
-                                        'modelType' => '\\App\\Models\\TransportationPricing',
+                                        'modelType' => '\\Modules\\Transportation\\Entities\\Pricing',
                                         'field' => 'is_active',
                                         'value' => (bool) $pricing->is_active,
                                         'table' => 'transportations_pricings',

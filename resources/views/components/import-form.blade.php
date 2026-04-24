@@ -23,8 +23,9 @@
     $backRoute = $cancelRoute ?? (Route::has("$routePrefix.index") ? route("$routePrefix.index") : url()->previous());
 @endphp
 
+<div class="flex flex-col gap-5 lg:gap-7.5">
 {{-- ===== PAGE HEADER ===== --}}
-<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+<div class="flex flex-wrap items-center justify-between gap-4">
     <div class="flex items-center gap-3">
         <div>
             <h1 class="text-xl font-semibold text-mono">{{ $title }}</h1>
@@ -52,7 +53,7 @@
 @if (count($requirements) > 0)
     @php $hasUnmetRequirements = collect($requirements)->contains(fn($r) => !$r['condition']); @endphp
     @if ($hasUnmetRequirements)
-        <div class="kt-alert kt-alert-icon kt-alert-destructive mb-6">
+        <div class="kt-alert kt-alert-icon kt-alert-destructive">
             <i class="fa-duotone fa-solid fa-circle-info-2 kt-alert-icon-item text-lg"></i>
             <div class="kt-alert-content">
                 <div class="kt-alert-title">{{ __('main.requirements_not_met') ?? 'Requirements Not Met' }}</div>
@@ -78,7 +79,7 @@
 @endif
 
 {{-- ===== MAIN GRID: Import from URL + Manual Upload ===== --}}
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-7.5">
 
     {{-- Import from URL Card --}}
     <div class="kt-card">
@@ -204,7 +205,7 @@
 
 {{-- ===== IMPORT HISTORY TABLE ===== --}}
 @livewire('import-history-table', ['modelType' => $modelClass ?? $model])
-
+</div>
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -364,7 +365,9 @@
                 if (r.isConfirmed) {
                     Swal.fire({
                         title: '{{ __('main.fetching') ?? 'Importing...' }}',
+                        html: '<p style="font-size:14px;color:#6b7280;margin-top:8px">{{ __('main.please_wait_downloading') ?? 'Downloading file from URL... Please wait.' }}</p>',
                         allowOutsideClick: false,
+                        width: '400px',
                         didOpen: () => Swal.showLoading()
                     });
                     document.getElementById('drive_action').value = 'update';

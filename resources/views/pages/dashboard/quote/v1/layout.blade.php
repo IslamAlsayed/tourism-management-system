@@ -1,10 +1,10 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 
 @section('content')
     <div class="container mx-auto px-4">
         <div class="w-full max-w-5xl mx-auto">
-            <div class="card card-flush">
-                <div class="card-body">
+            <div class="kt-card">
+                <div class="kt-card-body">
                     {{-- Stepper --}}
                     <div class="mb-6">
                         <div class="flex items-center justify-between">
@@ -35,7 +35,7 @@
 
 
 {{-- @section('content')
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         <div class="flex justify-center">
             <div class="w-full max-w-4xl">
                 <div class="card card-flush mb-6">

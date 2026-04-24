@@ -18,7 +18,7 @@ use Modules\Cruises\Http\Controllers\CruiseSeasonController;
 use Modules\Cruises\Http\Controllers\CruisePortController;
 use Modules\Cruises\Http\Controllers\CruiseSupplierController;
 
-Route::prefix('dashboard/cruises')->name('dashboard.cruises.')->middleware('auth')->group(function() {
+Route::prefix('dashboard/cruises')->name('dashboard.cruises.')->middleware(['auth', 'admin'])->group(function() {
     // Sub-resources MUST be registered BEFORE the main resource
     // to prevent {cruise} wildcard from catching 'categories', 'seasons', etc.
     Route::resource('categories', CabinCategoryController::class)->except(['show'])->names('categories');

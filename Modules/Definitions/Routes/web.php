@@ -15,7 +15,7 @@ use Modules\Definitions\Http\Controllers\FieldDefinitionController;
 |
 */
 
-Route::prefix('dashboard/definitions')->name('dashboard.definitions.')->middleware(['auth'])->group(function() {
+Route::prefix('dashboard/definitions')->name('dashboard.definitions.')->middleware(['auth', 'admin'])->group(function() {
     Route::resource('pricing-definitions', PricingDefinitionController::class)->names('pricing-definitions');
     Route::resource('field-definitions', FieldDefinitionController::class)->names('field-definitions');
 });

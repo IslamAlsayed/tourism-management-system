@@ -45,7 +45,7 @@ class ImportManager extends Component
 
         // emit immediate local notification so UI updates quickly
         $this->lastMessage = __('main.import_queued', [], 'ar');
-        $this->dispatchBrowserEvent('import-started', ['message' => $this->lastMessage]);
+        $this->dispatch('import-started', message: $this->lastMessage);
     }
 
     public function handleImportNotification($payload)
@@ -54,6 +54,6 @@ class ImportManager extends Component
         $this->lastMessage = $payload['message'] ?? json_encode($payload);
         $this->status = $this->lastMessage;
         // optionally emit a browser event for JS to show a toast
-        $this->dispatchBrowserEvent('import-completed-js', ['message' => $this->lastMessage, 'type' => $payload['type'] ?? 'success']);
+        $this->dispatch('import-completed-js', message: $this->lastMessage, type: $payload['type'] ?? 'success');
     }
 }

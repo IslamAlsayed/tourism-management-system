@@ -42,3 +42,5 @@ border_crossings_guide.html
 .env.testing
 CROSSING_PORTS_UPDATE.md
 .github\workflows\.bashrc
+public/assets/plugins/fontawesome-icons/metadata/*.json
+public/assets/vendors/fontawesome-7.2/metadata/*.json

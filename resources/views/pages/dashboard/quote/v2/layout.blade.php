@@ -4,7 +4,7 @@
     <div class="container mx-auto px-4">
         <div class="w-full max-w-5xl mx-auto">
             <div class="card card-flush">
-                <div class="card-body">
+                <div class="kt-card-body">
                     {{-- Stepper --}}
                     <div class="mb-6">
                         <div class="flex items-center justify-between">

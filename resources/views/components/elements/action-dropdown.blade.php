@@ -57,6 +57,7 @@
         {{-- Show --}}
         @if ($showRoute && Route::has($showRoute))
             <a href="{{ route($showRoute, $routeParams) }}"
+               x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['show'] !== false"
                class="flex items-center gap-2.5 px-3.5 py-2 text-[13px] text-foreground hover:bg-mono/5 transition-colors">
                 <i class="fa-duotone fa-solid fa-eye text-muted-foreground text-base leading-none"></i>
                 {{ __('main.show') }}
@@ -66,6 +67,7 @@
         {{-- Edit --}}
         @if ((!isset($models) || $models != 'notifications') && $editRoute && Route::has($editRoute))
             <a href="{{ route($editRoute, $routeParams) }}"
+               x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['edit'] !== false"
                class="flex items-center gap-2.5 px-3.5 py-2 text-[13px] text-foreground hover:bg-mono/5 transition-colors">
                 <i class="fa-duotone fa-solid fa-pen-to-square text-muted-foreground text-base leading-none"></i>
                 {{ __('main.edit') }}
@@ -86,6 +88,7 @@
 
         {{-- Delete --}}
         <button type="button"
+                x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['delete'] !== false"
                 class="flex items-center gap-2.5 px-3.5 py-2 text-[13px] text-danger hover:bg-danger/10 w-full text-start transition-colors action-delete-trigger"
                 data-action="delete"
                 data-record-id="{{ $id ?? '' }}">
@@ -95,6 +98,7 @@
 
         {{-- Force Delete --}}
         <button type="button"
+                x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['force_delete'] !== false"
                 class="flex items-center gap-2.5 px-3.5 py-2 text-[13px] text-red-400 hover:bg-red-500/10 w-full text-start transition-colors font-semibold action-delete-trigger"
                 data-action="forceDelete"
                 data-record-id="{{ $id ?? '' }}">

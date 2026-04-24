@@ -12,7 +12,7 @@
 
     <!-- Table -->
     <div class="card">
-        <div class="card-body p-0">
+        <div class="kt-card-body p-0">
             <div class="table-responsive">
                 <table class="kt-table table-auto kt-table-border align-middle text-gray-700 font-medium fs-6 gy-5">
                     <thead>

@@ -1,9 +1,9 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 
 @section('title', 'Edit Vehicle')
 
 @section('content')
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- Vehicle Form -->
             <div class="kt-card">

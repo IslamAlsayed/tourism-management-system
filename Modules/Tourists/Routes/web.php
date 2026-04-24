@@ -14,6 +14,6 @@ use Modules\Tourists\Http\Controllers\TouristsController;
 |
 */
 
-Route::prefix('dashboard/tourists')->name('dashboard.tourists.')->middleware('auth')->group(function () {
+Route::prefix('dashboard/tourists')->name('dashboard.tourists.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [TouristsController::class, 'index']);
 });

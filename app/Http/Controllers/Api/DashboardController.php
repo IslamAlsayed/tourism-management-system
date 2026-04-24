@@ -16,6 +16,12 @@ use Spatie\Activitylog\Models\Activity;
 
 class DashboardController extends Controller
 {
+    // Security: Only allow these models for dynamic operations
+    private const ALLOWED_MODELS = [
+        'Notification', 'MediaFile', 'UiIcon', 'PageBanner',
+        'StarRating', 'AiChatMessage', 'Airline', 'ImportHistory',
+        'SidebarMenuOrder', 'TableColumn', 'RichText',
+    ];
     // For testing: Get references for a given model based on foreign key and its value(s)
     public function getReferencesForTest(Request $request)
     {
@@ -32,8 +38,10 @@ class DashboardController extends Controller
         ]);
 
         $modelName = ucwords($validated['model']);
+        if (!in_array($modelName, self::ALLOWED_MODELS)) {
+            return response()->json(['error' => __('messages.invalid_model_specified')], 400);
+        }
         $modelClass = "App\\Models\\$modelName";
-
         if (!class_exists($modelClass)) {
             return response()->json(['error' => __('messages.invalid_model_specified')], 400);
         }
@@ -70,8 +78,10 @@ class DashboardController extends Controller
         ]);
 
         $modelName = ucwords($validated['model']);
+        if (!in_array($modelName, self::ALLOWED_MODELS)) {
+            return response()->json(['error' => __('messages.invalid_model_specified')], 400);
+        }
         $modelClass = "App\\Models\\$modelName";
-
         if (!class_exists($modelClass)) {
             return response()->json(['error' => __('messages.invalid_model_specified')], 400);
         }
@@ -267,8 +277,11 @@ class DashboardController extends Controller
             'value' => 'nullable',
         ]);
 
-        $modelClass = "App\\Models\\" . str_replace('-', '', studlyCaseName($request->model));
-
+        $modelName = str_replace('-', '', studlyCaseName($request->model));
+        if (!in_array($modelName, self::ALLOWED_MODELS)) {
+            return response()->json(['success' => false, 'message' => __('messages.invalid_model_specified')], 400);
+        }
+        $modelClass = "App\\Models\\" . $modelName;
         if (!class_exists($modelClass)) {
             return response()->json(['success' => false, 'message' => __('messages.invalid_model_specified')], 400);
         }

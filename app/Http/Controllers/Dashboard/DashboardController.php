@@ -46,32 +46,7 @@ class DashboardController extends Controller
         return view('pages.dashboard.index', compact('stats'));
     }
 
-    public function mainForm_old()
-    {
-        $currencies = Currency::orderBy('name')->get(['id', 'name', 'code']);
-        $hotels = Hotel::all()->toArray();
-        $hotel_room_types = HotelRoomType::all()->toArray();
-        $hotel_seasons = HotelSeason::all()->toArray();
-        $hotel_rates = HotelRate::all()->toArray();
-        $hotel_supplements = HotelSupplement::all()->toArray();
-        $hotel_policies = HotelPolicy::all()->toArray();
-        $transportations_companies = Company::all()->toArray();
-        $other_services = OtherService::all()->toArray();
-        $suppliers = Supplier::all()->toArray();
-
-        dd(
-            $currencies,
-            $hotels,
-            $hotel_room_types,
-            $hotel_seasons,
-            $hotel_rates,
-            $hotel_supplements,
-            $hotel_policies,
-            $transportations_companies,
-            $other_services,
-            $suppliers
-        );
-    }
+    // mainForm_old() removed — contained active dd() debug code
 
     public function mainForm()
     {
@@ -162,14 +137,28 @@ class DashboardController extends Controller
 
     public function deleteAll(Request $request)
     {
-        $modelClass = "App\\Models\\" . studlyCaseName($request->input('model'));
+        // Security: Only allow deletion of whitelisted models
+        $allowedModels = [
+            'Notification', 'MediaFile', 'UiIcon', 'PageBanner',
+            'ImportHistory', 'StarRating', 'AiChatMessage',
+        ];
+
+        $modelName = studlyCaseName($request->input('model'));
+
+        if (!in_array($modelName, $allowedModels)) {
+            return redirect()->back()->withError(__('messages.invalid_model_specified'));
+        }
+
+        $modelClass = "App\\Models\\" . $modelName;
         if (!class_exists($modelClass)) {
             return redirect()->back()->withError(__('messages.invalid_model_specified'));
         }
+
         $ids = $request->input('selectedItems');
         if (!$ids || !is_array($ids)) {
             return redirect()->back()->withError(__('messages.no_items_selected'));
         }
+
         $modelClass::whereIn('id', $ids)->delete();
         return redirect()->back()->withSuccess(__('messages.selected_items_deleted', ['count' => count($ids)]));
     }

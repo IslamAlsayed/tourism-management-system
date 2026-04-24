@@ -7,7 +7,7 @@
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
-                    {{ __('main.create_type', ['type' => __('main.cabin_categories') ?? 'Cabin Category']) }}
+                    {{ __('main.create_type', ['type' => __('main.cabin_categories')]) }}
                 </h1>
             </div>
             <div class="flex items-center gap-2.5">
@@ -33,8 +33,9 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {{-- Name EN --}}
                             <div>
-                                <label for="name" class="kt-label required mb-2">{{ __('main.name_en') ?? 'Name (EN)' }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ old('name') }}" required>
+                                <label for="name" class="kt-label required mb-2">{{ __('main.name_en') }}</label>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ old('name') }}" required>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -42,8 +43,9 @@
 
                             {{-- Name AR --}}
                             <div>
-                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') ?? 'Name (AR)' }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ old('name_ar') }}" dir="rtl">
+                                <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}" dir="rtl">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -51,8 +53,9 @@
 
                             {{-- Code --}}
                             <div class="md:col-span-2">
-                                <label for="code" class="kt-label required mb-2">{{ __('main.code') ?? 'Code' }}</label>
-                                <input type="text" name="code" id="code" class="kt-input h-[45px]" value="{{ old('code') }}" placeholder="E.g. I1, O2, B3..." required>
+                                <label for="code" class="kt-label required mb-2">{{ __('main.code') }}</label>
+                                <input type="text" name="code" id="code" class="kt-input h-[45px]"
+                                    value="{{ old('code') }}" placeholder="{{ __('main.code_placeholder') }}" required>
                                 @error('code')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -88,7 +91,8 @@
 
                 {{-- Action Buttons --}}
                 <div class="flex justify-end gap-3 mt-4">
-                    <a href="{{ route('dashboard.cruises.categories.index') }}" class="kt-btn kt-btn-outline">{{ __('main.cancel') }}</a>
+                    <a href="{{ route('dashboard.cruises.categories.index') }}"
+                        class="kt-btn kt-btn-outline">{{ __('main.cancel') }}</a>
                     <button type="submit" class="kt-btn kt-btn-primary">{{ __('main.save_and_continue') }}</button>
                 </div>
             </div>

@@ -50,7 +50,7 @@
     <div class="container-fixed">
         <form action="{{ route('dashboard.touristservices.services.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="grid gap-6 lg:gap-4">
+            <div class="grid gap-4 lg:gap-6">
                 <!-- 1. Location Information -->
                 <div class="kt-card">
                     <div class="kt-card-header">
@@ -67,7 +67,7 @@
                 </div>
 
                 <!-- 2. BASIC INFORMATION & SETTINGS -->
-                <div class="kt-card background dark:bg-gray-800 border-custom dark:border-gray-700 shadow-sm rounded-xl">
+                <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title flex items-center gap-2 text-lg font-bold text-gray-600 dark:text-white">
                             <span
@@ -119,7 +119,7 @@
                                     <!-- Pricing Unit -->
                                     <div class="relative group">
                                         <label
-                                            class="text-xs font-bold text-gray-600 uppercase mb-2 block flex items-center gap-1">
+                                            class="text-xs font-bold text-gray-600 uppercase mb-2 flex items-center gap-1">
                                             <i class="fa-duotone fa-solid fa-grid-2 text-gray-400"></i>
                                             {{ __('main.pricing_unit') }}
                                         </label>
@@ -139,7 +139,7 @@
                                     <!-- Quantity -->
                                     <div class="relative group">
                                         <label
-                                            class="text-xs font-bold text-gray-600 uppercase mb-2 block flex items-center gap-1">
+                                            class="text-xs font-bold text-gray-600 uppercase mb-2 flex items-center gap-1">
                                             <i class="fa-duotone fa-solid fa-calculator text-gray-400"></i>
                                             {{ __('main.qty') }}
                                         </label>
@@ -384,7 +384,7 @@
                 </div>
 
                 <!-- 3. PRICING ENGINE -->
-                <div class="kt-card background border-custom shadow-sm rounded-xl" id="pricing_engine_container">
+                <div class="kt-card" id="pricing_engine_container">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title flex items-center gap-2 text-lg font-bold text-gray-600 dark:text-white">
                             <span
@@ -421,7 +421,7 @@
                 </div>
 
                 <!-- 4. TAXES & FEES -->
-                <div class="kt-card background border-custom shadow-sm rounded-xl">
+                <div class="kt-card">
                     <div class="kt-card-header">
                         <h3 class="kt-card-title flex items-center gap-2 text-lg font-bold text-gray-600 dark:text-white">
                             <span
@@ -505,7 +505,7 @@
                                     <p class="mt-4">{{ __('main.click_or_drag_image_here') }}</p>
                                 </div>
                                 <input type="file" id="photo" name="photo" accept="image/*" hidden>
-                                <div id="preview-photo" class="hidden flex flex-wrap gap-4 mt-6"></div>
+                                <div id="preview-photo" class="hidden flex-wrap gap-4 mt-6"></div>
                             </div>
                             <div>
                                 <label for="gallery" class="kt-label">
@@ -517,7 +517,7 @@
                                     <p class="mt-4">{{ __('main.click_or_drag_image_here_multiple') }}</p>
                                 </div>
                                 <input type="file" id="gallery" name="gallery[]" accept="image/*" hidden multiple>
-                                <div id="preview-gallery" class="hidden flex flex-wrap gap-4 mt-6"></div>
+                                <div id="preview-gallery" class="hidden flex-wrap gap-4 mt-6"></div>
                             </div>
                             <div>
                                 <label for="video_url" class="kt-label">{{ __('main.video_url') }}</label>

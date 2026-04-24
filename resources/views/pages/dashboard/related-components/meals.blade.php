@@ -36,7 +36,7 @@
                                 <div class="flex items-center gap-2">
                                     @livewire('toggle-switch', [
                                         'modelId' => $meal->id,
-                                        'modelType' => '\\App\\Models\\Meal',
+                                        'modelType' => '\\Modules\\Restaurants\\Entities\\RestaurantMeal',
                                         'field' => 'is_included',
                                         'value' => (bool) $meal->is_included,
                                         'table' => 'meals',
@@ -48,7 +48,7 @@
                                 <div class="flex items-center gap-2">
                                     @livewire('toggle-switch', [
                                         'modelId' => $meal->id,
-                                        'modelType' => '\\App\\Models\\Meal',
+                                        'modelType' => '\\Modules\\Restaurants\\Entities\\RestaurantMeal',
                                         'field' => 'is_active',
                                         'value' => (bool) $meal->is_active,
                                         'table' => 'meals',
@@ -106,7 +106,7 @@
                         @livewire('delete-bottom', [
                             'type' => 'meals',
                             'modelId' => $meal->id,
-                            'modelType' => '\\App\\Models\\Meal',
+                            'modelType' => '\\Modules\\Restaurants\\Entities\\RestaurantMeal',
                             'table' => 'meals',
                         ])
                     </div>

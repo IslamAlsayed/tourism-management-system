@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head><title>KT Debug</title></head>
+<body>
+<h1>KTUI Diagnostic</h1>
+<div id="results" style="font-family:monospace; white-space:pre; background:#111; color:#0f0; padding:20px; font-size:14px;"></div>
+<script>
+// Wait for everything to load
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var r = document.getElementById('results');
+        var lines = [];
+        
+        lines.push('=== KTUI DIAGNOSTIC ===');
+        lines.push('');
+        
+        // Check global objects
+        lines.push('window.KTComponents: ' + (typeof window.KTComponents));
+        lines.push('window.KTMenu: ' + (typeof window.KTMenu));
+        lines.push('window.KTToast: ' + (typeof window.KTToast));
+        lines.push('window.KTSelect: ' + (typeof window.KTSelect));
+        lines.push('window.KTDrawer: ' + (typeof window.KTDrawer));
+        lines.push('window.KTModal: ' + (typeof window.KTModal));
+        lines.push('window.KTDropdown: ' + (typeof window.KTDropdown));
+        lines.push('');
+        
+        // Check if KTComponents has init
+        if (window.KTComponents) {
+            lines.push('KTComponents.init: ' + (typeof window.KTComponents.init));
+            lines.push('KTComponents keys: ' + Object.keys(window.KTComponents).join(', '));
+        }
+        
+        // Check if KTMenu has methods
+        if (window.KTMenu) {
+            lines.push('KTMenu.init: ' + (typeof window.KTMenu.init));
+            lines.push('KTMenu keys: ' + Object.keys(window.KTMenu).join(', '));
+        }
+        
+        lines.push('');
+        lines.push('=== SCRIPTS LOADED ===');
+        var scripts = document.querySelectorAll('script[src]');
+        scripts.forEach(function(s) { lines.push('  ' + s.src); });
+        
+        r.textContent = lines.join('\n');
+    }, 500);
+});
+</script>
+<script src="/metronic/js/core.bundle.js"></script>
+</body>
+</html>

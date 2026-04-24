@@ -48,8 +48,8 @@ class QuoteController extends Controller
 
     public function postStep1(Request $request)
     {
-        dd($request->all());
         $data = $request->except(['nationalitiesOptions', 'subregionsOption']);
+        session()->put('quote_v2_step1', $data);
 
         return redirect()->route('dashboard.quote.v2.step2');
     }
@@ -79,10 +79,10 @@ class QuoteController extends Controller
 
     public function postStep2(Request $request)
     {
-        // $data = $request->except(['nationalitiesOptions', 'subregionsOption']);
-        dd($request->all());
+        $data = $request->except(['_token']);
+        session()->put('quote_v2_step2', $data);
 
-        return redirect()->route('dashboard.quote.v2.step2');
+        return redirect()->route('dashboard.quote.v2.step3');
     }
 
     public function step3()
@@ -97,15 +97,19 @@ class QuoteController extends Controller
 
     public function postStep3(Request $request)
     {
-        // $data = $request->except(['nationalitiesOptions', 'subregionsOption']);
-        dd($request->all());
+        $data = $request->except(['_token']);
+        session()->put('quote_v2_step3', $data);
 
-        return redirect()->route('dashboard.quote.v2.step2');
+        return redirect()->route('dashboard.quote.v2.step4');
     }
 
     public function postStep4(Request $request)
     {
-        dd($request->all());
+        $data = $request->except(['_token']);
+        session()->put('quote_v2_step4', $data);
+
+        return redirect()->route('dashboard.quote.v2.step1')
+            ->with('success', __('messages.quote_saved_successfully'));
     }
 
     public function step4()

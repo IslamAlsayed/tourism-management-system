@@ -1,14 +1,13 @@
-{{-- Enhanced pagination information component --}}
+{{-- KTUI Pagination Component — Unified across all modules --}}
 <div class="kt-card-footer border-t border-gray-200 bg-transparent">
-    <div class="w-full flex justify-between items-center gap-4">
+    <div class="w-full flex flex-wrap justify-between items-center gap-4">
         {{-- Records per page selector --}}
-        <div class="flex items-center gap-2 text-sm text-gray-600">
+        <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
             <span>{{ __('main.show') }}</span>
 
-            {{-- Generate options from config array --}}
             @if (config('app.paginate_array'))
                 <select wire:model.live="paginate" name="paginate" id="paginate"
-                    class="kt-select w-20 px-2 py-1 border rounded" style="width: 65px">
+                    class="kt-select h-[32px] w-[70px] text-sm">
                     @foreach (config('app.paginate_array') as $limit)
                         <option value="{{ $limit }}">{{ $limit }}</option>
                     @endforeach
@@ -20,82 +19,139 @@
         {{-- Pagination info and links --}}
         @if (getPaginate() != config('app.paginate_max'))
             <div class="flex items-center gap-4">
-                <div class="text-sm text-gray-600 details_info">
+                {{-- Info text --}}
+                <div class="text-sm text-gray-600 dark:text-gray-400 details_info">
                     {{ $data->firstItem() ?? 0 }} - {{ $data->lastItem() ?? 0 }} {{ __('main.of') }}
                     {{ $data->total() ?? 0 }}
                 </div>
 
-                <div class="flex items-center gap-1">
-                    {{-- Previous --}}
-                    <span>
-                        <button wire:click="previousPage"
-                            class="px-3 py-1 text-blue-600 background border border-gray-300 rounded hover:bg-gray-50 cursor-pointer previousPage"
+                {{-- KTUI Pagination --}}
+                <ol class="kt-pagination">
+                    {{-- First Page --}}
+                    <li class="kt-pagination-item">
+                        <button wire:click="gotoPage(1)" wire:key="page-first"
+                            class="kt-btn kt-btn-icon kt-btn-ghost"
                             @if ($data->onFirstPage()) disabled @endif>
-                            <span>&laquo;</span><span class="s">{{ __('main.previous') }}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-chevron-first rtl:rotate-180"
+                                aria-hidden="true">
+                                <path d="m17 18-6-6 6-6"></path>
+                                <path d="M7 6v12"></path>
+                            </svg>
                         </button>
-                    </span>
+                    </li>
 
-                    <div class="flex items-center gap-1" id="pagination_links">
-                        {{-- First Page --}}
-                        <span>
-                            <button wire:click="gotoPage(1)" wire:key="page-1"
-                                class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($data->currentPage() == 1) text-white bg-blue-600 @else text-blue-600 background hover:bg-blue-50 @endif">
-                                1
-                            </button>
-                        </span>
+                    {{-- Previous --}}
+                    <li class="kt-pagination-item">
+                        <button wire:click="previousPage" wire:key="page-prev"
+                            class="kt-btn kt-btn-icon kt-btn-ghost"
+                            @if ($data->onFirstPage()) disabled @endif>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-chevron-left rtl:rotate-180"
+                                aria-hidden="true">
+                                <path d="m15 18-6-6 6-6"></path>
+                            </svg>
+                        </button>
+                    </li>
 
-                        {{-- Left Dots --}}
-                        @if ($data->currentPage() > 4)
-                            <span><span>...</span></span>
-                        @endif
+                    {{-- Page 1 --}}
+                    <li class="kt-pagination-item">
+                        <button wire:click="gotoPage(1)" wire:key="page-1"
+                            class="kt-btn kt-btn-icon kt-btn-ghost @if ($data->currentPage() == 1) active @endif">
+                            1
+                        </button>
+                    </li>
 
-                        {{-- Middle Pages (max 5 pages dynamic) --}}
-                        @php
-                            $start = max(2, $data->currentPage() - 2);
-                            $end = min($data->lastPage() - 1, $data->currentPage() + 2);
+                    {{-- Left Ellipsis --}}
+                    @if ($data->currentPage() > 4)
+                        <li class="kt-pagination-ellipsis">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-ellipsis" aria-hidden="true">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="19" cy="12" r="1"></circle>
+                                <circle cx="5" cy="12" r="1"></circle>
+                            </svg>
+                        </li>
+                    @endif
 
-                            // Ensure we always show 5 pages when possible
-                            if ($data->currentPage() <= 3) {
-                                $end = min(6, $data->lastPage() - 1);
-                            }
+                    {{-- Dynamic Middle Pages --}}
+                    @php
+                        $start = max(2, $data->currentPage() - 2);
+                        $end = min($data->lastPage() - 1, $data->currentPage() + 2);
 
-                            if ($data->currentPage() >= $data->lastPage() - 2) {
-                                $start = max($data->lastPage() - 5, 2);
-                            }
-                        @endphp
+                        if ($data->currentPage() <= 3) {
+                            $end = min(6, $data->lastPage() - 1);
+                        }
 
-                        @for ($i = $start; $i <= $end; $i++)
+                        if ($data->currentPage() >= $data->lastPage() - 2) {
+                            $start = max($data->lastPage() - 5, 2);
+                        }
+                    @endphp
+
+                    @for ($i = $start; $i <= $end; $i++)
+                        <li class="kt-pagination-item">
                             <button wire:click="gotoPage({{ $i }})" wire:key="page-{{ $i }}"
-                                class="px-3 py-1 border border-gray-300 rounded cursor-pointer @if ($i == $data->currentPage()) text-white bg-blue-600 @else text-blue-600 background hover:bg-blue-50 @endif">
+                                class="kt-btn kt-btn-icon kt-btn-ghost @if ($i == $data->currentPage()) active @endif">
                                 {{ $i }}
                             </button>
-                        @endfor
+                        </li>
+                    @endfor
 
-                        {{-- Right Dots --}}
-                        @if ($data->currentPage() < $data->lastPage() - 3)
-                            <span><span>...</span></span>
-                        @endif
+                    {{-- Right Ellipsis --}}
+                    @if ($data->currentPage() < $data->lastPage() - 3)
+                        <li class="kt-pagination-ellipsis">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-ellipsis" aria-hidden="true">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="19" cy="12" r="1"></circle>
+                                <circle cx="5" cy="12" r="1"></circle>
+                            </svg>
+                        </li>
+                    @endif
 
-                        {{-- Last Page --}}
-                        @if ($data->lastPage() > 1)
-                            <span>
-                                <button wire:click="gotoPage({{ $data->lastPage() }})" wire:key="page-last"
-                                    class="px-3 py-1 border border-gray-300 rounded hover:bg-blue-50 cursor-pointer @if ($data->currentPage() == $data->lastPage()) text-white bg-blue-600 @else text-blue-600 background @endif">
-                                    {{ $data->lastPage() }}
-                                </button>
-                            </span>
-                        @endif
-                    </div>
+                    {{-- Last Page --}}
+                    @if ($data->lastPage() > 1)
+                        <li class="kt-pagination-item">
+                            <button wire:click="gotoPage({{ $data->lastPage() }})" wire:key="page-last"
+                                class="kt-btn kt-btn-icon kt-btn-ghost @if ($data->currentPage() == $data->lastPage()) active @endif">
+                                {{ $data->lastPage() }}
+                            </button>
+                        </li>
+                    @endif
 
                     {{-- Next --}}
-                    <span>
-                        <button wire:click="nextPage"
-                            class="flex align-items-center px-3 py-1 text-blue-600 background border border-gray-300 rounded hover:bg-gray-50 cursor-pointer nextPage"
+                    <li class="kt-pagination-item">
+                        <button wire:click="nextPage" wire:key="page-next"
+                            class="kt-btn kt-btn-icon kt-btn-ghost"
                             @if (!$data->hasMorePages()) disabled @endif>
-                            <span class="s">{{ __('main.next') }}</span><span>&raquo;</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-chevron-right rtl:rotate-180"
+                                aria-hidden="true">
+                                <path d="m9 18 6-6-6-6"></path>
+                            </svg>
                         </button>
-                    </span>
-                </div>
+                    </li>
+
+                    {{-- Last Page Button --}}
+                    <li class="kt-pagination-item">
+                        <button wire:click="gotoPage({{ $data->lastPage() }})" wire:key="page-end"
+                            class="kt-btn kt-btn-icon kt-btn-ghost"
+                            @if (!$data->hasMorePages()) disabled @endif>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-chevron-last rtl:rotate-180"
+                                aria-hidden="true">
+                                <path d="m7 18 6-6-6-6"></path>
+                                <path d="M17 6v12"></path>
+                            </svg>
+                        </button>
+                    </li>
+                </ol>
             </div>
         @endif
     </div>

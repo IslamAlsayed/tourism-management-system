@@ -21,7 +21,7 @@ use Modules\Transportation\Http\Controllers\TransportationSupplementController;
 |
 */
 
-Route::prefix('dashboard/transportation')->name('dashboard.transportation.')->middleware('auth')->group(function () {
+Route::prefix('dashboard/transportation')->name('dashboard.transportation.')->middleware(['auth', 'admin'])->group(function () {
     // === COMPANIES MANAGEMENT ===
     Route::resource('companies', CompanyController::class)->names('companies');
 

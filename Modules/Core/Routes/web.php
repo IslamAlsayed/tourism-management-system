@@ -22,7 +22,7 @@ use Modules\Core\Http\Controllers\FieldDefinitionController;
 |
 */
 
-Route::prefix('dashboard/core')->name('dashboard.core.')->middleware('auth')->group(function () {
+Route::prefix('dashboard/core')->name('dashboard.core.')->middleware(['auth', 'admin'])->group(function () {
     // === USER MANAGEMENT ===
     Route::resource('users', UserController::class)->names('users');
 

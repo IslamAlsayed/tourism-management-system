@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('dashboard/emails')->name('dashboard.emails.')->middleware('auth')->group(function() {
+Route::prefix('dashboard/emails')->name('dashboard.emails.')->middleware(['auth', 'admin'])->group(function() {
     Route::get('/', 'EmailsController@index')->name('index');
 });

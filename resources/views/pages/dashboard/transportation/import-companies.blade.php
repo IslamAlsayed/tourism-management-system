@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="kt-card-body">
                         <h5 class="card-title mb-4">{{ __('main.upload_excel_file') }}</h5>
 
                         <form action="{{ route('transportations.import-export.companies-import') }}" method="POST" enctype="multipart/form-data">
@@ -73,7 +73,7 @@
 
                 <!-- Export Section -->
                 <div class="card mt-4">
-                    <div class="card-body">
+                    <div class="kt-card-body">
                         <h5 class="card-title mb-4">{{ __('main.or_export_existing') }}</h5>
 
                         <form action="{{ route('transportations.import-export.companies-export') }}" method="POST">

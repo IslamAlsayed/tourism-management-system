@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Psy\Util\Str;
+use Illuminate\Support\Str;
 
 class SessionExpired
 {

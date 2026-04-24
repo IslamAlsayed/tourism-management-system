@@ -39,7 +39,7 @@ class HandleActivityCreated
                 'created_at' => $activity->created_at->toDateTimeString(),
             ]);
 
-            if (env('APP_ENV') != 'production') {
+            if (config('app.env') != 'production') {
                 Log::info("Broadcasted activity via Ably", [
                     'activity_id' => $activity->id,
                     'event' => $activity->event,

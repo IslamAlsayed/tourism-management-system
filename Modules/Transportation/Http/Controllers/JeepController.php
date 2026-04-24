@@ -17,7 +17,7 @@ class JeepController extends Controller
 
     public function index()
     {
-        $jeeps = Jeep::with('currency')->latest()->paginate(10);
+        $jeeps = Jeep::with('currency')->latest()->paginate(getPaginate());
         return view('transportation::jeeps.index', compact('jeeps'));
     }
 

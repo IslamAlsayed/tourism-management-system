@@ -22,6 +22,11 @@ class SiteController extends Controller
 {
     use PhotoUploadTrait;
 
+    public function __construct()
+    {
+        $this->authorizeResource(TouristSite::class, 'site');
+    }
+
     public function index()
     {
         return view('touristsites::sites.index');

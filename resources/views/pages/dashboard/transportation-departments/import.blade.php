@@ -1,7 +1,7 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 
 @section('content')
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         'label' => __('main.states'),
         ],
         [

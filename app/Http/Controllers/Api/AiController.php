@@ -11,14 +11,17 @@ class AiController extends Controller
 
     public function correctByGemini(Request $request)
     {
+        $request->validate(['text' => 'required|string|max:5000']);
+        $text = strip_tags($request->text);
+
         $response = Http::post(
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' . env('GEMINI_API_KEY'),
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' . config('services.gemini.key'),
             [
                 'contents' => [
                     [
                         'parts' => [
                             [
-                                'text' => "You are a spelling and grammar corrector. Correct ONLY spelling and grammar mistakes. Do NOT explain. Do NOT rephrase. Return ONLY the corrected text. Text: {$request->text}"
+                                'text' => "You are a spelling and grammar corrector. Correct ONLY spelling and grammar mistakes. Do NOT explain. Do NOT rephrase. Return ONLY the corrected text. Text: {$text}"
                             ]
                         ]
                     ]
@@ -26,14 +29,15 @@ class AiController extends Controller
             ]
         );
 
-        $corrected = trim($response['candidates'][0]['content']['parts'][0]['text'] ?? $request->text);
+        $corrected = trim($response['candidates'][0]['content']['parts'][0]['text'] ?? $text);
 
         return response()->json(['corrected' => $corrected]);
     }
 
     public function correctByLanguageTool(Request $request)
     {
-        $text = $request->text;
+        $request->validate(['text' => 'required|string|max:5000']);
+        $text = strip_tags($request->text);
 
         $response = Http::asForm()->post('https://api.languagetool.org/v2/check', [
             'text' => $text,
@@ -59,20 +63,23 @@ class AiController extends Controller
     }
     public function correctByGpt(Request $request)
     {
+        $request->validate(['text' => 'required|string|max:5000']);
+        $text = strip_tags($request->text);
+
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
+            'Authorization' => 'Bearer ' . config('services.openai.key'),
         ])->post('https://api.openai.com/v1/chat/completions', [
                     'model' => 'gpt-3.5-turbo',
                     'messages' => [
                         [
                             'role' => 'user',
-                            'content' => "Correct spelling and grammar ONLY, do not rephrase: {$request->text}"
+                            'content' => "Correct spelling and grammar ONLY, do not rephrase: {$text}"
                         ]
                     ],
                     'temperature' => 0
                 ]);
 
-        $corrected = $response->json()['choices'][0]['message']['content'] ?? $request->text;
+        $corrected = $response->json()['choices'][0]['message']['content'] ?? $text;
 
         return response()->json(['corrected' => $corrected]);
     }

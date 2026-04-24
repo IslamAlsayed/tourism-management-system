@@ -45,7 +45,7 @@
                             ->filter(fn($s) => $s->daysRemaining() !== null && $s->daysRemaining() <= 30)
                             ->count();
                     @endphp
-                    <div class="text-3xl font-bold text-amber-600 mb-2">{{ $expiringSoon }}</div>
+                    <div class="text-3xl font-bold text-yellow-600 mb-2">{{ $expiringSoon }}</div>
                     <div class="text-gray-600 text-sm">{{ __('main.expiring_soon') }}</div>
                 </div>
             </div>

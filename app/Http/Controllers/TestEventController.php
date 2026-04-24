@@ -19,7 +19,7 @@ class TestEventController extends Controller
         $user->update(['active' => 1]);
 
         // 2️⃣ إرسال event عبر Ably
-        $ably = new AblyRest(env('ABLY_API_KEY')); // ضيف Ably API key في .env
+        $ably = new AblyRest(config('services.ably.key')); // Ably API key from config/services.php
         $ably->channel('dashboard-updates')->publish('user.logged-in', [
             'id' => $user->id,
             'name' => $user->name,

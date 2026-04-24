@@ -47,7 +47,7 @@
                                             class="inline-block px-3 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">{{ __('main.expired') }}</span>
                                     @elseif($subscription)
                                         <span
-                                            class="inline-block px-3 py-1 text-xs font-semibold text-white bg-amber-600 rounded-full">{{ __('main.inactive') }}</span>
+                                            class="inline-block px-3 py-1 text-xs font-semibold text-white bg-yellow-600 rounded-full">{{ __('main.inactive') }}</span>
                                     @else
                                         <span
                                             class="inline-block px-3 py-1 text-xs font-semibold text-white bg-gray-600 rounded-full">{{ __('main.not_subscribed') }}</span>
@@ -94,9 +94,9 @@
                             <!-- Trial Section -->
                             @if ($module['trial_days'] > 0)
                                 <div class="mb-4 pb-4 border-b border-gray-200">
-                                    <div class="bg-amber-50 border border-amber-200 rounded p-2">
-                                        <i class="fas fa-star text-amber-600 mr-2"></i>
-                                        <span class="text-sm text-amber-800 font-semibold">{{ __('main.trial') }}: {{ $module['trial_days'] }}
+                                    <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded p-2">
+                                        <i class="fas fa-star text-blue-600 dark:text-blue-400 mr-2"></i>
+                                        <span class="text-sm text-blue-800 dark:text-blue-300 font-semibold">{{ __('main.trial') }}: {{ $module['trial_days'] }}
                                             {{ __('main.days') }}</span>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@
                                         <form action="{{ route('dashboard.subscriptions.deactivate', $key) }}" method="POST" class="flex-1">
                                             @csrf
                                             <button type="submit"
-                                                class="w-full px-3 py-2 text-sm font-medium text-white bg-amber-600 rounded-lg hover:bg-amber-700 transition">
+                                                class="w-full px-3 py-2 text-sm font-medium text-white bg-yellow-600 rounded-lg hover:bg-yellow-700 transition">
                                                 <i class="fas fa-pause mr-1"></i> {{ __('main.deactivate') }}
                                             </button>
                                         </form>
@@ -148,7 +148,7 @@
                         </div>
                     @empty
                         <div class="col-span-full">
-                            <div class="px-4 py-3 bg-amber-100 border border-amber-400 rounded-lg text-sm text-amber-700">
+                            <div class="px-4 py-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 rounded-lg text-sm text-yellow-700 dark:text-yellow-300">
                                 <i class="fas fa-exclamation-triangle mr-2"></i> {{ __('main.no_modules_available') }}
                             </div>
                         </div>
@@ -190,7 +190,7 @@
                                             class="inline-block px-3 py-1 text-xs font-semibold text-white bg-red-600 rounded-full">{{ __('main.expired') }}</span>
                                     @else
                                         <span
-                                            class="inline-block px-3 py-1 text-xs font-semibold text-white bg-amber-600 rounded-full">{{ __('main.inactive') }}</span>
+                                            class="inline-block px-3 py-1 text-xs font-semibold text-white bg-yellow-600 rounded-full">{{ __('main.inactive') }}</span>
                                     @endif
                                 </td>
                                 <td class="px-4 py-3 text-gray-600">{{ $subscription->starts_at ? $subscription->starts_at->format('Y-m-d') : '-' }}</td>

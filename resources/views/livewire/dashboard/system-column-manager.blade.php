@@ -1,7 +1,7 @@
 <div>
     <div class="container-fluid py-5">
-        <div class="card shadow-sm border-0 rounded-xl">
-            <div class="card-header border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-dark-light py-4 px-6 rounded-t-xl">
+        <div class="kt-card">
+            <div class="kt-card-header">
                 <h3 class="card-title align-items-start flex-column m-0">
                     <span class="card-label fw-bold text-gray-900 dark:text-gray-100 text-lg flex items-center gap-2">
                         <i class="fa-duotone fa-solid fa-grid-2 text-primary text-2xl">
@@ -16,7 +16,7 @@
                 </h3>
             </div>
             
-            <div class="card-body p-6 md:p-8">
+            <div class="kt-card-body p-4 lg:p-6">
                 <!-- Alert Information -->
                 <div class="alert bg-primary/5 border border-primary/20 text-primary-800 dark:text-primary-300 p-5 rounded-xl mb-8 flex items-start gap-4">
                     <i class="fa-duotone fa-solid fa-circle-info text-primary text-3xl mt-0.5">

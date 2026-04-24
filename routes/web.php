@@ -19,47 +19,7 @@ use Modules\Transportation\Http\Controllers\PricingDefinitionController;
 
 Route::get('/', fn() => view('welcome'));
 
-// TEMP: Grant manage_sites permission to current user (REMOVE BEFORE DEPLOY)
-Route::get('/fix-sites-permission', function () {
-    $user = getActiveUser();
-    if (!$user) return redirect('/login');
-
-    // Ensure permission exists
-    $perm = \Spatie\Permission\Models\Permission::firstOrCreate(
-        ['name' => 'manage_sites', 'guard_name' => 'web']
-    );
-
-    // Also create other common tourist permissions
-    \Spatie\Permission\Models\Permission::firstOrCreate(['name' => 'manage_tourist_services', 'guard_name' => 'web']);
-
-    // Grant to user's role or directly
-    if ($user->roles->isNotEmpty()) {
-        $role = $user->roles->first();
-        $role->givePermissionTo('manage_sites');
-        $role->givePermissionTo('manage_tourist_services');
-    } else {
-        $user->givePermissionTo('manage_sites');
-        $user->givePermissionTo('manage_tourist_services');
-    }
-
-    // Clear permission cache
-    app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-
-    return redirect('/dashboard/tourists/sites')->with('success', 'Permission granted: manage_sites');
-});
-
-// TEMP: Clean corrupted rich_texts data (REMOVE BEFORE DEPLOY)
-Route::get('/fix-rich-texts', function () {
-    $deleted = \DB::table('rich_texts')
-        ->where('record_type', 'Modules\\Tourists\\Entities\\TouristSite')
-        ->delete();
-
-    // Clear any cached views
-    \Artisan::call('view:clear');
-
-    return redirect('/dashboard/tourists/sites/3/edit')
-        ->with('success', "Cleaned {$deleted} corrupted rich text records. Fields should now be empty and ready for clean content.");
-});
+// SECURITY: TEMP routes removed — were granting permissions and deleting data without auth
 
 // AI Agent routes
 Route::middleware(['auth'])->group(function () {
@@ -67,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Admin routes
-Route::prefix('dashboard')->middleware(['auth'])->group(function () {
+Route::prefix('dashboard')->middleware(['auth', 'admin'])->group(function () {
     // Dashboard Main
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::delete('delete-all-selected-items', [DashboardController::class, 'deleteAll'])->name('deleteAll');
@@ -99,6 +59,9 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     // === SYSTEM SETTINGS Extensions ===
     Route::get('/localization/page-banners', \App\Livewire\Dashboard\PageBanners::class)->name('localization.page-banners');
+    Route::get('/core/ui-icons-manager', \App\Livewire\UiIconsManager::class)
+        ->name('core.ui-icons-manager')
+        ->middleware('admin');
 
     // === SYSTEM COLUMNS (Global Setting) ===
     Route::get('/core/system-columns', \App\Livewire\Dashboard\SystemColumnManager::class)

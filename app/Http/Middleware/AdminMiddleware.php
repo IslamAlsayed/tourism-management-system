@@ -21,23 +21,17 @@ class AdminMiddleware
             return redirect()->route('login');
         }
 
-        // For development/testing purposes, allow all authenticated users
-        // You can customize this logic based on your user role system later
-        return $next($request);
-
-        /*
-        // Uncomment and customize this section when you have a proper role system:
         $user = Auth::user();
 
-        // Check if user has admin privileges
-        if ($user->email === 'admin@example.com' ||
-            (isset($user->is_admin) && $user->is_admin) ||
-            (isset($user->role) && $user->role === 'admin')) {
+        // Check if user has admin privileges using the role field
+        if (in_array($user->role, ['superadmin', 'admin'])) {
             return $next($request);
         }
 
-        // If not admin, redirect with error
-        abort(403, 'Access denied. Administrator privileges required.');
-        */
+        // TODO: Implement granular RBAC when additional roles are needed
+        // For now, non-admin users are denied access to dashboard
+        abort(403, __('messages.access_denied_admin_required', [
+            'default' => 'Access denied. Administrator privileges required.'
+        ]));
     }
 }

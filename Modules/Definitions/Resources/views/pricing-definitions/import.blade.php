@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="app-container container-fluid px-5 pt-4 pb-8">
+    <div class="kt-container-fixed px-5 pt-4 pb-8">
 
     <x-import-form :title="$title" :description="$description" :models="$models" :model="$model" :view="$view" :requirements="[
         [

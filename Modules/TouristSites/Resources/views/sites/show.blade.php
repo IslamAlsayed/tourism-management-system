@@ -80,7 +80,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristSite->id,
-                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'modelType' => '\\Modules\\TouristSites\\Entities\\TouristSite',
                                     'field' => 'is_active',
                                     'value' => (bool) $touristSite->is_active,
                                     'table' => 'tourist_sites',
@@ -92,7 +92,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristSite->id,
-                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'modelType' => '\\Modules\\TouristSites\\Entities\\TouristSite',
                                     'field' => 'unesco_site',
                                     'value' => (bool) $touristSite->unesco_site,
                                     'table' => 'tourist_sites',
@@ -244,7 +244,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristSite->id,
-                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'modelType' => '\\Modules\\TouristSites\\Entities\\TouristSite',
                                     'field' => 'is_24_7',
                                     'value' => (bool) $touristSite->is_24_7,
                                     'table' => 'tourist_sites',
@@ -452,7 +452,7 @@
                                     <div class="flex items-center gap-2">
                                         @livewire('toggle-switch', [
                                             'modelId' => $touristSite->id,
-                                            'modelType' => '\\App\\Models\\TouristSite',
+                                            'modelType' => '\\Modules\\TouristSites\\Entities\\TouristSite',
                                             'field' => $facility,
                                             'value' => (bool) $touristSite->$facility,
                                             'table' => 'tourist_sites',
@@ -568,7 +568,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristSite->id,
-                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'modelType' => '\\Modules\\TouristSites\\Entities\\TouristSite',
                                     'field' => 'is_featured',
                                     'value' => (bool) $touristSite->is_featured,
                                     'table' => 'tourist_sites',
@@ -580,7 +580,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristSite->id,
-                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'modelType' => '\\Modules\\TouristSites\\Entities\\TouristSite',
                                     'field' => 'is_verified',
                                     'value' => (bool) $touristSite->is_verified,
                                     'table' => 'tourist_sites',
@@ -592,7 +592,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $touristSite->id,
-                                    'modelType' => '\\App\\Models\\TouristSite',
+                                    'modelType' => '\\Modules\\TouristSites\\Entities\\TouristSite',
                                     'field' => 'has_unified_ticket',
                                     'value' => (bool) $touristSite->has_unified_ticket,
                                     'table' => 'tourist_sites',

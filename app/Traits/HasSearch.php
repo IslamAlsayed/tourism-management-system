@@ -42,9 +42,16 @@ trait HasSearch
             : [];
 
         return $query->where(function ($q) use ($search, $columns, $relations, $model) {
+            $modelTable = $model->getTable();
+            // Defense in Depth: Validate table name format
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $modelTable)) {
+                throw new \InvalidArgumentException('Invalid table name format.');
+            }
+
             // Search in root model columns
             foreach ($columns as $column) {
-                $q->orWhereRaw("LOWER({$model->getTable()}.{$column}) LIKE ?", ["%{$search}%"]);
+                if (!preg_match('/^[a-zA-Z0-9_]+$/', $column)) continue;
+                $q->orWhereRaw("LOWER(`{$modelTable}`.`{$column}`) LIKE ?", ["%{$search}%"]);
             }
 
             // Search in relations (Recursive search for nested relations)
@@ -77,8 +84,13 @@ trait HasSearch
             $relColumns = array_intersect($relColumns, $relSchemaColumns);
 
             $relQuery->where(function ($qq) use ($relColumns, $search, $relModel) {
+                $relTable = $relModel->getTable();
+                if (!preg_match('/^[a-zA-Z0-9_]+$/', $relTable)) {
+                    throw new \InvalidArgumentException('Invalid table name format.');
+                }
                 foreach ($relColumns as $col) {
-                    $qq->orWhereRaw("LOWER({$relModel->getTable()}.{$col}) LIKE ?", ["%{$search}%"]);
+                    if (!preg_match('/^[a-zA-Z0-9_]+$/', $col)) continue;
+                    $qq->orWhereRaw("LOWER(`{$relTable}`.`{$col}`) LIKE ?", ["%{$search}%"]);
                 }
 
                 // If the related model ALSO has relationship names to search
@@ -96,8 +108,13 @@ trait HasSearch
                             $targetCols = array_intersect($targetCols, $nestedSchema);
 
                             $nestedQuery->where(function ($lastQ) use ($targetCols, $search, $nestedModel) {
+                                $nestedTable = $nestedModel->getTable();
+                                if (!preg_match('/^[a-zA-Z0-9_]+$/', $nestedTable)) {
+                                    throw new \InvalidArgumentException('Invalid table name format.');
+                                }
                                 foreach ($targetCols as $c) {
-                                    $lastQ->orWhereRaw("LOWER({$nestedModel->getTable()}.{$c}) LIKE ?", ["%{$search}%"]);
+                                    if (!preg_match('/^[a-zA-Z0-9_]+$/', $c)) continue;
+                                    $lastQ->orWhereRaw("LOWER(`{$nestedTable}`.`{$c}`) LIKE ?", ["%{$search}%"]);
                                 }
                             });
                         });
@@ -126,6 +143,10 @@ trait HasSearch
         }
 
         $modelTable = $query->getModel()->getTable();
+        // Defense in Depth: Validate table name format
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $modelTable)) {
+            throw new \InvalidArgumentException('Invalid table name format.');
+        }
         // Apply column-specific filters
         if (!empty($searchColumnsFilters)) {
             $query->where(function ($q) use ($searchColumnsFilters, $modelTable, $availableRelations) {
@@ -137,6 +158,9 @@ trait HasSearch
                             $q->whereHas($column, function ($relQuery) use ($searchTerm) {
                                 $relModel = $relQuery->getModel();
                                 $relTable = $relModel->getTable();
+                                if (!preg_match('/^[a-zA-Z0-9_]+$/', $relTable)) {
+                                    throw new \InvalidArgumentException('Invalid table name format.');
+                                }
                                 
                                 // Get searchable columns for the related model
                                 if (method_exists($relModel, 'getSearchableColumns')) {
@@ -158,13 +182,16 @@ trait HasSearch
                                 
                                 $relQuery->where(function ($qq) use ($relCols, $searchTerm, $relTable) {
                                     foreach ($relCols as $c) {
-                                        $qq->orWhereRaw("LOWER({$relTable}.{$c}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                                        if (!preg_match('/^[a-zA-Z0-9_]+$/', $c)) continue;
+                                        $qq->orWhereRaw("LOWER(`{$relTable}`.`{$c}`) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
                                     }
                                 });
                             });
                         } else {
                             // Standard column search
-                            $q->whereRaw("LOWER({$modelTable}.{$column}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                            if (preg_match('/^[a-zA-Z0-9_]+$/', $column)) {
+                                $q->whereRaw("LOWER(`{$modelTable}`.`{$column}`) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                            }
                         }
                     }
                 }
@@ -203,6 +230,10 @@ trait HasSearch
         }
 
         $modelTable = $query->getModel()->getTable();
+        // Defense in Depth: Validate table name format
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $modelTable)) {
+            throw new \InvalidArgumentException('Invalid table name format.');
+        }
         // Apply column-specific filters
         if (!empty($searchColumnsFilters)) {
             $query->where(function ($q) use ($searchColumnsFilters, $modelTable, $availableRelations) {
@@ -213,6 +244,9 @@ trait HasSearch
                             $q->whereHas($column, function ($relQuery) use ($searchTerm) {
                                 $relModel = $relQuery->getModel();
                                 $relTable = $relModel->getTable();
+                                if (!preg_match('/^[a-zA-Z0-9_]+$/', $relTable)) {
+                                    throw new \InvalidArgumentException('Invalid table name format.');
+                                }
                                 
                                 if (method_exists($relModel, 'getSearchableColumns')) {
                                     $relCols = $relModel->getSearchableColumns();
@@ -232,12 +266,15 @@ trait HasSearch
                                 
                                 $relQuery->where(function ($qq) use ($relCols, $searchTerm, $relTable) {
                                     foreach ($relCols as $c) {
-                                        $qq->orWhereRaw("LOWER({$relTable}.{$c}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                                        if (!preg_match('/^[a-zA-Z0-9_]+$/', $c)) continue;
+                                        $qq->orWhereRaw("LOWER(`{$relTable}`.`{$c}`) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
                                     }
                                 });
                             });
                         } else {
-                            $q->whereRaw("LOWER({$modelTable}.{$column}) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                            if (preg_match('/^[a-zA-Z0-9_]+$/', $column)) {
+                                $q->whereRaw("LOWER(`{$modelTable}`.`{$column}`) LIKE ?", ["%" . strtolower(trim($searchTerm)) . "%"]);
+                            }
                         }
                     }
                 }

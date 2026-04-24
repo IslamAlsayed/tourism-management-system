@@ -18,7 +18,7 @@ use Modules\Restaurants\Http\Controllers\SeasonController;
 |
 */
 
-Route::prefix('dashboard')->name('dashboard.')->middleware('auth')->group(function () {
+Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'admin'])->group(function () {
     // === RESTAURANT TYPES === (must be before restaurants resource)
     Route::resource('restaurants/types', RestaurantTypeController::class)->names('restaurants.types');
 

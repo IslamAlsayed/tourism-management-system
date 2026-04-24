@@ -38,9 +38,9 @@
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,activateSelected,deactivateSelected,forceDeleteSelected,exportSelectedPDF,exportSelectedExcel,filterActive,filterRegionId,filterSubregionId,filterCountryId,filterStateId,filterCityId,filterTypeId">
 
         <!-- Unified Dropdown Filters -->
-        <div class="flex flex-wrap items-center gap-3 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 rounded-xl mb-5"
+        <div class="flex flex-wrap items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 rounded-xl mb-5"
          x-data="{ 
-             showAny: false,
+             showAny: true,
              filterKeys: {{ json_encode(array_keys($manageableFilters ?? [])) }}
          }"
          x-effect="
@@ -52,17 +52,17 @@
          "
          x-show="showAny"
          x-cloak>
-        <div class="flex items-center gap-2 pe-3 border-e border-amber-200 dark:border-amber-700/50">
-            <i class="fa-duotone fa-solid fa-filter text-amber-500 text-xl"></i>
-            <span class="text-sm font-semibold text-amber-800 dark:text-amber-400">
+        <div class="flex items-center gap-2 pe-3 border-e border-gray-300 dark:border-gray-600">
+            <i class="fa-duotone fa-solid fa-filter text-primary text-xl"></i>
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">
                 {{ __('main.filters') }}
             </span>
         </div>
             
             {{-- Active Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['active'] !== false" x-transition.opacity x-cloak>
-                <label for="filterActive" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.status') }}</label>
-                <select wire:model.live="filterActive" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterActive">
+                <label for="filterActive" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.status') }}</label>
+                <select wire:model.live="filterActive" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterActive">
                     <option value="all">{{ __('main.all') }}</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
@@ -71,8 +71,8 @@
 
             {{-- Region Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['region'] !== false" x-transition.opacity x-cloak>
-                <label for="filterRegionId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.regions') }}</label>
-                <select wire:model.live="filterRegionId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterRegionId">
+                <label for="filterRegionId" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.regions') }}</label>
+                <select wire:model.live="filterRegionId" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterRegionId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($regions as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -82,8 +82,8 @@
 
             {{-- Subregion Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['subregion'] !== false" x-transition.opacity x-cloak>
-                <label for="filterSubregionId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.subregions') }}</label>
-                <select wire:model.live="filterSubregionId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterSubregionId">
+                <label for="filterSubregionId" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.subregions') }}</label>
+                <select wire:model.live="filterSubregionId" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterSubregionId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($subregions as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -93,8 +93,8 @@
 
             {{-- Country Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['country'] !== false" x-transition.opacity x-cloak>
-                <label for="filterCountryId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.countries') }}</label>
-                <select wire:model.live="filterCountryId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterCountryId">
+                <label for="filterCountryId" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.countries') }}</label>
+                <select wire:model.live="filterCountryId" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterCountryId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($countries as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -104,8 +104,8 @@
 
             {{-- State Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['state'] !== false" x-transition.opacity x-cloak>
-                <label for="filterStateId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.states') }}</label>
-                <select wire:model.live="filterStateId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterStateId">
+                <label for="filterStateId" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.states') }}</label>
+                <select wire:model.live="filterStateId" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterStateId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($states as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -115,8 +115,8 @@
 
             {{-- City Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['city'] !== false" x-transition.opacity x-cloak>
-                <label for="filterCityId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.cities') }}</label>
-                <select wire:model.live="filterCityId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterCityId">
+                <label for="filterCityId" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.cities') }}</label>
+                <select wire:model.live="filterCityId" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterCityId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($cities as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -126,8 +126,8 @@
 
             {{-- Type Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]" x-show="!$store.filtersVisibility || $store.filtersVisibility.filters['type'] !== false" x-transition.opacity x-cloak>
-                <label for="filterTypeId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.type') }}</label>
-                <select wire:model.live="filterTypeId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterTypeId">
+                <label for="filterTypeId" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.type') }}</label>
+                <select wire:model.live="filterTypeId" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterTypeId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($types as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -257,10 +257,11 @@
                 ])
                 @endcomponent
 
-            @if (isset($data) && !empty($data) && $data->count() > 0)
-                @include('includes.pagination', ['data' => $data])
-            @endif
         </div>
     </div>
+
+    @if (isset($data) && !empty($data) && $data->count() > 0)
+        @include('includes.pagination', ['data' => $data])
+    @endif
 </div>
 

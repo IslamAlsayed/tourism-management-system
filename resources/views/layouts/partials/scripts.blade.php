@@ -1,5 +1,5 @@
 <script src="{{ asset('metronic/js/core.bundle.js') }}"></script>
-{{-- KTUI loaded via Vite in app.js to avoid double initialization --}}
+<script src="{{ asset('metronic/vendors/ktui/ktui.min.js') }}"></script>
 <script src="{{ asset('metronic/vendors/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ asset('metronic/js/layouts/demo1.js') }}"></script>
 {{-- jquery-3.7.1 --}}

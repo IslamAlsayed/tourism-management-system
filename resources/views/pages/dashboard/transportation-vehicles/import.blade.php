@@ -1,8 +1,8 @@
-```html
+﻿```html
 @extends('layouts.master')
 
 @section('content')
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         {{ __('main.export') }}
         </a>
     </div>

@@ -25,6 +25,34 @@ class DeleteBottom extends Component
         // dd($this->type, $this->modelId, $this->modelType, $this->table);
         try {
             $modelClass = $this->modelType;
+
+            // Security: Whitelist allowed model classes to prevent class name injection
+            $allowedPrefixes = [
+                'App\\Models\\',
+                'Modules\\Accommodations\\Entities\\',
+                'Modules\\Transportation\\Entities\\',
+                'Modules\\TouristSites\\Entities\\',
+                'Modules\\TouristServices\\Entities\\',
+                'Modules\\TourGuides\\Entities\\',
+                'Modules\\Restaurants\\Entities\\',
+                'Modules\\TravelDocuments\\Entities\\',
+                'Modules\\Geography\\Entities\\',
+                'Modules\\Cruises\\Entities\\',
+            ];
+
+            $isAllowed = false;
+            foreach ($allowedPrefixes as $prefix) {
+                if (str_starts_with($modelClass, $prefix) || str_starts_with($modelClass, '\\' . $prefix)) {
+                    $isAllowed = true;
+                    break;
+                }
+            }
+
+            if (!$isAllowed) {
+                $this->dispatch('show-toast', ['type' => 'error', 'message' => __('messages.model_not_found')]);
+                return;
+            }
+
             if (!class_exists($modelClass)) {
                 $this->dispatch('show-toast', ['type' => 'error', 'message' => __('messages.model_not_found')]);
                 return;
@@ -36,8 +64,7 @@ class DeleteBottom extends Component
                 return;
             }
 
-            // $deleted = $model->delete();
-            $deleted = true;
+            $deleted = $model->delete();
             if ($deleted) {
                 $this->dispatch('record-deleted', id: $model->id, type: $this->type);
                 $this->dispatch('show-toast', ['type' => 'success', 'message' => __('messages.type_deleted', ['type' => __('main.' . $this->type)])]);

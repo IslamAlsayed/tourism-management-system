@@ -38,7 +38,7 @@ class SeasonList extends Component
             })
             ->withCount('prices')
             ->latest()
-            ->paginate(10);
+            ->paginate(getPaginate());
 
         return view('cruises::livewire.season-list', [
             'seasons' => $seasons

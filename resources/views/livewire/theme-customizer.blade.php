@@ -1,8 +1,8 @@
-<div>
+﻿<div>
     @section('title', __('main.theme_customizer') ?? 'Theme Customizer')
     
     @section('content')
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7 mb-7 border-b border-border">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-foreground flex items-center gap-2">
@@ -30,14 +30,14 @@
         </div>
 
         <div class="grid lg:grid-cols-2 gap-5 lg:gap-7.5">
-            <div class="card shadow-sm border border-border">
-                <div class="card-header border-b border-border py-4">
-                    <h3 class="card-title font-semibold flex items-center gap-2">
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title font-semibold flex items-center gap-2">
                         <i class="fa-duotone fa-solid fa-pen text-muted-foreground fs-3 items-center"></i>
                         {{ __('main.brand_colors') ?? 'Brand Colors' }}
                     </h3>
                 </div>
-                <div class="card-body p-6">
+                <div class="kt-card-body p-4 lg:p-6">
                     <div class="flex flex-col gap-6">
                         <div class="flex flex-col gap-2">
                             <label class="form-label text-foreground font-medium">{{ __('main.primary_color') ?? 'Primary Color' }}</label>
@@ -69,14 +69,14 @@
                 </div>
             </div>
 
-            <div class="card shadow-sm border border-border">
-                <div class="card-header border-b border-border py-4">
-                    <h3 class="card-title font-semibold flex items-center gap-2">
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title font-semibold flex items-center gap-2">
                         <i class="fa-duotone fa-solid fa-circle-info-2 text-muted-foreground fs-3 items-center"></i>
                         {{ __('main.state_colors') ?? 'State Colors' }}
                     </h3>
                 </div>
-                <div class="card-body p-6">
+                <div class="kt-card-body p-4 lg:p-6">
                     <div class="flex flex-col gap-6">
                         <div class="flex flex-col gap-2">
                             <label class="form-label text-foreground font-medium" style="color:var(--color-success)">{{ __('main.success_color') ?? 'Success Color' }}</label>
@@ -113,14 +113,14 @@
                 </div>
             </div>
 
-            <div class="card shadow-sm border border-border mb-7">
-                <div class="card-header border-b border-border py-4">
-                    <h3 class="card-title font-semibold flex items-center gap-2">
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title font-semibold flex items-center gap-2">
                         <i class="fa-duotone fa-solid fa-gear-4 text-muted-foreground fs-3 items-center"></i>
                         {{ __('main.sidebar_colors') ?? 'Sidebar Colors' }}
                     </h3>
                 </div>
-                <div class="card-body p-6">
+                <div class="kt-card-body p-4 lg:p-6">
                     <div class="flex flex-col gap-6">
                         <div class="flex flex-col gap-2">
                             <label class="form-label text-foreground font-medium">{{ __('main.sidebar_bg_color') ?? 'Sidebar Background' }}</label>
@@ -149,14 +149,14 @@
                 </div>
             </div>
             
-            <div class="card shadow-sm border border-border mb-7">
-                <div class="card-header border-b border-border py-4">
-                    <h3 class="card-title font-semibold flex items-center gap-2">
+            <div class="kt-card">
+                <div class="kt-card-header">
+                    <h3 class="kt-card-title font-semibold flex items-center gap-2">
                         <i class="fa-duotone fa-solid fa-eye text-muted-foreground fs-3 items-center"></i>
                         {{ __('main.live_preview') ?? 'Live Preview Panel' }}
                     </h3>
                 </div>
-                <div class="card-body p-6">
+                <div class="kt-card-body p-4 lg:p-6">
                     <div class="flex flex-col gap-6">
                         <div class="flex flex-wrap gap-4 items-center">
                             <p class="text-sm font-medium text-foreground w-full mb-2">{{ __('main.ui_elements_preview') ?? 'UI Elements Preview' }}:</p>

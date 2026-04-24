@@ -19,7 +19,8 @@
     </div>
 
     <div class="container-fixed">
-        <form class="space-y-6" method="POST" action="{{ route('dashboard.cruises.ports.store') }}" enctype="multipart/form-data">
+        <form class="space-y-6" method="POST" action="{{ route('dashboard.cruises.ports.store') }}"
+            enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">
 
@@ -34,7 +35,8 @@
                             {{-- Name --}}
                             <div>
                                 <label for="name" class="kt-label required mb-2">{{ __('main.name') }}</label>
-                                <input type="text" name="name" id="name" class="kt-input h-[45px]" value="{{ old('name') }}" required>
+                                <input type="text" name="name" id="name" class="kt-input h-[45px]"
+                                    value="{{ old('name') }}" required>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -43,7 +45,8 @@
                             {{-- Arabic Name --}}
                             <div>
                                 <label for="name_ar" class="kt-label mb-2">{{ __('main.name_ar') }}</label>
-                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]" value="{{ old('name_ar') }}">
+                                <input type="text" name="name_ar" id="name_ar" class="kt-input h-[45px]"
+                                    value="{{ old('name_ar') }}">
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -54,8 +57,10 @@
                                 <label for="type" class="kt-label mb-2">{{ __('main.type') }}</label>
                                 <select name="type" id="type" class="kt-input">
                                     <option value="" selected disabled>{{ __('main.select_option') }}</option>
-                                    <option value="Ocean" {{ old('type') == 'Ocean' ? 'selected' : '' }}>Ocean</option>
-                                    <option value="River" {{ old('type') == 'River' ? 'selected' : '' }}>River</option>
+                                    <option value="Ocean" {{ old('type') == 'Ocean' ? 'selected' : '' }}>
+                                        {{ __('main.type_ocean') }}</option>
+                                    <option value="River" {{ old('type') == 'River' ? 'selected' : '' }}>
+                                        {{ __('main.type_river') }}</option>
                                 </select>
                                 @error('type')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -77,8 +82,9 @@
                                 <label for="country_id" class="kt-label mb-2">{{ __('main.country') }}</label>
                                 <select name="country_id" id="country_id" class="kt-input">
                                     <option value="">{{ __('main.select_option') }}</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{ $country->id }}" {{ old('country_id') == $country->id ? 'selected' : '' }}>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ old('country_id') == $country->id ? 'selected' : '' }}>
                                             {{ $country->name }}
                                         </option>
                                     @endforeach
@@ -103,7 +109,8 @@
                             {{-- Latitude --}}
                             <div>
                                 <label for="latitude" class="kt-label mb-2">{{ __('main.latitude') }}</label>
-                                <input type="number" step="any" name="latitude" id="latitude" class="kt-input h-[45px]" value="{{ old('latitude') }}">
+                                <input type="number" step="any" name="latitude" id="latitude"
+                                    class="kt-input h-[45px]" value="{{ old('latitude') }}">
                                 @error('latitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -112,7 +119,8 @@
                             {{-- Longitude --}}
                             <div>
                                 <label for="longitude" class="kt-label mb-2">{{ __('main.longitude') }}</label>
-                                <input type="number" step="any" name="longitude" id="longitude" class="kt-input h-[45px]" value="{{ old('longitude') }}">
+                                <input type="number" step="any" name="longitude" id="longitude"
+                                    class="kt-input h-[45px]" value="{{ old('longitude') }}">
                                 @error('longitude')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -123,7 +131,8 @@
 
                 {{-- Action Buttons --}}
                 <div class="flex justify-end gap-3 mt-4">
-                    <a href="{{ route('dashboard.cruises.ports.index') }}" class="kt-btn kt-btn-outline">{{ __('main.cancel') }}</a>
+                    <a href="{{ route('dashboard.cruises.ports.index') }}"
+                        class="kt-btn kt-btn-outline">{{ __('main.cancel') }}</a>
                     <button type="submit" class="kt-btn kt-btn-primary">{{ __('main.save_and_continue') }}</button>
                 </div>
             </div>
@@ -132,54 +141,55 @@
 @endsection
 
 @push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const countrySelect = document.getElementById('country_id');
-        const citySelect = document.getElementById('city_id');
-        const oldCityId = '{{ old('city_id') }}';
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const countrySelect = document.getElementById('country_id');
+            const citySelect = document.getElementById('city_id');
+            const oldCityId = '{{ old('city_id') }}';
 
-        function loadCities(countryId, selectedCityId = null) {
-            citySelect.innerHTML = '<option value="">{{ __("main.loading") }}...</option>';
-            citySelect.disabled = true;
+            function loadCities(countryId, selectedCityId = null) {
+                citySelect.innerHTML = '<option value="">{{ __('main.loading') }}...</option>';
+                citySelect.disabled = true;
 
-            if (!countryId) {
-                citySelect.innerHTML = '<option value="">{{ __("main.select_option") }}</option>';
-                citySelect.disabled = false;
-                return;
+                if (!countryId) {
+                    citySelect.innerHTML = '<option value="">{{ __('main.select_option') }}</option>';
+                    citySelect.disabled = false;
+                    return;
+                }
+
+                fetch(`/api/countries/${countryId}/cities`)
+                    .then(response => response.json())
+                    .then(data => {
+                        citySelect.innerHTML = '<option value="">{{ __('main.select_option') }}</option>';
+                        if (data && data.length > 0) {
+                            data.forEach(city => {
+                                const option = document.createElement('option');
+                                option.value = city.id;
+                                option.textContent = city.name + (city.name_ar ? ' / ' + city.name_ar :
+                                    '');
+                                if (selectedCityId && selectedCityId == city.id) {
+                                    option.selected = true;
+                                }
+                                citySelect.appendChild(option);
+                            });
+                        }
+                        citySelect.disabled = false;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching cities:', error);
+                        citySelect.innerHTML = '<option value="">{{ __('main.select_option') }}</option>';
+                        citySelect.disabled = false;
+                    });
             }
 
-            fetch(`/api/countries/${countryId}/cities`)
-                .then(response => response.json())
-                .then(data => {
-                    citySelect.innerHTML = '<option value="">{{ __("main.select_option") }}</option>';
-                    if (data && data.length > 0) {
-                        data.forEach(city => {
-                            const option = document.createElement('option');
-                            option.value = city.id;
-                            option.textContent = city.name + (city.name_ar ? ' / ' + city.name_ar : '');
-                            if (selectedCityId && selectedCityId == city.id) {
-                                option.selected = true;
-                            }
-                            citySelect.appendChild(option);
-                        });
-                    }
-                    citySelect.disabled = false;
-                })
-                .catch(error => {
-                    console.error('Error fetching cities:', error);
-                    citySelect.innerHTML = '<option value="">{{ __("main.select_option") }}</option>';
-                    citySelect.disabled = false;
-                });
-        }
+            countrySelect.addEventListener('change', function() {
+                loadCities(this.value);
+            });
 
-        countrySelect.addEventListener('change', function() {
-            loadCities(this.value);
+            // Initialize on page load if country is selected
+            if (countrySelect.value) {
+                loadCities(countrySelect.value, oldCityId);
+            }
         });
-
-        // Initialize on page load if country is selected
-        if (countrySelect.value) {
-            loadCities(countrySelect.value, oldCityId);
-        }
-    });
-</script>
+    </script>
 @endpush

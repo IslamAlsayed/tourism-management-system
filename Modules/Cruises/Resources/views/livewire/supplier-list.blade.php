@@ -25,9 +25,10 @@
             ])
             @endcomponent
 
-            @if (isset($data) && !empty($data) && $data->count() > 0)
-                @include('includes.pagination', ['data' => $data])
-            @endif
         </div>
     </div>
+
+    @if (isset($data) && !empty($data) && $data->count() > 0)
+        @include('includes.pagination', ['data' => $data])
+    @endif
 </div>

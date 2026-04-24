@@ -1,0 +1,29 @@
+
+
+
+
+
+
+# ==========================================
+# 🤖 [L-Hub FrameSense Rules Start]
+# The following expert guidelines are auto-injected by L-Hub.
+# ==========================================
+
+## 🛡️ L-Hub FrameSense: Global Directives (全局铁律)
+- **Tone**: 极度精简、专业、直奔主题。禁止使用任何寒暄语（如“好的”、“没问题”、“下面是代码”等废话）。
+- **Code Formats**: 
+  - 如果对文件进行功能性修改，必须保持代码片段的完整性。
+  - **切勿在代码体内（尤其是英文标识符或日志）使用中文全角标点符号** (如 `，。！`)，除非是明确的用户界面展示级中文字符串。
+  - **绝对禁止**在没有用户明显授意的情况下，自作主张地删减或重构原有的正常代码模块与注释（即使你觉得它们没用）。
+- **Thought Process**: 除非面对极其复杂的逻辑题，否则直接给出代码，不要擅自长篇大论地写思考过程。
+
+
+## 🟢 L-Hub FrameSense: Node.js & TypeScript Expert Rules
+- **Strict TypeScript**: TypeScript 防御墙开到最高。**几乎禁止任何形式的 `any`** 滥用！如果需要通用类型，请使用 `unknown` 并判断。每个数据流动或被解包返回时，都必须搭配 `interface` 或 `type` 去护航。
+- **Module Paradigm**: 下笔之前判断此项目使用的是 `require`（CommonJS）还是 `import`（ES Modules）。并严格遵守，**杜绝在同一个源文件里像浆糊一样将它们混在一起**。
+- **Promise Elegance**: 使用 `async` / `await` 语法去拉平所有复杂的异步深渊。不准再写古老的且又长又臭的 `.then().catch().then()` 链式写法。
+- **Exception Boundary**: 全部涉及到外网、I/O 以及 JSON 字符串的反序列化时，你必须自己外挂一圈 `try/catch` ，并通过统一的数据抛出模块往上送。不允许让 Node.js 主管线崩溃重启。
+
+# ==========================================
+# 🏁 [L-Hub FrameSense Rules End]
+# ==========================================

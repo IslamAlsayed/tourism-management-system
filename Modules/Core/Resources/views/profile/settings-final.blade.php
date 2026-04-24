@@ -41,7 +41,7 @@
             <!-- Sidebar Navigation -->
             <div class="col-lg-3 col-xl-2 mb-4">
                 <div class="card">
-                    <div class="card-body p-0">
+                    <div class="kt-card-body p-0">
                         <div class="nav nav-pills flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <button class="nav-link active rounded-0 border-0 text-start" id="v-pills-overview-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-pills-overview" type="button" role="tab">
@@ -76,10 +76,10 @@
                         <div class="row">
                             <div class="col-xl-8 mb-4">
                                 <div class="card">
-                                    <div class="card-header">
+                                    <div class="kt-card-header">
                                         <h5 class="card-title mb-0">Account Information</h5>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="kt-card-body">
                                         <div class="table-responsive">
                                             <table class="table table-borderless">
                                                 <tbody>
@@ -122,10 +122,10 @@
 
                             <div class="col-xl-4">
                                 <div class="card mb-4">
-                                    <div class="card-header">
+                                    <div class="kt-card-header">
                                         <h6 class="card-title mb-0">Profile Completion</h6>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="kt-card-body">
                                         <div class="d-flex align-items-center mb-3">
                                             <div class="progress flex-grow-1 me-3" style="height: 6px;">
                                                 <div class="progress-bar bg-success" role="progressbar" style="width: 85%">
@@ -139,20 +139,20 @@
                                 </div>
 
                                 <div class="card">
-                                    <div class="card-header">
+                                    <div class="kt-card-header">
                                         <h6 class="card-title mb-0">Quick Actions</h6>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="kt-card-body">
                                         <div class="d-grid gap-2">
-                                            <button type="button" class="btn btn-primary btn-sm">
+                                            <button type="button" class="kt-btn kt-btn-sm kt-btn-primary">
                                                 <i class="fa-duotone fa-solid fa-id-card me-2"></i>
                                                 Edit Profile
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-sm">
+                                            <button type="button" class="kt-btn kt-btn-sm bg-warning text-white hover:bg-yellow-600">
                                                 <i class="fa-duotone fa-solid fa-key me-2"></i>
                                                 Change Password
                                             </button>
-                                            <button type="button" class="btn btn-info btn-sm">
+                                            <button type="button" class="kt-btn kt-btn-sm bg-info text-white hover:bg-cyan-600">
                                                 <i class="fa-duotone fa-solid fa-bell-bing me-2"></i>
                                                 Notification Settings
                                             </button>
@@ -166,10 +166,10 @@
                     <!-- Personal Info Tab -->
                     <div class="tab-pane fade" id="v-pills-personal" role="tabpanel">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="kt-card-header">
                                 <h5 class="card-title mb-0">Personal Information</h5>
                             </div>
-                            <div class="card-body">
+                            <div class="kt-card-body">
                                 <form>
                                     <div class="row mb-4">
                                         <label class="col-lg-3 col-form-label fw-semibold">Full Name</label>
@@ -193,8 +193,8 @@
                                     </div>
 
                                     <div class="d-flex justify-content-end gap-2">
-                                        <button type="reset" class="btn btn-light">Discard</button>
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        <button type="reset" class="kt-btn kt-btn-light">Discard</button>
+                                        <button type="submit" class="kt-btn kt-btn-primary">Save Changes</button>
                                     </div>
                                 </form>
                             </div>
@@ -204,10 +204,10 @@
                     <!-- Security Tab -->
                     <div class="tab-pane fade" id="v-pills-security" role="tabpanel">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="kt-card-header">
                                 <h5 class="card-title mb-0">Security Settings</h5>
                             </div>
-                            <div class="card-body">
+                            <div class="kt-card-body">
                                 <h6 class="mb-4">Change Password</h6>
                                 <form>
                                     <div class="row mb-4">
@@ -225,7 +225,7 @@
                                     </div>
 
                                     <div class="d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary">Update Password</button>
+                                        <button type="submit" class="kt-btn kt-btn-primary">Update Password</button>
                                     </div>
                                 </form>
                             </div>
@@ -235,10 +235,10 @@
                     <!-- Notifications Tab -->
                     <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="kt-card-header">
                                 <h5 class="card-title mb-0">Email Notifications</h5>
                             </div>
-                            <div class="card-body">
+                            <div class="kt-card-body">
                                 <div class="row mb-4">
                                     <div class="col-lg-8">
                                         <label class="fw-semibold">Profile Updates</label>
@@ -266,7 +266,7 @@
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Save Preferences</button>
+                                    <button type="submit" class="kt-btn kt-btn-primary">Save Preferences</button>
                                 </div>
                             </div>
                         </div>
@@ -279,19 +279,19 @@
         <div class="text-center py-5">
             <h5 class="mb-4">🔗 روابط التنقل</h5>
             <div class="d-flex flex-wrap justify-content-center gap-2">
-                <a href="{{ route('dashboard.core.profile.edit') }}" class="btn btn-outline-primary">
+                <a href="{{ route('dashboard.core.profile.edit') }}" class="kt-btn kt-btn-outline text-primary border-primary/30 hover:bg-primary/10">
                     <i class="fa-duotone fa-solid fa-arrow-left me-2"></i>الصفحة القديمة
                 </a>
-                <a href="{{ route('dashboard.core.profile.settings.test') }}" class="btn btn-outline-warning">
+                <a href="{{ route('dashboard.core.profile.settings.test') }}" class="kt-btn kt-btn-outline text-warning border-warning/30 hover:bg-warning/10">
                     <i class="fa-duotone fa-solid fa-palette-1 me-2"></i>التجريبية الأولى
                 </a>
-                <a href="{{ route('dashboard.core.profile.settings.new') }}" class="btn btn-outline-info">
+                <a href="{{ route('dashboard.core.profile.settings.new') }}" class="kt-btn kt-btn-outline text-info border-info/30 hover:bg-info/10">
                     <i class="fa-duotone fa-solid fa-palette me-2"></i>التجريبية الثانية
                 </a>
-                <a href="{{ route('dashboard.core.profile.settings.final') }}" class="btn btn-primary">
+                <a href="{{ route('dashboard.core.profile.settings.final') }}" class="kt-btn kt-btn-primary">
                     <i class="fa-duotone fa-solid fa-palette me-2"></i>الصفحة النهائية الاحترافية ⭐
                 </a>
-                <a href="{{ route('dashboard.core.user.profile') }}" class="btn btn-outline-success">
+                <a href="{{ route('dashboard.core.user.profile') }}" class="kt-btn kt-btn-outline text-success border-success/30 hover:bg-success/10">
                     <i class="fa-duotone fa-solid fa-id-card me-2"></i>البروفايل الرئيسي
                 </a>
             </div>

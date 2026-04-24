@@ -15,6 +15,12 @@
    Border/shadow handled by KTUI theme automatically. */
 
 @layer base {
+
+    /* Alpine.js: hide elements with x-cloak until Alpine processes them */
+    [x-cloak] {
+        display: none !important;
+    }
+
     html {
         scroll-behavior: smooth;
     }
@@ -42,66 +48,6 @@
         display: none !important;
     }
 
-    /* Fix input text and placeholder color in dark mode */
-    html.dark .kt-input,
-    html.dark input.kt-input,
-    html.dark .kt-input input,
-    html.dark input,
-    [data-kt-theme-mode="dark"] .kt-input,
-    [data-kt-theme-mode="dark"] input.kt-input,
-    [data-kt-theme-mode="dark"] .kt-input input,
-    [data-kt-theme-mode="dark"] input {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-    }
-
-    html.dark .kt-input::placeholder,
-    html.dark input.kt-input::placeholder,
-    html.dark .kt-input input::placeholder,
-    [data-kt-theme-mode="dark"] .kt-input::placeholder,
-    [data-kt-theme-mode="dark"] input.kt-input::placeholder,
-    [data-kt-theme-mode="dark"] .kt-input input::placeholder {
-        color: rgba(255, 255, 255, 0.5) !important;
-        -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
-    }
-
-    /* Universal Autofill Fix to preserve exact theme background */
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: inherit !important;
-        transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s !important;
-        box-shadow: inset 0 0 20px 20px transparent;
-    }
-
-    /* Dark Mode Autofill override (matches Metronic dark input background) */
-    html.dark input:-webkit-autofill,
-    html.dark input:-webkit-autofill:hover,
-    html.dark input:-webkit-autofill:focus,
-    html.dark input:-webkit-autofill:active,
-    [data-kt-theme-mode="dark"] input:-webkit-autofill,
-    [data-kt-theme-mode="dark"] input:-webkit-autofill:hover,
-    [data-kt-theme-mode="dark"] input:-webkit-autofill:focus,
-    [data-kt-theme-mode="dark"] input:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0px 1000px #1b1b29 inset !important;
-        -webkit-text-fill-color: #ffffff !important;
-    }
-
-    /* Light Mode Autofill override */
-    html:not(.dark) input:-webkit-autofill,
-    html:not(.dark) input:-webkit-autofill:hover,
-    html:not(.dark) input:-webkit-autofill:focus,
-    html:not(.dark) input:-webkit-autofill:active,
-    [data-kt-theme-mode="light"] input:-webkit-autofill,
-    [data-kt-theme-mode="light"] input:-webkit-autofill:hover,
-    [data-kt-theme-mode="light"] input:-webkit-autofill:focus,
-    [data-kt-theme-mode="light"] input:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
-        -webkit-text-fill-color: #000000 !important;
-    }
-
     /* Fix for oversized/empty dropdowns */
     select.kt-input {
         max-height: 300px;
@@ -114,6 +60,7 @@
 /* Prevents black border/ring on focus and fixes text visibility   */
 /* ═══════════════════════════════════════════════════════════════ */
 @layer base {
+
     /* Dark mode container background */
     html.dark #search-container,
     [data-kt-theme-mode="dark"] #search-container {
@@ -160,10 +107,12 @@
 }
 
 @layer components {
+
     /* Align FontAwesome icons in the Metronic sidebar */
     .menu-icon i[class*="fa-"],
     .menu-icon i[class*="fas "] {
-        font-size: 1.25rem !important; /* Match fs-2 size roughly */
+        font-size: 1.25rem !important;
+        /* Match fs-2 size roughly */
         width: 1.25rem;
         height: 1.25rem;
         display: flex;
@@ -222,9 +171,6 @@
     /* Metronic container-fixed: standardized content container */
     .container-fixed {
         width: 100%;
-        max-width: 1320px;
-        margin-left: auto;
-        margin-right: auto;
         padding-left: 1.25rem;
         padding-right: 1.25rem;
     }

@@ -40,7 +40,7 @@
                                 'columnName' => 'flag',
                             ])
                             <input type="hidden" name="selected_flag" id="selected_flag">
-                            <button type="button" class="btn btn-sm btn-light-primary" data-kt-modal-toggle="#flags_modal">
+                            <button type="button" class="kt-btn kt-btn-sm kt-btn-light text-primary" data-kt-modal-toggle="#flags_modal">
                                 <i class="fa-duotone fa-solid fa-image"></i> {{ __('main.choose_from_media') }}
                             </button>
                         </div>

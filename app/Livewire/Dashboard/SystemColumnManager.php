@@ -86,7 +86,7 @@ class SystemColumnManager extends Component
             $this->selectedColumns = $systemConfig->columns;
         } else {
             // Default selection based on app settings or first 6 columns
-            $defaultCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 6));
+            $defaultCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', 6);
             $this->selectedColumns = array_slice($this->availableColumns, 0, $defaultCount);
         }
     }

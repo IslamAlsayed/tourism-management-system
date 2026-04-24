@@ -16,7 +16,7 @@ use Modules\Localization\Http\Controllers\TimezoneController;
 |
 */
 
-Route::prefix('dashboard/localization')->name('dashboard.localization.')->middleware('auth')->group(function () {
+Route::prefix('dashboard/localization')->name('dashboard.localization.')->middleware(['auth', 'admin'])->group(function () {
     // === LANGUAGE MANAGEMENT ===
     Route::resource('languages', LanguageController::class)->names('languages');
 

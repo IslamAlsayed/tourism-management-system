@@ -412,11 +412,11 @@
                 </div>
             </div>
         @endif
-
-        @if (isset($data) && !empty($data) && $data->count() > 0)
-            @include('includes.pagination', ['data' => $data])
-        @endif
     </div>
+
+    @if (isset($data) && !empty($data) && $data->count() > 0)
+        @include('includes.pagination', ['data' => $data])
+    @endif
 </div>
 
 @push('scripts')

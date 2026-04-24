@@ -77,7 +77,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $travelPass->id,
-                                    'modelType' => '\\App\\Models\\TravelPass',
+                                    'modelType' => '\\Modules\\TravelDocuments\\Entities\\TravelPasse',
                                     'field' => 'is_active',
                                     'value' => (bool) $travelPass->is_active,
                                     'table' => 'travel_passes',
@@ -90,7 +90,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $travelPass->id,
-                                    'modelType' => '\\App\\Models\\TravelPass',
+                                    'modelType' => '\\Modules\\TravelDocuments\\Entities\\TravelPasse',
                                     'field' => 'is_featured',
                                     'value' => (bool) $travelPass->is_featured,
                                     'table' => 'travel_passes',
@@ -159,7 +159,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $travelPass->id,
-                                    'modelType' => '\\App\\Models\\TravelPass',
+                                    'modelType' => '\\Modules\\TravelDocuments\\Entities\\TravelPasse',
                                     'field' => 'is_active',
                                     'value' => (bool) $travelPass->is_active,
                                     'table' => 'travel_passes',
@@ -171,7 +171,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $travelPass->id,
-                                    'modelType' => '\\App\\Models\\TravelPass',
+                                    'modelType' => '\\Modules\\TravelDocuments\\Entities\\TravelPasse',
                                     'field' => 'is_featured',
                                     'value' => (bool) $travelPass->is_featured,
                                     'table' => 'travel_passes',
@@ -183,7 +183,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $travelPass->id,
-                                    'modelType' => '\\App\\Models\\TravelPass',
+                                    'modelType' => '\\Modules\\TravelDocuments\\Entities\\TravelPasse',
                                     'field' => 'waives_visa_fee',
                                     'value' => (bool) $travelPass->waives_visa_fee,
                                     'table' => 'travel_passes',
@@ -195,7 +195,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $travelPass->id,
-                                    'modelType' => '\\App\\Models\\TravelPass',
+                                    'modelType' => '\\Modules\\TravelDocuments\\Entities\\TravelPasse',
                                     'field' => 'must_purchase_before_arrival',
                                     'value' => (bool) $travelPass->must_purchase_before_arrival,
                                     'table' => 'travel_passes',

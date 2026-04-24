@@ -49,6 +49,7 @@ class Restaurants extends Component
 
     public function mount()
     {
+        set_time_limit(120);
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(Restaurant::class);
         $this->resetPage();

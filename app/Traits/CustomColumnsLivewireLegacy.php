@@ -70,7 +70,7 @@ trait CustomColumnsLivewireLegacy
         $schemaColumns = \Illuminate\Support\Facades\Schema::getColumnListing($model->getTable());
         
         $this->fillable = $schemaColumns;
-        array_splice($this->fillable, optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5)), 0, $this->relations);
+        array_splice($this->fillable, optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', 5), 0, $this->relations);
 
         $excluded = $this->getExcludedColumnsWithSettings($model);
 
@@ -97,7 +97,7 @@ trait CustomColumnsLivewireLegacy
         }
 
         // إذا لم توجد إعدادات محفوظة، استخدم الافتراضي
-        $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+        $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', 5);
         $this->columns = $savedColumns ?? array_slice($this->allColumns, 0, $defaultColumnsCount);
 
         $this->pendingColumns = $this->columns;
@@ -177,7 +177,7 @@ trait CustomColumnsLivewireLegacy
 
         // لو كل الأعمدة محددة → ارجع للافتراضي
         if ($this->isAllSelected) {
-            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', 5);
             $this->pendingColumns = array_slice($this->allColumns, 0, $defaultColumnsCount);
         }
         // غير كده → حدد الكل
@@ -233,7 +233,7 @@ trait CustomColumnsLivewireLegacy
         if ($systemDefault) {
             $this->columns = $systemDefault;
         } else {
-            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', env('APP_COLUMNS_LENGTH', 5));
+            $defaultColumnsCount = optional(getActiveSettings())->app_columns_length ?? config('app.app_columns_length', 5);
             $this->columns = array_slice($this->allColumns, 0, $defaultColumnsCount);
         }
 

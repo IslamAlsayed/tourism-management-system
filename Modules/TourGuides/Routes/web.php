@@ -16,7 +16,7 @@ use Modules\TourGuides\Http\Controllers\SeasonController;
 |
 */
 
-Route::prefix('dashboard/tourguides')->name('dashboard.tourguides.')->middleware('auth')->group(function () {
+Route::prefix('dashboard/tourguides')->name('dashboard.tourguides.')->middleware(['auth', 'admin'])->group(function () {
     // === TOUR GUIDE MANAGEMENT ===
     Route::resource('guides', GuideController::class)->names('guides');
 

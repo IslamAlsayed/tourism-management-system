@@ -32,9 +32,9 @@
         </div>
 
         {{-- Main Card --}}
-        <div class="card shadow-sm border-0 rounded-xl">
+        <div class="kt-card">
             {{-- Search & Bulk Toolbar --}}
-            <div class="card-header border-b border-gray-100 dark:border-gray-800 py-4 px-6">
+            <div class="kt-card-header">
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 w-full">
                     <div class="relative w-full md:w-80">
                         <i class="fa-duotone fa-solid fa-magnifying-glass absolute start-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <div class="card-body p-6">
+            <div class="kt-card-body p-4 lg:p-6">
                 @if($viewMode === 'grid')
                     {{-- ==================== GRID VIEW ==================== --}}
                     <div class="flex flex-col gap-8">

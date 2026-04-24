@@ -1,7 +1,7 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 
 @section('content')
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         {{-- Page Header --}}
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>

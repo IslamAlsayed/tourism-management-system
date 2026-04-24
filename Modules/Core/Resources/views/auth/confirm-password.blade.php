@@ -49,7 +49,7 @@
 
         {{-- Left: Form (60% on desktop) --}}
         <div class="flex justify-center items-center p-8 lg:p-10 order-2 lg:order-1 auth-form-col">
-            <div class="kt-card max-w-[370px] w-full border-0 shadow-none bg-transparent">
+            <div class="kt-card max-w-[370px] w-full">
                 <div class="flex justify-center mb-10">
                     <a href="{{ url('/') }}">
                         @php
@@ -92,12 +92,10 @@
                             <div class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                 data-kt-toggle-password-trigger="true">
                                 <span class="kt-toggle-password-active:hidden">
-                                    <i class="fa-duotone fa-solid fa-eye text-muted-foreground">
-                                    </i>
+                                    <i class="ki-filled ki-eye text-muted-foreground"></i>
                                 </span>
                                 <span class="hidden kt-toggle-password-active:block">
-                                    <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground">
-                                    </i>
+                                    <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
                                 </span>
                             </div>
                         </label>

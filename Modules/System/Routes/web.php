@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('system')->group(function() {
+Route::prefix('system')->middleware(['auth', 'admin'])->group(function() {
     Route::get('/', 'SystemController@index');
 });

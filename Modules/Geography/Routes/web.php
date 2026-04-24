@@ -19,7 +19,7 @@ use Modules\Geography\Http\Controllers\SubregionController;
 |
 */
 
-Route::prefix('dashboard/geography')->name('dashboard.geography.')->middleware('auth')->group(function () {
+Route::prefix('dashboard/geography')->name('dashboard.geography.')->middleware(['auth', 'admin'])->group(function () {
     // === REGIONS MANAGEMENT ===
     Route::resource('regions', RegionController::class)->names('regions');
 

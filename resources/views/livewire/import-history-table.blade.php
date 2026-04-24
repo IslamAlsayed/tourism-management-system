@@ -51,7 +51,7 @@
     @if($hasActiveJobs && $activeJob)
         <!-- Prominent Unskippable Overlay for Active Imports -->
         <div class="fixed inset-0 z-[9999] flex items-center justify-center m-0 p-0" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);">
-            <div class="bg-white dark:bg-[#1e1e2d] w-full md:w-1/3 min-w-[320px] rounded-xl shadow-2xl border border-border relative flex flex-col max-h-[90vh] text-gray-900 dark:text-gray-100 opacity-100 isolate">
+            <div class="bg-white dark:bg-[#1e1e2d] rounded-xl shadow-2xl border border-border relative flex flex-col max-h-[90vh] text-gray-900 dark:text-gray-100 opacity-100 isolate" style="width: 90%; max-width: 520px; min-width: 320px; margin: 0 auto;">
                 <!-- Close Button (Fallback if stuck) -->
                 @if(in_array($activeJob->status, ['queued', 'pending_start', 'processing']))
                 <button wire:click="cancelJob({{ $activeJob->id }})" class="absolute top-4 right-4 z-10 text-muted-foreground hover:text-destructive transition-colors">

@@ -18,6 +18,9 @@ return [
 
     'default' => env('DB_CONNECTION', 'sqlite'),
 
+    // Used by db_connection() helper in app/helpers.php
+    'mode' => env('DB_MODE', 'local'),
+
     /*
     |--------------------------------------------------------------------------
     | Database Connections

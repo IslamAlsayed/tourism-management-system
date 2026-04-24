@@ -244,7 +244,7 @@ class ExcelController extends Controller
                         CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
                         CURLOPT_DNS_CACHE_TIMEOUT => 0,
                     ]
-                ])->retry(3, 200)->timeout(120)->connectTimeout(30)->get($csvExportUrl);
+                ])->retry(2, 300)->timeout(30)->connectTimeout(10)->get($csvExportUrl);
             } catch (\Exception $e) {
                 Log::warning("Http::get failed entirely (timeout?): " . $e->getMessage());
             }
@@ -257,7 +257,7 @@ class ExcelController extends Controller
                         'curl' => [
                             CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
                         ]
-                    ])->retry(3, 200)->timeout(120)->connectTimeout(30)->get($directDownloadUrl);
+                    ])->retry(2, 300)->timeout(30)->connectTimeout(10)->get($directDownloadUrl);
                 } catch (\Exception $e) {
                     Log::warning("Http::get (direct format) failed entirely: " . $e->getMessage());
                 }
@@ -277,6 +277,12 @@ class ExcelController extends Controller
                 if ($downloadResult) {
                     $contentType = 'text/csv';
                 }
+            }
+
+            // Final HTML content validation — reject any downloaded content that is an HTML error page
+            if ($downloadResult && stripos($downloadResult, '<html') !== false && stripos($downloadResult, '<!DOCTYPE') !== false) {
+                Log::warning("Downloaded content is HTML (error page), not a valid spreadsheet. Size: " . strlen($downloadResult) . " bytes");
+                $downloadResult = null;
             }
 
             if (!$downloadResult) {
@@ -347,7 +353,9 @@ class ExcelController extends Controller
 
     private function extractGoogleDriveFileId($url)
     {
-        $pattern = '/(?<=\/d\/)([a-zA-Z0-9-_]+)/';
+        // Match /d/ followed by the file ID (alphanumeric, dash, underscore) up to next slash or end
+        // This correctly handles malformed/duplicate URLs by stopping at /
+        $pattern = '/\/d\/([a-zA-Z0-9_-]{10,})(?=\/|$|\?)/';
         if (preg_match($pattern, $url, $matches)) {
             return $matches[1];
         }
@@ -664,9 +672,9 @@ class ExcelController extends Controller
                 unlink($tempFile);
                 Log::info("system curl.exe success. Downloaded " . strlen($content) . " bytes.");
                 
-                // If the content is small and contains 'HTML', it might be a login page
-                if (strlen($content) < 2000 && stripos($content, '<html') !== false) {
-                    Log::warning("system curl.exe returned HTML, likely a login page or error.");
+                // If the content contains HTML tags, it's likely a login/error page, not a spreadsheet
+                if (stripos($content, '<html') !== false || stripos($content, '<!DOCTYPE') !== false) {
+                    Log::warning("system curl.exe returned HTML (" . strlen($content) . " bytes), likely a login page or error.");
                     return null;
                 }
                 

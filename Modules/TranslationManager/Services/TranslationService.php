@@ -113,14 +113,6 @@ class TranslationService
         Arr::set($array, $key, $value);
     }
 
-    /**
-     * Write translations safely to file.
-     *
-     * @param string $filePath
-     * @param array $translations
-     * @return bool
-     * @throws \Exception
-     */
     public function writeTranslationFile(string $filePath, array $translations)
     {
         $directory = dirname($filePath);
@@ -128,13 +120,7 @@ class TranslationService
             File::makeDirectory($directory, 0755, true, true);
         }
 
-        $export = var_export($translations, true);
-        
-        // Optimize array syntax from array() to []
-        $export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
-        $array = preg_split("/\r\n|\n|\r/", $export);
-        $array = preg_replace(["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"], [trim(' ['), ']$1', ' => ['], $array);
-        $export = join(PHP_EOL, array_filter(["["] + $array));
+        $export = $this->renderArrayToShortSyntax($translations);
         
         $content = "<?php\n\nreturn " . $export . ";\n";
 
@@ -143,6 +129,30 @@ class TranslationService
         }
 
         return true;
+    }
+
+    /**
+     * Recursively render an array to PHP short syntax [].
+     * 
+     * @param array $array
+     * @param int $indentLevel
+     * @return string
+     */
+    private function renderArrayToShortSyntax(array $array, int $indentLevel = 1): string
+    {
+        $indent = str_repeat('    ', $indentLevel);
+        $output = "[\n";
+        foreach ($array as $key => $value) {
+            $keyExport = var_export((string)$key, true);
+            if (is_array($value)) {
+                $output .= $indent . $keyExport . " => " . $this->renderArrayToShortSyntax($value, $indentLevel + 1) . ",\n";
+            } else {
+                $valueExport = var_export((string)$value, true);
+                $output .= $indent . $keyExport . " => " . $valueExport . ",\n";
+            }
+        }
+        $output .= str_repeat('    ', $indentLevel - 1) . "]";
+        return $output;
     }
     
     /**

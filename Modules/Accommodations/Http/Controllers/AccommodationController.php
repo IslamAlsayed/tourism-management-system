@@ -9,13 +9,18 @@ use Modules\Accommodations\Entities\Season;
 use Modules\Accommodations\Entities\Supplement;
 use Modules\Accommodations\Entities\Accommodation;
 use App\Traits\PhotoUploadTrait;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
 use Modules\Accommodations\Http\Requests\Accommodations\StoreRequest;
 use Modules\Accommodations\Http\Requests\Accommodations\UpdateRequest;
 
 class AccommodationController extends Controller
 {
     use PhotoUploadTrait;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Accommodation::class, 'accommodation');
+    }
 
     public function index()
     {

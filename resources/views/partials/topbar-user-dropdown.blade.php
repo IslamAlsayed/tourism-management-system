@@ -68,6 +68,7 @@
                             $currentLang = $system_languages->firstWhere('code', getCurrentLocale());
                             $currentLangName = $currentLang ? ($currentLang->native ?? $currentLang->name) : strtoupper(getCurrentLocale());
                             
+                            // Priority: 1) Admin-uploaded flag  2) Metronic SVG  3) Default logo
                             $currentCountryCodeMap = [
                                 'en' => 'gb', 'ar' => 'sa', 'es' => 'es', 'it' => 'it',
                                 'fr' => 'fr', 'ja' => 'jp', 'tr' => 'tr', 'de' => 'de',
@@ -75,8 +76,13 @@
                             ];
                             $cCode = $currentCountryCodeMap[getCurrentLocale()] ?? getCurrentLocale();
                             $currentLangPath = 'assets/media/flags/' . $cCode . '.svg';
-                            $currentLangExists = file_exists(public_path($currentLangPath));
-                            $currentFlagUrl = $currentLangExists ? asset($currentLangPath) : ($currentLang && $currentLang->photo ? asset('storage/' . $currentLang->photo) : asset('assets/images/logos/default-logo.svg'));
+                            if ($currentLang && $currentLang->photo && checkExistFile($currentLang->photo)) {
+                                $currentFlagUrl = asset('storage/' . $currentLang->photo);
+                            } elseif (file_exists(public_path($currentLangPath))) {
+                                $currentFlagUrl = asset($currentLangPath);
+                            } else {
+                                $currentFlagUrl = asset('assets/images/logos/default-logo.svg');
+                            }
                         @endphp
                         {{ $currentLangName }}
                         <img alt="{{ $currentLangName }}" class="inline-block size-3.5 rounded-full object-cover ms-2"
@@ -90,7 +96,7 @@
                                 <a class="kt-dropdown-menu-link" href="{{ route('dashboard.localization.system-languages.change', $language->code) }}">
                                     <span class="flex items-center gap-2">
                                         @php
-                                            // Fallback for standard ISO country flags to match the local files
+                                            // Priority: 1) Admin-uploaded flag  2) Metronic SVG  3) Default logo
                                             $countryCodeMap = [
                                                 'en' => 'gb', 'ar' => 'sa', 'es' => 'es', 'it' => 'it',
                                                 'fr' => 'fr', 'ja' => 'jp', 'tr' => 'tr', 'de' => 'de',
@@ -98,9 +104,13 @@
                                             ];
                                             $countryCode = $countryCodeMap[$language->code] ?? $language->code;
                                             $flagPath = 'assets/media/flags/' . $countryCode . '.svg';
-                                            $flagExists = file_exists(public_path($flagPath));
-                                            
-                                            $flagUrl = $flagExists ? asset($flagPath) : ($language->photo ? asset('storage/' . $language->photo) : asset('assets/images/logos/default-logo.svg'));
+                                            if ($language->photo && checkExistFile($language->photo)) {
+                                                $flagUrl = asset('storage/' . $language->photo);
+                                            } elseif (file_exists(public_path($flagPath))) {
+                                                $flagUrl = asset($flagPath);
+                                            } else {
+                                                $flagUrl = asset('assets/images/logos/default-logo.svg');
+                                            }
                                         @endphp
                                         <img src="{{ $flagUrl }}" class="inline-block rounded-full size-4 object-cover">
                                         <span class="kt-menu-title">

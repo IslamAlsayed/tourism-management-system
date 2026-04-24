@@ -91,7 +91,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $EntryPoint->id,
-                                    'modelType' => '\\App\\Models\\EntryPoint',
+                                    'modelType' => '\\Modules\\EntryPoints\\Entities\\Seaport',
                                     'field' => 'is_active',
                                     'value' => (bool) $EntryPoint->is_active,
                                     'table' => 'crossing_ports',
@@ -103,7 +103,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $EntryPoint->id,
-                                    'modelType' => '\\App\\Models\\EntryPoint',
+                                    'modelType' => '\\Modules\\EntryPoints\\Entities\\Seaport',
                                     'field' => 'is_24_7',
                                     'value' => (bool) $EntryPoint->is_24_7,
                                     'table' => 'crossing_ports',
@@ -115,7 +115,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $EntryPoint->id,
-                                    'modelType' => '\\App\\Models\\EntryPoint',
+                                    'modelType' => '\\Modules\\EntryPoints\\Entities\\Seaport',
                                     'field' => 'is_commercial',
                                     'value' => (bool) $EntryPoint->is_commercial,
                                     'table' => 'crossing_ports',
@@ -127,7 +127,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $EntryPoint->id,
-                                    'modelType' => '\\App\\Models\\EntryPoint',
+                                    'modelType' => '\\Modules\\EntryPoints\\Entities\\Seaport',
                                     'field' => 'is_passenger',
                                     'value' => (bool) $EntryPoint->is_passenger,
                                     'table' => 'crossing_ports',
@@ -139,7 +139,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $EntryPoint->id,
-                                    'modelType' => '\\App\\Models\\EntryPoint',
+                                    'modelType' => '\\Modules\\EntryPoints\\Entities\\Seaport',
                                     'field' => 'is_international',
                                     'value' => (bool) $EntryPoint->is_international,
                                     'table' => 'crossing_ports',
@@ -151,7 +151,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $EntryPoint->id,
-                                    'modelType' => '\\App\\Models\\EntryPoint',
+                                    'modelType' => '\\Modules\\EntryPoints\\Entities\\Seaport',
                                     'field' => 'is_major',
                                     'value' => (bool) $EntryPoint->is_major,
                                     'table' => 'crossing_ports',
@@ -248,7 +248,7 @@
                                 <div class="flex items-center gap-2">
                                     @livewire('toggle-switch', [
                                         'modelId' => $EntryPoint->id,
-                                        'modelType' => '\\App\\Models\\EntryPoint',
+                                        'modelType' => '\\Modules\\EntryPoints\\Entities\\Seaport',
                                         'field' => 'allows_visa_on_arrival',
                                         'value' => (bool) $EntryPoint->allows_visa_on_arrival,
                                         'table' => 'crossing_ports',
@@ -274,7 +274,7 @@
                                 <div class="flex items-center gap-2">
                                     @livewire('toggle-switch', [
                                         'modelId' => $EntryPoint->id,
-                                        'modelType' => '\\App\\Models\\EntryPoint',
+                                        'modelType' => '\\Modules\\EntryPoints\\Entities\\Seaport',
                                         'field' => 'visa_required',
                                         'value' => (bool) $EntryPoint->visa_required,
                                         'table' => 'crossing_ports',

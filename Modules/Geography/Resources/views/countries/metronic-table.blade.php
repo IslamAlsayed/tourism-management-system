@@ -2,12 +2,12 @@
 
 @section('content')
 <!--begin::Card-->
-<div class="card">
-    <div class="card-header border-0 pt-6">
-        <div class="card-title">
+<div class="kt-card">
+    <div class="kt-card-header border-0 pt-6">
+        <div class="kt-card-title">
             <h2 class="fw-bold">الدول</h2>
         </div>
-        <div class="card-toolbar">
+        <div class="kt-card-toolbar">
             <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                 <button type="button" class="kt-btn kt-btn-light kt-btn-primary me-3" id="kt_export_button">
                     <i class="fa-duotone fa-solid fa-arrow-up-from-bracket fs-2"></i>تصدير
@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body py-4">
+    <div class="kt-card-body py-4">
         <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_countries_table">
             <thead>
                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">

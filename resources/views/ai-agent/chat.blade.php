@@ -6,7 +6,7 @@
 <div class="d-flex flex-column flex-column-fluid">
     <!--begin::Toolbar-->
     <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-        <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+        <div id="kt_app_toolbar_container" class="kt-container-fixed d-flex flex-stack">
             <!--begin::Page title-->
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                 <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
@@ -29,10 +29,10 @@
 
     <!--begin::Content-->
     <div id="kt_app_content" class="app-content flex-column-fluid">
-        <div id="kt_app_content_container" class="app-container container-xxl">
-            <div class="card shadow-sm border-0" style="min-height: 700px; display: flex; flex-direction: column;">
-                <div class="card-header border-0 pt-6 bg-light-primary rounded-top">
-                    <h3 class="card-title align-items-start flex-column">
+        <div id="kt_app_content_container" class="kt-container-fixed">
+            <div class="kt-card" style="min-height: 700px; display: flex; flex-direction: column;">
+                <div class="kt-card-header bg-light-primary rounded-top">
+                    <h3 class="kt-card-title align-items-start flex-column">
                         <span class="card-label fw-bold fs-3 mb-1"><i class="fas fa-robot text-primary me-2"></i> {{ __('sidebar.Ai-Agent') ?? 'AI Assistant' }}</span>
                         <span class="text-muted mt-1 fw-semibold fs-7">How can I help you today?</span>
                     </h3>

@@ -1,9 +1,9 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 
 @section('title', __('main.create_type', ['type' => __('main.pricing-definition')]))
 
 @section('content')
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-4">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -31,7 +31,7 @@
         ])
     </div>
 
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         <form action="{{ route('dashboard.core.pricing-definitions.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 lg:gap-6">

@@ -29,6 +29,7 @@ use Modules\Core\Policies\FieldDefinitionPolicy;
 use Modules\Core\Policies\PricingDefinitionPolicy;
 use Modules\TouristServices\Entities\TouristService;
 use Modules\TouristSites\Entities\TouristSite;
+use Modules\Accommodations\Entities\Accommodation;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -53,6 +54,7 @@ class AuthServiceProvider extends ServiceProvider
         TouristService::class => TouristServicePolicy::class,
         TouristSite::class => TouristSitePolicy::class,
         \Modules\Geography\Entities\Nationality::class => \App\Policies\NationalityPolicy::class,
+        Accommodation::class => \App\Policies\AccommodationPolicy::class,
     ];
 
     /**
@@ -72,7 +74,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         ResetPassword::createUrlUsing(function (User $user, string $token) {
-            return env('FRONTEND_URL')."/password-reset/$token?email=".urlencode($user->email);
+            return config('app.frontend_url', config('app.url'))."/password-reset/$token?email=".urlencode($user->email);
         });
     }
 }

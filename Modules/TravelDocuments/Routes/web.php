@@ -15,7 +15,7 @@ use Modules\TravelDocuments\Http\Controllers\VisaRequirementController;
 |
 */
 
-Route::prefix('dashboard/traveldocuments')->name('dashboard.traveldocuments.')->middleware('auth')->group(function () {
+Route::prefix('dashboard/traveldocuments')->name('dashboard.traveldocuments.')->middleware(['auth', 'admin'])->group(function () {
     // === VISA REQUIREMENTS MANAGEMENT ===
     Route::resource('visa-requirements', VisaRequirementController::class)->names('visa-requirements');
 

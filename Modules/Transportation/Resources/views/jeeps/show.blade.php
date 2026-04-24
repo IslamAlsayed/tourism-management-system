@@ -85,7 +85,7 @@
                                     <div class="flex items-center gap-2">
                                         @livewire('toggle-switch', [
                                             'modelId' => $jeep->id,
-                                            'modelType' => '\\App\\Models\\Jeep',
+                                            'modelType' => '\\Modules\\Transportation\\Entities\\Jeep',
                                             'field' => 'is_active',
                                             'value' => (bool) $jeep->is_active,
                                             'table' => 'jeeps',
@@ -192,7 +192,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $jeep->id,
-                                    'modelType' => '\\App\\Models\\Jeep',
+                                    'modelType' => '\\Modules\\Transportation\\Entities\\Jeep',
                                     'field' => 'has_ac',
                                     'value' => (bool) $jeep->has_ac,
                                     'table' => 'jeeps',
@@ -204,7 +204,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $jeep->id,
-                                    'modelType' => '\\App\\Models\\Jeep',
+                                    'modelType' => '\\Modules\\Transportation\\Entities\\Jeep',
                                     'field' => 'has_driver',
                                     'value' => (bool) $jeep->has_driver,
                                     'table' => 'jeeps',
@@ -216,7 +216,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $jeep->id,
-                                    'modelType' => '\\App\\Models\\Jeep',
+                                    'modelType' => '\\Modules\\Transportation\\Entities\\Jeep',
                                     'field' => 'is_4x4',
                                     'value' => (bool) $jeep->is_4x4,
                                     'table' => 'jeeps',
@@ -228,7 +228,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $jeep->id,
-                                    'modelType' => '\\App\\Models\\Jeep',
+                                    'modelType' => '\\Modules\\Transportation\\Entities\\Jeep',
                                     'field' => 'has_camping_gear',
                                     'value' => (bool) $jeep->has_camping_gear,
                                     'table' => 'jeeps',
@@ -240,7 +240,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $jeep->id,
-                                    'modelType' => '\\App\\Models\\Jeep',
+                                    'modelType' => '\\Modules\\Transportation\\Entities\\Jeep',
                                     'field' => 'is_active',
                                     'value' => (bool) $jeep->is_active,
                                     'table' => 'jeeps',
@@ -252,7 +252,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $jeep->id,
-                                    'modelType' => '\\App\\Models\\Jeep',
+                                    'modelType' => '\\Modules\\Transportation\\Entities\\Jeep',
                                     'field' => 'is_featured',
                                     'value' => (bool) $jeep->is_featured,
                                     'table' => 'jeeps',

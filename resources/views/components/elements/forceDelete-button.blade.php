@@ -6,7 +6,7 @@
     id="{{ $btnId }}"
     type="button"
     style="{{ $styles ?? '' }}"
-    class="btn btn-sm bg-red-800 text-white shadow-sm hover:shadow-md hover:bg-red-900 hover:-translate-y-0.5 transition-all duration-150 px-3 py-1.5 gap-2 rounded-full font-semibold"
+    class="kt-btn kt-btn-sm bg-red-800 text-white shadow-sm hover:shadow-md hover:bg-red-900 hover:-translate-y-0.5 transition-all duration-150 px-3 py-1.5 gap-2 rounded-full font-semibold"
     style="{{ $styles ?? '' }}"
     title="{{ __('main.force_delete') }}"
     data-id="{{ $id ?? '' }}"

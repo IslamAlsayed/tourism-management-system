@@ -56,7 +56,7 @@
                                 <div class="flex items-center gap-2">
                                     @livewire('toggle-switch', [
                                         'modelId' => $supplement->id,
-                                        'modelType' => '\\App\\Models\\Supplement',
+                                        'modelType' => '\\Modules\\Restaurants\\Entities\\RestaurantSupplement',
                                         'field' => 'is_mandatory',
                                         'value' => (bool) $supplement->is_mandatory,
                                         'table' => 'supplements',
@@ -68,7 +68,7 @@
                                 <div class="flex items-center gap-2">
                                     @livewire('toggle-switch', [
                                         'modelId' => $supplement->id,
-                                        'modelType' => '\\App\\Models\\Supplement',
+                                        'modelType' => '\\Modules\\Restaurants\\Entities\\RestaurantSupplement',
                                         'field' => 'is_active',
                                         'value' => (bool) $supplement->is_active,
                                         'table' => 'supplements',
@@ -93,7 +93,7 @@
                         @livewire('delete-bottom', [
                             'type' => 'supplements',
                             'modelId' => $supplement->id,
-                            'modelType' => '\\App\\Models\\Supplement',
+                            'modelType' => '\\Modules\\Restaurants\\Entities\\RestaurantSupplement',
                             'table' => 'supplements',
                         ])
                     </div>

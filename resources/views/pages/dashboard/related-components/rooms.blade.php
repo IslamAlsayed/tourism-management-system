@@ -48,7 +48,7 @@
                                 <div class="flex items-center gap-2">
                                     @livewire('toggle-switch', [
                                         'modelId' => $room->id,
-                                        'modelType' => '\\App\\Models\\Room',
+                                        'modelType' => '\\Modules\\Accommodations\\Entities\\Room',
                                         'field' => 'is_active',
                                         'value' => (bool) $room->is_active,
                                         'table' => 'rooms',
@@ -133,7 +133,7 @@
                         @livewire('delete-bottom', [
                             'type' => 'rooms',
                             'modelId' => $room->id,
-                            'modelType' => '\\App\\Models\\Room',
+                            'modelType' => '\\Modules\\Accommodations\\Entities\\Room',
                             'table' => 'rooms',
                         ])
                     </div>

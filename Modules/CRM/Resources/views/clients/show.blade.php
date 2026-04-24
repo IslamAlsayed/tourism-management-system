@@ -139,7 +139,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $client->id,
-                                    'modelType' => '\\App\\Models\\Client',
+                                    'modelType' => '\\Modules\\CRM\\Entities\\Client',
                                     'field' => 'is_active',
                                     'value' => (bool) $client->is_active,
                                     'table' => 'clients',

@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('dashboard/whatsapp')->name('dashboard.whatsapp.')->middleware('auth')->group(function() {
+Route::prefix('dashboard/whatsapp')->name('dashboard.whatsapp.')->middleware(['auth', 'admin'])->group(function() {
     Route::get('/', 'WhatsAppController@index')->name('index');
 });

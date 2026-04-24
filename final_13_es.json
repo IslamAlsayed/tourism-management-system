@@ -1,0 +1,19 @@
+{
+    "languages.php": {
+        "hindi": "Hindi",
+        "urdu": "Urdu"
+    },
+    "main.php": {
+        "error": "error",
+        "individual": "Individual",
+        "eur": "Euro",
+        "videos": "Vídeos",
+        "e_visa": "Visa Electrónica",
+        "push": "Push",
+        "maps.asia\/kuwait": "Asia\/Kuwait",
+        "main.$model": "$model",
+        "main.vehicle-types": "Tipos de Vehículos",
+        "main.duplicate_companies_will_be_updated": "Las empresas duplicadas serán actualizadas",
+        "main.empty_values_set_to_null": "Los valores vacíos se establecerán como nulos"
+    }
+}

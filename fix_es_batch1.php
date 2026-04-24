@@ -1,0 +1,287 @@
+<?php
+$basePath = __DIR__ . '/resources/lang/es';
+
+function updateNestedArray(&$original, $newValues) {
+    foreach ($newValues as $key => $value) {
+        if (is_array($value) && isset($original[$key]) && is_array($original[$key])) {
+            updateNestedArray($original[$key], $value);
+        } else {
+            $original[$key] = $value;
+        }
+    }
+}
+
+function exportArrayToPhpSafeHelper($array, $indent = 1) {
+    $spaces = str_repeat("    ", $indent);
+    $content = "[\n";
+    foreach ($array as $key => $value) {
+        $safeKey = addcslashes((string)$key, "'\\");
+        if (is_array($value)) {
+            $content .= $spaces . "'$safeKey' => " . exportArrayToPhpSafeHelper($value, $indent + 1) . ",\n";
+        } else {
+            $safeValue = addcslashes((string)$value, "'\\");
+            $content .= $spaces . "'$safeKey' => '$safeValue',\n";
+        }
+    }
+    $content .= str_repeat("    ", $indent - 1) . "]";
+    return $content;
+}
+
+function exportArrayToPhpSafe($array) {
+    return "<?php\n\nreturn " . exportArrayToPhpSafeHelper($array) . ";\n";
+}
+
+$translations = [
+    'en.php' => [
+        'created_at' => 'Creado el',
+        'updated_at' => 'Actualizado el',
+        'inactive' => 'Inactivo',
+        'dashboard_subtitle' => 'Centro de Control Personalizado',
+        'view_profile' => 'Ver Perfil',
+        'total_users' => 'Total de Usuarios',
+        'total_countries' => 'Total de Países',
+        'total_cities' => 'Total de Ciudades',
+        'total_currencies' => 'Total de Monedas',
+        'view_all' => 'Ver Todo',
+        'welcome_to' => 'Bienvenido a',
+        'welcome_message' => 'Bienvenido a MixJo2025',
+        'system_overview' => 'Resumen del Sistema',
+        'total_records' => 'Total de Registros',
+        'active' => 'Activo',
+        'auto_refresh' => 'Actualización Automática',
+        'quick_actions' => 'Acciones Rápidas',
+        'manage_users' => 'Gestionar Usuarios',
+        'total' => 'total',
+        'get_started' => 'Empezar',
+        'back' => 'Atrás',
+        'submit' => 'Enviar',
+        'search' => 'Buscar',
+        'filter' => 'Filtrar',
+        'reset' => 'Restablecer',
+        'view' => 'Ver',
+        'remove' => 'Eliminar',
+        'show' => 'Mostrar',
+        'hide' => 'Ocultar',
+        'close' => 'Cerrar',
+        'required_field' => 'Campo obligatorio',
+        'optional_field' => 'Campo opcional',
+        'username' => 'Nombre de usuario',
+        'name' => 'Nombre',
+        'first_name' => 'Nombre',
+        'last_name' => 'Apellido',
+        'phone' => 'Teléfono',
+        'address' => 'Dirección',
+        'country' => 'País',
+        'city' => 'Ciudad',
+        'postal_code' => 'Código Postal',
+        'date_of_birth' => 'Fecha de Nacimiento',
+        'gender' => 'Género',
+        'male' => 'Masculino',
+        'female' => 'Femenino',
+        'register' => 'Registrarse',
+        'forgot_password' => '¿Olvidó su contraseña?',
+        'reset_password' => 'Restablecer Contraseña',
+        'remember_me' => 'Recordarme',
+        'user_management' => 'Gestión de Usuarios',
+        'all_users' => 'Todos los Usuarios',
+        'add_new_user' => 'Agregar Nuevo Usuario',
+        'active_users' => 'Usuarios Activos',
+        'inactive_users' => 'Usuarios Inactivos',
+        'my_profile' => 'Mi Perfil',
+        'user_profile' => 'Perfil de Usuario',
+        'edit_profile' => 'Editar Perfil',
+        'profile_photo' => 'Foto de Perfil',
+        'update_profile' => 'Actualizar Perfil',
+        'change_password' => 'Cambiar Contraseña',
+        'current_password' => 'Contraseña Actual',
+        'new_password' => 'Nueva Contraseña',
+        'confirm_password' => 'Confirmar Contraseña',
+        'unknown_user' => 'Usuario desconocido',
+        'dark_mode' => 'Modo Oscuro',
+        'user' => 'Usuario',
+        'status' => 'Estado',
+        'department' => 'Departamento',
+        'position' => 'Cargo',
+        'location_management' => 'Gestión de Ubicaciones',
+        'countries' => 'Países',
+        'all_countries' => 'Todos los Países',
+        'add_new_country' => 'Agregar Nuevo País',
+        'cities' => 'Ciudades',
+        'all_cities' => 'Todas las Ciudades',
+        'add_new_city' => 'Agregar Nueva Ciudad',
+        'currency_management' => 'Gestión de Monedas',
+        'all_currencies' => 'Todas las Monedas',
+        'add_new_currency' => 'Agregar Nueva Moneda',
+        'exchange_rates' => 'Tipos de Cambio',
+        'update_rates' => 'Actualizar Tasas',
+        'error_occurred' => 'Ha ocurrido un error.',
+        'access_denied' => 'Acceso denegado.',
+        'not_found' => 'No encontrado.',
+        'invalid_credentials' => 'Credenciales inválidas.',
+        'invalid_input' => 'Entrada inválida.',
+        'validation_error' => 'Error de validación.',
+        'server_error' => 'Error del servidor.',
+        'page_not_found' => 'Página no encontrada',
+        'unauthorized' => 'No autorizado',
+        'forbidden' => 'Prohibido',
+        'server_error_title' => 'Error del Servidor',
+        'welcome' => 'Bienvenido',
+        'home' => 'Inicio',
+        'date' => 'Fecha',
+        'time' => 'Hora',
+        'datetime' => 'Fecha y Hora',
+        'today' => 'Hoy',
+        'yesterday' => 'Ayer',
+        'tomorrow' => 'Mañana',
+        'yes' => 'Sí',
+        'previous' => 'Anterior',
+        'next' => 'Siguiente',
+        'showing' => 'Mostrando',
+        'results' => 'resultados',
+        'general_settings' => 'Ajustes Generales',
+        'security_settings' => 'Ajustes de Seguridad',
+        'notification_settings' => 'Ajustes de Notificaciones',
+        'light' => 'Claro',
+        'dark' => 'Oscuro',
+        'system' => 'Sistema',
+        'english' => 'Inglés',
+        'arabic' => 'Árabe',
+        'page_under_construction' => 'Página en construcción',
+        'loading' => 'Cargando...',
+        'no_data_available' => 'No hay datos disponibles',
+        'more_info' => 'Más Información'
+    ],
+    'languages.php' => [
+        'arabic' => 'Árabe',
+        'english' => 'Inglés',
+        'french' => 'Francés',
+        'français' => 'Francés',
+        'español' => 'Español',
+        'spanish' => 'Español',
+        'german' => 'Alemán',
+        'deutsch' => 'Alemán',
+        'italian' => 'Italiano',
+        'italiano' => 'Italiano',
+        'portuguese' => 'Portugués',
+        'russian' => 'Ruso',
+        'русский' => 'Ruso',
+        'pусский' => 'Ruso',
+        'chinese' => 'Chino',
+        'japanese' => 'Japonés',
+        'korean' => 'Coreano',
+        'turkish' => 'Turco',
+        'dutch' => 'Holandés',
+        'hebrew' => 'Hebreo',
+        'hindi' => 'Hindi',
+        'urdu' => 'Urdu',
+        'persian' => 'Persa',
+        'thai' => 'Tailandés',
+        'vietnamese' => 'Vietnamita',
+        'indonesian' => 'Indonesio',
+        'malay' => 'Malayo',
+        'swahili' => 'Swahili',
+        'greek' => 'Griego',
+        'polish' => 'Polaco',
+        'czech' => 'Checo',
+        'hungarian' => 'Húngaro',
+        'romanian' => 'Rumano',
+        'bulgarian' => 'Búlgaro',
+        'croatian' => 'Croata',
+        'serbian' => 'Serbio',
+        'ukrainian' => 'Ucraniano',
+        'finnish' => 'Finlandés',
+        'swedish' => 'Sueco',
+        'norwegian' => 'Noruego',
+        'danish' => 'Danés'
+    ],
+    'activity.php' => [
+        'activity_log' => 'Registro de Actividad',
+        'activity_logs' => 'Registros de Actividad',
+        'activity_total_events' => 'Eventos Totales',
+        'activity_model_events' => 'Cambios de Modelo',
+        'activity_system_events' => 'Eventos del Sistema',
+        'activity_error_events' => 'Errores',
+        'activity_log_type' => 'Tipo de Registro',
+        'activity_event_type' => 'Tipo de Evento',
+        'activity_user_filter' => 'Realizado por',
+        'activity_date_from' => 'Desde Fecha',
+        'activity_date_to' => 'Hasta Fecha',
+        'activity_clear_current_log' => 'Limpiar Registro Actual',
+        'activity_clear_all_logs' => 'Limpiar Todos los Registros',
+        'activity_breakdown_title' => 'Desglose de Eventos',
+        'activity_selected_title' => 'Actividad Seleccionada',
+        'activity_id' => 'ID de Actividad',
+        'activity_timestamp' => 'Marca de Tiempo',
+        'activity_causer' => 'Activado por',
+        'activity_subject' => 'Sujeto',
+        'activity_description' => 'Descripción',
+        'activity_properties' => 'Propiedades',
+        'activity_summary' => 'Resumen',
+        'activity_no_description' => 'No hay descripción disponible.',
+        'system_generated' => 'Sistema',
+        'clear_selection' => 'Limpiar Selección',
+        'per_page' => 'Por Página',
+        'unknown' => 'Desconocido',
+        'event_unknown' => 'Desconocido',
+        'all_activities' => 'Todas las Actividades',
+        'users_activity' => 'Actividad de Usuarios',
+        'system_activity' => 'Actividad del Sistema',
+        'event_created' => 'Creado',
+        'event_create' => 'Creado',
+        'event_updated' => 'Actualizado',
+        'event_update' => 'Actualizado',
+        'event_deleted' => 'Eliminado',
+        'event_delete' => 'Eliminado',
+        'event_restored' => 'Restaurado',
+        'event_restore' => 'Restaurado',
+        'event_error' => 'Error',
+        'event_failed' => 'Fallido',
+        'event_login' => 'Inicio de Sesión',
+        'event_logout' => 'Cierre de Sesión',
+        'event_register' => 'Registro',
+        'event_login_failed' => 'Inicio de Sesión Fallido',
+        'event_password_reset_request' => 'Solicitud de Restablecimiento de Contraseña',
+        'event_password_reset' => 'Restablecimiento de Contraseña',
+        'event_password_update' => 'Actualización de Contraseña',
+        'event_force_deleted' => 'Eliminado permanentemente'
+    ],
+    'automation.php' => [
+        'automation_settings' => 'Ajustes de Automatización (n8n)',
+        'add_new_webhook' => 'Agregar Nuevo Webhook (n8n)',
+        'edit_webhook' => 'Editar Webhook',
+        'friendly_name' => 'Nombre Amigable',
+        'webhook_url' => 'URL del Webhook',
+        'event_type' => 'Tipo de Evento',
+        'all_events' => 'Todos los Eventos (*)',
+        'secret_token' => 'Token Secreto (Opcional)',
+        'update_bridge' => 'Actualizar Puente',
+        'connect_to_n8n' => 'Conectar a n8n',
+        'active_automation_bridges' => 'Puentes de Automatización Activos',
+        'name' => 'Nombre',
+        'event' => 'Evento',
+        'status' => 'Estado',
+        'actions' => 'Acciones',
+        'active' => 'Activo',
+        'paused' => 'Pausado',
+        'recent_synchronizations' => 'Sincronizaciones Recientes',
+        'time' => 'Hora',
+        'bridge' => 'Puente',
+        'response' => 'Respuesta',
+        'restaurant_created' => 'Restaurante Creado',
+        'restaurant_updated' => 'Restaurante Actualizado',
+        'hotel_created' => 'Hotel Creado',
+        'booking_created' => 'Reserva Creada'
+    ]
+];
+
+foreach ($translations as $fileName => $nestedData) {
+    $filePath = "$basePath/$fileName";
+    $currentData = file_exists($filePath) ? include $filePath : [];
+    updateNestedArray($currentData, $nestedData);
+    file_put_contents($filePath, exportArrayToPhpSafe($currentData));
+    echo "-> Applied batch fix to $fileName\n";
+}
+
+echo "=====================================\n";
+echo "SUCCESS! Spanish Batch 1 Applied.\n";
+echo "=====================================\n";

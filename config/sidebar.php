@@ -250,6 +250,12 @@ return [
                             'icon' => 'fas fa-cog',
                             'route' => 'dashboard.core.settings.system'
                         ],
+                        [
+                            'title' => 'ui icons manager',
+                            'icon' => 'fas fa-icons',
+                            'route' => 'core.ui-icons-manager',
+                            'roles' => ['admin', 'superadmin']
+                        ],
                         // [DISABLED] Theme Customizer - removed to prevent color conflicts
                         // [
                         //     'title' => 'theme_customizer',
@@ -1020,12 +1026,103 @@ return [
             ],
         ],
 
+        // ================= Cruises - الرحلات البحرية =================
+        [
+            'title' => 'cruises',
+            'icon' => 'fas fa-ship',
+            'fixed' => 'done',
+            'label' => 'cruises',
+            'children' => [
+                [
+                    'title' => 'cruises',
+                    'icon' => 'fas fa-ship',
+                    'children' => [
+                        [
+                            'title' => 'all cruises',
+                            'icon' => 'fas fa-anchor',
+                            'route' => 'dashboard.cruises.index',
+                        ],
+                        [
+                            'title' => 'create cruise',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.cruises.create',
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'categories',
+                    'icon' => 'fas fa-layer-group',
+                    'children' => [
+                        [
+                            'title' => 'all categories',
+                            'icon' => 'ki-outline ki-minus',
+                            'route' => 'dashboard.cruises.categories.index',
+                        ],
+                        [
+                            'title' => 'create category',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.cruises.categories.create',
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'suppliers',
+                    'icon' => 'fas fa-building',
+                    'children' => [
+                        [
+                            'title' => 'all suppliers',
+                            'icon' => 'fas fa-building-user',
+                            'route' => 'dashboard.cruises.suppliers.index',
+                        ],
+                        [
+                            'title' => 'create supplier',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.cruises.suppliers.create',
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'ports',
+                    'icon' => 'fas fa-dock',
+                    'children' => [
+                        [
+                            'title' => 'all ports',
+                            'icon' => 'fas fa-anchor',
+                            'route' => 'dashboard.cruises.ports.index',
+                        ],
+                        [
+                            'title' => 'create port',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.cruises.ports.create',
+                        ],
+                    ],
+                ],
+                [
+                    'title' => 'seasons',
+                    'icon' => 'fas fa-calendar-days',
+                    'children' => [
+                        [
+                            'title' => 'all seasons',
+                            'icon' => 'fas fa-calendar-check',
+                            'route' => 'dashboard.cruises.seasons.index',
+                        ],
+                        [
+                            'title' => 'create season',
+                            'icon' => 'fas fa-plus',
+                            'route' => 'dashboard.cruises.seasons.create',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+
         // ================= Transportation - النقل =================
         [
             'title' => 'transportation',
             'icon' => 'fas fa-bus',
             'fixed' => 'done',
             'label' => 'transportation',
+            'roles' => ['admin', 'superadmin'],
             'children' => [
                 [
                     'title' => 'companies',

@@ -93,7 +93,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $visaRequirement->id,
-                                    'modelType' => '\\App\\Models\\VisaRequirement',
+                                    'modelType' => '\\Modules\\TravelDocuments\\Entities\\VisaRequirement',
                                     'field' => 'is_active',
                                     'value' => (bool) $visaRequirement->is_active,
                                     'table' => 'visa_requirements',
@@ -105,7 +105,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $visaRequirement->id,
-                                    'modelType' => '\\App\\Models\\VisaRequirement',
+                                    'modelType' => '\\Modules\\TravelDocuments\\Entities\\VisaRequirement',
                                     'field' => 'is_restricted',
                                     'value' => (bool) $visaRequirement->is_restricted,
                                     'table' => 'visa_requirements',
@@ -151,7 +151,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $visaRequirement->id,
-                                    'modelType' => '\\App\\Models\\VisaRequirement',
+                                    'modelType' => '\\Modules\\TravelDocuments\\Entities\\VisaRequirement',
                                     'field' => 'can_issue_at_port',
                                     'value' => (bool) $visaRequirement->can_issue_at_port,
                                     'table' => 'visa_requirements',

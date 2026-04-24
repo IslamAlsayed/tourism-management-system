@@ -1,4 +1,4 @@
-@extends('layouts.master')
+﻿@extends('layouts.master')
 
 @section('title', __('main.dashboard'))
 
@@ -21,7 +21,7 @@
 
 @section('content')
     <!-- Container -->
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         <div class="flex flex-wrap items-center lg:items-end justify-between gap-4 pb-6">
             <div class="flex flex-col justify-center gap-2">
                 <h1 class="text-xl font-medium leading-none text-mono">
@@ -41,7 +41,7 @@
     <!-- End of Container -->
 
     <!-- Container -->
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         <div class="grid gap-4 lg:gap-6">
             <!-- begin: grid -->
             <div class="grid lg:grid-cols-3 gap-y-5 lg:gap-7.5 items-stretch">

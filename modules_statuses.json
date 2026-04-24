@@ -7,7 +7,7 @@
     "Restaurants": true,
     "Transportation": true,
     "TravelDocuments": true,
-    "Subscriptions": false,
+    "Subscriptions": true,
     "CRM": true,
     "Tourists": true,
     "EntryPoints": true,
@@ -18,5 +18,6 @@
     "TouristServices": true,
     "Automation": true,
     "System": true,
-    "TranslationManager": true
+    "TranslationManager": true,
+    "Cruises": true
 }

@@ -37,6 +37,8 @@
                     </div>
                     <div class="kt-card-body p-4">
                         @livewire('geography::livewire.regions.location-select-base2')
+                    </div>
+                </div>
 
                 <!-- Start and End Points -->
                 <div class="kt-card">
@@ -50,15 +52,19 @@
                             <!-- Main Start Point -->
                             <div class="space-y-4">
                                 <div>
-                                    <label for="start_country_id" class="kt-label mb-2">{{ __('main.country') }} ({{ __('main.main_start_point') }})</label>
+                                    <label for="start_country_id" class="kt-label mb-2">{{ __('main.country') }}
+                                        ({{ __('main.main_start_point') }})</label>
                                     <div class="kt-input-group">
                                         <span class="kt-input-addon kt-input-addon-icon">
                                             <i class="fa-duotone fa-solid fa-flag"></i>
                                         </span>
-                                        <select id="start_country_id" name="start_country_id" class="kt-input" data-control="select2">
-                                            <option value="" selected disabled>{{ __('main.select_option') }}</option>
-                                            @foreach($countries as $country)
-                                                <option value="{{ $country->id }}" {{ old('start_country_id') == $country->id ? 'selected' : '' }}>
+                                        <select id="start_country_id" name="start_country_id" class="kt-input"
+                                            data-control="select2">
+                                            <option value="" selected disabled>{{ __('main.select_option') }}
+                                            </option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->id }}"
+                                                    {{ old('start_country_id') == $country->id ? 'selected' : '' }}>
                                                     {{ app()->getLocale() == 'ar' ? $country->name_ar : $country->name }}
                                                 </option>
                                             @endforeach
@@ -66,15 +72,21 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="main_start_point_id" class="kt-label mb-2">{{ __('main.main_start_point') }} ({{ __('main.city') }})</label>
+                                    <label for="main_start_point_id"
+                                        class="kt-label mb-2">{{ __('main.main_start_point') }}
+                                        ({{ __('main.city') }})</label>
                                     <div class="kt-input-group">
                                         <span class="kt-input-addon kt-input-addon-icon">
                                             <i class="fa-duotone fa-solid fa-location-dot"></i>
                                         </span>
-                                        <select name="main_start_point_id" id="main_start_point_id" class="kt-input" data-control="select2" disabled>
-                                            <option value="" selected disabled>{{ __('main.select_option') }}</option>
-                                            @foreach($cities as $city)
-                                                <option value="{{ $city->id }}" data-country="{{ $city->country_id }}" {{ old('main_start_point_id') == $city->id ? 'selected' : '' }} style="display: none;">
+                                        <select name="main_start_point_id" id="main_start_point_id" class="kt-input"
+                                            data-control="select2" disabled>
+                                            <option value="" selected disabled>{{ __('main.select_option') }}
+                                            </option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}" data-country="{{ $city->country_id }}"
+                                                    {{ old('main_start_point_id') == $city->id ? 'selected' : '' }}
+                                                    style="display: none;">
                                                     {{ app()->getLocale() == 'ar' ? $city->name_ar : $city->name }}
                                                 </option>
                                             @endforeach
@@ -89,14 +101,16 @@
                             <!-- Main End Point -->
                             <div class="space-y-4">
                                 <div>
-                                    <label for="end_country_id" class="kt-label mb-2">{{ __('main.country') }} ({{ __('main.main_end_point') }})</label>
+                                    <label for="end_country_id" class="kt-label mb-2">{{ __('main.country') }}
+                                        ({{ __('main.main_end_point') }})</label>
                                     <div class="kt-input-group">
                                         <span class="kt-input-addon kt-input-addon-icon">
                                             <i class="fa-duotone fa-solid fa-flag"></i>
                                         </span>
                                         <select id="end_country_id" class="kt-input" data-control="select2">
-                                            <option value="" selected disabled>{{ __('main.select_option') }}</option>
-                                            @foreach($countries as $country)
+                                            <option value="" selected disabled>{{ __('main.select_option') }}
+                                            </option>
+                                            @foreach ($countries as $country)
                                                 <option value="{{ $country->id }}">
                                                     {{ app()->getLocale() == 'ar' ? $country->name_ar : $country->name }}
                                                 </option>
@@ -105,15 +119,20 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="main_end_point_id" class="kt-label mb-2">{{ __('main.main_end_point') }} ({{ __('main.city') }})</label>
+                                    <label for="main_end_point_id" class="kt-label mb-2">{{ __('main.main_end_point') }}
+                                        ({{ __('main.city') }})</label>
                                     <div class="kt-input-group">
                                         <span class="kt-input-addon kt-input-addon-icon">
                                             <i class="fa-duotone fa-solid fa-location-dot"></i>
                                         </span>
-                                        <select name="main_end_point_id" id="main_end_point_id" class="kt-input" data-control="select2" disabled>
-                                            <option value="" selected disabled>{{ __('main.select_option') }}</option>
-                                            @foreach($cities as $city)
-                                                <option value="{{ $city->id }}" data-country="{{ $city->country_id }}" {{ old('main_end_point_id') == $city->id ? 'selected' : '' }} style="display: none;">
+                                        <select name="main_end_point_id" id="main_end_point_id" class="kt-input"
+                                            data-control="select2" disabled>
+                                            <option value="" selected disabled>{{ __('main.select_option') }}
+                                            </option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}" data-country="{{ $city->country_id }}"
+                                                    {{ old('main_end_point_id') == $city->id ? 'selected' : '' }}
+                                                    style="display: none;">
                                                     {{ app()->getLocale() == 'ar' ? $city->name_ar : $city->name }}
                                                 </option>
                                             @endforeach
@@ -144,7 +163,8 @@
                                     <span class="kt-input-addon kt-input-addon-icon">
                                         <i class="fa-duotone fa-solid fa-ship"></i>
                                     </span>
-                                    <input type="text" name="name" id="name" class="kt-input " value="{{ old('name') }}" required>
+                                    <input type="text" name="name" id="name" class="kt-input "
+                                        value="{{ old('name') }}" required>
                                 </div>
                                 @error('name')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -158,7 +178,8 @@
                                     <span class="kt-input-addon kt-input-addon-icon">
                                         <i class="fa-duotone fa-solid fa-ship"></i>
                                     </span>
-                                    <input type="text" name="name_ar" id="name_ar" class="kt-input " value="{{ old('name_ar') }}">
+                                    <input type="text" name="name_ar" id="name_ar" class="kt-input "
+                                        value="{{ old('name_ar') }}">
                                 </div>
                                 @error('name_ar')
                                     <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -174,9 +195,13 @@
                                     </span>
                                     <select name="vessel_class" id="vessel_class" class="kt-input">
                                         <option value="" selected disabled>{{ __('main.select_option') }}</option>
-                                        <option value="Standard" {{ old('vessel_class') == 'Standard' ? 'selected' : '' }}>Standard</option>
-                                        <option value="Luxury" {{ old('vessel_class') == 'Luxury' ? 'selected' : '' }}>Luxury</option>
-                                        <option value="Mega" {{ old('vessel_class') == 'Mega' ? 'selected' : '' }}>Mega</option>
+                                        <option value="Standard"
+                                            {{ old('vessel_class') == 'Standard' ? 'selected' : '' }}>
+                                            {{ __('main.vessel_class_standard') }}</option>
+                                        <option value="Luxury" {{ old('vessel_class') == 'Luxury' ? 'selected' : '' }}>
+                                            {{ __('main.vessel_class_luxury') }}</option>
+                                        <option value="Mega" {{ old('vessel_class') == 'Mega' ? 'selected' : '' }}>
+                                            {{ __('main.vessel_class_mega') }}</option>
                                     </select>
                                 </div>
                                 @error('vessel_class')
@@ -193,8 +218,12 @@
                                     </span>
                                     <select name="type" id="type" class="kt-input">
                                         <option value="" selected disabled>{{ __('main.select_option') }}</option>
-                                        <option value="Ocean" {{ old('type') == 'Ocean' ? 'selected' : '' }}>Ocean</option>
-                                        <option value="River" {{ old('type') == 'River' ? 'selected' : '' }}>River</option>
+                                        <option value="Ocean" {{ old('type') == 'Ocean' ? 'selected' : '' }}>
+                                            {{ __('main.type_ocean') }}
+                                        </option>
+                                        <option value="River" {{ old('type') == 'River' ? 'selected' : '' }}>
+                                            {{ __('main.type_river') }}
+                                        </option>
                                     </select>
                                 </div>
                                 @error('type')
@@ -204,15 +233,18 @@
 
                             <!-- Vessel Nationality -->
                             <div>
-                                <label for="vessel_nationality_id" class="kt-label mb-2">{{ __('main.vessel_nationality') }}</label>
+                                <label for="vessel_nationality_id"
+                                    class="kt-label mb-2">{{ __('main.vessel_nationality') }}</label>
                                 <div class="kt-input-group">
                                     <span class="kt-input-addon kt-input-addon-icon">
                                         <i class="fa-duotone fa-solid fa-cubes"></i>
                                     </span>
-                                    <select name="vessel_nationality_id" id="vessel_nationality_id" class="kt-input" data-control="select2">
+                                    <select name="vessel_nationality_id" id="vessel_nationality_id" class="kt-input"
+                                        data-control="select2">
                                         <option value="" selected disabled>{{ __('main.select_option') }}</option>
-                                        @foreach($countries as $country)
-                                            <option value="{{ $country->id }}" {{ old('vessel_nationality_id') == $country->id ? 'selected' : '' }}>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country->id }}"
+                                                {{ old('vessel_nationality_id') == $country->id ? 'selected' : '' }}>
                                                 {{ app()->getLocale() == 'ar' ? $country->name_ar : $country->name }}
                                             </option>
                                         @endforeach
@@ -240,7 +272,8 @@
                                     <span class="kt-input-addon kt-input-addon-icon">
                                         <i class="fa-duotone fa-solid fa-store"></i>
                                     </span>
-                                    <input type="number" name="total_cabins" id="total_cabins" class="kt-input " value="{{ old('total_cabins') }}" min="0">
+                                    <input type="number" name="total_cabins" id="total_cabins" class="kt-input "
+                                        value="{{ old('total_cabins') }}" min="0">
                                 </div>
                             </div>
 
@@ -251,7 +284,8 @@
                                     <span class="kt-input-addon kt-input-addon-icon">
                                         <i class="fa-duotone fa-solid fa-table-cells-large"></i>
                                     </span>
-                                    <input type="number" name="deck_count" id="deck_count" class="kt-input " value="{{ old('deck_count') }}" min="0">
+                                    <input type="number" name="deck_count" id="deck_count" class="kt-input "
+                                        value="{{ old('deck_count') }}" min="0">
                                 </div>
                             </div>
 
@@ -262,7 +296,8 @@
                                     <span class="kt-input-addon kt-input-addon-icon">
                                         <i class="fa-duotone fa-solid fa-calendar"></i>
                                     </span>
-                                    <input type="number" name="built_year" id="built_year" class="kt-input " value="{{ old('built_year') }}" min="1900" max="{{ date('Y') }}">
+                                    <input type="number" name="built_year" id="built_year" class="kt-input "
+                                        value="{{ old('built_year') }}" min="1900" max="{{ date('Y') }}">
                                 </div>
                             </div>
 
@@ -273,7 +308,8 @@
                                     <span class="kt-input-addon kt-input-addon-icon">
                                         <i class="fa-duotone fa-solid fa-calendar-add"></i>
                                     </span>
-                                    <input type="number" name="renovated_year" id="renovated_year" class="kt-input " value="{{ old('renovated_year') }}" min="1900" max="{{ date('Y') }}">
+                                    <input type="number" name="renovated_year" id="renovated_year" class="kt-input "
+                                        value="{{ old('renovated_year') }}" min="1900" max="{{ date('Y') }}">
                                 </div>
                             </div>
 
@@ -284,7 +320,8 @@
                                     <span class="kt-input-addon kt-input-addon-icon">
                                         <i class="fa-duotone fa-solid fa-drafting-compass"></i>
                                     </span>
-                                    <input type="number" step="0.01" name="length_meters" id="length_meters" class="kt-input " value="{{ old('length_meters') }}" min="0">
+                                    <input type="number" step="0.01" name="length_meters" id="length_meters"
+                                        class="kt-input " value="{{ old('length_meters') }}" min="0">
                                 </div>
                             </div>
 
@@ -295,7 +332,8 @@
                                     <span class="kt-input-addon kt-input-addon-icon">
                                         <i class="fa-duotone fa-solid fa-arrow-down-2"></i>
                                     </span>
-                                    <input type="number" step="0.01" name="draft_meters" id="draft_meters" class="kt-input " value="{{ old('draft_meters') }}" min="0">
+                                    <input type="number" step="0.01" name="draft_meters" id="draft_meters"
+                                        class="kt-input " value="{{ old('draft_meters') }}" min="0">
                                 </div>
                             </div>
                         </div>
@@ -331,7 +369,8 @@
 
                 {{-- Action Buttons --}}
                 <div class="flex justify-end gap-3 mt-4">
-                    <a href="{{ route('dashboard.cruises.index') }}" class="kt-btn kt-btn-outline">{{ __('main.cancel') }}</a>
+                    <a href="{{ route('dashboard.cruises.index') }}"
+                        class="kt-btn kt-btn-outline">{{ __('main.cancel') }}</a>
                     <button type="submit" class="kt-btn kt-btn-primary">{{ __('main.save_and_continue') }}</button>
                 </div>
             </div>
@@ -340,59 +379,59 @@
 @endsection
 
 @push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        function setupLocationDependency(countrySelectId, citySelectId) {
-            const countrySelect = $('#' + countrySelectId);
-            const citySelect = $('#' + citySelectId);
-            
-            // If select2 is used
-            countrySelect.on('change', function() {
-                const countryId = $(this).val();
-                
-                // Clear city select
-                citySelect.val(null).trigger('change');
-                
-                if (countryId) {
-                    // Enable and show generic loader text
-                    citySelect.prop('disabled', false);
-                    citySelect.find('option').each(function() {
-                        const opt = $(this);
-                        if (opt.val() === '') return; // skip placeholder
-                        
-                        if (opt.data('country') == countryId) {
-                            opt.show();
-                            opt.prop('disabled', false);
-                        } else {
-                            opt.hide();
-                            opt.prop('disabled', true);
-                        }
-                    });
-                    
-                    // Re-initialize select2 so it picks up the disabled/hidden states
-                    citySelect.select2('destroy');
-                    citySelect.select2();
-                } else {
-                    citySelect.prop('disabled', true);
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function setupLocationDependency(countrySelectId, citySelectId) {
+                const countrySelect = $('#' + countrySelectId);
+                const citySelect = $('#' + citySelectId);
+
+                // If select2 is used
+                countrySelect.on('change', function() {
+                    const countryId = $(this).val();
+
+                    // Clear city select
+                    citySelect.val(null).trigger('change');
+
+                    if (countryId) {
+                        // Enable and show generic loader text
+                        citySelect.prop('disabled', false);
+                        citySelect.find('option').each(function() {
+                            const opt = $(this);
+                            if (opt.val() === '') return; // skip placeholder
+
+                            if (opt.data('country') == countryId) {
+                                opt.show();
+                                opt.prop('disabled', false);
+                            } else {
+                                opt.hide();
+                                opt.prop('disabled', true);
+                            }
+                        });
+
+                        // Re-initialize select2 so it picks up the disabled/hidden states
+                        citySelect.select2('destroy');
+                        citySelect.select2();
+                    } else {
+                        citySelect.prop('disabled', true);
+                    }
+                });
+
+                // Trigger change on load if value exists
+                if (countrySelect.val()) {
+                    countrySelect.trigger('change');
                 }
-            });
-
-            // Trigger change on load if value exists
-            if (countrySelect.val()) {
-                countrySelect.trigger('change');
             }
-        }
 
-        setupLocationDependency('start_country_id', 'main_start_point_id');
-        setupLocationDependency('end_country_id', 'main_end_point_id');
-        
-        // Wait for Livewire or other scripts to load Select2 before attaching events
-        setTimeout(() => {
-            if ($('#start_country_id').data('select2')) {
-                $('#start_country_id').trigger('change');
-                $('#end_country_id').trigger('change');
-            }
-        }, 500);
-    });
-</script>
+            setupLocationDependency('start_country_id', 'main_start_point_id');
+            setupLocationDependency('end_country_id', 'main_end_point_id');
+
+            // Wait for Livewire or other scripts to load Select2 before attaching events
+            setTimeout(() => {
+                if ($('#start_country_id').data('select2')) {
+                    $('#start_country_id').trigger('change');
+                    $('#end_country_id').trigger('change');
+                }
+            }, 500);
+        });
+    </script>
 @endpush

@@ -27,12 +27,19 @@ trait PhotoUploadTrait
 
         // Handle if $request is a Request object
         if (!$file && $request->hasFile($photoColumn)) {
+            // Validate file before processing
+            if ($request instanceof Request) {
+                $request->validate([
+                    $photoColumn => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+                ]);
+            }
             $file = $request->file($photoColumn);
         }
 
         if ($file) {
-            // Store the new photo
-            $filename = $file->hashName();
+            // Secure naming using UUID to prevent filename exploitation
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::uuid() . '.' . $extension;
             $path = $file->storeAs('uploads/' . $folder . '/' . $model->id . ($column ? '/' . $column : ''), $filename, 'public');
 
             // Handle gallery_images (array) vs single photo (string)
@@ -82,7 +89,15 @@ trait PhotoUploadTrait
     public function uploadMediaFile($file, $folder, $model, $collection)
     {
         try {
-            $filename = time() . '_' . Str::random(10) . '.' . $file->extension();
+            // Validate MIME type for security
+            $allowedMimes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/webp', 'application/pdf', 'video/mp4', 'audio/mpeg'];
+            if (!in_array($file->getMimeType(), $allowedMimes)) {
+                \Illuminate\Support\Facades\Log::warning('Rejected file upload: unsupported MIME type ' . $file->getMimeType());
+                return false;
+            }
+
+            // Secure naming using UUID
+            $filename = Str::uuid() . '.' . $file->extension();
             $path = $file->storeAs('uploads/' . $folder . '/' . $model->id . ($collection ? '/' . $collection : ''), $filename, 'public');
             $mimeType = $file->getMimeType();
             $fileType = strpos($mimeType, 'image') !== false ? 'image' : 'file';
@@ -139,17 +154,19 @@ trait PhotoUploadTrait
         if (!$request->hasFile($column)) {
             return;
         }
+
+        // Validate file before processing
+        $request->validate([
+            $column => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+        ]);
+
         // Store old photo path BEFORE any updates
         $oldPhoto = $model->{$column};
-        // dd($model->toArray(), $oldPhoto, $request->file($column));
 
-        // if (Storage::disk('public')->exists($oldPhoto)) {
-        // dd("Old photo exists at path: {$oldPhoto}. Deletion is deferred until after new photo is uploaded and model is updated.");
-        // }
-        // dd($request->input('remove_photo'), $request->all(), $request->file($column));
-
-        // Upload new photo
-        $path = $request->file($column)->store("uploads/{$folder}/{$model->id}", 'public');
+        // Upload new photo with secure UUID naming
+        $file = $request->file($column);
+        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs("uploads/{$folder}/{$model->id}", $filename, 'public');
 
         // Update model with new path
         $model->update([$column => $path]);
@@ -177,10 +194,16 @@ trait PhotoUploadTrait
             return;
         }
 
+        // Validate all gallery files
+        $request->validate([
+            "{$column}.*" => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+        ]);
+
         $gallery = $model->{$column} ?? [];
 
         foreach ($request->file($column) as $file) {
-            $gallery[] = $file->store("uploads/{$folder}/{$model->id}/gallery", 'public');
+            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $gallery[] = $file->storeAs("uploads/{$folder}/{$model->id}/gallery", $filename, 'public');
         }
 
         $model->update([$column => array_values($gallery),]);

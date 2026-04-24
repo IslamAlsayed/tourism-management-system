@@ -182,9 +182,9 @@ return [
     'confirm_bulk_force_delete' => "WARNING: Are you sure you want to PERMANENTLY delete the selected items? CRITICAL: This will completely erase the data from the database. Next time you create or import items, they will get NEW, higher IDs, which may break relationships with other modules (like Hotels or Restaurants). Use only if absolutely necessary!",
 
     // System Languages
-    'status_updated' => 'تم تحديث حالة :type بنجاح.',
+    'status_updated' => 'Status of :type updated successfully.',
     'columns_cleared_to_minimum' => 'Columns cleared, keeping minimum required.',
-    'default_language_updated' => 'تم تحديث اللغة الافتراضية بنجاح.',
+    'default_language_updated' => 'Default language updated successfully.',
 
     // Banners
     'page_banners' => 'Page Banners',

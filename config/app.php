@@ -14,8 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'paginate_array' => ['all', 5, 10, 25, 50, 100, 500],
-    'paginate_max' => env('PAGINATE_MAX', 10000),
+    'paginate_array' => ['all', 5, 10, 25, 50, 100],
+    'paginate_max' => env('PAGINATE_MAX', 500),
     'paginate_count' => (int) env('PAGINATE_COUNT', 25),
     'excel_export_format' => env('EXCEL_EXPORT_FORMAT', 'xlsx'),
     'app_theme' => env('APP_THEME', 'system'),
@@ -38,6 +38,7 @@ return [
     'app_sidebar_width' => env('APP_SIDEBAR_WIDTH', 290),
     'idle_timeout' => env('IDLE_TIMEOUT', 1800000),
     'ably_key' => env('ABLY_KEY', ''),
+    'frontend_url' => env('FRONTEND_URL', env('APP_URL', 'http://localhost')),
 
     /*
     |--------------------------------------------------------------------------

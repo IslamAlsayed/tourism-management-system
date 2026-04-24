@@ -157,7 +157,28 @@ class Notifications extends Component
 
     protected function currentPageDataIds()
     {
-        $paginator = ModelsNotification::paginate(getPaginate());
+        $query = ModelsNotification::targetMe(getActiveUserId());
+
+        // Apply same filters as getNotificationsProperty
+        if ($this->filter == 'unread') {
+            $query->unread();
+        } elseif ($this->filter == 'read') {
+            $query->read();
+        }
+
+        if (!empty($this->type) && $this->type !== 'all') {
+            $query->ofType($this->type);
+        }
+
+        if (!empty($this->notificationType) && $this->notificationType !== 'all') {
+            $query->ofNotificationType($this->notificationType);
+        }
+
+        if ($this->filterTypeUserId && $this->filterTypeUserId !== 'all') {
+            $query->where('target_user_id', (int) $this->filterTypeUserId);
+        }
+
+        $paginator = $query->paginate(getPaginate());
         return $paginator->getCollection()->pluck('id');
     }
 
@@ -167,20 +188,31 @@ class Notifications extends Component
             return;
         }
 
-        ModelsNotification::whereIn('id', $this->selectedIds)->delete();
-        $count = count($this->selectedIds);
+        // Security: Only delete notifications owned by the current user
+        $deletedCount = ModelsNotification::whereIn('id', $this->selectedIds)
+            ->where('user_id', getActiveUserId())
+            ->delete();
+
         $this->selectedIds = [];
+        $this->selectPage = false;
+        $this->refreshNotifications();
 
         $this->dispatch('show-toast', [
             'type' => 'success',
-            'message' => __('messages.type_deleted_count', ['type' => __('main.notifications'), 'count' => $count]),
+            'message' => __('messages.type_deleted_count', ['type' => __('main.notifications'), 'count' => $deletedCount]),
         ]);
     }
 
     public function exportSelectedPDF()
     {
+        // Security: Filter to only export notifications owned by the current user
+        $ownedIds = ModelsNotification::whereIn('id', $this->selectedIds ?? [])
+            ->where('user_id', getActiveUserId())
+            ->pluck('id')
+            ->toArray();
+
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedPdfForModel($this->selectedIds ?? [], ModelsNotification::class, $cols, 'notifications');
+        $result = $this->exportSelectedPdfForModel($ownedIds, ModelsNotification::class, $cols, 'notifications');
         $this->selectedIds = [];
         $this->selectPage = false;
         $this->dispatch('reset-checkout-boxes');
@@ -189,8 +221,14 @@ class Notifications extends Component
 
     public function exportSelectedExcel($extension)
     {
+        // Security: Filter to only export notifications owned by the current user
+        $ownedIds = ModelsNotification::whereIn('id', $this->selectedIds ?? [])
+            ->where('user_id', getActiveUserId())
+            ->pluck('id')
+            ->toArray();
+
         $cols = !empty($this->pendingColumns) ? $this->pendingColumns : ($this->columns ?? null);
-        $result = $this->exportSelectedExcelForModel($this->selectedIds ?? [], ModelsNotification::class, $cols, 'notifications', $extension);
+        $result = $this->exportSelectedExcelForModel($ownedIds, ModelsNotification::class, $cols, 'notifications', $extension);
         $this->selectedIds = [];
         $this->selectPage = false;
         $this->dispatch('reset-checkout-boxes');

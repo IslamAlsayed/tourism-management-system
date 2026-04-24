@@ -20,11 +20,11 @@
         wire:target="search,paginate,toggleAll,resetColumns,applyColumns,destroy,deleteSelected,activateSelected,deactivateSelected,forceDeleteSelected,exportSelectedPDF,exportSelectedExcel,resetFilters,filterActive,filterRegionId,filterSubregionId,filterCountryId">
 
         <!-- Unified Dropdown Filters -->
-        <div class="mb-5 flex flex-wrap items-end gap-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200/60 dark:border-amber-700/30 p-3 rounded-xl relative z-[5] shadow-sm">
+        <div class="mb-5 flex flex-wrap items-end gap-3 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 p-3 rounded-xl relative z-[5] shadow-sm">
             {{-- Active Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]">
-                <label for="filterActive" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.status') }}</label>
-                <select wire:model.live="filterActive" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterActive">
+                <label for="filterActive" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.status') }}</label>
+                <select wire:model.live="filterActive" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterActive">
                     <option value="all">{{ __('main.all') }}</option>
                     <option value="active">{{ __('main.active') }}</option>
                     <option value="inactive">{{ __('main.inactive') }}</option>
@@ -33,8 +33,8 @@
 
             {{-- Region Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]">
-                <label for="filterRegionId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.regions') }}</label>
-                <select wire:model.live="filterRegionId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterRegionId">
+                <label for="filterRegionId" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.regions') }}</label>
+                <select wire:model.live="filterRegionId" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterRegionId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($regions as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -44,8 +44,8 @@
 
             {{-- Subregion Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]">
-                <label for="filterSubregionId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.subregions') }}</label>
-                <select wire:model.live="filterSubregionId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterSubregionId">
+                <label for="filterSubregionId" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.subregions') }}</label>
+                <select wire:model.live="filterSubregionId" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterSubregionId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($subregions as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -55,8 +55,8 @@
 
             {{-- Country Filter --}}
             <div class="min-w-[140px] flex-1 max-w-[200px]">
-                <label for="filterCountryId" class="text-[11px] font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider mb-1 block">{{ __('main.countries') }}</label>
-                <select wire:model.live="filterCountryId" class="kt-select h-[36px] w-full border-amber-200 focus:border-amber-500 focus:ring-amber-500/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterCountryId">
+                <label for="filterCountryId" class="text-[11px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1 block">{{ __('main.countries') }}</label>
+                <select wire:model.live="filterCountryId" class="kt-select h-[36px] w-full border-gray-300 focus:border-primary focus:ring-primary/20 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 transition-colors shadow-sm" id="filterCountryId">
                     <option value="all">{{ __('main.all') }}</option>
                     @foreach ($countries as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>
@@ -186,10 +186,11 @@
                 ])
                 @endcomponent
 
-            @if (isset($data) && !empty($data) && $data->count() > 0)
-                @include('includes.pagination', ['data' => $data])
-            @endif
         </div>
     </div>
+
+    @if (isset($data) && !empty($data) && $data->count() > 0)
+        @include('includes.pagination', ['data' => $data])
+    @endif
 </div>
 

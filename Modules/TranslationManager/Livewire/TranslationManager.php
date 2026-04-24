@@ -29,7 +29,7 @@ class TranslationManager extends Component
     
     public $importFile;
 
-    public $selectedFile = 'main';
+    public $selectedFile = 'global::main';
 
     public $selectedLocale = 'ar';
 
@@ -78,11 +78,14 @@ class TranslationManager extends Component
     
     public $showKeyColumn = false;
 
-    // Standard components.columns properties
+    // Standard components.columns properties (must match CustomColumnsLivewireLegacy interface)
+    public string $modelClass = '';
     public $selectedIds = [];
     public $selectAll = false;
-    public $allColumns = ['key' => 'Key', 'english' => 'English Reference', 'translation' => 'Translation', 'status' => 'Status', 'suggest' => 'Suggest'];
-    public $pendingColumns = ['key', 'english', 'translation', 'status', 'suggest'];
+    public array $allColumns = ['key', 'english', 'translation', 'status', 'suggest'];
+    public array $columns = ['key', 'english', 'translation', 'status', 'suggest'];
+    public array $pendingColumns = ['key', 'english', 'translation', 'status', 'suggest'];
+    public bool $hasCustomColumns = false;
     
     public $editingSuggestedValues = [];
 
@@ -93,6 +96,41 @@ class TranslationManager extends Component
         $this->discoverFiles();
         $this->discoverLocales();
         $this->loadTranslations();
+    }
+
+    // ═══════════ Column Management Methods (required by components.columns) ═══════════
+
+    public function applyColumns()
+    {
+        $this->columns = array_values(array_intersect($this->pendingColumns, $this->allColumns));
+        $this->dispatch('close-modal');
+    }
+
+    public function resetColumns(): void
+    {
+        $this->columns = $this->allColumns;
+        $this->pendingColumns = $this->allColumns;
+    }
+
+    public function toggleAll(): void
+    {
+        if (count($this->pendingColumns) === count($this->allColumns)) {
+            $this->pendingColumns = array_slice($this->allColumns, 0, 3);
+        } else {
+            $this->pendingColumns = $this->allColumns;
+        }
+        $this->applyColumns();
+    }
+
+    public function clearAllColumns(): void
+    {
+        $this->pendingColumns = ['key', 'translation'];
+        $this->applyColumns();
+    }
+
+    public function updatedPendingColumns(): void
+    {
+        $this->pendingColumns = array_values(array_intersect($this->pendingColumns, $this->allColumns));
     }
 
     public function updatedSelectAll($value)

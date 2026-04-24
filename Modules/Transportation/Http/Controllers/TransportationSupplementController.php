@@ -14,7 +14,7 @@ class TransportationSupplementController extends Controller
      */
     public function index()
     {
-        return view('transportation::index');
+        return view('transportation::supplements.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class TransportationSupplementController extends Controller
      */
     public function create()
     {
-        return view('transportation::create');
+        return view('transportation::supplements.create');
     }
 
     /**
@@ -43,7 +43,7 @@ class TransportationSupplementController extends Controller
      */
     public function show($id)
     {
-        return view('transportation::show');
+        return view('transportation::supplements.show');
     }
 
     /**
@@ -53,7 +53,7 @@ class TransportationSupplementController extends Controller
      */
     public function edit($id)
     {
-        return view('transportation::edit');
+        return view('transportation::supplements.edit');
     }
 
     /**

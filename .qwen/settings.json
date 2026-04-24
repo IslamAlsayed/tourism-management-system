@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(g:\\MixJo Top downlode mains dats\\for edit\\tourism-management-system  13 FEB 2026 0221AM\\tourism-management-system\\app\\Listeners/**)",
+      "WebFetch(ktui.io)",
+      "WebFetch(keenthemes.com)",
+      "WebSearch",
+      "WebFetch(www.npmjs.com)",
+      "WebFetch(github.com)",
+      "Read(G:\\MixJo Top downlode mains by dats\\for edit\\Metronic 9.4.8\\metronic_v9.4.8\\metronic-tailwind-html-demos\\dist\\html\\demo1/**)"
+    ]
+  },
+  "$version": 3
+}

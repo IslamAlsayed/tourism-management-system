@@ -42,15 +42,8 @@
                         <div class="flex flex-col gap-4">
                             <div class="flex flex-col gap-1">
                                 <label class="kt-form-label font-normal text-mono">{{ __('main.email') }}</label>
-                                <div class="kt-input h-[45px] disabled opacity-50" data-kt-toggle-password="true">
-                                    <input type="email" name="email" value="{{ $user->email }}">
-                                    <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
-                                        data-kt-toggle-password-trigger="true" type="button">
-                                        <span class="hidden kt-toggle-password-active:block">
-                                            <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground"></i>
-                                        </span>
-                                    </button>
-                                </div>
+                                <input type="email" name="email" value="{{ $user->email }}"
+                                    class="kt-input" disabled />
                                 @error('email')
                                     <span class="text-red-600 text-sm">{{ $message }}</span>
                                 @enderror
@@ -58,15 +51,16 @@
 
                             <div class="flex flex-col gap-1">
                                 <label class="kt-form-label font-normal text-mono">{{ __('main.new_password') }}</label>
-                                <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                    <input type="password" name="password" required autocomplete="new-password">
+                                <div class="kt-input" data-kt-toggle-password="true">
+                                    <input type="password" name="password"
+                                        required autocomplete="new-password" />
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="kt-toggle-password-active:hidden">
-                                            <i class="fa-duotone fa-solid fa-eye text-muted-foreground"></i>
+                                            <i class="ki-filled ki-eye text-muted-foreground"></i>
                                         </span>
                                         <span class="hidden kt-toggle-password-active:block">
-                                            <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground"></i>
+                                            <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
                                         </span>
                                     </button>
                                 </div>
@@ -78,16 +72,16 @@
                             <div class="flex flex-col gap-1">
                                 <label
                                     class="kt-form-label font-normal text-mono">{{ __('main.confirm_password') }}</label>
-                                <div class="kt-input h-[45px]" data-kt-toggle-password="true">
-                                    <input type="password" name="password_confirmation" required
-                                        autocomplete="new-password">
+                                <div class="kt-input" data-kt-toggle-password="true">
+                                    <input type="password" name="password_confirmation"
+                                        required autocomplete="new-password" />
                                     <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                         data-kt-toggle-password-trigger="true" type="button">
                                         <span class="kt-toggle-password-active:hidden">
-                                            <i class="fa-duotone fa-solid fa-eye text-muted-foreground"></i>
+                                            <i class="ki-filled ki-eye text-muted-foreground"></i>
                                         </span>
                                         <span class="hidden kt-toggle-password-active:block">
-                                            <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground"></i>
+                                            <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
                                         </span>
                                     </button>
                                 </div>
@@ -110,20 +104,4 @@
 @endsection
 
 @push('scripts')
-    <script>
-        function togglePassword(button) {
-            const input = button.previousElementSibling;
-            const icon = button.querySelector('i');
-
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
-            } else {
-                input.type = "password";
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
-            }
-        }
-    </script>
 @endpush

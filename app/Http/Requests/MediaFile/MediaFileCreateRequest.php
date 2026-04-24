@@ -22,7 +22,12 @@ class MediaFileCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'files.*' => 'required|file|max:10240', // 10MB max
+            'files.*' => [
+                'required',
+                'file',
+                'mimes:jpeg,png,jpg,gif,webp,pdf,mp4,mp3,doc,docx,xls,xlsx,csv',
+                'max:10240', // 10MB max
+            ],
             'description' => 'nullable|string',
             'collection_name' => 'required|string|max:255',
             'is_featured' => 'boolean',

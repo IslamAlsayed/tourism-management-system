@@ -25,6 +25,8 @@ use Modules\Transportation\Entities\CompanyContact;
 use Modules\Transportation\Entities\RouteAssignment;
 use Modules\Transportation\Livewire\RouteAssignment as RouteAssignmentComponent;
 use Modules\Transportation\Livewire\RouteAssignments;
+use Modules\Transportation\Livewire\Seasons;
+use Modules\Transportation\Livewire\Supplements;
 use Modules\Transportation\Policies\VehicleTypePolicy;
 use Modules\Transportation\Policies\CompanyContactPolicy;
 use Modules\Transportation\Policies\RouteAssignmentPolicy;
@@ -71,6 +73,8 @@ class TransportationServiceProvider extends ServiceProvider
         Livewire::component('transportation::vehicle-types', VehicleTypes::class);
         Livewire::component('transportation::pricing-steps', PricingSteps::class);
         Livewire::component('transportation::jeeps', Jeeps::class);
+        Livewire::component('transportation::seasons', Seasons::class);
+        Livewire::component('transportation::supplements', Supplements::class);
 
         foreach ($this->policies as $model => $policy) {
             Gate::policy($model, $policy);

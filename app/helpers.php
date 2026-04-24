@@ -386,7 +386,9 @@ if (!function_exists('getPaginate')) {
     function getPaginate()
     {
         $settings = getActiveSettings();
-        return (int) session('paginate_count', optional($settings)->app_paginate_count ?? config('app.paginate_count'));
+        $count = (int) session('paginate_count', optional($settings)->app_paginate_count ?? config('app.paginate_count'));
+        $max = (int) config('app.paginate_max', 500);
+        return min($count, $max);
     }
 }
 
@@ -510,7 +512,7 @@ if (!function_exists('limitedText')) {
 if (!function_exists('db_connection')) {
     function db_connection(?string $mode = null): string
     {
-        $mode2 = $mode ?? env('DB_MODE', 'local');
+        $mode2 = $mode ?? config('database.mode', 'local');
 
         return match ($mode2) {
             'local' => 'mysql',
@@ -954,6 +956,59 @@ if (!function_exists('showToastErrorMessage')) {
     {
         if (function_exists('addToastError')) {
             addToastError($message);
+        }
+    }
+}
+
+if (!function_exists('getFieldIcon')) {
+    /**
+     * Get the icon HTML for a specific field key.
+     *
+     * @param string $key The unique field key of the icon
+     * @param string $defaultClass Fallback icon class if not found
+     * @param string|null $size Optional size class override
+     * @return string HTML representation of the icon
+     */
+    function getFieldIcon($key, $defaultClass = '', $size = null)
+    {
+        try {
+            $icon = \App\Models\UiIcon::where('field_key', $key)->first();
+            if (!$icon) {
+                return $defaultClass ? '<i class="' . $defaultClass . ' ' . $size . '"></i>' : '';
+            }
+
+            // Use the requested size override or fall back to the icon's defined size
+            $sizeClass = $size ? $size : ($icon->size && $icon->size !== 'base' ? 'fs-' . $icon->size : '');
+            
+            return '<i class="' . $icon->icon_class . ' ' . $sizeClass . '"></i>';
+        } catch (\Exception $e) {
+            return $defaultClass ? '<i class="' . $defaultClass . ' ' . $size . '"></i>' : '';
+        }
+    }
+}
+
+if (!function_exists('getSidebarIcon')) {
+    /**
+     * Get the icon HTML specifically designed for the sidebar.
+     *
+     * @param string $key The unique field key
+     * @param string $defaultClass Fallback icon class
+     * @return string HTML representation of the icon
+     */
+    function getSidebarIcon($key, $defaultClass = 'fa-duotone fa-solid fa-grid-2')
+    {
+        try {
+            $icon = \App\Models\UiIcon::where('field_key', $key)->first();
+            if (!$icon) {
+                return $defaultClass ? '<i class="' . $defaultClass . '"></i>' : '';
+            }
+
+            // Apply weighting or extra properties if defined in DB for the sidebar context
+            $weightClass = '';
+            
+            return '<i class="' . $icon->icon_class . ' ' . $weightClass . '"></i>';
+        } catch (\Exception $e) {
+            return $defaultClass ? '<i class="' . $defaultClass . '"></i>' : '';
         }
     }
 }

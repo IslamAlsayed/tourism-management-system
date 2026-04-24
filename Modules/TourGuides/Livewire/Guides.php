@@ -2,7 +2,7 @@
 
 namespace Modules\TourGuides\Livewire;
 
-use App\Traits\CustomColumnsRefreshBased;
+use App\Traits\CustomColumnsLivewireLegacy;
 use App\Traits\CustomPagination;
 use App\Traits\ExportsData;
 use App\Traits\HandlesCrudSafely;
@@ -13,7 +13,7 @@ use Modules\TourGuides\Entities\TourGuide;
 
 class Guides extends Component
 {
-    use WithPagination, CustomPagination, CustomColumnsRefreshBased, WithSorting, HandlesCrudSafely, ExportsData;
+    use WithPagination, CustomPagination, CustomColumnsLivewireLegacy, WithSorting, HandlesCrudSafely, ExportsData;
     public $search = '';
     public $totalCount = 0;
     public $filterActive = '';
@@ -43,6 +43,8 @@ class Guides extends Component
 
     public function mount()
     {
+        set_time_limit(120);
+        ini_set('memory_limit', '512M');
         $this->mountWithCustomPagination();
         $this->mountWithCustomColumns(TourGuide::class);
         $this->resetPage();
@@ -75,7 +77,15 @@ class Guides extends Component
 
     protected function buildQuery()
     {
-        $query = TourGuide::query();
+        $query = TourGuide::query()
+            ->without(['richTextDescription', 'richTextNotes'])
+            ->with([
+                'country:id,name,name_ar',
+                'state:id,name,name_ar',
+                'city:id,name,name_ar',
+                'guide_type:id,type',
+                'currency:id,name,code,symbol',
+            ]);
 
         if ($this->filterActive === 'active') {
             $query->where('is_active', true);
@@ -186,8 +196,10 @@ class Guides extends Component
 
     public function render()
     {
+        ini_set('memory_limit', '512M');
         $query = $this->buildQuery();
-        $data = $query->paginate(getPaginate());
+        $perPage = min(getPaginate(), 25); // Tour Guides: max 25 per page for performance
+        $data = $query->paginate($perPage);
         
         // جلب أسماء الأعمدة الجغرافية حسب اللغة
         $nameCol = 'name' . (app()->getLocale() == 'ar' ? '_ar' : '');

@@ -17,7 +17,7 @@ use Modules\EntryPoints\Http\Controllers\SeaportController;
 |
 */
 
-Route::prefix('dashboard/entrypoints')->name('dashboard.entrypoints.')->middleware('auth')->group(function () {
+Route::prefix('dashboard/entrypoints')->name('dashboard.entrypoints.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('filtered/{filtered?}', [EntryPointsController::class, 'index'])->name('filtered');
     Route::resource('land-crossings', LandcrossingController::class)->names('land-crossings');
     Route::resource('seaports', SeaportController::class)->names('seaports');

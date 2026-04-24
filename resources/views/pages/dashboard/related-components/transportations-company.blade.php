@@ -40,7 +40,7 @@
                         <div class="flex items-center gap-2">
                             @livewire('toggle-switch', [
                                 'modelId' => $record->id,
-                                'modelType' => '\\App\\Models\\TransportationCompany',
+                                'modelType' => '\\Modules\\Transportation\\Entities\\Company',
                                 'field' => 'is_active',
                                 'value' => (bool) $record->is_active,
                                 'table' => 'transportations_companies',
@@ -65,7 +65,7 @@
                 @livewire('delete-bottom', [
                     'type' => 'transportation-company',
                     'modelId' => $record->id,
-                    'modelType' => '\\App\\Models\\TransportationCompany',
+                    'modelType' => '\\Modules\\Transportation\\Entities\\Company',
                     'table' => 'transportations_companies',
                 ])
             </div>

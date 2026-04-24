@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KT Component Diagnostic</title>
+    <link href="metronic/css/styles.css" rel="stylesheet"/>
+    <style>
+        body { font-family: Inter, sans-serif; padding: 20px; background: #f8f9fa; }
+        .result { padding: 8px 12px; margin: 4px 0; border-radius: 6px; font-family: monospace; }
+        .ok { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .warn { background: #fff3cd; color: #856404; }
+        h2 { margin-top: 20px; }
+        button { padding: 8px 16px; margin: 4px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🔍 KT Component Diagnostic</h1>
+    <p>Loading scripts in same order as the project...</p>
+    
+    <h2>1. Script Loading Order</h2>
+    <div id="loadOrder"></div>
+    
+    <h2>2. Window Globals</h2>
+    <div id="globals"></div>
+    
+    <h2>3. Component Init Status</h2>
+    <div id="initStatus"></div>
+
+    <h2>4. Sidebar Test</h2>
+    <div style="display:flex;gap:10px;align-items:center;">
+        <div class="kt-sidebar" data-kt-drawer="true" data-kt-drawer-class="kt-drawer kt-drawer-start top-0 bottom-0" id="test_sidebar" style="width:200px;height:100px;background:#e3e3e3;padding:10px;">
+            Sidebar Content
+            <button data-kt-toggle="body" data-kt-toggle-class="test-collapse" id="test_toggle">Toggle</button>
+        </div>
+        <div id="sidebarResult"></div>
+    </div>
+    
+    <!-- Scripts in EXACT same order as the project -->
+    <script>window._scriptLog = [];</script>
+    <script src="metronic/js/core.bundle.js" onload="window._scriptLog.push('✅ core.bundle.js loaded');" onerror="window._scriptLog.push('❌ core.bundle.js FAILED');"></script>
+    <script src="metronic/vendors/ktui/ktui.min.js" onload="window._scriptLog.push('✅ ktui.min.js loaded');" onerror="window._scriptLog.push('❌ ktui.min.js FAILED');"></script>
+    <script src="metronic/js/layouts/demo1.js" onload="window._scriptLog.push('✅ demo1.js loaded');" onerror="window._scriptLog.push('❌ demo1.js FAILED');"></script>
+    
+    <script>
+    // Wait for everything to settle
+    setTimeout(function() {
+        // 1. Script loading
+        var loadEl = document.getElementById('loadOrder');
+        window._scriptLog.forEach(function(msg) {
+            var div = document.createElement('div');
+            div.className = 'result ' + (msg.includes('✅') ? 'ok' : 'fail');
+            div.textContent = msg;
+            loadEl.appendChild(div);
+        });
+        
+        // 2. Window globals
+        var globalsEl = document.getElementById('globals');
+        var components = [
+            'KTDom','KTComponents','KTMenu','KTDropdown','KTDrawer','KTToggle',
+            'KTScrollable','KTSticky','KTReparent','KTModal','KTToast','KTSelect',
+            'KTTabs','KTAccordion','KTCollapse','KTDismiss','KTTooltip',
+            'KTUtils','KTEventHandler','KTDatePicker'
+        ];
+        components.forEach(function(name) {
+            var div = document.createElement('div');
+            var exists = typeof window[name] !== 'undefined';
+            var type = typeof window[name];
+            div.className = 'result ' + (exists ? 'ok' : 'fail');
+            div.textContent = name + ': ' + (exists ? type : 'UNDEFINED ❌');
+            globalsEl.appendChild(div);
+        });
+        
+        // 3. Init status
+        var initEl = document.getElementById('initStatus');
+        var flags = ['KT_DRAWER_INITIALIZED','KT_DROPDOWN_INITIALIZED','KT_MODAL_INITIALIZED','KT_REPARENT_INITIALIZED','KT_SCROLLABLE_INITIALIZED','KT_TABS_INITIALIZED','KT_TOOLTIP_INITIALIZED'];
+        flags.forEach(function(flag) {
+            var div = document.createElement('div');
+            var val = window[flag];
+            div.className = 'result ' + (val ? 'ok' : 'warn');
+            div.textContent = flag + ': ' + (val ? 'TRUE ✅' : 'false/undefined');
+            initEl.appendChild(div);
+        });
+        
+        // 4. Sidebar test
+        var sidebarResult = document.getElementById('sidebarResult');
+        var results = [];
+        
+        if (typeof KTToggle !== 'undefined') {
+            var toggleEl = document.getElementById('test_toggle');
+            var instance = KTToggle.getInstance(toggleEl);
+            results.push('KTToggle instance: ' + (instance ? 'EXISTS ✅' : 'MISSING ❌'));
+        } else {
+            results.push('KTToggle: NOT AVAILABLE ❌');
+        }
+        
+        if (typeof KTDrawer !== 'undefined') {
+            var sidebarEl = document.getElementById('test_sidebar');
+            var drawerInstance = KTDrawer.getInstance(sidebarEl);
+            results.push('KTDrawer instance: ' + (drawerInstance ? 'EXISTS ✅' : 'MISSING ❌'));
+        } else {
+            results.push('KTDrawer: NOT AVAILABLE ❌');
+        }
+        
+        results.forEach(function(r) {
+            var div = document.createElement('div');
+            div.className = 'result ' + (r.includes('✅') ? 'ok' : 'fail');
+            div.textContent = r;
+            sidebarResult.appendChild(div);
+        });
+        
+    }, 1000);
+    </script>
+</body>
+</html>

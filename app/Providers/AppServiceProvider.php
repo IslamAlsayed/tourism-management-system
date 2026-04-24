@@ -28,7 +28,40 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // ------------------------------------------------------------------
+        // Legacy class aliases: old App\Models\* → new Modules\*\Entities\*
+        // These aliases allow legacy Quote controllers (v1/v2) and the
+        // multi-step form to keep working without rewriting every import.
+        // TODO: Migrate all code to use Module namespaces directly, then
+        //       remove these aliases.
+        // ------------------------------------------------------------------
+        $aliases = [
+            // Accommodations
+            'App\\Models\\Hotel'            => \Modules\Accommodations\Entities\Accommodation::class,
+            'App\\Models\\HotelSeason'      => \Modules\Accommodations\Entities\Season::class,
+            'App\\Models\\HotelRoomType'    => \Modules\Accommodations\Entities\Room::class,
+            'App\\Models\\HotelSupplement'  => \Modules\Accommodations\Entities\Supplement::class,
+            'App\\Models\\AccommodationType' => \Modules\Accommodations\Entities\Type::class,
+
+            // Geography
+            'App\\Models\\City'             => \Modules\Geography\Entities\City::class,
+            'App\\Models\\Country'          => \Modules\Geography\Entities\Country::class,
+            'App\\Models\\Subregion'        => \Modules\Geography\Entities\Subregion::class,
+            'App\\Models\\Nationality'      => \Modules\Geography\Entities\Nationality::class,
+
+            // Localization
+            'App\\Models\\Currency'         => \Modules\Localization\Entities\Currency::class,
+
+            // Transportation
+            'App\\Models\\TransportationCompany' => \Modules\Transportation\Entities\Company::class,
+            'App\\Models\\BusType'               => \Modules\Transportation\Entities\VehicleType::class,
+        ];
+
+        foreach ($aliases as $alias => $concrete) {
+            if (!class_exists($alias, false)) {
+                class_alias($concrete, $alias);
+            }
+        }
     }
 
     /**

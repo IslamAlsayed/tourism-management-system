@@ -129,7 +129,7 @@ class HandleUserLogged
                 }
             }
 
-            if (env('APP_ENV') != 'production') {
+            if (config('app.env') != 'production') {
                 Log::info("Broadcasted user status via Ably", ['user_id' => $event->user->id, 'status' => $status]);
             }
         } catch (\Exception $e) {

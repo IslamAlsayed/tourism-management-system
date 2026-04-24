@@ -42,7 +42,7 @@
                         <div class="flex items-center gap-2">
                             @livewire('toggle-switch', [
                                 'modelId' => $record->id,
-                                'modelType' => '\\App\\Models\\PricingDefinition',
+                                'modelType' => '\\Modules\\Definitions\\Entities\\PricingDefinition',
                                 'field' => 'is_active',
                                 'value' => (bool) $record->is_active,
                                 'table' => 'pricing_definitions',
@@ -67,7 +67,7 @@
                 @livewire('delete-bottom', [
                     'type' => 'pricing-definition',
                     'modelId' => $record->id,
-                    'modelType' => '\\App\\Models\\PricingDefinition',
+                    'modelType' => '\\Modules\\Definitions\\Entities\\PricingDefinition',
                     'table' => 'pricing_definitions',
                 ])
             </div>

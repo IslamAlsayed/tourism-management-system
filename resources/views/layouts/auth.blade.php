@@ -12,11 +12,11 @@
     {{-- Favicon --}}
     <link href="{{ asset('metronic/media/app/favicon.ico') }}" rel="shortcut icon" />
 
-    {{-- Metronic Core CSS --}}
-    <link href="{{ asset('metronic/vendors/keenicons/styles.bundle.css') }}" rel="stylesheet" />
+    {{-- Keenicons removed: fully migrated to Font Awesome Pro --}}
+    <link href="{{ asset('assets/plugins/fontawesome-icons/css/all.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('metronic/css/styles.css') }}" rel="stylesheet" />
 
-    {{-- Custom Auth CSS (Direct Link to bypass stale build) --}}
+    {{-- Custom Auth CSS (light overrides only) --}}
     <link href="{{ asset('css/custom-auth.css') }}" rel="stylesheet" />
     {{-- @vite('resources/css/app.css') --}}
 
@@ -51,69 +51,14 @@
         }
     </script>
 
-    {{-- Theme Toggle (floating) --}}
-    <style>
-        #kt_auth_theme_toggle {
-            position: fixed;
-            top: 18px;
-            right: 20px;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: inherit;
-        }
-    </style>
-    <div id="kt_auth_theme_toggle">
-        <i class="text-base fa-duotone fa-solid fa-moon" id="icon-theme-mode"></i>
-        <input class="kt-switch" id="switch-theme-mode" type="checkbox" value="1" />
-    </div>
-
     @yield('content')
 
     {{-- Metronic Core JS --}}
     <script src="{{ asset('metronic/js/core.bundle.js') }}"></script>
-    <script src="{{ asset('metronic/vendors/ktui/ktui.min.js') }}"></script>
+    {{-- KTUI loaded via Vite in app.js to avoid double initialization --}}
 
     {{-- App JS --}}
     @vite('resources/js/app.js')
-
-    {{-- Theme toggle JS --}}
-    <script>
-        (() => {
-            const switchEl = document.getElementById('switch-theme-mode');
-            const iconEl = document.getElementById('icon-theme-mode');
-
-            const getTheme = () => localStorage.getItem('kt-theme') || '{{ config('app.app_theme', 'light') }}';
-
-            const applyTheme = (mode) => {
-                const resolved = mode === 'system' ?
-                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') :
-                    mode;
-
-                document.documentElement.classList.remove('dark', 'light');
-                document.documentElement.classList.add(resolved);
-                document.documentElement.setAttribute('data-kt-theme-mode', resolved);
-
-                if (switchEl) switchEl.checked = resolved === 'dark';
-                if (iconEl) iconEl.className = resolved === 'dark' ?
-                    'text-base fa-duotone fa-solid fa-moon' :
-                    'text-base fa-duotone fa-solid fa-sun';
-
-                localStorage.setItem('kt-theme', mode);
-            };
-
-            // Init
-            applyTheme(getTheme());
-
-            // Toggle
-            if (switchEl) {
-                switchEl.addEventListener('change', () => {
-                    applyTheme(switchEl.checked ? 'dark' : 'light');
-                });
-            }
-        })();
-    </script>
 
     @stack('scripts')
 </body>

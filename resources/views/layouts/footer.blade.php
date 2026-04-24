@@ -1,7 +1,7 @@
 <!-- Footer -->
-<footer class="kt-footer">
+<footer class="kt-footer mt-auto shrink-0">
     <!-- Container -->
-    <div class="container-fixed">
+    <div class="kt-container-fixed">
         <div class="flex flex-col items-center justify-center gap-3 py-5 md:flex-row md:justify-between">
             <div class="order-2 flex gap-2 text-sm font-normal md:order-1">
                 <span class="text-secondary-foreground">

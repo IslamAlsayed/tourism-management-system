@@ -58,6 +58,8 @@ class CruiseList extends Component
 
     public function render()
     {
+        set_time_limit(120);
+
         $query = Cruise::query();
         
         // Search using the HasSearch trait functionality

@@ -57,6 +57,20 @@ class ThemeCustomizer extends Component
 
     public function save()
     {
+        // Validate all color inputs as valid hex colors
+        $this->validate([
+            'primary' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'secondary' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'success' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'info' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'warning' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'danger' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'dark' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_bg' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_text' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_active' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        ]);
+
         $settings = Setting::first();
         if ($settings) {
             $settings->update([

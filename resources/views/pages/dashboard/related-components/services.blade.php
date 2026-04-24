@@ -243,7 +243,7 @@
                                     <div class="flex items-center gap-2">
                                         @livewire('toggle-switch', [
                                             'modelId' => $service->id,
-                                            'modelType' => '\\App\\Models\\TouristSite',
+                                            'modelType' => '\\Modules\\TouristSites\\Entities\\TouristSite',
                                             'field' => 'club_cars_available',
                                             'value' => (bool) $service->club_cars_available,
                                             'table' => 'tourist_sites',

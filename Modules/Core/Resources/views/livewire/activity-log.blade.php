@@ -478,7 +478,7 @@
 
         @if (!empty($selectedIds))
             <div
-                class="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                class="flex items-center justify-between rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
                 <span>{{ __('main.selected_items', ['count' => count($selectedIds)]) }}</span>
                 <div class="flex items-center gap-2">
                     <button type="button" class="kt-btn kt-btn-sm kt-btn-light"
@@ -510,11 +510,11 @@
                 </div>
             </div>
         @endif
-
-        @if (isset($data) && !empty($data) && $data->count() > 0)
-            @include('includes.pagination', ['data' => $data])
-        @endif
     </div>
+
+    @if (isset($data) && !empty($data) && $data->count() > 0)
+        @include('includes.pagination', ['data' => $data])
+    @endif
 </div>
 
 @push('scripts')

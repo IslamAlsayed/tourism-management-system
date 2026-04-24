@@ -164,13 +164,7 @@
                     </th>
                 @endforeach
                 <th class="px-4 py-3 text-end min-w-[120px]"
-                    x-data
-                    x-show="!$store.filtersVisibility || 
-                           $store.filtersVisibility.filters['show'] !== false || 
-                           $store.filtersVisibility.filters['edit'] !== false || 
-                           $store.filtersVisibility.filters['delete'] !== false || 
-                           $store.filtersVisibility.filters['force_delete'] !== false"
-                    x-transition x-cloak>
+                    x-show="!$store.filtersVisibility || ['show','edit','delete','force_delete'].some(k => $store.filtersVisibility.filters[k] !== false)">
                     {{ __('main.actions') }}
                 </th>
             </tr>
@@ -199,13 +193,7 @@
                     @endforeach
                     {{-- Actions Column — KTUI 3-Dot Dropdown --}}
                     <td class="px-4 py-2 text-end"
-                        x-data
-                        x-show="!$store.filtersVisibility || 
-                               $store.filtersVisibility.filters['show'] !== false || 
-                               $store.filtersVisibility.filters['edit'] !== false || 
-                               $store.filtersVisibility.filters['delete'] !== false || 
-                               $store.filtersVisibility.filters['force_delete'] !== false"
-                        x-transition x-cloak>
+                        x-show="!$store.filtersVisibility || ['show','edit','delete','force_delete'].some(k => $store.filtersVisibility.filters[k] !== false)">
                         @if (Auth::check() && isset($models))
                             @include('components.elements.action-dropdown', [
                                 'id' => $item->id,

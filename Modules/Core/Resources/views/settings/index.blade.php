@@ -31,7 +31,7 @@
                             {{ __('main.configure_basic_app_settings') }}
                         </p>
                         <a href="{{ route('dashboard.core.settings.general') }}" class="kt-btn kt-btn-primary kt-btn-sm">
-                            {{ __('main.manage_users') }}
+                            {{ __('main.manage') }}
                         </a>
                     </div>
                 </div>

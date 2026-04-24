@@ -3,7 +3,10 @@
 namespace Modules\TouristServices\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\TouristServices\Entities\TouristService;
+use Modules\TouristServices\Policies\TouristServicePolicy;
 
 class TouristServicesServiceProvider extends ServiceProvider
 {
@@ -30,6 +33,8 @@ class TouristServicesServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
         \Livewire\Livewire::component('touristservices::services', \Modules\TouristServices\Livewire\TouristServices::class);
+
+        Gate::policy(TouristService::class, TouristServicePolicy::class);
     }
 
     /**

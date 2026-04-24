@@ -112,7 +112,7 @@
                             <div class="flex items-center gap-2">
                                 @livewire('toggle-switch', [
                                     'modelId' => $route->id,
-                                    'modelType' => '\\App\\Models\\TransportationRoute',
+                                    'modelType' => '\\Modules\\Transportation\\Entities\\Route',
                                     'field' => 'is_active',
                                     'value' => (bool) $route->is_active,
                                     'table' => 'transportations_routes',

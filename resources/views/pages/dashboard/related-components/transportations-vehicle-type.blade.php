@@ -42,7 +42,7 @@
                         <div class="flex items-center gap-2">
                             @livewire('toggle-switch', [
                                 'modelId' => $record->id,
-                                'modelType' => '\\App\\Models\\TransportationVehicleType',
+                                'modelType' => '\\Modules\\Transportation\\Entities\\VehicleType',
                                 'field' => 'is_active',
                                 'value' => (bool) $record->is_active,
                                 'table' => 'transportations_vehicle_types',
@@ -54,7 +54,7 @@
                         <div class="flex items-center gap-2">
                             @livewire('toggle-switch', [
                                 'modelId' => $record->id,
-                                'modelType' => '\\App\\Models\\TransportationVehicleType',
+                                'modelType' => '\\Modules\\Transportation\\Entities\\VehicleType',
                                 'field' => 'has_luggage',
                                 'value' => (bool) $record->has_luggage,
                                 'table' => 'transportations_vehicle_types',
@@ -66,7 +66,7 @@
                         <div class="flex items-center gap-2">
                             @livewire('toggle-switch', [
                                 'modelId' => $record->id,
-                                'modelType' => '\\App\\Models\\TransportationVehicleType',
+                                'modelType' => '\\Modules\\Transportation\\Entities\\VehicleType',
                                 'field' => 'is_air_conditioning',
                                 'value' => (bool) $record->is_air_conditioning,
                                 'table' => 'transportations_vehicle_types',
@@ -95,7 +95,7 @@
                 @livewire('delete-bottom', [
                     'type' => 'transportation-vehicle-type',
                     'modelId' => $record->id,
-                    'modelType' => '\\App\\Models\\TransportationVehicleType',
+                    'modelType' => '\\Modules\\Transportation\\Entities\\VehicleType',
                     'table' => 'transportations_vehicle_types',
                 ])
             </div>

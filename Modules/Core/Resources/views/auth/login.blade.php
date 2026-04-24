@@ -35,15 +35,19 @@
 
         {{-- Left: Form (60% on desktop) --}}
         <div class="flex justify-center items-center p-8 lg:p-10 order-2 lg:order-1 auth-form-col">
-            <div class="kt-card max-w-[370px] w-full border-0 shadow-none bg-transparent">
+            <div class="kt-card max-w-[370px] w-full">
                 <div class="flex justify-center mb-10">
                     <a href="{{ url('/') }}">
                         @php
                             $settings = \Modules\Core\Entities\Setting::first();
                             $aWidth = optional($settings)->auth_logo_width ?? '150px';
-                            if (is_numeric($aWidth)) { $aWidth .= 'px'; }
+                            if (is_numeric($aWidth)) {
+                                $aWidth .= 'px';
+                            }
                             $aHeight = optional($settings)->auth_logo_height ?? 'auto';
-                            if (is_numeric($aHeight)) { $aHeight .= 'px'; }
+                            if (is_numeric($aHeight)) {
+                                $aHeight .= 'px';
+                            }
                         @endphp
                         {{-- Swapping: mixjo-default-logo is light (belongs in dark), mixjo-default-logo-dark is dark (belongs in light) --}}
                         <img class="dark:hidden max-w-full transition-all duration-300 object-contain"
@@ -94,15 +98,15 @@
                             </a>
                         </div>
                         <div class="kt-input" data-kt-toggle-password="true">
-                            <input name="password" placeholder="Enter Password" type="password" required
-                                autocomplete="off" />
+                            <input name="password" placeholder="Enter Password" type="password"
+                                required autocomplete="off" value="" />
                             <button class="kt-btn kt-btn-sm kt-btn-ghost kt-btn-icon bg-transparent! -me-1.5"
                                 data-kt-toggle-password-trigger="true" type="button">
                                 <span class="kt-toggle-password-active:hidden">
-                                    <i class="fa-duotone fa-solid fa-eye text-muted-foreground"></i>
+                                    <i class="ki-filled ki-eye text-muted-foreground"></i>
                                 </span>
                                 <span class="hidden kt-toggle-password-active:block">
-                                    <i class="fa-duotone fa-solid fa-eye-slash text-muted-foreground"></i>
+                                    <i class="ki-filled ki-eye-slash text-muted-foreground"></i>
                                 </span>
                             </button>
                         </div>

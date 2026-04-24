@@ -28,8 +28,8 @@ class LandcrossingController extends Controller
         return $created
             ? ($request->has('save_and_add')
                 ? redirect()->back()->with('success', __('messages.type_created', ['type' => __('main.land-crossing')]))
-                : redirect()->route('entrypoints.index')->with('success', __('messages.type_created', ['type' => __('main.land-crossing')])))
-            : redirect()->route('entrypoints.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.land-crossing')]));
+                : redirect()->route('dashboard.entrypoints.land-crossings.index')->with('success', __('messages.type_created', ['type' => __('main.land-crossing')])))
+            : redirect()->route('dashboard.entrypoints.land-crossings.index')->with('error', __('messages.type_creation_failed', ['type' => __('main.land-crossing')]));
     }
 
     public function show($id)
@@ -58,7 +58,7 @@ class LandcrossingController extends Controller
         $validated = $request->validated();
         $updated = $EntryPoint->update($validated);
         return $updated
-            ? redirect()->route('entrypoints.index')->withSuccess(__('messages.type_updated', ['type' => __('main.land-crossing')]))
+            ? redirect()->route('dashboard.entrypoints.land-crossings.index')->withSuccess(__('messages.type_updated', ['type' => __('main.land-crossing')]))
             : redirect()->back()->withError(__('messages.type_update_failed', ['type' => __('main.land-crossing')]));
     }
 
@@ -69,8 +69,8 @@ class LandcrossingController extends Controller
             return redirect()->back()->withError(__('messages.not_found_this_type', ['type' => __('main.land-crossing')]));
         $deleted = $EntryPoint->delete();
         return $deleted
-            ? redirect()->route('entrypoints.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.land-crossing')]))
-            : redirect()->route('entrypoints.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.land-crossing')]));
+            ? redirect()->route('dashboard.entrypoints.land-crossings.index')->withSuccess(__('messages.type_deleted', ['type' => __('main.land-crossing')]))
+            : redirect()->route('dashboard.entrypoints.land-crossings.index')->withError(__('messages.type_deletion_failed', ['type' => __('main.land-crossing')]));
     }
 
     /**
@@ -81,7 +81,7 @@ class LandcrossingController extends Controller
         $filtered = singularLowerCaseName($filtered, '_');
         $validTypes = config('helpers.crossing_port_types');
         if (!isset($validTypes[$filtered]))
-            return redirect()->route('entrypoints.index')->withError(__('messages.invalid_type'));
+            return redirect()->route('dashboard.entrypoints.land-crossings.index')->withError(__('messages.invalid_type'));
         $typeValue = $validTypes[$filtered];
         $typeLabel = ucfirst(str_replace('_', ' ', $typeValue));
         return view('entrypoints::land-crossings.filtered', compact('filtered', 'typeValue', 'typeLabel'));

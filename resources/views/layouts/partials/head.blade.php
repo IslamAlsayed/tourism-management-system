@@ -43,7 +43,7 @@
     rel="shortcut icon" />
 {{-- Metronic plugins --}}
 <link href="{{ asset('metronic/vendors/apexcharts/apexcharts.css') }}" rel="stylesheet" />
-<link href="{{ asset('metronic/vendors/keenicons/styles.bundle.css') }}" rel="stylesheet" />
+{{-- Keenicons removed: fully migrated to Font Awesome Pro --}}
 {{-- Inter Font --}}
 <link href="{{ asset('assets/plugins/fonts/inter.css') }}" rel="stylesheet" />
 {{-- Text editor --}}
@@ -98,36 +98,10 @@
     }
 </style>
 
-{{-- Sync Metronic Theme with Tailwind Dark Mode Class --}}
-<script>
-    (function() {
-        // Run immediately to avoid flash of unstyled content
-        function syncTailwindDarkClass() {
-            var theme = document.documentElement.getAttribute('data-bs-theme');
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        }
-        
-        syncTailwindDarkClass();
-        
-        // Use MutationObserver for dynamic changes (user clicking theme switcher)
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.attributeName === 'data-bs-theme') {
-                    syncTailwindDarkClass();
-                }
-            });
-        });
-        
-        // Start observing HTML tag
-        document.addEventListener('DOMContentLoaded', function() {
-            observer.observe(document.documentElement, { attributes: true, childList: false, subtree: false });
-        });
-    })();
-</script>
+{{-- KTUI Dark Mode Note:
+     KTThemeSwitch directly adds/removes 'dark' class on <html> element.
+     No sync script is needed — Tailwind's dark: prefix works natively.
+     See: KTThemeSwitch._bindMode() in core.bundle.js --}}
 
 @yield('styles')
 @stack('styles')

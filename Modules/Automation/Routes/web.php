@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('automation')->group(function() {
+Route::prefix('automation')->middleware(['auth', 'admin'])->group(function() {
     Route::get('/', [\Modules\Automation\Http\Controllers\AutomationController::class, 'index']);
     Route::get('/settings', \Modules\Automation\Livewire\WebhookSettings::class)->name('automation.settings');
 });

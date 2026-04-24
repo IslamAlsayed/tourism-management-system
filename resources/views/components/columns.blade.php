@@ -1,14 +1,13 @@
 <div id="parentColumnsModal">
 
     @if (isset($view) && $view)
-        <button wire:click="toggleView" class="kt-btn kt-btn-icon kt-btn-outline bg-secondary text-white h-[45px] w-[45px] cursor-pointer hover:bg-opacity-80 transition-colors" title="{{ $view == 'grid' ? __('main.list') : __('main.grid') }}">
+        <button wire:click="toggleView" class="kt-btn kt-btn-icon kt-btn-outline bg-secondary text-white h-[38px] w-[38px] cursor-pointer hover:bg-opacity-80 transition-colors" title="{{ $view == 'grid' ? __('main.list') : __('main.grid') }}">
             <i class="fa-duotone fa-solid fa-{{ $view == 'grid' ? 'list' : 'grid-2' }} text-base"></i>
         </button>
     @endif
 
     <div x-cloak x-show="$wire.selectedIds && $wire.selectedIds.length > 0" class="flex items-center gap-2">
-        <!-- Empty placeholder to ensure kt-menu initializes correctly if needed, or just start directly -->
-        <div class="kt-menu" data-kt-menu="true" x-data="{
+        <div x-data="{
             confirmDelete() {
                 Swal.fire({
                     title: '{{ __('messages.are_you_sure') }}',
@@ -27,9 +26,9 @@
             }
         }">
             <button
-                class="user-action relative kt-menu-toggle kt-btn kt-btn-outline bg-danger text-white px-3 h-[45px] cursor-pointer hover:bg-red-700 transition-colors"
+                class="user-action relative kt-btn kt-btn-outline kt-btn-sm bg-danger text-white px-3 h-[38px] cursor-pointer hover:bg-red-700 transition-colors"
                 x-on:click.prevent="confirmDelete">
-                <span class="kt-menu-title flex items-center gap-2">
+                <span class="flex items-center gap-2">
                     <i class="fas fa-trash"></i>
                     <span>{{ __('main.delete') }} (<span x-text="$wire.selectedIds.length"></span> {{ __('main.items') }})</span>
                 </span>
@@ -37,68 +36,91 @@
         </div>
     </div>
 
-    {{-- Global Export Dropdown --}}
+    {{-- Global Export Dropdown (Alpine.js + position:fixed — avoids z-index/overflow without leaving Livewire DOM) --}}
     @if(!isset($hideExport) || !$hideExport)
-    <div class="kt-menu" data-kt-menu="true">
-        <div class="kt-menu-item" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-end"
-            data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown"
-            data-kt-menu-item-trigger="click">
-            <button
-                class="user-action relative kt-menu-toggle kt-btn kt-btn-outline bg-primary text-white px-3 h-[45px] cursor-pointer">
-                <span class="kt-menu-title flex items-center gap-2">
-                    <i class="fas fa-file-export"></i>
-                    <span>{{ __('main.export') }} <span x-show="$wire.selectedIds && $wire.selectedIds.length > 0">(<span x-text="$wire.selectedIds.length"></span>)</span></span>
+    <div class="relative" x-data="{
+            exportOpen: false,
+            fixedTop: 0,
+            fixedLeft: 0,
+            toggle(btn) {
+                if (this.exportOpen) { this.exportOpen = false; return; }
+                const rect = btn.getBoundingClientRect();
+                this.fixedTop = rect.bottom + 6;
+                this.fixedLeft = rect.right - 220;
+                if (this.fixedLeft < 10) this.fixedLeft = 10;
+                this.exportOpen = true;
+            },
+            close() { this.exportOpen = false; }
+        }">
+        <button
+            @click="toggle($el)"
+            class="user-action relative kt-btn kt-btn-outline kt-btn-sm bg-primary text-white px-3 h-[38px] cursor-pointer hover:bg-primary/90 transition-colors">
+            <span class="flex items-center gap-2">
+                <i class="fas fa-file-export"></i>
+                <span>{{ __('main.export') }} <span x-show="$wire.selectedIds && $wire.selectedIds.length > 0">(<span x-text="$wire.selectedIds.length"></span>)</span></span>
+                <i class="fas fa-chevron-down text-[10px] ms-0.5 transition-transform duration-200" :class="exportOpen && 'rotate-180'"></i>
+            </span>
+            <span class="hidden absolute top-50 left-50 translate-50" id="loading-spinner">
+                @include('components.load-data', ['color' => 'var(--color-white)'])
+            </span>
+        </button>
+
+        {{-- Export Dropdown Menu (position:fixed escapes overflow without leaving Livewire DOM) --}}
+        <div x-show="exportOpen"
+             x-transition:enter="transition ease-out duration-150"
+             x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-100"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95"
+             @click.outside="close()"
+             x-cloak
+             :style="`position:fixed; top:${fixedTop}px; left:${fixedLeft}px; z-index:99999; width:220px; background-color: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border);`"
+             class="rounded-lg shadow-md py-1.5">
+            {{-- PDF --}}
+            <button class="kt-dropdown-menu-link w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-accent" style="color: var(--foreground); border-radius: calc(var(--radius) - 2px);"
+                    wire:click="exportSelectedPDF" wire:loading.attr="disabled" wire:target="exportSelectedPDF"
+                    @click="close()">
+                <span class="flex items-center gap-2.5">
+                    <i class="fas fa-file-pdf text-red-500 w-4 text-center"></i>
+                    <span class="font-medium">{{ __('main.pdf') }}</span>
                 </span>
-                <span class="hidden absolute top-50 left-50 translate-50" id="loading-spinner">
-                    @include('components.load-data', ['color' => 'var(--color-white)'])
+                <span wire:loading wire:target="exportSelectedPDF">
+                    <i class="fas fa-spinner fa-spin text-xs text-primary"></i>
                 </span>
             </button>
-            <div class="kt-menu-dropdown kt-menu-default w-full max-w-[200px]" data-kt-menu-dismiss="true">
-                {{-- Export Full / Selected Data --}}
-                <div class="kt-menu-item">
-                    <button class="kt-menu-link" wire:click="exportSelectedPDF" wire:loading.attr="disabled" wire:target="exportSelectedPDF" :disabled="!$wire.selectedIds || $wire.selectedIds.length === 0">
-                        <span class="kt-menu-title flex items-center gap-2">
-                            <i class="fas fa-file-pdf text-danger"></i>
-                            <span>{{ __('main.pdf') }}</span>
-                        </span>
-                        <span wire:loading wire:target="exportSelectedPDF">
-                            <i class="fas fa-spinner fa-spin ms-2"></i>
-                        </span>
-                    </button>
-                </div>
-                <div class="kt-menu-item">
-                    <button class="kt-menu-link" wire:click="exportSelectedExcel('csv')" wire:loading.attr="disabled" wire:target="exportSelectedExcel" :disabled="!$wire.selectedIds || $wire.selectedIds.length === 0">
-                        <span class="kt-menu-title flex items-center gap-2">
-                            <i class="fas fa-file-csv text-success"></i>
-                            <span>{{ __('main.csv') }}</span>
-                        </span>
-                        <span wire:loading wire:target="exportSelectedExcel">
-                            <i class="fas fa-spinner fa-spin ms-2"></i>
-                        </span>
-                    </button>
-                </div>
-                <div class="kt-menu-item">
-                    <button class="kt-menu-link" wire:click="exportSelectedExcel('xlsx')" wire:loading.attr="disabled" wire:target="exportSelectedExcel" :disabled="!$wire.selectedIds || $wire.selectedIds.length === 0">
-                        <span class="kt-menu-title flex items-center gap-2">
-                            <i class="fas fa-file-excel text-success"></i>
-                            <span>{{ __('main.xlsx') }}</span>
-                        </span>
-                        <span wire:loading wire:target="exportSelectedExcel">
-                            <i class="fas fa-spinner fa-spin ms-2"></i>
-                        </span>
-                    </button>
-                </div>
-                <div class="kt-menu-separator my-1"></div>
-                {{-- Export Template --}}
-                <div class="kt-menu-item">
-                    <a href="{{ route('import.template', ['models' => $routePrefix ?? preg_replace('/^([a-z])/', '$1', strtolower(class_basename($this)))]) }}" class="kt-menu-link" target="_blank">
-                        <span class="kt-menu-title flex items-center gap-2">
-                            <i class="fas fa-download text-primary"></i>
-                            <span>{{ __('main.export_template') }}</span>
-                        </span>
-                    </a>
-                </div>
-            </div>
+            {{-- CSV --}}
+            <button class="kt-dropdown-menu-link w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-accent" style="color: var(--foreground); border-radius: calc(var(--radius) - 2px);"
+                    wire:click="exportSelectedExcel('csv')" wire:loading.attr="disabled" wire:target="exportSelectedExcel"
+                    @click="close()">
+                <span class="flex items-center gap-2.5">
+                    <i class="fas fa-file-csv text-green-500 w-4 text-center"></i>
+                    <span class="font-medium">{{ __('main.csv') }}</span>
+                </span>
+                <span wire:loading wire:target="exportSelectedExcel">
+                    <i class="fas fa-spinner fa-spin text-xs text-primary"></i>
+                </span>
+            </button>
+            {{-- Excel --}}
+            <button class="kt-dropdown-menu-link w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors hover:bg-accent" style="color: var(--foreground); border-radius: calc(var(--radius) - 2px);"
+                    wire:click="exportSelectedExcel('xlsx')" wire:loading.attr="disabled" wire:target="exportSelectedExcel"
+                    @click="close()">
+                <span class="flex items-center gap-2.5">
+                    <i class="fas fa-file-excel text-green-600 w-4 text-center"></i>
+                    <span class="font-medium">{{ __('main.xlsx') }}</span>
+                </span>
+                <span wire:loading wire:target="exportSelectedExcel">
+                    <i class="fas fa-spinner fa-spin text-xs text-primary"></i>
+                </span>
+            </button>
+            <div class="my-1" style="height: 1px; background-color: var(--border); margin-inline: -0.5rem;"></div>
+            {{-- Export Template --}}
+            <a href="{{ route('import.template', ['models' => $routePrefix ?? preg_replace('/^([a-z])/', '$1', strtolower(class_basename($this)))]) }}"
+               class="kt-dropdown-menu-link w-full flex items-center gap-2.5 px-4 py-2.5 text-sm transition-colors" style="color: var(--foreground); border-radius: calc(var(--radius) - 2px);"
+               target="_blank" @click="close()">
+                <i class="fas fa-download text-primary w-4 text-center"></i>
+                <span class="font-medium">{{ __('main.export_template') }}</span>
+            </a>
         </div>
     </div>
     @endif
@@ -106,9 +128,9 @@
     {{-- Column Picker Toggle Button --}}
     <button @click="$store.colPicker.toggle()" type="button"
         class="kt-btn kt-btn-sm flex items-center gap-1.5 px-3 h-[38px] border rounded-lg transition-all duration-200"
-        :class="$store.colPicker.open ? 'bg-primary text-white border-primary shadow-md' : 'btn-light border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800'"
+        :class="$store.colPicker.open ? 'bg-primary text-white border-primary shadow-md' : 'kt-btn-outline border-border text-foreground hover:bg-accent'"
         title="{{ __('main.columns') }}">
-        <i class="fa-duotone fa-solid fa-desktop text-red-500 text-base"></i>
+        <i class="fa-duotone fa-solid fa-desktop text-base" :class="$store.colPicker.open ? 'text-white' : 'text-primary'"></i>
         <span class="text-sm font-medium hidden sm:inline">{{ __('main.columns') }}</span>
         
         <span x-data
@@ -122,22 +144,27 @@
 
 <script>
     // Register Alpine store for column picker state (shared across components)
+    // NOTE: Primary registration is in master.blade.php — this is a fallback guard
     document.addEventListener('alpine:init', () => {
-        Alpine.store('colPicker', {
-            open: false,
-            count: 0,
-            toggle() { this.open = !this.open; },
-            close() { this.open = false; }
-        });
+        if (!Alpine.store('colPicker')) {
+            Alpine.store('colPicker', {
+                open: false,
+                count: 0,
+                toggle() { this.open = !this.open; },
+                close() { this.open = false; }
+            });
+        }
 
-        Alpine.store('filtersVisibility', {
-            filters: JSON.parse(localStorage.getItem('systemFiltersVisibility')) || {},
-            toggle(key) {
-                let currentVal = typeof this.filters[key] === 'undefined' ? true : this.filters[key];
-                this.filters = { ...this.filters, [key]: !currentVal };
-                localStorage.setItem('systemFiltersVisibility', JSON.stringify(this.filters));
-            }
-        });
+        if (!Alpine.store('filtersVisibility')) {
+            Alpine.store('filtersVisibility', {
+                filters: JSON.parse(localStorage.getItem('systemFiltersVisibility')) || {},
+                toggle(key) {
+                    let currentVal = typeof this.filters[key] === 'undefined' ? true : this.filters[key];
+                    this.filters = { ...this.filters, [key]: !currentVal };
+                    localStorage.setItem('systemFiltersVisibility', JSON.stringify(this.filters));
+                }
+            });
+        }
     });
 
     document.addEventListener('DOMContentLoaded', function() {

@@ -107,7 +107,7 @@
                         <div class="flex items-center gap-2">
                             @livewire('toggle-switch', [
                                 'modelId' => $record->id,
-                                'modelType' => '\\App\\Models\\Accommodation',
+                                'modelType' => '\\Modules\\Restaurants\\Entities\\Restaurant',
                                 'field' => 'is_active',
                                 'value' => (bool) $record->is_active,
                                 'table' => 'restaurants',

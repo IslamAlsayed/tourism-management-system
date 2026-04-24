@@ -27,7 +27,7 @@ class NotificationController extends Controller
         if ($request->has('type') && $request->get('type') != '') {
             $query->ofType($request->get('type'));
         }
-        $notifications = $query->paginate(50);
+        $notifications = $query->paginate(getPaginate());
 
         // $notifications = Notification::targetMe(getActiveUserId())->orderBy('created_at', 'desc')->limit(10)->get();
         $unreadNotificationsCount = Notification::unread()->count();

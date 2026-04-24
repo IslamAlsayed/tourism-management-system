@@ -14,7 +14,7 @@ use Modules\Subscriptions\Http\Controllers\SubscriptionsController;
 |
 */
 
-Route::prefix('dashboard/subscriptions')->name('dashboard.subscriptions.')->middleware('auth')->middleware('auth')->group(function () {
+Route::prefix('dashboard/subscriptions')->name('dashboard.subscriptions.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [SubscriptionsController::class, 'index'])->name('index');
     Route::get('my-modules', [SubscriptionsController::class, 'myModules'])->name('my-modules');
     Route::post('activate/{moduleKey}', [SubscriptionsController::class, 'activate'])->name('activate');

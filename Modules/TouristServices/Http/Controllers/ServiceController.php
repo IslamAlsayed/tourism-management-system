@@ -14,6 +14,11 @@ class ServiceController extends Controller
 {
     use PhotoUploadTrait;
 
+    public function __construct()
+    {
+        $this->authorizeResource(TouristService::class, 'service');
+    }
+
     public function index()
     {
         return view('touristservices::services.index');
